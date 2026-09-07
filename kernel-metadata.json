@@ -1,0 +1,17 @@
+{
+  "id": "gustavnguyen/paddleocr-cham-finetune",
+  "title": "paddleocr-cham-finetune",
+  "code_file": "paddleocr_cham_finetune.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_tpu": "false",
+  "enable_internet": "true",
+  "dataset_sources": [
+    "gustavnguyen/cham-ocr-v5-assets"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

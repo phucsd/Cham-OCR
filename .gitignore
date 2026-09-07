@@ -1,0 +1,75 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+
+# Caches & Local Environments
+.pytest_cache/
+.coverage
+htmlcov/
+.env
+.venv
+env/
+venv/
+ENV/
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# CodeGraph & System Agent Metadata
+.codegraph/
+.codebase-memory/
+
+# Archive & Scratch
+archive/
+scratch/
+
+# Large Training Checkpoints & Weights
+*.pdparams
+*.pdopt
+*.pdstates
+*.pth
+*.pt
+*.bin
+*.onnx
+
+# Compressed archives (Keep repository lightweight under 50MB)
+*.zip
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+
+# Synthetic Datasets & Training Run Outputs (Kept on Kaggle / Local)
+ocr-training/data/output*/
+ocr-training/data/cham-ocr-v5-assets/
+ocr-training/data/cham_synthetic*/
+ocr-training/data/temp*/
+ocr-training/data/pretrain_models/
+ocr-training/data/detector/
+ocr-training/data/kaggle_error_log/
+ocr-training/output/
+
+# OS Specific
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+*.jsonl
+
+# Upstream PaddleOCR third-party documentation & unused apps (Keep repo lightweight)
+webapp-ui/PaddleOCR/docs/
+webapp-ui/PaddleOCR/doc/
+webapp-ui/PaddleOCR/deploy/
+webapp-ui/PaddleOCR/ppstructure/
+webapp-ui/PaddleOCR/PPOCRLabel/
+webapp-ui/PaddleOCR/StyleText/
+webapp-ui/PaddleOCR/test_tipc/
+webapp-ui/PaddleOCR/tests/
+webapp-ui/PaddleOCR/benchmark/
+webapp-ui/PaddleOCR/applications/

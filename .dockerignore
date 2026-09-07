@@ -1,0 +1,12 @@
+.git
+.agents
+.codegraph
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.DS_Store
+webapp-ui/data/output/rec_cham_inference_v23.zip
+*.zip
+scratch/
+archive/

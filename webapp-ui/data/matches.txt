@@ -1,0 +1,249 @@
+app.py:9: # Monkeypatch NumPy 2.x to support legacy symbols removed/deprecated for PaddleOCR and imgaug
+app.py:27: from http.server import BaseHTTPRequestHandler, HTTPServer
+app.py:58: from paddleocr import PaddleOCR
+app.py:59: ocr_rec_batch_size = int(os.getenv("OCR_REC_BATCH_SIZE", "16"))
+app.py:69: text_recognition_batch_size=ocr_rec_batch_size
+app.py:79: rec_batch_num=ocr_rec_batch_size
+app.py:91: # Bypass detection pipeline and run batch recognition directly on text_rec_model
+app.py:100: # PaddleOCR 2.x batching
+app.py:108: print(f"OfficialPaddleOCRWrapper batch failed, falling back to sequential: {e}")
+app.py:123: def __init__(self, cham_model, viet_model):
+app.py:124: self.cham_model = cham_model
+app.py:131: # 1. Predict all images with Cham model in a single batch
+app.py:132: cham_res, _ = self.cham_model(img_list)
+app.py:137: for i, (cham_text, cham_conf) in enumerate(cham_res):
+app.py:138: if cham_conf < 0.65:
+app.py:142: # 3. Predict those with Vietnamese model in a single batch
+app.py:145: viet_batch_res, _ = self.viet_model(viet_imgs)
+app.py:146: viet_res = viet_batch_res
+app.py:152: cham_text, cham_conf = cham_res[i]
+app.py:153: if cham_conf >= 0.65:
+app.py:154: final_results[i] = (cham_text, cham_conf)
+app.py:159: if cham_conf >= 0.40 and cham_conf > viet_conf - 0.15:
+app.py:160: final_results[i] = (cham_text, cham_conf)
+app.py:167: """Loads and caches the PaddleOCR model for the given version dynamically"""
+app.py:172: if version in ['vi', 'en', 'ch', 'japan']:
+app.py:178: cham_model = get_ocr_model('v23')
+app.py:180: ocr_model = AutoRoutingOCRWrapper(cham_model, viet_model)
+app.py:184: from tools.infer.predict_rec import TextRecognizer
+app.py:187: model_dir = os.path.join(PROJECT_ROOT, "data", "output", f"rec_cham_inference_{version}")
+app.py:188: dict_path = os.path.join(PROJECT_ROOT, "data", f"cham_dict_{version}.txt")
+app.py:192: model_dir = os.path.join(PROJECT_ROOT, "data", "output", "rec_cham_inference")
+app.py:193: dict_path = os.path.join(PROJECT_ROOT, "data", "cham_dict.txt")
+app.py:201: args.rec_char_dict_path = dict_path
+app.py:206: args.use_space_char = True
+app.py:208: # Batch size config
+app.py:209: ocr_rec_batch_size = int(os.getenv("OCR_REC_BATCH_SIZE", "16"))
+app.py:210: args.rec_batch_num = ocr_rec_batch_size
+app.py:218: args.mkldnn_cache_capacity = 32
+app.py:223: print(f"⚙️  Loading PaddleOCR Model {version} (GPU: {args.use_gpu}, MKLDNN: {args.enable_mkldnn}, Batch: {args.rec_batch_num})...")
+app.py:226: # Warmup the model with a dummy image to trigger compilation/allocator caching
+app.py:307: # Penalize if prediction length is too far from median
+app.py:313: # Penalize if there is significant ink touching the top or bottom edges
+app.py:314: # We check the top 3 and bottom 3 rows
+app.py:322: # Boost safe slightly because it inherently suffers from resize-down confidence drops
+app.py:338: similarity = difflib.SequenceMatcher(None, pred, gt).ratio()
+app.py:341: def has_important_cham_sign_changes(pred1, pred2):
+app.py:348: char = d[2]
+app.py:350: if '\uA800' <= char <= '\uA82F' or '\uA840' <= char <= '\uA87F':
+app.py:356: Advanced Multi-Crop Strategy with Risk-Gated Batched Inference
+app.py:460: line_meta["reason"].append("very_close_lines_or_touching_diacritics")
+app.py:537: # Phase 3: Pass 1 Batch Recognition
+app.py:560: print(f"Batch inference pass 1 failed: {e}")
+app.py:562: recognition_batch_pass1_sec = time.time() - t_pass1
+app.py:651: # Run Batch Pass 2
+app.py:672: print(f"Batch inference pass 2 failed: {e}")
+app.py:674: recognition_batch_pass2_sec = time.time() - t_pass2_rec
+app.py:720: single_chars = sum(1 for t in tokens if len(t) == 1)
+app.py:721: if len(tokens) > 0 and single_chars / len(tokens) > 0.3:
+app.py:725: similarity = difflib.SequenceMatcher(None, data["prediction"], safe_data["prediction"]).ratio()
+app.py:785: - recognition_batch_pass1_sec: {recognition_batch_pass1_sec:.4f}s
+app.py:786: - recognition_batch_pass2_sec: {recognition_batch_pass2_sec:.4f}s
+app.py:797: "recognition_batch_pass1_sec": round(recognition_batch_pass1_sec, 4),
+app.py:798: "recognition_batch_pass2_sec": round(recognition_batch_pass2_sec, 4),
+app.py:819: self.send_header('Content-type', 'text/html; charset=utf-8')
+app.py:820: self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+app.py:821: self.send_header('Pragma', 'no-cache')
+app.py:873: nparr = np.frombuffer(img_data, np.uint8)
+app.py:912: from scripts.generate_data import normalize_unicode
+app.py:915: # Encode cropped line to base64 for frontend display
+app.py:967: self.send_header('Content-type', 'application/json; charset=utf-8')
+index.html:4: <meta charset="UTF-8">
+index.html:464: .char-bbox-rect {
+index.html:471: animation: pulse-char 1.5s infinite;
+index.html:474: @keyframes pulse-char {
+index.html:568: .char-span {
+index.html:575: .char-span:hover {
+index.html:579: .char-span.active {
+index.html:612: grid-template-columns: 1fr 1fr;
+index.html:624: .inspector-item span:first-child {
+index.html:681: @keyframes spin {
+index.html:783: <input type="file" id="file-input" style="display: none;" accept="image/*" onchange="handleFileSelect(event)">
+index.html:791: <strong>Khởi chạy OCR</strong>
+index.html:796: <select id="model-select" class="form-select" onchange="updateModelBadge()">
+index.html:801: <option value="v18">Version 18 (Chỉ chữ cái)</option>
+index.html:806: <option value="ch">Tiếng Trung (Bản gốc)</option>
+index.html:822: <select id="method-select" class="form-select" onchange="toggleMethodControls()">
+index.html:832: <label>Khoảng cách dòng tối thiểu (px)</label>
+index.html:836: <label>Kích thước cửa sổ (Valley Window)</label>
+index.html:843: <div class="pane-header">Lịch sử & Hàng đợi quét</div>
+index.html:849: <button class="btn" style="width: 100%; justify-content: center;" onclick="clearQueue()">Xóa sạch hàng đợi</button>
+index.html:860: <button class="toolbar-btn" onclick="zoomToWidth()" title="Vừa chiều rộng">
+index.html:863: <button class="toolbar-btn" onclick="zoomTo100()" title="Kích thước 100%">
+index.html:882: <select id="overlay-mode-select" class="form-select" style="width: 100px; padding: 2px 6px; font-size: 11px; height: 26px;" onchange="changeOverlayMode()">
+index.html:884: <option value="char">Cấp Ký tự</option>
+index.html:911: <div class="ocr-loading-text" id="ocr-loading-text">Đang nhận dạng OCR chữ viết...</div>
+index.html:917: <p>Vui lòng tải ảnh lên để bắt đầu kiểm tra và hiệu chỉnh OCR</p>
+index.html:935: <span id="inspector-badge" class="badge" style="border-color: var(--accent-orange); color: var(--accent-orange); background: none;">Chưa chọn</span>
+index.html:940: <span>Văn bản chọn:</span>
+index.html:962: <button class="btn" style="border-color: var(--accent-red); color: var(--accent-red); background: none;" onclick="markSelectedWrong()" title="Báo dòng chữ nhận diện sai">Đánh dấu sai</button>
+index.html:963: <button class="btn" style="border-color: var(--accent-primary); color: var(--accent-primary); background: none;" onclick="splitSelectedLine()" title="Tách dòng hiện tại thành 2 dòng">Tách dòng</button>
+index.html:1003: <strong>Cham OCR Review Studio</strong> là giao diện thử nghiệm tích hợp, phục vụ nghiên cứu và phát triển công cụ nhận diện chữ viết tiếng Chăm (Akhar Thrah & West Cham) lấy cảm hứng từ cấu trúc 3 cột của ABBYY FineReader. Hệ thống hỗ trợ so sánh, đánh giá hiệu năng các mô hình và chỉnh sửa nhãn dữ liệu trực tiếp.
+index.html:1005: <h3 style="font-family: var(--font-serif); color: var(--accent-primary); margin-top: 20px; font-size: 16px;">📋 Danh sách Công nghệ & Giấy phép</h3>
+index.html:1023: <td style="padding: 8px; color: var(--accent-green);">Apache License 2.0</td>
+index.html:1028: <td style="padding: 8px; color: var(--accent-green);">Apache License 2.0</td>
+index.html:1033: <td style="padding: 8px; color: var(--accent-green);">Apache License 2.0</td>
+index.html:1036: <td style="padding: 8px; font-weight: bold;">NumPy (với Patch)</td>
+index.html:1059: Các phiên bản <strong>V23, V22, V21</strong> được phát triển độc quyền bằng cách chuyển giao tri thức từ mô hình nền tảng PP-OCRv4 tiếng Trung sang tập ký tự tiếng Chăm Akhar Thrah. Mô hình V23 hỗ trợ Visual Order, trong khi V26/V24 (đã lưu trữ) bổ sung hỗ trợ Logical Order.
+index.html:1094: fetch('/log', {
+index.html:1098: }).catch(() => {});
+index.html:1105: fetch('/log', {
+index.html:1109: }).catch(() => {});
+index.html:1114: level: "line",     // "line" | "char"
+index.html:1116: charId: null,
+index.html:1127: let overlayMode = "line"; // "line" | "char"
+index.html:1136: // HTML elements cached
+index.html:1171: } catch (e) {
+index.html:1186: } catch (e) {
+index.html:1198: } catch (e) {
+index.html:1209: } catch (e) {
+index.html:1223: localStorage.setItem('cham_ocr_image_queue', JSON.stringify(cleanQueue));
+index.html:1224: } catch (e) {
+index.html:1231: const data = localStorage.getItem('cham_ocr_image_queue');
+index.html:1234: // Đặt active = false cho các ảnh cũ để tránh xung đột
+index.html:1235: imageQueue.forEach(item => item.active = false);
+index.html:1240: } catch (e) {
+index.html:1244: localStorage.removeItem('cham_ocr_image_queue');
+index.html:1245: } catch(ex) {}
+index.html:1250: if (confirm("Bạn có chắc chắn muốn xóa sạch hàng đợi quét?")) {
+index.html:1256: // Reset giao diện về trạng thái chưa có ảnh
+index.html:1264: showToast("Đã xóa sạch hàng đợi quét");
+index.html:1268: // Initial launch
+index.html:1355: const ch = container.clientHeight;
+index.html:1360: const scaleH = ch / ih;
+index.html:1364: panY = (ch - ih * scale) / 2;
+index.html:1399: function changeOverlayMode() {
+index.html:1416: // Core Selection and 2-way Synchronization
+index.html:1421: currentSelection.charId = null;
+index.html:1425: document.querySelectorAll('.bbox-rect').forEach(b => b.classList.remove('active'));
+index.html:1426: document.querySelectorAll('.editor-line-row').forEach(row => row.classList.remove('active'));
+index.html:1456: function selectCharacter(lineId, charIdx, focusEditor = true) {
+index.html:1457: currentSelection.level = "char";
+index.html:1459: currentSelection.charId = charIdx;
+index.html:1460: currentSelection.bboxId = `bbox-line-${lineId}-char-${charIdx}`;
+index.html:1463: document.querySelectorAll('.char-span').forEach(s => s.classList.remove('active'));
+index.html:1464: document.querySelectorAll('.bbox-rect').forEach(b => b.classList.remove('active'));
+index.html:1468: const charSpan = document.getElementById(`char-${lineId}-${charIdx}`);
+index.html:1469: if (charSpan) {
+index.html:1470: charSpan.classList.add('active');
+index.html:1472: charSpan.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+index.html:1477: document.querySelectorAll('.editor-line-row').forEach(row => row.classList.remove('active'));
+index.html:1497: const segments = Array.from(segmenter.segment(text));
+index.html:1498: const charCount = segments.length;
+index.html:1502: if (charCount > 0) {
+index.html:1515: for (let i = 0; i < charIdx; i++) {
+index.html:1521: finalCharXmax = Math.round(xmin + boxWidth * ((xOffset + widths[charIdx]) / (totalWidth || 1)));
+index.html:1531: // Draw custom dashed bbox overlay for selected character
+index.html:1532: const charBbox = document.createElement('div');
+index.html:1533: charBbox.className = 'char-bbox-rect';
+index.html:1534: charBbox.id = 'char-bbox-indicator';
+index.html:1535: charBbox.style.left = finalCharXmin + "px";
+index.html:1536: charBbox.style.top = visualTop + "px";
+index.html:1537: charBbox.style.width = (finalCharXmax - finalCharXmin) + "px";
+index.html:1538: charBbox.style.height = visualHeight + "px";
+index.html:1539: bboxOverlay.appendChild(charBbox);
+index.html:1556: document.getElementById('inspector-badge').innerText = `Ký tự #${charIdx + 1} (Dòng #${lineId + 1})`;
+index.html:1558: const segs2 = Array.from(segmenter2.segment(lineData.text || ""));
+index.html:1559: const charVal = segs2[charIdx] ? segs2[charIdx].segment : "";
+index.html:1560: document.getElementById('inspect-text').innerText = charVal;
+index.html:1562: document.getElementById('inspect-original').innerText = charVal;
+index.html:1565: const charBox = lineData.bbox || [0, 0, 0, 0];
+index.html:1566: document.getElementById('inspect-coords').innerText = `X: [${finalCharXmin || charBox[0]}, ${finalCharXmax || charBox[2]}] | Y: [${charBox[1]}, ${charBox[3]}]`;
+index.html:1571: const ind = document.getElementById('char-bbox-indicator');
+index.html:1582: responseLines.forEach((item, idx) => {
+index.html:1626: } else if (overlayMode === "char") {
+index.html:1627: // Draw estimated char boxes
+index.html:1630: const segments = Array.from(segmenter.segment(text));
+index.html:1631: const charCount = segments.length;
+index.html:1632: if (charCount > 0) {
+index.html:1645: for (let c = 0; c < charCount; c++) {
+index.html:1646: const charWidth = width * (widths[c] / (totalWidth || 1));
+index.html:1647: const charX = left + width * (xOffset / (totalWidth || 1));
+index.html:1649: const charRect = document.createElement('div');
+index.html:1650: charRect.className = 'bbox-rect';
+index.html:1651: charRect.id = `bbox-line-${idx}-char-${c}`;
+index.html:1652: charRect.style.left = charX + "px";
+index.html:1653: charRect.style.top = top + "px";
+index.html:1654: charRect.style.width = charWidth + "px";
+index.html:1655: charRect.style.height = height + "px";
+index.html:1656: charRect.style.borderStyle = "dotted";
+index.html:1658: charRect.onclick = (e) => {
+index.html:1662: bboxOverlay.appendChild(charRect);
+index.html:1672: } else if (currentSelection.level === "char" && currentSelection.charId !== null) {
+index.html:1673: selectCharacter(currentSelection.lineId, currentSelection.charId, false);
+index.html:1682: container.innerHTML = '<div style="color: var(--text-muted); text-align: center; margin-top: 40px;">Chưa có dữ liệu nhận diện. Hãy bấm "Khởi chạy OCR".</div>';
+index.html:1686: responseLines.forEach((item, idx) => {
+index.html:1714: textView.innerHTML = '<span style="color: var(--text-muted); font-style: italic;">(Dòng trống - Double click để nhập chữ)</span>';
+index.html:1721: // Dùng Intl.Segmenter để tách đúng từng chữ (grapheme cluster) thay vì cắt vụn unicode
+index.html:1723: const segments = Array.from(segmenter.segment(text));
+index.html:1724: segments.forEach((seg, c) => {
+index.html:1725: const charSpan = document.createElement('span');
+index.html:1726: charSpan.className = 'char-span';
+index.html:1727: charSpan.id = `char-${idx}-${c}`;
+index.html:1728: charSpan.innerText = seg.segment;
+index.html:1729: charSpan.onclick = (e) => {
+index.html:1733: lineSpan.appendChild(charSpan);
+index.html:1832: appendLog(`Đã chọn ảnh: ${file.name || 'Ảnh từ clipboard'} (${(file.size / 1024).toFixed(1)} KB)`, 'info');
+index.html:1863: imageQueue.forEach(item => item.active = false);
+index.html:1909: appendLog(`Khởi chạy OCR với mô hình: ${modelSelect.value}, thuật toán: ${payload.method}`, 'info');
+index.html:1912: fetch('/ocr', {
+index.html:1921: appendLog('Lỗi từ Máy chủ: ' + data.error, 'error');
+index.html:1935: appendLog(`Hoàn thành trích xuất ${responseLines.length} dòng! Trạng thái: ${finalStatus}`, 'success');
+index.html:1942: appendLog(`  + OCR Batch Pass 1 (Safe Crops): ${data.profiler.recognition_batch_pass1_sec}s`, 'info');
+index.html:1943: appendLog(`  + OCR Batch Pass 2 (Rescue/Fallback): ${data.profiler.recognition_batch_pass2_sec}s`, 'info');
+index.html:1953: .catch(err => {
+index.html:1954: console.error("OCR Fetch error:", err);
+index.html:1955: appendLog('Lỗi kết nối / Fetch error: ' + err.message, 'error');
+index.html:1956: fetch('/log', {
+index.html:1959: body: JSON.stringify({ message: 'Fetch error in runOCR: ' + err.message + '\nStack: ' + err.stack })
+index.html:1960: }).catch(() => {});
+index.html:1961: showToast('Lỗi kết nối máy chủ');
+index.html:1966: btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg> Khởi chạy OCR';
+index.html:1991: imageQueue.forEach(x => x.active = false);
+index.html:2043: imageQueue.forEach(item => {
+index.html:2057: thumb.innerHTML = `<div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:var(--border-color); color:var(--text-muted); font-size:12px;" title="Ảnh lỗi hoặc chưa lưu">⚠️</div>`;
+index.html:2109: showToast("Vui lòng chọn một dòng chữ trước!");
+index.html:2128: showToast("Vui lòng chọn một dòng chữ trước!");
+index.html:2137: showToast("Dòng quá ngắn để tách đôi!");
+index.html:2164: responseLines.forEach((l, idx) => l.index = idx + 1);
+index.html:2168: showToast(`Đã tách đôi dòng #${lineId + 1}`);
+index.html:2171: showToast("Vui lòng chọn một dòng chữ trước!");
+index.html:2180: responseLines.forEach((item, idx) => {
+index.html:2186: showToast("Không tìm thấy dòng chữ nào cần xem xét lại!");
+index.html:2225: responseLines.forEach(item => {
+index.html:2288: .catch(() => showToast("Không thể copy văn bản."));
+index.html:2297: const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload, null, 2));
+index.html:2298: const downloadAnchor = document.createElement('a');
+index.html:2299: downloadAnchor.setAttribute("href", dataStr);
+index.html:2300: downloadAnchor.setAttribute("download", "ocr_corrected_output.json");
+index.html:2301: document.body.appendChild(downloadAnchor);
+index.html:2302: downloadAnchor.click();
+index.html:2303: downloadAnchor.remove();
+index.html:2321: const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(manifest, null, 2));
+index.html:2322: const downloadAnchor = document.createElement('a');
+index.html:2323: downloadAnchor.setAttribute("href", dataStr);
+index.html:2324: downloadAnchor.setAttribute("download", "training_pairs_manifest.json");
+index.html:2325: document.body.appendChild(downloadAnchor);
+index.html:2326: downloadAnchor.click();
+index.html:2327: downloadAnchor.remove();
+index.html:2447: imageQueue.forEach((item, qIdx) => {
