@@ -174,7 +174,10 @@ class AutoRoutingOCRWrapper:
             if cham_conf >= 0.65:
                 final_results[i] = (cham_text, cham_conf)
             else:
-                viet_text, viet_conf = viet_res[viet_ptr]
+                if viet_ptr < len(viet_res):
+                    viet_text, viet_conf = viet_res[viet_ptr]
+                else:
+                    viet_text, viet_conf = ("", 0.0)
                 viet_ptr += 1
                 
                 if cham_conf >= 0.40 and cham_conf > viet_conf - 0.15:
@@ -211,6 +214,7 @@ def get_ocr_model(version):
     if not os.path.exists(model_dir):
         # Fallback to general data/output folders if version-specific folder is missing
         model_dir = os.path.join(PROJECT_ROOT, "data", "output", "rec_cham_inference")
+    if not os.path.exists(dict_path):
         dict_path = os.path.join(PROJECT_ROOT, "data", "cham_dict.txt")
         
     sys_argv_backup = sys.argv
@@ -381,8 +385,9 @@ def has_important_cham_sign_changes(pred1, pred2):
     for d in diff:
         if d.startswith('- ') or d.startswith('+ '):
             char = d[2]
-            # Cham pre-signs / final signs range: U+A800 to U+A82F, U+A840 to U+A87F
-            if '\uA800' <= char <= '\uA82F' or '\uA840' <= char <= '\uA87F':
+            # Cham Unicode Block: U+AA00 to U+AA5F (with diacritics / vowels U+AA29 to U+AA4D)
+            # Also support legacy ranges U+A800 to U+A87F
+            if '\uAA00' <= char <= '\uAA5F' or '\uA800' <= char <= '\uA87F':
                 return True
     return False
 
@@ -396,7 +401,17 @@ def segment_lines_advanced(img, base_coords, ocr_model):
     
     t_start = time.time()
     if not base_coords:
-        return [], []
+        return [], [], {
+            "candidate_generation_sec": 0.0,
+            "recognition_batch_pass1_sec": 0.0,
+            "recognition_batch_pass2_sec": 0.0,
+            "selection_sec": 0.0,
+            "total_segmentation_sec": 0.0,
+            "num_lines": 0,
+            "num_candidates_pass1": 0,
+            "num_candidates_pass2": 0,
+            "ocr_model_calls": 0
+        }
         
     img_h, img_w, _ = img.shape
     heights = [float(e - s) for s, e in base_coords]
@@ -954,10 +969,23 @@ def segment_lines_advanced(img, base_coords, ocr_model):
             if sel_data["overlap_prev_px"] > 5 or sel_data["overlap_next_px"] > 5:
                 needs_review_reasons.append("adjacent_line_contamination")
                 
-        if len(cand_data) > 1:
-            preds = [c["prediction"] for c in cand_data.values() if c["prediction"]]
-            if len(set(preds)) == len(cand_data) and len(preds) > 1:
-                needs_review_reasons.append("multi_crop_disagreement")
+        # Only flag needs_review for multi-crop disagreement if important Cham signs change
+        # or if there is a significant confidence drop (>= 0.15) compared to safe crop
+        if len(cand_data) > 1 and "safe" in cand_data:
+            safe_pred = cand_data["safe"].get("prediction", "")
+            safe_conf = cand_data["safe"].get("confidence", 0.0)
+            
+            has_cham_sign_diff = False
+            for ctype, cand in cand_data.items():
+                if ctype != "safe" and has_important_cham_sign_changes(safe_pred, cand.get("prediction", "")):
+                    has_cham_sign_diff = True
+                    break
+                    
+            if has_cham_sign_diff:
+                needs_review_reasons.append("important_cham_sign_change")
+                
+            if safe_conf - sel_data["confidence"] >= 0.15:
+                needs_review_reasons.append("significant_confidence_drop")
                 
         line_meta["needs_review"] = len(needs_review_reasons) > 0
         line_meta["reason"] = needs_review_reasons
@@ -985,7 +1013,7 @@ def segment_lines_advanced(img, base_coords, ocr_model):
     for m in lines_meta:
         print(f"  Line {m['line_id']}: bbox={m['bbox']}, core_box={m['core_box']}")
     
-    # Phase 7: Non-Text Background Line Pruning & 1D Vertical NMS
+    # Phase 7: Non-Text Background Line Pruning & 2D Vertical/Horizontal NMS
     filtered_lines_meta = []
     filtered_final_crops = []
     
@@ -995,12 +1023,12 @@ def segment_lines_advanced(img, base_coords, ocr_model):
         conf = cand_sel.get("confidence", 0.0)
         pred = cand_sel.get("prediction", "").strip()
         
-        has_cham_char = any('\uA800' <= char <= '\uA82F' or '\uA840' <= char <= '\uA87F' for char in pred)
+        has_cham_char = any('\uAA00' <= char <= '\uAA5F' or '\uA800' <= char <= '\uA87F' for char in pred)
         has_alphanumeric = any(char.isalnum() for char in pred)
         
         # Strict filter out false positive lines from background artwork (dragons, elephants, ocean graphics)
-        # Any line with confidence < 0.50 that does NOT contain valid Cham characters is treated as fake background artwork
-        is_fake_background = (conf < 0.50 and not has_cham_char)
+        # Only treat as fake background artwork if confidence < 0.35 AND neither Cham nor alphanumeric characters are found
+        is_fake_background = (conf < 0.35 and not has_cham_char and not has_alphanumeric)
         if not is_fake_background and conf >= 0.15:
             filtered_lines_meta.append(meta)
             filtered_final_crops.append(crop)
@@ -1011,7 +1039,7 @@ def segment_lines_advanced(img, base_coords, ocr_model):
         filtered_lines_meta = [lines_meta[best_i]]
         filtered_final_crops = [final_crops[best_i]]
         
-    # 1D Vertical Non-Maximum Suppression (NMS) to eliminate overlapping border lines
+    # Non-Maximum Suppression (NMS) with 2D IoM (checks both vertical and horizontal overlaps)
     if len(filtered_lines_meta) > 1:
         indexed_items = []
         for meta, crop in zip(filtered_lines_meta, filtered_final_crops):
@@ -1019,30 +1047,42 @@ def segment_lines_advanced(img, base_coords, ocr_model):
             cand_sel = meta["candidates"].get(sel_type, {})
             conf = cand_sel.get("confidence", 0.0)
             box = meta["core_box"]
-            indexed_items.append((conf, box, meta, crop))
+            bbox = meta.get("bbox", [0, box[0], img_w, box[1]])
+            indexed_items.append((conf, box, bbox, meta, crop))
             
         indexed_items.sort(key=lambda x: x[0], reverse=True)
         nms_kept = []
-        for conf, box, meta, crop in indexed_items:
+        for conf, box, bbox, meta, crop in indexed_items:
             s1, e1 = box
             h1 = max(1, e1 - s1)
+            x1_min, _, x1_max, _ = bbox
+            w1 = max(1, x1_max - x1_min)
+            
             keep = True
-            for k_conf, k_box, _, _ in nms_kept:
+            for k_conf, k_box, k_bbox, _, _ in nms_kept:
                 s2, e2 = k_box
                 h2 = max(1, e2 - s2)
                 inter_s = max(s1, s2)
                 inter_e = min(e1, e2)
-                inter = max(0, inter_e - inter_s)
-                iom = inter / min(h1, h2)
-                if iom > 0.12:
+                inter_y = max(0, inter_e - inter_s)
+                iom_y = inter_y / min(h1, h2)
+                
+                # Check horizontal overlap to avoid suppressing side-by-side columns
+                x2_min, _, x2_max, _ = k_bbox
+                w2 = max(1, x2_max - x2_min)
+                inter_x = max(0, min(x1_max, x2_max) - max(x1_min, x2_min))
+                iom_x = inter_x / min(w1, w2)
+                
+                # Only suppress if both vertical and horizontal overlaps are significant
+                if iom_y > 0.40 and iom_x > 0.30:
                     keep = False
                     break
             if keep:
-                nms_kept.append((conf, box, meta, crop))
+                nms_kept.append((conf, box, bbox, meta, crop))
                 
         nms_kept.sort(key=lambda x: x[1][0])
-        filtered_lines_meta = [x[2] for x in nms_kept]
-        filtered_final_crops = [x[3] for x in nms_kept]
+        filtered_lines_meta = [x[3] for x in nms_kept]
+        filtered_final_crops = [x[4] for x in nms_kept]
 
     # Relative confidence pruning against max document confidence
     if len(filtered_lines_meta) > 1:
@@ -1057,9 +1097,12 @@ def segment_lines_advanced(img, base_coords, ocr_model):
                 sel_type = meta.get("selected_crop_type", "safe")
                 cand_sel = meta["candidates"].get(sel_type, {})
                 conf = cand_sel.get("confidence", 0.0)
+                pred = cand_sel.get("prediction", "").strip()
+                has_cham_char = any('\uAA00' <= char <= '\uAA5F' or '\uA800' <= char <= '\uA87F' for char in pred)
                 
-                # If a line's confidence is far below max_doc_conf (> 0.25 lower) and conf < 0.45, prune as noise
-                if conf < 0.45 and (max_doc_conf - conf > 0.25):
+                # If a line has real Cham text, never prune it even if confidence is lower
+                # Only prune pure low-confidence non-Cham noise blobs
+                if conf < 0.35 and (max_doc_conf - conf > 0.35) and not has_cham_char:
                     continue
                 rel_filtered_meta.append(meta)
                 rel_filtered_crops.append(crop)
@@ -1107,7 +1150,8 @@ def segment_lines_advanced(img, base_coords, ocr_model):
 
 class ChamOCRRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
-        if self.path == '/':
+        parsed_path = urllib.parse.urlparse(self.path).path
+        if parsed_path in ('/', '/index.html'):
             self.send_response(200)
             self.send_header('Content-type', 'text/html; charset=utf-8')
             self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')

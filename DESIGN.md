@@ -26,7 +26,20 @@ colors:
   confidence_low: "#C4513B"
   confidence_low_bg: "#FDE8E2"
 typography:
-  fontFamily: "'Google Sans Flex', 'Google Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+  body:
+    fontFamily: "Google Sans Flex, Google Sans, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
+    fontSize: "14px"
+    fontWeight: "400"
+  heading:
+    fontFamily: "Google Sans Flex, Google Sans, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
+    fontSize: "20px"
+    fontWeight: "700"
+spacing:
+  xs: "4px"
+  sm: "8px"
+  md: "16px"
+  lg: "24px"
+  xl: "32px"
 rounded:
   sm: "8px"
   md: "12px"
