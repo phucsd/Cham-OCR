@@ -16,13 +16,13 @@ Dự án nghiên cứu, huấn luyện và chẩn đoán nhận diện chữ vi�
 
 ```
 Cham-OCR/
-├── webapp-ui/                          # 1. Ứng dụng Web Chẩn đoán & Review OCR (Diagnostic Studio)
+├── ocr-studio/                         # 1. Giao diện Chẩn đoán & Review OCR (Diagnostic Studio)
 │   ├── app.py                          # Backend HTTP Server & Multi-Crop Orchestrator
 │   ├── index.html                      # Giao diện Studio Warm Light Theme
 │   ├── start_studio.py                 # Script chạy nhanh giao diện
 │   ├── data/                           # Dictionaries & Model inference (v23, v22, v21, v18)
 │   ├── PaddleOCR/                      # Codebase inference PaddleOCR
-│   └── README_WEBAPP.md                # Hướng dẫn chi tiết sử dụng Web App
+│   └── README_STUDIO.md                # Hướng dẫn chi tiết sử dụng Studio
 │
 ├── ocr-training/                       # 2. Pipeline Huấn luyện & Fine-tune Mô hình (Kaggle Pipeline)
 │   ├── paddleocr_cham_finetune.ipynb  # Notebook chính chạy trên Kaggle GPU T4x2
@@ -44,21 +44,21 @@ Cham-OCR/
 
 ## 🚀 Hướng dẫn Bắt đầu Nhanh
 
-### A. Chạy thử nghiệm nhận diện & Chẩn đoán OCR (Web App Studio):
+### A. Chạy thử nghiệm nhận diện & Chẩn đoán OCR (Cham OCR Studio):
 1. Cài đặt các thư viện cần thiết:
    ```bash
    pip install -r requirements.txt
    ```
 2. Khởi chạy studio chẩn đoán:
    ```bash
-   python webapp-ui/app.py
+   python ocr-studio/app.py
    ```
    Hoặc chạy qua file khởi động nhanh:
    ```bash
-   python webapp-ui/start_studio.py
+   python ocr-studio/start_studio.py
    ```
 3. Mở trình duyệt tại địa chỉ: `http://localhost:7860`
-4. Chi tiết tài liệu: xem tại [webapp-ui/README_WEBAPP.md](webapp-ui/README_WEBAPP.md).
+4. Chi tiết tài liệu: xem tại [ocr-studio/README_STUDIO.md](ocr-studio/README_STUDIO.md).
 
 ### B. Huấn luyện / Fine-tune mô hình mới trên Kaggle:
 1. Đọc hướng dẫn chi tiết tại [ocr-training/README_TRAINING.md](ocr-training/README_TRAINING.md).

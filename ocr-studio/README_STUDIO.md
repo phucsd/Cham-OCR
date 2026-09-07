@@ -1,12 +1,12 @@
-# Cham OCR Diagnostic Studio (Web App Test OCR)
+# Cham OCR Diagnostic Studio (OCR Review & Inference Studio)
 
 Ứng dụng này cung cấp giao diện web cục bộ để thử nghiệm, chẩn đoán lỗi phân đoạn dòng (Line Segmentation) và kiểm tra độ chính xác của các mô hình nhận diện chữ viết tiếng Chăm khác nhau.
 
-## 📁 Cấu trúc Thư mục Phân hệ Web App
+## 📁 Cấu trúc Thư mục Phân hệ Studio
 
 ```
-webapp-ui/
-├── README_WEBAPP.md                    # Hướng dẫn này
+ocr-studio/
+├── README_STUDIO.md                    # Hướng dẫn này
 ├── app.py                              # Script chạy ứng dụng Web Server & Studio Backend
 ├── index.html                          # Frontend Claude Warm Light Theme
 ├── start_studio.py                     # Script khởi động nhanh giao diện
@@ -31,27 +31,27 @@ webapp-ui/
    ```
    *Lưu ý*: Đối với môi trường Python mới (như Python 3.13+), ứng dụng đã tự động vá lỗi tương thích NumPy 2.x bằng monkeypatch.
 
-2. Đảm bảo bạn đã có các mô hình inference trong `webapp-ui/data/output/` và file từ điển tương ứng trong `webapp-ui/data/`.
+2. Đảm bảo bạn đã có các mô hình inference trong `ocr-studio/data/output/` và file từ điển tương ứng trong `ocr-studio/data/`.
 
 ---
 
 ## 🚀 Hướng dẫn khởi chạy
 
-Chạy lệnh sau tại thư mục gốc của dự án hoặc trong thư mục `webapp-ui`:
+Chạy lệnh sau tại thư mục gốc của dự án hoặc trong thư mục `ocr-studio`:
 
 ```bash
-python webapp-ui/app.py
+python ocr-studio/app.py
 ```
 
 Hoặc sử dụng tệp khởi chạy nhanh:
 ```bash
-python webapp-ui/start_studio.py
+python ocr-studio/start_studio.py
 ```
 
 Ứng dụng sẽ tìm kiếm cổng trống thích hợp (mặc định: `7860`, `8080`, `8081`...) và khởi chạy:
 ```
 🚀 Cham OCR Diagnostic Studio is running at: http://localhost:7860
-📁 Corrections will be saved to: webapp-ui/data/ocr_corrections.txt
+📁 Corrections will be saved to: ocr-studio/data/ocr_corrections.txt
 ```
 
 Mở trình duyệt và truy cập `http://localhost:7860` để bắt đầu kiểm tra chẩn đoán ảnh chữ viết tiếng Chăm.

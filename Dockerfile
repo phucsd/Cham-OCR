@@ -37,4 +37,4 @@ ENV PYTHONUNBUFFERED=1
 EXPOSE 7860
 
 # Run Cham OCR Studio
-CMD ["python", "-u", "webapp-ui/app.py"]
+CMD ["python", "-u", "ocr-studio/app.py"]

@@ -6,7 +6,7 @@ __pycache__
 *.pyo
 *.pyd
 .DS_Store
-webapp-ui/data/output/rec_cham_inference_v23.zip
+ocr-studio/data/output/rec_cham_inference_v23.zip
 *.zip
 scratch/
 archive/

@@ -1301,7 +1301,7 @@ def run_server():
         
     print(f"======================================================================")
     print(f"🚀 Cham OCR Diagnostic Studio is running at: http://localhost:{actual_port}")
-    print(f"📁 Corrections will be saved to: webapp-ui/data/ocr_corrections.txt")
+    print(f"📁 Corrections will be saved to: ocr-studio/data/ocr_corrections.txt")
     print(f"======================================================================")
     
     try:

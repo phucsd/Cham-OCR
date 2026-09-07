@@ -2,7 +2,7 @@ import subprocess
 import sys
 import os
 
-# Get path of webapp-ui directory
+# Get path of ocr-studio directory
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 app_path = os.path.join(PROJECT_ROOT, "app.py")
 

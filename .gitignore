@@ -63,13 +63,13 @@ desktop.ini
 *.jsonl
 
 # Upstream PaddleOCR third-party documentation & unused apps (Keep repo lightweight)
-webapp-ui/PaddleOCR/docs/
-webapp-ui/PaddleOCR/doc/
-webapp-ui/PaddleOCR/deploy/
-webapp-ui/PaddleOCR/ppstructure/
-webapp-ui/PaddleOCR/PPOCRLabel/
-webapp-ui/PaddleOCR/StyleText/
-webapp-ui/PaddleOCR/test_tipc/
-webapp-ui/PaddleOCR/tests/
-webapp-ui/PaddleOCR/benchmark/
-webapp-ui/PaddleOCR/applications/
+ocr-studio/PaddleOCR/docs/
+ocr-studio/PaddleOCR/doc/
+ocr-studio/PaddleOCR/deploy/
+ocr-studio/PaddleOCR/ppstructure/
+ocr-studio/PaddleOCR/PPOCRLabel/
+ocr-studio/PaddleOCR/StyleText/
+ocr-studio/PaddleOCR/test_tipc/
+ocr-studio/PaddleOCR/tests/
+ocr-studio/PaddleOCR/benchmark/
+ocr-studio/PaddleOCR/applications/
