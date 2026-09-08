@@ -1311,9 +1311,18 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             # Decode image
             if ',' in img_b64:
                 img_b64 = img_b64.split(',', 1)[1]
-            img_data = base64.b64decode(img_b64)
-            nparr = np.frombuffer(img_data, np.uint8)
-            img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+            missing_padding = len(img_b64) % 4
+            if missing_padding:
+                img_b64 += '=' * (4 - missing_padding)
+            try:
+                img_data = base64.b64decode(img_b64)
+                nparr = np.frombuffer(img_data, np.uint8)
+                img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+            except Exception as e:
+                print(f"❌ Error decoding image: {e}")
+                self.send_json_response({'error': f'Không thể giải mã ảnh: {e}'}, 400)
+                return
+                
             print(f"⏱️  Parsed parameters and decoded image in: {time.time() - t_parse:.4f}s")
             
             if img is None:
@@ -1332,6 +1341,14 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             print(f"⏱️  Loaded model in: {time.time() - t_model:.4f}s")
                 
             t_seg = time.time()
+            base_segmentation_sec = 0.0
+            profiler_dict = {
+                'method': method,
+                'base_segmentation_sec': 0.0,
+                'legacy_fast_pass_count': 0,
+                'pass2_rescue_count': 0
+            }
+            
             if method == 'dbnet':
                 print("🔍 Running PaddleOCR DBNet segmentation...")
                 try:
@@ -1342,6 +1359,7 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                     print(f"❌ DBNet segmentation error: {traceback.format_exc()}")
                     final_crops, lines_metadata = [], []
                 
+                base_segmentation_sec = time.time() - t_seg
                 if not final_crops:
                     print("⚠️ DBNet found 0 text lines, falling back to Valley segmentation...")
                     _, coords = segment_lines_valleys(img, window_size=win, min_dist=gap)
@@ -1349,10 +1367,14 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                 else:
                     t_rec = time.time()
                     rec_res, _ = ocr(final_crops)
-                    print(f"⏱️  DBNet batch recognition ({len(final_crops)} lines) took: {time.time() - t_rec:.4f}s")
+                    rec_sec = time.time() - t_rec
+                    print(f"⏱️  DBNet batch recognition ({len(final_crops)} lines) took: {rec_sec:.4f}s")
                     for idx, (pred_text, conf) in enumerate(rec_res):
                         lines_metadata[idx]['candidates']['dbnet']['prediction'] = pred_text
                         lines_metadata[idx]['candidates']['dbnet']['confidence'] = conf
+                    profiler_dict['base_segmentation_sec'] = round(base_segmentation_sec, 4)
+                    profiler_dict['rec_inference_sec'] = round(rec_sec, 4)
+                    profiler_dict['num_lines'] = len(final_crops)
             else:
                 if method == 'valley':
                     _, coords = segment_lines_valleys(img, window_size=win, min_dist=gap)
