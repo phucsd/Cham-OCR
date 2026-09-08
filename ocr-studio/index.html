@@ -795,10 +795,8 @@
                     <label>Mô hình (Model Version)</label>
                     <select id="model-select" class="form-select" onchange="updateModelBadge()">
                         <optgroup label="Chữ Chăm (Custom Models)" style="background: #1e1e2e; color: #cdd6f4;">
-                            <option value="v23" selected>Version 23 (Visual Order - Tối ưu dấu)</option>
-                            <option value="v22">Version 22 (Chữ in 97%-99%)</option>
-                            <option value="v21">Version 21 (Số & Dấu câu)</option>
-                            <option value="v18">Version 18 (Chỉ chữ cái)</option>
+                            <option value="v23" selected>Version 23 (Golden Baseline - Chuẩn xác nhất)</option>
+                            <option value="v22">Version 22 (Dự phòng)</option>
                         </optgroup>
                         <optgroup label="Đa ngôn ngữ (PaddleOCR)" style="background: #1e1e2e; color: #cdd6f4;">
                             <option value="vi">Tiếng Việt (Bản gốc)</option>
@@ -820,7 +818,8 @@
                     <div class="form-group">
                         <label>Thuật toán Phân đoạn</label>
                         <select id="method-select" class="form-select" onchange="toggleMethodControls()">
-                            <option value="valley" selected>Valley Detection</option>
+                            <option value="dbnet" selected>PaddleOCR DBNet (Tranh ảnh / Nền phức tạp)</option>
+                            <option value="valley">Valley Detection (Tài liệu scan/Sách phẳng)</option>
                             <option value="adaptive">Adaptive Threshold</option>
                         </select>
                     </div>
@@ -828,11 +827,11 @@
                         <label>Ngưỡng nhị phân (Threshold)</label>
                         <input type="number" id="threshold-input" class="form-input" value="0.05" step="0.01" min="0.01" max="0.5">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="group-gap" style="display: none;">
                         <label>Khoảng cách dòng tối thiểu (px)</label>
                         <input type="number" id="gap-input" class="form-input" value="12" min="1" max="100">
                     </div>
-                    <div class="form-group" id="group-window">
+                    <div class="form-group" id="group-window" style="display: none;">
                         <label>Kích thước cửa sổ (Valley Window)</label>
                         <input type="number" id="window-input" class="form-input" value="25" min="5" max="100">
                     </div>
@@ -2368,13 +2367,20 @@
             const method = document.getElementById('method-select').value;
             const groupThreshold = document.getElementById('group-threshold');
             const groupWindow = document.getElementById('group-window');
+            const groupGap = document.getElementById('group-gap');
             
-            if (method === 'adaptive') {
-                groupThreshold.style.display = 'flex';
-                groupWindow.style.display = 'none';
+            if (method === 'dbnet') {
+                if (groupThreshold) groupThreshold.style.display = 'none';
+                if (groupWindow) groupWindow.style.display = 'none';
+                if (groupGap) groupGap.style.display = 'none';
+            } else if (method === 'adaptive') {
+                if (groupThreshold) groupThreshold.style.display = 'flex';
+                if (groupWindow) groupWindow.style.display = 'none';
+                if (groupGap) groupGap.style.display = 'flex';
             } else {
-                groupThreshold.style.display = 'none';
-                groupWindow.style.display = 'flex';
+                if (groupThreshold) groupThreshold.style.display = 'none';
+                if (groupWindow) groupWindow.style.display = 'flex';
+                if (groupGap) groupGap.style.display = 'flex';
             }
         }
 

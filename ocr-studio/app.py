@@ -55,6 +55,7 @@ if ocr_training_dir not in sys.path:
 
 # Global variables for OCR models
 ocr_models = {}
+det_model = None
 
 class OfficialPaddleOCRWrapper:
     def __init__(self, lang):
@@ -212,10 +213,10 @@ def get_ocr_model(version):
     dict_path = os.path.join(PROJECT_ROOT, "data", f"cham_dict_{version}.txt")
     
     if not os.path.exists(model_dir):
-        # Fallback to general data/output folders if version-specific folder is missing
-        model_dir = os.path.join(PROJECT_ROOT, "data", "output", "rec_cham_inference")
+        # Fallback to Golden Baseline v23 if version-specific folder is missing
+        model_dir = os.path.join(PROJECT_ROOT, "data", "output", "rec_cham_inference_v23")
     if not os.path.exists(dict_path):
-        dict_path = os.path.join(PROJECT_ROOT, "data", "cham_dict.txt")
+        dict_path = os.path.join(PROJECT_ROOT, "data", "cham_dict_v23.txt")
         
     sys_argv_backup = sys.argv
     sys.argv = [sys.argv[0]]
@@ -272,6 +273,108 @@ def get_ocr_model(version):
         
     ocr_models[version] = ocr_model
     return ocr_model
+
+def get_det_model():
+    """Loads and caches the PaddleOCR TextDetector model for DBNet segmentation."""
+    global det_model
+    if det_model is not None:
+        return det_model
+
+    from tools.infer.predict_det import TextDetector
+    import tools.infer.utility as utility
+
+    det_model_dir = os.path.join(PROJECT_ROOT, "data", "output", "ch_PP-OCRv4_det_infer")
+    model_file = os.path.join(det_model_dir, "inference.pdmodel")
+    if not os.path.exists(model_file):
+        print(f"📥 Downloading ch_PP-OCRv4_det_infer to {det_model_dir}...")
+        os.makedirs(det_model_dir, exist_ok=True)
+        url = "https://paddleocr.bj.bcebos.com/PP-OCRv4/chinese/ch_PP-OCRv4_det_infer.tar"
+        tar_path = os.path.join(det_model_dir, "det.tar")
+        import urllib.request, tarfile, shutil
+        urllib.request.urlretrieve(url, tar_path)
+        with tarfile.open(tar_path) as tar:
+            tar.extractall(det_model_dir)
+        sub = os.path.join(det_model_dir, "ch_PP-OCRv4_det_infer")
+        if os.path.exists(sub):
+            for f in os.listdir(sub):
+                shutil.move(os.path.join(sub, f), os.path.join(det_model_dir, f))
+            os.rmdir(sub)
+        if os.path.exists(tar_path):
+            os.remove(tar_path)
+        print("✅ Downloaded and extracted ch_PP-OCRv4_det_infer successfully.")
+
+    sys_argv_backup = sys.argv
+    sys.argv = [sys.argv[0]]
+    args = utility.parse_args()
+    sys.argv = sys_argv_backup
+
+    args.use_gpu = False
+    args.enable_mkldnn = False
+    args.ir_optim = False
+    args.det_algorithm = 'DB'
+    args.det_model_dir = det_model_dir
+    args.det_db_thresh = 0.3
+    args.det_db_box_thresh = 0.5
+    args.det_db_unclip_ratio = 1.6
+
+    print(f"⚙️  Loading PaddleOCR DBNet Detector from {det_model_dir}...")
+    det_model = TextDetector(args)
+    print("🔥 PaddleOCR DBNet Detector loaded successfully.")
+    return det_model
+
+def segment_lines_dbnet(img, det_model):
+    """
+    Performs deep-learning based text line segmentation using PaddleOCR DBNet.
+    Returns:
+        final_crops: list of cropped BGR images corresponding to each detected line
+        lines_metadata: list of metadata dicts matching the Studio response schema
+    """
+    import tools.infer.utility as utility
+    from tools.infer.predict_system import sorted_boxes
+
+    dt_boxes, elapse = det_model(img)
+    if dt_boxes is None or len(dt_boxes) == 0:
+        return [], []
+
+    # Sort boxes top-to-bottom, left-to-right
+    dt_boxes = sorted_boxes(dt_boxes)
+
+    final_crops = []
+    lines_metadata = []
+    h, w = img.shape[:2]
+
+    for idx, box in enumerate(dt_boxes):
+        pts = np.array(box, dtype=np.float32)
+        x_min = int(max(0, np.min(pts[:, 0])))
+        x_max = int(min(w, np.max(pts[:, 0])))
+        y_min = int(max(0, np.min(pts[:, 1])))
+        y_max = int(min(h, np.max(pts[:, 1])))
+
+        # Get perspective crop
+        crop_img = utility.get_rotate_crop_image(img, pts)
+        final_crops.append(crop_img)
+
+        meta = {
+            'line_id': idx,
+            'core_box': [y_min, y_max],
+            'bbox': [x_min, y_min, x_max, y_max],
+            'polygon': pts.tolist(),
+            'overlap_prev_px': 0,
+            'overlap_next_px': 0,
+            'crop_confidence': 1.0,
+            'selected_crop_type': 'dbnet',
+            'crop_sanity_score': 1.0,
+            'needs_review': False,
+            'candidates': {
+                'dbnet': {
+                    'prediction': '',
+                    'confidence': 0.0
+                }
+            }
+        }
+        lines_metadata.append(meta)
+
+    return final_crops, lines_metadata
 
 # ==============================================================================
 # Line Segmentation Algorithms
@@ -1199,7 +1302,7 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             
             # Extract parameters
             img_b64 = data['image']
-            model_ver = data.get('model', 'v21')
+            model_ver = data.get('model', 'v23')
             method = data.get('method', 'valley')
             threshold = float(data.get('threshold', 0.05))
             gap = int(data.get('gap', 12))
@@ -1229,17 +1332,39 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             print(f"⏱️  Loaded model in: {time.time() - t_model:.4f}s")
                 
             t_seg = time.time()
-            if method == 'valley':
-                _, coords = segment_lines_valleys(img, window_size=win, min_dist=gap)
-            else:
-                _, coords = segment_lines_adaptive(img, threshold_pct=threshold, gap_threshold=gap)
-            base_segmentation_sec = time.time() - t_seg
-            print(f"⏱️  Base line segmentation took: {base_segmentation_sec:.4f}s")
+            if method == 'dbnet':
+                print("🔍 Running PaddleOCR DBNet segmentation...")
+                try:
+                    det = get_det_model()
+                    final_crops, lines_metadata = segment_lines_dbnet(img, det)
+                except Exception as e:
+                    import traceback
+                    print(f"❌ DBNet segmentation error: {traceback.format_exc()}")
+                    final_crops, lines_metadata = [], []
                 
-            t_adv = time.time()
-            # Apply Advanced Segmentation and Multi-Crop
-            final_crops, lines_metadata, profiler_dict = segment_lines_advanced(img, coords, ocr)
-            print(f"⏱️  segment_lines_advanced took: {time.time() - t_adv:.4f}s")
+                if not final_crops:
+                    print("⚠️ DBNet found 0 text lines, falling back to Valley segmentation...")
+                    _, coords = segment_lines_valleys(img, window_size=win, min_dist=gap)
+                    final_crops, lines_metadata, profiler_dict = segment_lines_advanced(img, coords, ocr)
+                else:
+                    t_rec = time.time()
+                    rec_res, _ = ocr(final_crops)
+                    print(f"⏱️  DBNet batch recognition ({len(final_crops)} lines) took: {time.time() - t_rec:.4f}s")
+                    for idx, (pred_text, conf) in enumerate(rec_res):
+                        lines_metadata[idx]['candidates']['dbnet']['prediction'] = pred_text
+                        lines_metadata[idx]['candidates']['dbnet']['confidence'] = conf
+            else:
+                if method == 'valley':
+                    _, coords = segment_lines_valleys(img, window_size=win, min_dist=gap)
+                else:
+                    _, coords = segment_lines_adaptive(img, threshold_pct=threshold, gap_threshold=gap)
+                base_segmentation_sec = time.time() - t_seg
+                print(f"⏱️  Base line segmentation took: {base_segmentation_sec:.4f}s")
+                    
+                t_adv = time.time()
+                # Apply Advanced Segmentation and Multi-Crop
+                final_crops, lines_metadata, profiler_dict = segment_lines_advanced(img, coords, ocr)
+                print(f"⏱️  segment_lines_advanced took: {time.time() - t_adv:.4f}s")
                 
             t_resp = time.time()
             # Prepare backward-compatible response
@@ -1265,15 +1390,16 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                         'confidence': float(confidence),
                         'coords': meta['core_box'],
                         'bbox': meta.get('bbox', [0, meta['core_box'][0], img.shape[1], meta['core_box'][1]]),
+                        'polygon': meta.get('polygon'),
                         'image': line_b64,
                         'segmentation': {
-                            'overlap_prev_px': meta['overlap_prev_px'],
-                            'overlap_next_px': meta['overlap_next_px'],
-                            'crop_confidence': meta['crop_confidence'],
-                            'selected_crop_type': meta['selected_crop_type'],
-                            'crop_sanity_score': meta['crop_sanity_score'],
-                            'needs_review': meta['needs_review'],
-                            'reason': meta['reason']
+                            'overlap_prev_px': meta.get('overlap_prev_px', 0),
+                            'overlap_next_px': meta.get('overlap_next_px', 0),
+                            'crop_confidence': meta.get('crop_confidence', 1.0),
+                            'selected_crop_type': meta.get('selected_crop_type', 'standard'),
+                            'crop_sanity_score': meta.get('crop_sanity_score', 1.0),
+                            'needs_review': meta.get('needs_review', False),
+                            'reason': meta.get('reason', '')
                         }
                     })
                     print(f"📥 [DO_POST RESULT] Line {meta['line_id']+1}: text='{pred_text[:15]}...', conf={confidence:.4f}, bbox={meta.get('bbox')}")

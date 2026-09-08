@@ -200,17 +200,23 @@ def create_predictor(args, mode, logger):
 
     else:
         file_names = ['model', 'inference']
+        model_file_path = None
+        params_file_path = None
         for file_name in file_names:
-            model_file_path = '{}/{}.pdmodel'.format(model_dir, file_name)
-            params_file_path = '{}/{}.pdiparams'.format(model_dir, file_name)
-            if os.path.exists(model_file_path) and os.path.exists(
-                    params_file_path):
+            for ext in ['.pdmodel', '.json']:
+                m_path = '{}/{}{}'.format(model_dir, file_name, ext)
+                p_path = '{}/{}.pdiparams'.format(model_dir, file_name)
+                if os.path.exists(m_path) and os.path.exists(p_path):
+                    model_file_path = m_path
+                    params_file_path = p_path
+                    break
+            if model_file_path:
                 break
-        if not os.path.exists(model_file_path):
+        if not model_file_path or not os.path.exists(model_file_path):
             raise ValueError(
-                "not find model.pdmodel or inference.pdmodel in {}".format(
+                "not find model/inference pdmodel or json in {}".format(
                     model_dir))
-        if not os.path.exists(params_file_path):
+        if not params_file_path or not os.path.exists(params_file_path):
             raise ValueError(
                 "not find model.pdiparams or inference.pdiparams in {}".format(
                     model_dir))
@@ -278,14 +284,15 @@ def create_predictor(args, mode, logger):
                     # default cpu threads as 10
                     config.set_cpu_math_library_num_threads(10)
         # enable memory optim
-        config.enable_memory_optim()
+        if not model_file_path.endswith('.json'):
+            config.enable_memory_optim()
+            config.delete_pass("conv_transpose_eltwiseadd_bn_fuse_pass")
+            config.delete_pass("matmul_transpose_reshape_fuse_pass")
+            if mode == 're':
+                config.delete_pass("simplify_with_basic_ops_pass")
+            if mode == 'table':
+                config.delete_pass("fc_fuse_pass")  # not supported for table
         config.disable_glog_info()
-        config.delete_pass("conv_transpose_eltwiseadd_bn_fuse_pass")
-        config.delete_pass("matmul_transpose_reshape_fuse_pass")
-        if mode == 're':
-            config.delete_pass("simplify_with_basic_ops_pass")
-        if mode == 'table':
-            config.delete_pass("fc_fuse_pass")  # not supported for table
         config.switch_use_feed_fetch_ops(False)
         config.switch_ir_optim(args.ir_optim)
 
