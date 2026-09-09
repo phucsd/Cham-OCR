@@ -49,3 +49,10 @@
 - **Quy tắc Khoanh Vùng Hiển Thị Chữ (Bounding Box Rendering)**:
   - **Chiều dọc (Vertical)**: Không được dùng toạ độ `bbox` thô của Connected Components để vẽ khung đỏ/xanh vì đặc thù chữ Chăm có các dấu phụ vươn lên cao và kéo xuống thấp, khiến khung bị tràn lấn sang dòng lân cận. Bắt buộc phải ưu tiên dùng toạ độ dải chữ lõi `coords` để giới hạn chiều cao khung hiển thị vừa khít.
   - **Chiều ngang (Horizontal)**: Không được ước lượng độ rộng ký tự bằng phép chia trung bình. Bắt buộc phải sử dụng API `CanvasRenderingContext2D.measureText()` kết hợp với `Intl.Segmenter(granularity: 'grapheme')` để tính tỷ lệ bề ngang thực tế của từng cụm ký tự (grapheme clusters).
+
+- **Quy tắc Chuẩn bị Dữ liệu Huấn luyện Phiên bản mới (Training Data Safeguards)**:
+  - **Mẫu số thứ tự khổ thơ Chăm**: Bắt buộc phải đưa cấu trúc `{cham_digits}{cham_section_mark} {cham_text}` từ 1 đến 99 (ví dụ `꩑꩞ ...`, `꩑꩐꩞ ...`, `꩔꩓꩞ ...`, `꩕꩗꩞ ...`) vào generator sinh dữ liệu tổng hợp (`scripts/generate_data.py`), tránh việc CTC Decoder ép nhầm số thứ tự thành phụ âm hoặc chữ tương đồng (`꩔` -> `ꨤ`, `꩕` -> `ꨅ`/`ꨂ`, `꩑꩞` -> `ꨩꩌ`, `꩒꩞` -> `ꨝꨮ`).
+  - **Cân bằng cặp dấu phụ dễ nhầm lẫn**: Sinh tối thiểu 5,000 mẫu hard-examples cho cặp dấu dưới chân `ꨲ` (Vowel Sign Au, U+AA32) và `ꨶ` (Vowel Sign O, U+AA36) với các phụ âm `ꨀ`, `ꨓ`, `ꨚ`, `ꨆ` để chống thiên kiến nhầm `ꨲ` thành `ꨶ`.
+  - **Khoảng cách Double Danda (`꩝꩝`)**: Phải sinh các mẫu có khoảng cách biến thiên giữa 2 nét gạch đứng từ 2px đến 8px kèm nhiễu mờ để CTC không bị gộp 2 ký tự thành 1 (`꩝`).
+  - **Tổ hợp dấu phụ đa tầng**: Tăng cường các mẫu kết hợp đồng thời dấu phụ dưới (`ꨳ`) và dấu phụ trên (`ꨪ`, `ꩌ`) như `ꨣꨳꨪꩌ` để tránh bị rút gọn sai thành `ꨣꨳꨬ`.
+

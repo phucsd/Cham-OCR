@@ -1,0 +1,618 @@
+{
+  "total_tests": 50,
+  "total_time_sec": 8.492177486419678,
+  "category_stats": {
+    "Cat 1: Clean Baseline": {
+      "total": 5,
+      "pass_rate": 20.0,
+      "avg_cer": 14.835020029517182,
+      "avg_conf": 0.9480939507484436
+    },
+    "Cat 2: Single-Digit Stanzas": {
+      "total": 5,
+      "pass_rate": 0.0,
+      "avg_cer": 18.415825834614246,
+      "avg_conf": 0.9446053743362427
+    },
+    "Cat 3: Two-Digit Stanzas": {
+      "total": 5,
+      "pass_rate": 20.0,
+      "avg_cer": 17.594443378879156,
+      "avg_conf": 0.9519006729125976
+    },
+    "Cat 4: Low Height / Low-Res": {
+      "total": 5,
+      "pass_rate": 0.0,
+      "avg_cer": 27.64987695483051,
+      "avg_conf": 0.8836928844451905
+    },
+    "Cat 5: Blur Degradation": {
+      "total": 5,
+      "pass_rate": 0.0,
+      "avg_cer": 41.77777777777778,
+      "avg_conf": 0.8756241083145142
+    },
+    "Cat 6: Noise & Grain": {
+      "total": 5,
+      "pass_rate": 0.0,
+      "avg_cer": 50.58823529411765,
+      "avg_conf": 0.6020000219345093
+    },
+    "Cat 7: Paper Texture & Contrast": {
+      "total": 5,
+      "pass_rate": 0.0,
+      "avg_cer": 33.333333333333336,
+      "avg_conf": 0.9185622453689575
+    },
+    "Cat 8: Tilt & Perspective": {
+      "total": 5,
+      "pass_rate": 0.0,
+      "avg_cer": 22.142857142857142,
+      "avg_conf": 0.8949370145797729
+    },
+    "Cat 9: Stroke Degradation": {
+      "total": 5,
+      "pass_rate": 0.0,
+      "avg_cer": 26.666666666666664,
+      "avg_conf": 0.9117172002792359
+    },
+    "Cat 10: Diacritics & Punctuation": {
+      "total": 5,
+      "pass_rate": 0.0,
+      "avg_cer": 28.71520588911893,
+      "avg_conf": 0.9435567855834961
+    }
+  },
+  "tests": [
+    {
+      "id": 1,
+      "category": "Cat 1: Clean Baseline",
+      "desc": "Clean Regular font, standard resolution",
+      "gt": "ꨚꨗꨶꨮꩄ ꨆꨭꨖꨩ ꨔꩅ ꨓꨳꩀ꩝ ꨨꨤꨭꩆ ꨋꩇ ꨝꨩ ꨤꨪꨠꩍ꩝꩝",
+      "pred": "ꨚꨗꨶꨮꩄ ꨆꨭꨖꨩ ꨔꩅ ꨓꨳꩀ ꨨꨤꨭꩆ ꨋꩇ ꨝꨩ ꨤꨪꨠꩍ ꩝",
+      "conf": 0.9605849385261536,
+      "dist": 2,
+      "cer": 5.555555555555555,
+      "passed": true
+    },
+    {
+      "id": 2,
+      "category": "Cat 1: Clean Baseline",
+      "desc": "Clean Bold font, standard resolution",
+      "gt": "꩓꩞ ꨨꨤꨭꩆ ꨆꨘꩊ ꨕꨫ ꨣꨩ ꨓꨨꨩ ꨙꨯꩌ ꨀꨇꨩꩆ꩝ ꨕꨤꩌ ꨚꨗꨶꨮꩄ ꨕꨭꨤꨪꨆꩊ꩝ ꨨꨤꨭꩆ ꨚꨗꩍ ꨝꨩ ꨓꨝꨳꩀ꩝꩝",
+      "pred": "ꨁꨩ ꨨꨤꨭꩆ ꨆꨘꩊ ꨕꨬ ꨣꨩ ꨓꨨꨩ ꨙꩌ ꨯꨀꨇꨩꩆ ꨕꨤꩌ ꨚꨗꨶꨮꩄ ꨕꨭꨤꨪꨆꩊ ꨨꨤꨭꩆ ꨚꨗꩍ ꨝꨩ ꨓꨝꨳꩀ ꩝",
+      "conf": 0.9572279453277588,
+      "dist": 8,
+      "cer": 11.76470588235294,
+      "passed": false
+    },
+    {
+      "id": 3,
+      "category": "Cat 1: Clean Baseline",
+      "desc": "Clean Regular font, medium length",
+      "gt": "꩕꩞ ꨟꩃ ꨕꨯꨮꩍ ꨧꨗꨪ ꨚꨮꩃ ꨚꨗꨶꨮꩄ ꨣꨩ ꨓꨨꨩ꩝",
+      "pred": "ꨂ ꨟꩃ ꨕꨮꩍ ꨧꨗꨪ ꨚꨮꩃ ꨚꨗꨶꨮꩄ ꨣꨩ ꨓꨨꨩ ꩝",
+      "conf": 0.9504104256629944,
+      "dist": 4,
+      "cer": 12.5,
+      "passed": false
+    },
+    {
+      "id": 4,
+      "category": "Cat 1: Clean Baseline",
+      "desc": "Clean Bold font, medium length",
+      "gt": "꩖꩞ ꨚꨣꩆ ꨨꨕꨮꩉ ꨝꨪꨣꨭꨥ ꨠꨡꨯꩍ ꨛꨯꨮ ꨠꨣꨰ꩝",
+      "pred": "ꨣꨩ ꨚꨣꩆ ꨨꨕꨮꩉ ꨝꨪꨣꨭꨥ ꨠꨡꩍ ꨛꨮ ꨯꨠꨣꨰ",
+      "conf": 0.9532133340835571,
+      "dist": 6,
+      "cer": 19.35483870967742,
+      "passed": false
+    },
+    {
+      "id": 5,
+      "category": "Cat 1: Clean Baseline",
+      "desc": "Clean Regular font, large text",
+      "gt": "꩘꩞ ꨢꨶꨮꩆ ꨤꩄ ꨌꩌ ꨆꨳꨮꩃ ꨨꨭꨩ ꨛꨯꨮ ꨕꨯꨱꩃ꩝",
+      "pred": "ꨌ ꨢꨶꨮꩆ ꨤꩄ ꨌꩌ ꨆꨳꨮ ꨨꨭꨩ ꨛꨮ ꨯꨕꨩ ꩝",
+      "conf": 0.9190331101417542,
+      "dist": 8,
+      "cer": 25.0,
+      "passed": false
+    },
+    {
+      "id": 6,
+      "category": "Cat 2: Single-Digit Stanzas",
+      "desc": "Stanza ꩑꩞ leading prefix",
+      "gt": "꩑꩞ ꨀꨆꨢꨯꨮꩅ ꨧꨪ ꨚꨗꩍ ꨓꨶꨮꩉ ꨓꨝꨳꩀ꩝",
+      "pred": "ꩍ ꨀꨆꨢꨮꩅ ꨧꨪ ꨚꨗꩍ ꨓꨶꨮꩉ ꨓꨝꨳꩀ ꩝",
+      "conf": 0.9030031561851501,
+      "dist": 4,
+      "cer": 14.814814814814813,
+      "passed": false
+    },
+    {
+      "id": 7,
+      "category": "Cat 2: Single-Digit Stanzas",
+      "desc": "Stanza ꩒꩞ leading prefix",
+      "gt": "꩒꩞ ꨦꩀꨆꨣꨰ ꨚꨗꨶꨮꩄ ꨝꨪꨗꨴꨪꩀ ꨕꨨꨵꩀ ꨥꩀ꩝ ꨎꩊ ꨈꨴꨭꩀ ꨆꨔꨯꨱꩅ ꨣꨪꨡꩍ꩝ ꨚꨴꨯꨱꩃ ꨤꨯꨩ ꨕꨫ ꨣꨳꨪꩌ ꨚꨆꩉ꩝꩝",
+      "pred": "꩜ꨮ ꨦꩀꨆꨣ ꨰꨚꨗꨶꨮꩄ ꨝꨪꨗꩀ ꨕꨚꨵꩀ ꨥꩀ ꨎꩊ ꨈꨴ ꨆꨔꨩꩅ ꨣꨪꨡꩍ ꨚꨈꨴꨮ ꨤꨩ ꨕꨫ ꨣꨳꨪ ꨚꨆꩉ ꩝",
+      "conf": 0.9236185550689697,
+      "dist": 20,
+      "cer": 27.027027027027028,
+      "passed": false
+    },
+    {
+      "id": 8,
+      "category": "Cat 2: Single-Digit Stanzas",
+      "desc": "Stanza ꩔꩞ leading prefix",
+      "gt": "꩔꩞ ꨧꨳꩌ ꨧꨭꨩ ꨏꩀ ꨕꨯꨱꩀ ꨨꨚꩀ ꨕꨯꨮꨝꨪꨓꨩ꩝ ꨀꨲꩆ ꨓꨘꩆ ꨌꩃ ꨆꨩ꩝ ꨔꨬ ꨤꨪꨆꨮꨭ ꨎꩃ ꨅꨩ ꨨꨭꨩ꩝꩝",
+      "pred": "ꨤꨩ ꨧꨳꩌ ꨧꨭꨩ ꨏꩀ ꨕꨮꨯꨱꩀ ꨨꨚꩀ ꨕꨮꨝꨪꨓꨩ ꨀꩆ ꨓꨘꩆ ꨌꩃ ꨆꨩ ꨔꨬ ꨤꨪꨆꨭ ꨎꩃ ꨅꨩ ꨨꨭꨩ ꩝",
+      "conf": 0.9500737190246582,
+      "dist": 9,
+      "cer": 13.432835820895523,
+      "passed": false
+    },
+    {
+      "id": 9,
+      "category": "Cat 2: Single-Digit Stanzas",
+      "desc": "Stanza ꨙꨯꩌ leading prefix",
+      "gt": "ꨙꨯꩌ ꨨꨚꩀ ꨙꨯꨱꩌ ꨝꨩ꩝ ꨚꨗꨶꨮꩄ ꨕꨤꩌ ꨦꩀꨆꨣꨰ꩝꩝",
+      "pred": "ꨙꩌ ꨯꨨꨚꩀ ꨙ ꨝꨩ ꨚꨗꨶꨮꩄ ꨕꨤꩌ ꨦꩀꨆꨣꨰ ꩝",
+      "conf": 0.9771153330802917,
+      "dist": 7,
+      "cer": 20.588235294117645,
+      "passed": false
+    },
+    {
+      "id": 10,
+      "category": "Cat 2: Single-Digit Stanzas",
+      "desc": "Stanza ꨀꨝꨪꩍ leading prefix",
+      "gt": "ꨀꨝꨪꩍ ꨕꨴꨬ ꨀꨕꨬ ꨧꨀꨰ꩝ ꨓꨨꨩ ꨕꨣꨩ ꨀꨮꩆ ꨓꨝꨶꨮꩆ꩝꩝",
+      "pred": "ꨀꨝꨪꩍ ꨕ ꨴꨀꨕꨬ ꨧꨀ ꨰ ꨓꨨꨩ ꨕꨣꨩ ꨀꨮꩆ ꨓꨝꨶꨮꩆ ꩝",
+      "conf": 0.9692161083221436,
+      "dist": 6,
+      "cer": 16.216216216216218,
+      "passed": false
+    },
+    {
+      "id": 11,
+      "category": "Cat 3: Two-Digit Stanzas",
+      "desc": "Two-digit stanza Stanza-10",
+      "gt": "ꨈꨮꩇ꩝꩝",
+      "pred": "ꨈꨮꩇ ꩝",
+      "conf": 0.9865703582763672,
+      "dist": 1,
+      "cer": 20.0,
+      "passed": false
+    },
+    {
+      "id": 12,
+      "category": "Cat 3: Two-Digit Stanzas",
+      "desc": "Two-digit stanza ꩑꩔꩞",
+      "gt": "꩑꩔꩞ ꨝꨪꨣꨭꨥ ꨟꩃ ꨨꨟꨪꩅ ꨓꨮꩊ ꨚꨓꨯꨱ ꨤꨯꨱꨥ ꨢꨶꨮꩆ꩝",
+      "pred": "ꩍ ꨤꩌ ꨝꨪꨣꨭꨥ ꨟꩃ ꨨꨟꨪꩅ ꨓꨮꩊ ꨚꨓꨮꨱ ꨤꨯꨱꨥ ꨢꨶꨮꩆ ꩝",
+      "conf": 0.9298979640007019,
+      "dist": 6,
+      "cer": 16.216216216216218,
+      "passed": false
+    },
+    {
+      "id": 13,
+      "category": "Cat 3: Two-Digit Stanzas",
+      "desc": "Two-digit stanza Stanza-12",
+      "gt": "ꨧꨭꨗꨪꩅ ꨈꨪꨗꨴꨮꩍ ꨅꨩ ꨔꨬ ꨣꨩ ꨓꨮꩊ꩝ ꨆꨳꨮꩃ ꨚꨯꩀ ꨓꨈꨯꩀ ꨎꨳꨯꨮꩃ ꨚꨓꨯꨱ꩝꩝",
+      "pred": "ꨧꨭꨗꨪꩅ ꨈꨪꨗꨴ ꨅꨩ ꨔꨬ ꨣꨩ ꨓꨮꩊ ꨆꨳꨮ ꨚꩀ ꨓꨈꩀ ꨎꨳꨮ ꨯꨚꨓꨮꨱ ꩝",
+      "conf": 0.9340702295303345,
+      "dist": 11,
+      "cer": 20.754716981132077,
+      "passed": false
+    },
+    {
+      "id": 14,
+      "category": "Cat 3: Two-Digit Stanzas",
+      "desc": "Two-digit stanza Stanza-13",
+      "gt": "ꨤꨪꨨꨪꩀ ꨀꨝꨪꩍ ꨖꨮꩉ ꨜꨶꨮꩊ꩝ ꨕꨯꨮꨝꨪꨓꨩ ꨚꨵꨮꩀ ꨤꨪꨆꨭꩀ꩝꩝",
+      "pred": "ꨤꨪꨨꨪꩀ ꨀꨝꨪꩍ ꨖꨮꩉ ꨜꨶꨮꩊ ꨕꨮꨝꨪꨓꨩ ꨚꨵꨮꩀ ꨤꨪꨆꨭꩀ ꩝",
+      "conf": 0.9684654474258423,
+      "dist": 3,
+      "cer": 7.317073170731707,
+      "passed": true
+    },
+    {
+      "id": 15,
+      "category": "Cat 3: Two-Digit Stanzas",
+      "desc": "Two-digit stanza ꩓꩑꩞",
+      "gt": "꩓꩑꩞ ꨧꨭꨗꨪꩅ ꨈꨪꨗꨴꨮꩍ ꨤꨪꨝꨰꩍ ꨕꨫ ꨛꨯꨮ ꨝꨪꩊꨔꨶꨮꩉ꩝",
+      "pred": "ꨁꩍꩀ ꨧꨭꨗꨪꩅ ꨈꨪꨗꩍ ꨤꨪꨝꩍ ꨕ ꨛꨮ ꨝꨪꩊꨔꨶꨮꩉ ꩝",
+      "conf": 0.9404993653297424,
+      "dist": 9,
+      "cer": 23.684210526315788,
+      "passed": false
+    },
+    {
+      "id": 16,
+      "category": "Cat 4: Low Height / Low-Res",
+      "desc": "Low crop height 24px downscaled",
+      "gt": "ꨠꨢꩍ ꨨꨕꨬ ꨌꩌ ꨅꨩ ꨎꨳꨯꨮꩃ꩝ ꨎꨶꨰ ꨡꨶꩍ ꨆꩉ ꨕꨫ",
+      "pred": "ꨠꨢꩍ ꨨꨕꨬ ꨌ ꨩ ꨎꨳꨮ ꨎꨶ ꨡꩍ ꨆꩂ ꨕꨫ",
+      "conf": 0.7889078855514526,
+      "dist": 8,
+      "cer": 23.52941176470588,
+      "passed": false
+    },
+    {
+      "id": 17,
+      "category": "Cat 4: Low Height / Low-Res",
+      "desc": "Low crop height 26px downscaled",
+      "gt": "ꨆꨮꨭ꩝꩝",
+      "pred": "ꨆꨮꨭ ꩝",
+      "conf": 0.9764403104782104,
+      "dist": 1,
+      "cer": 20.0,
+      "passed": false
+    },
+    {
+      "id": 18,
+      "category": "Cat 4: Low Height / Low-Res",
+      "desc": "Low crop height 28px downscaled",
+      "gt": "꩙꩞ ꨧꨭꨗꨪꩅ ꨈꨪꨗꨴꨮꩍ ꨤꨪꨝꨰꩍ ꨕꨫ ꨣꩈ ꨛꨯꨮ ꨕꨨꨵꨮꨭ꩝",
+      "pred": "ꨡꩌ ꨧꨭꨗꨪꩅ ꨈꨪꨗꩆ ꨤꨪꨝꨭꩍ ꨕꨫ ꨣꩈ ꨛꨮꩃ ꨯꨨꨚꨵꨮꩀ",
+      "conf": 0.8607758283615112,
+      "dist": 12,
+      "cer": 31.57894736842105,
+      "passed": false
+    },
+    {
+      "id": 19,
+      "category": "Cat 4: Low Height / Low-Res",
+      "desc": "Low crop height 30px downscaled",
+      "gt": "ꨨꨤꨬ ꨀꨗꩀ ꨢꨶꨮꩆ ꨆꨮꨭ꩝ ꨕꩀ ꨓꨆꨴꨲꨩ ꨤꨪꨨꨪꩀ ꨚꨓꨯꨱ꩝꩝",
+      "pred": "ꨨꨤꨬ ꨀꨗꩀ ꨢꨶꨮꩆꨆꨭꩍ ꨕꩀ ꨓꨆ ꨴꨤꨪꨨꨪꩀ ꨚꨓꨩ ꩝",
+      "conf": 0.9314866065979004,
+      "dist": 10,
+      "cer": 25.64102564102564,
+      "passed": false
+    },
+    {
+      "id": 20,
+      "category": "Cat 4: Low Height / Low-Res",
+      "desc": "Low crop height 32px downscaled",
+      "gt": "꩑꩐꩞ ꨓꨈꨯꩀ ꨕꨫ ꨣꩈ ꨕꨯꨱꩀ ꨕꨫ ꨧꨴꨪ ꨝꨪꨗꩈ꩝",
+      "pred": "ꩍꨖꨮꨩ ꨓꨈꨶꩀ ꨕꨫ ꨣꩈ ꨕꨮꨩꩀ ꨕꨫ ꨧ ꨴꨝꨪꨗ ꩈ",
+      "conf": 0.8608537912368774,
+      "dist": 12,
+      "cer": 37.5,
+      "passed": false
+    },
+    {
+      "id": 21,
+      "category": "Cat 5: Blur Degradation",
+      "desc": "Gaussian Blur radius=1.0",
+      "gt": "ꨧꨭꨗꨪꩅ ꨈꨪꨗꨴꨮꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ꩝ ꨓꨴꨭꩆ ꨠꨣꨰ ꨚꨆꨴꨮꩃ ꨘꨈꨮꩉ꩝꩝",
+      "pred": "ꨧꨭꨗꨪꩅ ꨈꨪꨗꨴ ꨛꨮ ꨆꨵꨯꨱ ꨓꩆ ꨠꨣ ꨰꨚꨆ ꨴꨘꨈꨮꩉ ꩝",
+      "conf": 0.9360846281051636,
+      "dist": 14,
+      "cer": 31.11111111111111,
+      "passed": false
+    },
+    {
+      "id": 22,
+      "category": "Cat 5: Blur Degradation",
+      "desc": "Gaussian Blur radius=1.8",
+      "gt": "ꨧꨭꨗꨪꩅ ꨈꨪꨗꨴꨮꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ꩝ ꨓꨴꨭꩆ ꨠꨣꨰ ꨚꨆꨴꨮꩃ ꨘꨈꨮꩉ꩝꩝",
+      "pred": "ꨧꨭꨗꨪꩅ ꨈꨪꨗꨴꩍ ꨛꨮ ꨯꨆꨵꨯꨱ ꨓꩆ ꨠꨣ ꨰꨚꨆ ꨴꨘꨈꨮꩉ ꩝",
+      "conf": 0.8945809602737427,
+      "dist": 14,
+      "cer": 31.11111111111111,
+      "passed": false
+    },
+    {
+      "id": 23,
+      "category": "Cat 5: Blur Degradation",
+      "desc": "Horizontal motion blur (camera shake)",
+      "gt": "ꨧꨭꨗꨪꩅ ꨈꨪꨗꨴꨮꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ꩝ ꨓꨴꨭꩆ ꨠꨣꨰ ꨚꨆꨴꨮꩃ ꨘꨈꨮꩉ꩝꩝",
+      "pred": "ꨧꨭꨗꨪꩊ ꨤꨪꨗꩍ ꨓꨰ ꨯꨆꨯꨱꩀ ꨪꩆ ꨁꨣ ꨰꨚꨆ ꨴꨈꨮꩉ ꩟",
+      "conf": 0.8244603872299194,
+      "dist": 23,
+      "cer": 51.11111111111111,
+      "passed": false
+    },
+    {
+      "id": 24,
+      "category": "Cat 5: Blur Degradation",
+      "desc": "Diagonal motion blur",
+      "gt": "ꨧꨭꨗꨪꩅ ꨈꨪꨗꨴꨮꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ꩝ ꨓꨴꨭꩆ ꨠꨣꨰ ꨚꨆꨴꨮꩃ ꨘꨈꨮꩉ꩝꩝",
+      "pred": "ꨚꨭꨗꨩꩆ ꨤꨪꨗꩍ ꨗꨮꨩꩃ ꨆꨵꨮꨩꩉ ꨓꨟꨴꩉ ꨘꨣꩍ ꨚꨚ ꨴꨙꨯꨥ ꩉ",
+      "conf": 0.8146867752075195,
+      "dist": 29,
+      "cer": 64.44444444444444,
+      "passed": false
+    },
+    {
+      "id": 25,
+      "category": "Cat 5: Blur Degradation",
+      "desc": "Box Blur 1.5",
+      "gt": "ꨧꨭꨗꨪꩅ ꨈꨪꨗꨴꨮꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ꩝ ꨓꨴꨭꩆ ꨠꨣꨰ ꨚꨆꨴꨮꩃ ꨘꨈꨮꩉ꩝꩝",
+      "pred": "ꨧꨭꨗꨪꩅ ꨈꨪꨗꨴ ꨛꨮ ꨆꨵꨯꨱ ꨓꩆ ꨠꨣ ꨰꨚꨆ ꨴꨘꨈꨮꩉ ꩝",
+      "conf": 0.9083077907562256,
+      "dist": 14,
+      "cer": 31.11111111111111,
+      "passed": false
+    },
+    {
+      "id": 26,
+      "category": "Cat 6: Noise & Grain",
+      "desc": "Gaussian noise sigma=15",
+      "gt": "꩑꩓꩞ ꨣꨯꩀ ꨨꨟꨭꨩ ꨝꨮꩀ ꨝꨪꨗꩀ ꨆꨶꨮꩄ ꨣꨪꨝꨯꨱꩃ꩝",
+      "pred": "ꩍ ꨁꨩꩌ ꨣꩀ ꨨꨟꨭꨩ ꨝꨮꩀ ꨝꨪꨗꩀ ꨆꨶꨮꩄ ꨣꨪꨝꨩꨱꩀ",
+      "conf": 0.9156712293624878,
+      "dist": 9,
+      "cer": 26.47058823529412,
+      "passed": false
+    },
+    {
+      "id": 27,
+      "category": "Cat 6: Noise & Grain",
+      "desc": "Gaussian noise sigma=35",
+      "gt": "꩑꩓꩞ ꨣꨯꩀ ꨨꨟꨭꨩ ꨝꨮꩀ ꨝꨪꨗꩀ ꨆꨶꨮꩄ ꨣꨪꨝꨯꨱꩃ꩝",
+      "pred": "ꩍꨄꨴ  ꩀꨰ ꨰꨭꨩ ꨝꨮꩀ ꨝꨪꨗꩀ ꨆꨶꨮꩄ ꨣꨪꨝꩀ",
+      "conf": 0.6859477758407593,
+      "dist": 12,
+      "cer": 35.294117647058826,
+      "passed": false
+    },
+    {
+      "id": 28,
+      "category": "Cat 6: Noise & Grain",
+      "desc": "Salt and Pepper noise (dust)",
+      "gt": "꩑꩓꩞ ꨣꨯꩀ ꨨꨟꨭꨩ ꨝꨮꩀ ꨝꨪꨗꩀ ꨆꨶꨮꩄ ꨣꨪꨝꨯꨱꩃ꩝",
+      "pred": "ꨆ   ꨯꨱ   ꨪꨭ ꨆꨮ ꨮꨝꨵꨴꨵꨥ",
+      "conf": 0.3685154914855957,
+      "dist": 23,
+      "cer": 67.64705882352942,
+      "passed": false
+    },
+    {
+      "id": 29,
+      "category": "Cat 6: Noise & Grain",
+      "desc": "Multiplicative speckle noise",
+      "gt": "꩑꩓꩞ ꨣꨯꩀ ꨨꨟꨭꨩ ꨝꨮꩀ ꨝꨪꨗꩀ ꨆꨶꨮꩄ ꨣꨪꨝꨯꨱꩃ꩝",
+      "pred": "ꨓ ꨒꨴꩀ ꨴꨭꨩ  ꨪꨗꨭ ꨶꩄ ꨪ ꨝ",
+      "conf": 0.5025949478149414,
+      "dist": 20,
+      "cer": 58.82352941176471,
+      "passed": false
+    },
+    {
+      "id": 30,
+      "category": "Cat 6: Noise & Grain",
+      "desc": "Low light underexposed + sensor noise",
+      "gt": "꩑꩓꩞ ꨣꨯꩀ ꨨꨟꨭꨩ ꨝꨮꩀ ꨝꨪꨗꩀ ꨆꨶꨮꩄ ꨣꨪꨝꨯꨱꩃ꩝",
+      "pred": "ꨝꨒꨭꨩ  ꨝꨪꨭ ꨆꨶꨶ ꨪꨝꨵꨥ",
+      "conf": 0.5372706651687622,
+      "dist": 22,
+      "cer": 64.70588235294117,
+      "passed": false
+    },
+    {
+      "id": 31,
+      "category": "Cat 7: Paper Texture & Contrast",
+      "desc": "Aged parchment yellow paper",
+      "gt": "꩑꩕꩞ ꨞꨯꨚꨓꨪꩍ ꨧꨭꨗꨪꩅ ꨈꨪꨗꨴꨮꩍ ꨧꩀꨓꨎꨰ꩝",
+      "pred": "ꨃ ꨞꨚꨯꨓꨪꩍ ꨧꨭꨗꨪꩅ ꨈꨪꨗ ꨧꩀꨓꨎꨰ",
+      "conf": 0.9398537278175354,
+      "dist": 9,
+      "cer": 30.0,
+      "passed": false
+    },
+    {
+      "id": 32,
+      "category": "Cat 7: Paper Texture & Contrast",
+      "desc": "Recycled textured gray paper",
+      "gt": "꩑꩕꩞ ꨞꨯꨚꨓꨪꩍ ꨧꨭꨗꨪꩅ ꨈꨪꨗꨴꨮꩍ ꨧꩀꨓꨎꨰ꩝",
+      "pred": "ꨃ ꨞꨚꨯꨓꨪꩍ ꨧꨭꨗꨪꩅ ꨈꨪꨗꩍ ꨧꩀꨓꨎꨰ",
+      "conf": 0.9263821244239807,
+      "dist": 8,
+      "cer": 26.666666666666668,
+      "passed": false
+    },
+    {
+      "id": 33,
+      "category": "Cat 7: Paper Texture & Contrast",
+      "desc": "Non-uniform lighting shadow across line",
+      "gt": "꩑꩕꩞ ꨞꨯꨚꨓꨪꩍ ꨧꨭꨗꨪꩅ ꨈꨪꨗꨴꨮꩍ ꨧꩀꨓꨎꨰ꩝",
+      "pred": "ꨕ ꨞꨚꨯꨓꨪꩍ ꨧꨭꨗꨪꩅ ꨈꨪꨗ ꨧꩀꨓꨎꨰ",
+      "conf": 0.8999354243278503,
+      "dist": 9,
+      "cer": 30.0,
+      "passed": false
+    },
+    {
+      "id": 34,
+      "category": "Cat 7: Paper Texture & Contrast",
+      "desc": "Low contrast faded ink print",
+      "gt": "꩑꩕꩞ ꨞꨯꨚꨓꨪꩍ ꨧꨭꨗꨪꩅ ꨈꨪꨗꨴꨮꩍ ꨧꩀꨓꨎꨰ꩝",
+      "pred": "ꨃ ꨞꨚꨯꨓꨪꩍ ꨧꨭꨗꨪꩅ ꨈꨪꨗꨴꩍ ꨧꩀꨓꨎ ꨰ",
+      "conf": 0.8821711540222168,
+      "dist": 8,
+      "cer": 26.666666666666668,
+      "passed": false
+    },
+    {
+      "id": 35,
+      "category": "Cat 7: Paper Texture & Contrast",
+      "desc": "Water stains / ink bleed blotches",
+      "gt": "꩑꩕꩞ ꨞꨯꨚꨓꨪꩍ ꨧꨭꨗꨪꩅ ꨈꨪꨗꨴꨮꩍ ꨧꩀꨓꨎꨰ꩝",
+      "pred": "ꨃ ꨞꨣꨯꨱꨧꨭꨗꨪꩅ ꨈꨪꨗꨓꨎꨰ",
+      "conf": 0.9444687962532043,
+      "dist": 16,
+      "cer": 53.333333333333336,
+      "passed": false
+    },
+    {
+      "id": 36,
+      "category": "Cat 8: Tilt & Perspective",
+      "desc": "Rotation +3.0 degrees",
+      "gt": "꩑꩗꩞ ꨎꨝꩅ ꨧꨪꨤꩌ ꨝꨩ ꨈꨮꩇ ꨥꨮꩀ ꨚꨤꨬ꩝",
+      "pred": " ꨣꨯꨱꩀ ꨎꨝꩅ ꨧꨪꨤꩌꨝꨩ ꨈꨮꩇ ꨥꨮꩀ ꨚꨤꨬ",
+      "conf": 0.9109748601913452,
+      "dist": 7,
+      "cer": 25.0,
+      "passed": false
+    },
+    {
+      "id": 37,
+      "category": "Cat 8: Tilt & Perspective",
+      "desc": "Rotation -3.0 degrees",
+      "gt": "꩑꩗꩞ ꨎꨝꩅ ꨧꨪꨤꩌ ꨝꨩ ꨈꨮꩇ ꨥꨮꩀ ꨚꨤꨬ꩝",
+      "pred": "꩜ ꨣꨯꨱꩀ ꨎꨝꩅ ꨧꨪꨤꩌꨝꨩ ꨈꨮꩇ ꨥꨮꩀ ꨚꨤꨬ",
+      "conf": 0.9177162051200867,
+      "dist": 8,
+      "cer": 28.57142857142857,
+      "passed": false
+    },
+    {
+      "id": 38,
+      "category": "Cat 8: Tilt & Perspective",
+      "desc": "Rotation +6.0 degrees",
+      "gt": "꩑꩗꩞ ꨎꨝꩅ ꨧꨪꨤꩌ ꨝꨩ ꨈꨮꩇ ꨥꨮꩀ ꨚꨤꨬ꩝",
+      "pred": "ꨣꨶꨮꩌ ꨎꨝꩅ ꨧꨪꨤꩌ ꨝꨩ ꨈꨮꩇ ꨥꨮꩀ ꨚꨤꨪꩀ",
+      "conf": 0.8975597620010376,
+      "dist": 6,
+      "cer": 21.428571428571427,
+      "passed": false
+    },
+    {
+      "id": 39,
+      "category": "Cat 8: Tilt & Perspective",
+      "desc": "Rotation -6.0 degrees",
+      "gt": "꩑꩗꩞ ꨎꨝꩅ ꨧꨪꨤꩌ ꨝꨩ ꨈꨮꩇ ꨥꨮꩀ ꨚꨤꨬ꩝",
+      "pred": "꩜ ꩀ ꨎꨝꩅ ꨧꨪꨤꩌꨝꨩ ꨈꨮꩇ ꨥꨮꩀ ꨚꨤꨬ",
+      "conf": 0.8560473322868347,
+      "dist": 5,
+      "cer": 17.857142857142858,
+      "passed": false
+    },
+    {
+      "id": 40,
+      "category": "Cat 8: Tilt & Perspective",
+      "desc": "3D perspective skew (keystone tilt)",
+      "gt": "꩑꩗꩞ ꨎꨝꩅ ꨧꨪꨤꩌ ꨝꨩ ꨈꨮꩇ ꨥꨮꩀ ꨚꨤꨬ꩝",
+      "pred": "꩗ꩀ ꨎꨝꩅ ꨧꨪꨤꩌ ꨝꨩꨈꨮꩇ ꨥꨮꩀ ꨚꨤꨪ ꩝",
+      "conf": 0.8923869132995605,
+      "dist": 5,
+      "cer": 17.857142857142858,
+      "passed": false
+    },
+    {
+      "id": 41,
+      "category": "Cat 9: Stroke Degradation",
+      "desc": "Erosion light (broken fine strokes)",
+      "gt": "ꨘꨈꨮꩉ꩝꩝",
+      "pred": "ꨘꨈꨮꩉ ꩝",
+      "conf": 0.9976655840873718,
+      "dist": 1,
+      "cer": 16.666666666666664,
+      "passed": false
+    },
+    {
+      "id": 42,
+      "category": "Cat 9: Stroke Degradation",
+      "desc": "Erosion heavy (fragmented strokes)",
+      "gt": "ꨘꨈꨮꩉ꩝꩝",
+      "pred": "ꨘꩃ ꨈꨮꩉ ꩟",
+      "conf": 0.7585434913635254,
+      "dist": 4,
+      "cer": 66.66666666666666,
+      "passed": false
+    },
+    {
+      "id": 43,
+      "category": "Cat 9: Stroke Degradation",
+      "desc": "Dilation light (heavy inking)",
+      "gt": "ꨘꨈꨮꩉ꩝꩝",
+      "pred": "ꨘꨈꨮꩉ ꩝",
+      "conf": 0.9527726173400879,
+      "dist": 1,
+      "cer": 16.666666666666664,
+      "passed": false
+    },
+    {
+      "id": 44,
+      "category": "Cat 9: Stroke Degradation",
+      "desc": "Dilation heavy (ink spread & touching strokes)",
+      "gt": "ꨘꨈꨮꩉ꩝꩝",
+      "pred": "ꨘꨈꨮꩉ ꩝",
+      "conf": 0.8918153643608093,
+      "dist": 1,
+      "cer": 16.666666666666664,
+      "passed": false
+    },
+    {
+      "id": 45,
+      "category": "Cat 9: Stroke Degradation",
+      "desc": "Hard Otsu binarization artifact",
+      "gt": "ꨘꨈꨮꩉ꩝꩝",
+      "pred": "ꨘꨈꨮꩉ ꩝",
+      "conf": 0.9577889442443848,
+      "dist": 1,
+      "cer": 16.666666666666664,
+      "passed": false
+    },
+    {
+      "id": 46,
+      "category": "Cat 10: Diacritics & Punctuation",
+      "desc": "Vowel Sign Au (ꨲ) stress test",
+      "gt": "ꨀꨲꩆ ꨓꨆꨴꨲꨩ ꨚꨴꨲꨩ ꨆꨲꩆ ꨓꨶꨮꩉ",
+      "pred": "ꨀꩆ ꨓꨆ ꨴꨚ ꨴꨆꨶꩆ ꨓꨶꨮꩉ",
+      "conf": 0.9488624930381775,
+      "dist": 9,
+      "cer": 39.130434782608695,
+      "passed": false
+    },
+    {
+      "id": 47,
+      "category": "Cat 10: Diacritics & Punctuation",
+      "desc": "Pre-vowels ꨯ & ꨯꨱ preservation",
+      "gt": "ꨗꨯꨣꨚꨮꩅ ꨆꨴꨯꩅ ꨛꨯꨮ ꨚꨓꨯꨱ ꨈꨪꨗꨯꨱꩃ",
+      "pred": "ꨗꨣꨯꨚꨮꩅ ꨆꨓꨴꩅ ꨛꨮ ꨯꨚꨓꨩ ꨈꨪꨗ",
+      "conf": 0.9779788851737976,
+      "dist": 11,
+      "cer": 40.74074074074074,
+      "passed": false
+    },
+    {
+      "id": 48,
+      "category": "Cat 10: Diacritics & Punctuation",
+      "desc": "Multi-layer 3-tier diacritics",
+      "gt": "ꨣꨳꨪꩌ ꨕꨨꨵꩀ ꨝꨪꨗꨳꨪ ꨨꨕꨳꨮꩇ ꨓꨆꨴꨲꨩ",
+      "pred": "ꨣꨳꨪ ꨕꨚꨵꩀ ꨝꨪꨗꨳꨪ ꨨꨕꨳꨮꩇ ꨓꨆ ꨫ",
+      "conf": 0.9087398052215576,
+      "dist": 5,
+      "cer": 18.51851851851852,
+      "passed": false
+    },
+    {
+      "id": 49,
+      "category": "Cat 10: Diacritics & Punctuation",
+      "desc": "Narrow Double Danda (꩝꩝) separation",
+      "gt": "ꨨꨤꨭꩆ ꨋꩇ ꨝꨩ ꨤꨪꨠꩍ꩝꩝ ꨚꨆꩉ꩝꩝",
+      "pred": "ꨨꨤꨭꩆ ꨋꩇ ꨝꨩ ꨤꨪꨠꩍ ꨚꨆꩉ ꩝",
+      "conf": 0.9601730108261108,
+      "dist": 3,
+      "cer": 13.043478260869565,
+      "passed": false
+    },
+    {
+      "id": 50,
+      "category": "Cat 10: Diacritics & Punctuation",
+      "desc": "Special symbols ꩜, ꩞, ꩟",
+      "gt": "꩜ ꨚꨣꨪꩀ ꨚꨗꨴꩃ ꨆꨴꨯꨱꩃ ꩞ ꨞꨯꨚꨓꨪꩍ ꩟",
+      "pred": "꩜ ꨚꨣꨪꩀ ꨚꨗ ꨴꨆ ꨴ ꨵ ꨞꨚꨯꨓꨪꩍ ꩟",
+      "conf": 0.9220297336578369,
+      "dist": 9,
+      "cer": 32.142857142857146,
+      "passed": false
+    }
+  ]
+}

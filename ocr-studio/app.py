@@ -200,7 +200,7 @@ def get_ocr_model(version):
         return ocr_model
         
     if version == 'auto':
-        cham_model = get_ocr_model('v23')
+        cham_model = get_ocr_model('v24')
         viet_model = get_ocr_model('vi')
         ocr_model = AutoRoutingOCRWrapper(cham_model, viet_model)
         ocr_models[version] = ocr_model
@@ -315,12 +315,82 @@ def get_det_model():
     args.det_model_dir = det_model_dir
     args.det_db_thresh = 0.3
     args.det_db_box_thresh = 0.5
-    args.det_db_unclip_ratio = 1.6
+    args.det_db_unclip_ratio = 1.8
 
     print(f"⚙️  Loading PaddleOCR DBNet Detector from {det_model_dir}...")
     det_model = TextDetector(args)
     print("🔥 PaddleOCR DBNet Detector loaded successfully.")
     return det_model
+
+def merge_line_boxes(boxes, img_w, img_h):
+    """
+    Merges horizontally separated bounding boxes on the same line into a single unified line crop.
+    Prevents splitting a single line into separate fragments across distant words.
+    """
+    if boxes is None or len(boxes) == 0:
+        return []
+    rects = []
+    for b in boxes:
+        pts = np.array(b, dtype=np.float32)
+        x1 = float(np.min(pts[:, 0]))
+        y1 = float(np.min(pts[:, 1]))
+        x2 = float(np.max(pts[:, 0]))
+        y2 = float(np.max(pts[:, 1]))
+        if (x2 - x1) <= 3 or (y2 - y1) <= 3:
+            continue
+        rects.append([x1, y1, x2, y2, pts])
+
+    rects = sorted(rects, key=lambda r: (r[1], r[0]))
+
+    merged = True
+    while merged:
+        merged = False
+        new_rects = []
+        skip = set()
+        for i in range(len(rects)):
+            if i in skip:
+                continue
+            r1 = rects[i]
+            for j in range(i + 1, len(rects)):
+                if j in skip:
+                    continue
+                r2 = rects[j]
+                h1 = r1[3] - r1[1]
+                h2 = r2[3] - r2[1]
+                min_h = min(h1, h2)
+                if min_h <= 0:
+                    continue
+
+                v_inter = max(0.0, min(r1[3], r2[3]) - max(r1[1], r2[1]))
+                v_overlap = v_inter / min_h
+
+                if r1[2] <= r2[0]:
+                    x_dist = r2[0] - r1[2]
+                elif r2[2] <= r1[0]:
+                    x_dist = r1[0] - r2[2]
+                else:
+                    x_dist = 0.0
+
+                if v_overlap >= 0.50 and x_dist <= max(40.0, 2.5 * min_h):
+                    new_x1 = max(0.0, min(r1[0], r2[0]))
+                    new_y1 = max(0.0, min(r1[1], r2[1]))
+                    new_x2 = min(float(img_w), max(r1[2], r2[2]))
+                    new_y2 = min(float(img_h), max(r1[3], r2[3]))
+                    new_pts = np.array([
+                        [new_x1, new_y1],
+                        [new_x2, new_y1],
+                        [new_x2, new_y2],
+                        [new_x1, new_y2]
+                    ], dtype=np.float32)
+                    r1 = [new_x1, new_y1, new_x2, new_y2, new_pts]
+                    skip.add(j)
+                    merged = True
+            new_rects.append(r1)
+        rects = new_rects
+
+    # Line sorting: sort by vertical center
+    rects = sorted(rects, key=lambda r: (r[1] + r[3]) / 2.0)
+    return [r[4] for r in rects]
 
 def segment_lines_dbnet(img, det_model):
     """
@@ -336,12 +406,12 @@ def segment_lines_dbnet(img, det_model):
     if dt_boxes is None or len(dt_boxes) == 0:
         return [], []
 
-    # Sort boxes top-to-bottom, left-to-right
-    dt_boxes = sorted_boxes(dt_boxes)
+    h, w = img.shape[:2]
+    # Merge horizontal box fragments on the same line
+    dt_boxes = merge_line_boxes(dt_boxes, w, h)
 
     final_crops = []
     lines_metadata = []
-    h, w = img.shape[:2]
 
     for idx, box in enumerate(dt_boxes):
         pts = np.array(box, dtype=np.float32)
@@ -1302,7 +1372,7 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             
             # Extract parameters
             img_b64 = data['image']
-            model_ver = data.get('model', 'v23')
+            model_ver = data.get('model', 'v24')
             method = data.get('method', 'valley')
             threshold = float(data.get('threshold', 0.05))
             gap = int(data.get('gap', 12))
@@ -1375,6 +1445,8 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                     profiler_dict['base_segmentation_sec'] = round(base_segmentation_sec, 4)
                     profiler_dict['rec_inference_sec'] = round(rec_sec, 4)
                     profiler_dict['num_lines'] = len(final_crops)
+                    profiler_dict['total_segmentation_sec'] = round(base_segmentation_sec, 4)
+                    profiler_dict['ocr_model_calls'] = 1
             else:
                 if method == 'valley':
                     _, coords = segment_lines_valleys(img, window_size=win, min_dist=gap)

@@ -763,7 +763,7 @@
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
                 Giới thiệu
             </button>
-            <div class="badge" id="active-model-badge">v23</div>
+            <div class="badge" id="active-model-badge">v24</div>
         </div>
     </header>
 
@@ -795,7 +795,8 @@
                     <label>Mô hình (Model Version)</label>
                     <select id="model-select" class="form-select" onchange="updateModelBadge()">
                         <optgroup label="Chữ Chăm (Custom Models)" style="background: #1e1e2e; color: #cdd6f4;">
-                            <option value="v23" selected>Version 23 (Golden Baseline - Chuẩn xác nhất)</option>
+                            <option value="v24" selected>Version 24 (Thế hệ mới - Khắc phục số khổ & Kháng nhiễu)</option>
+                            <option value="v23">Version 23 (Golden Baseline)</option>
                             <option value="v22">Version 22 (Dự phòng)</option>
                         </optgroup>
                         <optgroup label="Đa ngôn ngữ (PaddleOCR)" style="background: #1e1e2e; color: #cdd6f4;">
@@ -1956,17 +1957,27 @@
                     
                     if (data.profiler) {
                         appendLog(`=== THỜI GIAN XỬ LÝ (BACKEND PROFILE) ===`, 'success');
-                        appendLog(`- Phân đoạn cơ bản (Base Line Segmentation): ${data.profiler.base_segmentation_sec}s`, 'info');
-                        appendLog(`- Phân đoạn nâng cao & OCR (Advanced Segment & OCR): ${data.profiler.total_segmentation_sec}s`, 'info');
-                        appendLog(`  + Sinh các crop ứng viên: ${data.profiler.candidate_generation_sec}s`, 'info');
-                        appendLog(`  + OCR Batch Pass 1 (Safe Crops): ${data.profiler.recognition_batch_pass1_sec}s`, 'info');
-                        appendLog(`  + OCR Batch Pass 2 (Rescue/Fallback): ${data.profiler.recognition_batch_pass2_sec}s`, 'info');
-                        appendLog(`  + Chọn lọc & Hậu xử lý (Selection & Post-process): ${data.profiler.selection_sec}s`, 'info');
-                        appendLog(`- Tổng số dòng: ${data.profiler.num_lines}`, 'info');
-                        appendLog(`- Tổng số ứng viên Pass 1: ${data.profiler.num_candidates_pass1}`, 'info');
-                        appendLog(`- Tổng số ứng viên Pass 2: ${data.profiler.num_candidates_pass2}`, 'info');
-                        appendLog(`- Số lần gọi OCR model: ${data.profiler.ocr_model_calls}`, 'info');
-                        appendLog(`- Tổng thời gian xử lý Backend: ${data.profiler.backend_total_sec}s`, 'success');
+                        if (data.profiler.method === 'dbnet') {
+                            appendLog(`- Thuật toán phân đoạn: PaddleOCR DBNet (Deep Learning)`, 'info');
+                            appendLog(`- Thời gian phát hiện dòng (DBNet Detector): ${data.profiler.base_segmentation_sec}s`, 'info');
+                            appendLog(`- Thời gian nhận diện ký tự (OCR Batch Inference): ${data.profiler.rec_inference_sec !== undefined ? data.profiler.rec_inference_sec + 's' : 'N/A'}`, 'info');
+                            appendLog(`- Tổng số dòng phát hiện: ${data.profiler.num_lines}`, 'info');
+                            appendLog(`- Số lần gọi OCR model: ${data.profiler.ocr_model_calls || 1}`, 'info');
+                            appendLog(`- Tổng thời gian xử lý Backend: ${data.profiler.backend_total_sec}s`, 'success');
+                        } else {
+                            appendLog(`- Thuật toán phân đoạn: ${data.profiler.method === 'valley' ? 'Valley Projection' : 'Adaptive Projection'}`, 'info');
+                            appendLog(`- Phân đoạn cơ bản (Base Line Segmentation): ${data.profiler.base_segmentation_sec}s`, 'info');
+                            appendLog(`- Phân đoạn nâng cao & OCR (Advanced Segment & OCR): ${data.profiler.total_segmentation_sec}s`, 'info');
+                            appendLog(`  + Sinh các crop ứng viên: ${data.profiler.candidate_generation_sec}s`, 'info');
+                            appendLog(`  + OCR Batch Pass 1 (Safe Crops): ${data.profiler.recognition_batch_pass1_sec}s`, 'info');
+                            appendLog(`  + OCR Batch Pass 2 (Rescue/Fallback): ${data.profiler.recognition_batch_pass2_sec}s`, 'info');
+                            appendLog(`  + Chọn lọc & Hậu xử lý (Selection & Post-process): ${data.profiler.selection_sec}s`, 'info');
+                            appendLog(`- Tổng số dòng: ${data.profiler.num_lines}`, 'info');
+                            appendLog(`- Tổng số ứng viên Pass 1: ${data.profiler.num_candidates_pass1}`, 'info');
+                            appendLog(`- Tổng số ứng viên Pass 2: ${data.profiler.num_candidates_pass2}`, 'info');
+                            appendLog(`- Số lần gọi OCR model: ${data.profiler.ocr_model_calls}`, 'info');
+                            appendLog(`- Tổng thời gian xử lý Backend: ${data.profiler.backend_total_sec}s`, 'success');
+                        }
                     }
                 }
             })
