@@ -283,7 +283,12 @@ def get_det_model():
     from tools.infer.predict_det import TextDetector
     import tools.infer.utility as utility
 
-    det_model_dir = os.path.join(PROJECT_ROOT, "data", "output", "ch_PP-OCRv4_det_infer")
+    cham_det_dir = os.path.join(PROJECT_ROOT, "data", "output", "ch_PP-OCRv4_det_cham_infer")
+    if os.path.exists(os.path.join(cham_det_dir, "inference.pdmodel")):
+        det_model_dir = cham_det_dir
+        print(f"🌟 Sử dụng mô hình Text Detection Chăm chuyên biệt: {det_model_dir}")
+    else:
+        det_model_dir = os.path.join(PROJECT_ROOT, "data", "output", "ch_PP-OCRv4_det_infer")
     model_file = os.path.join(det_model_dir, "inference.pdmodel")
     if not os.path.exists(model_file):
         print(f"📥 Downloading ch_PP-OCRv4_det_infer to {det_model_dir}...")
