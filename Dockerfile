@@ -19,7 +19,7 @@ COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Force cache bust for updated app code & V24 model
-RUN echo "Cache bust 2026-09-09T07:52:00Z"
+RUN echo "Cache bust 2026-09-09T07:56:30Z"
 
 # Copy application files
 COPY . /app

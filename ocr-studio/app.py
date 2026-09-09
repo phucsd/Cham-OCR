@@ -1469,8 +1469,11 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                     confidence = meta['candidates'][meta['selected_crop_type']]['confidence']
                     
                     if model_ver in ['v24', 'v26']:
-                        from scripts.generate_data import normalize_unicode
-                        pred_text = normalize_unicode(pred_text)
+                        try:
+                            from scripts.generate_data import normalize_unicode
+                            pred_text = normalize_unicode(pred_text)
+                        except Exception as e:
+                            print(f"Warning: normalize_unicode failed: {e}")
                         
                     # Encode cropped line to base64 for frontend display
                     _, buffer = cv2.imencode('.png', line_img)

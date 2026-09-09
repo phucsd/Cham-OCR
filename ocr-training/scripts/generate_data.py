@@ -5,9 +5,15 @@ import cv2
 import numpy as np
 import json
 import re
-from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageEnhance
-from fontTools.ttLib import TTFont
-import albumentations as A
+try:
+    from fontTools.ttLib import TTFont
+except ImportError:
+    TTFont = None
+
+try:
+    import albumentations as A
+except ImportError:
+    A = None
 
 # Configure standard streams to support UTF-8 on Windows terminals
 if sys.stdout and sys.stdout.encoding != 'utf-8':
