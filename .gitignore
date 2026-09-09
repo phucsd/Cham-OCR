@@ -10,7 +10,7 @@ __pycache__/
 .coverage
 htmlcov/
 .env
-.venv
+.venv*
 env/
 venv/
 ENV/

@@ -191,7 +191,7 @@ infer_dir = "/kaggle/working/output/rec_cham_inference_v24"
 os.makedirs(infer_dir, exist_ok=True)
 
 # Xuất mô hình inference
-!python3 tools/export_model.py -c /kaggle/working/configs/rec_cham_v24.yml -o Global.pretrained_model={target_ckpt} Global.save_inference_dir={infer_dir}
+!python3 tools/export_model.py -c /kaggle/working/configs/rec_cham_v24.yml -o Global.pretrained_model={target_ckpt} Global.save_inference_dir={infer_dir} Global.export_with_pir=False
 
 # Copy từ điển vào thư mục inference
 shutil.copy2('/kaggle/working/data/cham_dict_v24.txt', os.path.join(infer_dir, 'cham_dict_v24.txt'))
