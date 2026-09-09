@@ -56,3 +56,7 @@
   - **Khoảng cách Double Danda (`꩝꩝`)**: Phải sinh các mẫu có khoảng cách biến thiên giữa 2 nét gạch đứng từ 2px đến 8px kèm nhiễu mờ để CTC không bị gộp 2 ký tự thành 1 (`꩝`).
   - **Tổ hợp dấu phụ đa tầng**: Tăng cường các mẫu kết hợp đồng thời dấu phụ dưới (`ꨳ`) và dấu phụ trên (`ꨪ`, `ꩌ`) như `ꨣꨳꨪꩌ` để tránh bị rút gọn sai thành `ꨣꨳꨬ`.
 
+- **Thông tin Tên miền Dịch vụ (OCR Studio Domain)**:
+  - Tên miền chính thức của ứng dụng web Cham OCR Review Studio là `ocr.cham.asia` (được trỏ về hệ thống phục vụ trực tuyến). Mọi liên kết, tài liệu hướng dẫn và phản hồi liên quan đến OCR Studio cần luôn sử dụng tên miền chính: `https://ocr.cham.asia`.
+
+
