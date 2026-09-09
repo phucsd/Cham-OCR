@@ -6,46 +6,45 @@ import base64
 if sys.stdout and hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
 
+print("=== KIỂM THỬ GIAO DIỆN & API TINH GIẢN HÓA (CHỈ CẦN ẢNH & MÔ HÌNH) ===")
+
+# 1. Kiểm tra HTML đã gỡ bỏ hoàn toàn khối cấu hình thủ công
+html_resp = requests.get('https://ocr.cham.asia', timeout=30)
+html_text = html_resp.text
+has_adv = 'advanced-settings-content' in html_text
+has_method_sel = 'method-select' in html_text
+has_thresh = 'threshold-input' in html_text
+print(f"1. Kiểm tra HTML giao diện Web:")
+print(f"   - Mã phản hồi HTTP: {html_resp.status_code}")
+print(f"   - Còn chứa khối 'Cấu hình nâng cao': {has_adv}")
+print(f"   - Còn chứa menu chọn thuật toán: {has_method_sel}")
+print(f"   - Còn chứa input ngưỡng nhị phân: {has_thresh}")
+
+if not has_adv and not has_method_sel and not has_thresh:
+    print("   👉 Giao diện Web đã được tinh giản hoàn hảo!")
+else:
+    print("   ⚠️ Vẫn còn sót thành phần cũ trên giao diện.")
+
+# 2. Kiểm tra API POST /ocr với payload tối giản
 with open('ocr-training/output/evidence/page_ocr/page_0.png', 'rb') as f:
     img_b64 = base64.b64encode(f.read()).decode('utf-8')
 
-print("=== TEST 1: Model V24 + Valley Segmentation ===")
-payload1 = {
+print(f"\n2. Gửi yêu cầu OCR với Payload tối giản (không gửi method/threshold):")
+payload = {
     'image': 'data:image/png;base64,' + img_b64,
-    'model': 'v24',
-    'method': 'valley',
-    'threshold': 0.05,
-    'gap': 12,
-    'window': 25
+    'model': 'v24'
 }
 
-resp1 = requests.post('https://ocr.cham.asia/ocr', json=payload1, timeout=60)
-data1 = resp1.json()
+resp = requests.post('https://ocr.cham.asia/ocr', json=payload, timeout=60)
+data = resp.json()
 
-if 'error' in data1:
-    print("❌ Error:", data1['error'])
+if 'error' in data:
+    print("❌ Lỗi:", data['error'])
 else:
-    lines = data1.get('lines', [])
-    print(f"✅ Thành công! Số dòng nhận diện: {len(lines)}")
+    lines = data.get('lines', [])
+    profiler = data.get('profiler', {})
+    print(f"✅ Thành công 100%! Phát hiện {len(lines)} dòng chữ:")
+    print(f"   - Thuật toán phân đoạn tự động kích hoạt: {profiler.get('method')}")
+    print(f"   - Tổng thời gian xử lý: {profiler.get('backend_total_sec')}s")
     for idx, l in enumerate(lines):
-        print(f"  [Dòng {idx+1}] Độ tin cậy: {l['confidence']:.4f} | BBox: {l['bbox']} | Text: {l['text']}")
-    print("⏱️ Profiler:", json.dumps(data1.get('profiler'), indent=2))
-
-print("\n=== TEST 2: Model V24 + DBNet Segmentation ===")
-payload2 = {
-    'image': 'data:image/png;base64,' + img_b64,
-    'model': 'v24',
-    'method': 'dbnet'
-}
-
-resp2 = requests.post('https://ocr.cham.asia/ocr', json=payload2, timeout=60)
-data2 = resp2.json()
-
-if 'error' in data2:
-    print("❌ Error:", data2['error'])
-else:
-    lines = data2.get('lines', [])
-    print(f"✅ Thành công! Số dòng nhận diện: {len(lines)}")
-    for idx, l in enumerate(lines):
-        print(f"  [Dòng {idx+1}] Độ tin cậy: {l['confidence']:.4f} | BBox: {l['bbox']} | Text: {l['text']}")
-    print("⏱️ Profiler:", json.dumps(data2.get('profiler'), indent=2))
+        print(f"   [Dòng {idx+1}] Độ tin cậy: {l['confidence']:.4f} | BBox: {l['bbox']} | Text: {l['text']}")
