@@ -1373,7 +1373,7 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             # Extract parameters
             img_b64 = data['image']
             model_ver = data.get('model', 'v24')
-            method = data.get('method', 'valley')
+            method = data.get('method', 'dbnet')
             threshold = float(data.get('threshold', 0.05))
             gap = int(data.get('gap', 12))
             win = int(data.get('window', 25))

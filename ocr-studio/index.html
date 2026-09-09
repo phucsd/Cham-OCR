@@ -810,33 +810,6 @@
                         </optgroup>
                     </select>
                 </div>
-
-                <!-- Collapsible Advanced Settings -->
-                <div class="collapsible-trigger" onclick="toggleAdvancedSettings()">
-                    <span id="adv-arrow">▶</span> Cấu hình nâng cao
-                </div>
-                <div class="collapsible-content" id="advanced-settings-content">
-                    <div class="form-group">
-                        <label>Thuật toán Phân đoạn</label>
-                        <select id="method-select" class="form-select" onchange="toggleMethodControls()">
-                            <option value="dbnet" selected>PaddleOCR DBNet (Tranh ảnh / Nền phức tạp)</option>
-                            <option value="valley">Valley Detection (Tài liệu scan/Sách phẳng)</option>
-                            <option value="adaptive">Adaptive Threshold</option>
-                        </select>
-                    </div>
-                    <div class="form-group" id="group-threshold" style="display: none;">
-                        <label>Ngưỡng nhị phân (Threshold)</label>
-                        <input type="number" id="threshold-input" class="form-input" value="0.05" step="0.01" min="0.01" max="0.5">
-                    </div>
-                    <div class="form-group" id="group-gap" style="display: none;">
-                        <label>Khoảng cách dòng tối thiểu (px)</label>
-                        <input type="number" id="gap-input" class="form-input" value="12" min="1" max="100">
-                    </div>
-                    <div class="form-group" id="group-window" style="display: none;">
-                        <label>Kích thước cửa sổ (Valley Window)</label>
-                        <input type="number" id="window-input" class="form-input" value="25" min="5" max="100">
-                    </div>
-                </div>
             </div>
 
             <!-- Queue list -->
@@ -1269,7 +1242,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadQueueFromStorage();
             updateModelBadge();
-            toggleMethodControls();
         });
 
         // -------------------------------------------------------------
@@ -1921,14 +1893,10 @@
             const payload = {
                 image: currentImageBase64,
                 model: modelSelect.value,
-                method: document.getElementById('method-select').value,
-                threshold: document.getElementById('threshold-input').value,
-                gap: document.getElementById('gap-input').value,
-                window: document.getElementById('window-input').value
+                method: 'dbnet'
             };
 
-            appendLog(`Khởi chạy OCR với mô hình: ${modelSelect.value}, thuật toán: ${payload.method}`, 'info');
-            appendLog(`Tham số: threshold=${payload.threshold}, gap=${payload.gap}, window=${payload.window}`, 'info');
+            appendLog(`Khởi chạy OCR với mô hình: ${modelName} (Phân đoạn DBNet tự động)`, 'info');
 
             fetch('/ocr', {
                 method: 'POST',
@@ -2363,38 +2331,6 @@
         // -------------------------------------------------------------
         // Helper Utils
         // -------------------------------------------------------------
-        function toggleAdvancedSettings() {
-            const content = document.getElementById('advanced-settings-content');
-            const arrow = document.getElementById('adv-arrow');
-            content.classList.toggle('open');
-            if (content.classList.contains('open')) {
-                arrow.innerText = "▼";
-            } else {
-                arrow.innerText = "▶";
-            }
-        }
-
-        function toggleMethodControls() {
-            const method = document.getElementById('method-select').value;
-            const groupThreshold = document.getElementById('group-threshold');
-            const groupWindow = document.getElementById('group-window');
-            const groupGap = document.getElementById('group-gap');
-            
-            if (method === 'dbnet') {
-                if (groupThreshold) groupThreshold.style.display = 'none';
-                if (groupWindow) groupWindow.style.display = 'none';
-                if (groupGap) groupGap.style.display = 'none';
-            } else if (method === 'adaptive') {
-                if (groupThreshold) groupThreshold.style.display = 'flex';
-                if (groupWindow) groupWindow.style.display = 'none';
-                if (groupGap) groupGap.style.display = 'flex';
-            } else {
-                if (groupThreshold) groupThreshold.style.display = 'none';
-                if (groupWindow) groupWindow.style.display = 'flex';
-                if (groupGap) groupGap.style.display = 'flex';
-            }
-        }
-
         function updateModelBadge() {
             const ver = document.getElementById('model-select').value;
             document.getElementById('active-model-badge').innerText = ver;
