@@ -283,6 +283,11 @@ def create_predictor(args, mode, logger):
                 else:
                     # default cpu threads as 10
                     config.set_cpu_math_library_num_threads(10)
+            else:
+                if hasattr(config, "disable_onednn"):
+                    config.disable_onednn()
+                if hasattr(config, "disable_mkldnn"):
+                    config.disable_mkldnn()
         # enable memory optim
         if not model_file_path.endswith('.json'):
             config.enable_memory_optim()
