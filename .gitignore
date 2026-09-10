@@ -52,6 +52,7 @@ ocr-training/data/pretrain_models/
 ocr-training/data/detector/
 ocr-training/data/kaggle_error_log/
 ocr-training/output/
+ocr-training/cham_dbnet_v1_infer/
 
 # OS Specific
 .DS_Store
