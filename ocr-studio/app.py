@@ -284,13 +284,14 @@ def get_det_model():
     import tools.infer.utility as utility
 
     cham_det_dir = os.path.join(PROJECT_ROOT, "data", "output", "ch_PP-OCRv4_det_cham_infer")
-    if os.path.exists(os.path.join(cham_det_dir, "inference.pdmodel")):
+    has_cham_model = os.path.exists(os.path.join(cham_det_dir, "inference.pdmodel")) or os.path.exists(os.path.join(cham_det_dir, "inference.json"))
+    if has_cham_model:
         det_model_dir = cham_det_dir
         print(f"🌟 Sử dụng mô hình Text Detection Chăm chuyên biệt: {det_model_dir}")
     else:
         det_model_dir = os.path.join(PROJECT_ROOT, "data", "output", "ch_PP-OCRv4_det_infer")
-    model_file = os.path.join(det_model_dir, "inference.pdmodel")
-    if not os.path.exists(model_file):
+    model_file_exists = os.path.exists(os.path.join(det_model_dir, "inference.pdmodel")) or os.path.exists(os.path.join(det_model_dir, "inference.json"))
+    if not model_file_exists:
         print(f"📥 Downloading ch_PP-OCRv4_det_infer to {det_model_dir}...")
         os.makedirs(det_model_dir, exist_ok=True)
         url = "https://paddleocr.bj.bcebos.com/PP-OCRv4/chinese/ch_PP-OCRv4_det_infer.tar"
@@ -318,7 +319,7 @@ def get_det_model():
     args.ir_optim = False
     args.det_algorithm = 'DB'
     args.det_model_dir = det_model_dir
-    args.det_db_thresh = 0.3
+    args.det_db_thresh = 0.25
     args.det_db_box_thresh = 0.5
     args.det_db_unclip_ratio = 1.8
 
