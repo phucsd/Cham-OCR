@@ -29,18 +29,25 @@
             
             /* OCR confidence */
             --accent-green: #2F7D5C;   /* Green for high conf */
+            --accent-green-bg: #EAF6EF;
             --accent-orange: #B7791F;  /* Yellow/orange for med conf */
+            --accent-orange-bg: #FFF4D8;
             --accent-red: #C4513B;     /* Red for low conf */
+            --accent-red-bg: #FDE8E2;
             
             /* Shadows & Corners */
             --shadow-sm: 0 1px 2px rgba(43, 33, 24, 0.05);
             --shadow-md: 0 4px 12px rgba(43, 33, 24, 0.08);
-            --radius-sm: 8px;
-            --radius-md: 12px;
+            --shadow-lg: 0 8px 24px rgba(43, 33, 24, 0.12);
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
 
             /* Typography */
-            --font-serif: "Google Sans Flex", "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             --font-sans: "Google Sans Flex", "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+            /* Bottom Dock Height */
+            --dock-height: 32px;
         }
 
         * {
@@ -59,40 +66,125 @@
             overflow: hidden;
         }
 
-        /* Header Style */
+        /* -------------------------------------------------------------
+           Header - Command Center
+           ------------------------------------------------------------- */
         header {
             background-color: var(--bg-panel);
             border-bottom: 1px solid var(--border-color);
-            padding: 10px 20px;
+            padding: 0 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 50px;
-            z-index: 10;
+            height: 52px;
+            z-index: 100;
             box-shadow: var(--shadow-sm);
+            flex-shrink: 0;
+            gap: 16px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 0;
         }
 
         .logo {
-            font-family: var(--font-serif);
-            font-size: 20px;
-            font-weight: bold;
+            font-size: 17px;
+            font-weight: 700;
             color: var(--text-main);
             display: flex;
             align-items: center;
             gap: 8px;
+            white-space: nowrap;
+            letter-spacing: -0.2px;
+            text-decoration: none;
         }
 
         .logo span {
-            font-weight: 300;
+            font-weight: 400;
             color: var(--text-muted);
+            font-size: 15px;
         }
 
-        .header-actions {
+        .doc-status-pill {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 6px;
+            padding: 3px 10px;
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 240px;
         }
 
+        .doc-status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: var(--border-strong);
+            flex-shrink: 0;
+        }
+
+        .doc-status-dot.active {
+            background-color: var(--accent-green);
+        }
+
+        .header-center {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .model-picker-wrap {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-sm);
+            padding: 2px 6px;
+            transition: border-color 0.2s;
+        }
+
+        .model-picker-wrap:focus-within {
+            border-color: var(--accent-primary);
+        }
+
+        .model-picker-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-right: 6px;
+            white-space: nowrap;
+        }
+
+        .model-select-compact {
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-main);
+            outline: none;
+            cursor: pointer;
+            padding: 3px 0;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        /* Buttons */
         .btn {
             background-color: var(--bg-panel);
             color: var(--text-main);
@@ -101,163 +193,176 @@
             font-size: 13px;
             border-radius: var(--radius-sm);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
             font-weight: 500;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 6px;
+            font-family: inherit;
             box-shadow: var(--shadow-sm);
+            white-space: nowrap;
+            user-select: none;
         }
 
         .btn:hover {
             background-color: var(--active-bg);
             border-color: var(--border-strong);
+            color: var(--text-main);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn-sm {
+            padding: 3px 8px;
+            font-size: 11.5px;
+            border-radius: 5px;
         }
 
         .btn-primary {
             background-color: var(--accent-primary);
             color: #FFFFFF;
             border-color: var(--accent-primary);
+            box-shadow: 0 2px 6px rgba(201, 100, 66, 0.25);
         }
 
         .btn-primary:hover {
             background-color: var(--accent-hover);
             border-color: var(--accent-hover);
+            color: #FFFFFF;
+        }
+
+        .btn-primary:disabled {
+            background-color: var(--border-medium);
+            border-color: var(--border-medium);
+            color: var(--text-quiet);
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
         }
 
         .badge {
             background-color: var(--active-bg);
             border: 1px solid var(--border-medium);
             color: var(--accent-primary);
-            padding: 3px 8px;
-            font-size: 12px;
+            padding: 2px 7px;
+            font-size: 11px;
             border-radius: 4px;
-            font-weight: bold;
+            font-weight: 600;
         }
 
-        /* 3-Pane Layout */
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 6px;
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-lg);
+            min-width: 200px;
+            z-index: 1000;
+            padding: 4px 0;
+            animation: fadeIn 0.15s ease-out;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12.5px;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: background-color 0.15s;
+            text-decoration: none;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--active-bg);
+            color: var(--accent-primary);
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 4px 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* -------------------------------------------------------------
+           Main Workspace Layout
+           ------------------------------------------------------------- */
         .workspace {
             display: flex;
             flex: 1;
-            height: calc(100vh - 50px);
+            height: calc(100vh - 52px - var(--dock-height));
             overflow: hidden;
+            transition: height 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
         }
 
-        /* Left Sidebar: Image Queue and Settings */
+        /* Left Sidebar: Document Queue */
         .sidebar {
-            width: 280px;
+            width: 250px;
             background-color: var(--bg-surface);
             border-right: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            transition: width 0.25s ease, min-width 0.25s ease, opacity 0.2s ease;
+            transition: width 0.25s ease, opacity 0.2s ease;
             flex-shrink: 0;
         }
 
         .sidebar.collapsed {
             width: 0 !important;
-            min-width: 0 !important;
             border-right: none;
             opacity: 0;
             pointer-events: none;
             visibility: hidden;
         }
 
-        .pane-header {
-            font-family: var(--font-serif);
-            padding: 12px 16px;
+        .sidebar-header {
+            padding: 10px 14px;
             border-bottom: 1px solid var(--border-color);
-            font-weight: bold;
-            font-size: 15px;
-            color: var(--accent-primary);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background-color: var(--bg-panel);
         }
 
-        .dropzone-container {
-            padding: 16px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .dropzone {
-            border: 2px dashed var(--border-color);
-            border-radius: 8px;
-            padding: 20px 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: border-color 0.2s ease;
-        }
-
-        .dropzone:hover {
-            border-color: var(--accent-primary);
-        }
-
-        .dropzone p {
+        .sidebar-title {
             font-size: 12px;
+            font-weight: 700;
             color: var(--text-muted);
-            margin-top: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .controls-container {
-            padding: 16px;
+        .sidebar-upload-bar {
+            padding: 10px 12px;
             border-bottom: 1px solid var(--border-color);
+            background-color: var(--bg-panel);
             display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
             gap: 6px;
         }
 
-        .form-group label {
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--text-muted);
-        }
-
-        .form-select, .form-input {
-            background-color: #FFFFFF;
-            border: 1px solid var(--border-medium);
-            color: var(--text-main);
-            padding: 8px;
-            border-radius: 6px;
-            font-size: 13px;
-            outline: none;
-            width: 100%;
-        }
-
-        .form-select:focus, .form-input:focus {
-            border-color: var(--accent-primary);
-        }
-
-        .collapsible-trigger {
-            font-size: 12px;
-            color: var(--accent-primary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            user-select: none;
-            margin-top: 4px;
-        }
-
-        .collapsible-content {
-            display: none;
-            flex-direction: column;
-            gap: 10px;
-            padding-top: 8px;
-        }
-
-        .collapsible-content.open {
-            display: flex;
-        }
-
-        /* Image Queue List */
         .queue-container {
             flex: 1;
             overflow-y: auto;
@@ -265,11 +370,12 @@
 
         .queue-item {
             display: flex;
-            gap: 12px;
-            padding: 12px 16px;
+            gap: 10px;
+            padding: 10px 12px;
             border-bottom: 1px solid var(--border-color);
             cursor: pointer;
-            transition: background-color 0.2s ease;
+            transition: background-color 0.15s ease;
+            align-items: center;
         }
 
         .queue-item:hover {
@@ -282,8 +388,8 @@
         }
 
         .queue-thumb {
-            width: 60px;
-            height: 45px;
+            width: 48px;
+            height: 38px;
             background-color: var(--bg-surface);
             border: 1px solid var(--border-medium);
             border-radius: 4px;
@@ -291,6 +397,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
 
         .queue-thumb img {
@@ -301,10 +408,10 @@
 
         .queue-info {
             flex: 1;
+            min-width: 0;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            min-width: 0;
+            gap: 3px;
         }
 
         .queue-name {
@@ -313,28 +420,28 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            color: var(--text-main);
         }
 
         .queue-meta {
-            font-size: 10px;
+            font-size: 10.5px;
             color: var(--text-muted);
             display: flex;
             justify-content: space-between;
+            align-items: center;
         }
 
         .status-badge {
-            font-size: 10px;
-            padding: 1.5px 6px;
-            border-radius: 4px;
-            font-weight: bold;
-            box-shadow: var(--shadow-sm);
+            font-size: 9.5px;
+            padding: 1px 5px;
+            border-radius: 3px;
+            font-weight: 700;
         }
 
         .status-not_processed { background-color: var(--border-medium); color: var(--text-muted); }
-        .status-processing { background-color: #FFF4D8; color: var(--accent-orange); }
-        .status-needs_review { background-color: #FDE8E2; color: var(--accent-red); }
-        .status-verified { background-color: #EAF6EF; color: var(--accent-green); }
-
+        .status-processing { background-color: var(--accent-orange-bg); color: var(--accent-orange); }
+        .status-needs_review { background-color: var(--accent-red-bg); color: var(--accent-red); }
+        .status-verified { background-color: var(--accent-green-bg); color: var(--accent-green); }
 
         /* Center Pane: Document Viewer */
         .viewer-pane {
@@ -344,23 +451,25 @@
             flex-direction: column;
             position: relative;
             overflow: hidden;
+            min-width: 250px;
         }
 
         .viewer-toolbar {
-            height: 40px;
+            height: 38px;
             background-color: var(--bg-surface);
             border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 16px;
+            padding: 0 12px;
             z-index: 5;
+            flex-shrink: 0;
         }
 
         .toolbar-group {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .toolbar-btn {
@@ -369,12 +478,12 @@
             color: var(--text-muted);
             width: 28px;
             height: 28px;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             border-radius: var(--radius-sm);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
         }
 
         .toolbar-btn:hover {
@@ -385,22 +494,24 @@
 
         .toolbar-btn.active {
             background-color: var(--active-bg);
-            border-color: var(--border-medium);
+            border-color: var(--accent-primary);
             color: var(--accent-primary);
         }
 
         .toolbar-divider {
             width: 1px;
-            height: 20px;
+            height: 18px;
             background-color: var(--border-color);
-            margin: 0 4px;
+            margin: 0 3px;
         }
 
         .zoom-badge {
-            font-size: 12px;
+            font-size: 11.5px;
+            font-weight: 500;
             color: var(--text-muted);
-            min-width: 45px;
+            min-width: 42px;
             text-align: center;
+            user-select: none;
         }
 
         .viewer-container {
@@ -427,7 +538,6 @@
             -webkit-user-drag: none;
         }
 
-        /* SVG / HTML Overlay drawing Bounding Boxes */
         .bbox-overlay {
             position: absolute;
             top: 0;
@@ -439,7 +549,7 @@
 
         .bbox-rect {
             position: absolute;
-            border: 1.5px solid rgba(201, 100, 66, 0.4);
+            border: 1.5px solid rgba(201, 100, 66, 0.45);
             background-color: rgba(201, 100, 66, 0.04);
             pointer-events: auto;
             cursor: pointer;
@@ -462,16 +572,10 @@
 
         .bbox-rect.needs-review {
             border-color: var(--accent-red);
-            background-color: rgba(196, 81, 59, 0.06);
+            background-color: rgba(196, 81, 59, 0.08);
         }
 
-        .bbox-rect.needs-review:hover {
-            border-color: var(--accent-red);
-            background-color: rgba(196, 81, 59, 0.14);
-            box-shadow: 0 0 6px rgba(196, 81, 59, 0.3);
-        }
-
-        /* Temp Char Bbox Outline */
+        /* Char Bbox Highlight */
         .char-bbox-rect {
             position: absolute;
             border: 2px solid var(--accent-green);
@@ -488,17 +592,67 @@
             100% { background-color: rgba(47, 125, 92, 0.15); }
         }
 
+        /* Draw Mode */
+        .draw-mode-active {
+            cursor: crosshair !important;
+        }
+        .draw-mode-active .viewer-content {
+            cursor: crosshair !important;
+        }
+        .drawing-bbox-rect {
+            position: absolute;
+            border: 2px dashed var(--accent-primary);
+            background-color: rgba(201, 100, 66, 0.2);
+            pointer-events: none;
+            z-index: 25;
+        }
 
-        /* Right Pane: OCR Text Editor */
+        /* OCR Loading Overlay */
+        .ocr-loading-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(250, 247, 242, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            z-index: 50;
+            backdrop-filter: blur(3px);
+        }
+
+        .ocr-spinner {
+            width: 42px;
+            height: 42px;
+            border: 3.5px solid var(--border-medium);
+            border-top-color: var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+        }
+
+        .ocr-loading-text {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* -------------------------------------------------------------
+           Right Pane: Continuous Text Editor
+           ------------------------------------------------------------- */
         .editor-pane {
             flex: 1;
-            min-width: 320px;
-            background-color: var(--bg-surface);
+            min-width: 340px;
+            max-width: 600px;
+            background-color: var(--bg-panel);
             border-left: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            transition: flex 0.25s ease, min-width 0.25s ease, width 0.25s ease, opacity 0.2s ease;
+            transition: width 0.25s ease, opacity 0.2s ease, min-width 0.25s ease;
         }
 
         .editor-pane.collapsed {
@@ -511,46 +665,77 @@
             visibility: hidden;
         }
 
+        .editor-header {
+            height: 38px;
+            background-color: var(--bg-surface);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .editor-header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .editor-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         .editor-container {
             flex: 1;
-            min-height: 0;
             overflow-y: auto;
-            padding: 16px;
+            padding: 12px 16px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
             background-color: var(--bg-panel);
         }
 
         .editor-line-row {
             display: flex;
             align-items: flex-start;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 6px;
+            border: 1px solid transparent;
+            border-radius: var(--radius-sm);
+            padding: 4px 6px;
             gap: 8px;
-            transition: background-color 0.2s ease;
-            border-radius: 4px;
+            transition: background-color 0.15s ease, border-color 0.15s ease;
+        }
+
+        .editor-line-row:hover {
+            background-color: rgba(201, 100, 66, 0.03);
+            border-color: var(--border-color);
         }
 
         .editor-line-row.active {
             background-color: var(--active-bg);
+            border-color: var(--accent-primary);
         }
 
         .line-gutter {
             font-size: 11px;
-            font-weight: bold;
+            font-weight: 700;
             color: var(--text-muted);
-            width: 24px;
+            width: 22px;
             text-align: right;
             padding-top: 4px;
             user-select: none;
+            flex-shrink: 0;
         }
 
         .line-status {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
-            margin-top: 8px;
+            margin-top: 9px;
             flex-shrink: 0;
         }
 
@@ -564,10 +749,10 @@
         }
 
         .line-text-view {
-            padding: 4px;
+            padding: 2px 4px;
             font-size: 16px;
-            line-height: 1.6;
-            min-height: 28px;
+            line-height: 1.55;
+            min-height: 26px;
             cursor: text;
             word-break: break-all;
             font-family: inherit;
@@ -577,17 +762,18 @@
             display: none;
             width: 100%;
             background-color: #FFFFFF;
-            border: 1px solid var(--border-medium);
+            border: 1.5px solid var(--accent-primary);
             color: var(--text-main);
-            padding: 4px 6px;
+            padding: 4px 8px;
             border-radius: 4px;
             font-size: 16px;
-            line-height: 1.6;
+            line-height: 1.55;
             outline: none;
             word-break: break-all;
+            font-family: inherit;
+            box-shadow: 0 0 0 2px var(--accent-glow);
         }
 
-        /* Char/Word spans */
         .char-span {
             cursor: pointer;
             padding: 0 1px;
@@ -604,264 +790,202 @@
             color: #FFFFFF;
             outline: 2px solid var(--accent-green);
         }
+
         .line-span.low-confidence {
             border-bottom: 2px wavy var(--accent-red);
         }
 
-        /* Compact Inspector Panel */
-        .inspector-panel {
+        .line-crop-preview {
+            margin-bottom: 4px;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            display: inline-flex;
+            align-items: center;
+            max-height: 36px;
+            padding: 2px 4px;
+            cursor: pointer;
+        }
+
+        .line-crop-preview:hover {
+            border-color: var(--accent-primary);
+        }
+
+        .line-crop-preview img {
+            max-height: 32px;
+            width: auto;
+            display: block;
+        }
+
+        /* -------------------------------------------------------------
+           Line Action Strip (Slim Sticky Bar Replacing 220px Inspector)
+           ------------------------------------------------------------- */
+        .line-action-strip {
+            height: 42px;
             background-color: var(--bg-surface);
             border-top: 1px solid var(--border-color);
-            padding: 12px 16px;
+            padding: 0 12px;
             display: flex;
-            flex-direction: column;
-            gap: 10px;
-            min-height: 180px;
-            max-height: 220px;
+            align-items: center;
+            justify-content: space-between;
             flex-shrink: 0;
-            overflow-y: auto;
+            gap: 10px;
         }
 
-        .inspector-title {
-            font-family: var(--font-serif);
-            font-size: 13px;
-            font-weight: bold;
-            color: var(--accent-primary);
+        .action-strip-left {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-        }
-
-        .inspector-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px 16px;
-            font-size: 12px;
-        }
-
-        .inspector-item {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 4px;
-        }
-
-        .inspector-item span:first-child {
-            color: var(--text-muted);
-        }
-
-        .inspector-actions {
-            display: flex;
             gap: 8px;
-            margin-top: auto;
+            font-size: 12px;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
-        .inspector-actions .btn {
-            flex: 1;
-            justify-content: center;
-            padding: 8px;
-        }
-
-        /* Review Shortcuts Toolbar */
-        .review-toolbar {
-            padding: 8px 16px;
-            background-color: var(--bg-surface);
-            border-top: 1px solid var(--border-color);
+        .action-strip-right {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            gap: 12px;
+            gap: 6px;
+            flex-shrink: 0;
         }
 
-        /* OCR Loading Overlay for Viewer */
-        .ocr-loading-overlay {
-            position: absolute;
-            inset: 0;
-            background-color: rgba(250, 247, 242, 0.7); /* Claude warm light semi-transparent */
+        /* -------------------------------------------------------------
+           Bottom Cham Virtual Keyboard Dock (Collapsible Drawer)
+           ------------------------------------------------------------- */
+        .bottom-keyboard-dock {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 900;
+            background-color: var(--bg-panel);
+            border-top: 1px solid var(--border-medium);
+            box-shadow: 0 -4px 16px rgba(43, 33, 24, 0.08);
+            transition: height 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
             display: flex;
             flex-direction: column;
+            height: var(--dock-height);
+        }
+
+        .dock-collapsed-bar {
+            height: 32px;
+            background-color: var(--bg-surface);
+            display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 16px;
-            z-index: 50;
-            backdrop-filter: blur(2px);
-            transition: all 0.3s ease;
+            justify-content: space-between;
+            padding: 0 16px;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.15s;
+            flex-shrink: 0;
         }
 
-        .ocr-spinner {
-            width: 48px;
-            height: 48px;
-            border: 4px solid var(--border-medium);
-            border-top-color: var(--accent-primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        .dock-collapsed-bar:hover {
+            background-color: var(--active-bg);
         }
 
-        .ocr-loading-text {
-            font-size: 14px;
+        .dock-collapsed-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
             font-weight: 600;
             color: var(--text-main);
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Modal About Style */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(43, 33, 24, 0.4);
-            backdrop-filter: blur(4px);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: var(--bg-panel);
-            color: var(--text-main);
-            margin: auto;
-            padding: 24px;
-            border: 1px solid var(--border-medium);
-            width: 85%;
-            max-width: 650px;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-md);
-            position: relative;
-        }
-
-        .modal-content h2 {
-            font-family: var(--font-serif);
-        }
-
-        .close-btn {
-            position: absolute;
-            right: 20px;
-            top: 15px;
+        .dock-collapsed-hint {
+            font-size: 11px;
             color: var(--text-muted);
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .close-btn:hover {
-            color: var(--accent-primary);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-base);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--border-strong);
-        }
-
-        /* Cham Virtual Keyboard */
-        .cham-keyboard-panel {
-            background-color: var(--bg-surface);
-            border-top: 1px solid var(--border-color);
-            padding: 10px 14px;
+        .dock-expanded-content {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            max-height: 220px;
-            overflow-y: auto;
-            animation: slideUpKb 0.2s ease-out;
-            box-shadow: 0 -2px 8px rgba(43, 33, 24, 0.04);
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+            background-color: var(--bg-panel);
+        }
+
+        .dock-header {
+            height: 36px;
+            padding: 0 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--bg-surface);
             flex-shrink: 0;
         }
 
-        @keyframes slideUpKb {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .keyboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .keyboard-tabs {
+        .dock-tabs {
             display: flex;
             gap: 6px;
         }
 
-        .kb-tab-btn {
+        .dock-tab-btn {
             background-color: var(--bg-panel);
             border: 1px solid var(--border-medium);
             border-radius: 4px;
-            padding: 3px 8px;
+            padding: 3px 10px;
             font-size: 11px;
             cursor: pointer;
             color: var(--text-muted);
             font-family: inherit;
+            font-weight: 500;
             transition: all 0.15s ease;
         }
 
-        .kb-tab-btn:hover {
+        .dock-tab-btn:hover {
             background-color: var(--active-bg);
             color: var(--text-main);
             border-color: var(--accent-primary);
         }
 
-        .kb-tab-btn.active {
+        .dock-tab-btn.active {
             background-color: var(--accent-primary);
             border-color: var(--accent-primary);
             color: #FFFFFF;
-            font-weight: bold;
+            font-weight: 700;
         }
 
-        .kb-close-btn {
-            background: none;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            color: var(--text-muted);
-            line-height: 1;
-            padding: 0 4px;
+        .dock-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .kb-close-btn:hover {
-            color: var(--accent-primary);
-        }
-
-        .keyboard-body {
+        .dock-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px 14px;
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
-            padding: 4px 0;
+            align-content: flex-start;
         }
 
         .cham-key-btn {
             background-color: #FFFFFF;
             border: 1px solid var(--border-medium);
             border-radius: 6px;
-            min-width: 36px;
+            min-width: 38px;
             height: 38px;
             padding: 2px 6px;
-            display: flex;
+            display: inline-flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             font-size: 16px;
             cursor: pointer;
             color: var(--text-main);
-            transition: all 0.15s ease;
+            transition: all 0.12s ease;
             user-select: none;
             box-shadow: var(--shadow-sm);
             font-family: var(--font-sans);
@@ -872,7 +996,7 @@
             border-color: var(--accent-primary);
             color: var(--accent-primary);
             transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(201, 100, 66, 0.15);
+            box-shadow: 0 2px 6px rgba(201, 100, 66, 0.15);
         }
 
         .cham-key-btn:active {
@@ -886,181 +1010,208 @@
             margin-top: 2px;
         }
 
-        /* Line Crop Preview in Continuous Editor */
-        .line-crop-preview {
-            margin-bottom: 4px;
-            border-radius: 4px;
-            overflow: hidden;
-            background: #FFFFFF;
-            border: 1px solid var(--border-color);
-            display: inline-flex;
+        /* -------------------------------------------------------------
+           Modals (About & Logs)
+           ------------------------------------------------------------- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(43, 33, 24, 0.45);
+            backdrop-filter: blur(4px);
+            justify-content: center;
             align-items: center;
-            max-height: 38px;
-            padding: 2px 4px;
-            cursor: pointer;
-            transition: border-color 0.15s ease;
         }
 
-        .line-crop-preview:hover {
-            border-color: var(--accent-primary);
+        .modal-content {
+            background-color: var(--bg-panel);
+            color: var(--text-main);
+            margin: auto;
+            padding: 22px;
+            border: 1px solid var(--border-medium);
+            width: 90%;
+            max-width: 620px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            position: relative;
         }
 
-        .line-crop-preview img {
-            height: 30px;
-            max-width: 100%;
-            object-fit: contain;
-            display: block;
-        }
-
-        /* Manual Bbox Drawing Mode */
-        .draw-mode-active {
-            cursor: crosshair !important;
-        }
-
-        .drawing-bbox-rect {
+        .close-btn {
             position: absolute;
-            border: 2px dashed var(--accent-primary);
-            background-color: rgba(201, 100, 66, 0.15);
-            pointer-events: none;
-            z-index: 30;
+            right: 18px;
+            top: 14px;
+            color: var(--text-muted);
+            font-size: 26px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
         }
 
-        /* Select Optgroups */
-        optgroup {
-            background-color: var(--bg-panel);
-            color: var(--text-main);
-            font-weight: 600;
+        .close-btn:hover {
+            color: var(--accent-primary);
         }
-        option {
-            background-color: var(--bg-panel);
-            color: var(--text-main);
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-base);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--border-strong);
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- 1. Header (Command Center) -->
     <header>
-        <div class="logo">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-primary);"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-            Cham OCR <span>Review Studio</span>
+        <div class="header-left">
+            <a href="#" class="logo" onclick="event.preventDefault()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-primary);"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                Cham OCR <span>Studio</span>
+            </a>
+            <div class="doc-status-pill" id="doc-status-pill" title="Tài liệu đang mở">
+                <div class="doc-status-dot" id="doc-status-dot"></div>
+                <span id="header-doc-title">Chưa có tài liệu</span>
+            </div>
         </div>
-        <div class="header-actions">
-            <button class="btn" onclick="openLogModal()" id="btn-logs">
+
+        <div class="header-center">
+            <div class="model-picker-wrap" title="Chọn phiên bản mô hình nhận diện">
+                <span class="model-picker-label">Mô hình:</span>
+                <select id="model-select" class="model-select-compact" onchange="updateModelBadge()">
+                    <optgroup label="Chữ Chăm (Custom Models)">
+                        <option value="v24" selected>Version 24 (Thế hệ mới - Kháng nhiễu & Khắc phục số khổ)</option>
+                        <option value="v23">Version 23 (Golden Baseline)</option>
+                        <option value="v22">Version 22 (Dự phòng)</option>
+                    </optgroup>
+                    <optgroup label="Đa ngôn ngữ (PaddleOCR)">
+                        <option value="vi">Tiếng Việt</option>
+                        <option value="en">Tiếng Anh</option>
+                        <option value="fr">Tiếng Pháp</option>
+                        <option value="japan">Tiếng Nhật</option>
+                    </optgroup>
+                    <optgroup label="Chế độ Tự động">
+                        <option value="auto">Tự động nhận diện (Chăm - Việt)</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <button class="btn btn-primary" id="btn-run" onclick="runOCR()" disabled title="Khởi chạy trích xuất văn bản OCR">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>Khởi chạy OCR</span>
+            </button>
+        </div>
+
+        <div class="header-right">
+            <!-- Export Dropdown -->
+            <div class="dropdown">
+                <button class="btn" id="btn-export" onclick="toggleExportMenu(event)" title="Xuất dữ liệu kết quả">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Xuất dữ liệu ▾
+                </button>
+                <div class="dropdown-menu" id="export-menu">
+                    <div class="dropdown-item" onclick="copyAllText()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Sao chép toàn bộ TXT
+                    </div>
+                    <div class="dropdown-item" onclick="exportJSON()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                        Xuất tệp JSON chuẩn
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" onclick="exportTrainingPairs()" style="color: var(--accent-primary);">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                        Xuất Cặp Huấn luyện (Manifest)
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn" onclick="openLogModal()" id="btn-logs" title="Nhật ký hệ thống">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
                 Logs
             </button>
-            <button class="btn" onclick="openAboutModal()">
+            <button class="btn" onclick="openAboutModal()" title="Thông tin & Phím tắt">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                Giới thiệu
             </button>
-            <div class="badge" id="active-model-badge">v24</div>
         </div>
     </header>
 
-    <!-- Workspace -->
-    <div class="workspace">
-        
-        <!-- Left Sidebar: Controls & Queue -->
+    <!-- 2. Main Workspace (3-Pane Split View) -->
+    <div class="workspace" id="main-workspace">
+
+        <!-- Left Sidebar: Document List / Queue -->
         <div class="sidebar" id="sidebar-pane">
-            <div class="pane-header">Điều khiển & Hàng đợi</div>
-            
-            <!-- Upload Dropzone -->
-            <div class="dropzone-container">
-                <div class="dropzone" onclick="document.getElementById('file-input').click()">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 8px; color: var(--accent-primary);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                    <strong>Tải ảnh lên</strong>
-                    <p>Click hoặc kéo thả file</p>
-                    <input type="file" id="file-input" style="display: none;" accept="image/*" onchange="handleFileSelect(event)">
-                </div>
-            </div>
-
-            <!-- Main Job Controls -->
-            <div class="controls-container">
-                <button class="btn btn-primary" id="btn-run" style="width: 100%; justify-content: center; padding: 10px;" onclick="runOCR()" disabled>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                    <strong>Khởi chạy OCR</strong>
+            <div class="sidebar-header">
+                <span class="sidebar-title">Danh sách tài liệu</span>
+                <button class="toolbar-btn" onclick="clearQueue()" title="Xóa sạch hàng đợi">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                 </button>
-
-                <div class="form-group">
-                    <label>Mô hình (Model Version)</label>
-                    <select id="model-select" class="form-select" onchange="updateModelBadge()">
-                        <optgroup label="Chữ Chăm (Custom Models)">
-                            <option value="v24" selected>Version 24 (Thế hệ mới - Khắc phục số khổ & Kháng nhiễu)</option>
-                            <option value="v23">Version 23 (Golden Baseline)</option>
-                            <option value="v22">Version 22 (Dự phòng)</option>
-                        </optgroup>
-                        <optgroup label="Đa ngôn ngữ (PaddleOCR)">
-                            <option value="vi">Tiếng Việt (Bản gốc)</option>
-                            <option value="en">Tiếng Anh (Bản gốc)</option>
-                            <option value="fr">Tiếng Pháp (Bản gốc)</option>
-                            <option value="japan">Tiếng Nhật (Bản gốc)</option>
-                        </optgroup>
-                        <optgroup label="Chế độ Tự động">
-                            <option value="auto">Tự động nhận diện (Chăm - Việt)</option>
-                        </optgroup>
-                    </select>
-                </div>
             </div>
 
-            <!-- Queue list -->
-            <div class="pane-header">Lịch sử & Hàng đợi quét</div>
+            <div class="sidebar-upload-bar">
+                <button class="btn btn-sm" style="flex: 1; justify-content: center;" onclick="document.getElementById('file-input').click()">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Thêm ảnh mới
+                </button>
+                <input type="file" id="file-input" style="display: none;" accept="image/*" onchange="handleFileSelect(event)">
+            </div>
+
             <div class="queue-container" id="queue-list">
-                <!-- Queue Items dynamically inserted -->
-            </div>
-            
-            <div style="padding: 10px 16px; border-top: 1px solid var(--border-color);">
-                <button class="btn" style="width: 100%; justify-content: center;" onclick="clearQueue()">Xóa sạch hàng đợi</button>
+                <!-- Queue Items dynamically populated -->
             </div>
         </div>
 
         <!-- Center Pane: Document Viewer -->
         <div class="viewer-pane" id="viewer-pane">
+            <!-- Viewer HUD Toolbar -->
             <div class="viewer-toolbar">
                 <div class="toolbar-group">
-                    <button class="toolbar-btn" id="btn-toggle-sidebar" onclick="toggleSidebar()" title="Thu gọn / Mở rộng Sidebar">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+                    <button class="toolbar-btn" id="btn-toggle-sidebar" onclick="toggleSidebar()" title="Thu gọn / Mở rộng Danh sách ảnh">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
                     </button>
                     <div class="toolbar-divider"></div>
-                    <button class="toolbar-btn" onclick="zoomToFit()" title="Vừa toàn bộ trang">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    <button class="toolbar-btn" onclick="zoomToFit()" title="Vừa toàn bộ khung nhìn">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
                     </button>
-                    <button class="toolbar-btn" onclick="zoomToWidth()" title="Vừa chiều rộng">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M4 4v16M20 4v16"/></svg>
+                    <button class="toolbar-btn" onclick="zoomToWidth()" title="Vừa chiều rộng trang">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M4 4v16M20 4v16"/></svg>
                     </button>
-                    <button class="toolbar-btn" onclick="zoomTo100()" title="Kích thước 100%">
-                        <span style="font-size: 9px; font-weight: bold;">1:1</span>
+                    <button class="toolbar-btn" onclick="zoomTo100()" title="Kích thước 100% (1:1)">
+                        <span style="font-size: 9.5px; font-weight: 700;">1:1</span>
                     </button>
                     <div class="toolbar-divider"></div>
                     <button class="toolbar-btn" onclick="zoomOut()" title="Thu nhỏ">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
                     </button>
                     <span class="zoom-badge" id="zoom-value">100%</span>
                     <button class="toolbar-btn" onclick="zoomIn()" title="Phóng to">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                     </button>
                 </div>
-                
-                <div class="toolbar-group">
-                    <div class="toolbar-divider"></div>
-                    <button class="toolbar-btn" id="btn-draw-bbox" onclick="toggleDrawBboxMode()" title="Vẽ Bbox mới thủ công (Kéo chuột trên ảnh)">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                    </button>
-                    <button class="toolbar-btn active" id="btn-toggle-overlay" onclick="toggleOverlay()" title="Bật/tắt hộp giới hạn Bbox">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
-                    </button>
-                    
-                    <select id="overlay-mode-select" class="form-select" style="width: 100px; padding: 2px 6px; font-size: 11px; height: 26px;" onchange="changeOverlayMode()">
-                        <option value="line" selected>Cấp Dòng</option>
-                        <option value="char">Cấp Ký tự</option>
-                    </select>
 
-                    <button class="toolbar-btn" id="btn-heatmap" onclick="toggleHeatmap()" title="Bản đồ nhiệt độ tự tin">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                <div class="toolbar-group">
+                    <button class="toolbar-btn" id="btn-draw-bbox" onclick="toggleDrawBboxMode()" title="Vẽ Bbox mới thủ công (Kéo chuột trên ảnh)">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                    </button>
+                    <button class="toolbar-btn active" id="btn-toggle-overlay" onclick="toggleOverlay()" title="Bật/tắt hiển thị hộp Bbox">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
                     </button>
                     <div class="toolbar-divider"></div>
                     <button class="toolbar-btn" id="btn-toggle-editor" onclick="toggleEditor()" title="Thu gọn / Mở rộng Trình soạn thảo">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
                     </button>
                 </div>
             </div>
@@ -1072,219 +1223,160 @@
                  onmouseup="stopDragging()"
                  onmouseleave="stopDragging()"
                  onwheel="handleZoomWheel(event)">
-                 
+
                  <div class="viewer-content" id="viewer-content">
                      <img id="document-image" class="document-image" src="" alt="">
-                     <div class="bbox-overlay" id="bbox-overlay">
-                         <!-- Bounding boxes generated dynamically -->
-                     </div>
+                     <div class="bbox-overlay" id="bbox-overlay"></div>
                      <div id="drawing-bbox-rect" class="drawing-bbox-rect" style="display: none;"></div>
                  </div>
-                 
-                 <!-- OCR Loading Overlay -->
+
+                 <!-- Loading Overlay -->
                  <div id="ocr-loading-overlay" class="ocr-loading-overlay" style="display: none;">
                      <div class="ocr-spinner"></div>
-                     <div class="ocr-loading-text" id="ocr-loading-text">Đang nhận dạng OCR chữ viết...</div>
+                     <div class="ocr-loading-text" id="ocr-loading-text">Đang nhận dạng văn bản...</div>
                  </div>
-                 
-                 <!-- Empty placeholder state -->
-                 <div id="no-image-placeholder" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); gap: 16px;">
-                     <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--border-color);"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                     <p>Vui lòng tải ảnh lên để bắt đầu kiểm tra và hiệu chỉnh OCR</p>
+
+                 <!-- Empty state -->
+                 <div id="no-image-placeholder" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); gap: 12px; pointer-events: none;">
+                     <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--border-strong);"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                     <p style="font-size: 13.5px;">Kéo thả ảnh tài liệu hoặc nhấn <strong>Thêm ảnh mới</strong> để bắt đầu</p>
+                     <p style="font-size: 11.5px; color: var(--text-quiet);">Hỗ trợ dán trực tiếp ảnh từ bộ nhớ tạm (Ctrl+V)</p>
                  </div>
             </div>
         </div>
 
-        <!-- Right Pane: OCR Text Editor & Inspector -->
+        <!-- Right Pane: Continuous Text Editor -->
         <div class="editor-pane" id="editor-pane">
-            <div class="pane-header">
-                <span>Trình soạn thảo văn bản liên tục</span>
-                <div style="display: flex; align-items: center; gap: 6px;">
-                    <button class="btn" id="btn-toggle-crops" onclick="toggleLineCrops()" title="Bật/tắt dải ảnh cắt từng dòng" style="padding: 3px 8px; font-size: 11px;">
+            <div class="editor-header">
+                <div class="editor-header-left">
+                    <span class="editor-title">Văn bản nhận diện</span>
+                    <span class="badge" id="line-count-badge">0 dòng</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 4px;">
+                    <button class="btn btn-sm" id="btn-toggle-crops" onclick="toggleLineCrops()" title="Bật/tắt dải ảnh cắt tương ứng từng dòng">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
                         Ảnh dòng
                     </button>
-                    <button class="btn" id="btn-toggle-keyboard" onclick="toggleChamKeyboard()" title="Bật/tắt bàn phím ảo tiếng Chăm" style="padding: 3px 8px; font-size: 11px;">
-                        ⌨️ Phím Chăm
+                    <button class="toolbar-btn" onclick="navLowConfidence('prev')" title="Dòng độ tự tin thấp trước đó">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <button class="toolbar-btn" onclick="navLowConfidence('next')" title="Dòng độ tự tin thấp tiếp theo">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
+                    <button class="btn btn-sm" style="color: var(--accent-green); border-color: var(--accent-green); background-color: var(--accent-green-bg);" onclick="acceptAllHighConfidence()" title="Duyệt nhanh tất cả dòng có độ tự tin cao">
+                        Duyệt nhanh ✓
                     </button>
                 </div>
             </div>
-            
-            <!-- Continuous Editor workspace -->
+
+            <!-- Continuous Editor List (Full Height Workspace) -->
             <div class="editor-container" id="editor-container">
                 <!-- Lines inserted dynamically -->
             </div>
 
-            <!-- Cham Virtual Keyboard Panel -->
-            <div id="cham-keyboard-panel" class="cham-keyboard-panel" style="display: none;">
-                <div class="keyboard-header">
-                    <div class="keyboard-tabs">
-                        <button class="kb-tab-btn active" id="kb-tab-consonants" onclick="switchKeyboardTab('consonants')">Phụ âm</button>
-                        <button class="kb-tab-btn" id="kb-tab-diacritics" onclick="switchKeyboardTab('diacritics')">Dấu phụ & Nguyên âm</button>
-                        <button class="kb-tab-btn" id="kb-tab-digits" onclick="switchKeyboardTab('digits')">Chữ số & Dấu đoạn</button>
-                    </div>
-                    <button class="kb-close-btn" onclick="toggleChamKeyboard()" title="Đóng bàn phím">&times;</button>
+            <!-- Line Action Strip (Slim Sticky Bar) -->
+            <div class="line-action-strip" id="line-action-strip">
+                <div class="action-strip-left" id="action-strip-info">
+                    <span style="color: var(--text-muted); font-size: 11.5px; font-style: italic;">Chọn một dòng để thực hiện ghép, tách hoặc duyệt</span>
                 </div>
-                <div class="keyboard-body" id="keyboard-body"></div>
-            </div>
-
-            <!-- Compact Inspector Panel -->
-            <div class="inspector-panel">
-                <div class="inspector-title">
-                    <span>CHI TIẾT ĐỐI TƯỢNG ĐANG CHỌN</span>
-                    <span id="inspector-badge" class="badge" style="border-color: var(--accent-orange); color: var(--accent-orange); background: none;">Chưa chọn</span>
-                </div>
-                
-                <div class="inspector-grid">
-                    <div class="inspector-item">
-                        <span>Văn bản chọn:</span>
-                        <strong id="inspect-text" style="color: var(--accent-primary); font-size: 14px;">-</strong>
-                    </div>
-                    <div class="inspector-item">
-                        <span>Độ tự tin:</span>
-                        <strong id="inspect-confidence">-</strong>
-                    </div>
-                    <div class="inspector-item">
-                        <span>OCR gốc:</span>
-                        <span id="inspect-original" style="font-style: italic;">-</span>
-                    </div>
-                    <div class="inspector-item">
-                        <span>Nguồn Bbox:</span>
-                        <span id="inspect-source">-</span>
-                    </div>
-                    <div class="inspector-item" style="grid-column: span 2;">
-                        <span>Tọa độ Bbox:</span>
-                        <span id="inspect-coords" style="font-family: monospace;">-</span>
-                    </div>
-                </div>
-
-                <div class="inspector-actions">
-                    <button class="btn" style="border-color: var(--accent-red); color: var(--accent-red); background: none;" onclick="markSelectedWrong()" title="Báo dòng chữ nhận diện sai (Phím W)">Đánh dấu sai (W)</button>
-                    <button class="btn" style="border-color: var(--accent-primary); color: var(--accent-primary); background: none;" onclick="splitSelectedLine()" title="Tách dòng hiện tại thành 2 dòng (Phím S)">Tách (S)</button>
-                    <button class="btn" style="border-color: var(--border-strong); color: var(--text-main); background: none;" onclick="mergeSelectedWithNextLine()" title="Ghép với dòng liền sau (Phím M)" id="btn-merge-line">Ghép sau (M)</button>
-                    <button class="btn btn-primary" onclick="acceptSelectedLine()" title="Đồng ý dòng này (Phím A)">Đồng ý (A)</button>
+                <div class="action-strip-right" id="action-strip-buttons" style="display: none;">
+                    <button class="btn btn-sm" style="color: var(--accent-green); border-color: var(--accent-green);" onclick="acceptSelectedLine()" title="Đồng ý dòng này (Phím A)">Đồng ý (A)</button>
+                    <button class="btn btn-sm" onclick="mergeSelectedWithNextLine()" title="Ghép với dòng liền sau (Phím M)">Ghép sau (M)</button>
+                    <button class="btn btn-sm" onclick="splitSelectedLine()" title="Tách dòng đôi (Phím S)">Tách (S)</button>
+                    <button class="btn btn-sm" style="color: var(--accent-red); border-color: var(--accent-red);" onclick="markSelectedWrong()" title="Báo nhận diện sai (Phím W)">Báo sai (W)</button>
                 </div>
             </div>
+        </div>
 
-            <!-- Review Shortcuts Toolbar -->
-            <div class="review-toolbar">
-                <div style="display: flex; gap: 8px;">
-                    <button class="btn" onclick="navLowConfidence('prev')" title="Dòng độ tự tin thấp trước đó">
-                        ◀ Trực quan
-                    </button>
-                    <button class="btn" onclick="navLowConfidence('next')" title="Dòng độ tự tin thấp tiếp theo">
-                        Trực quan ▶
-                    </button>
-                </div>
-                
-                <button class="btn" style="background-color: rgba(166, 227, 161, 0.15); border: 1px solid var(--accent-green); color: var(--accent-green);" onclick="acceptAllHighConfidence()" title="Tự động đồng ý tất cả dòng có độ tự tin cao">
-                    Duyệt nhanh (High Conf)
-                </button>
+    </div>
+
+    <!-- 3. Bottom Cham Virtual Keyboard Dock (Collapsible Drawer) -->
+    <div class="bottom-keyboard-dock" id="cham-keyboard-dock">
+        <!-- Collapsed Bar (Always Visible at Bottom) -->
+        <div class="dock-collapsed-bar" onclick="toggleChamKeyboardDock()">
+            <div class="dock-collapsed-title">
+                <span>⌨️ Bàn phím ảo tiếng Chăm</span>
+                <span class="badge" style="font-size: 9.5px; padding: 1px 6px;">68 ký tự Unicode</span>
             </div>
+            <div class="dock-collapsed-hint">
+                <span id="dock-status-hint">Nhấn để mở bàn phím ảo (Alt+K)</span>
+                <span id="dock-toggle-arrow" style="font-size: 11px;">▲</span>
+            </div>
+        </div>
 
-            <!-- Export Toolbar -->
-            <div style="padding: 12px 16px; border-top: 1px solid var(--border-color); display: flex; flex-wrap: wrap; gap: 8px; background-color: var(--bg-surface);">
-                <button class="btn" style="flex: 1; justify-content: center; font-size: 11px;" onclick="copyAllText()">Copy TXT</button>
-                <button class="btn" style="flex: 1; justify-content: center; font-size: 11px;" onclick="exportJSON()">Export JSON</button>
-                <button class="btn" style="flex: 1; justify-content: center; font-size: 11px; background-color: var(--active-bg); border: 1px solid var(--accent-primary); color: var(--accent-primary);" onclick="exportTrainingPairs()">Export Cặp Train</button>
+        <!-- Expanded Dock Content -->
+        <div class="dock-expanded-content">
+            <div class="dock-header">
+                <div class="dock-tabs">
+                    <button class="dock-tab-btn active" id="kb-tab-consonants" onclick="switchKeyboardTab('consonants')">Phụ âm (41)</button>
+                    <button class="dock-tab-btn" id="kb-tab-diacritics" onclick="switchKeyboardTab('diacritics')">Dấu phụ & Nguyên âm (14)</button>
+                    <button class="dock-tab-btn" id="kb-tab-digits" onclick="switchKeyboardTab('digits')">Chữ số & Dấu đoạn (13)</button>
+                </div>
+                <div class="dock-actions">
+                    <button class="btn btn-sm" onclick="insertSpaceCham()" title="Chèn dấu cách (Space)">⎵ Cách</button>
+                    <button class="btn btn-sm" onclick="deleteChamChar()" title="Xóa ký tự cuối (Backspace)">⌫ Xóa</button>
+                    <button class="btn btn-sm" onclick="toggleChamKeyboardDock()" title="Thu gọn bàn phím (Alt+K / Esc)">▼ Thu gọn</button>
+                </div>
+            </div>
+            <div class="dock-body" id="keyboard-body">
+                <!-- Cham Character keys dynamically rendered -->
             </div>
         </div>
     </div>
 
-    <!-- About Modal -->
+    <!-- About & License Modal -->
     <div id="about-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeAboutModal()">&times;</span>
-            <h2 style="color: var(--accent-primary); margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                Thông tin dự án & Công nghệ
+            <h2 style="color: var(--accent-primary); margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; display: flex; align-items: center; gap: 8px; font-size: 18px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                Thông tin & Hướng dẫn Sử dụng
             </h2>
-            <div style="max-height: 400px; overflow-y: auto; padding-right: 8px;">
-                <p style="line-height: 1.6; margin-bottom: 16px;">
-                    <strong>Cham OCR Review Studio</strong> là giao diện thử nghiệm tích hợp, phục vụ nghiên cứu và phát triển công cụ nhận diện chữ viết tiếng Chăm (Akhar Thrah & West Cham) lấy cảm hứng từ cấu trúc 3 cột của ABBYY FineReader. Hệ thống hỗ trợ so sánh, đánh giá hiệu năng các mô hình và chỉnh sửa nhãn dữ liệu trực tiếp.
+            <div style="max-height: 420px; overflow-y: auto; padding-right: 8px; font-size: 13.5px; line-height: 1.6;">
+                <p style="margin-bottom: 14px;">
+                    <strong>Cham OCR Review Studio</strong> là môi trường chuyên dụng để trích xuất, hiệu chỉnh và lập nhãn dữ liệu chữ Chăm cổ truyền (Akhar Thrah) dựa trên PaddleOCR và DBNet.
                 </p>
-                <h3 style="font-family: var(--font-serif); color: var(--accent-primary); margin-top: 20px; font-size: 16px;">📋 Danh sách Công nghệ & Giấy phép</h3>
-                <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px;">
-                    <thead>
-                        <tr style="border-bottom: 2px solid var(--border-color); text-align: left;">
-                            <th style="padding: 8px; color: #f5c2e7;">Công nghệ / Thư viện</th>
-                            <th style="padding: 8px; color: #f5c2e7;">Phiên bản</th>
-                            <th style="padding: 8px; color: #f5c2e7;">Giấy phép (License)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="border-bottom: 1px solid var(--border-color);">
-                            <td style="padding: 8px; font-weight: bold;">Python Runtime</td>
-                            <td style="padding: 8px;">3.13.x</td>
-                            <td style="padding: 8px; color: var(--accent-green);">PSFL Open Source</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid var(--border-color);">
-                            <td style="padding: 8px; font-weight: bold;">PaddlePaddle</td>
-                            <td style="padding: 8px;">3.3.1 (Official)</td>
-                            <td style="padding: 8px; color: var(--accent-green);">Apache License 2.0</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid var(--border-color);">
-                            <td style="padding: 8px; font-weight: bold;">PaddleOCR</td>
-                            <td style="padding: 8px;">PP-OCRv4 / PP-OCRv5</td>
-                            <td style="padding: 8px; color: var(--accent-green);">Apache License 2.0</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid var(--border-color);">
-                            <td style="padding: 8px; font-weight: bold;">OpenCV-Python</td>
-                            <td style="padding: 8px;">4.13.0</td>
-                            <td style="padding: 8px; color: var(--accent-green);">Apache License 2.0</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid var(--border-color);">
-                            <td style="padding: 8px; font-weight: bold;">NumPy (với Patch)</td>
-                            <td style="padding: 8px;">2.2.6 / 2.4.2</td>
-                            <td style="padding: 8px; color: var(--accent-green);">BSD 3-Clause</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid var(--border-color);">
-                            <td style="padding: 8px; font-weight: bold;">Pillow (PIL)</td>
-                            <td style="padding: 8px;">10.4.0 / 12.1.1</td>
-                            <td style="padding: 8px; color: var(--accent-green);">HPND License</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid var(--border-color);">
-                            <td style="padding: 8px; font-weight: bold;">RapidFuzz</td>
-                            <td style="padding: 8px;">3.14.5</td>
-                            <td style="padding: 8px; color: var(--accent-green);">MIT License</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid var(--border-color);">
-                            <td style="padding: 8px; font-weight: bold;">Vanilla HTML5/CSS/JS</td>
-                            <td style="padding: 8px;">Modern Standard</td>
-                            <td style="padding: 8px; color: var(--accent-green);">MIT / Open Source</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <h3 style="font-family: var(--font-serif); color: var(--accent-primary); margin-top: 20px; font-size: 16px;">🔮 Mô hình Nhận diện Chữ Chăm (Custom Models)</h3>
-                <p style="font-size: 13px; line-height: 1.5; color: var(--text-muted); margin: 5px 0;">
-                    Các phiên bản <strong>V23, V22, V21</strong> được phát triển độc quyền bằng cách chuyển giao tri thức từ mô hình nền tảng PP-OCRv4 tiếng Trung sang tập ký tự tiếng Chăm Akhar Thrah. Mô hình V23 hỗ trợ Visual Order, trong khi V26/V24 (đã lưu trữ) bổ sung hỗ trợ Logical Order.
+                <h3 style="color: var(--accent-primary); margin-top: 14px; font-size: 14px;">⌨️ Phím tắt Hỗ trợ Hiệu đính Nhanh</h3>
+                <ul style="padding-left: 20px; margin: 8px 0; color: var(--text-main);">
+                    <li><strong>A</strong>: Đồng ý dòng được chọn (Confidence = 100%) và tự chuyển sang dòng kế tiếp.</li>
+                    <li><strong>M</strong>: Ghép dòng được chọn với dòng liền kề bên dưới.</li>
+                    <li><strong>S</strong>: Tách đôi dòng được chọn.</li>
+                    <li><strong>W</strong>: Đánh dấu dòng nhận diện sai cần huấn luyện lại.</li>
+                    <li><strong>Alt + K</strong>: Mở / Thu gọn Bàn phím ảo tiếng Chăm dưới đáy màn hình.</li>
+                    <li><strong>Phím Mũi tên Lên / Xuống</strong>: Điều hướng chọn dòng trước / sau.</li>
+                    <li><strong>Double Click vào dòng chữ</strong>: Chỉnh sửa trực tiếp nội dung văn bản.</li>
+                </ul>
+                <h3 style="color: var(--accent-primary); margin-top: 16px; font-size: 14px;">📋 Thông tin Mô hình</h3>
+                <p style="color: var(--text-muted); font-size: 12.5px;">
+                    - <strong>Version 24</strong>: Kiến trúc thế hệ mới, tối ưu hóa nhận diện số khổ thơ và kháng nhiễu bản in cổ.<br>
+                    - <strong>Version 23</strong>: Bản Baseline nhận diện Visual Order chuẩn xác.
                 </p>
             </div>
-            <div style="margin-top: 20px; text-align: right; border-top: 1px solid var(--border-color); padding-top: 12px;">
+            <div style="margin-top: 18px; text-align: right; border-top: 1px solid var(--border-color); padding-top: 12px;">
                 <button class="btn btn-primary" onclick="closeAboutModal()">Đóng</button>
             </div>
         </div>
     </div>
 
-    <!-- Logs Modal -->
+    <!-- System Logs Modal -->
     <div id="logs-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeLogModal()">&times;</span>
-            <h2 style="color: var(--accent-primary); margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
+            <h2 style="color: var(--accent-primary); margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; display: flex; align-items: center; gap: 8px; font-size: 18px;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
                 Nhật ký Hệ thống (Logs)
             </h2>
-            <div style="max-height: 400px; overflow-y: auto; padding-right: 8px;">
-                <pre id="system-logs-container" style="font-family: monospace; font-size: 12px; background: var(--bg-surface); color: var(--text-main); border: 1px solid var(--border-color); padding: 12px; border-radius: 6px; white-space: pre-wrap; word-wrap: break-word;"></pre>
+            <div style="max-height: 380px; overflow-y: auto; padding-right: 8px;">
+                <pre id="system-logs-container" style="font-family: monospace; font-size: 11.5px; background: var(--bg-surface); color: var(--text-main); border: 1px solid var(--border-color); padding: 12px; border-radius: 6px; white-space: pre-wrap; word-wrap: break-word;"></pre>
             </div>
-            <div style="margin-top: 20px; text-align: right; border-top: 1px solid var(--border-color); padding-top: 12px; display: flex; justify-content: space-between;">
+            <div style="margin-top: 16px; text-align: right; border-top: 1px solid var(--border-color); padding-top: 12px; display: flex; justify-content: space-between;">
                 <button class="btn" onclick="clearLogs()">Xoá Nhật ký</button>
                 <button class="btn btn-primary" onclick="closeLogModal()">Đóng</button>
             </div>
         </div>
     </div>
 
-    <!-- JS Scripts -->
+    <!-- Application JavaScript Engine -->
     <script>
         // Global error logging for remote debug
         window.onerror = function(message, source, lineno, colno, error) {
@@ -1325,14 +1417,14 @@
         let isDragging = false;
         let startX, startY;
         let showBboxOverlay = true;
-        let overlayMode = "line"; // "line" | "char"
-        let showHeatmap = false;
+        let overlayMode = "line";
 
-        // State variables for New Features
+        // State variables for Tools
         let isDrawBboxMode = false;
         let isDrawingBbox = false;
         let drawStartPoint = null;
         let showLineCrops = false;
+        let isKeyboardDockExpanded = false;
         let activeChamKeyboardTab = 'consonants';
         let lastActiveInputElement = null;
         
@@ -1422,7 +1514,6 @@
 
         function saveQueueToStorage() {
             try {
-                // Loại bỏ image và lines nặng nề trước khi lưu metadata vào localStorage
                 const cleanQueue = imageQueue.map(item => {
                     const copy = { ...item };
                     delete copy.image;
@@ -1440,7 +1531,6 @@
                 const data = localStorage.getItem('cham_ocr_image_queue');
                 if (data) {
                     imageQueue = JSON.parse(data);
-                    // Đặt active = false cho các ảnh cũ để tránh xung đột
                     imageQueue.forEach(item => item.active = false);
                     renderQueue();
                 } else {
@@ -1456,32 +1546,35 @@
         }
 
         function clearQueue() {
-            if (confirm("Bạn có chắc chắn muốn xóa sạch hàng đợi quét?")) {
+            if (confirm("Bạn có chắc chắn muốn xóa sạch hàng đợi tài liệu?")) {
                 imageQueue = [];
                 saveQueueToStorage();
                 clearAllImagesFromDB();
                 renderQueue();
                 
-                // Reset giao diện về trạng thái chưa có ảnh
                 imgEl.src = "";
                 imgEl.style.display = "none";
                 document.getElementById('no-image-placeholder').style.display = 'flex';
                 document.getElementById('btn-run').setAttribute('disabled', 'true');
+                document.getElementById('header-doc-title').innerText = 'Chưa có tài liệu';
+                document.getElementById('doc-status-dot').classList.remove('active');
+                
                 responseLines = [];
                 renderEditor();
                 renderBboxes();
-                showToast("Đã xóa sạch hàng đợi quét");
+                updateLineCountBadge();
+                showToast("Đã xóa sạch danh sách tài liệu");
             }
         }
 
         // Initial launch
         document.addEventListener('DOMContentLoaded', () => {
             loadQueueFromStorage();
-            updateModelBadge();
+            renderChamKeyboardBody();
         });
 
         // -------------------------------------------------------------
-        // Pan and Zoom Controller
+        // Pan & Zoom Controller
         // -------------------------------------------------------------
         function updateTransform() {
             content.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
@@ -1526,7 +1619,7 @@
                 startDrawingBbox(e);
                 return;
             }
-            if (e.target.classList.contains('bbox-rect')) return; // ignore dragging on boxes
+            if (e.target.classList.contains('bbox-rect')) return;
             isDragging = true;
             startX = e.clientX - panX;
             startY = e.clientY - panY;
@@ -1673,6 +1766,7 @@
                 
                 renderEditor();
                 renderBboxes();
+                updateLineCountBadge();
                 selectLine(insertIdx, true);
                 enterEditMode(insertIdx);
                 
@@ -1680,7 +1774,6 @@
                 saveCorrectionToBackend(insertIdx, newLine.text);
                 showToast(`Đã thêm dòng mới #${insertIdx + 1}!`);
                 
-                // Turn off drawing mode
                 toggleDrawBboxMode();
             } catch (err) {
                 console.error("Failed to OCR drawn bbox:", err);
@@ -1694,7 +1787,6 @@
             const mouseX = e.clientX - rect.left;
             const mouseY = e.clientY - rect.top;
             
-            // Image coordinates relative to content before scaling
             const imageX = (mouseX - panX) / scale;
             const imageY = (mouseY - panY) / scale;
             
@@ -1707,7 +1799,6 @@
             updateTransform();
         }
 
-        // Zoom Toolbar actions
         function zoomIn() {
             const center = getContainerCenter();
             const imageX = (center.x - panX) / scale;
@@ -1747,7 +1838,7 @@
             
             const scaleW = cw / iw;
             const scaleH = ch / ih;
-            scale = Math.min(scaleW, scaleH) * 0.95; // 95% of fits
+            scale = Math.min(scaleW, scaleH) * 0.95;
             
             panX = (cw - iw * scale) / 2;
             panY = (ch - ih * scale) / 2;
@@ -1758,10 +1849,9 @@
             if (!imgEl.naturalWidth) return;
             const cw = container.clientWidth;
             const iw = imgEl.naturalWidth;
-            
             scale = (cw / iw) * 0.95;
             panX = (cw - iw * scale) / 2;
-            panY = 10; // offset top slightly
+            panY = 10;
             updateTransform();
         }
 
@@ -1772,7 +1862,6 @@
             };
         }
 
-        // Toggle Overlay Bbox
         function toggleOverlay() {
             showBboxOverlay = !showBboxOverlay;
             const btn = document.getElementById('btn-toggle-overlay');
@@ -1785,22 +1874,6 @@
             }
         }
 
-        function changeOverlayMode() {
-            overlayMode = document.getElementById('overlay-mode-select').value;
-            renderBboxes();
-        }
-
-        function toggleHeatmap() {
-            showHeatmap = !showHeatmap;
-            const btn = document.getElementById('btn-heatmap');
-            if (showHeatmap) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-            renderBboxes();
-        }
-
         // -------------------------------------------------------------
         // Core Selection and 2-way Synchronization
         // -------------------------------------------------------------
@@ -1810,16 +1883,13 @@
             currentSelection.charId = null;
             currentSelection.bboxId = `bbox-line-${lineId}`;
             
-            // Clean previous highlights
             document.querySelectorAll('.bbox-rect').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.editor-line-row').forEach(row => row.classList.remove('active'));
             removeEstimatedCharBbox();
 
-            // Highlight selected bbox
             const bboxEl = document.getElementById(`bbox-line-${lineId}`);
             if (bboxEl) bboxEl.classList.add('active');
 
-            // Highlight selected editor row
             const rowEl = document.getElementById(`line-row-${lineId}`);
             if (rowEl) {
                 rowEl.classList.add('active');
@@ -1828,18 +1898,31 @@
                 }
             }
 
-            // Update Inspector Panel
-            const lineData = responseLines[lineId];
-            if (lineData) {
-                document.getElementById('inspector-badge').innerText = `Dòng #${lineId + 1}`;
-                document.getElementById('inspect-text').innerText = lineData.text || "(Trống)";
-                document.getElementById('inspect-confidence').innerText = Math.round(lineData.confidence * 100) + "%";
-                document.getElementById('inspect-original').innerText = lineData.original_ocr || lineData.text || "";
-                document.getElementById('inspect-source').innerText = lineData.segmentation ? lineData.segmentation.selected_crop_type : "model";
-                
-                const box = lineData.bbox || [0, 0, 0, 0];
-                document.getElementById('inspect-coords').innerText = `X: [${box[0]}, ${box[2]}] | Y: [${box[1]}, ${box[3]}]`;
+            // Update Line Action Strip
+            updateLineActionStrip(lineId);
+        }
+
+        function updateLineActionStrip(lineId) {
+            const stripInfo = document.getElementById('action-strip-info');
+            const stripButtons = document.getElementById('action-strip-buttons');
+            
+            if (lineId === null || !responseLines[lineId]) {
+                stripInfo.innerHTML = '<span style="color: var(--text-muted); font-size: 11.5px; font-style: italic;">Chọn một dòng để thực hiện ghép, tách hoặc duyệt</span>';
+                stripButtons.style.display = 'none';
+                return;
             }
+
+            const item = responseLines[lineId];
+            const conf = Math.round((item.confidence || 0) * 100);
+            const confColor = conf >= 75 ? 'var(--accent-green)' : (conf >= 45 ? 'var(--accent-orange)' : 'var(--accent-red)');
+            const confBg = conf >= 75 ? 'var(--accent-green-bg)' : (conf >= 45 ? 'var(--accent-orange-bg)' : 'var(--accent-red-bg)');
+
+            stripInfo.innerHTML = `
+                <strong style="color: var(--accent-primary);">Dòng #${lineId + 1}</strong>
+                <span class="badge" style="background-color: ${confBg}; color: ${confColor}; border-color: ${confColor}; font-size: 10px;">${conf}%</span>
+                <span style="color: var(--text-muted); font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 140px;">${item.text || '(Trống)'}</span>
+            `;
+            stripButtons.style.display = 'flex';
         }
 
         function selectCharacter(lineId, charIdx, focusEditor = true) {
@@ -1848,12 +1931,10 @@
             currentSelection.charId = charIdx;
             currentSelection.bboxId = `bbox-line-${lineId}-char-${charIdx}`;
 
-            // Clean previous Highlights
             document.querySelectorAll('.char-span').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.bbox-rect').forEach(b => b.classList.remove('active'));
             removeEstimatedCharBbox();
 
-            // Highlight in editor
             const charSpan = document.getElementById(`char-${lineId}-${charIdx}`);
             if (charSpan) {
                 charSpan.classList.add('active');
@@ -1862,98 +1943,73 @@
                 }
             }
 
-            // Highlight parent row
             document.querySelectorAll('.editor-line-row').forEach(row => row.classList.remove('active'));
             const rowEl = document.getElementById(`line-row-${lineId}`);
             if (rowEl) rowEl.classList.add('active');
 
-            // Highlight parent line bbox in the original image for context
             const lineBbox = document.getElementById(`bbox-line-${lineId}`);
             if (lineBbox) lineBbox.classList.add('active');
 
-            // Highlight in Image Viewer (Estimated position)
+            // Estimated char bbox calculation
             const lineData = responseLines[lineId];
-            if (lineData) {
-                let finalCharXmin = 0, finalCharXmax = 0;
+            if (lineData && lineData.bbox) {
                 const box = lineData.bbox;
-                if (box) {
-                    const xmin = box[0];
-                    const ymin = box[1];
-                    const xmax = box[2];
-                    const ymax = box[3];
-                    const text = lineData.text || "";
-                    const segmenter = new Intl.Segmenter('vi', { granularity: 'grapheme' });
-                    const segments = Array.from(segmenter.segment(text));
-                    const charCount = segments.length;
+                const xmin = box[0], ymin = box[1], xmax = box[2], ymax = box[3];
+                const text = lineData.text || "";
+                const segmenter = new Intl.Segmenter('vi', { granularity: 'grapheme' });
+                const segments = Array.from(segmenter.segment(text));
+                const charCount = segments.length;
 
-                    finalCharXmin = xmin;
-                    finalCharXmax = xmax;
-                    if (charCount > 0) {
-                        const canvas = document.createElement("canvas");
-                        const ctx = canvas.getContext("2d");
-                        ctx.font = "20px var(--font-sans), 'Google Sans Flex', sans-serif";
-                        
-                        let totalWidth = 0;
-                        const widths = segments.map(seg => {
-                            const w = ctx.measureText(seg.segment).width;
-                            totalWidth += w;
-                            return w;
-                        });
-                        
-                        let xOffset = 0;
-                        for (let i = 0; i < charIdx; i++) {
-                            xOffset += widths[i];
-                        }
-                        
-                        const boxWidth = xmax - xmin;
-                        finalCharXmin = Math.round(xmin + boxWidth * (xOffset / (totalWidth || 1)));
-                        finalCharXmax = Math.round(xmin + boxWidth * ((xOffset + widths[charIdx]) / (totalWidth || 1)));
-                        
-                        // Prioritize core band coords for vertical height to avoid expanding into neighbor lines
-                        let visualTop = (lineData.coords && lineData.coords.length === 2)
-                            ? Math.max(0, lineData.coords[0] - 2)
-                            : Math.max(0, ymin - 2);
-                        let visualHeight = (lineData.coords && lineData.coords.length === 2)
-                            ? (lineData.coords[1] - lineData.coords[0]) + 4
-                            : (ymax - ymin) + 4;
-
-                        // Draw custom dashed bbox overlay for selected character
-                        const charBbox = document.createElement('div');
-                        charBbox.className = 'char-bbox-rect';
-                        charBbox.id = 'char-bbox-indicator';
-                        charBbox.style.left = finalCharXmin + "px";
-                        charBbox.style.top = visualTop + "px";
-                        charBbox.style.width = (finalCharXmax - finalCharXmin) + "px";
-                        charBbox.style.height = visualHeight + "px";
-                        bboxOverlay.appendChild(charBbox);
-
-                        // Center and Zoom onto the Glyph
-                        const cx = (finalCharXmin + finalCharXmax) / 2;
-                        const cy = visualTop + visualHeight / 2;
-                        const containerRect = container.getBoundingClientRect();
-                        
-                        // Increase zoom if too far out
-                        const targetScale = Math.max(scale, 1.8);
-                        panX = containerRect.width / 2 - cx * targetScale;
-                        panY = containerRect.height / 2 - cy * targetScale;
-                        scale = targetScale;
-                        updateTransform();
+                if (charCount > 0) {
+                    const canvas = document.createElement("canvas");
+                    const ctx = canvas.getContext("2d");
+                    ctx.font = "20px var(--font-sans), 'Google Sans Flex', sans-serif";
+                    
+                    let totalWidth = 0;
+                    const widths = segments.map(seg => {
+                        const w = ctx.measureText(seg.segment).width;
+                        totalWidth += w;
+                        return w;
+                    });
+                    
+                    let xOffset = 0;
+                    for (let i = 0; i < charIdx; i++) {
+                        xOffset += widths[i];
                     }
+                    
+                    const boxWidth = xmax - xmin;
+                    const finalCharXmin = Math.round(xmin + boxWidth * (xOffset / (totalWidth || 1)));
+                    const finalCharXmax = Math.round(xmin + boxWidth * ((xOffset + widths[charIdx]) / (totalWidth || 1)));
+                    
+                    let visualTop = (lineData.coords && lineData.coords.length === 2)
+                        ? Math.max(0, lineData.coords[0] - 2)
+                        : Math.max(0, ymin - 2);
+                    let visualHeight = (lineData.coords && lineData.coords.length === 2)
+                        ? (lineData.coords[1] - lineData.coords[0]) + 4
+                        : (ymax - ymin) + 4;
+
+                    const charBbox = document.createElement('div');
+                    charBbox.className = 'char-bbox-rect';
+                    charBbox.id = 'char-bbox-indicator';
+                    charBbox.style.left = finalCharXmin + "px";
+                    charBbox.style.top = visualTop + "px";
+                    charBbox.style.width = (finalCharXmax - finalCharXmin) + "px";
+                    charBbox.style.height = visualHeight + "px";
+                    bboxOverlay.appendChild(charBbox);
+
+                    const cx = (finalCharXmin + finalCharXmax) / 2;
+                    const cy = visualTop + visualHeight / 2;
+                    const containerRect = container.getBoundingClientRect();
+                    
+                    const targetScale = Math.max(scale, 1.8);
+                    panX = containerRect.width / 2 - cx * targetScale;
+                    panY = containerRect.height / 2 - cy * targetScale;
+                    scale = targetScale;
+                    updateTransform();
                 }
-                
-                // Update Inspector
-                document.getElementById('inspector-badge').innerText = `Ký tự #${charIdx + 1} (Dòng #${lineId + 1})`;
-                const segmenter2 = new Intl.Segmenter('vi', { granularity: 'grapheme' });
-                const segs2 = Array.from(segmenter2.segment(lineData.text || ""));
-                const charVal = segs2[charIdx] ? segs2[charIdx].segment : "";
-                document.getElementById('inspect-text').innerText = charVal;
-                document.getElementById('inspect-confidence').innerText = Math.round(lineData.confidence * 100) + "% (Ước lượng)";
-                document.getElementById('inspect-original').innerText = charVal;
-                document.getElementById('inspect-source').innerText = "estimated";
-                
-                const charBox = lineData.bbox || [0, 0, 0, 0];
-                document.getElementById('inspect-coords').innerText = `X: [${finalCharXmin || charBox[0]}, ${finalCharXmax || charBox[2]}] | Y: [${charBox[1]}, ${charBox[3]}]`;
             }
+
+            updateLineActionStrip(lineId);
         }
 
         function removeEstimatedCharBbox() {
@@ -1975,7 +2031,6 @@
                 const left = box[0];
                 const width = box[2] - box[0];
 
-                // Prioritize core band coords for vertical height to prevent diacritics from overlapping neighbor lines
                 let top = (item.coords && item.coords.length === 2)
                     ? Math.max(0, item.coords[0] - 2)
                     : Math.max(0, box[1] - 2);
@@ -1983,78 +2038,25 @@
                     ? (item.coords[1] - item.coords[0]) + 4
                     : (box[3] - box[1]) + 4;
 
-                if (overlayMode === "line") {
-                    const rect = document.createElement('div');
-                    rect.className = 'bbox-rect';
-                    if (item.segmentation && item.segmentation.needs_review) {
-                        rect.classList.add('needs-review');
-                    }
-                    rect.id = `bbox-line-${idx}`;
-                    rect.style.left = left + "px";
-                    rect.style.top = top + "px";
-                    rect.style.width = width + "px";
-                    rect.style.height = height + "px";
-                    
-                    // Heatmap coloring
-                    if (showHeatmap) {
-                        const score = item.confidence || 0;
-                        let r = 196, g = 81, b = 59; // low conf
-                        if (score >= 0.75) { r = 47; g = 125; b = 92; } // high
-                        else if (score >= 0.45) { r = 183; g = 121; b = 31; } // medium
-                        
-                        rect.style.borderColor = `rgb(${r}, ${g}, ${b})`;
-                        rect.style.backgroundColor = `rgba(${r}, ${g}, ${b}, 0.06)`;
-                    }
-
-                    rect.onclick = (e) => {
-                        e.stopPropagation();
-                        selectLine(idx, true);
-                    };
-
-                    bboxOverlay.appendChild(rect);
-                } else if (overlayMode === "char") {
-                    // Draw estimated char boxes
-                    const text = item.text || "";
-                    const segmenter = new Intl.Segmenter('vi', { granularity: 'grapheme' });
-                    const segments = Array.from(segmenter.segment(text));
-                    const charCount = segments.length;
-                    if (charCount > 0) {
-                        const canvas = document.createElement("canvas");
-                        const ctx = canvas.getContext("2d");
-                        ctx.font = "20px var(--font-sans), 'Google Sans Flex', sans-serif";
-                        
-                        let totalWidth = 0;
-                        const widths = segments.map(seg => {
-                            const w = ctx.measureText(seg.segment).width;
-                            totalWidth += w;
-                            return w;
-                        });
-                        
-                        let xOffset = 0;
-                        for (let c = 0; c < charCount; c++) {
-                            const charWidth = width * (widths[c] / (totalWidth || 1));
-                            const charX = left + width * (xOffset / (totalWidth || 1));
-                            
-                            const charRect = document.createElement('div');
-                            charRect.className = 'bbox-rect';
-                            charRect.id = `bbox-line-${idx}-char-${c}`;
-                            charRect.style.left = charX + "px";
-                            charRect.style.top = top + "px";
-                            charRect.style.width = charWidth + "px";
-                            charRect.style.height = height + "px";
-                            charRect.style.borderStyle = "dotted";
-
-                            charRect.onclick = (e) => {
-                                e.stopPropagation();
-                                selectCharacter(idx, c, true);
-                            };
-                            bboxOverlay.appendChild(charRect);
-                        }
-                    }
+                const rect = document.createElement('div');
+                rect.className = 'bbox-rect';
+                if (item.segmentation && item.segmentation.needs_review) {
+                    rect.classList.add('needs-review');
                 }
+                rect.id = `bbox-line-${idx}`;
+                rect.style.left = left + "px";
+                rect.style.top = top + "px";
+                rect.style.width = width + "px";
+                rect.style.height = height + "px";
+
+                rect.onclick = (e) => {
+                    e.stopPropagation();
+                    selectLine(idx, true);
+                };
+
+                bboxOverlay.appendChild(rect);
             });
 
-            // Restore selection highlight
             if (currentSelection.lineId !== null) {
                 if (currentSelection.level === "line") {
                     selectLine(currentSelection.lineId, false);
@@ -2068,11 +2070,7 @@
             showLineCrops = !showLineCrops;
             const btn = document.getElementById('btn-toggle-crops');
             if (btn) {
-                if (showLineCrops) {
-                    btn.classList.add('btn-primary');
-                } else {
-                    btn.classList.remove('btn-primary');
-                }
+                btn.classList.toggle('btn-primary', showLineCrops);
             }
             renderEditor();
         }
@@ -2091,11 +2089,21 @@
             updateTransform();
         }
 
+        function updateLineCountBadge() {
+            const badge = document.getElementById('line-count-badge');
+            if (badge) {
+                const count = responseLines ? responseLines.length : 0;
+                badge.innerText = `${count} dòng`;
+            }
+        }
+
         function renderEditor() {
-            const container = document.getElementById('editor-container');
-            container.innerHTML = "";
+            const editorContainer = document.getElementById('editor-container');
+            editorContainer.innerHTML = "";
+            
             if (!responseLines || responseLines.length === 0) {
-                container.innerHTML = '<div style="color: var(--text-muted); text-align: center; margin-top: 40px;">Chưa có dữ liệu nhận diện. Hãy bấm "Khởi chạy OCR".</div>';
+                editorContainer.innerHTML = '<div style="color: var(--text-muted); text-align: center; margin-top: 50px; font-size: 13px;">Chưa có dữ liệu văn bản.<br>Tải ảnh lên và bấm <strong>Khởi chạy OCR</strong>.</div>';
+                updateLineActionStrip(null);
                 return;
             }
 
@@ -2123,7 +2131,7 @@
                 if (showLineCrops && item.image) {
                     const cropPreview = document.createElement('div');
                     cropPreview.className = 'line-crop-preview';
-                    cropPreview.title = `Ảnh cắt dòng #${idx + 1} (Bấm để zoom tới dòng)`;
+                    cropPreview.title = `Ảnh cắt dòng #${idx + 1} (Click để zoom tới dòng)`;
                     cropPreview.onclick = (e) => {
                         e.stopPropagation();
                         selectLine(idx, true);
@@ -2141,14 +2149,13 @@
 
                 const text = item.text || "";
                 if (text === "") {
-                    textView.innerHTML = '<span style="color: var(--text-muted); font-style: italic;">(Dòng trống - Double click để nhập chữ)</span>';
+                    textView.innerHTML = '<span style="color: var(--text-muted); font-style: italic; font-size: 13px;">(Dòng trống - Double click để nhập chữ)</span>';
                 } else {
                     const lineSpan = document.createElement('span');
                     lineSpan.className = 'line-span';
                     if (score < 0.60) {
                         lineSpan.classList.add('low-confidence');
                     }
-                    // Dùng Intl.Segmenter để tách đúng từng chữ (grapheme cluster) thay vì cắt vụn unicode
                     const segmenter = new Intl.Segmenter('vi', { granularity: 'grapheme' });
                     const segments = Array.from(segmenter.segment(text));
                     segments.forEach((seg, c) => {
@@ -2186,16 +2193,44 @@
                 row.appendChild(gutter);
                 row.appendChild(status);
                 row.appendChild(textContainer);
-                container.appendChild(row);
+                editorContainer.appendChild(row);
             });
+
+            if (currentSelection.lineId !== null) {
+                updateLineActionStrip(currentSelection.lineId);
+            }
         }
 
         function enterEditMode(idx) {
-            document.getElementById(`line-text-view-${idx}`).style.display = 'none';
+            const viewEl = document.getElementById(`line-text-view-${idx}`);
             const editEl = document.getElementById(`line-text-edit-${idx}`);
-            editEl.style.display = 'block';
-            lastActiveInputElement = editEl;
-            editEl.focus();
+            if (viewEl && editEl) {
+                viewEl.style.display = 'none';
+                editEl.style.display = 'block';
+                lastActiveInputElement = editEl;
+                editEl.focus();
+            }
+        }
+
+        function exitEditMode(idx, saveChanges) {
+            const viewEl = document.getElementById(`line-text-view-${idx}`);
+            const editEl = document.getElementById(`line-text-edit-${idx}`);
+            if (!viewEl || !editEl) return;
+            
+            if (saveChanges) {
+                const newVal = editEl.value;
+                if (responseLines[idx] && responseLines[idx].text !== newVal) {
+                    responseLines[idx].text = newVal;
+                    responseLines[idx].confidence = 1.0;
+                    renderEditor();
+                    renderBboxes();
+                    updateQueueItemStatus(imageQueue.findIndex(x => x.active === true), 'Verified');
+                    saveCorrectionToBackend(idx, newVal);
+                }
+            }
+            
+            editEl.style.display = 'none';
+            viewEl.style.display = 'block';
         }
 
         function saveCorrectionToBackend(lineIdx, text) {
@@ -2218,26 +2253,6 @@
               });
         }
 
-        function exitEditMode(idx, saveChanges) {
-            const viewEl = document.getElementById(`line-text-view-${idx}`);
-            const editEl = document.getElementById(`line-text-edit-${idx}`);
-            
-            if (saveChanges) {
-                const newVal = editEl.value;
-                if (responseLines[idx].text !== newVal) {
-                    responseLines[idx].text = newVal;
-                    responseLines[idx].confidence = 1.0; // User override = 100% confidence
-                    renderEditor();
-                    renderBboxes();
-                    updateQueueItemStatus(imageQueue.findIndex(x => x.active === true), 'Verified');
-                    saveCorrectionToBackend(idx, newVal);
-                }
-            }
-            
-            editEl.style.display = 'none';
-            viewEl.style.display = 'block';
-        }
-
         // -------------------------------------------------------------
         // Queue and File Upload Management
         // -------------------------------------------------------------
@@ -2247,10 +2262,7 @@
             processImageFile(file);
         }
 
-        // Drag/Drop handling
-        container.addEventListener('dragover', (e) => {
-            e.preventDefault();
-        });
+        container.addEventListener('dragover', (e) => e.preventDefault());
         container.addEventListener('drop', (e) => {
             e.preventDefault();
             const file = e.dataTransfer.files[0];
@@ -2259,20 +2271,18 @@
             }
         });
 
-        function generateThumbnail(base64Str, maxWidth = 150, maxHeight = 150) {
+        function generateThumbnail(base64Str, maxWidth = 120, maxHeight = 120) {
             return new Promise((resolve) => {
                 const img = new Image();
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
                     let width = img.width;
                     let height = img.height;
-                    
                     if (width > maxWidth || height > maxHeight) {
                         const ratio = Math.min(maxWidth / width, maxHeight / height);
                         width = width * ratio;
                         height = height * ratio;
                     }
-                    
                     canvas.width = width;
                     canvas.height = height;
                     const ctx = canvas.getContext('2d');
@@ -2288,7 +2298,6 @@
             const reader = new FileReader();
             reader.onload = async function(event) {
                 currentImageBase64 = event.target.result.split(',')[1];
-                
                 const thumbB64 = await generateThumbnail(currentImageBase64);
                 
                 imgEl.onload = function() {
@@ -2298,13 +2307,12 @@
                     document.getElementById('no-image-placeholder').style.display = 'none';
                     imgEl.style.display = 'block';
                     
-                    // Reset pan/zoom
                     zoomToFit();
                     
-                    // Add to Queue
+                    const fileName = file.name || ('clipboard_' + Date.now() + '.png');
                     const queueItem = {
                         id: 'img_' + Date.now(),
-                        name: file.name || ('clipboard_image_' + Date.now() + '.png'),
+                        name: fileName,
                         image: currentImageBase64,
                         thumb: thumbB64,
                         time: new Date().toLocaleTimeString(),
@@ -2314,7 +2322,6 @@
                         active: true
                     };
                     
-                    // Set all other queue items active to false
                     imageQueue.forEach(item => item.active = false);
                     imageQueue.unshift(queueItem);
                     
@@ -2322,13 +2329,14 @@
                     saveQueueToStorage();
                     renderQueue();
                     
-                    // Enable run button
                     document.getElementById('btn-run').removeAttribute('disabled');
+                    document.getElementById('header-doc-title').innerText = fileName;
+                    document.getElementById('doc-status-dot').classList.add('active');
                     
-                    // Clear previous results
                     responseLines = [];
                     renderEditor();
                     renderBboxes();
+                    updateLineCountBadge();
                 };
                 
                 imgEl.src = event.target.result;
@@ -2339,12 +2347,11 @@
         function runOCR() {
             const btn = document.getElementById('btn-run');
             btn.setAttribute('disabled', 'true');
-            btn.innerHTML = '⚙️ Đang xử lý...';
+            btn.innerHTML = '<div class="ocr-spinner" style="width:14px;height:14px;border-width:2px;border-top-color:#fff;"></div><span>Đang quét...</span>';
 
             const modelSelect = document.getElementById('model-select');
             const modelName = modelSelect.options[modelSelect.selectedIndex].text;
             
-            // Show loader overlay with selected model info
             const loader = document.getElementById('ocr-loading-overlay');
             const loaderText = document.getElementById('ocr-loading-text');
             loaderText.innerText = `Đang nhận dạng bằng ${modelName}...`;
@@ -2358,7 +2365,7 @@
                 method: 'dbnet'
             };
 
-            appendLog(`Khởi chạy OCR với mô hình: ${modelName} (Phân đoạn DBNet tự động)`, 'info');
+            appendLog(`Khởi chạy OCR với mô hình: ${modelName} (DBNet Detector)`, 'info');
 
             fetch('/ocr', {
                 method: 'POST',
@@ -2374,130 +2381,90 @@
                 } else {
                     responseLines = data.lines || [];
                     
-                    // Check if any lines need review
                     let needsReview = responseLines.some(line => line.segmentation && line.segmentation.needs_review);
                     let finalStatus = needsReview ? 'Needs review' : 'Verified';
                     
                     updateActiveQueueItemStatus(finalStatus, responseLines);
                     renderEditor();
                     renderBboxes();
+                    updateLineCountBadge();
                     
-                    showToast(`Quét thành công ${responseLines.length} dòng!`);
-                    appendLog(`Hoàn thành trích xuất ${responseLines.length} dòng! Trạng thái: ${finalStatus}`, 'success');
-                    
-                    if (data.profiler) {
-                        appendLog(`=== THỜI GIAN XỬ LÝ (BACKEND PROFILE) ===`, 'success');
-                        if (data.profiler.method === 'dbnet') {
-                            appendLog(`- Thuật toán phân đoạn: PaddleOCR DBNet (Deep Learning)`, 'info');
-                            appendLog(`- Thời gian phát hiện dòng (DBNet Detector): ${data.profiler.base_segmentation_sec}s`, 'info');
-                            appendLog(`- Thời gian nhận diện ký tự (OCR Batch Inference): ${data.profiler.rec_inference_sec !== undefined ? data.profiler.rec_inference_sec + 's' : 'N/A'}`, 'info');
-                            appendLog(`- Tổng số dòng phát hiện: ${data.profiler.num_lines}`, 'info');
-                            appendLog(`- Số lần gọi OCR model: ${data.profiler.ocr_model_calls || 1}`, 'info');
-                            appendLog(`- Tổng thời gian xử lý Backend: ${data.profiler.backend_total_sec}s`, 'success');
-                        } else {
-                            appendLog(`- Thuật toán phân đoạn: ${data.profiler.method === 'valley' ? 'Valley Projection' : 'Adaptive Projection'}`, 'info');
-                            appendLog(`- Phân đoạn cơ bản (Base Line Segmentation): ${data.profiler.base_segmentation_sec}s`, 'info');
-                            appendLog(`- Phân đoạn nâng cao & OCR (Advanced Segment & OCR): ${data.profiler.total_segmentation_sec}s`, 'info');
-                            appendLog(`  + Sinh các crop ứng viên: ${data.profiler.candidate_generation_sec}s`, 'info');
-                            appendLog(`  + OCR Batch Pass 1 (Safe Crops): ${data.profiler.recognition_batch_pass1_sec}s`, 'info');
-                            appendLog(`  + OCR Batch Pass 2 (Rescue/Fallback): ${data.profiler.recognition_batch_pass2_sec}s`, 'info');
-                            appendLog(`  + Chọn lọc & Hậu xử lý (Selection & Post-process): ${data.profiler.selection_sec}s`, 'info');
-                            appendLog(`- Tổng số dòng: ${data.profiler.num_lines}`, 'info');
-                            appendLog(`- Tổng số ứng viên Pass 1: ${data.profiler.num_candidates_pass1}`, 'info');
-                            appendLog(`- Tổng số ứng viên Pass 2: ${data.profiler.num_candidates_pass2}`, 'info');
-                            appendLog(`- Số lần gọi OCR model: ${data.profiler.ocr_model_calls}`, 'info');
-                            appendLog(`- Tổng thời gian xử lý Backend: ${data.profiler.backend_total_sec}s`, 'success');
-                        }
-                    }
+                    showToast(`Quét hoàn tất ${responseLines.length} dòng!`);
+                    appendLog(`Hoàn thành trích xuất ${responseLines.length} dòng. Trạng thái: ${finalStatus}`, 'success');
                 }
             })
             .catch(err => {
-                console.error("OCR Fetch error:", err);
-                appendLog('Lỗi kết nối / Fetch error: ' + err.message, 'error');
-                fetch('/log', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: 'Fetch error in runOCR: ' + err.message + '\nStack: ' + err.stack })
-                }).catch(() => {});
-                showToast('Lỗi kết nối máy chủ');
+                showToast('Lỗi kết nối máy chủ!');
+                appendLog('Lỗi kết nối máy chủ: ' + err, 'error');
                 updateActiveQueueItemStatus('Not processed');
             })
             .finally(() => {
-                btn.removeAttribute('disabled');
-                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg> Khởi chạy OCR';
                 loader.style.display = 'none';
+                btn.removeAttribute('disabled');
+                btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>Khởi chạy OCR</span>';
             });
         }
 
-        async function selectQueueItem(id) {
-            const idx = imageQueue.findIndex(x => x.id === id);
-            if (idx === -1) return;
-            
-            const item = imageQueue[idx];
-            
-            if (!item.image || !item.lines || item.lines.length === 0) {
-                const dbItem = await loadItemFromDB(item.id);
-                if (dbItem) {
-                    if (dbItem.image) item.image = dbItem.image;
-                    if (dbItem.lines && dbItem.lines.length > 0) item.lines = dbItem.lines;
-                }
-            }
-            
-            let imgData = item.image;
-            if (!imgData) {
-                showToast("Không tìm thấy dữ liệu ảnh. Vui lòng nạp lại ảnh.");
-                return;
-            }
-            
-            imageQueue.forEach(x => x.active = false);
-            item.active = true;
-            currentImageBase64 = imgData;
-            
-            imgEl.onload = function() {
-                originalImageWidth = imgEl.naturalWidth;
-                originalImageHeight = imgEl.naturalHeight;
-                document.getElementById('no-image-placeholder').style.display = 'none';
-                zoomToFit();
-                
-                document.getElementById('model-select').value = item.model;
-                updateModelBadge();
-                
-                responseLines = item.lines || [];
-                renderEditor();
-                renderBboxes();
-                renderQueue();
-                
-                document.getElementById('btn-run').removeAttribute('disabled');
-            };
-            imgEl.src = `data:image/png;base64,${imgData}`;
-        }
-
-        function updateActiveQueueItemStatus(status, lines = []) {
+        function updateActiveQueueItemStatus(status, lines = null) {
             const idx = imageQueue.findIndex(x => x.active === true);
             if (idx !== -1) {
+                updateQueueItemStatus(idx, status, lines);
+            }
+        }
+
+        function updateQueueItemStatus(idx, status, lines = null) {
+            if (idx !== -1 && imageQueue[idx]) {
                 imageQueue[idx].status = status;
-                if (lines.length > 0) imageQueue[idx].lines = lines;
+                if (lines) {
+                    imageQueue[idx].lines = lines;
+                }
                 saveItemToDB(imageQueue[idx]);
                 saveQueueToStorage();
                 renderQueue();
             }
         }
 
-        function updateQueueItemStatus(idx, status) {
-            if (idx !== -1 && imageQueue[idx]) {
-                imageQueue[idx].status = status;
-                imageQueue[idx].lines = responseLines;
-                saveItemToDB(imageQueue[idx]);
-                saveQueueToStorage();
-                renderQueue();
+        async function selectQueueItem(id) {
+            const item = imageQueue.find(x => x.id === id);
+            if (!item) return;
+
+            imageQueue.forEach(x => x.active = (x.id === id));
+            renderQueue();
+
+            document.getElementById('header-doc-title').innerText = item.name;
+            document.getElementById('doc-status-dot').classList.add('active');
+
+            if (!item.image) {
+                const dbItem = await loadItemFromDB(id);
+                if (dbItem && dbItem.image) {
+                    item.image = dbItem.image;
+                    item.lines = dbItem.lines || [];
+                }
+            }
+
+            if (item.image) {
+                currentImageBase64 = item.image;
+                document.getElementById('no-image-placeholder').style.display = 'none';
+                imgEl.style.display = 'block';
+                imgEl.onload = function() {
+                    originalImageWidth = imgEl.naturalWidth;
+                    originalImageHeight = imgEl.naturalHeight;
+                    zoomToFit();
+                    responseLines = item.lines || [];
+                    renderEditor();
+                    renderBboxes();
+                    updateLineCountBadge();
+                };
+                imgEl.src = 'data:image/png;base64,' + item.image;
+                document.getElementById('btn-run').removeAttribute('disabled');
             }
         }
 
         function renderQueue() {
             const qList = document.getElementById('queue-list');
             qList.innerHTML = "";
-            if (imageQueue.length === 0) {
-                qList.innerHTML = '<div style="color: var(--text-muted); padding: 20px; text-align: center; font-size: 12px;">Hàng đợi trống</div>';
+            if (!imageQueue || imageQueue.length === 0) {
+                qList.innerHTML = '<div style="color: var(--text-muted); padding: 24px 12px; text-align: center; font-size: 11.5px;">Hàng đợi trống.<br>Nhấn <strong>Thêm ảnh</strong> để bắt đầu.</div>';
                 return;
             }
 
@@ -2508,14 +2475,12 @@
 
                 const thumb = document.createElement('div');
                 thumb.className = 'queue-thumb';
-                
-                // Use thumb if available, otherwise fallback to placeholder
                 if (item.thumb) {
                     thumb.innerHTML = `<img src="data:image/jpeg;base64,${item.thumb}" alt="">`;
                 } else if (item.image) {
                     thumb.innerHTML = `<img src="data:image/png;base64,${item.image}" alt="">`;
                 } else {
-                    thumb.innerHTML = `<div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:var(--border-color); color:var(--text-muted); font-size:12px;" title="Ảnh lỗi hoặc chưa lưu">⚠️</div>`;
+                    thumb.innerHTML = `⚠️`;
                 }
 
                 const info = document.createElement('div');
@@ -2548,7 +2513,7 @@
         }
 
         // -------------------------------------------------------------
-        // Quick Review, Inspector Controls & Shortcuts
+        // Quick Review, Line Actions & Shortcuts
         // -------------------------------------------------------------
         function acceptSelectedLine() {
             if (currentSelection.lineId !== null) {
@@ -2563,7 +2528,6 @@
                 updateQueueItemStatus(imageQueue.findIndex(x => x.active === true), 'Verified');
                 saveCorrectionToBackend(lineId, responseLines[lineId].text);
                 
-                // Select next line automatically
                 if (lineId + 1 < responseLines.length) {
                     selectLine(lineId + 1);
                 }
@@ -2594,39 +2558,35 @@
         function splitSelectedLine() {
             if (currentSelection.lineId !== null) {
                 const lineId = currentSelection.lineId;
-                const text = responseLines[lineId].text;
+                const text = responseLines[lineId].text || "";
                 if (text.length <= 1) {
                     showToast("Dòng quá ngắn để tách đôi!");
                     return;
                 }
                 
-                // Cut line in half conceptually
                 const half = Math.ceil(text.length / 2);
                 const firstHalf = text.substring(0, half);
                 const secondHalf = text.substring(half);
                 
-                // Clone bbox dimensions and split
                 const box = responseLines[lineId].bbox || [0, 0, 0, 0];
                 const y_mid = Math.round((box[1] + box[3]) / 2);
                 
                 const line1 = JSON.parse(JSON.stringify(responseLines[lineId]));
                 line1.text = firstHalf;
-                line1.bbox[3] = y_mid; // limit lower boundary of first half
+                line1.bbox[3] = y_mid;
                 line1.confidence = 1.0;
                 
                 const line2 = JSON.parse(JSON.stringify(responseLines[lineId]));
                 line2.text = secondHalf;
-                line2.bbox[1] = y_mid; // limit upper boundary of second half
+                line2.bbox[1] = y_mid;
                 line2.confidence = 1.0;
                 
-                // Replace old line with 2 new split lines
                 responseLines.splice(lineId, 1, line1, line2);
-                
-                // Update index field
                 responseLines.forEach((l, idx) => l.index = idx + 1);
                 
                 renderEditor();
                 renderBboxes();
+                updateLineCountBadge();
                 showToast(`Đã tách đôi dòng #${lineId + 1}`);
                 updateQueueItemStatus(imageQueue.findIndex(x => x.active === true), 'Verified');
             } else {
@@ -2676,12 +2636,12 @@
                 lineA.segmentation.needs_review = false;
             }
             
-            // Remove lineB
             responseLines.splice(lineId + 1, 1);
             responseLines.forEach((l, idx) => l.index = idx + 1);
             
             renderEditor();
             renderBboxes();
+            updateLineCountBadge();
             selectLine(lineId, true);
             updateQueueItemStatus(imageQueue.findIndex(x => x.active === true), 'Verified');
             saveCorrectionToBackend(lineId, mergedText);
@@ -2689,7 +2649,7 @@
         }
 
         // -------------------------------------------------------------
-        // Cham Virtual Keyboard Management
+        // Bottom Cham Virtual Keyboard Dock
         // -------------------------------------------------------------
         const CHAM_KEYBOARD_DATA = {
             consonants: [
@@ -2726,39 +2686,47 @@
             ]
         };
 
-        function toggleChamKeyboard() {
-            const panel = document.getElementById('cham-keyboard-panel');
-            const btn = document.getElementById('btn-toggle-keyboard');
-            if (!panel) return;
-            const isOpen = panel.style.display !== 'none';
-            panel.style.display = isOpen ? 'none' : 'flex';
-            if (btn) btn.classList.toggle('btn-primary', !isOpen);
-            if (!isOpen) {
+        function toggleChamKeyboardDock() {
+            isKeyboardDockExpanded = !isKeyboardDockExpanded;
+            const dock = document.getElementById('cham-keyboard-dock');
+            const arrow = document.getElementById('dock-toggle-arrow');
+            const hint = document.getElementById('dock-status-hint');
+            
+            if (isKeyboardDockExpanded) {
+                document.documentElement.style.setProperty('--dock-height', '180px');
+                dock.style.height = '180px';
+                if (arrow) arrow.innerText = '▼';
+                if (hint) hint.innerText = 'Thu gọn bàn phím ảo (Alt+K / Esc)';
                 renderChamKeyboardBody();
+            } else {
+                document.documentElement.style.setProperty('--dock-height', '32px');
+                dock.style.height = '32px';
+                if (arrow) arrow.innerText = '▲';
+                if (hint) hint.innerText = 'Nhấn để mở bàn phím ảo (Alt+K)';
             }
         }
 
         function switchKeyboardTab(tabName) {
             activeChamKeyboardTab = tabName;
-            document.querySelectorAll('.kb-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.dock-tab-btn').forEach(btn => btn.classList.remove('active'));
             const activeBtn = document.getElementById(`kb-tab-${tabName}`);
             if (activeBtn) activeBtn.classList.add('active');
             renderChamKeyboardBody();
         }
 
         function renderChamKeyboardBody() {
-            const container = document.getElementById('keyboard-body');
-            if (!container) return;
-            container.innerHTML = '';
+            const kbBody = document.getElementById('keyboard-body');
+            if (!kbBody) return;
+            kbBody.innerHTML = '';
             const list = CHAM_KEYBOARD_DATA[activeChamKeyboardTab] || [];
             list.forEach(item => {
                 const btn = document.createElement('button');
                 btn.className = 'cham-key-btn';
-                btn.title = `${item.char} (U+${item.char.codePointAt(0).toString(16).toUpperCase()} - ${item.name})`;
+                btn.title = `${item.char} (${item.name})`;
                 btn.innerHTML = `<span>${item.char}</span><span class="key-sub">${item.name}</span>`;
-                btn.onmousedown = (e) => e.preventDefault(); // prevent input blur
+                btn.onmousedown = (e) => e.preventDefault();
                 btn.onclick = () => insertChamChar(item.char);
-                container.appendChild(btn);
+                kbBody.appendChild(btn);
             });
         }
 
@@ -2784,15 +2752,33 @@
                     editInput.focus();
                 }
             } else {
-                showToast(`Đã copy ký tự ${char} vào Clipboard`);
+                showToast(`Đã sao chép ký tự ${char} vào bộ nhớ tạm`);
                 navigator.clipboard.writeText(char).catch(() => {});
+            }
+        }
+
+        function insertSpaceCham() {
+            insertChamChar(' ');
+        }
+
+        function deleteChamChar() {
+            if (lastActiveInputElement && document.body.contains(lastActiveInputElement) && lastActiveInputElement.style.display !== 'none') {
+                const input = lastActiveInputElement;
+                const start = input.selectionStart !== null ? input.selectionStart : input.value.length;
+                const end = input.selectionEnd !== null ? input.selectionEnd : input.value.length;
+                if (start === end && start > 0) {
+                    input.value = input.value.substring(0, start - 1) + input.value.substring(end);
+                    input.selectionStart = input.selectionEnd = start - 1;
+                } else if (start !== end) {
+                    input.value = input.value.substring(0, start) + input.value.substring(end);
+                    input.selectionStart = input.selectionEnd = start;
+                }
+                input.focus();
             }
         }
 
         function navLowConfidence(direction) {
             if (!responseLines || responseLines.length === 0) return;
-            
-            // Find all lines with low confidence (< 0.60) or marked needs review
             const targets = [];
             responseLines.forEach((item, idx) => {
                 const isLow = (item.confidence < 0.60) || (item.segmentation && item.segmentation.needs_review);
@@ -2800,7 +2786,7 @@
             });
 
             if (targets.length === 0) {
-                showToast("Không tìm thấy dòng chữ nào cần xem xét lại!");
+                showToast("Không có dòng chữ nào cần xem xét lại!");
                 return;
             }
 
@@ -2820,20 +2806,7 @@
             }
 
             selectLine(nextTargetIdx, true);
-            
-            // Focus image viewer to the bbox
-            const box = responseLines[nextTargetIdx].bbox;
-            if (box) {
-                const cx = (box[0] + box[2]) / 2;
-                const cy = (box[1] + box[3]) / 2;
-                const containerRect = container.getBoundingClientRect();
-                const targetScale = Math.max(scale, 1.4);
-                
-                panX = containerRect.width / 2 - cx * targetScale;
-                panY = containerRect.height / 2 - cy * targetScale;
-                scale = targetScale;
-                updateTransform();
-            }
+            zoomToLineBbox(nextTargetIdx);
         }
 
         function acceptAllHighConfidence() {
@@ -2854,7 +2827,17 @@
 
         // Keyboard Shortcuts
         document.addEventListener('keydown', (e) => {
-            // Ignore shortcut keys if user is editing text
+            if (e.altKey && (e.key === 'k' || e.key === 'K')) {
+                e.preventDefault();
+                toggleChamKeyboardDock();
+                return;
+            }
+            if (e.key === 'Escape' && isKeyboardDockExpanded) {
+                e.preventDefault();
+                toggleChamKeyboardDock();
+                return;
+            }
+
             if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
             
             if (e.key === 'a' || e.key === 'A') {
@@ -2878,7 +2861,7 @@
             }
         });
 
-        // Clipboard Paste handler for quick image loading
+        // Clipboard Paste
         document.addEventListener('paste', (e) => {
             const clipboardData = e.clipboardData || window.clipboardData;
             if (!clipboardData) return;
@@ -2897,36 +2880,60 @@
         });
 
         // -------------------------------------------------------------
-        // Export utilities
+        // Export utilities & Dropdown
         // -------------------------------------------------------------
+        function toggleExportMenu(e) {
+            if (e) e.stopPropagation();
+            const menu = document.getElementById('export-menu');
+            menu.classList.toggle('show');
+        }
+
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('export-menu');
+            const btn = document.getElementById('btn-export');
+            if (menu && menu.classList.contains('show') && !menu.contains(e.target) && e.target !== btn && !btn.contains(e.target)) {
+                menu.classList.remove('show');
+            }
+        });
+
         function copyAllText() {
-            if (!responseLines || responseLines.length === 0) return;
+            toggleExportMenu();
+            if (!responseLines || responseLines.length === 0) {
+                showToast("Chưa có văn bản để sao chép");
+                return;
+            }
             const text = responseLines.map(x => x.text).join('\n');
             navigator.clipboard.writeText(text)
                 .then(() => showToast("Đã copy toàn bộ văn bản vào Clipboard!"))
-                .catch(() => showToast("Không thể copy văn bản."));
+                .catch(() => showToast("Không thể copy văn bản"));
         }
 
         function exportJSON() {
-            if (!responseLines || responseLines.length === 0) return;
+            toggleExportMenu();
+            if (!responseLines || responseLines.length === 0) {
+                showToast("Chưa có dữ liệu để xuất");
+                return;
+            }
             const payload = {
                 image_name: imageQueue.find(x => x.active === true)?.name || "document.png",
                 lines: responseLines
             };
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload, null, 2));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", "ocr_corrected_output.json");
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-            showToast("Đã xuất file corrected JSON!");
+            const a = document.createElement('a');
+            a.href = dataStr;
+            a.download = "ocr_corrected_output.json";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            showToast("Đã xuất tệp JSON chuẩn!");
         }
 
         function exportTrainingPairs() {
-            if (!responseLines || responseLines.length === 0) return;
-            
-            // Generate a manifest of the corrected text and bbox mapping
+            toggleExportMenu();
+            if (!responseLines || responseLines.length === 0) {
+                showToast("Chưa có dữ liệu để xuất");
+                return;
+            }
             const manifest = {
                 image_name: imageQueue.find(x => x.active === true)?.name || "document.png",
                 pairs: responseLines.map(x => ({
@@ -2936,49 +2943,46 @@
                     crop_confidence: x.confidence
                 }))
             };
-            
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(manifest, null, 2));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", "training_pairs_manifest.json");
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-            showToast("Đã xuất file training manifest!");
+            const a = document.createElement('a');
+            a.href = dataStr;
+            a.download = "training_pairs_manifest.json";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            showToast("Đã xuất tệp Training Manifest!");
         }
 
         // -------------------------------------------------------------
-        // Helper Utils
+        // Helper Utils & Modals
         // -------------------------------------------------------------
         function updateModelBadge() {
-            const ver = document.getElementById('model-select').value;
-            document.getElementById('active-model-badge').innerText = ver;
+            // Nothing to update in badge, select dropdown itself shows the selected version
         }
 
         function showToast(msg) {
-            // Toast popup creator
             const t = document.createElement('div');
             t.style.position = 'fixed';
-            t.style.bottom = '20px';
+            t.style.bottom = '45px';
             t.style.left = '50%';
             t.style.transform = 'translateX(-50%)';
             t.style.backgroundColor = 'var(--text-main)';
             t.style.color = 'var(--bg-app)';
             t.style.border = '1px solid var(--accent-primary)';
-            t.style.padding = '10px 20px';
+            t.style.padding = '8px 18px';
             t.style.borderRadius = '8px';
-            t.style.fontSize = '13px';
+            t.style.fontSize = '12.5px';
             t.style.fontWeight = '500';
-            t.style.boxShadow = '0 4px 16px rgba(43, 33, 24, 0.25)';
-            t.style.zIndex = '2000';
+            t.style.boxShadow = 'var(--shadow-lg)';
+            t.style.zIndex = '3000';
             t.innerText = msg;
             
             document.body.appendChild(t);
             setTimeout(() => {
                 t.style.opacity = '0';
-                t.style.transition = 'opacity 0.5s';
-                setTimeout(() => t.remove(), 500);
-            }, 3000);
+                t.style.transition = 'opacity 0.4s';
+                setTimeout(() => t.remove(), 400);
+            }, 2600);
         }
 
         function openAboutModal() {
@@ -2989,7 +2993,6 @@
             document.getElementById('about-modal').style.display = 'none';
         }
 
-        // --- Log Modal Functions ---
         function openLogModal() {
             document.getElementById('logs-modal').style.display = 'flex';
         }
@@ -3007,7 +3010,7 @@
             const container = document.getElementById('system-logs-container');
             if (!container) return;
             const time = new Date().toLocaleTimeString();
-            let color = 'var(--text-main)'; // default text
+            let color = 'var(--text-main)';
             if (type === 'error') color = 'var(--accent-red)';
             if (type === 'success') color = 'var(--accent-green)';
             if (type === 'warn') color = 'var(--accent-orange)';
@@ -3019,16 +3022,11 @@
             container.scrollTop = container.scrollHeight;
         }
 
-        // Close modal clicking outside
         window.onclick = function(e) {
             const aboutModal = document.getElementById('about-modal');
             const logModal = document.getElementById('logs-modal');
-            if (e.target === aboutModal) {
-                aboutModal.style.display = 'none';
-            }
-            if (e.target === logModal) {
-                logModal.style.display = 'none';
-            }
+            if (e.target === aboutModal) aboutModal.style.display = 'none';
+            if (e.target === logModal) logModal.style.display = 'none';
         };
 
     </script>
