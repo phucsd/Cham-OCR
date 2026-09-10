@@ -115,3 +115,34 @@ Tuân thủ nghiêm ngặt quy chuẩn của dự án trong `.agents/AGENTS.md`:
    python3 -m paddle.distributed.launch --gpus '0,1' tools/train.py -c configs/rec/rec_cham_v24.yml
    ```
 3. Load pre-trained weights từ checkpoint `v23` và fine-tune với learning rate nhỏ (`1e-4`) trong 30-50 epochs để giữ nguyên khả năng nhận diện thân chữ cốt lõi và cập nhật trọng số cho các cụm số thứ tự mới.
+
+---
+
+## 5. Kết quả Đánh giá Thực nghiệm v24 & Kịch bản Huấn luyện v25
+
+### 5.1. Định lượng hiệu năng v24 trên văn bản trang
+- **Độ chính xác toàn trang**: 27 dòng thực tế, 1,494 ký tự, 110 lỗi ký tự.
+- **Chỉ số CER**: **7.36%** (Độ chính xác ký tự đạt **92.64%**).
+- **Độ tin cậy nhận diện trung bình**: **0.935 (93.5%)**.
+- **Tiến bộ vượt bậc**: Nhận diện số thứ tự khổ thơ Chăm đầu dòng (`꩕꩞`, `꩕꩞꩑꩞`, `꩕꩞ ꩒꩞`, `꩕꩞ ꩓꩞`) đạt **100% chính xác**, khắc phục triệt để lỗi của v23.
+
+### 5.2. Danh mục 5 nhóm lỗi cốt lõi trên v24
+1. **Dấu ngắt khổ thơ `꩞` (Cham Section Mark, U+AA5E)** bị ép thành Danda `꩝꩝` hoặc `꩝` (9/9 trường hợp).
+2. **Tổ hợp nguyên âm 3 thành phần `ꨯꨮꨩ` (Pre-E + OE + AA)** bị nhận diện nhầm thành nguyên âm đôi `ꨯꨱ` (Au) (4/4 lần xuất hiện từ `ꨗꨆꨓꨯꨮꨩ` -> `ꨗꨆꨓꨯꨱ`).
+3. **Thiếu ký tự từ điển & dấu câu hiện đại**:
+   - Gạch đầu dòng En-dash `–` (U+2013) và Em-dash `—` (U+2014) rụng 100% (7/7 dòng) do `cham_dict_v24.txt` chỉ có `-` (U+002D).
+   - Dấu hỏi `?` (U+003F) bị ép thành Danda `꩝` (3/3 lần) do từ điển hoàn toàn thiếu `?`.
+   - Dấu hai chấm `:`, chấm phẩy `;`, ngoặc đơn `()` thường bị rụng khi đứng sát chữ Chăm.
+   - Số Ả Rập `10` trong ngoặc bị nuốt mất do thiếu mẫu văn bản Chăm kẹp số Tây.
+4. **Nhầm lẫn cặp dấu trên Anusvara `ꩌ` (U+AA4C) thành Final Ng `ꩃ` (U+AA43)** (8 trường hợp, ví dụ `ꨨꨈꨴꨮꩌ` -> `ꨨꨈꨴꨮꩃ`, `ꨣꨪꨈꨮꩌ` -> `ꨣꨪꨈꨮꩃ`).
+5. **Cặp phụ âm tương đồng nét & biến dạng dòng ngắn**:
+   - `ꨟ` (MA) nhầm thành `ꨡ` (BHA) trong `ꨁꨤꨪꨟꨯꨩ` -> `ꨁꨤꨪꨡꨯꨩ`.
+   - Dòng siêu ngắn (`ꨨꨰ:` rộng 35px) bị kéo giãn ngang 9 lần khi chuẩn hóa kích thước 48x320 làm `ꨨ` méo thành `ꨣ` và `:` biến thành `꩝`.
+
+### 5.3. Kịch bản Dữ liệu Đặc trị cho v25
+1. **Cập nhật từ điển `cham_dict_v25.txt`**: Bổ sung `–` (U+2013), `—` (U+2014), `?` (U+003F).
+2. **Gói dữ liệu phân biệt `꩞` vs `꩝꩝`**: Sinh 5,000 mẫu cặp câu kết thúc bằng `꩞`, `꩝꩝`, `꩝`.
+3. **Gói dữ liệu tổ hợp `ꨯ...ꨮꨩ` vs `ꨯ...ꨱ`**: Sinh 3,000 mẫu hard-examples chứa các từ có `ꨯ...ꨮꨩ` (`ꨗꨆꨓꨯꨮꨩ`, `ꨚꨓꨯꨮꨩ`, `ꨤꨯꨮꨩ`, `ꨨꨝꨳꨯꨮꩆ`).
+4. **Gói dữ liệu Chăm kẹp số Ả Rập**: Sinh các mẫu chứa cấu trúc `({cham_word} {0-99} ...)`.
+5. **Cải tiến Studio/Backend**: Áp dụng White-Padding Guard cho các dòng có `width < 120px` thay vì kéo dãn méo tỉ lệ trước khi đưa vào mô hình nhận diện.
+

@@ -1533,6 +1533,68 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                 f.write(text.strip() + '\n')
                 
             self.send_json_response({'success': True, 'path': dest_file})
+        elif self.path == '/ocr_crop':
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            data = json.loads(post_data.decode('utf-8'))
+            
+            img_b64 = data.get('image', '')
+            model_ver = data.get('model', 'v24')
+            bbox = data.get('bbox', [0, 0, 0, 0])
+            
+            if ',' in img_b64:
+                img_b64 = img_b64.split(',', 1)[1]
+            missing_padding = len(img_b64) % 4
+            if missing_padding:
+                img_b64 += '=' * (4 - missing_padding)
+            try:
+                img_data = base64.b64decode(img_b64)
+                nparr = np.frombuffer(img_data, np.uint8)
+                img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+            except Exception as e:
+                self.send_json_response({'error': f'Không thể giải mã ảnh: {e}'}, 400)
+                return
+                
+            if img is None:
+                self.send_json_response({'error': 'Không thể đọc ảnh'}, 400)
+                return
+                
+            h, w = img.shape[:2]
+            x1, y1, x2, y2 = [int(v) for v in bbox]
+            x1 = max(0, min(w - 1, x1))
+            x2 = max(x1 + 1, min(w, x2))
+            y1 = max(0, min(h - 1, y1))
+            y2 = max(y1 + 1, min(h, y2))
+            
+            crop_img = img[y1:y2, x1:x2]
+            if crop_img.size == 0:
+                self.send_json_response({'error': 'Vùng crop rỗng'}, 400)
+                return
+                
+            try:
+                ocr = get_ocr_model(model_ver)
+                res, _ = ocr([crop_img])
+                pred_text, conf = res[0] if res else ("", 0.0)
+            except Exception as e:
+                self.send_json_response({'error': f'Lỗi OCR crop ({model_ver}): {e}'}, 200)
+                return
+                
+            if model_ver in ['v24', 'v26']:
+                try:
+                    from scripts.generate_data import normalize_unicode
+                    pred_text = normalize_unicode(pred_text)
+                except Exception as e:
+                    print(f"Warning: normalize_unicode failed: {e}")
+                    
+            _, buffer = cv2.imencode('.png', crop_img)
+            crop_b64 = base64.b64encode(buffer).decode('utf-8')
+            
+            self.send_json_response({
+                'text': pred_text,
+                'confidence': float(conf),
+                'image': crop_b64,
+                'bbox': [x1, y1, x2, y2]
+            })
         else:
             self.send_error(404, 'Endpoint Not Found')
             

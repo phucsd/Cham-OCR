@@ -59,4 +59,11 @@
 - **Thông tin Tên miền Dịch vụ (OCR Studio Domain)**:
   - Tên miền chính thức của ứng dụng web Cham OCR Review Studio là `ocr.cham.asia` (được trỏ về hệ thống phục vụ trực tuyến). Mọi liên kết, tài liệu hướng dẫn và phản hồi liên quan đến OCR Studio cần luôn sử dụng tên miền chính: `https://ocr.cham.asia`.
 
+- **Quy tắc sử dụng Agent Memory (Persistent Memory)**:
+  - **Định danh dự án (Project Identifier)**: Luôn sử dụng canonical identifier `project: "cham-ocr"` cho mọi thao tác truy vấn và lưu trữ bộ nhớ của dự án này.
+  - **Cơ chế tự động ghi nhớ (Autonomous Auto-Memory Triggers)**: Agent tuyệt đối **KHÔNG ĐƯỢC CHỜ** người dùng nhắc nhở hay gõ lệnh `/remember`, mà phải **TỰ ĐỘNG CHỦ ĐỘNG GỌI `memory_save`** ngay trong lượt phản hồi khi xảy ra các sự kiện sau:
+    1. **Tự động lưu sau mỗi lần code/refactor quan trọng (`type: "architecture"` hoặc `"workflow"`)**: Sau khi phát triển tính năng mới, tối ưu hóa thuật toán (như Line Segmentation, DBNet, CTC Decoder, Logical Order Normalization), sửa đổi API backend hoặc UI Studio, Agent bắt buộc phải tự động ghi nhớ tóm tắt thay đổi mã nguồn, lý do kỹ thuật và các tệp liên quan.
+    2. **Tự động lưu sau mỗi lần Benchmark & Đánh giá mô hình (`type: "pattern"`)**: Sau khi chạy test hoặc đánh giá chất lượng mô hình (v23, v24, v25...), Agent bắt buộc phải tự động lưu chi tiết kết quả định lượng: chỉ số CER, WER, tỷ lệ nhận diện số khổ thơ Chăm, các cặp ký tự/dấu phụ bị nhầm lẫn (như `ꨲ` vs `ꨶ`, `꩝꩝` vs `꩝`), độ bền vững trước nhiễu/blur để làm dữ liệu định hướng cho các phiên huấn luyện tiếp theo.
+    3. **Tự động lưu chỉ thị & sở thích người dùng (`type: "preference"` hoặc `"fact"`)**: Lưu ngay các quy chuẩn về tài khoản Kaggle, hạ tầng, đường dẫn, domain, cờ cấu hình môi trường hoặc yêu cầu nghiệp vụ mà người dùng đưa ra.
+  - **Tự động truy hồi ngữ cảnh trước khi hành động (Context Recall First)**: Trước khi code thay đổi kiến trúc, sửa lỗi nhận diện chữ Chăm, tối ưu pipeline hoặc thiết lập huấn luyện Kaggle, Agent bắt buộc phải tự động gọi `memory_recall` hoặc `memory_smart_search` (với các từ khóa liên quan như `v24`, `benchmark`, `kaggle`, `segmentation`...) để kế thừa toàn bộ tri thức của các phiên làm việc trước mà không cần người dùng nhắc lại.
 
