@@ -4,12 +4,12 @@
 Master Synthetic Dataset Generator for Cham OCR Model V25.
 Optimized for 32-core Data Prep CPU Machine on Lightning AI Studios.
 
-Produces 250,000 Train + 25,000 Val line images across 5 core pillars:
+Produces 140,000 Train + 10,000 Val (150,000 total) line images across 5 core pillars:
 1. Standard & Authentic Cham Literature (Po Klong Garai, 57-stanza poem, administration)
 2. Extreme Anti-Motion Blur & Defocus Augmentation (Kernels 7x7 to 13x13, downsampling)
 3. Intra-line Bilingual Code-Switching (Cham phrase + Vietnamese diacritics + Latin)
 4. Full Stanza Digits (1-99: ꩑꩞..꩙꩙꩞) & Boundary Punctuation (꩞, :, –, ?, !)
-5. Minimal Pairs Hard-Examples (ꨲ vs ꨶ, ꨯꨮꨩ vs ꨯꨱ, ꩝꩝ variable gap 2-8px)
+5. Minimal Pairs Hard-Examples (Vowel Sign UE ꨲ U+AA32 vs Medial WA ꨶ U+AA36, ꨯꨮꨩ vs ꨯꨱ, ꩝꩝ variable gap 2-8px)
 """
 
 import os
@@ -82,8 +82,8 @@ CHAM_VOCAB_POOL = [
     "ꨌꨙꨳꩀ", "ꨓꨆꨶꨯꩈ", "ꨀꨥꨰꩅ", "ꨗꨆꨓꨯꨮꨩ", "ꨀꨆꨢꨯꨮꩅ", "ꨓꨆꨴꨲꨩ", "ꨚꨟꨆꨴꨲꨩ", "ꨣꨳꨪꩌ", "ꨨꨈꨴꨮꩌ"
 ]
 
-# Minimal pairs cho dấu Au ꨲ vs O ꨶ
-MINIMAL_PAIRS_AU_O = [
+# Minimal pairs cho Vowel Sign UE ꨲ (U+AA32) vs Consonant Sign Medial WA ꨶ (U+AA36)
+MINIMAL_PAIRS_UE_WA = [
     ("ꨀꨲꩆ", "ꨀꨶꩆ"),
     ("ꨓꨆꨴꨲꨩ", "ꨓꨆꨴꨶꨩ"),
     ("ꨚꨴꨲꨩ", "ꨚꨴꨶꨩ"),
@@ -158,9 +158,9 @@ def sample_v25_text(pillar_type):
 
     elif pillar_type == "minimal_pairs":
         # Trụ cột 4: Cặp đối kháng
-        sub = random.choice(["au_o", "double_danda", "complex_clusters"])
-        if sub == "au_o":
-            pair = random.choice(MINIMAL_PAIRS_AU_O)
+        sub = random.choice(["ue_wa", "double_danda", "complex_clusters"])
+        if sub == "ue_wa":
+            pair = random.choice(MINIMAL_PAIRS_UE_WA)
             target = pair[0] if random.random() < 0.5 else pair[1]
             surrounding = random.sample(CHAM_VOCAB_POOL, random.randint(2, 3))
             return f"{target} " + " ".join(surrounding) + random.choice(["꩝", "꩝꩝", "꩞", ""])

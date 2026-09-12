@@ -12,14 +12,14 @@ flowchart TD
         E1["Mờ rung tay (Motion Blur)<br/>CER vọt 38.74% (Gấp 2.7 lần)<br/>Sót 8.3% dòng chữ"]
         E2["Song ngữ nội dòng (Inline Mixed)<br/>CER vọt 27.84%<br/>Mô hình Chăm mù chữ Việt, Việt mù Chăm"]
         E3["Mất dấu ngắt câu ꩞, :, –<br/>Gây nối nhầm dòng đoạn văn<br/>Paragraph Flow F1 tụt còn 70.7%"]
-        E4["Nhầm cặp dấu phụ chân ꨲ (Au) vs ꨶ (O)<br/>Khoảng cách Double Danda ꩝꩝"]
+        E4["Nhầm cặp dấu phụ chân ꨲ (Vowel Sign UE) vs ꨶ (Medial WA)<br/>Khoảng cách Double Danda ꩝꩝"]
     end
 
     subgraph Solutions_V25["4 Trụ Cột Huấn Luyện Cho Mô Hình V25"]
         P1["Trụ cột 1: Data Augmentation Mờ Động Cực Hạn (On-the-Fly)<br/>(Directional Motion Blur 7x7 đến 13x13, Defocus trong RAM)"]
         P2["Trụ cột 2: Từ Điển Hợp Nhất Chăm - Việt Động Chuẩn Hóa NFC<br/>(build_dict_v25.py giữ thứ tự V24 + Preflight checks + Weight Surgery)"]
         P3["Trụ cột 3: Gói Dữ Liệu Đặc Trị Số Khổ & Ngắt Câu Biên<br/>(Dãy số 1-99 ꩑꩞..꩙꩙꩞, bảo tồn ꩞, :, –, padding biên)"]
-        P4["Trụ cột 4: Cặp Đối Kháng Hard-Examples Minimal Pairs<br/>(Phân biệt ꨲ vs ꨶ, bảo tồn ꨯ, ꨯꨱ, Double Danda ꩝꩝ 2-8px)"]
+        P4["Trụ cột 4: Cặp Đối Kháng Hard-Examples Minimal Pairs<br/>(Phân biệt ꨲ (Vowel Sign UE) vs ꨶ (Medial WA), bảo tồn ꨯ (Vowel Sign E), ꨯꨱ, Double Danda ꩝꩝ 2-8px)"]
     end
 
     E1 ==> P1
@@ -67,10 +67,10 @@ flowchart TD
 
 ### Trụ Cột 4: Cặp Đối Kháng Hard-Examples Cho Dấu Phụ Dễ Nhầm
 - **Thực trạng**:
-  - Dấu `ꨲ` (Au, U+AA32) và `ꨶ` (O, U+AA36) có cấu trúc vi mô rất tương đồng.
+  - Dấu `ꨲ` (Vowel Sign UE, U+AA32) và `ꨶ` (Medial WA, U+AA36) có cấu trúc vi mô rất tương đồng.
   - Dấu Double Danda `꩝꩝` hay bị gộp thành Single Danda `꩝`.
-  - Nguyên âm trước `ꨯ` (E) và `ꨯꨱ` (Au) dễ bị nuốt khi nét vẽ thanh mảnh.
-- **Giải pháp cho v25 (Gói 4: 20,000 dòng)**:
+  - Nguyên âm phụ thuộc `ꨯ` (Vowel Sign E, U+AA2F) và `ꨯꨱ` (Vowel Sign AU, U+AA2F U+AA31) dễ bị nuốt khi nét vẽ thanh mảnh.
+- **Giải pháp cho v25 (Gói 5: 12,000 dòng)**:
   - Sinh **mẫu cặp từ tối thiểu (Minimal Pairs)**:
     - `{Phụ âm} + ꨲ` đối sánh trực tiếp với `{Phụ âm} + ꨶ` (ví dụ `ꨀꨲꩆ` vs `ꨀꨶꩆ`, `ꨓꨆꨴꨲꨩ` vs `ꨓꨆꨴꨶꨩ`, `ꨚꨲ` vs `ꨚꨶ`).
     - Dấu Double Danda `꩝꩝` với khoảng cách thay đổi từ 2px đến 8px.
@@ -82,14 +82,15 @@ flowchart TD
 
 Theo tệp đặc tả chuẩn `configs/v25_dataset_manifest.json`:
 
-| Gói Dữ Liệu (Bucket) | Số Lượng Dòng (Train) | Tỷ Lệ | Mục Tiêu Kỹ Thuật | Đặc Điểm Augmentation |
+| Gói Dữ Liệu (Pillar / Package) | Số Lượng Dòng (Train) | Tỷ Lệ | Mục Tiêu Kỹ Thuật | Đặc Điểm Augmentation |
 | :--- | :---: | :---: | :--- | :--- |
-| **Gói 1: Ngữ liệu Chăm chuẩn & Cổ tích** | 70,000 | 50.0% | Nền tảng từ vựng Chăm chuẩn xác (Po Klong Garai, sử thi, thơ 57 khổ) | Nền giấy cổ, texture, tiêu chuẩn sạch |
-| **Gói 2: Song ngữ nội dòng (Chăm + Việt)** | 25,000 | 17.9% | Nhận diện mượt mà Chăm kẹp Việt/Latin | Font kết hợp NotoSansCham + NotoSans |
-| **Gói 3: Số thứ tự khổ thơ & Dấu câu biên** | 25,000 | 17.9% | Nhận diện số 1-99, dấu `꩞`, `:`, `–` | Padding biên biến thiên 0-12px |
-| **Gói 4: Cặp đối kháng Hard-Examples** | 20,000 | 14.3% | Khắc phục triệt để `ꨲ` vs `ꨶ`, `꩝꩝` vs `꩝` | Minimal pairs, zoom nét chân |
+| **Gói 1: Ngữ liệu Chăm chuẩn & Văn học kinh điển** | 65,000 | 43.3% | Nền tảng từ vựng Chăm chuẩn xác (Po Klong Garai, sử thi, thơ 57 khổ) | Nền giấy cổ, texture, tiêu chuẩn sạch |
+| **Gói 2: Ngữ liệu đặc trị Mờ Rung Tay (Anti-Blur Base)** | 30,000 | 20.0% | Tăng cường độ thích nghi mờ rung tay | Ảnh cơ sở sinh sạch, làm mờ on-the-fly trong RAM |
+| **Gói 3: Song ngữ nội dòng (Chăm + Việt kẹp dòng)** | 25,000 | 16.7% | Nhận diện mượt mà Chăm kẹp Việt/Latin | Font kết hợp NotoSansCham + NotoSans |
+| **Gói 4: Số thứ tự khổ thơ & Dấu câu biên** | 18,000 | 12.0% | Nhận diện số 1-99, dấu `꩞`, `:`, `–` | Padding biên biến thiên 0-12px |
+| **Gói 5: Cặp đối kháng Hard-Examples Minimal Pairs** | 12,000 | 8.0% | Khắc phục triệt để `ꨲ` (UE) vs `ꨶ` (WA), `꩝꩝` vs `꩝` | Minimal pairs, zoom nét chân, tổ hợp 3 tầng |
 | **TỔNG CỘNG TẬP TRAIN v25** | **140,000** | **100%** | **Toàn diện mọi điều kiện thực tế** | **Ảnh gốc sinh sạch trên đĩa** |
-| **TẬP KIỂM THỬ (VALIDATION)** | **10,000** | — | **Đánh giá khách quan, cân đối 4 nhóm** | **Cố định hạt giống ngẫu nhiên** |
+| **TẬP KIỂM THỬ (VALIDATION)** | **10,000** | — | **Đánh giá khách quan, cân đối 5 nhóm** | **Cố định hạt giống ngẫu nhiên** |
 | **TỔNG QUY MÔ DATASET** | **150,000** | — | **Đồng bộ duy nhất với Manifest** | **On-the-fly Blur: 35% qua RecAug** |
 
 > [!IMPORTANT]
@@ -175,9 +176,9 @@ flowchart LR
 ### Bước 4: Khởi Động Huấn Luyện 3 Chặng Trên Kaggle GPU T4x2
 - Sử dụng cấu hình [rec_cham_v25.yml](file:///e:/Phuc's%20Data/Github/Cham-OCR/ocr-training/configs/rec_cham_v25.yml).
 - Tự động nạp thông tin xác thực bảo mật qua [kaggle_auth.py](file:///e:/Phuc's%20Data/Github/Cham-OCR/ocr-training/scripts/kaggle_auth.py) và `.env`.
-- **Chặng 1** (Epoch 1 -> 14, ~7.8h): Khởi động với initial weights từ Bước 3. Xuất checkpoint `latest`.
-- **Chặng 2** (Epoch 15 -> 27, ~7.3h): Resume thông qua `Global.checkpoints` trỏ vào full checkpoint Chặng 1 (`.pdparams + .pdopt + .states`).
-- **Chặng 3** (Epoch 28 -> 40, ~7.3h): Resume từ full checkpoint Chặng 2, hoàn thành toàn bộ 40 epochs.
+- **Chặng 1** (Epoch 1 -> 12, ~7.5h): Khởi động với initial weights từ Bước 3. Ngắt chặng tại epoch 12 (`stage_end_epoch: 12`), xuất checkpoint `latest` & `best_accuracy`.
+- **Chặng 2** (Epoch 13 -> 22, ~6.5h): Resume thông qua `Global.checkpoints` trỏ vào full checkpoint Chặng 1 (`.pdparams + .pdopt + .states`). Ngắt chặng tại epoch 22 (`stage_end_epoch: 22`).
+- **Chặng 3** (Epoch 23 -> 40, ~11.0h): Resume từ full checkpoint Chặng 2, hoàn thành toàn bộ 40 epochs, xuất model `inference` v25.
 
 ### Bước 5: Đóng Gói Inference & Kiểm Thử Nghiệm Thu (Non-Regression Gate)
 - Xuất model inference:

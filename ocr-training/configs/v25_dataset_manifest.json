@@ -43,15 +43,15 @@
         "name": "Cặp đối kháng Hard-Examples Minimal Pairs",
         "count": 12000,
         "percentage": "8.0%",
-        "description": "Tập trung phân biệt cặp dấu chân ꨲ (Au) vs ꨶ (O), khoảng cách Double Danda ꩝꩝ (2-8px), tổ hợp dấu 3 tầng."
+        "description": "Tập trung phân biệt cặp dấu chân ꨲ (Vowel Sign UE, U+AA32) vs ꨶ (Medial WA, U+AA36), khoảng cách Double Danda ꩝꩝ (2-8px), tổ hợp dấu 3 tầng."
       }
     ]
   },
   "training_policy": {
     "image_shape": [3, 48, 480],
     "image_shape_rationale": "Chiều cao 48px bảo vệ dấu phụ mỏng; chiều rộng 480px chống co bẹp nét chữ trên dòng song ngữ dài.",
-    "batch_size_per_card": 72,
-    "global_batch_size": 144,
+    "batch_size_per_card": 32,
+    "global_batch_size": 64,
     "num_workers": 2,
     "amp_enabled": true,
     "amp_level": "O1",
@@ -64,22 +64,22 @@
       "stages": [
         {
           "stage": 1,
-          "epochs": "1 -> 14",
-          "est_hours": 7.8,
+          "epochs": "1 -> 12",
+          "est_hours": 7.5,
           "checkpoint_save": "save_epoch_step: 1",
           "output": "ch_PP-OCRv4_rec_v25_stage1/latest"
         },
         {
           "stage": 2,
-          "epochs": "15 -> 27",
-          "est_hours": 7.3,
+          "epochs": "13 -> 22",
+          "est_hours": 6.5,
           "resume_from": "stage 1 latest (pdparams + pdopt + states)",
           "output": "ch_PP-OCRv4_rec_v25_stage2/latest"
         },
         {
           "stage": 3,
-          "epochs": "28 -> 40",
-          "est_hours": 7.3,
+          "epochs": "23 -> 40",
+          "est_hours": 11.0,
           "resume_from": "stage 2 latest (pdparams + pdopt + states)",
           "output": "ch_PP-OCRv4_rec_v25_final/latest"
         }

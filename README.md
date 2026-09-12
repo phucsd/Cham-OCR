@@ -38,10 +38,12 @@ An end-to-end deep learning research platform and paleographic transcription sys
    - Dual-head multi-task learning with **Connectionist Temporal Classification (CTC)** sequence alignment and **NRTR Multi-Head Cross-Attention** auxiliary decoding.
 3. **Canonical Unicode & Logical Order Normalization**:
    - Automatically parses recognized grapheme clusters via `normalize_unicode` to reconstruct standard **Brahmic Logical Order** (`Base Consonant + Medials + Pre-Vowels + Dependent Vowels + Vowel Lengthener AA + Finals / Signs / Final VA`), resolving local visual permutation artifacts.
-4. **150,000 Textline Synthetic Pipeline**:
+4. **150,000 Textline Synthetic Pipelines**:
    - Font map validation via `fontTools` cmap parsing, eliminating tofu/missing glyph artifacts.
    - Dynamic In-RAM augmentation applying directional motion blur on clean disk renders to prevent double-blur degradation.
-   - Calibrated dataset generator (`scripts/generate_data.py`) partitioning 150,000 textlines into 15% evaluation/locked splits and 85% training across 6 categories: clean short (25%), clean medium (20%), clean long (15%), noisy short (15%), noisy long (15%), and hard adversarial examples (10%).
+   - **Dual-Generator Architecture**:
+     - *Pipeline A (Baseline: `scripts/generate_data.py`)*: 150,000 textlines partitioned into 15% evaluation/locked splits and 85% training across 6 categories: clean short (25%), clean medium (20%), clean long (15%), noisy short (15%), noisy long (15%), and hard adversarial examples (10%).
+     - *Pipeline B (Experimental V25: `scripts/generate_data_v25.py`)*: 150,000 textlines (140,000 train + 10,000 val) synchronized with `configs/v25_dataset_manifest.json` across 5 core pillars: canonical Cham literature (43.3%), anti-blur base (20.0%), inline bilingual (16.7%), stanza numerals & punctuation (12.0%), and minimal pairs (8.0%).
 5. **Distributed Multi-GPU Cloud Training**:
    - Adaptive data-parallel execution (`paddle.distributed.launch --gpus '0,1'`) on Kaggle Nvidia Tesla T4x2 and Lightning Cloud A100 SXM4.
    - 3-Stage Checkpoint & Resume protocol ensuring uninterrupted progress across Kaggle's 12-hour session timeout limits.
@@ -172,13 +174,13 @@ Logged in `ocr-studio/data/benchmark_v24_vs_v25_results.json`:
 If you utilize Cham-OCR, our synthetic dataset pipeline, or the OCR Studio in your research, please cite:
 
 ```bibtex
-@software{cham_ocr_studio,
-  author = {Nguyen, Phuc},
-  title = {Cham OCR Studio: Deep Learning Pipeline and Paleographic Transcription Workbench for Historical Cham Manuscripts},
+@software{cham_ocr_pipeline,
+  author = {Nguyen, Phuc H.},
+  title = {Cham-OCR: A Deep-Learning OCR Pipeline for Unicode Eastern Cham, toward Historical Manuscript and Epigraphic Recognition},
   year = {2026},
   publisher = {GitHub},
   url = {https://github.com/phucsd/Cham-OCR},
-  note = {Live web service: https://ocr.cham.asia}
+  note = {Production web service: https://ocr.cham.asia}
 }
 ```
 

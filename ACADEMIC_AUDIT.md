@@ -120,13 +120,13 @@ To adhere to rigorous academic scholarship, multiple unverified or hyperbolic as
 To situate this project appropriately within existing scientific literature, a dedicated related work section and bibliography were added citing seminal contributions:
 
 1. **Nguyen, M.-T., Schweyer, A.-V., Le, T.-L., Tran, T.-H., & Vu, H. (2019a)**: *Preliminary Results on Ancient Cham Glyph Recognition from Cham Inscription Images*. In 2019 International Conference on Multimedia Analysis and Pattern Recognition (MAPR 2019), IEEE, pp. 1–6. DOI: 10.1109/MAPR.2019.8743540. (Evaluated HOG, NPW, and CNN-derived features with k-NN and linear SVM).
-2. **Nguyen, M.-T., Schweyer, A.-V., Le, T.-L., Tran, T.-H., & Vu, H. (2019b)**: *Improving Ancient Cham Glyph Recognition Using Data Augmentation and Transfer Learning*. In International Conference on Image Analysis and Processing (ICIAP 2019 Workshops: PatReCH), Springer, Cham, LNCS 11808, pp. 115–125. DOI: 10.1007/978-3-030-30754-7_12. (Evaluated data augmentation and transfer learning from rendered synthetic glyph variants to weathered stone inscriptions).
+2. **Nguyen, M.-T., Schweyer, A.-V., Le, T.-L., Tran, T.-H., & Vu, H. (2019b)**: *Improving Ancient Cham Glyph Recognition Using Data Augmentation and Transfer Learning*. In International Conference on Image Analysis and Processing (ICIAP 2019 Workshops: PatReCH), Springer, Cham, LNCS 11808, pp. 115–125. DOI: 10.1007/978-3-030-30754-7_12. (Evaluated data augmentation and transfer learning from scripts of similar or the same language family to ancient stone inscription glyphs).
 3. **Nguyen, T.-N. (2023)**: *Segmentation, Recognition and Indexing of Cham characters in Cham documents* (*Segmentation, reconnaissance et indexation des caractères Cham dans les documents Cham*). Ph.D. Dissertation, Université de La Rochelle, France.
 4. **Nguyen, T.-N., Burie, J.-C., Le, T.-L., & Schweyer, A.-V. (2022)**: *An effective method for text line segmentation in historical document images*. In 26th International Conference on Pattern Recognition (ICPR 2022), IEEE, pp. 2686–2692. DOI: 10.1109/ICPR56361.2022.9956617.
 5. **Nguyen, T.-N., Burie, J.-C., Le, T.-L., & Schweyer, A.-V. (2023)**: *A Two-Step Sequence Transformer Based Method for Cham to Latin Script Transliteration*. In Proceedings of the 7th International Workshop on Historical Document Imaging and Processing (HIP@ICDAR 2023), ACM, pp. 25–30. DOI: 10.1145/3604951.3605525.
 6. **Nguyen, T.-N., Burie, J.-C., Le, T.-L., & Schweyer, A.-V. (2025)**: *Text line segmentation approach combining deep learning model and traditional image processing techniques - application to transliteration of Cham manuscripts*. *Multimedia Tools and Applications*, Springer. DOI: 10.1007/s11042-025-20602-x. (Evaluates line segmentation and transliteration across 627 images, ~8,300 lines).
 7. **ANR CHAMDOC Project (2019–2024)**: *Cham Documentation (CHAMDOC)*, Project ANR-19-CE27-0018, Agence Nationale de la Recherche, France.
-8. **Digitization Archives**: *Historic Cham Manuscripts of Vietnam* collection (Southeast Asia Digital Library / SEADL, Northern Illinois University, preserving 977 digitized manuscripts, >57,800 page scans) and Cham community collections (~3,000 physical manuscripts across Vietnam and Cambodia).
+8. **Digitization Archives**: The Historic Cham Manuscripts of Vietnam collection in the Southeast Asia Digital Library (SEADL) contains 977 digitized manuscripts comprising more than 57,800 page scans. Cham community collections preserve an estimated 3,000 physical manuscripts across Vietnam and Cambodia.
 
 ---
 
@@ -134,9 +134,9 @@ To situate this project appropriately within existing scientific literature, a d
 
 The project openly documents four major technical limitations:
 
-1. **Synthetic-to-Real Domain Gap**: The neural recognizer is trained primarily on synthetic textline images rendered with digital TrueType fonts (*Noto Sans Cham*, *Cham Roman*, *EFEO Cham*). Real manuscripts feature idiosyncratic scribal handwriting, varying pen pressure, and ink bleed that may degrade recognition accuracy in archival field settings.
+1. **Synthetic-to-Real Domain Gap**: The neural recognizer is trained predominantly on synthetic textline images rendered with bundled *Noto Sans Cham* (SIL OFL 1.1). Real manuscripts feature idiosyncratic scribal handwriting, varying pen pressure, and ink bleed that may degrade recognition accuracy in archival field settings.
 2. **Absence of a Large-Scale Annotated Real Manuscript Benchmark**: To date, there is no publicly available, character-level annotated historical Cham manuscript dataset of sufficient volume. Curating such a corpus requires close, sustained collaboration with native Cham scholars, paleographers, and community elders.
-3. **Extreme Biological Degradation & Epigraphy**: Inscription rubbings and severely mold-damaged palm-leaves (where $>40\%$ of glyph strokes are eroded) cannot be resolved by visual CTC sequence decoders alone without integrating language modeling priors (MLMs).
+3. **Extreme Biological Degradation & Epigraphy**: Inscription rubbings and severely mold-damaged palm-leaves (where character ink has substantially eroded) cannot be resolved by visual CTC sequence decoders alone without integrating language modeling priors (MLMs).
 4. **Interlinear Overlap Breaking Point (Level 5)**: When sinusoidal document warping exceeds line spacing ($\text{Amplitude} > \text{Gap}$), 1D projection and horizontal bounding boxes break down, necessitating future research into 2D polygonal baseline tracking.
 
 ---
@@ -154,16 +154,19 @@ The project openly documents four major technical limitations:
 | File Audited | Changes Applied | Status | Verification Mechanism |
 | :--- | :--- | :---: | :--- |
 | `LICENSE` | Clean MIT License for code; pointers to DATA_PROVENANCE.md | **Verified** | Standard legal wording |
-| `DATA_PROVENANCE.md` | Documented text corpora, fonts (*Noto Sans Cham*, *EFEO Cham*), rights disclaimer, and synthetic splits | **Verified** | Created & linked across docs |
-| `RESEARCH.md` | Reconciled title, scope, Unicode order, citations (DOIs, ICPR 2022, 2025 paper), detector parameters, manuscript counts, 25/20/15/15/15/10 splits | **Verified** | 100% matched with benchmarks |
-| `ocr-studio/research.html` | Verbatim synchronization with RESEARCH.md; fixed pre-vowels (O/AI only); updated tables and citations | **Verified** | `node --check` static JS syntax validated (Code 0) |
+| `DATA_PROVENANCE.md` | Documented text corpora, fonts (*Noto Sans Cham*, external reference fonts), rights disclaimer, and dual-generator architecture | **Verified** | Created & linked across docs |
+| `RESEARCH.md` | Reconciled title, scope, Unicode order, citations (DOIs, ICPR 2022, 2025 paper), detector parameters, manuscript counts, dual generators (Pipeline A baseline 25/20/15/15/15/10 and Pipeline B V25 5-pillar) | **Verified** | 100% matched with benchmarks |
+| `ocr-studio/research.html` | Verbatim synchronization with RESEARCH.md; updated title, tag pill, abstract grammar, citations, and dual generators | **Verified** | `node --check` static JS syntax validated (Code 0) |
 | `ocr-studio/index.html` | Updated model picker, Tab 1 Unicode, Tab 5 empirical benchmarks | **Verified** | `node --check` static JS syntax validated (Code 0) |
-| `README.md` & `README_VI.md` | Standardized title, qualified scope to Eastern Cham, updated synthetic splits and font classifications | **Verified** | Synchronized across languages |
+| `README.md` & `README_VI.md` | Standardized title, qualified scope to Eastern Cham, updated synthetic pipeline to dual generators | **Verified** | Synchronized across languages |
 | `generate_data.py` | Fixed PRE_SIGNS (`ꨯꨰ`), MEDIAL_SIGNS (`ꨴꨵꨳꨶ`), cleaned VOWEL_DIACRITIC_SIGNS, enforced canonical Unicode order | **Verified** | Unit tests passing |
+| `generate_data_v25.py` | Fixed docstring (140k/10k), renamed `MINIMAL_PAIRS_UE_WA` (`ꨲ` UE vs `ꨶ` WA), synchronized with manifest | **Verified** | Code inspection & syntax clean |
+| `v25_dataset_manifest.json` | Reconciled batch size (32/card, 64 global), stages (1-12, 13-22, 23-40), and diacritic naming with `rec_cham_v25.yml` | **Verified** | JSON syntax validated |
+| `TRAINING_ROADMAP_V25.md` | Aligned data distribution table to 5 pillars, updated execution plan stages to 1-12, 13-22, 23-40, fixed diacritic naming | **Verified** | Documented & reconciled |
 | `test_vol_roundtrip.py` | Added comprehensive test suites for VA initial/final, medials, pre-vowels, dependent vowels, stanzas | **Verified** | 100% test pass rate |
 | `validate_unicode_source_labels.py` | Fixed PRE_SIGNS, MEDIAL_SIGNS, and regex for diacritic validation | **Verified** | Script execution clean |
 | `paddleocr_cham_finetune.ipynb` | Synchronized character sets and canonical cluster reordering with generate_data.py | **Verified** | JSON validated |
-| `ACADEMIC_AUDIT.md` | Internal Documentation Audit & Reconciliation Log documenting all items | **Verified** | Fully documented |
+| `ACADEMIC_AUDIT.md` | Documentation Audit & Reconciliation Log tracking known issues and empirical uncertainties | **Verified** | Fully documented |
 
 ---
 
@@ -193,4 +196,4 @@ To maintain full transparency with academic collaborators and external reviewers
 
 ---
 
-**Conclusion**: The repository `phucsd/Cham-OCR` is in full compliance with rigorous academic, scientific, and paleographic standards. Zero ungrounded claims remain in the codebase.
+**Summary of Documentation & Verification Status**: The documentation across `phucsd/Cham-OCR` has been calibrated against actual code artifacts and empirical benchmark logs. Open empirical uncertainties and ongoing data collection needs remain cataloged above to guide future research and collaborative fieldwork.

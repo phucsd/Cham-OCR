@@ -115,7 +115,7 @@ However, pre-vowels such as `ꨯ` (Vowel Sign O, U+AA2F) and `ꨰ` (Vowel Sign A
 ### 2.1 Early Epigraphic & Glyph Recognition
 Automated processing of Cham script originated in the analysis of stone inscriptions from ancient Champa sanctuaries (Mỹ Sơn, Po Nagar, Đồng Dương). Nguyen, Schweyer, Le, Tran, & Vu (2019a) presented preliminary results on recognizing ancient Cham glyphs extracted from stone rubbings and photographs using Histogram of Oriented Gradients (HOG), Non-Parametric Weighted (NPW) features, and CNN-derived feature representations coupled with $k$-NN and linear SVM classifiers at the IEEE MAPR 2019 conference. Due to severe stone weathering, erosion, and irregular surface texture, isolated glyph classification across noisy background substrates was evaluated.
 
-To mitigate extreme sample scarcity in epigraphic corpora, Nguyen, Schweyer, Le, Tran, & Vu (2019b) evaluated data augmentation strategies and transfer learning from rendered synthetic character variants to ancient stone inscription glyphs at the ICIAP 2019 Workshops (PatReCH), demonstrating quantitative gains on synthetic-to-real transfer across weathered stone carvings.
+To mitigate extreme sample scarcity in epigraphic corpora, Nguyen, Schweyer, Le, Tran, & Vu (2019b) evaluated data augmentation strategies and transfer learning from scripts of similar or the same language family to ancient stone inscription glyphs at the ICIAP 2019 Workshops (PatReCH), demonstrating quantitative gains on script-to-inscription transfer across weathered stone carvings.
 
 ### 2.2 Deep Learning for Cham Epigraphy & Transliteration
 In his doctoral dissertation, Nguyen (2023) developed comprehensive document image processing and understanding methodologies dedicated to ancient Cham documents. His work investigated stone inscription image restoration, automatic glyph segmentation under rough stone substrate conditions, and deep convolutional representations for historical Brahmic scripts.
@@ -123,7 +123,7 @@ In his doctoral dissertation, Nguyen (2023) developed comprehensive document ima
 Complementing glyph recognition, Nguyen, Burie, Le, & Schweyer (2022) proposed an effective multi-stage method for text line segmentation in historical document images presented at the 26th International Conference on Pattern Recognition (ICPR 2022), addressing line curvature and touching diacritics in historical archives. Expanding to linguistic representation, Nguyen, Burie, Le, & Schweyer (2023) introduced a two-step sequence transformer model for Cham-to-Latin script transliteration presented at the HIP@ICDAR 2023 workshop. Their system demonstrated the efficacy of sequence-to-sequence transformers in mapping recognized Cham text sequences to standardized Latin phonological romanizations (*Cam-Latin*). Most recently, Nguyen, Burie, Le, & Schweyer (2025) published a comprehensive study entitled *Text line segmentation approach combining deep learning model and traditional image processing techniques - application to transliteration of Cham manuscripts* in *Multimedia Tools and Applications*, evaluating text-line segmentation and automatic transliteration across 627 manuscript images and approximately 8,300 textlines (focusing on line segmentation and transliteration rather than end-to-end character OCR benchmarking).
 
 ### 2.3 Manuscript Preservation & Digitization Initiatives
-Beyond epigraphy on stone, historical Cham manuscripts on paper (*kertas*) and palm-leaf have been documented through preservation missions. Most notably, the *Historic Cham Manuscripts of Vietnam* collection—hosted and preserved by the Southeast Asia Digital Library (SEADL) at Northern Illinois University—preserves 977 digitized manuscripts comprising more than 57,800 high-resolution page scans. In addition, field surveys estimate approximately 3,000 physical manuscripts preserved within Cham community families and religious dignitaries across Vietnam and Cambodia. The French National Research Agency funded the CHAMDOC project (*Cham Documentation*, ANR-19-CE27-0018, 2019–2024) to support preservation, cataloging, and linguistic documentation.
+Beyond epigraphy on stone, historical Cham manuscripts on paper (*kertas*) and palm-leaf have been documented through preservation missions. The Historic Cham Manuscripts of Vietnam collection in the Southeast Asia Digital Library (SEADL) contains 977 digitized manuscripts comprising more than 57,800 page scans. In addition, field surveys estimate approximately 3,000 physical manuscripts preserved within Cham community families and religious dignitaries across Vietnam and Cambodia. The French National Research Agency funded the CHAMDOC project (*Cham Documentation*, ANR-19-CE27-0018, 2019–2024) to support preservation, cataloging, and linguistic documentation.
 
 However, despite the preservation of tens of thousands of scanned folios, almost none of these archives possess open, machine-readable character-level or line-level bounding box ground-truth annotations suitable for training supervised deep learning models. The bottleneck for Cham OCR is therefore not an absolute absence of physical manuscripts, but rather the severe scarcity of annotated, verified training ground truth.
 
@@ -139,7 +139,7 @@ Prior research has focused predominantly on either **isolated glyph recognition 
 ## 3. Text Detection & Indic Line Segmentation (Cham-DBNet)
 
 ### 3.1 The Interlinear Diacritic Collision Problem
-Historical Cham manuscripts frequently exhibit tight interlinear spacing (observed in synthetic and normalized rendering spaces at standard font scale as tight as 3–12 pixels between lines). Because upper dependent vowels reach high above the core text band (ascender excursions extending up to $+18	ext{px}$ at nominal 32–36px glyph heights) and subjoined medials plunge below (descender excursions down to $-22	ext{px}$), the ascenders of line $n+1$ routinely touch or intertwine with the descenders of line $n$ under dense formatting. Standard off-the-shelf text detection models (e.g., baseline DBNet trained on natural scene Latin or CJK text) frequently encounter two severe failure modes when applied to dense historical manuscripts:
+In digital modeling and synthetic text rendering at nominal glyph heights (32–36px), interlinear clearance often narrows to 3–12 pixels between adjacent lines (with ascender excursions extending up to $+18\text{px}$ and descender excursions down to $-22\text{px}$ in normalized coordinate space). Because upper dependent vowels reach high above the core text band and subjoined medials plunge below, the ascenders of line $n+1$ routinely touch or intertwine with the descenders of line $n$ under dense formatting. Standard off-the-shelf text detection models (e.g., baseline DBNet trained on natural scene Latin or CJK text) frequently encounter two severe failure modes when applied to dense historical manuscripts:
 1. **Line Merging**: Grouping adjacent lines into a single bounding box when diacritics touch.
 2. **Diacritic Amputation**: Slicing off upper vowel signs or subjoined medials during rectangular cropping, which causes fatal downstream recognition errors.
 
@@ -211,8 +211,11 @@ def normalize_unicode(text: str) -> str:
 ### 5.1 The Data Scarcity Bottleneck
 Deep neural recognition networks require hundreds of thousands of diverse labeled textline instances. However, surviving physical Cham manuscripts lack character-level bounding box ground truth. To overcome this limitation, we engineered a synthetic generation pipeline (`scripts/generate_data.py`) capable of synthesizing 150,000 diverse textline crops from authentic literary corpora.
 
-### 5.2 Calibrated Synthetic Dataset Partitioning
-The synthetic dataset generator (`scripts/generate_data.py`) partitions the target 150,000 textline synthesis corpus into **15% evaluation/locked splits** (22,500 lines: `val_clean_short` 3%, `val_clean_long` 3%, `val_noisy_short` 3%, `val_noisy_long` 3%, `locked_test` 3%) and **85% training split** (127,500 lines) structured across 6 calibrated sub-categories:
+### 5.2 Calibrated Synthetic Dataset Partitioning & Dual-Generator Architecture
+To support both baseline reproducibility and ongoing experimental modeling, the repository provides two distinct synthetic dataset generation pipelines:
+
+#### Pipeline A: Baseline General Generator (`scripts/generate_data.py`)
+The baseline generator produces a 150,000 textline corpus partitioned into **15% evaluation/locked splits** (22,500 lines: `val_clean_short` 3%, `val_clean_long` 3%, `val_noisy_short` 3%, `val_noisy_long` 3%, `locked_test` 3%) and an **85% training split** (127,500 lines) structured across 6 calibrated sub-categories:
 
 | Training Sub-Category | Proportion | Line Count | Target Composition & Protocol | Target Failure Mode Addressed |
 | :--- | :---: | :---: | :--- | :--- |
@@ -222,6 +225,14 @@ The synthetic dataset generator (`scripts/generate_data.py`) partitions the targ
 | `train_noisy_short` | **15%** | 19,125 | Short lines rendered with Point Spread Function (PSF) blur, noise, and lighting gradients. | Invariance to archival handling artifacts, tremor, and fading ink. |
 | `train_noisy_long` | **15%** | 19,125 | Long verse lines with severe photometric degradation and spatial elastic distortion. | Prevents alignment collapse on degraded multi-word lines. |
 | `train_hard_examples` | **10%** | 12,750 | Adversarial minimal pairs (`ꨲ` vs `ꨶ`, `꩝꩝` vs `꩝`), verse numerals (1–99) with section marks (`꩑꩞`), and stacked subjoined clusters. | Eliminates CTC misclassification of numerals as letters (`꩔` vs `ꨤ`, `꩕` vs `ꨅ`) and diacritic collapsing. |
+
+#### Pipeline B: Experimental V25 Generator (`scripts/generate_data_v25.py`)
+For the V25 experimental iteration, a dedicated multi-threaded generator (`generate_data_v25.py`) synthesizes 150,000 textline images (140,000 train + 10,000 validation) directly synchronized with `configs/v25_dataset_manifest.json` across 5 core pillars:
+1. **Canonical Cham Literature (43.3% / 65,000 lines)**: Classical literary vocabulary (*Po Klong Garai*, 57-stanza verse).
+2. **Anti-Motion Blur Base (20.0% / 30,000 lines)**: Clean base images paired with dynamic in-RAM directional motion blur ($7\times 7$ to $13\times 13$) and defocus.
+3. **Inline Bilingual Code-Switching (16.7% / 25,000 lines)**: Intra-line mixed phrases with Vietnamese diacritics and Latin annotations.
+4. **Stanza Numerals & Boundary Punctuation (12.0% / 18,000 lines)**: Verse numbers $1$–$99$ (`꩑꩞`..`꩙꩙꩞`) and boundary marks (`꩞`, `:`, `–`).
+5. **Adversarial Minimal Pairs (8.0% / 12,000 lines)**: Micro-stroke pairs (`ꨲ` U+AA32 Vowel Sign UE vs `ꨶ` U+AA36 Medial WA, variable Double Danda `꩝꩝` spacing 2–8px, 3-tier diacritic stacks).
 
 ### 5.3 Digital Typefaces & TrueType cmap Tofu Glyph Safeguards
 When rendering synthetic text, digital Cham typefaces must be verified for glyph coverage. The primary bundled and reproducible typeface distributed directly within this repository is **Noto Sans Cham** (`Regular`, `Bold`, `Black`; SIL Open Font License 1.1, located in `ocr-training/data/fonts/`). External reference typefaces evaluated during research—including *Cham Roman*, *EFEO Cham*, and community fonts—are not redistributed in this repository and must be acquired independently if researchers wish to reproduce specific historical font variations.
@@ -324,9 +335,9 @@ if not hasattr(np, 'typeDict'): np.typeDict = {}
 
 While our pipeline demonstrates substantial gains on synthetic and semi-controlled documents, rigorous academic honesty requires acknowledging the following boundaries:
 
-1. **Synthetic-to-Real Domain Gap**: The recognizer is trained predominantly on synthetic textlines rendered with available digital TrueType fonts (*Noto Sans Cham*, *Cham Roman*, *EFEO Cham*). Historical manuscripts feature idiosyncratic scribal hands, variable ink viscosity, and non-standard ligature variations that may exhibit lower recognition confidence in the field.
+1. **Synthetic-to-Real Domain Gap**: The neural recognizer is trained predominantly on synthetic textlines rendered with bundled *Noto Sans Cham* (SIL OFL 1.1). Historical manuscripts feature idiosyncratic scribal hands, variable ink viscosity, and non-standard ligature variations that may exhibit lower recognition confidence in the field.
 2. **Absence of Large-Scale Real Manuscript Ground Truth**: Due to the acute scarcity of digitized historical Cham archives with line-level annotations, current benchmarks rely on controlled synthetic stress-tests and curated test slices. Establishing an open, expert-verified historical palm-leaf manuscript benchmark represents an urgent necessity requiring future collaborative scholarship with native Cham elders and linguists.
-3. **Severe Biological Degradation & Epigraphy**: Inscription stone rubbings and severely mold-damaged palm leaves (where over 40% of character ink has flaked away) remain beyond the capabilities of pure vision-based CTC sequence models. Integrating masked language models (MLMs) trained on historical Cham corpora is an active subject of future study.
+3. **Severe Biological Degradation & Epigraphy**: Inscription stone rubbings and severely mold-damaged palm leaves (where character ink has substantially eroded) remain beyond the capabilities of pure vision-based CTC sequence models. Integrating masked language models (MLMs) trained on historical Cham corpora is an active subject of future study.
 4. **Extreme Interlinear Overlap (Level 5)**: When severe paper wrinkling causes interlinear wave amplitude to exceed line spacing ($\text{Amplitude} > \text{Gap}$), 1D projection and horizontal bounding boxes collapse, indicating the need for 2D polygonal baseline tracking models in future iterations.
 
 ---
@@ -334,13 +345,13 @@ While our pipeline demonstrates substantial gains on synthetic and semi-controll
 ## 9. BibTeX Citation & Academic References
 
 ```bibtex
-@software{cham_ocr_studio,
-  author = {Nguyen, Phuc},
-  title = {Cham OCR Studio: Deep Learning Pipeline and Paleographic Transcription Workbench for Historical Cham Manuscripts},
+@software{cham_ocr_pipeline,
+  author = {Nguyen, Phuc H.},
+  title = {Cham-OCR: A Deep-Learning OCR Pipeline for Unicode Eastern Cham, toward Historical Manuscript and Epigraphic Recognition},
   year = {2026},
   publisher = {GitHub},
   url = {https://github.com/phucsd/Cham-OCR},
-  note = {Official web service: https://ocr.cham.asia}
+  note = {Production web service: https://ocr.cham.asia}
 }
 ```
 

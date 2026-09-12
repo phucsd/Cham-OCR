@@ -83,9 +83,11 @@ Cham-OCR/
    - Mạng nơ-ron **PP-OCRv4 SVTR-LCNet** mở rộng tensor đầu vào lên `[3, 48, 480]`.
    - Cơ chế giải mã kép: CTC Loss kết hợp NRTR Multi-Head Cross-Attention.
    - Chuẩn hóa thứ tự gõ Logic Chăm `normalize_unicode` (Brahmic Logical Order: Phụ âm cơ sở + Dấu phụ dưới chân/quấn RA/LA + Dấu phụ YA/WA + Nguyên âm đứng trước O/AI + Các nguyên âm phụ thuộc khác + Dấu kéo dài âm AA + Phụ âm cuối/Dấu ngắt).
-3. **Sinh Dữ liệu Tổng hợp & Tăng cường**:
-   - 150,000 dòng dữ liệu tổng hợp qua 4 gói phân tầng.
+3. **Hệ thống Sinh Dữ liệu Tổng hợp 150.000 dòng**:
    - Cơ chế lọc chữ lỗi ô vuông (tofu) bằng `fontTools` cmap và làm mờ động học trong RAM (*On-the-Fly Motion Blur*).
+   - **Kiến trúc Hai Bộ Sinh Dữ liệu (Dual Generators)**:
+     - *Pipeline A (Bộ sinh chuẩn: `scripts/generate_data.py`)*: 150.000 dòng chia 15% kiểm thử/đóng băng và 85% huấn luyện qua 6 nhóm: ngắn sạch (25%), vừa sạch (20%), dài sạch (15%), ngắn nhiễu (15%), dài nhiễu (15%), cặp đối kháng (10%).
+     - *Pipeline B (Bộ sinh thực nghiệm V25: `scripts/generate_data_v25.py`)*: 150.000 dòng (140.000 train + 10.000 val) đồng bộ trực tiếp với `configs/v25_dataset_manifest.json` qua 5 trụ cột: ngữ liệu chuẩn (43,3%), chống mờ rung tay (20,0%), song ngữ kẹp dòng (16,7%), số khổ & dấu câu (12,0%), cặp đối kháng vi mô (8,0%).
 4. **Triển khai Trực tuyến**:
    - Đóng gói container Docker trên **Hugging Face Spaces** (`phucsd/cham-ocr-studio`).
    - Tên miền dịch vụ chính thức: **[https://ocr.cham.asia](https://ocr.cham.asia)**.
@@ -115,13 +117,13 @@ Mọi số liệu công bố đều được đối chiếu trực tiếp từ c
 Nếu bạn sử dụng tài liệu, bộ sinh dữ liệu hoặc công cụ Cham OCR Studio trong nghiên cứu, vui lòng trích dẫn:
 
 ```bibtex
-@software{cham_ocr_studio,
-  author = {Nguyen, Phuc},
-  title = {Cham OCR Studio: Deep Learning Pipeline and Paleographic Transcription Workbench for Historical Cham Manuscripts},
+@software{cham_ocr_pipeline,
+  author = {Nguyen, Phuc H.},
+  title = {Cham-OCR: A Deep-Learning OCR Pipeline for Unicode Eastern Cham, toward Historical Manuscript and Epigraphic Recognition},
   year = {2026},
   publisher = {GitHub},
   url = {https://github.com/phucsd/Cham-OCR},
-  note = {Live web service: https://ocr.cham.asia}
+  note = {Production web service: https://ocr.cham.asia}
 }
 ```
 

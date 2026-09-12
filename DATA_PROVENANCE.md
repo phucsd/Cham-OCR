@@ -14,10 +14,10 @@ This document provides a transparent, verifiable record of the provenance, right
 
 | Source / Title | Author / Editor / Institution | Web Reference / Archive | Acquisition Method | Rights / License Status | Redistributed in Repo? |
 | :--- | :--- | :--- | :--- | :--- | :---: |
-| *Akayet Inra Patra* (Classical verse epic) | Traditional Cham scribal transmission; modern editorial transliterations by Cham scholars | Academic & community preservation publications | Curated and transcribed from public domain cultural heritage texts | Traditional cultural heritage; public domain for classical text | Yes (as normalized Unicode textlines in `cham_text.txt`) |
-| *Ariya Po Pareng* (Classical narrative poem) | Traditional Cham scribal transmission | Cham cultural preservation archives | Curated and transcribed from traditional manuscripts | Traditional cultural heritage; public domain for classical text | Yes (normalized Unicode textlines in `cham_text.txt`) |
-| Historical chronicles & folk narratives (*Dalikal*) | Cham traditional oral and written literature | Cham community collections and regional cultural publications | Digitized and normalized into Unicode | Traditional cultural heritage | Yes (normalized Unicode textlines in `cham_text.txt`) |
-| Cham-Vietnamese-French Lexical Compendia | Historical missionary and linguistic wordlists (e.g. Aymonier & Cabaton 1906; Moussay 1971; modern pedagogical materials) | Academic library collections & SEADL references | Digital normalization into standard Unicode 16.0 Cham | Historical reference works / non-exclusive educational use | Yes (vocabulary tokens merged into `cham_text.txt`) |
+| *Akayet Inra Patra* (Classical verse epic) | Traditional Cham scribal transmission; modern editorial transliterations by Cham scholars | Academic & community preservation publications | Curated and transcribed from traditional cultural heritage texts | Traditional cultural heritage / specific edition rights unverified / non-commercial educational & preservation use (line-by-line edition mapping subject to archival verification) | Yes (as normalized Unicode textlines in `cham_text.txt`) |
+| *Ariya Po Pareng* (Classical narrative poem) | Traditional Cham scribal transmission | Cham cultural preservation archives | Curated and transcribed from traditional manuscripts | Traditional cultural heritage / specific edition rights unverified / non-commercial educational & preservation use (line-by-line edition mapping subject to archival verification) | Yes (normalized Unicode textlines in `cham_text.txt`) |
+| Historical chronicles & folk narratives (*Dalikal*) | Cham traditional oral and written literature | Cham community collections and regional cultural publications | Digitized and normalized into Unicode | Traditional cultural heritage / specific edition rights unverified / non-commercial educational & preservation use (line-by-line edition mapping subject to archival verification) | Yes (normalized Unicode textlines in `cham_text.txt`) |
+| Cham-Vietnamese-French Lexical Compendia | Historical missionary and linguistic wordlists (e.g. Aymonier & Cabaton 1906; Moussay 1971; modern pedagogical materials) | Academic library collections & SEADL references | Digital normalization into standard Unicode 16.0 Cham | Historical reference works / specific edition rights unverified / non-commercial educational & preservation use (line-by-line edition mapping subject to archival verification) | Yes (vocabulary tokens merged into `cham_text.txt`) |
 
 ### 1.2 Corpus Curation & Linguistic Preprocessing
 * **Orthographic Normalization**: Conversion into canonical Unicode 16.0 Cham representation (`U+AA00`–`U+AA5F`).
@@ -56,10 +56,10 @@ The following typefaces were evaluated as reference designs during research expe
 
 ## 3. Synthetic Document & Textline Datasets
 
-Due to the acute scarcity of character-level annotated historical Cham manuscript datasets, training and benchmark datasets were synthesized programmatically from `cham_text.txt`:
+Due to the acute scarcity of character-level annotated historical Cham manuscript datasets, training and benchmark datasets were synthesized programmatically from `cham_text.txt`. The repository maintains two distinct synthetic generation pipelines:
 
-### 3.1 150,000 Textline Synthesis Dataset (`scripts/generate_data.py`)
-The generator partitions the 150,000 synthetic corpus into **15% evaluation/locked splits** (22,500 lines) and **85% training split** (127,500 lines):
+### 3.1 Pipeline A: Baseline General Generator (`scripts/generate_data.py`)
+The baseline generator produces a 150,000 textline corpus partitioned into **15% evaluation/locked splits** (22,500 lines) and **85% training split** (127,500 lines):
 * **Evaluation & Locked Splits (15% total / 22,500 lines)**:
   - `val_clean_short` (3% / 4,500 lines)
   - `val_clean_long` (3% / 4,500 lines)
@@ -74,14 +74,22 @@ The generator partitions the 150,000 synthetic corpus into **15% evaluation/lock
   - `train_noisy_long` (**15%** / 19,125 lines): Long verse lines with severe photometric degradation and spatial elastic distortion.
   - `train_hard_examples` (**10%** / 12,750 lines): Adversarial minimal pairs (`ꨲ` vs `ꨶ`, `꩝꩝` vs `꩝`), verse numerals (1–99) with section marks (`꩑꩞`), and stacked subjoined clusters.
 
-### 3.2 Controlled 200-Page Synthetic Document Stress-Test (`ocr-benchmark/`)
+### 3.2 Pipeline B: Experimental V25 Generator (`scripts/generate_data_v25.py`)
+The V25 generator synthesizes 150,000 textline images (140,000 train + 10,000 val) synchronized with `configs/v25_dataset_manifest.json` across 5 core pillars:
+1. **Canonical Cham Literature (43.3% / 65,000 lines)**: Classical literary vocabulary (*Po Klong Garai*, 57-stanza verse).
+2. **Anti-Motion Blur Base (20.0% / 30,000 lines)**: Clean base images paired with dynamic in-RAM directional motion blur ($7\times 7$ to $13\times 13$) and defocus.
+3. **Inline Bilingual Code-Switching (16.7% / 25,000 lines)**: Intra-line mixed phrases with Vietnamese diacritics and Latin annotations.
+4. **Stanza Numerals & Boundary Punctuation (12.0% / 18,000 lines)**: Verse numbers $1$–$99$ (`꩑꩞`..`꩙꩙꩞`) and boundary marks (`꩞`, `:`, `–`).
+5. **Adversarial Minimal Pairs (8.0% / 12,000 lines)**: Micro-stroke pairs (`ꨲ` U+AA32 Vowel Sign UE vs `ꨶ` U+AA36 Medial WA, variable Double Danda `꩝꩝` spacing 2–8px, 3-tier diacritic stacks).
+
+### 3.3 Controlled 200-Page Synthetic Document Stress-Test (`ocr-benchmark/`)
 * 200 full-page synthetic documents comprising 903 ground-truth textlines across 5 difficulty levels (Standard, Aged Paper, Narrow Gap, Wavy Sinusoid, Extreme Overlap).
 * Generated by `ocr-benchmark/scripts/generate_benchmark_200.py` to establish the mathematical breaking point of line segmentation and CTC recognition.
 
-### 3.3 50-Test Stratified Diagnostic Suite (`ocr-studio/data/benchmark_50_tests_results.json`)
+### 3.4 50-Test Stratified Diagnostic Suite (`ocr-studio/data/benchmark_50_tests_results.json`)
 * 50 targeted synthetic image crops covering 10 distinct failure modes (noise, tilt, blur, diacritic confusion, low resolution).
 
-### 3.4 Rights Status of Synthetic Outputs
+### 3.5 Rights Status of Synthetic Outputs
 Synthetically rendered document images and transcriptions generated by repository scripts inherit the rights and usage status of the underlying linguistic corpora and fonts. The synthetic generator code and annotations produced by the project maintainers are provided under the project's [MIT License](LICENSE), while redistribution of generated textline images remains subject to the rights status of the respective underlying source texts.
 
 ---
