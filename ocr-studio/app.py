@@ -194,7 +194,7 @@ def get_ocr_model(version):
     if version in ocr_models:
         return ocr_models[version]
         
-    if version in ['vi', 'en', 'fr', 'japan']:
+    if version in ['en', 'fr', 'japan']:
         ocr_model = OfficialPaddleOCRWrapper(lang=version)
         ocr_models[version] = ocr_model
         return ocr_model
@@ -209,14 +209,40 @@ def get_ocr_model(version):
     from tools.infer.predict_rec import TextRecognizer
     import tools.infer.utility as utility
     
-    model_dir = os.path.join(PROJECT_ROOT, "data", "output", f"rec_cham_inference_{version}")
-    dict_path = os.path.join(PROJECT_ROOT, "data", f"cham_dict_{version}.txt")
-    
-    if not os.path.exists(model_dir):
-        # Fallback to Golden Baseline v23 if version-specific folder is missing
-        model_dir = os.path.join(PROJECT_ROOT, "data", "output", "rec_cham_inference_v23")
-    if not os.path.exists(dict_path):
-        dict_path = os.path.join(PROJECT_ROOT, "data", "cham_dict_v23.txt")
+    if version == 'vi':
+        model_dir = os.path.join(PROJECT_ROOT, "data", "output", "rec_vietnamese_infer")
+        dict_path = os.path.join(PROJECT_ROOT, "data", "vietnamese_dict.txt")
+        model_ready = os.path.exists(os.path.join(model_dir, "inference.pdiparams")) and os.path.exists(dict_path)
+        if not model_ready:
+            try:
+                print(f"📥 Downloading dedicated Vietnamese OCR model to {model_dir}...")
+                os.makedirs(model_dir, exist_ok=True)
+                import urllib.request
+                base_url = "https://huggingface.co/anbeo2004/paddleocr-v5-rec-vi-custom/resolve/main/"
+                dl_files = {
+                    "custom_dict.txt": dict_path,
+                    "inference.json": os.path.join(model_dir, "inference.json"),
+                    "inference.yml": os.path.join(model_dir, "inference.yml"),
+                    "inference.pdiparams": os.path.join(model_dir, "inference.pdiparams")
+                }
+                for fname, ftarget in dl_files.items():
+                    if not os.path.exists(ftarget):
+                        urllib.request.urlretrieve(base_url + fname, ftarget)
+                print("✅ Downloaded Vietnamese OCR model successfully.")
+            except Exception as e:
+                print(f"⚠️ Failed to auto-download Vietnamese model: {e}")
+                ocr_model = OfficialPaddleOCRWrapper(lang='vi')
+                ocr_models[version] = ocr_model
+                return ocr_model
+    else:
+        model_dir = os.path.join(PROJECT_ROOT, "data", "output", f"rec_cham_inference_{version}")
+        dict_path = os.path.join(PROJECT_ROOT, "data", f"cham_dict_{version}.txt")
+        
+        if not os.path.exists(model_dir):
+            # Fallback to Golden Baseline v23 if version-specific folder is missing
+            model_dir = os.path.join(PROJECT_ROOT, "data", "output", "rec_cham_inference_v23")
+        if not os.path.exists(dict_path):
+            dict_path = os.path.join(PROJECT_ROOT, "data", "cham_dict_v23.txt")
         
     sys_argv_backup = sys.argv
     sys.argv = [sys.argv[0]]

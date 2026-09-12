@@ -1254,19 +1254,13 @@
             <div class="model-picker-wrap" title="Select neural OCR recognition architecture">
                 <span class="model-picker-label">Model:</span>
                 <select id="model-select" class="model-select-compact" onchange="updateModelBadge()">
-                    <optgroup label="Paleographic Cham Models (Custom Fine-Tuned)">
-                        <option value="v24" selected>Version 24 (Validated Baseline — Verse-Numeral & Noise-Resilient SVTR)</option>
-                        <option value="v23">Version 23 (Golden Baseline — Visual Order SVTR)</option>
-                        <option value="v22">Version 22 (Legacy Fallback Baseline)</option>
+                    <optgroup label="Paleographic Cham Models">
+                        <option value="v24" selected>Cham V24 (Recommended — Logical Order)</option>
+                        <option value="v23">Cham V23 (Visual Order Baseline)</option>
                     </optgroup>
-                    <optgroup label="Multilingual Baselines (PaddleOCR PP-OCRv4)">
-                        <option value="vi">Vietnamese (Latin)</option>
-                        <option value="en">English (Latin)</option>
-                        <option value="fr">French (Latin)</option>
-                        <option value="japan">Japanese (CJK)</option>
-                    </optgroup>
-                    <optgroup label="Autonomous Routing">
-                        <option value="auto">Adaptive Dual-Engine (Cham & Vietnamese)</option>
+                    <optgroup label="Bilingual & Modern Text">
+                        <option value="auto">Auto Dual-Engine (Cham & Vietnamese)</option>
+                        <option value="vi">Vietnamese (Fine-Tuned PP-OCRv5)</option>
                     </optgroup>
                 </select>
             </div>
