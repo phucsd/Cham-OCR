@@ -13,12 +13,15 @@ pinned: false
 # Cham OCR Monorepo: Deep Learning Pipeline & Paleographic Transcription Workbench
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-ocr.cham.asia-C96442?style=for-the-badge&logo=google-chrome&logoColor=white)](https://ocr.cham.asia)
+[![Research Whitepaper](https://img.shields.io/badge/Research-Whitepaper-8C533E?style=for-the-badge&logo=googlescholar&logoColor=white)](RESEARCH.md)
 [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-F59E0B?style=for-the-badge)](https://huggingface.co/spaces/phucsd/cham-ocr-studio)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-phucsd%2FCham--OCR-24292e?style=for-the-badge&logo=github)](https://github.com/phucsd/Cham-OCR)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
 An end-to-end deep learning research platform and paleographic transcription system specifically engineered for the digitized preservation, line segmentation, and optical character recognition of historical **Cham manuscripts** (encompassing traditional *Akhar Thrah* of Eastern Cham and *Cam Srak* of Western Cham).
 
+> 📖 **Full Academic Research Publication**: Read our comprehensive research paper at **[RESEARCH.md](RESEARCH.md)** or online at **[https://ocr.cham.asia/research](https://ocr.cham.asia/research)** detailing Brahmic paleography, DBNet line segmentation, SVTR recognition, 150K synthetic data generation, and empirical benchmarks.
+> 
 > 🌟 **Live Interactive Web Demo**: Experience the full-featured transcription and diagnostic studio online at **[https://ocr.cham.asia](https://ocr.cham.asia)** (hosted via [Hugging Face Spaces](https://huggingface.co/spaces/phucsd/cham-ocr-studio)).
 
 ---
@@ -138,7 +141,7 @@ If you utilize Cham-OCR, our synthetic dataset pipeline, or the OCR Studio in yo
 
 ```bibtex
 @software{cham_ocr_studio,
-  author = {Nguyen, Phuc and Contributors},
+  author = {Nguyen, Phuc},
   title = {Cham OCR Studio: Deep Learning Pipeline and Paleographic Transcription Workbench for Historical Cham Manuscripts},
   year = {2026},
   publisher = {GitHub},

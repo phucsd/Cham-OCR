@@ -4,6 +4,8 @@
 
 Dự án nghiên cứu, huấn luyện và chẩn đoán nhận diện chữ viết tiếng Chăm (Akhar Thrah & West Cham/Cam Srak) dựa trên nền tảng PaddleOCR PP-OCRv4 Multilingual và DBNet.
 
+> 📖 **Bài Báo Nghiên Cứu Khoa Học (Academic Whitepaper)**: Xem toàn bộ công trình nghiên cứu khoa học, phương pháp luận và số liệu benchmark thực nghiệm chi tiết tại **[RESEARCH.md](RESEARCH.md)** hoặc trực tuyến tại **[https://ocr.cham.asia/research](https://ocr.cham.asia/research)**.
+> 
 > 🌟 **Trải nghiệm Trực tuyến (Live Demo)**: Truy cập giao diện ứng dụng web Cham OCR Studio tại: **[https://ocr.cham.asia](https://ocr.cham.asia)** (hoặc trên [Hugging Face Spaces](https://huggingface.co/spaces/phucsd/cham-ocr-studio)).
 
 ---

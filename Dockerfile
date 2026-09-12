@@ -19,7 +19,7 @@ COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Force cache bust for updated app code & Cham-DBNet model
-RUN echo "Cache bust 2026-09-12T09:40:00Z - Academic English UI, 7-Tab Research Methodology & Public GitHub Repo"
+RUN echo "Cache bust 2026-09-12T10:00:00Z - Dedicated Academic Research Page & Single Author Citation"
 
 # Copy application files
 COPY . /app

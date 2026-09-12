@@ -1347,6 +1347,25 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                 html_content = "<h1>Error: index.html not found!</h1>"
                 
             self.wfile.write(html_content.encode('utf-8'))
+        elif parsed_path in ('/research', '/research.html', '/methodology', '/paper'):
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html; charset=utf-8')
+            self.send_header('Cache-Control', 'public, max-age=1800')
+            self.end_headers()
+            
+            dir_path = os.path.dirname(os.path.abspath(__file__))
+            research_path = os.path.join(dir_path, 'research.html')
+            if os.path.exists(research_path):
+                with open(research_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+            else:
+                content = "<h1>Error: research.html not found!</h1>"
+            self.wfile.write(content.encode('utf-8'))
+        elif parsed_path in ('/health', '/api/health'):
+            self.send_response(200)
+            self.send_header('Content-type', 'text/plain; charset=utf-8')
+            self.end_headers()
+            self.wfile.write(b"OK")
         else:
             self.send_error(404, 'File Not Found')
             
