@@ -1,57 +1,80 @@
-# Cham OCR Diagnostic Studio (OCR Review & Inference Studio)
+**English** | [Tiếng Việt](README_STUDIO_VI.md)
 
-Ứng dụng này cung cấp giao diện web cục bộ để thử nghiệm, chẩn đoán lỗi phân đoạn dòng (Line Segmentation) và kiểm tra độ chính xác của các mô hình nhận diện chữ viết tiếng Chăm khác nhau.
+# Cham OCR Studio: Paleographic Transcription & Diagnostic Workbench
 
-## 📁 Cấu trúc Thư mục Phân hệ Studio
+Cham OCR Studio is an interactive paleographic document analysis and transcription environment designed for digitized historical Cham manuscripts (*Akhar Thrah* and *Cam Srak*). It features deep neural text recognition (PP-OCRv4 SVTR), Indic Line Segmentation (PaddleOCR DBNet + Valley-Cut Heuristics), continuous ground-truth editing, and a built-in virtual paleographic keyboard.
+
+> 🌟 **Live Interactive Web Demo**: **[https://ocr.cham.asia](https://ocr.cham.asia)** (mirrored on [Hugging Face Spaces](https://huggingface.co/spaces/phucsd/cham-ocr-studio))
+
+---
+
+## 📁 Studio Directory Structure
 
 ```
 ocr-studio/
-├── README_STUDIO.md                    # Hướng dẫn này
-├── app.py                              # Script chạy ứng dụng Web Server & Studio Backend
-├── index.html                          # Frontend Claude Warm Light Theme
-├── start_studio.py                     # Script khởi động nhanh giao diện
-├── PaddleOCR/                          # Bản sao thư viện PaddleOCR phục vụ suy luận cục bộ
-└── data/                               # Dữ liệu phục vụ suy luận
-    ├── ocr_corrections.txt             # Lưu trữ các chỉnh sửa nhãn của người dùng
-    ├── cham_dict_v*.txt                # Từ điển ký tự các phiên bản mô hình
-    └── output/                         # Thư mục chứa các mô hình nhận diện đã xuất (inference model)
-        ├── rec_cham_inference_v18/
-        ├── rec_cham_inference_v21/
+├── README_STUDIO.md                    # This documentation (English)
+├── README_STUDIO_VI.md                 # Vietnamese documentation
+├── app.py                              # HTTP Server backend & multi-crop orchestrator
+├── index.html                          # Frontend UI (Claude Warm Light Theme, Google Sans Flex)
+├── start_studio.py                     # Quick-launch helper script
+├── PaddleOCR/                          # Standalone PaddleOCR inference library
+└── data/                               # Inference data & model assets
+    ├── ocr_corrections.txt             # Verified textline corrections log
+    ├── cham_dict_v*.txt                # Character dictionaries for model versions
+    └── output/                         # Exported model checkpoints (inference format)
+        ├── rec_cham_inference_v24/
+        ├── rec_cham_inference_v23/
         ├── rec_cham_inference_v22/
-        └── rec_cham_inference_v23/
+        └── rec_cham_inference_v21/
 ```
 
 ---
 
-## ⚡ Yêu cầu hệ thống & Cài đặt
+## ⚡ System Requirements & Installation
 
-1. Cài đặt các thư viện cần thiết từ thư mục gốc:
+1. Install project dependencies from the repository root:
    ```bash
    pip install -r requirements.txt
    ```
-   *Lưu ý*: Đối với môi trường Python mới (như Python 3.13+), ứng dụng đã tự động vá lỗi tương thích NumPy 2.x bằng monkeypatch.
+   *Note*: On modern Python runtimes (Python 3.10+ / 3.13+), NumPy 2.x backward-compatibility monkeypatching is automatically applied.
 
-2. Đảm bảo bạn đã có các mô hình inference trong `ocr-studio/data/output/` và file từ điển tương ứng trong `ocr-studio/data/`.
+2. Verify that inference models are present in `ocr-studio/data/output/` alongside the corresponding dictionaries in `ocr-studio/data/`.
 
 ---
 
-## 🚀 Hướng dẫn khởi chạy
+## 🚀 Launching the Studio
 
-Chạy lệnh sau tại thư mục gốc của dự án hoặc trong thư mục `ocr-studio`:
+Run the application from the repository root or from within the `ocr-studio` directory:
 
 ```bash
 python ocr-studio/app.py
 ```
 
-Hoặc sử dụng tệp khởi chạy nhanh:
+Alternatively, use the quick-launch script:
 ```bash
 python ocr-studio/start_studio.py
 ```
 
-Ứng dụng sẽ tìm kiếm cổng trống thích hợp (mặc định: `7860`, `8080`, `8081`...) và khởi chạy:
+The server automatically binds to an open port (defaulting to `7860`, `8080`, `8081`...):
 ```
+======================================================================
 🚀 Cham OCR Diagnostic Studio is running at: http://localhost:7860
 📁 Corrections will be saved to: ocr-studio/data/ocr_corrections.txt
+======================================================================
 ```
 
-Mở trình duyệt và truy cập `http://localhost:7860` để bắt đầu kiểm tra chẩn đoán ảnh chữ viết tiếng Chăm.
+Open your browser and visit `http://localhost:7860`.
+
+---
+
+## ⌨️ Reviewer Keybindings
+
+| Key | Action | Description |
+| :---: | :--- | :--- |
+| **A** | **Approve** | Marks current line as verified ($100\%$ confidence) and moves to the next line. |
+| **M** | **Merge Below** | Merges selected line with the subsequent line below into a unified crop. |
+| **S** | **Split Line** | Splits selected line into two equal halves. |
+| **W** | **Flag Error** | Flags current line as inaccurate ($0\%$ confidence) for retraining. |
+| **Alt + K** | **Virtual Keyboard** | Toggles the Cham paleographic virtual keyboard drawer. |
+| **Arrow Up / Down** | **Navigation** | Traverses previous and subsequent textlines. |
+| **Double Click** | **In-Place Edit** | Activates inline text editing for the target line. |

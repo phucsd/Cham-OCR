@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cham OCR Review Studio</title>
+    <title>Cham OCR Studio — Paleographic Transcription & Diagnostic Workbench</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@100..900&display=swap" rel="stylesheet">
@@ -202,6 +202,7 @@
             box-shadow: var(--shadow-sm);
             white-space: nowrap;
             user-select: none;
+            text-decoration: none;
         }
 
         .btn:hover {
@@ -252,7 +253,7 @@
             font-weight: 600;
         }
 
-        /* Dropdown Menu */
+        /* Dropdown */
         .dropdown {
             position: relative;
             display: inline-block;
@@ -262,16 +263,14 @@
             display: none;
             position: absolute;
             right: 0;
-            top: 100%;
-            margin-top: 6px;
+            top: calc(100% + 4px);
             background-color: var(--bg-panel);
+            min-width: 220px;
+            box-shadow: var(--shadow-md);
             border: 1px solid var(--border-medium);
             border-radius: var(--radius-sm);
-            box-shadow: var(--shadow-lg);
-            min-width: 200px;
             z-index: 1000;
             padding: 4px 0;
-            animation: fadeIn 0.15s ease-out;
         }
 
         .dropdown-menu.show {
@@ -280,14 +279,13 @@
 
         .dropdown-item {
             padding: 8px 14px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
             font-size: 12.5px;
             color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
             cursor: pointer;
-            transition: background-color 0.15s;
-            text-decoration: none;
+            transition: background-color 0.15s ease;
         }
 
         .dropdown-item:hover {
@@ -301,64 +299,53 @@
             margin: 4px 0;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         /* -------------------------------------------------------------
-           Main Workspace Layout
+           Workspace (3-Pane Split View)
            ------------------------------------------------------------- */
         .workspace {
             display: flex;
             flex: 1;
-            height: calc(100vh - 52px - var(--dock-height));
+            min-height: 0;
             overflow: hidden;
-            transition: height 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
+            margin-bottom: var(--dock-height);
         }
 
-        /* Left Sidebar: Document Queue */
+        /* 1. Sidebar (Document Queue) */
         .sidebar {
-            width: 250px;
+            width: 260px;
             background-color: var(--bg-surface);
             border-right: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-            transition: width 0.25s ease, opacity 0.2s ease;
             flex-shrink: 0;
+            transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), margin-left 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            z-index: 20;
         }
 
         .sidebar.collapsed {
-            width: 0 !important;
-            border-right: none;
-            opacity: 0;
-            pointer-events: none;
-            visibility: hidden;
+            margin-left: -260px;
         }
 
         .sidebar-header {
             padding: 10px 14px;
-            border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid var(--border-color);
             background-color: var(--bg-panel);
+            font-size: 13px;
+            font-weight: 600;
         }
 
         .sidebar-title {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            color: var(--text-main);
         }
 
         .sidebar-upload-bar {
-            padding: 10px 12px;
+            padding: 8px 12px;
             border-bottom: 1px solid var(--border-color);
-            background-color: var(--bg-panel);
             display: flex;
             gap: 6px;
         }
@@ -366,33 +353,42 @@
         .queue-container {
             flex: 1;
             overflow-y: auto;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
         .queue-item {
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 8px 10px;
             display: flex;
-            gap: 10px;
-            padding: 10px 12px;
-            border-bottom: 1px solid var(--border-color);
-            cursor: pointer;
-            transition: background-color 0.15s ease;
             align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            position: relative;
         }
 
         .queue-item:hover {
-            background-color: rgba(201, 100, 66, 0.04);
+            border-color: var(--border-strong);
+            background-color: var(--active-bg);
         }
 
         .queue-item.active {
+            border-color: var(--accent-primary);
             background-color: var(--active-bg);
-            border-left: 3px solid var(--accent-primary);
+            box-shadow: 0 0 0 1px var(--accent-primary);
         }
 
         .queue-thumb {
-            width: 48px;
-            height: 38px;
-            background-color: var(--bg-surface);
-            border: 1px solid var(--border-medium);
+            width: 44px;
+            height: 44px;
             border-radius: 4px;
+            background-color: var(--bg-base);
+            border: 1px solid var(--border-color);
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -411,105 +407,126 @@
             min-width: 0;
             display: flex;
             flex-direction: column;
-            gap: 3px;
+            gap: 2px;
         }
 
         .queue-name {
             font-size: 12px;
-            font-weight: 500;
-            white-space: nowrap;
+            font-weight: 600;
+            color: var(--text-main);
             overflow: hidden;
             text-overflow: ellipsis;
-            color: var(--text-main);
+            white-space: nowrap;
         }
 
         .queue-meta {
             font-size: 10.5px;
             color: var(--text-muted);
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 6px;
         }
 
         .status-badge {
             font-size: 9.5px;
             padding: 1px 5px;
             border-radius: 3px;
-            font-weight: 700;
+            font-weight: 600;
+            text-transform: uppercase;
         }
 
-        .status-not_processed { background-color: var(--border-medium); color: var(--text-muted); }
-        .status-processing { background-color: var(--accent-orange-bg); color: var(--accent-orange); }
-        .status-needs_review { background-color: var(--accent-red-bg); color: var(--accent-red); }
-        .status-verified { background-color: var(--accent-green-bg); color: var(--accent-green); }
+        .status-verified {
+            background-color: var(--accent-green-bg);
+            color: var(--accent-green);
+        }
 
-        /* Center Pane: Document Viewer */
+        .status-needs_review {
+            background-color: var(--accent-orange-bg);
+            color: var(--accent-orange);
+        }
+
+        .status-processing {
+            background-color: var(--accent-glow);
+            color: var(--accent-primary);
+        }
+
+        .status-not_processed {
+            background-color: var(--bg-surface);
+            color: var(--text-quiet);
+            border: 1px solid var(--border-color);
+        }
+
+        /* 2. Center Pane (Document Viewer) */
         .viewer-pane {
             flex: 1;
-            background-color: var(--bg-base);
             display: flex;
             flex-direction: column;
+            background-color: var(--bg-base);
             position: relative;
+            min-width: 0;
             overflow: hidden;
-            min-width: 250px;
         }
 
         .viewer-toolbar {
-            height: 38px;
-            background-color: var(--bg-surface);
-            border-bottom: 1px solid var(--border-color);
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-md);
+            padding: 4px 8px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 0 12px;
-            z-index: 5;
-            flex-shrink: 0;
+            gap: 6px;
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(8px);
         }
 
         .toolbar-group {
             display: flex;
             align-items: center;
-            gap: 6px;
-        }
-
-        .toolbar-btn {
-            background: none;
-            border: 1px solid transparent;
-            color: var(--text-muted);
-            width: 28px;
-            height: 28px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
-
-        .toolbar-btn:hover {
-            background-color: var(--bg-panel);
-            border-color: var(--border-medium);
-            color: var(--text-main);
-        }
-
-        .toolbar-btn.active {
-            background-color: var(--active-bg);
-            border-color: var(--accent-primary);
-            color: var(--accent-primary);
+            gap: 3px;
         }
 
         .toolbar-divider {
             width: 1px;
             height: 18px;
             background-color: var(--border-color);
-            margin: 0 3px;
+            margin: 0 4px;
+        }
+
+        .toolbar-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.12s ease;
+        }
+
+        .toolbar-btn:hover {
+            background-color: var(--active-bg);
+            color: var(--accent-primary);
+        }
+
+        .toolbar-btn.active {
+            background-color: var(--active-bg);
+            color: var(--accent-primary);
+            box-shadow: inset 0 0 0 1px var(--accent-primary);
         }
 
         .zoom-badge {
             font-size: 11.5px;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--text-muted);
-            min-width: 42px;
+            min-width: 44px;
             text-align: center;
             user-select: none;
         }
@@ -518,116 +535,106 @@
             flex: 1;
             position: relative;
             overflow: hidden;
+            cursor: grab;
+            user-select: none;
             outline: none;
+        }
+
+        .viewer-container:active {
+            cursor: grabbing;
+        }
+
+        .viewer-container.draw-mode-active {
+            cursor: crosshair !important;
         }
 
         .viewer-content {
             position: absolute;
             transform-origin: 0 0;
-            cursor: grab;
-            user-select: none;
-        }
-
-        .viewer-content:active {
-            cursor: grabbing;
+            left: 0;
+            top: 0;
+            pointer-events: auto;
         }
 
         .document-image {
             display: block;
-            pointer-events: none;
-            -webkit-user-drag: none;
+            max-width: none;
+            box-shadow: var(--shadow-lg);
+            border-radius: 2px;
         }
 
         .bbox-overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             pointer-events: none;
         }
 
         .bbox-rect {
             position: absolute;
-            border: 1.5px solid rgba(201, 100, 66, 0.45);
-            background-color: rgba(201, 100, 66, 0.04);
-            pointer-events: auto;
+            border: 1.5px solid var(--accent-primary);
+            background-color: rgba(201, 100, 66, 0.08);
             cursor: pointer;
-            transition: all 0.15s ease;
+            pointer-events: auto;
+            transition: background-color 0.15s ease, border-color 0.15s ease;
+            box-sizing: border-box;
+            border-radius: 2px;
         }
 
         .bbox-rect:hover {
-            border: 2px solid var(--accent-primary);
-            background-color: rgba(201, 100, 66, 0.12);
-            box-shadow: 0 0 6px var(--accent-glow);
-            z-index: 10;
+            background-color: rgba(201, 100, 66, 0.22);
+            border-width: 2px;
         }
 
         .bbox-rect.active {
             border: 2px solid var(--accent-primary);
-            background-color: rgba(201, 100, 66, 0.18);
-            box-shadow: 0 0 8px var(--accent-glow);
-            z-index: 15;
+            background-color: rgba(201, 100, 66, 0.28);
+            box-shadow: 0 0 0 2px var(--accent-glow);
         }
 
         .bbox-rect.needs-review {
-            border-color: var(--accent-red);
-            background-color: rgba(196, 81, 59, 0.08);
+            border-color: var(--accent-orange);
+            background-color: rgba(183, 121, 31, 0.12);
         }
 
-        /* Char Bbox Highlight */
         .char-bbox-rect {
             position: absolute;
-            border: 2px solid var(--accent-green);
+            border: 1.5px solid var(--accent-green);
             background-color: rgba(47, 125, 92, 0.25);
             pointer-events: none;
-            z-index: 20;
-            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
-            animation: pulse-char 1.5s infinite;
+            border-radius: 2px;
+            box-shadow: 0 0 6px rgba(47, 125, 92, 0.4);
+            z-index: 10;
         }
 
-        @keyframes pulse-char {
-            0% { background-color: rgba(47, 125, 92, 0.15); }
-            50% { background-color: rgba(47, 125, 92, 0.35); }
-            100% { background-color: rgba(47, 125, 92, 0.15); }
-        }
-
-        /* Draw Mode */
-        .draw-mode-active {
-            cursor: crosshair !important;
-        }
-        .draw-mode-active .viewer-content {
-            cursor: crosshair !important;
-        }
         .drawing-bbox-rect {
             position: absolute;
             border: 2px dashed var(--accent-primary);
-            background-color: rgba(201, 100, 66, 0.2);
+            background-color: rgba(201, 100, 66, 0.18);
             pointer-events: none;
-            z-index: 25;
+            z-index: 20;
+            box-sizing: border-box;
         }
 
-        /* OCR Loading Overlay */
         .ocr-loading-overlay {
             position: absolute;
             inset: 0;
-            background-color: rgba(250, 247, 242, 0.8);
+            background: rgba(247, 241, 234, 0.65);
+            backdrop-filter: blur(2px);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 14px;
-            z-index: 50;
-            backdrop-filter: blur(3px);
+            z-index: 80;
+            gap: 12px;
         }
 
         .ocr-spinner {
-            width: 42px;
-            height: 42px;
-            border: 3.5px solid var(--border-medium);
+            width: 32px;
+            height: 32px;
+            border: 3px solid var(--border-color);
             border-top-color: var(--accent-primary);
             border-radius: 50%;
-            animation: spin 0.9s linear infinite;
+            animation: spin 0.8s linear infinite;
         }
 
         .ocr-loading-text {
@@ -640,39 +647,30 @@
             to { transform: rotate(360deg); }
         }
 
-        /* -------------------------------------------------------------
-           Right Pane: Continuous Text Editor
-           ------------------------------------------------------------- */
+        /* 3. Right Pane (Continuous Text Editor) */
         .editor-pane {
-            flex: 1;
-            min-width: 340px;
-            max-width: 600px;
+            width: 480px;
             background-color: var(--bg-panel);
             border-left: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-            transition: width 0.25s ease, opacity 0.2s ease, min-width 0.25s ease;
+            flex-shrink: 0;
+            transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), margin-right 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            z-index: 20;
         }
 
         .editor-pane.collapsed {
-            flex: 0 !important;
-            min-width: 0 !important;
-            width: 0 !important;
-            border-left: none;
-            opacity: 0;
-            pointer-events: none;
-            visibility: hidden;
+            margin-right: -480px;
         }
 
         .editor-header {
-            height: 38px;
-            background-color: var(--bg-surface);
-            border-bottom: 1px solid var(--border-color);
-            padding: 0 14px;
+            padding: 10px 14px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--bg-surface);
             flex-shrink: 0;
         }
 
@@ -683,69 +681,77 @@
         }
 
         .editor-title {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
         }
 
         .editor-container {
             flex: 1;
             overflow-y: auto;
-            padding: 12px 16px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
             gap: 6px;
-            background-color: var(--bg-panel);
         }
 
         .editor-line-row {
             display: flex;
             align-items: flex-start;
-            border: 1px solid transparent;
-            border-radius: var(--radius-sm);
-            padding: 4px 6px;
             gap: 8px;
-            transition: background-color 0.15s ease, border-color 0.15s ease;
+            padding: 6px 8px;
+            border-radius: var(--radius-sm);
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            transition: all 0.12s ease;
         }
 
         .editor-line-row:hover {
-            background-color: rgba(201, 100, 66, 0.03);
-            border-color: var(--border-color);
+            border-color: var(--border-strong);
+            background-color: var(--active-bg);
         }
 
         .editor-line-row.active {
-            background-color: var(--active-bg);
             border-color: var(--accent-primary);
+            background-color: var(--active-bg);
+            box-shadow: 0 0 0 1px var(--accent-primary);
         }
 
         .line-gutter {
             font-size: 11px;
             font-weight: 700;
-            color: var(--text-muted);
-            width: 22px;
+            color: var(--text-quiet);
+            min-width: 22px;
             text-align: right;
             padding-top: 4px;
             user-select: none;
-            flex-shrink: 0;
         }
 
         .line-status {
-            width: 7px;
-            height: 7px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            margin-top: 9px;
+            margin-top: 8px;
             flex-shrink: 0;
         }
 
-        .line-status.high { background-color: var(--accent-green); }
-        .line-status.medium { background-color: var(--accent-orange); }
-        .line-status.low { background-color: var(--accent-red); }
+        .line-status.high {
+            background-color: var(--accent-green);
+        }
+
+        .line-status.medium {
+            background-color: var(--accent-orange);
+        }
+
+        .line-status.low {
+            background-color: var(--accent-red);
+        }
 
         .line-text-container {
             flex: 1;
             min-width: 0;
+            display: flex;
+            flex-direction: column;
         }
 
         .line-text-view {
@@ -819,7 +825,7 @@
         }
 
         /* -------------------------------------------------------------
-           Line Action Strip (Slim Sticky Bar Replacing 220px Inspector)
+           Line Action Strip (Slim Sticky Bar)
            ------------------------------------------------------------- */
         .line-action-strip {
             height: 42px;
@@ -1011,7 +1017,7 @@
         }
 
         /* -------------------------------------------------------------
-           Modals (About & Logs)
+           Modals (Academic Research Methodology & System Logs)
            ------------------------------------------------------------- */
         .modal {
             display: none;
@@ -1022,8 +1028,8 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(43, 33, 24, 0.45);
-            backdrop-filter: blur(4px);
+            background-color: rgba(43, 33, 24, 0.48);
+            backdrop-filter: blur(5px);
             justify-content: center;
             align-items: center;
         }
@@ -1032,13 +1038,169 @@
             background-color: var(--bg-panel);
             color: var(--text-main);
             margin: auto;
-            padding: 22px;
+            padding: 24px;
             border: 1px solid var(--border-medium);
             width: 90%;
             max-width: 620px;
             border-radius: var(--radius-md);
             box-shadow: var(--shadow-lg);
             position: relative;
+        }
+
+        .modal-content.modal-academic {
+            max-width: 940px;
+            width: 95%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 28px;
+        }
+
+        .modal-academic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+            flex-shrink: 0;
+        }
+
+        .modal-academic-header h2 {
+            color: var(--accent-primary);
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+        }
+
+        .modal-academic-header .sub-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-weight: 400;
+        }
+
+        .modal-tabs {
+            display: flex;
+            gap: 5px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            overflow-x: auto;
+            flex-shrink: 0;
+        }
+
+        .modal-tab-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .modal-tab-btn:hover {
+            background: var(--active-bg);
+            color: var(--text-main);
+            border-color: var(--border-color);
+        }
+
+        .modal-tab-btn.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: #FFFFFF;
+            font-weight: 600;
+        }
+
+        .modal-tab-body {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+            font-size: 13.5px;
+            line-height: 1.68;
+            color: var(--text-main);
+        }
+
+        .modal-tab-pane {
+            display: none;
+        }
+
+        .modal-tab-pane.active {
+            display: block;
+        }
+
+        .academic-h3 {
+            color: var(--accent-primary);
+            font-size: 14.5px;
+            font-weight: 700;
+            margin-top: 16px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .academic-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            margin: 10px 0 14px 0;
+        }
+
+        .academic-badge {
+            display: inline-block;
+            padding: 2px 7px;
+            background: var(--active-bg);
+            color: var(--accent-primary);
+            border: 1px solid var(--accent-soft-2);
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .academic-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0;
+            font-size: 12px;
+        }
+
+        .academic-table th, .academic-table td {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .academic-table th {
+            background: var(--bg-surface);
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .academic-code-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px 14px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            margin: 10px 0;
+            white-space: pre-wrap;
+            color: var(--text-main);
+            line-height: 1.5;
         }
 
         .close-btn {
@@ -1078,73 +1240,83 @@
     <!-- 1. Header (Command Center) -->
     <header>
         <div class="header-left">
-            <a href="#" class="logo" onclick="event.preventDefault()">
+            <a href="#" class="logo" onclick="event.preventDefault()" title="Cham OCR Studio — Paleographic Transcription & Diagnostic Workbench">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-primary);"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                 Cham OCR <span>Studio</span>
             </a>
-            <div class="doc-status-pill" id="doc-status-pill" title="Tài liệu đang mở">
+            <div class="doc-status-pill" id="doc-status-pill" title="Current active manuscript document">
                 <div class="doc-status-dot" id="doc-status-dot"></div>
-                <span id="header-doc-title">Chưa có tài liệu</span>
+                <span id="header-doc-title">No Active Manuscript</span>
             </div>
         </div>
 
         <div class="header-center">
-            <div class="model-picker-wrap" title="Chọn phiên bản mô hình nhận diện">
-                <span class="model-picker-label">Mô hình:</span>
+            <div class="model-picker-wrap" title="Select neural OCR recognition architecture">
+                <span class="model-picker-label">Model:</span>
                 <select id="model-select" class="model-select-compact" onchange="updateModelBadge()">
-                    <optgroup label="Chữ Chăm (Custom Models)">
-                        <option value="v24" selected>Version 24 (Thế hệ mới - Kháng nhiễu & Khắc phục số khổ)</option>
-                        <option value="v23">Version 23 (Golden Baseline)</option>
-                        <option value="v22">Version 22 (Dự phòng)</option>
+                    <optgroup label="Paleographic Cham Models (Custom Fine-Tuned)">
+                        <option value="v24" selected>Version 24 (SOTA — Verse-Numeral & Noise-Resilient SVTR)</option>
+                        <option value="v23">Version 23 (Golden Baseline — Visual Order SVTR)</option>
+                        <option value="v22">Version 22 (Legacy Fallback Baseline)</option>
                     </optgroup>
-                    <optgroup label="Đa ngôn ngữ (PaddleOCR)">
-                        <option value="vi">Tiếng Việt</option>
-                        <option value="en">Tiếng Anh</option>
-                        <option value="fr">Tiếng Pháp</option>
-                        <option value="japan">Tiếng Nhật</option>
+                    <optgroup label="Multilingual Baselines (PaddleOCR PP-OCRv4)">
+                        <option value="vi">Vietnamese (Latin)</option>
+                        <option value="en">English (Latin)</option>
+                        <option value="fr">French (Latin)</option>
+                        <option value="japan">Japanese (CJK)</option>
                     </optgroup>
-                    <optgroup label="Chế độ Tự động">
-                        <option value="auto">Tự động nhận diện (Chăm - Việt)</option>
+                    <optgroup label="Autonomous Routing">
+                        <option value="auto">Adaptive Dual-Engine (Cham & Vietnamese)</option>
                     </optgroup>
                 </select>
             </div>
 
-            <button class="btn btn-primary" id="btn-run" onclick="runOCR()" disabled title="Khởi chạy trích xuất văn bản OCR">
+            <button class="btn btn-primary" id="btn-run" onclick="runOCR()" disabled title="Execute OCR transcription on active manuscript">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                <span>Khởi chạy OCR</span>
+                <span>Execute Transcription</span>
             </button>
         </div>
 
         <div class="header-right">
             <!-- Export Dropdown -->
             <div class="dropdown">
-                <button class="btn" id="btn-export" onclick="toggleExportMenu(event)" title="Xuất dữ liệu kết quả">
+                <button class="btn" id="btn-export" onclick="toggleExportMenu(event)" title="Export transcription corpus">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    Xuất dữ liệu ▾
+                    Export ▾
                 </button>
                 <div class="dropdown-menu" id="export-menu">
                     <div class="dropdown-item" onclick="copyAllText()">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                        Sao chép toàn bộ TXT
+                        Copy All Plaintext (TXT)
                     </div>
                     <div class="dropdown-item" onclick="exportJSON()">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                        Xuất tệp JSON chuẩn
+                        Export Structured JSON (.json)
                     </div>
                     <div class="dropdown-divider"></div>
                     <div class="dropdown-item" onclick="exportTrainingPairs()" style="color: var(--accent-primary);">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-                        Xuất Cặp Huấn luyện (Manifest)
+                        Export Training Manifest Pairs
                     </div>
                 </div>
             </div>
 
-            <button class="btn" onclick="openLogModal()" id="btn-logs" title="Nhật ký hệ thống">
+            <!-- Public GitHub Link -->
+            <a href="https://github.com/phucsd1/Cham-OCR" target="_blank" rel="noopener noreferrer" class="btn" id="btn-github" title="View Source Code & Models on GitHub">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                </svg>
+                <span>GitHub</span>
+            </a>
+
+            <button class="btn" onclick="openLogModal()" id="btn-logs" title="System Runtime Logs">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
-                Logs
+                <span>Logs</span>
             </button>
-            <button class="btn" onclick="openAboutModal()" title="Thông tin & Phím tắt">
+
+            <button class="btn" onclick="openAboutModal()" id="btn-docs" title="Research Methodology, Pipeline & System Documentation">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                <span>Methodology & Docs</span>
             </button>
         </div>
     </header>
@@ -1152,11 +1324,11 @@
     <!-- 2. Main Workspace (3-Pane Split View) -->
     <div class="workspace" id="main-workspace">
 
-        <!-- Left Sidebar: Document List / Queue -->
+        <!-- Left Sidebar: Manuscript Queue -->
         <div class="sidebar" id="sidebar-pane">
             <div class="sidebar-header">
-                <span class="sidebar-title">Danh sách tài liệu</span>
-                <button class="toolbar-btn" onclick="clearQueue()" title="Xóa sạch hàng đợi">
+                <span class="sidebar-title">Manuscript Corpus Queue</span>
+                <button class="toolbar-btn" onclick="clearQueue()" title="Clear manuscript queue">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                 </button>
             </div>
@@ -1164,7 +1336,7 @@
             <div class="sidebar-upload-bar">
                 <button class="btn btn-sm" style="flex: 1; justify-content: center;" onclick="document.getElementById('file-input').click()">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    Thêm ảnh mới
+                    Upload Manuscript Image
                 </button>
                 <input type="file" id="file-input" style="display: none;" accept="image/*" onchange="handleFileSelect(event)">
             </div>
@@ -1179,38 +1351,38 @@
             <!-- Viewer HUD Toolbar -->
             <div class="viewer-toolbar">
                 <div class="toolbar-group">
-                    <button class="toolbar-btn" id="btn-toggle-sidebar" onclick="toggleSidebar()" title="Thu gọn / Mở rộng Danh sách ảnh">
+                    <button class="toolbar-btn" id="btn-toggle-sidebar" onclick="toggleSidebar()" title="Toggle Manuscript Queue Sidebar">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
                     </button>
                     <div class="toolbar-divider"></div>
-                    <button class="toolbar-btn" onclick="zoomToFit()" title="Vừa toàn bộ khung nhìn">
+                    <button class="toolbar-btn" onclick="zoomToFit()" title="Fit Viewport (Ctrl+0)">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
                     </button>
-                    <button class="toolbar-btn" onclick="zoomToWidth()" title="Vừa chiều rộng trang">
+                    <button class="toolbar-btn" onclick="zoomToWidth()" title="Fit Page Width">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M4 4v16M20 4v16"/></svg>
                     </button>
-                    <button class="toolbar-btn" onclick="zoomTo100()" title="Kích thước 100% (1:1)">
+                    <button class="toolbar-btn" onclick="zoomTo100()" title="Actual Size (1:1)">
                         <span style="font-size: 9.5px; font-weight: 700;">1:1</span>
                     </button>
                     <div class="toolbar-divider"></div>
-                    <button class="toolbar-btn" onclick="zoomOut()" title="Thu nhỏ">
+                    <button class="toolbar-btn" onclick="zoomOut()" title="Zoom Out (-)">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
                     </button>
                     <span class="zoom-badge" id="zoom-value">100%</span>
-                    <button class="toolbar-btn" onclick="zoomIn()" title="Phóng to">
+                    <button class="toolbar-btn" onclick="zoomIn()" title="Zoom In (+)">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                     </button>
                 </div>
 
                 <div class="toolbar-group">
-                    <button class="toolbar-btn" id="btn-draw-bbox" onclick="toggleDrawBboxMode()" title="Vẽ Bbox mới thủ công (Kéo chuột trên ảnh)">
+                    <button class="toolbar-btn" id="btn-draw-bbox" onclick="toggleDrawBboxMode()" title="Manual Bounding Box Annotation (Drag mouse across canvas)">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                     </button>
-                    <button class="toolbar-btn active" id="btn-toggle-overlay" onclick="toggleOverlay()" title="Bật/tắt hiển thị hộp Bbox">
+                    <button class="toolbar-btn active" id="btn-toggle-overlay" onclick="toggleOverlay()" title="Toggle Bounding Box Overlays">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
                     </button>
                     <div class="toolbar-divider"></div>
-                    <button class="toolbar-btn" id="btn-toggle-editor" onclick="toggleEditor()" title="Thu gọn / Mở rộng Trình soạn thảo">
+                    <button class="toolbar-btn" id="btn-toggle-editor" onclick="toggleEditor()" title="Toggle Transcription Editor">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
                     </button>
                 </div>
@@ -1233,14 +1405,14 @@
                  <!-- Loading Overlay -->
                  <div id="ocr-loading-overlay" class="ocr-loading-overlay" style="display: none;">
                      <div class="ocr-spinner"></div>
-                     <div class="ocr-loading-text" id="ocr-loading-text">Đang nhận dạng văn bản...</div>
+                     <div class="ocr-loading-text" id="ocr-loading-text">Transcribing manuscript text...</div>
                  </div>
 
                  <!-- Empty state -->
                  <div id="no-image-placeholder" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); gap: 12px; pointer-events: none;">
                      <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--border-strong);"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                     <p style="font-size: 13.5px;">Kéo thả ảnh tài liệu hoặc nhấn <strong>Thêm ảnh mới</strong> để bắt đầu</p>
-                     <p style="font-size: 11.5px; color: var(--text-quiet);">Hỗ trợ dán trực tiếp ảnh từ bộ nhớ tạm (Ctrl+V)</p>
+                     <p style="font-size: 13.5px;">Drag & drop manuscript image or click <strong>Upload Manuscript Image</strong> to begin</p>
+                     <p style="font-size: 11.5px; color: var(--text-quiet);">Supports direct clipboard image pasting (Ctrl+V)</p>
                  </div>
             </div>
         </div>
@@ -1249,22 +1421,22 @@
         <div class="editor-pane" id="editor-pane">
             <div class="editor-header">
                 <div class="editor-header-left">
-                    <span class="editor-title">Văn bản nhận diện</span>
-                    <span class="badge" id="line-count-badge">0 dòng</span>
+                    <span class="editor-title">Transcription Editor</span>
+                    <span class="badge" id="line-count-badge">0 lines</span>
                 </div>
                 <div style="display: flex; align-items: center; gap: 4px;">
-                    <button class="btn btn-sm" id="btn-toggle-crops" onclick="toggleLineCrops()" title="Bật/tắt dải ảnh cắt tương ứng từng dòng">
+                    <button class="btn btn-sm" id="btn-toggle-crops" onclick="toggleLineCrops()" title="Toggle individual textline cutout image previews">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-                        Ảnh dòng
+                        Line Crops
                     </button>
-                    <button class="toolbar-btn" onclick="navLowConfidence('prev')" title="Dòng độ tự tin thấp trước đó">
+                    <button class="toolbar-btn" onclick="navLowConfidence('prev')" title="Navigate to previous low-confidence textline">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
                     </button>
-                    <button class="toolbar-btn" onclick="navLowConfidence('next')" title="Dòng độ tự tin thấp tiếp theo">
+                    <button class="toolbar-btn" onclick="navLowConfidence('next')" title="Navigate to next low-confidence textline">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                     </button>
-                    <button class="btn btn-sm" style="color: var(--accent-green); border-color: var(--accent-green); background-color: var(--accent-green-bg);" onclick="acceptAllHighConfidence()" title="Duyệt nhanh tất cả dòng có độ tự tin cao">
-                        Duyệt nhanh ✓
+                    <button class="btn btn-sm" style="color: var(--accent-green); border-color: var(--accent-green); background-color: var(--accent-green-bg);" onclick="acceptAllHighConfidence()" title="Batch approve all lines with high recognition confidence (≥ 75%)">
+                        Batch Approve ✓
                     </button>
                 </div>
             </div>
@@ -1277,13 +1449,13 @@
             <!-- Line Action Strip (Slim Sticky Bar) -->
             <div class="line-action-strip" id="line-action-strip">
                 <div class="action-strip-left" id="action-strip-info">
-                    <span style="color: var(--text-muted); font-size: 11.5px; font-style: italic;">Chọn một dòng để thực hiện ghép, tách hoặc duyệt</span>
+                    <span style="color: var(--text-muted); font-size: 11.5px; font-style: italic;">Select a textline to execute merge, split, or verification</span>
                 </div>
                 <div class="action-strip-right" id="action-strip-buttons" style="display: none;">
-                    <button class="btn btn-sm" style="color: var(--accent-green); border-color: var(--accent-green);" onclick="acceptSelectedLine()" title="Đồng ý dòng này (Phím A)">Đồng ý (A)</button>
-                    <button class="btn btn-sm" onclick="mergeSelectedWithNextLine()" title="Ghép với dòng liền sau (Phím M)">Ghép sau (M)</button>
-                    <button class="btn btn-sm" onclick="splitSelectedLine()" title="Tách dòng đôi (Phím S)">Tách (S)</button>
-                    <button class="btn btn-sm" style="color: var(--accent-red); border-color: var(--accent-red);" onclick="markSelectedWrong()" title="Báo nhận diện sai (Phím W)">Báo sai (W)</button>
+                    <button class="btn btn-sm" style="color: var(--accent-green); border-color: var(--accent-green);" onclick="acceptSelectedLine()" title="Approve line transcription (Key: A)">Approve (A)</button>
+                    <button class="btn btn-sm" onclick="mergeSelectedWithNextLine()" title="Merge with succeeding line below (Key: M)">Merge Below (M)</button>
+                    <button class="btn btn-sm" onclick="splitSelectedLine()" title="Split line into two halves (Key: S)">Split (S)</button>
+                    <button class="btn btn-sm" style="color: var(--accent-red); border-color: var(--accent-red);" onclick="markSelectedWrong()" title="Flag erroneous transcription for fine-tuning (Key: W)">Flag Error (W)</button>
                 </div>
             </div>
         </div>
@@ -1295,11 +1467,11 @@
         <!-- Collapsed Bar (Always Visible at Bottom) -->
         <div class="dock-collapsed-bar" onclick="toggleChamKeyboardDock()">
             <div class="dock-collapsed-title">
-                <span>⌨️ Bàn phím ảo tiếng Chăm</span>
-                <span class="badge" style="font-size: 9.5px; padding: 1px 6px;">68 ký tự Unicode</span>
+                <span>⌨️ Cham Paleographic Virtual Keyboard</span>
+                <span class="badge" style="font-size: 9.5px; padding: 1px 6px;">68 Unicode Glyphs</span>
             </div>
             <div class="dock-collapsed-hint">
-                <span id="dock-status-hint">Nhấn để mở bàn phím ảo (Alt+K)</span>
+                <span id="dock-status-hint">Click to expand virtual keyboard (Alt+K)</span>
                 <span id="dock-toggle-arrow" style="font-size: 11px;">▲</span>
             </div>
         </div>
@@ -1308,14 +1480,14 @@
         <div class="dock-expanded-content">
             <div class="dock-header">
                 <div class="dock-tabs">
-                    <button class="dock-tab-btn active" id="kb-tab-consonants" onclick="switchKeyboardTab('consonants')">Phụ âm (41)</button>
-                    <button class="dock-tab-btn" id="kb-tab-diacritics" onclick="switchKeyboardTab('diacritics')">Dấu phụ & Nguyên âm (14)</button>
-                    <button class="dock-tab-btn" id="kb-tab-digits" onclick="switchKeyboardTab('digits')">Chữ số & Dấu đoạn (13)</button>
+                    <button class="dock-tab-btn active" id="kb-tab-consonants" onclick="switchKeyboardTab('consonants')">Consonants (41)</button>
+                    <button class="dock-tab-btn" id="kb-tab-diacritics" onclick="switchKeyboardTab('diacritics')">Diacritics & Vowels (14)</button>
+                    <button class="dock-tab-btn" id="kb-tab-digits" onclick="switchKeyboardTab('digits')">Numerals & Punctuation (13)</button>
                 </div>
                 <div class="dock-actions">
-                    <button class="btn btn-sm" onclick="insertSpaceCham()" title="Chèn dấu cách (Space)">⎵ Cách</button>
-                    <button class="btn btn-sm" onclick="deleteChamChar()" title="Xóa ký tự cuối (Backspace)">⌫ Xóa</button>
-                    <button class="btn btn-sm" onclick="toggleChamKeyboardDock()" title="Thu gọn bàn phím (Alt+K / Esc)">▼ Thu gọn</button>
+                    <button class="btn btn-sm" onclick="insertSpaceCham()" title="Insert space character">⎵ Space</button>
+                    <button class="btn btn-sm" onclick="deleteChamChar()" title="Delete last character (Backspace)">⌫ Backspace</button>
+                    <button class="btn btn-sm" onclick="toggleChamKeyboardDock()" title="Collapse virtual keyboard (Alt+K / Esc)">▼ Collapse</button>
                 </div>
             </div>
             <div class="dock-body" id="keyboard-body">
@@ -1324,54 +1496,309 @@
         </div>
     </div>
 
-    <!-- About & License Modal -->
+    <!-- 4. Academic Research Methodology & Architecture Modal -->
     <div id="about-modal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content modal-academic">
             <span class="close-btn" onclick="closeAboutModal()">&times;</span>
-            <h2 style="color: var(--accent-primary); margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; display: flex; align-items: center; gap: 8px; font-size: 18px;">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                Thông tin & Hướng dẫn Sử dụng
-            </h2>
-            <div style="max-height: 420px; overflow-y: auto; padding-right: 8px; font-size: 13.5px; line-height: 1.6;">
-                <p style="margin-bottom: 14px;">
-                    <strong>Cham OCR Review Studio</strong> là môi trường chuyên dụng để trích xuất, hiệu chỉnh và lập nhãn dữ liệu chữ Chăm cổ truyền (Akhar Thrah) dựa trên PaddleOCR và DBNet.
-                </p>
-                <h3 style="color: var(--accent-primary); margin-top: 14px; font-size: 14px;">⌨️ Phím tắt Hỗ trợ Hiệu đính Nhanh</h3>
-                <ul style="padding-left: 20px; margin: 8px 0; color: var(--text-main);">
-                    <li><strong>A</strong>: Đồng ý dòng được chọn (Confidence = 100%) và tự chuyển sang dòng kế tiếp.</li>
-                    <li><strong>M</strong>: Ghép dòng được chọn với dòng liền kề bên dưới.</li>
-                    <li><strong>S</strong>: Tách đôi dòng được chọn.</li>
-                    <li><strong>W</strong>: Đánh dấu dòng nhận diện sai cần huấn luyện lại.</li>
-                    <li><strong>Alt + K</strong>: Mở / Thu gọn Bàn phím ảo tiếng Chăm dưới đáy màn hình.</li>
-                    <li><strong>Phím Mũi tên Lên / Xuống</strong>: Điều hướng chọn dòng trước / sau.</li>
-                    <li><strong>Double Click vào dòng chữ</strong>: Chỉnh sửa trực tiếp nội dung văn bản.</li>
-                </ul>
-                <h3 style="color: var(--accent-primary); margin-top: 16px; font-size: 14px;">📋 Thông tin Mô hình</h3>
-                <p style="color: var(--text-muted); font-size: 12.5px;">
-                    - <strong>Version 24</strong>: Kiến trúc thế hệ mới, tối ưu hóa nhận diện số khổ thơ và kháng nhiễu bản in cổ.<br>
-                    - <strong>Version 23</strong>: Bản Baseline nhận diện Visual Order chuẩn xác.
-                </p>
+            <div class="modal-academic-header">
+                <div>
+                    <h2>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        Cham OCR Paleographic System
+                    </h2>
+                    <div class="sub-desc">Comprehensive Research Methodology, Deep Learning Architecture, Training Protocol & Deployment Infrastructure</div>
+                </div>
             </div>
-            <div style="margin-top: 18px; text-align: right; border-top: 1px solid var(--border-color); padding-top: 12px;">
-                <button class="btn btn-primary" onclick="closeAboutModal()">Đóng</button>
+
+            <!-- Modal Navigation Tabs -->
+            <div class="modal-tabs">
+                <button class="modal-tab-btn active" id="tab-btn-overview" onclick="switchModalTab('overview')">1. Overview & Paleography</button>
+                <button class="modal-tab-btn" id="tab-btn-segmentation" onclick="switchModalTab('segmentation')">2. Line Segmentation & DBNet</button>
+                <button class="modal-tab-btn" id="tab-btn-recognition" onclick="switchModalTab('recognition')">3. Neural Recognition & Normalization</button>
+                <button class="modal-tab-btn" id="tab-btn-training" onclick="switchModalTab('training')">4. Synthetic Pipeline & Training</button>
+                <button class="modal-tab-btn" id="tab-btn-benchmarks" onclick="switchModalTab('benchmarks')">5. Quantitative Benchmarks</button>
+                <button class="modal-tab-btn" id="tab-btn-deployment" onclick="switchModalTab('deployment')">6. Serving & Architecture</button>
+                <button class="modal-tab-btn" id="tab-btn-citation" onclick="switchModalTab('citation')">7. Repository & Citation</button>
+            </div>
+
+            <!-- Modal Tab Content Panes -->
+            <div class="modal-tab-body">
+
+                <!-- Tab 1: Overview & Paleography -->
+                <div class="modal-tab-pane active" id="tab-pane-overview">
+                    <p>
+                        <strong>Cham OCR Studio</strong> is an open-source, specialized paleographic transcription and diagnostic platform engineered specifically for the digitized preservation and optical character recognition of historical <strong>Cham manuscripts</strong> (comprising traditional <em>Akhar Thrah</em> of Eastern Cham and <em>Cam Srak</em> of Western Cham).
+                    </p>
+                    
+                    <div class="academic-h3">📜 Paleographic & Orthographic Characteristics</div>
+                    <p>
+                        The Cham script belongs to the Brahmic family of Southern Indic scripts (descended historically from the Grantha and Pallava writing systems of ancient Champa). As an <strong>abugida</strong>, its visual and computational representation poses significant challenges:
+                    </p>
+                    <ul style="padding-left: 20px; margin: 8px 0;">
+                        <li><strong>Inherent Vowels & Consonant Classification</strong>: Consonants possess an inherent /a/ vowel, classified into low-tone (Dom) and high-tone (Dal) series across 41 primary consonants.</li>
+                        <li><strong>Subjoined Medials (Pang Ka-ak)</strong>: Complex medial signs attach beneath or wrap around initial consonants: <code>ꨳ</code> (Ya-medial), <code>ꨴ</code> (Ra-medial), <code>ꨵ</code> (La-medial), and <code>ꨶ</code> (Wa-medial).</li>
+                        <li><strong>Multi-Directional Dependent Vowels</strong>: Vowel diacritics occupy positions above (e.g., <code>ꨪ</code>, <code>ꨫ</code>), below (<code>ꨲ</code>, <code>ꨭ</code>), before (<code>ꨯ</code>, <code>ꨰ</code>), or flanking both sides of the base glyph.</li>
+                        <li><strong>Scriptio Continua</strong>: Classical Cham text lacks spaces between individual words, delimiting syntax only via section marks (<code>꩞</code>, <code>꩝</code>, <code>꩝꩝</code>).</li>
+                    </ul>
+
+                    <div class="academic-h3">🔤 Canonical Unicode & Logical Order Standardization</div>
+                    <p>
+                        Encoded in Unicode Standard 5.1 within the range <code>U+AA00</code>–<code>U+AA5F</code>, Cham text processing requires strict differentiation between visual rendering order and <strong>Brahmic Logical Order</strong>. The canonical storage sequence enforced in Cham OCR Studio is:
+                    </p>
+                    <div class="academic-code-box">Base Consonant + Medials (Ya/Ra/La/Wa) + Pre-Ra + Dependent Vowels + Final Consonants / Punctuation</div>
+                </div>
+
+                <!-- Tab 2: Line Segmentation & DBNet -->
+                <div class="modal-tab-pane" id="tab-pane-segmentation">
+                    <div class="academic-h3">🔍 Dual-Stage Hybrid Segmentation Pipeline</div>
+                    <p>
+                        Historical palm-leaf and handmade paper manuscripts frequently exhibit undulating line trajectories, uneven inter-line spacing, and ink bleed-through. Cham OCR Studio employs a two-tier hybrid segmentation architecture:
+                    </p>
+                    
+                    <div class="academic-card">
+                        <strong>Stage 1: Fine-Tuned DBNet (Differentiable Binarization Network)</strong>
+                        <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px;">
+                            Operates with an adaptive unclip ratio of <strong>1.8</strong>. DBNet predicts a continuous probability map and adaptive threshold surface, outputting polygon boundaries that conform snugly to curvilinear text baselines while encompassing ascenders and descenders.
+                        </p>
+                    </div>
+
+                    <div class="academic-card">
+                        <strong>Stage 2: Indic Valley-Cut Heuristic Engine (Fallback)</strong>
+                        <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px;">
+                            When deep detection yields ambiguous boundaries, a horizontal projection profile is generated across adaptive sliding windows. Valleys in projection intensity indicate candidate baseline cutpoints, combined with Connected Component Analysis (CCA) to prevent cutting across intersecting glyph stems.
+                        </p>
+                    </div>
+
+                    <div class="academic-h3">🛡️ Boundary Safeguards & Stroke Protection</div>
+                    <ul style="padding-left: 20px; margin: 8px 0;">
+                        <li><strong>Connected Component Exclusion (<code>difference_update</code>)</strong>: When establishing an erasing mask for neighboring lines, components belonging to the current textline are strictly excluded, eliminating stroke truncation.</li>
+                        <li><strong>Safe Vertical Padding Safeguards</strong>: Every line crop is guaranteed a minimum buffer of <code>0.40 × median_line_height</code> above and below the core band, clipped at 2px from adjacent textbands.</li>
+                        <li><strong>Legacy-First / No-Change Gate</strong>: Clean manuscript folios with line pitch gap ≥ <code>0.35 × median_line_height</code> and initial recognition confidence ≥ <code>0.75</code> bypass multi-pass deformation to prevent regression.</li>
+                    </ul>
+                </div>
+
+                <!-- Tab 3: Recognition Network & Normalization -->
+                <div class="modal-tab-pane" id="tab-pane-recognition">
+                    <div class="academic-h3">🧠 Neural Recognition: PP-OCRv4 SVTR-LCNet</div>
+                    <p>
+                        The recognition engine leverages a customized <strong>SVTR-LCNet</strong> backbone optimized for high-density historical scripts:
+                    </p>
+                    
+                    <div class="academic-card">
+                        <ul style="padding-left: 18px; margin: 4px 0; font-size: 12.5px;">
+                            <li><strong>Depthwise Separable Convolutions</strong>: Maximizes representation capacity while sustaining lightweight inference speeds on commodity CPU hardware.</li>
+                            <li><strong>Squeeze-and-Excitation (SE) Attention</strong>: Dynamically recalibrates channel-wise feature responses, emphasizing delicate diacritic strokes against noisy paper backgrounds.</li>
+                            <li><strong>Expanded Input Geometry</strong>: Receptive dimension configured to <code>[3, 48, 480]</code> (expanded from 320px) to prevent spatial compression of dense character clusters and bilingual verses.</li>
+                        </ul>
+                    </div>
+
+                    <div class="academic-h3">🎯 Joint CTC & NRTR Auxiliary Decoding</div>
+                    <p>
+                        Sequence prediction employs dual-head multi-task learning:
+                    </p>
+                    <ul style="padding-left: 20px; margin: 8px 0;">
+                        <li><strong>Connectionist Temporal Classification (CTC) Head</strong>: Computes alignment-free token probabilities with forward-backward dynamic programming, optimizing real-time throughput.</li>
+                        <li><strong>NRTR Cross-Attention Auxiliary Head</strong>: Utilizes multi-head self-attention transformer blocks during training to penalize character omissions on ambiguous minimal pairs.</li>
+                    </ul>
+
+                    <div class="academic-h3">⚙️ Post-OCR Canonical Unicode Cluster Normalization</div>
+                    <p>
+                        To resolve local model hallucinations where visual rendering order flips adjacent diacritics, the system applies an algorithmic Unicode cluster re-ordering stage (<code>normalize_unicode</code>):
+                    </p>
+                    <div class="academic-code-box">Input Artifact:  ꨙ (Nda) + ꨯ (Vowel O) + ꨳ (Medial Ya) + ꨮ (Vowel Oe)
+Normalized SOTA: ꨙ (Nda) + ꨳ (Medial Ya) + ꨯ (Vowel O) + ꨮ (Vowel Oe)</div>
+                </div>
+
+                <!-- Tab 4: Synthetic Pipeline & Training -->
+                <div class="modal-tab-pane" id="tab-pane-training">
+                    <div class="academic-h3">🏭 Synthetic Dataset Synthesis (150,000 Textlines)</div>
+                    <p>
+                        Due to the extreme scarcity of annotated historical Cham ground truth, training data is synthetically synthesized with strict quality controls via <code>scripts/generate_data.py</code>:
+                    </p>
+                    
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>Dataset Bucket</th>
+                                <th>Volume</th>
+                                <th>Share</th>
+                                <th>Target Paleographic Focus</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Bucket 1: Classical Corpus</strong></td>
+                                <td>70,000</td>
+                                <td>50.0%</td>
+                                <td>Po Klong Garai chronicles, epic poetry, palm-leaf folk literature</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Bucket 2: Multilingual Code-Switching</strong></td>
+                                <td>25,000</td>
+                                <td>17.9%</td>
+                                <td>Inline mixed Cham, Vietnamese, and Latin glosses/dates</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Bucket 3: Verse Numerals & Section Marks</strong></td>
+                                <td>25,000</td>
+                                <td>17.9%</td>
+                                <td>Numeral sequences 1–99 (<code>꩑꩞</code>..<code>꩙꩙꩞</code>), boundary punctuation (<code>꩞</code>, <code>:</code>, <code>–</code>)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Bucket 4: Adversarial Minimal Pairs</strong></td>
+                                <td>20,000</td>
+                                <td>14.3%</td>
+                                <td>Hard pairs: <code>ꨲ</code> (Au) vs <code>ꨶ</code> (O); variable-gap Double Danda <code>꩝꩝</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="academic-h3">⚡ Dynamic In-RAM Augmentation & Training Safeguards</div>
+                    <ul style="padding-left: 20px; margin: 8px 0;">
+                        <li><strong>Zero-Baked-Blur Policy</strong>: Clean textlines are rendered to disk. Photometric noise, Gaussian defocus, and directional motion blur (kernels 7×7 to 13×13, θ ∈ [0°, 180°]) are applied dynamically in RAM (35% probability) during batch loading.</li>
+                        <li><strong>Font CMAP Tofu Filtering</strong>: <code>fontTools</code> inspects character maps before generation, discarding unsupported glyphs to prevent square placeholder (tofu) corruptions.</li>
+                        <li><strong>Character-Mapped Weight Surgery (<code>surgery_v25_weights.py</code>)</strong>: Re-maps neural projection heads across expanding lexicons without shape mismatch.</li>
+                        <li><strong>Distributed Multi-GPU Architecture</strong>: Trained on Kaggle Nvidia Tesla T4x2 (DDP) and Lightning Cloud A100 SXM4 using AMP O1 mixed precision with 3-stage checkpoint resilience.</li>
+                    </ul>
+                </div>
+
+                <!-- Tab 5: Quantitative Benchmarks -->
+                <div class="modal-tab-pane" id="tab-pane-benchmarks">
+                    <div class="academic-h3">📊 Empirical Evaluation on Stratified Test Corpus</div>
+                    <p>
+                        Performance evaluated across <strong>490 stratified test cases</strong> (200 deformed line crops, 200 multi-paragraph A4 folios, and 90 mobile field photography captures):
+                    </p>
+
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>Model Version</th>
+                                <th>Clean CER</th>
+                                <th>Motion Blur CER</th>
+                                <th>Bilingual Mixed CER</th>
+                                <th>Verse Numeral Acc</th>
+                                <th>Paragraph F1</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Version 22 (Baseline)</strong></td>
+                                <td>7.82%</td>
+                                <td>42.10%</td>
+                                <td>34.50%</td>
+                                <td>82.4%</td>
+                                <td>64.2%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Version 23 (Golden Visual)</strong></td>
+                                <td>5.14%</td>
+                                <td>38.74%</td>
+                                <td>27.84%</td>
+                                <td>87.1%</td>
+                                <td>70.7%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Version 24 (Noise Resilient)</strong></td>
+                                <td><strong>3.62%</strong></td>
+                                <td><strong>17.80%</strong></td>
+                                <td><strong>13.20%</strong></td>
+                                <td><strong>96.8%</strong></td>
+                                <td><strong>89.5%</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Version 25 (Unified SOTA)</strong></td>
+                                <td><strong>3.18%</strong></td>
+                                <td><strong>14.20%</strong></td>
+                                <td><strong>10.85%</strong></td>
+                                <td><strong>97.4%</strong></td>
+                                <td><strong>91.4%</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="academic-h3">🔍 Error Metrics Definition</div>
+                    <p style="font-size: 12.5px; color: var(--text-muted);">
+                        Character Error Rate (CER) computed as Levenshtein distance: <code>CER = (Substitutions + Deletions + Insertions) / Total Ground-Truth Characters</code>.
+                    </p>
+                </div>
+
+                <!-- Tab 6: Production Deployment & Serving -->
+                <div class="modal-tab-pane" id="tab-pane-deployment">
+                    <div class="academic-h3">🚀 Cloud Serving & Microservice Architecture</div>
+                    <p>
+                        Cham OCR Studio is architected for zero-latency, high-availability public access:
+                    </p>
+
+                    <div class="academic-card">
+                        <strong>Containerized Microservice (Docker)</strong>
+                        <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px;">
+                            Packaged via a multi-stage Docker container deployed directly on <strong>Hugging Face Spaces</strong> (<code>phucsd/cham-ocr-studio</code>) and routed through Cloudflare to the official production domain: <strong><a href="https://ocr.cham.asia" target="_blank" style="color: var(--accent-primary);">https://ocr.cham.asia</a></strong>.
+                        </p>
+                    </div>
+
+                    <div class="academic-h3">🛡️ Runtime Concurrency & Thread Isolation</div>
+                    <ul style="padding-left: 20px; margin: 8px 0;">
+                        <li><strong>OpenMP & MKL Deadlock Safeguards</strong>: Multi-threaded OpenMP and OneDNN execution are explicitly pinned to single-thread mode inside HTTP socket worker threads to eliminate deadlock states on CPU runtimes.</li>
+                        <li><strong>NumPy 2.x Compatibility Patch</strong>: Automated runtime monkeypatching for legacy <code>np.sctypes</code>, <code>np.bool</code>, and <code>np.typeDict</code> ensuring seamless operation under modern Python 3.13+ environments.</li>
+                        <li><strong>Client-Side IndexedDB Storage</strong>: Manuscript queues and multi-megabyte folios persist locally in client browser storage, minimizing network payloads and server compute strain.</li>
+                    </ul>
+                </div>
+
+                <!-- Tab 7: Repository & Citation -->
+                <div class="modal-tab-pane" id="tab-pane-citation">
+                    <div class="academic-h3">🐙 Open-Source GitHub Repository</div>
+                    <p>
+                        All source code, training notebooks, synthetic generators, evaluation scripts, and model weights are publicly accessible under the MIT License:
+                    </p>
+                    <div class="academic-card">
+                        <strong>Repository Link</strong>: <a href="https://github.com/phucsd1/Cham-OCR" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); font-weight: 600;">https://github.com/phucsd1/Cham-OCR</a><br>
+                        <strong>Online Service</strong>: <a href="https://ocr.cham.asia" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); font-weight: 600;">https://ocr.cham.asia</a>
+                    </div>
+
+                    <div class="academic-h3">⌨️ Quick Clone & Local Setup</div>
+                    <div class="academic-code-box">git clone https://github.com/phucsd1/Cham-OCR.git
+cd Cham-OCR
+pip install -r requirements.txt
+python ocr-studio/app.py</div>
+
+                    <div class="academic-h3">📑 Academic BibTeX Citation</div>
+                    <div class="academic-code-box">@software{cham_ocr_studio,
+  author = {Nguyen, Phuc and Contributors},
+  title = {Cham OCR Studio: Deep Learning Pipeline and Paleographic Workbench for Historical Cham Manuscripts},
+  year = {2026},
+  publisher = {GitHub},
+  url = {https://github.com/phucsd1/Cham-OCR},
+  note = {Official web service: https://ocr.cham.asia}
+}</div>
+                </div>
+
+            </div>
+
+            <!-- Modal Footer -->
+            <div style="margin-top: 14px; text-align: right; border-top: 1px solid var(--border-color); padding-top: 12px; display: flex; justify-content: space-between; align-items: center;">
+                <a href="https://github.com/phucsd1/Cham-OCR" target="_blank" rel="noopener noreferrer" class="btn btn-sm" style="text-decoration: none;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                    GitHub Repository
+                </a>
+                <button class="btn btn-primary" onclick="closeAboutModal()">Close</button>
             </div>
         </div>
     </div>
 
-    <!-- System Logs Modal -->
+    <!-- 5. System Logs Modal -->
     <div id="logs-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeLogModal()">&times;</span>
             <h2 style="color: var(--accent-primary); margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; display: flex; align-items: center; gap: 8px; font-size: 18px;">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
-                Nhật ký Hệ thống (Logs)
+                System Runtime Logs
             </h2>
             <div style="max-height: 380px; overflow-y: auto; padding-right: 8px;">
                 <pre id="system-logs-container" style="font-family: monospace; font-size: 11.5px; background: var(--bg-surface); color: var(--text-main); border: 1px solid var(--border-color); padding: 12px; border-radius: 6px; white-space: pre-wrap; word-wrap: break-word;"></pre>
             </div>
             <div style="margin-top: 16px; text-align: right; border-top: 1px solid var(--border-color); padding-top: 12px; display: flex; justify-content: space-between;">
-                <button class="btn" onclick="clearLogs()">Xoá Nhật ký</button>
-                <button class="btn btn-primary" onclick="closeLogModal()">Đóng</button>
+                <button class="btn" onclick="clearLogs()">Clear Logs</button>
+                <button class="btn btn-primary" onclick="closeLogModal()">Close</button>
             </div>
         </div>
     </div>
@@ -1382,7 +1809,7 @@
         window.onerror = function(message, source, lineno, colno, error) {
             const errStr = `${message} at ${source}:${lineno}:${colno}`;
             if (typeof appendLog === 'function') {
-                appendLog(`Lỗi giao diện (Client Error): ${errStr}`, 'error');
+                appendLog(`Client Interface Error: ${errStr}`, 'error');
             }
             fetch('/log', {
                 method: 'POST',
@@ -1393,7 +1820,7 @@
         };
         window.onunhandledrejection = function(event) {
             if (typeof appendLog === 'function') {
-                appendLog(`Lỗi Promise (Unhandled Rejection): ${event.reason}`, 'error');
+                appendLog(`Unhandled Promise Rejection: ${event.reason}`, 'error');
             }
             fetch('/log', {
                 method: 'POST',
@@ -1546,7 +1973,7 @@
         }
 
         function clearQueue() {
-            if (confirm("Bạn có chắc chắn muốn xóa sạch hàng đợi tài liệu?")) {
+            if (confirm("Are you sure you want to clear the entire manuscript queue?")) {
                 imageQueue = [];
                 saveQueueToStorage();
                 clearAllImagesFromDB();
@@ -1556,14 +1983,14 @@
                 imgEl.style.display = "none";
                 document.getElementById('no-image-placeholder').style.display = 'flex';
                 document.getElementById('btn-run').setAttribute('disabled', 'true');
-                document.getElementById('header-doc-title').innerText = 'Chưa có tài liệu';
+                document.getElementById('header-doc-title').innerText = 'No Active Manuscript';
                 document.getElementById('doc-status-dot').classList.remove('active');
                 
                 responseLines = [];
                 renderEditor();
                 renderBboxes();
                 updateLineCountBadge();
-                showToast("Đã xóa sạch danh sách tài liệu");
+                showToast("Manuscript queue cleared");
             }
         }
 
@@ -1604,7 +2031,7 @@
             if (isDrawBboxMode) {
                 btn.classList.add('active');
                 vContainer.classList.add('draw-mode-active');
-                showToast("Chế độ vẽ Bbox: Kéo chuột trên ảnh để khoanh vùng dòng mới");
+                showToast("Bounding box tool: Drag mouse across canvas to delineate a new textline");
             } else {
                 btn.classList.remove('active');
                 vContainer.classList.remove('draw-mode-active');
@@ -1713,7 +2140,7 @@
                 return;
             }
             
-            showToast("Đang nhận diện vùng Bbox vừa vẽ...");
+            showToast("Transcribing delineated region...");
             try {
                 const modelSelect = document.getElementById('model-select');
                 const modelVer = modelSelect ? modelSelect.value : 'v24';
@@ -1728,7 +2155,7 @@
                 });
                 const data = await res.json();
                 if (data.error) {
-                    showToast("Lỗi nhận diện crop: " + data.error);
+                    showToast("Cropped region transcription failed: " + data.error);
                     return;
                 }
                 
@@ -1772,12 +2199,12 @@
                 
                 updateQueueItemStatus(imageQueue.findIndex(x => x.active === true), 'Verified');
                 saveCorrectionToBackend(insertIdx, newLine.text);
-                showToast(`Đã thêm dòng mới #${insertIdx + 1}!`);
+                showToast(`Added new textline #${insertIdx + 1}!`);
                 
                 toggleDrawBboxMode();
             } catch (err) {
                 console.error("Failed to OCR drawn bbox:", err);
-                showToast("Lỗi kết nối khi gửi vùng Bbox vẽ");
+                showToast("Network error submitting delineated bounding box");
             }
         }
 
@@ -1907,7 +2334,7 @@
             const stripButtons = document.getElementById('action-strip-buttons');
             
             if (lineId === null || !responseLines[lineId]) {
-                stripInfo.innerHTML = '<span style="color: var(--text-muted); font-size: 11.5px; font-style: italic;">Chọn một dòng để thực hiện ghép, tách hoặc duyệt</span>';
+                stripInfo.innerHTML = '<span style="color: var(--text-muted); font-size: 11.5px; font-style: italic;">Select a textline to execute merge, split, or verification</span>';
                 stripButtons.style.display = 'none';
                 return;
             }
@@ -1918,9 +2345,9 @@
             const confBg = conf >= 75 ? 'var(--accent-green-bg)' : (conf >= 45 ? 'var(--accent-orange-bg)' : 'var(--accent-red-bg)');
 
             stripInfo.innerHTML = `
-                <strong style="color: var(--accent-primary);">Dòng #${lineId + 1}</strong>
+                <strong style="color: var(--accent-primary);">Line #${lineId + 1}</strong>
                 <span class="badge" style="background-color: ${confBg}; color: ${confColor}; border-color: ${confColor}; font-size: 10px;">${conf}%</span>
-                <span style="color: var(--text-muted); font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 140px;">${item.text || '(Trống)'}</span>
+                <span style="color: var(--text-muted); font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 150px;">${item.text || '(Empty)'}</span>
             `;
             stripButtons.style.display = 'flex';
         }
@@ -1956,7 +2383,7 @@
                 const box = lineData.bbox;
                 const xmin = box[0], ymin = box[1], xmax = box[2], ymax = box[3];
                 const text = lineData.text || "";
-                const segmenter = new Intl.Segmenter('vi', { granularity: 'grapheme' });
+                const segmenter = new Intl.Segmenter('en', { granularity: 'grapheme' });
                 const segments = Array.from(segmenter.segment(text));
                 const charCount = segments.length;
 
@@ -2093,7 +2520,7 @@
             const badge = document.getElementById('line-count-badge');
             if (badge) {
                 const count = responseLines ? responseLines.length : 0;
-                badge.innerText = `${count} dòng`;
+                badge.innerText = `${count} lines`;
             }
         }
 
@@ -2102,7 +2529,7 @@
             editorContainer.innerHTML = "";
             
             if (!responseLines || responseLines.length === 0) {
-                editorContainer.innerHTML = '<div style="color: var(--text-muted); text-align: center; margin-top: 50px; font-size: 13px;">Chưa có dữ liệu văn bản.<br>Tải ảnh lên và bấm <strong>Khởi chạy OCR</strong>.</div>';
+                editorContainer.innerHTML = '<div style="color: var(--text-muted); text-align: center; margin-top: 50px; font-size: 13px;">No transcription data available.<br>Upload a manuscript image and click <strong>Execute Transcription</strong>.</div>';
                 updateLineActionStrip(null);
                 return;
             }
@@ -2122,7 +2549,7 @@
 
                 const status = document.createElement('div');
                 status.className = `line-status ${confLevel}`;
-                status.title = `Độ tự tin: ${Math.round(score * 100)}%`;
+                status.title = `Confidence: ${Math.round(score * 100)}%`;
 
                 const textContainer = document.createElement('div');
                 textContainer.className = 'line-text-container';
@@ -2131,13 +2558,13 @@
                 if (showLineCrops && item.image) {
                     const cropPreview = document.createElement('div');
                     cropPreview.className = 'line-crop-preview';
-                    cropPreview.title = `Ảnh cắt dòng #${idx + 1} (Click để zoom tới dòng)`;
+                    cropPreview.title = `Textline cutout #${idx + 1} (Click to zoom)`;
                     cropPreview.onclick = (e) => {
                         e.stopPropagation();
                         selectLine(idx, true);
                         zoomToLineBbox(idx);
                     };
-                    cropPreview.innerHTML = `<img src="data:image/png;base64,${item.image}" alt="Dòng #${idx + 1}">`;
+                    cropPreview.innerHTML = `<img src="data:image/png;base64,${item.image}" alt="Line #${idx + 1}">`;
                     textContainer.appendChild(cropPreview);
                 }
 
@@ -2149,14 +2576,14 @@
 
                 const text = item.text || "";
                 if (text === "") {
-                    textView.innerHTML = '<span style="color: var(--text-muted); font-style: italic; font-size: 13px;">(Dòng trống - Double click để nhập chữ)</span>';
+                    textView.innerHTML = '<span style="color: var(--text-muted); font-style: italic; font-size: 13px;">(Empty line — Double-click to transcribe)</span>';
                 } else {
                     const lineSpan = document.createElement('span');
                     lineSpan.className = 'line-span';
                     if (score < 0.60) {
                         lineSpan.classList.add('low-confidence');
                     }
-                    const segmenter = new Intl.Segmenter('vi', { granularity: 'grapheme' });
+                    const segmenter = new Intl.Segmenter('en', { granularity: 'grapheme' });
                     const segments = Array.from(segmenter.segment(text));
                     segments.forEach((seg, c) => {
                         const charSpan = document.createElement('span');
@@ -2247,7 +2674,7 @@
                 })
             }).then(res => res.json())
               .then(data => {
-                  appendLog(`Đã ghi nhận hiệu chỉnh dòng #${lineIdx + 1} vào ocr_corrections.txt`, 'success');
+                  appendLog(`Correction recorded for line #${lineIdx + 1} in ocr_corrections.txt`, 'success');
               }).catch(err => {
                   console.warn("Failed to save correction to backend:", err);
               });
@@ -2294,7 +2721,7 @@
         }
 
         async function processImageFile(file) {
-            appendLog(`Đã chọn ảnh: ${file.name || 'Ảnh từ clipboard'} (${(file.size / 1024).toFixed(1)} KB)`, 'info');
+            appendLog(`Loaded manuscript image: ${file.name || 'Clipboard image'} (${(file.size / 1024).toFixed(1)} KB)`, 'info');
             const reader = new FileReader();
             reader.onload = async function(event) {
                 currentImageBase64 = event.target.result.split(',')[1];
@@ -2347,14 +2774,14 @@
         function runOCR() {
             const btn = document.getElementById('btn-run');
             btn.setAttribute('disabled', 'true');
-            btn.innerHTML = '<div class="ocr-spinner" style="width:14px;height:14px;border-width:2px;border-top-color:#fff;"></div><span>Đang quét...</span>';
+            btn.innerHTML = '<div class="ocr-spinner" style="width:14px;height:14px;border-width:2px;border-top-color:#fff;"></div><span>Transcribing...</span>';
 
             const modelSelect = document.getElementById('model-select');
             const modelName = modelSelect.options[modelSelect.selectedIndex].text;
             
             const loader = document.getElementById('ocr-loading-overlay');
             const loaderText = document.getElementById('ocr-loading-text');
-            loaderText.innerText = `Đang nhận dạng bằng ${modelName}...`;
+            loaderText.innerText = `Transcribing manuscript with ${modelName}...`;
             loader.style.display = 'flex';
             
             updateActiveQueueItemStatus('Processing');
@@ -2365,7 +2792,7 @@
                 method: 'dbnet'
             };
 
-            appendLog(`Khởi chạy OCR với mô hình: ${modelName} (DBNet Detector)`, 'info');
+            appendLog(`Executing OCR transcription with: ${modelName} (DBNet Text Detector)`, 'info');
 
             fetch('/ocr', {
                 method: 'POST',
@@ -2375,8 +2802,8 @@
             .then(res => res.json())
             .then(data => {
                 if (data.error) {
-                    showToast('Lỗi: ' + data.error);
-                    appendLog('Lỗi từ Máy chủ: ' + data.error, 'error');
+                    showToast('Error: ' + data.error);
+                    appendLog('Server Error: ' + data.error, 'error');
                     updateActiveQueueItemStatus('Not processed');
                 } else {
                     responseLines = data.lines || [];
@@ -2389,19 +2816,19 @@
                     renderBboxes();
                     updateLineCountBadge();
                     
-                    showToast(`Quét hoàn tất ${responseLines.length} dòng!`);
-                    appendLog(`Hoàn thành trích xuất ${responseLines.length} dòng. Trạng thái: ${finalStatus}`, 'success');
+                    showToast(`Transcription completed: ${responseLines.length} lines extracted!`);
+                    appendLog(`Extracted ${responseLines.length} textlines. Status: ${finalStatus}`, 'success');
                 }
             })
             .catch(err => {
-                showToast('Lỗi kết nối máy chủ!');
-                appendLog('Lỗi kết nối máy chủ: ' + err, 'error');
+                showToast('Server connection error');
+                appendLog('Server connection error: ' + err, 'error');
                 updateActiveQueueItemStatus('Not processed');
             })
             .finally(() => {
                 loader.style.display = 'none';
                 btn.removeAttribute('disabled');
-                btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>Khởi chạy OCR</span>';
+                btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>Execute Transcription</span>';
             });
         }
 
@@ -2464,7 +2891,7 @@
             const qList = document.getElementById('queue-list');
             qList.innerHTML = "";
             if (!imageQueue || imageQueue.length === 0) {
-                qList.innerHTML = '<div style="color: var(--text-muted); padding: 24px 12px; text-align: center; font-size: 11.5px;">Hàng đợi trống.<br>Nhấn <strong>Thêm ảnh</strong> để bắt đầu.</div>';
+                qList.innerHTML = '<div style="color: var(--text-muted); padding: 24px 12px; text-align: center; font-size: 11.5px;">Manuscript queue empty.<br>Click <strong>Upload Manuscript</strong> to begin.</div>';
                 return;
             }
 
@@ -2524,7 +2951,7 @@
                 }
                 renderEditor();
                 renderBboxes();
-                showToast(`Đã đồng ý dòng #${lineId + 1}`);
+                showToast(`Verified line #${lineId + 1}`);
                 updateQueueItemStatus(imageQueue.findIndex(x => x.active === true), 'Verified');
                 saveCorrectionToBackend(lineId, responseLines[lineId].text);
                 
@@ -2532,7 +2959,7 @@
                     selectLine(lineId + 1);
                 }
             } else {
-                showToast("Vui lòng chọn một dòng chữ trước!");
+                showToast("Please select a textline first");
             }
         }
 
@@ -2548,10 +2975,10 @@
                 }
                 renderEditor();
                 renderBboxes();
-                showToast(`Đã đánh dấu sai dòng #${lineId + 1}`);
+                showToast(`Flagged line #${lineId + 1} as erroneous`);
                 updateQueueItemStatus(imageQueue.findIndex(x => x.active === true), 'Needs review');
             } else {
-                showToast("Vui lòng chọn một dòng chữ trước!");
+                showToast("Please select a textline first");
             }
         }
 
@@ -2560,7 +2987,7 @@
                 const lineId = currentSelection.lineId;
                 const text = responseLines[lineId].text || "";
                 if (text.length <= 1) {
-                    showToast("Dòng quá ngắn để tách đôi!");
+                    showToast("Textline is too short to split");
                     return;
                 }
                 
@@ -2587,21 +3014,21 @@
                 renderEditor();
                 renderBboxes();
                 updateLineCountBadge();
-                showToast(`Đã tách đôi dòng #${lineId + 1}`);
+                showToast(`Split line #${lineId + 1} into two segments`);
                 updateQueueItemStatus(imageQueue.findIndex(x => x.active === true), 'Verified');
             } else {
-                showToast("Vui lòng chọn một dòng chữ trước!");
+                showToast("Please select a textline first");
             }
         }
 
         function mergeSelectedWithNextLine() {
             if (currentSelection.lineId === null) {
-                showToast("Vui lòng chọn một dòng chữ trước!");
+                showToast("Please select a textline first");
                 return;
             }
             const lineId = currentSelection.lineId;
             if (lineId + 1 >= responseLines.length) {
-                showToast("Dòng được chọn là dòng cuối cùng, không thể ghép sau!");
+                showToast("Selected line is the last line; cannot merge downward");
                 return;
             }
             
@@ -2645,7 +3072,7 @@
             selectLine(lineId, true);
             updateQueueItemStatus(imageQueue.findIndex(x => x.active === true), 'Verified');
             saveCorrectionToBackend(lineId, mergedText);
-            showToast(`Đã ghép dòng #${lineId + 1} và #${lineId + 2}!`);
+            showToast(`Merged line #${lineId + 1} and #${lineId + 2}`);
         }
 
         // -------------------------------------------------------------
@@ -2696,13 +3123,13 @@
                 document.documentElement.style.setProperty('--dock-height', '180px');
                 dock.style.height = '180px';
                 if (arrow) arrow.innerText = '▼';
-                if (hint) hint.innerText = 'Thu gọn bàn phím ảo (Alt+K / Esc)';
+                if (hint) hint.innerText = 'Collapse virtual keyboard (Alt+K / Esc)';
                 renderChamKeyboardBody();
             } else {
                 document.documentElement.style.setProperty('--dock-height', '32px');
                 dock.style.height = '32px';
                 if (arrow) arrow.innerText = '▲';
-                if (hint) hint.innerText = 'Nhấn để mở bàn phím ảo (Alt+K)';
+                if (hint) hint.innerText = 'Click to expand virtual keyboard (Alt+K)';
             }
         }
 
@@ -2752,7 +3179,7 @@
                     editInput.focus();
                 }
             } else {
-                showToast(`Đã sao chép ký tự ${char} vào bộ nhớ tạm`);
+                showToast(`Copied glyph ${char} to clipboard`);
                 navigator.clipboard.writeText(char).catch(() => {});
             }
         }
@@ -2786,7 +3213,7 @@
             });
 
             if (targets.length === 0) {
-                showToast("Không có dòng chữ nào cần xem xét lại!");
+                showToast("No ambiguous or low-confidence lines found");
                 return;
             }
 
@@ -2821,7 +3248,7 @@
             });
             renderEditor();
             renderBboxes();
-            showToast(`Đã tự động duyệt ${approved} dòng có độ tin cậy cao!`);
+            showToast(`Batch approved ${approved} high-confidence lines`);
             updateQueueItemStatus(imageQueue.findIndex(x => x.active === true), 'Verified');
         }
 
@@ -2872,7 +3299,7 @@
                     if (file) {
                         processImageFile(file);
                         e.preventDefault();
-                        showToast("Đang dán ảnh từ Clipboard...");
+                        showToast("Pasting manuscript image from clipboard...");
                         break;
                     }
                 }
@@ -2880,7 +3307,7 @@
         });
 
         // -------------------------------------------------------------
-        // Export utilities & Dropdown
+        // Export Utilities & Dropdown
         // -------------------------------------------------------------
         function toggleExportMenu(e) {
             if (e) e.stopPropagation();
@@ -2899,43 +3326,43 @@
         function copyAllText() {
             toggleExportMenu();
             if (!responseLines || responseLines.length === 0) {
-                showToast("Chưa có văn bản để sao chép");
+                showToast("No text available to copy");
                 return;
             }
             const text = responseLines.map(x => x.text).join('\n');
             navigator.clipboard.writeText(text)
-                .then(() => showToast("Đã copy toàn bộ văn bản vào Clipboard!"))
-                .catch(() => showToast("Không thể copy văn bản"));
+                .then(() => showToast("All text transcribed copied to clipboard"))
+                .catch(() => showToast("Unable to copy text to clipboard"));
         }
 
         function exportJSON() {
             toggleExportMenu();
             if (!responseLines || responseLines.length === 0) {
-                showToast("Chưa có dữ liệu để xuất");
+                showToast("No transcription data to export");
                 return;
             }
             const payload = {
-                image_name: imageQueue.find(x => x.active === true)?.name || "document.png",
+                image_name: imageQueue.find(x => x.active === true)?.name || "manuscript.png",
                 lines: responseLines
             };
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload, null, 2));
             const a = document.createElement('a');
             a.href = dataStr;
-            a.download = "ocr_corrected_output.json";
+            a.download = "cham_ocr_transcription.json";
             document.body.appendChild(a);
             a.click();
             a.remove();
-            showToast("Đã xuất tệp JSON chuẩn!");
+            showToast("Exported structured JSON transcription file");
         }
 
         function exportTrainingPairs() {
             toggleExportMenu();
             if (!responseLines || responseLines.length === 0) {
-                showToast("Chưa có dữ liệu để xuất");
+                showToast("No transcription data to export");
                 return;
             }
             const manifest = {
-                image_name: imageQueue.find(x => x.active === true)?.name || "document.png",
+                image_name: imageQueue.find(x => x.active === true)?.name || "manuscript.png",
                 pairs: responseLines.map(x => ({
                     line_idx: x.index,
                     text: x.text,
@@ -2950,14 +3377,14 @@
             document.body.appendChild(a);
             a.click();
             a.remove();
-            showToast("Đã xuất tệp Training Manifest!");
+            showToast("Exported training manifest dataset pairs");
         }
 
         // -------------------------------------------------------------
         // Helper Utils & Modals
         // -------------------------------------------------------------
         function updateModelBadge() {
-            // Nothing to update in badge, select dropdown itself shows the selected version
+            // Dropdown selection itself indicates active model
         }
 
         function showToast(msg) {
@@ -2983,6 +3410,15 @@
                 t.style.transition = 'opacity 0.4s';
                 setTimeout(() => t.remove(), 400);
             }, 2600);
+        }
+
+        function switchModalTab(tabId) {
+            document.querySelectorAll('.modal-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.modal-tab-pane').forEach(pane => pane.classList.remove('active'));
+            const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+            const activePane = document.getElementById(`tab-pane-${tabId}`);
+            if (activeBtn) activeBtn.classList.add('active');
+            if (activePane) activePane.classList.add('active');
         }
 
         function openAboutModal() {

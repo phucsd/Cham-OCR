@@ -7,8 +7,8 @@ import queue
 if sys.stdout and hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
 
-os.environ['KAGGLE_USERNAME'] = 'gustavnguyen'
-os.environ['KAGGLE_KEY'] = '6bf56db7e5c0fa7895d157167961d92b'
+from kaggle_auth import init_kaggle_auth
+init_kaggle_auth()
 
 from kaggle.api.kaggle_api_extended import KaggleApi
 

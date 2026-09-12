@@ -1,0 +1,108 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "name": "Cham-OCR V25 Unified Dataset Manifest",
+  "version": "v25.0",
+  "created_at": "2026-09-11",
+  "description": "Source of truth thống nhất cho toàn bộ quy mô, phân bổ dữ liệu và chính sách huấn luyện V25",
+  "data_distribution": {
+    "total_samples": 150000,
+    "train_samples": 140000,
+    "val_samples": 10000,
+    "train_val_ratio": "93.3% / 6.7%",
+    "packages": [
+      {
+        "id": "pkg_01_cham_canonical",
+        "name": "Ngữ liệu Chăm chuẩn & Văn học kinh điển",
+        "count": 65000,
+        "percentage": "43.3%",
+        "description": "Nền tảng từ vựng Chăm chuẩn xác từ sử thi Po Klong Garai, thơ 57 khổ, truyền thuyết và truyện cổ tích."
+      },
+      {
+        "id": "pkg_02_anti_blur_base",
+        "name": "Ngữ liệu đặc trị Mờ Rung Tay (Anti-Blur Base)",
+        "count": 30000,
+        "percentage": "20.0%",
+        "description": "Ảnh cơ sở được sinh sạch, áp dụng Directional Motion Blur (7x7-13x13) và Defocus on-the-fly trong DataLoader."
+      },
+      {
+        "id": "pkg_03_inline_mixed_bilingual",
+        "name": "Song ngữ Chăm - Việt kẹp nội dòng (Inline Mixed)",
+        "count": 25000,
+        "percentage": "16.7%",
+        "description": "Các cấu trúc Chăm kèm chú thích dịch nghĩa tiếng Việt có dấu, ngày tháng năm và ký hiệu."
+      },
+      {
+        "id": "pkg_04_stanza_and_punctuation",
+        "name": "Số thứ tự khổ thơ Chăm 1-99 & Dấu ngắt câu biên",
+        "count": 18000,
+        "percentage": "12.0%",
+        "description": "Dãy số khổ thơ Chăm 1-99 (꩑꩞..꩙꩙꩞), bảo tồn dấu ngắt ꩞, dấu hai chấm :, gạch ngang – và padding biên."
+      },
+      {
+        "id": "pkg_05_minimal_pairs_hard",
+        "name": "Cặp đối kháng Hard-Examples Minimal Pairs",
+        "count": 12000,
+        "percentage": "8.0%",
+        "description": "Tập trung phân biệt cặp dấu chân ꨲ (Au) vs ꨶ (O), khoảng cách Double Danda ꩝꩝ (2-8px), tổ hợp dấu 3 tầng."
+      }
+    ]
+  },
+  "training_policy": {
+    "image_shape": [3, 48, 480],
+    "image_shape_rationale": "Chiều cao 48px bảo vệ dấu phụ mỏng; chiều rộng 480px chống co bẹp nét chữ trên dòng song ngữ dài.",
+    "batch_size_per_card": 72,
+    "global_batch_size": 144,
+    "num_workers": 2,
+    "amp_enabled": true,
+    "amp_level": "O1",
+    "blur_augmentation": "on_the_fly",
+    "blur_rationale": "Tuyệt đối không sinh ảnh mờ tĩnh lưu đĩa để tránh lỗi double-blur; biến dạng mờ được sinh động ngẫu nhiên trên RAM.",
+    "max_text_length_policy": "P99_dynamic_scan",
+    "max_text_length_rationale": "Quét toàn bộ nhãn tập train/val và đặt max_text_length = P99 để không bị cắt cụt nhãn song ngữ.",
+    "kaggle_execution_plan": {
+      "timeout_limit_hours": 12.0,
+      "stages": [
+        {
+          "stage": 1,
+          "epochs": "1 -> 14",
+          "est_hours": 7.8,
+          "checkpoint_save": "save_epoch_step: 1",
+          "output": "ch_PP-OCRv4_rec_v25_stage1/latest"
+        },
+        {
+          "stage": 2,
+          "epochs": "15 -> 27",
+          "est_hours": 7.3,
+          "resume_from": "stage 1 latest (pdparams + pdopt + states)",
+          "output": "ch_PP-OCRv4_rec_v25_stage2/latest"
+        },
+        {
+          "stage": 3,
+          "epochs": "28 -> 40",
+          "est_hours": 7.3,
+          "resume_from": "stage 2 latest (pdparams + pdopt + states)",
+          "output": "ch_PP-OCRv4_rec_v25_final/latest"
+        }
+      ]
+    }
+  },
+  "acceptance_gates": {
+    "non_regression_clean_a4": {
+      "description": "Đảm bảo độ chính xác trên văn bản Chăm in chuẩn A4 không bị suy giảm khi tối ưu các miền dữ liệu mới.",
+      "metric": "CER",
+      "max_allowed_delta": "+0.50%"
+    },
+    "anti_blur_target": {
+      "metric": "CER on motion blur tests",
+      "target": "< 18.0%"
+    },
+    "mixed_bilingual_target": {
+      "metric": "CER on inline mixed Cham-Viet",
+      "target": "< 12.0%"
+    },
+    "paragraph_flow_f1": {
+      "metric": "Paragraph reconstruction F1",
+      "target": "> 88.0%"
+    }
+  }
+}

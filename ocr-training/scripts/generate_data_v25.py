@@ -17,6 +17,8 @@ import sys
 import math
 import random
 import time
+import json
+import unicodedata
 import argparse
 import cv2
 import numpy as np
@@ -248,35 +250,25 @@ def apply_heavy_motion_blur(img_np, ksize=9, angle=45.0):
         kernel[cx, cy] = 1.0
     return cv2.filter2D(img_np, -1, kernel)
 
-def augment_image_v25(img_pil, is_motion_blur_pillar=False):
+def augment_image_v25(img_pil, is_motion_blur_pillar=False, bake_blur=False):
     """
-    Áp dụng các phép biến thái thực tế:
-    - Nếu is_motion_blur_pillar=True: Bắt buộc áp dụng directional motion blur (7x7 đến 13x13).
-    - Thêm nhiễu giấy cổ, contrast jitter, downsampling ngẫu nhiên.
+    Áp dụng các phép biến dạng hình ảnh thực tế:
+    - Nếu bake_blur=False (MẶC ĐỊNH CHO V25): Không nướng (bake) motion blur nặng vào ảnh đĩa.
+      Mọi thao tác làm mờ được thực hiện On-the-fly trong DataLoader qua RecAug để tránh double-blur.
+    - Giữ biến dạng nhẹ: nhiễu hạt giấy cổ, độ tương phản và chuẩn hóa chiều cao 48px.
     """
     img_bgr = cv2.cvtColor(np.array(img_pil), cv2.COLOR_RGB2BGR)
     h, w = img_bgr.shape[:2]
 
-    if is_motion_blur_pillar:
-        # Bắt buộc Motion Blur nặng
+    if bake_blur and is_motion_blur_pillar:
+        # Chỉ áp dụng nếu người dùng cố ý bật bake_blur
         ksize = random.choice([7, 9, 11, 13])
         angle = random.uniform(0.0, 180.0)
         img_bgr = apply_heavy_motion_blur(img_bgr, ksize=ksize, angle=angle)
-        
-        # Thêm Defocus hoặc Downsampling
         if random.random() < 0.4:
             scale = random.uniform(0.5, 0.75)
             small = cv2.resize(img_bgr, (max(int(w * scale), 20), max(int(h * scale), 16)), interpolation=cv2.INTER_LINEAR)
             img_bgr = cv2.resize(small, (w, h), interpolation=cv2.INTER_CUBIC)
-    else:
-        # Biến dạng nhẹ tiêu chuẩn cho các gói khác
-        if random.random() < 0.15:
-            ksize = random.choice([3, 5])
-            angle = random.uniform(0.0, 180.0)
-            img_bgr = apply_heavy_motion_blur(img_bgr, ksize=ksize, angle=angle)
-        if random.random() < 0.15:
-            sigma = random.uniform(0.5, 1.2)
-            img_bgr = cv2.GaussianBlur(img_bgr, (0, 0), sigma)
 
     # Thêm nhiễu nền giấy cổ nhẹ
     if random.random() < 0.6:
@@ -301,10 +293,11 @@ def augment_image_v25(img_pil, is_motion_blur_pillar=False):
 # ==============================================================================
 def generate_sample_worker(args):
     """Worker tạo một mẫu ảnh và nhãn."""
-    sample_idx, pillar_type, out_img_path = args
+    sample_idx, pillar_type, out_img_path, bake_blur = args
 
-    # 1. Sinh văn bản
-    text = sample_v25_text(pillar_type)
+    # 1. Sinh văn bản và chuẩn hóa tuyệt đối Unicode NFC
+    raw_text = sample_v25_text(pillar_type)
+    text = unicodedata.normalize('NFC', raw_text)
 
     # 2. Render ảnh
     is_bold = (random.random() < 0.35)
@@ -314,9 +307,9 @@ def generate_sample_worker(args):
     
     img_pil = render_line_v25(text, is_bold=is_bold, pad_left=pad_l, pad_right=pad_r, danda_gap=danda_gap)
 
-    # 3. Biến dạng (Augmentation)
+    # 3. Biến dạng (Augmentation sạch cho lưu trữ đĩa)
     is_blur_pillar = (pillar_type == "anti_blur")
-    img_final = augment_image_v25(img_pil, is_motion_blur_pillar=is_blur_pillar)
+    img_final = augment_image_v25(img_pil, is_motion_blur_pillar=is_blur_pillar, bake_blur=bake_blur)
 
     # 4. Ghi file ảnh
     cv2.imwrite(out_img_path, img_final)
@@ -329,19 +322,46 @@ def generate_sample_worker(args):
 # 6. Điều Phối Huấn Luyện Toàn Cục (Master Generator Loop)
 # ==============================================================================
 def main():
-    parser = argparse.ArgumentParser(description="Generate Cham OCR V25 Synthetic Dataset (250,000 samples)")
+    default_manifest = os.path.join(TRAINING_DIR, "configs", "v25_dataset_manifest.json")
+    parser = argparse.ArgumentParser(description="Generate Cham OCR V25 Synthetic Dataset (Manifest-Aligned)")
+    parser.add_argument("--manifest", type=str, default=default_manifest, help="Đường dẫn file manifest JSON chuẩn")
     parser.add_argument("--output_dir", type=str, default="./data/cham_synthetic_v25", help="Thư mục xuất dữ liệu")
-    parser.add_argument("--num_train", type=int, default=250000, help="Số lượng mẫu huấn luyện (mặc định 250k)")
-    parser.add_argument("--num_val", type=int, default=25000, help="Số lượng mẫu kiểm thử (mặc định 25k)")
+    parser.add_argument("--num_train", type=int, default=None, help="Số mẫu Train (mặc định lấy từ manifest: 140,000)")
+    parser.add_argument("--num_val", type=int, default=None, help="Số mẫu Val (mặc định lấy từ manifest: 10,000)")
+    parser.add_argument("--bake_blur", action="store_true", default=False, help="Bake mờ nặng vào ảnh đĩa (mặc định False: on-the-fly)")
     parser.add_argument("--workers", type=int, default=None, help="Số tiến trình CPU song song (mặc định cpu_count)")
     args = parser.parse_args()
 
+    # Nạp cấu hình từ manifest nếu có
+    num_train = args.num_train
+    num_val = args.num_val
+    pillars = ["standard", "anti_blur", "bilingual", "stanza_punct", "minimal_pairs"]
+    weights = [0.433, 0.200, 0.167, 0.120, 0.080] # Tương ứng 65k, 30k, 25k, 18k, 12k
+
+    if os.path.exists(args.manifest):
+        try:
+            with open(args.manifest, "r", encoding="utf-8") as f:
+                manifest_data = json.load(f)
+                dist = manifest_data.get("data_distribution", {})
+                if num_train is None:
+                    num_train = dist.get("train_samples", 140000)
+                if num_val is None:
+                    num_val = dist.get("val_samples", 10000)
+                print(f"📖 Đã nạp cấu hình phân bổ dữ liệu từ Manifest: {args.manifest}")
+        except Exception as e:
+            print(f"⚠️ Không đọc được manifest ({e}), dùng thông số mặc định.")
+
+    if num_train is None: num_train = 140000
+    if num_val is None: num_val = 10000
+
     num_workers = args.workers or cpu_count()
     print("=" * 75)
-    print("🚀 MASTER SYNTHETIC DATASET GENERATOR V25 (LIGHTNING AI OPTIMIZED)")
+    print("🚀 MASTER SYNTHETIC DATASET GENERATOR V25 (MANIFEST SYNCHRONIZED)")
     print(f"   • Số CPU Workers song song : {num_workers} tiến trình")
-    print(f"   • Quy mô mẫu Huấn luyện     : {args.num_train:,} ảnh")
-    print(f"   • Quy mô mẫu Kiểm thử       : {args.num_val:,} ảnh")
+    print(f"   • Quy mô mẫu Huấn luyện     : {num_train:,} ảnh")
+    print(f"   • Quy mô mẫu Kiểm thử       : {num_val:,} ảnh")
+    print(f"   • Tổng quy mô dữ liệu       : {num_train + num_val:,} ảnh")
+    print(f"   • Chính sách Mờ Động Học   : {'Bake tĩnh trên đĩa' if args.bake_blur else 'On-The-Fly trong DataLoader (Khuyến nghị)'}")
     print(f"   • Thư mục đầu ra           : {args.output_dir}")
     print("=" * 75)
 
@@ -350,37 +370,28 @@ def main():
     os.makedirs(train_img_dir, exist_ok=True)
     os.makedirs(val_img_dir, exist_ok=True)
 
-    # Phân bổ tỷ lệ các gói dữ liệu theo đúng TRAINING_ROADMAP_V25.md:
-    # 1. Chuẩn & Cổ tích: 48% (120k / 250k)
-    # 2. Anti-Motion Blur: 18% (45k / 250k)
-    # 3. Song ngữ nội dòng: 16% (40k / 250k)
-    # 4. Số khổ 1-99 & Dấu ngắt: 10% (25k / 250k)
-    # 5. Cặp đối kháng Hard-Examples: 8% (20k / 250k)
-    pillars = ["standard", "anti_blur", "bilingual", "stanza_punct", "minimal_pairs"]
-    weights = [0.48, 0.18, 0.16, 0.10, 0.08]
-
     # Chuẩn bị danh sách tham số cho Train
-    print(f"📦 Chuẩn bị danh mục tác vụ cho {args.num_train:,} mẫu Train...")
+    print(f"📦 Chuẩn bị danh mục tác vụ cho {num_train:,} mẫu Train...")
     train_tasks = []
-    for i in range(args.num_train):
+    for i in range(num_train):
         p_type = random.choices(pillars, weights=weights)[0]
         img_name = f"train_{i+1:07d}.png"
         out_path = os.path.join(train_img_dir, img_name)
-        train_tasks.append((i, p_type, out_path))
+        train_tasks.append((i, p_type, out_path, args.bake_blur))
 
     # Chuẩn bị danh sách tham số cho Val
-    print(f"📦 Chuẩn bị danh mục tác vụ cho {args.num_val:,} mẫu Val...")
+    print(f"📦 Chuẩn bị danh mục tác vụ cho {num_val:,} mẫu Val...")
     val_tasks = []
-    for i in range(args.num_val):
+    for i in range(num_val):
         p_type = random.choices(pillars, weights=weights)[0]
         img_name = f"val_{i+1:06d}.png"
         out_path = os.path.join(val_img_dir, img_name)
-        val_tasks.append((i, p_type, out_path))
+        val_tasks.append((i, p_type, out_path, args.bake_blur))
 
     t_start = time.time()
 
     # 1. Sinh tập Train với đa tiến trình
-    print(f"\n⚡ Đang sinh tập Train ({args.num_train:,} ảnh) trên {num_workers} CPU cores...")
+    print(f"\n⚡ Đang sinh tập Train ({num_train:,} ảnh) trên {num_workers} CPU cores...")
     train_label_path = os.path.join(args.output_dir, "train_label.txt")
     with open(train_label_path, "w", encoding="utf-8") as f_train:
         with Pool(processes=num_workers) as pool:
@@ -389,30 +400,34 @@ def main():
             for label_line in pool.imap_unordered(generate_sample_worker, train_tasks, chunksize=chunksize):
                 f_train.write(label_line)
                 completed += 1
-                if completed % 25000 == 0 or completed == args.num_train:
+                if completed % 25000 == 0 or completed == num_train:
                     elapsed = time.time() - t_start
                     fps = completed / max(elapsed, 1e-5)
-                    print(f"   [Train Progress] {completed:,} / {args.num_train:,} ảnh ({completed/args.num_train*100:.1f}%) - Tốc độ: {fps:.1f} ảnh/s")
+                    print(f"   [Train Progress] {completed:,} / {num_train:,} ảnh ({completed/num_train*100:.1f}%) - Tốc độ: {fps:.1f} ảnh/s")
 
     t_train_done = time.time()
     print(f"✅ Hoàn thành tập Train trong {t_train_done - t_start:.2f}s (~{(t_train_done - t_start)/60:.1f} phút)")
 
     # 2. Sinh tập Val với đa tiến trình
-    print(f"\n⚡ Đang sinh tập Val ({args.num_val:,} ảnh) trên {num_workers} CPU cores...")
-    val_label_path = os.path.join(args.output_dir, "val_label.txt")
-    with open(val_label_path, "w", encoding="utf-8") as f_val:
-        with Pool(processes=num_workers) as pool:
-            chunksize = 250
-            completed = 0
-            for label_line in pool.imap_unordered(generate_sample_worker, val_tasks, chunksize=chunksize):
-                f_val.write(label_line)
-                completed += 1
-                if completed % 5000 == 0 or completed == args.num_val:
-                    print(f"   [Val Progress] {completed:,} / {args.num_val:,} ảnh ({completed/args.num_val*100:.1f}%)")
+    if num_val > 0:
+        print(f"\n⚡ Đang sinh tập Val ({num_val:,} ảnh) trên {num_workers} CPU cores...")
+        val_label_path = os.path.join(args.output_dir, "val_label.txt")
+        with open(val_label_path, "w", encoding="utf-8") as f_val:
+            with Pool(processes=num_workers) as pool:
+                chunksize = 250
+                completed = 0
+                for label_line in pool.imap_unordered(generate_sample_worker, val_tasks, chunksize=chunksize):
+                    f_val.write(label_line)
+                    completed += 1
+                    if completed % 5000 == 0 or completed == num_val:
+                        print(f"   [Val Progress] {completed:,} / {num_val:,} ảnh ({completed/num_val*100:.1f}%)")
+    else:
+        val_label_path = os.path.join(args.output_dir, "val_label.txt")
+        print(f"\n❄️  Bỏ qua sinh tập Val (num_val = 0). Giữ nguyên tập Val đóng băng tại: {val_label_path}")
 
     total_time = time.time() - t_start
     print("=" * 75)
-    print(f"🎉 HOÀN TẤT SINH TOÀN BỘ BỘ DỮ LIỆU V25 ({args.num_train + args.num_val:,} ẢNH)!")
+    print(f"🎉 HOÀN TẤT SINH TOÀN BỘ BỘ DỮ LIỆU V25 ({num_train + num_val:,} ẢNH)!")
     print(f"   • Tổng thời gian thực thi: {total_time:.2f}s (~{total_time/60:.2f} phút)")
     print(f"   • Tệp nhãn Train          : {train_label_path}")
     print(f"   • Tệp nhãn Val            : {val_label_path}")

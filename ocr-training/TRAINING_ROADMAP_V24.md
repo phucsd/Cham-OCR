@@ -66,9 +66,8 @@ Tài liệu này ghi nhớ toàn bộ các nguyên nhân lỗi trên mô hình *
 Tuân thủ nghiêm ngặt quy định trong `.agents/AGENTS.md`:
 
 ```python
-import os
-os.environ["KAGGLE_USERNAME"] = "gustavnguyen"
-os.environ["KAGGLE_KEY"] = "6bf56db7e5c0fa7895d157167961d92b"
+from scripts.kaggle_auth import init_kaggle_auth
+init_kaggle_auth() # Nạp từ .env hoặc biến môi trường
 ```
 
 - **Base checkpoint**: Khởi tạo trọng số từ checkpoint tốt nhất của `v23` (`data/output/rec_cham_inference_v23/`).

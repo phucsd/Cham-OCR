@@ -1,0 +1,314 @@
+[
+  {
+    "name": "T1 (Baseline FP32 BS64)",
+    "batch_size_per_card": 64,
+    "global_batch_size": 128,
+    "num_workers": 2,
+    "amp": false,
+    "amp_level": "O1",
+    "nccl_tune": false,
+    "status": "SUCCESS",
+    "median_ips": 96.6,
+    "mean_ips": 96.7,
+    "std_ips": 1.48,
+    "cov_pct": 1.5,
+    "avg_batch_cost": 1.3245,
+    "avg_reader_cost": 0.006,
+    "compute_cost": 1.3185,
+    "reader_ratio": 0.005,
+    "peak_alloc_mb": 11891,
+    "peak_res_mb": 12144,
+    "loss_initial": 156.66,
+    "loss_final": 144.75,
+    "loss_status": "HEALTHY",
+    "vram": [
+      {
+        "used_mb": 3.0,
+        "total_mb": 15360.0,
+        "pct": 0.0
+      },
+      {
+        "used_mb": 3.0,
+        "total_mb": 15360.0,
+        "pct": 0.0
+      }
+    ],
+    "error": null,
+    "elapsed_sec": 128.65,
+    "speedup_pct": 0.0,
+    "est_40_epoch_hours": 28.76
+  },
+  {
+    "name": "T2 (Tensor Cores BS64)",
+    "batch_size_per_card": 64,
+    "global_batch_size": 128,
+    "num_workers": 2,
+    "amp": true,
+    "amp_level": "O1",
+    "nccl_tune": false,
+    "status": "SUCCESS",
+    "median_ips": 119.1,
+    "mean_ips": 119.3,
+    "std_ips": 0.79,
+    "cov_pct": 0.7,
+    "avg_batch_cost": 1.0734,
+    "avg_reader_cost": 0.0065,
+    "compute_cost": 1.0669,
+    "reader_ratio": 0.006,
+    "peak_alloc_mb": 11494,
+    "peak_res_mb": 11736,
+    "loss_initial": 156.75,
+    "loss_final": 144.11,
+    "loss_status": "HEALTHY",
+    "vram": [
+      {
+        "used_mb": 3.0,
+        "total_mb": 15360.0,
+        "pct": 0.0
+      },
+      {
+        "used_mb": 3.0,
+        "total_mb": 15360.0,
+        "pct": 0.0
+      }
+    ],
+    "error": null,
+    "elapsed_sec": 106.63,
+    "speedup_pct": 23.3,
+    "est_40_epoch_hours": 23.32
+  },
+  {
+    "name": "T3 (AMP BS48)",
+    "batch_size_per_card": 48,
+    "global_batch_size": 96,
+    "num_workers": 2,
+    "amp": true,
+    "amp_level": "O1",
+    "nccl_tune": false,
+    "status": "SUCCESS",
+    "median_ips": 116.6,
+    "mean_ips": 116.8,
+    "std_ips": 0.97,
+    "cov_pct": 0.8,
+    "avg_batch_cost": 0.814,
+    "avg_reader_cost": 0.0054,
+    "compute_cost": 0.8086,
+    "reader_ratio": 0.007,
+    "peak_alloc_mb": 8681,
+    "peak_res_mb": 8782,
+    "loss_initial": 156.73,
+    "loss_final": 140.49,
+    "loss_status": "HEALTHY",
+    "vram": [
+      {
+        "used_mb": 3.0,
+        "total_mb": 15360.0,
+        "pct": 0.0
+      },
+      {
+        "used_mb": 3.0,
+        "total_mb": 15360.0,
+        "pct": 0.0
+      }
+    ],
+    "error": null,
+    "elapsed_sec": 108.57,
+    "speedup_pct": 20.7,
+    "est_40_epoch_hours": 23.82
+  },
+  {
+    "name": "T4 (AMP BS72)",
+    "batch_size_per_card": 72,
+    "global_batch_size": 144,
+    "num_workers": 2,
+    "amp": true,
+    "amp_level": "O1",
+    "nccl_tune": false,
+    "status": "SUCCESS",
+    "median_ips": 120.4,
+    "mean_ips": 120.6,
+    "std_ips": 0.84,
+    "cov_pct": 0.7,
+    "avg_batch_cost": 1.1214,
+    "avg_reader_cost": 0.0061,
+    "compute_cost": 1.1153,
+    "reader_ratio": 0.005,
+    "peak_alloc_mb": 12878,
+    "peak_res_mb": 13158,
+    "loss_initial": 156.72,
+    "loss_final": 146.15,
+    "loss_status": "HEALTHY",
+    "vram": [
+      {
+        "used_mb": 3.0,
+        "total_mb": 15360.0,
+        "pct": 0.0
+      },
+      {
+        "used_mb": 3.0,
+        "total_mb": 15360.0,
+        "pct": 0.0
+      }
+    ],
+    "error": null,
+    "elapsed_sec": 103.61,
+    "speedup_pct": 24.6,
+    "est_40_epoch_hours": 23.07
+  },
+  {
+    "name": "T5 (AMP BS80)",
+    "batch_size_per_card": 80,
+    "global_batch_size": 160,
+    "num_workers": 2,
+    "amp": true,
+    "amp_level": "O1",
+    "nccl_tune": false,
+    "status": "SUCCESS",
+    "median_ips": 116.6,
+    "mean_ips": 115.6,
+    "std_ips": 4.68,
+    "cov_pct": 4.1,
+    "avg_batch_cost": 1.338,
+    "avg_reader_cost": 0.0065,
+    "compute_cost": 1.3316,
+    "reader_ratio": 0.005,
+    "peak_alloc_mb": 14300,
+    "peak_res_mb": 14346,
+    "loss_initial": 156.57,
+    "loss_final": 147.38,
+    "loss_status": "HEALTHY",
+    "vram": [
+      {
+        "used_mb": 3.0,
+        "total_mb": 15360.0,
+        "pct": 0.0
+      },
+      {
+        "used_mb": 3.0,
+        "total_mb": 15360.0,
+        "pct": 0.0
+      }
+    ],
+    "error": null,
+    "elapsed_sec": 110.61,
+    "speedup_pct": 20.7,
+    "est_40_epoch_hours": 23.82
+  },
+  {
+    "name": "T6 (AMP BS96)",
+    "batch_size_per_card": 96,
+    "global_batch_size": 192,
+    "num_workers": 2,
+    "amp": true,
+    "amp_level": "O1",
+    "nccl_tune": false,
+    "status": "OOM",
+    "median_ips": 0.0,
+    "mean_ips": 0.0,
+    "std_ips": 0.0,
+    "cov_pct": 0.0,
+    "avg_batch_cost": 0.0,
+    "avg_reader_cost": 0.0,
+    "compute_cost": 0.0,
+    "reader_ratio": 0.0,
+    "peak_alloc_mb": 0,
+    "peak_res_mb": 0,
+    "loss_initial": 0.0,
+    "loss_final": 0.0,
+    "loss_status": "N/A",
+    "vram": [
+      {
+        "used_mb": 3.0,
+        "total_mb": 15360.0,
+        "pct": 0.0
+      },
+      {
+        "used_mb": 3.0,
+        "total_mb": 15360.0,
+        "pct": 0.0
+      }
+    ],
+    "error": "CUDA Out Of Memory",
+    "elapsed_sec": 24.73,
+    "speedup_pct": 0.0,
+    "est_40_epoch_hours": 0.0
+  },
+  {
+    "name": "T7 (NCCL Tuned BS64)",
+    "batch_size_per_card": 64,
+    "global_batch_size": 128,
+    "num_workers": 2,
+    "amp": true,
+    "amp_level": "O1",
+    "nccl_tune": true,
+    "status": "SUCCESS",
+    "median_ips": 119.2,
+    "mean_ips": 119.3,
+    "std_ips": 0.91,
+    "cov_pct": 0.8,
+    "avg_batch_cost": 1.0733,
+    "avg_reader_cost": 0.0061,
+    "compute_cost": 1.0672,
+    "reader_ratio": 0.006,
+    "peak_alloc_mb": 11485,
+    "peak_res_mb": 11710,
+    "loss_initial": 156.39,
+    "loss_final": 144.87,
+    "loss_status": "HEALTHY",
+    "vram": [
+      {
+        "used_mb": 3.0,
+        "total_mb": 15360.0,
+        "pct": 0.0
+      },
+      {
+        "used_mb": 3.0,
+        "total_mb": 15360.0,
+        "pct": 0.0
+      }
+    ],
+    "error": null,
+    "elapsed_sec": 106.58,
+    "speedup_pct": 23.4,
+    "est_40_epoch_hours": 23.3
+  },
+  {
+    "name": "T8 (Workers 3 BS64)",
+    "batch_size_per_card": 64,
+    "global_batch_size": 128,
+    "num_workers": 3,
+    "amp": true,
+    "amp_level": "O1",
+    "nccl_tune": false,
+    "status": "SUCCESS",
+    "median_ips": 119.0,
+    "mean_ips": 119.2,
+    "std_ips": 0.85,
+    "cov_pct": 0.7,
+    "avg_batch_cost": 1.0742,
+    "avg_reader_cost": 0.0057,
+    "compute_cost": 1.0685,
+    "reader_ratio": 0.005,
+    "peak_alloc_mb": 11485,
+    "peak_res_mb": 11710,
+    "loss_initial": 156.65,
+    "loss_final": 144.54,
+    "loss_status": "HEALTHY",
+    "vram": [
+      {
+        "used_mb": 3.0,
+        "total_mb": 15360.0,
+        "pct": 0.0
+      },
+      {
+        "used_mb": 3.0,
+        "total_mb": 15360.0,
+        "pct": 0.0
+      }
+    ],
+    "error": null,
+    "elapsed_sec": 104.6,
+    "speedup_pct": 23.2,
+    "est_40_epoch_hours": 23.34
+  }
+]

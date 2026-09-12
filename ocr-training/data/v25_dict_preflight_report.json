@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "preflight_checks": {
+    "unknown_characters_count": 0,
+    "unknown_characters_list": [],
+    "invalid_unicode_count": 0,
+    "invalid_unicode_list": [],
+    "labels_exceeding_max_len_count": 0,
+    "labels_exceeding_percentage": 0.0
+  },
+  "vocabulary_metrics": {
+    "v24_base_tokens": 103,
+    "new_appended_tokens": 13,
+    "v25_total_tokens": 116,
+    "sample_new_tokens": [
+      "A",
+      "C",
+      "E",
+      "H",
+      "I",
+      "M",
+      "T",
+      "V",
+      "e",
+      "f",
+      "r",
+      "§",
+      "ù"
+    ]
+  },
+  "label_length_percentiles": {
+    "min": 2,
+    "p50_median": 15.0,
+    "p90": 25.0,
+    "p95": 26.0,
+    "p99": 29.0,
+    "max": 69,
+    "mean": 15.89,
+    "recommended_max_text_length": 29,
+    "configured_max_text_length": 80
+  }
+}

@@ -2,10 +2,14 @@
 
 - **Quy tắc làm việc**: Khi có bất kỳ điểm nào chưa rõ ràng hoặc thiếu thông tin cần thiết để thực hiện công việc, Agent bắt buộc phải dừng lại và đặt câu hỏi làm rõ với người dùng ngay lập tức, tránh tự ý giả định.
 - **Quy tắc tối ưu hóa GPU trên Kaggle**:
-  - **Tài khoản Kaggle riêng cho dự án**: Luôn sử dụng tài khoản Kaggle của dự án này: `username: "gustavnguyen"`, `key: "6bf56db7e5c0fa7895d157167961d92b"`. Khi gọi Kaggle API hoặc chạy các kịch bản tương tác với Kaggle, luôn đảm bảo gán `os.environ["KAGGLE_USERNAME"] = "gustavnguyen"` và `os.environ["KAGGLE_KEY"] = "6bf56db7e5c0fa7895d157167961d92b"` trước khi xác thực để không bị xung đột với tài khoản khác trên máy.
+  - **Tài khoản Kaggle riêng cho dự án**: Luôn sử dụng tài khoản Kaggle của dự án này: `username: "gustavnguyen"`. Khi gọi Kaggle API hoặc chạy các kịch bản tương tác với Kaggle, luôn sử dụng module `kaggle_auth.init_kaggle_auth()` hoặc đọc an toàn từ biến môi trường `KAGGLE_KEY` / tệp `.env` (tuyệt đối không hardcode API key vào mã nguồn hoặc tài liệu markdown để tránh lộ bí mật khi push lên GitHub).
   - Khi khởi chạy bất kỳ tác vụ huấn luyện nào trên Kaggle, luôn luôn chỉ định bộ tăng tốc GPU tối ưu (`--accelerator NvidiaTeslaT4` để cấp phát GPU T4x2).
   - Viết mã nguồn huấn luyện thích ứng tự động (Adaptive Multi-GPU) để truy vấn số lượng GPU khả dụng bằng `paddle.device.cuda.device_count()`.
   - Nếu phát hiện số GPU > 1, bắt buộc phải sử dụng lệnh chạy phân tán song song `python3 -m paddle.distributed.launch --gpus '0,1,...' tools/train.py` nhằm tối đa hóa tốc độ huấn luyện (nhanh gấp đôi) để tiết kiệm thời gian thực thi và hạn ngạch quota của người dùng.
+  - **Giới hạn thời gian 12 tiếng và Huấn luyện đa chặng (12-Hour Timeout & Multi-Stage Checkpoints)**:
+    - Mỗi phiên chạy (kernel run) trên Kaggle bị giới hạn cứng tối đa là 12 tiếng. Với khối lượng huấn luyện dài hạn (như 40 epochs ~23 tiếng), **TUYỆT ĐỐI KHÔNG** được cấu hình chạy toàn bộ trong 1 phiên duy nhất để tránh bị Kaggle ngắt tiến trình giữa chừng và mất dữ liệu.
+    - Bắt buộc phải chia tiến trình huấn luyện thành nhiều chặng an toàn (ví dụ: Chặng 1: Epochs 1–20 (~11.5h), Chặng 2: Epochs 21–40 (~11.5h); hoặc phương án đệm an toàn 3 chặng ~8h/chặng).
+    - Cấu hình lưu checkpoint tự động sau mỗi epoch (`Global.save_epoch_step: 1`) và thiết lập cơ chế resume liền mạch qua `Global.checkpoints` trỏ vào checkpoint của chặng trước (thông qua Kaggle Kernel Output hoặc Kaggle Dataset) để tiếp tục tiến trình huấn luyện mà không làm gián đoạn learning rate schedule và optimizer state.
 
 - **Quy tắc tương thích NumPy 2.x**:
   - Khi viết các mã nguồn hoặc chạy ứng dụng cục bộ sử dụng môi trường Python mới (như Python 3.13 trở lên), luôn áp dụng đoạn mã monkeypatch tương thích ngược ở đầu tệp (trước khi import PaddleOCR hoặc `imgaug`):

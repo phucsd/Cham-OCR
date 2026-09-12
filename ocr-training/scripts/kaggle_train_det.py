@@ -4,8 +4,7 @@
 Kaggle Training Automation for Cham Text Detection (Phase 4).
 Prepares and submits a multi-GPU (T4x2) PaddleOCR DBNet training job to Kaggle,
 strictly following the Cham-OCR project rules:
-- Kaggle user: "gustavnguyen"
-- Key: "6bf56db7e5c0fa7895d157167961d92b"
+- Kaggle user: "gustavnguyen" (Key nạp tự động qua kaggle_auth / .env)
 - Accelerator: NvidiaTeslaT4
 - Distributed multi-GPU execution: paddle.distributed.launch --gpus '0,1'
 """
@@ -24,9 +23,9 @@ if sys.stdout and sys.stdout.encoding != 'utf-8':
     except AttributeError:
         pass
 
-# Force Kaggle credentials
-os.environ["KAGGLE_USERNAME"] = "gustavnguyen"
-os.environ["KAGGLE_KEY"] = "6bf56db7e5c0fa7895d157167961d92b"
+# Kaggle credentials
+from kaggle_auth import init_kaggle_auth
+init_kaggle_auth()
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "scripts"))

@@ -18,11 +18,11 @@ if sys.stdout and sys.stdout.encoding != 'utf-8':
 def get_authenticated_api():
     """Khởi tạo và xác thực với Kaggle API"""
     try:
-        # Tự động nạp tài khoản Kaggle riêng của dự án Cham-OCR nếu chưa cấu hình trong env
-        if "KAGGLE_USERNAME" not in os.environ:
-            os.environ["KAGGLE_USERNAME"] = "gustavnguyen"
-        if "KAGGLE_KEY" not in os.environ:
-            os.environ["KAGGLE_KEY"] = "6bf56db7e5c0fa7895d157167961d92b"
+        try:
+            from scripts.kaggle_auth import init_kaggle_auth
+        except ImportError:
+            from kaggle_auth import init_kaggle_auth
+        init_kaggle_auth()
 
         api = KaggleApi()
         api.authenticate()

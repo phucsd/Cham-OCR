@@ -287,7 +287,7 @@ def get_det_model():
     has_cham_model = os.path.exists(os.path.join(cham_det_dir, "inference.pdmodel")) or os.path.exists(os.path.join(cham_det_dir, "inference.json"))
     if has_cham_model:
         det_model_dir = cham_det_dir
-        print(f"🌟 Sử dụng mô hình Text Detection Chăm chuyên biệt: {det_model_dir}")
+        print(f"🌟 Using dedicated Cham Text Detection model: {det_model_dir}")
     else:
         det_model_dir = os.path.join(PROJECT_ROOT, "data", "output", "ch_PP-OCRv4_det_infer")
     model_file_exists = os.path.exists(os.path.join(det_model_dir, "inference.pdmodel")) or os.path.exists(os.path.join(det_model_dir, "inference.json"))
@@ -1396,13 +1396,13 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                 img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
             except Exception as e:
                 print(f"❌ Error decoding image: {e}")
-                self.send_json_response({'error': f'Không thể giải mã ảnh: {e}'}, 400)
+                self.send_json_response({'error': f'Unable to decode image data: {e}'}, 400)
                 return
                 
             print(f"⏱️  Parsed parameters and decoded image in: {time.time() - t_parse:.4f}s")
             
             if img is None:
-                self.send_json_response({'error': 'Không thể đọc ảnh (Dữ liệu b64 lỗi)'}, 400)
+                self.send_json_response({'error': 'Unable to read image (corrupted base64 payload)'}, 400)
                 return
                 
             # Perform segmentation
@@ -1412,7 +1412,7 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             except Exception as e:
                 import traceback
                 print(f"❌ Error loading OCR model '{model_ver}': {traceback.format_exc()}")
-                self.send_json_response({'error': f'Lỗi tải mô hình ({model_ver}): {e}'}, 200)
+                self.send_json_response({'error': f'Model loading failure ({model_ver}): {e}'}, 200)
                 return
             print(f"⏱️  Loaded model in: {time.time() - t_model:.4f}s")
                 
@@ -1509,7 +1509,7 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             except Exception as e:
                 import traceback
                 print(f"❌ Error during OCR formatting: {traceback.format_exc()}")
-                self.send_json_response({'error': f'Lỗi hệ thống OCR: {e}'}, 200)
+                self.send_json_response({'error': f'OCR transcription engine error: {e}'}, 200)
                 return
             print(f"⏱️  Formatted response in: {time.time() - t_resp:.4f}s")
             
@@ -1552,11 +1552,11 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                 nparr = np.frombuffer(img_data, np.uint8)
                 img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
             except Exception as e:
-                self.send_json_response({'error': f'Không thể giải mã ảnh: {e}'}, 400)
+                self.send_json_response({'error': f'Unable to decode image data: {e}'}, 400)
                 return
                 
             if img is None:
-                self.send_json_response({'error': 'Không thể đọc ảnh'}, 400)
+                self.send_json_response({'error': 'Unable to read image'}, 400)
                 return
                 
             h, w = img.shape[:2]
@@ -1568,7 +1568,7 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             
             crop_img = img[y1:y2, x1:x2]
             if crop_img.size == 0:
-                self.send_json_response({'error': 'Vùng crop rỗng'}, 400)
+                self.send_json_response({'error': 'Empty cropped region'}, 400)
                 return
                 
             try:
@@ -1576,7 +1576,7 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                 res, _ = ocr([crop_img])
                 pred_text, conf = res[0] if res else ("", 0.0)
             except Exception as e:
-                self.send_json_response({'error': f'Lỗi OCR crop ({model_ver}): {e}'}, 200)
+                self.send_json_response({'error': f'Cropped OCR transcription error ({model_ver}): {e}'}, 200)
                 return
                 
             if model_ver in ['v24', 'v26']:

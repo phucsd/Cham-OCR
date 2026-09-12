@@ -1,0 +1,134 @@
+Architecture:
+  Backbone:
+    name: PPLCNetV3
+    scale: 0.95
+  Head:
+    head_list:
+    - CTCHead:
+        Head:
+          fc_decay: 1.0e-05
+        Neck:
+          depth: 2
+          dims: 120
+          hidden_dims: 120
+          kernel_size:
+          - 1
+          - 3
+          name: svtr
+          use_guide: true
+    - NRTRHead:
+        max_text_length: 80
+        nrtr_dim: 384
+    name: MultiHead
+  Transform: null
+  algorithm: SVTR_LCNet
+  model_type: rec
+Eval:
+  dataset:
+    data_dir: /kaggle/working/data/cham_synthetic_benchmark
+    label_file_list:
+    - /kaggle/working/data/cham_synthetic_benchmark/val_label.txt
+    name: SimpleDataSet
+    transforms:
+    - DecodeImage:
+        channel_first: false
+        img_mode: BGR
+    - MultiLabelEncode:
+        gtc_encode: NRTRLabelEncode
+    - RecResizeImg:
+        image_shape:
+        - 3
+        - 48
+        - 320
+    - KeepKeys:
+        keep_keys:
+        - image
+        - label_ctc
+        - label_gtc
+        - length
+  loader:
+    batch_size_per_card: 64
+    drop_last: false
+    num_workers: 2
+    shuffle: false
+Global:
+  amp_level: O1
+  cal_metric_during_train: false
+  character_dict_path: /kaggle/working/data/cham_dict_v24.txt
+  checkpoints: null
+  d2s_train_image_shape:
+  - 3
+  - 48
+  - 320
+  debug: false
+  distributed: true
+  epoch_num: 1
+  eval_batch_step:
+  - 0
+  - 99999
+  infer_img: null
+  infer_mode: false
+  log_smooth_window: 20
+  max_text_length: 80
+  model_name: PP-OCRv4_mobile_rec
+  pretrained_model: null
+  print_batch_step: 5
+  save_epoch_step: 999
+  save_inference_dir: null
+  save_model_dir: /kaggle/working/benchmark_output/run_T8_Workers_3_BS64
+  save_res_path: /kaggle/working/benchmark_output/run_T8_Workers_3_BS64/predicts.txt
+  use_amp: true
+  use_gpu: true
+  use_space_char: true
+  use_visualdl: false
+Loss:
+  loss_config_list:
+  - CTCLoss: null
+  - NRTRLoss: null
+  name: MultiLoss
+Metric:
+  main_indicator: acc
+  name: RecMetric
+Optimizer:
+  beta1: 0.9
+  beta2: 0.999
+  lr:
+    learning_rate: 0.0001
+    name: Cosine
+    warmup_epoch: 2
+  name: Adam
+  regularizer:
+    factor: 3.0e-05
+    name: L2
+PostProcess:
+  name: CTCLabelDecode
+Train:
+  dataset:
+    data_dir: /kaggle/working/data/cham_synthetic_benchmark
+    label_file_list:
+    - /kaggle/working/data/cham_synthetic_benchmark/train_label.txt
+    name: SimpleDataSet
+    transforms:
+    - DecodeImage:
+        channel_first: false
+        img_mode: BGR
+    - RecAug: null
+    - MultiLabelEncode:
+        gtc_encode: NRTRLabelEncode
+    - RecResizeImg:
+        image_shape:
+        - 3
+        - 48
+        - 320
+    - KeepKeys:
+        keep_keys:
+        - image
+        - label_ctc
+        - label_gtc
+        - length
+  loader:
+    batch_size_per_card: 64
+    drop_last: true
+    num_workers: 3
+    shuffle: true
+profiler_options: null

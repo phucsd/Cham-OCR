@@ -13,9 +13,10 @@ if sys.stdout and hasattr(sys.stdout, 'reconfigure'):
 
 socket.setdefaulttimeout(60)
 
+from kaggle_auth import init_kaggle_auth
+
 def get_api():
-    os.environ["KAGGLE_USERNAME"] = "gustavnguyen"
-    os.environ["KAGGLE_KEY"] = "6bf56db7e5c0fa7895d157167961d92b"
+    init_kaggle_auth()
     api = KaggleApi()
     api.authenticate()
     return api

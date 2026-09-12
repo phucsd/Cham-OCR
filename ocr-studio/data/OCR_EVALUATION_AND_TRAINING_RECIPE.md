@@ -105,10 +105,10 @@ Sinh 5,000 ảnh tập trung vào:
 
 ### 4.3. Quy trình Huấn Luyện trên Kaggle GPU T4x2
 Tuân thủ nghiêm ngặt quy chuẩn của dự án trong `.agents/AGENTS.md`:
-1. Sử dụng tài khoản Kaggle của dự án:
+1. Sử dụng tài khoản Kaggle của dự án (`username: "gustavnguyen"`), nạp key từ biến môi trường `KAGGLE_KEY` hoặc `.env`:
    ```python
-   os.environ["KAGGLE_USERNAME"] = "gustavnguyen"
-   os.environ["KAGGLE_KEY"] = "6bf56db7e5c0fa7895d157167961d92b"
+   from scripts.kaggle_auth import init_kaggle_auth
+   init_kaggle_auth()
    ```
 2. Khởi chạy với GPU T4x2 và lệnh phân tán đa GPU:
    ```bash
