@@ -109,6 +109,7 @@ Mọi số liệu công bố đều được đối chiếu trực tiếp từ c
 3. **Phân loại Mô hình V24 vs V25**:
    - **Version 24 (Validated Baseline)**: Mô hình chuẩn chính thức đang phục vụ trên production (CER 16.81%, Pass Rate 44.0% trong bài đối sánh cục bộ).
    - **Version 25 (Experimental Checkpoint)**: Bản thử nghiệm mở rộng từ điển dấu câu và số khổ thơ (đang trong quá trình huấn luyện và tinh chỉnh, CER 51.73% ở checkpoint ban đầu).
+   - **Đóng băng Thực nghiệm Huấn luyện V25**: Để đảm bảo tính tái lập khoa học và xác thực mô hình trong khi tiến trình huấn luyện đa chặng đang chạy trên GPU Kaggle, toàn bộ tài nguyên huấn luyện V25 (`generate_data_v25.py`, `rec_cham_v25.yml`, `v25_dataset_manifest.json`, `TRAINING_ROADMAP_V25.md`) được đóng băng nghiêm ngặt. Các đề xuất cải tiến tiếp theo được theo dõi riêng tại [FUTURE_WORK.md](FUTURE_WORK.md).
 
 ---
 

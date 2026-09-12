@@ -49,7 +49,7 @@ Evaluations across a **controlled 200-page synthetic document stress-test** (903
   - [4.3 Post-OCR Deterministic Canonical Normalization](#43-post-ocr-deterministic-canonical-normalization)
 - [5. Synthetic Dataset Generation & Hard-Example Mining](#5-synthetic-dataset-generation--hard-example-mining)
   - [5.1 The Data Scarcity Bottleneck](#51-the-data-scarcity-bottleneck)
-  - [5.2 4-Tier Stratified Synthesis Corpus](#52-4-tier-stratified-synthesis-corpus)
+  - [5.2 Calibrated Synthetic Dataset Partitioning & Dual-Generator Architecture](#52-calibrated-synthetic-dataset-partitioning--dual-generator-architecture)
   - [5.3 TrueType/OpenType cmap Tofu Glyph Safeguards](#53-truetypeopentype-cmap-tofu-glyph-safeguards)
   - [5.4 On-the-Fly Dynamic Augmentation in RAM](#54-on-the-fly-dynamic-augmentation-in-ram)
 - [6. Empirical Benchmarks & Quantitative Evaluations](#6-empirical-benchmarks--quantitative-evaluations)
@@ -61,6 +61,7 @@ Evaluations across a **controlled 200-page synthetic document stress-test** (903
   - [7.1 Containerized Microservice Architecture](#71-containerized-microservice-architecture)
   - [7.2 Concurrency Safeguards & NumPy 2.x Forward Compatibility](#72-concurrency-safeguards--numpy-2x-forward-compatibility)
 - [8. Limitations & Open Research Challenges](#8-limitations--open-research-challenges)
+  - [8.5 Post-V25 Future Iterations (Planned V25.1 / V26 Improvements)](#85-post-v25-future-iterations-planned-v251--v26-improvements)
 - [9. BibTeX Citation & Academic References](#9-bibtex-citation--academic-references)
 
 ---
@@ -99,7 +100,7 @@ Unlike alphabetic writing systems where letters follow a single horizontal axis,
 7. **Punctuation & Verse Markers**: Traditional texts structure discourse via Danda (`꩝` U+AA5D), Double Danda (`꩞` U+AA5E, also serving as stanza/section mark), and Triple Danda (`꩟` U+AA5F). Poetic stanzas frequently begin with Cham numerals followed by a section mark (e.g., `꩑꩞` for Stanza 1, `꩒꩞` for Stanza 2).
 
 ### 1.3 Logical Storage Order vs Visual Rendering Order
-In conformance with Unicode Standard Annex #29 and Brahmic script architecture, the Unicode Standard mandates **Logical Order** encoding:
+In conformance with the Unicode Standard Chapter 16 (Section 16.3 Cham, Table 16-16) and Brahmic script architecture, the Unicode Standard mandates **Logical Order** encoding:
 
 $$\text{Canonical Cluster} = \text{Base Consonant} + [\text{Medials RA/LA}] + [\text{Medials YA/WA}] + [\text{Pre-Vowels}] + [\text{Dependent Vowels}] + [\text{Lengthener AA}] + [\text{Finals / Signs}]$$
 
@@ -234,6 +235,9 @@ For the V25 experimental iteration, a dedicated multi-threaded generator (`gener
 4. **Stanza Numerals & Boundary Punctuation (12.0% / 18,000 lines)**: Verse numbers $1$–$99$ (`꩑꩞`..`꩙꩙꩞`) and boundary marks (`꩞`, `:`, `–`).
 5. **Adversarial Minimal Pairs (8.0% / 12,000 lines)**: Micro-stroke pairs (`ꨲ` U+AA32 Vowel Sign UE vs `ꨶ` U+AA36 Medial WA, variable Double Danda `꩝꩝` spacing 2–8px, 3-tier diacritic stacks).
 
+> [!IMPORTANT]
+> **Active Training Experiment Freeze (V25)**: Model Version 25 is currently undergoing multi-stage distributed GPU training on Kaggle. To preserve scientific reproducibility and execution determinism, the entire V25 training experiment—including `generate_data_v25.py`, `rec_cham_v25.yml`, `v25_dataset_manifest.json`, `TRAINING_ROADMAP_V25.md`, character dictionary, and checkpoint states—is strictly frozen. No modifications are permitted to active V25 training assets during the run.
+
 ### 5.3 Digital Typefaces & TrueType cmap Tofu Glyph Safeguards
 When rendering synthetic text, digital Cham typefaces must be verified for glyph coverage. The primary bundled and reproducible typeface distributed directly within this repository is **Noto Sans Cham** (`Regular`, `Bold`, `Black`; SIL Open Font License 1.1, located in `ocr-training/data/fonts/`). External reference typefaces evaluated during research—including *Cham Roman*, *EFEO Cham*, and community fonts—are not redistributed in this repository and must be acquired independently if researchers wish to reproduce specific historical font variations.
 
@@ -291,6 +295,9 @@ To clarify model designations within the repository, we conducted an empirical c
 
 **Scientific Interpretation**: Version 24 serves as our validated baseline. While Version 25 incorporates lexicon expansion and weight surgery (`surgery_v25_weights.py`) to accommodate newly added punctuation and numeral tokens, early checkpoints exhibit alignment instability across extended lexicons. Consequently, **Version 24 remains the production standard**, while Version 25 remains an active research checkpoint undergoing further training.
 
+> [!NOTE]
+> **Active Training Experiment Freeze**: The implementation, configuration, dataset manifest, and training scripts for Version 25 are intentionally frozen during the training run to maintain experiment reproducibility. Proposed pipeline improvements (including mixed-script font fallback and exact manifest allocation) are cataloged separately in [FUTURE_WORK.md](file:///FUTURE_WORK.md) for post-V25 development.
+
 ### 6.4 Multi-GPU Distributed Hardware Scaling & Cost Efficiency
 To support reproducible training across constrained computational budgets, we conducted multi-GPU benchmarks across four hardware environments:
 
@@ -339,6 +346,13 @@ While our pipeline demonstrates substantial gains on synthetic and semi-controll
 2. **Absence of Large-Scale Real Manuscript Ground Truth**: Due to the acute scarcity of digitized historical Cham archives with line-level annotations, current benchmarks rely on controlled synthetic stress-tests and curated test slices. Establishing an open, expert-verified historical palm-leaf manuscript benchmark represents an urgent necessity requiring future collaborative scholarship with native Cham elders and linguists.
 3. **Severe Biological Degradation & Epigraphy**: Inscription stone rubbings and severely mold-damaged palm leaves (where character ink has substantially eroded) remain beyond the capabilities of pure vision-based CTC sequence models. Integrating masked language models (MLMs) trained on historical Cham corpora is an active subject of future study.
 4. **Extreme Interlinear Overlap (Level 5)**: When severe paper wrinkling causes interlinear wave amplitude to exceed line spacing ($\text{Amplitude} > \text{Gap}$), 1D projection and horizontal bounding boxes collapse, indicating the need for 2D polygonal baseline tracking models in future iterations.
+
+### 8.5 Post-V25 Future Iterations (Planned V25.1 / V26 Improvements)
+To protect the integrity, reproducibility, and execution determinism of the active V25 training run, all subsequent pipeline enhancements are tracked separately for future releases (see [FUTURE_WORK.md](file:///FUTURE_WORK.md)):
+1. **Dual-Script Font Fallback & Glyph Validation**: Implementation of a coordinated rendering pipeline for mixed Cham and Vietnamese/Latin text with fontTools cmap validation across both scripts to eliminate tofu artifacts in bilingual annotations.
+2. **Dedicated Directional Motion-Blur Augmentation**: Physics-grounded Point Spread Function (PSF) kernels modeling hand tremor motion angles and shutter exposure times.
+3. **Manifest-Driven Exact Package Allocation**: Deterministic line count allocation per category instead of probabilistic multinomial sampling.
+4. **Deterministic Frozen Validation Generation**: Permanent pre-generated frozen validation splits to guarantee zero-variance benchmark comparisons across epochs.
 
 ---
 

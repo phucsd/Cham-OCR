@@ -45,6 +45,7 @@ An audit of earlier documentation revealed several critical errors regarding Uni
 | `U+AA05` | `ꨅ` | Consonant | `CHAM LETTER O` (**Independent Vowel**) | Rectified across all docs |
 | `U+AA06`–`U+AA28` | `ꨆ`–`ꨨ` | Grouped with independent vowels | **Consonantal Inventory** (35 consonants: `KA` to `HA`) | Grouping formalized |
 | `U+AA25` | `ꨥ` | Treated solely as base consonant | `CHAM LETTER VA` (**Dual Initial / Syllable-Final Consonant per Table 16-16**) | Implemented & verified |
+| `U+AA2F` | `ꨯ` | Mislabeled as E-vowel in older draft | `CHAM VOWEL SIGN O` (**Pre-base Dependent Vowel**) | Reconciled across all documentation |
 | `U+AA31` | `ꨱ` | Omitted or misattributed | `CHAM VOWEL SIGN AU` (Dependent Vowel) | Verified in dictionary & generator |
 | `U+AA32` | `ꨲ` | Mislabeled as Vowel Sign "Au" | `CHAM VOWEL SIGN UE` (Dependent Vowel) | Mislabeled "Au" fixed to "Ue" |
 | `U+AA33` | `ꨳ` | Mislabeled as "Medial Ra" | `CHAM CONSONANT SIGN YA` (**Medial Ya**) | Inverted sign fixed to Ya |
@@ -167,6 +168,8 @@ The project openly documents four major technical limitations:
 | `validate_unicode_source_labels.py` | Fixed PRE_SIGNS, MEDIAL_SIGNS, and regex for diacritic validation | **Verified** | Script execution clean |
 | `paddleocr_cham_finetune.ipynb` | Synchronized character sets and canonical cluster reordering with generate_data.py | **Verified** | JSON validated |
 | `ACADEMIC_AUDIT.md` | Documentation Audit & Reconciliation Log tracking known issues and empirical uncertainties | **Verified** | Fully documented |
+| `FUTURE_WORK.md` | Standalone roadmap decoupling post-V25 proposals (font fallback, directional PSF blur, manifest allocation, val freeze) from active training | **Verified** | Decoupled & documented |
+| **Active V25 Experiment Freeze** | Strict freeze on `generate_data_v25.py`, `rec_cham_v25.yml`, `v25_dataset_manifest.json`, `TRAINING_ROADMAP_V25.md` during training | **Verified** | Active run frozen & untouched |
 
 ---
 

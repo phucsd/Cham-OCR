@@ -167,6 +167,9 @@ Logged in `ocr-studio/data/benchmark_v24_vs_v25_results.json`:
 - **Version 24 (Validated Baseline)**: Demonstrates proven convergence with **16.81% CER** and **44.0% pass rate**, serving as our default production model.
 - **Version 25 (Experimental Checkpoint)**: Ingests lexicon expansions and neural weight surgery (`surgery_v25_weights.py`). Current checkpoints yield **51.73% CER** and **10.0% pass rate** due to early alignment shifts, remaining under active training and calibration.
 
+> [!IMPORTANT]
+> **Active Training Experiment Freeze (V25)**: Model Version 25 is actively undergoing multi-stage distributed GPU training on Kaggle. To guarantee exact scientific reproducibility and execution determinism, the entire V25 training experiment (including `generate_data_v25.py`, `rec_cham_v25.yml`, `v25_dataset_manifest.json`, and `TRAINING_ROADMAP_V25.md`) is strictly frozen until training and benchmark evaluation conclude. Proposed future iterations (e.g., dual-script font fallback, directional blur) are tracked separately in [FUTURE_WORK.md](FUTURE_WORK.md).
+
 ---
 
 ## 📑 Academic Citation

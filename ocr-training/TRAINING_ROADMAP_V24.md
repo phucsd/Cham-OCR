@@ -11,7 +11,7 @@ Tài liệu này ghi nhớ toàn bộ các nguyên nhân lỗi trên mô hình *
    - *Nguyên nhân*: Thiếu cấu trúc số thứ tự khổ thơ đứng đầu dòng trong tập dữ liệu tổng hợp (`scripts/generate_data.py`).
    - *Hành động khắc phục*: Bổ sung template `{cham_num}꩞ {cham_text}` với số chạy từ `꩑` đến `꩙꩙`.
 
-2. **Lỗi nhầm lẫn cặp dấu phụ `ꨲ` (Au, U+AA32) thành `ꨶ` (O, U+AA36)**:
+2. **Lỗi nhầm lẫn cặp dấu phụ `ꨲ` (Vowel Sign UE, U+AA32) thành `ꨶ` (Medial WA, U+AA36)**:
    - *Hiện tượng*: Sai 100% khi gặp dấu `ꨲ` (như `ꨀꨲꩆ` -> `ꨀꨶꩆ`, `ꨓꨆꨴꨲꨩ` -> `ꨓꨆꨴꨶꨩ`).
    - *Nguyên nhân*: Cả hai đều là dấu phụ nằm dưới chân phụ âm, nét vẽ chỉ khác nhau góc lượn nhọn và móc khép kín; tập huấn luyện thiếu các từ chứa `ꨲ`.
    - *Hành động khắc phục*: Sinh 5,000 mẫu hard-examples tập trung vào các phụ âm kết hợp `ꨲ` (`ꨀ`, `ꨓ`, `ꨚ`, `ꨆ`, `ꨟ`, `ꨣ`).
@@ -30,7 +30,7 @@ Tài liệu này ghi nhớ toàn bộ các nguyên nhân lỗi trên mô hình *
    - *Đặc điểm đáng chú ý*: Các số hàng đơn vị đứng sau (`꩐`, `꩔`, `꩕`, `꩗`, `꩘`) mô hình vẫn nhận diện đúng! Điều này chứng minh mô hình có khả năng trích xuất đặc trưng của số Chăm, nhưng vì thiếu hoàn toàn dữ liệu ngữ cảnh số 2 chữ số đứng đầu dòng nên CTC Decoder tự động ép số đầu tiên thành phụ âm/nguyên âm để khớp với ngữ cảnh từ vựng thông thường.
    - *Hành động khắc phục*: Đảm bảo dải số sinh dữ liệu mở rộng từ 1 đến 99 (đặc biệt các số `꩔꩐` - `꩙꩙`).
 
-6. **Lỗi rụng nguyên âm trước `ꨯ` (E-vowel, U+AA2F) và nguyên âm kép `ꨯꨱ` (Au) [Phát hiện từ Case 2]**:
+6. **Lỗi rụng nguyên âm đứng trước `ꨯ` (Vowel Sign O, U+AA2F) và nguyên âm kép `ꨯꨱ` (Au) [Phát hiện từ Case 2]**:
    - *Hiện tượng*: Các từ như `ꨗꨯꨣꨚꨮꩅ` bị rụng mất `ꨯ` thành `ꨗꨣꨚꨮꩅ`, `ꨆꨴꨯꩅ` thành `ꨆꨴꩅ`, `ꨈꨪꨗꨯꨱꩃ` thành `ꨈꨪꨗꨮ`.
    - *Nguyên nhân*: Nét vẽ của nguyên âm trước `ꨯ` thanh mảnh và đứng trước phụ âm, ở các dòng chữ có chiều cao thấp (~30px) dễ bị lẫn vào viền crop hoặc bị bộ trích xuất CNN làm mờ.
    - *Hành động khắc phục*: Bổ sung biến đổi độ phân giải thấp (downsampling resize 0.6x - 0.9x) và làm mờ motion blur vào pipeline dữ liệu tổng hợp để mô hình nhạy bén hơn với nét thanh của `ꨯ`.
@@ -53,7 +53,7 @@ Tài liệu này ghi nhớ toàn bộ các nguyên nhân lỗi trên mô hình *
   - `val_synthetic`: ~15,000 dòng ảnh.
   - `hard_examples_v24`: 35,000 dòng ảnh đặc trị gồm:
     - 15,000 số thứ tự khổ thơ Chăm 1-99 (`{cham_num}꩞ {cham_text}`).
-    - 5,000 cặp đối kháng `ꨲ` (U+AA32) vs `ꨶ` (U+AA36).
+    - 5,000 cặp đối kháng `ꨲ` (Vowel Sign UE, U+AA32) vs `ꨶ` (Medial WA, U+AA36).
     - 5,000 Double Danda `꩝꩝` cự ly hẹp 1px - 8px.
     - 5,000 tổ hợp 3 tầng dấu phụ (`ꨣꨳꨪꩌ`...).
     - 5,000 mẫu ảnh suy thoái thực tế (Motion Blur, Dust/Noise, Parchment texture, Tilt/Perspective).

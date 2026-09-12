@@ -19,15 +19,18 @@ This document provides a transparent, verifiable record of the provenance, right
 | Historical chronicles & folk narratives (*Dalikal*) | Cham traditional oral and written literature | Cham community collections and regional cultural publications | Digitized and normalized into Unicode | Traditional cultural heritage / specific edition rights unverified / non-commercial educational & preservation use (line-by-line edition mapping subject to archival verification) | Yes (normalized Unicode textlines in `cham_text.txt`) |
 | Cham-Vietnamese-French Lexical Compendia | Historical missionary and linguistic wordlists (e.g. Aymonier & Cabaton 1906; Moussay 1971; modern pedagogical materials) | Academic library collections & SEADL references | Digital normalization into standard Unicode 16.0 Cham | Historical reference works / specific edition rights unverified / non-commercial educational & preservation use (line-by-line edition mapping subject to archival verification) | Yes (vocabulary tokens merged into `cham_text.txt`) |
 
+> [!NOTE]
+> **Archival Verification Caveat**: Exact published print editions, original publication years, critical apparatus variants, and persistent digital repository shelfmarks/URLs for the literary texts transcribed in `cham_text.txt` have not been independently verified by an institutional archivist or manuscript librarian. The corpus represents normalized Unicode transcriptions assembled from diverse educational and community preservation sources for OCR training and evaluation. Downstream researchers must not rely on `cham_text.txt` as an authoritative or critical philological edition.
+
 ### 1.2 Corpus Curation & Linguistic Preprocessing
 * **Orthographic Normalization**: Conversion into canonical Unicode 16.0 Cham representation (`U+AA00`–`U+AA5F`).
 * **Encoding Rectification**: Removal of legacy ASCII transliteration hacks, unmapped symbols, and malformed encoding artifacts.
 * **Textline Segmentation**: Partitioning into sentence and clause fragments corresponding to natural textline sequence lengths.
 
 ### 1.3 Legal & Cultural Usage Rights Disclaimer
-> **Important Notice on Text Rights**:  
-> The project does not claim ownership over underlying third-party texts. Redistribution rights remain subject to the rights status of each source corpus.  
-> The curated file `cham_text.txt` is compiled and provided strictly for educational scholarship, non-profit linguistic preservation, and scientific OCR research.
+> **Important Notice on Text Rights & Archival Provenance**:  
+> The project maintainer claims no proprietary rights or copyright over underlying traditional Cham literature, historical chronicles, or modern scholarly editions. Redistribution rights remain subject to the rights status of each source corpus.  
+> The curated file `cham_text.txt` is compiled and provided strictly for non-commercial educational scholarship, cultural preservation, and algorithmic OCR training under fair-use research principles. Because persistent canonical archival URLs and institutional repository licenses cannot be independently verified for all aggregated fragments, any commercial utilization or redistribution outside academic research must seek permission from relevant cultural rights holders and publishing bodies.
 
 ---
 
