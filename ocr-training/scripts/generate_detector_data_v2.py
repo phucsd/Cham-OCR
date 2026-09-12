@@ -312,7 +312,7 @@ def main():
         os.makedirs(os.path.dirname(corpus_file), exist_ok=True)
         try:
             import urllib.request
-            raw_url = "https://raw.githubusercontent.com/phucsd1/Cham-OCR/main/ocr-training/data/corpus/cham_text.txt"
+            raw_url = "https://raw.githubusercontent.com/phucsd/Cham-OCR/main/ocr-training/data/corpus/cham_text.txt"
             urllib.request.urlretrieve(raw_url, corpus_file)
             print(f"✅ Đã tải corpus thành công về: {corpus_file}")
         except Exception as e:

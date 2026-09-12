@@ -14,7 +14,7 @@ pinned: false
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-ocr.cham.asia-C96442?style=for-the-badge&logo=google-chrome&logoColor=white)](https://ocr.cham.asia)
 [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-F59E0B?style=for-the-badge)](https://huggingface.co/spaces/phucsd/cham-ocr-studio)
-[![GitHub Repository](https://img.shields.io/badge/GitHub-phucsd1%2FCham--OCR-24292e?style=for-the-badge&logo=github)](https://github.com/phucsd1/Cham-OCR)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-phucsd%2FCham--OCR-24292e?style=for-the-badge&logo=github)](https://github.com/phucsd/Cham-OCR)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
 An end-to-end deep learning research platform and paleographic transcription system specifically engineered for the digitized preservation, line segmentation, and optical character recognition of historical **Cham manuscripts** (encompassing traditional *Akhar Thrah* of Eastern Cham and *Cam Srak* of Western Cham).
@@ -81,7 +81,7 @@ Cham-OCR/
 ### 1. Environment Setup
 Clone the repository and install all required dependencies:
 ```bash
-git clone https://github.com/phucsd1/Cham-OCR.git
+git clone https://github.com/phucsd/Cham-OCR.git
 cd Cham-OCR
 pip install -r requirements.txt
 ```
@@ -142,7 +142,7 @@ If you utilize Cham-OCR, our synthetic dataset pipeline, or the OCR Studio in yo
   title = {Cham OCR Studio: Deep Learning Pipeline and Paleographic Transcription Workbench for Historical Cham Manuscripts},
   year = {2026},
   publisher = {GitHub},
-  url = {https://github.com/phucsd1/Cham-OCR},
+  url = {https://github.com/phucsd/Cham-OCR},
   note = {Live web service: https://ocr.cham.asia}
 }
 ```

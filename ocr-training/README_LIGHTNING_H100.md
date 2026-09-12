@@ -34,7 +34,7 @@ Tài liệu hướng dẫn chi tiết quy trình 1-click huấn luyện mô hìn
 Mở **Terminal** trong Lightning Studio và gõ 3 dòng lệnh sau:
 
 ```bash
-git clone https://github.com/phucsd1/Cham-OCR.git
+git clone https://github.com/phucsd/Cham-OCR.git
 cd Cham-OCR/ocr-training
 bash run_h100_train.sh
 ```

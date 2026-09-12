@@ -38,7 +38,7 @@ def main():
     
     setup_cmds = [
         # 1. Clone or Pull Cham-OCR
-        "if [ ! -d 'Cham-OCR' ]; then git clone https://github.com/phucsd1/Cham-OCR.git; else cd Cham-OCR && git pull origin main && cd ..; fi",
+        "if [ ! -d 'Cham-OCR' ]; then git clone https://github.com/phucsd/Cham-OCR.git; else cd Cham-OCR && git pull origin main && cd ..; fi",
         # 2. Clone PaddleOCR inside Cham-OCR/ocr-training if not exists
         "cd /teamspace/studios/this_studio/Cham-OCR/ocr-training && if [ ! -d 'PaddleOCR' ]; then git clone -b release/2.7 https://github.com/PaddlePaddle/PaddleOCR.git; fi",
         # 3. Download fonts
