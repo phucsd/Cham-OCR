@@ -1,8 +1,8 @@
 ---
 title: Cham OCR Studio — Paleographic Transcription Workbench
 emoji: 📜
-colorFrom: amber
-colorTo: stone
+colorFrom: yellow
+colorTo: red
 sdk: docker
 app_port: 7860
 pinned: false
