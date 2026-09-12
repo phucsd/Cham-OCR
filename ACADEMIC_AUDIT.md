@@ -3,6 +3,7 @@
 > **Document Type**: Internal Documentation Audit & Reconciliation Log  
 > **Audited Repository**: `phucsd/Cham-OCR`  
 > **Author & Project Maintainer**: Phuc H. Nguyen  
+> **Email / Contact**: [phucsd@gmail.com](mailto:phucsd@gmail.com)  
 > **Audit Date**: September 2026  
 > **Repository Commit**: Current Working Tree (Post-Audit Synchronized)  
 > **Live Web Service**: [https://ocr.cham.asia](https://ocr.cham.asia)  

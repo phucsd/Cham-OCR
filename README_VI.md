@@ -2,6 +2,12 @@
 
 # Cham-OCR: Đường ống Deep Learning cho Chăm Đông Unicode, hướng tới Bản thảo Lịch sử và Văn bia
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-ocr.cham.asia-C96442?style=for-the-badge&logo=google-chrome&logoColor=white)](https://ocr.cham.asia)
+[![Báo cáo Kỹ thuật](https://img.shields.io/badge/Báo_cáo-RESEARCH.md-8C533E?style=for-the-badge&logo=googlescholar&logoColor=white)](RESEARCH.md)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-phucsd%2FCham--OCR-24292e?style=for-the-badge&logo=github)](https://github.com/phucsd/Cham-OCR)
+[![Liên hệ Email](https://img.shields.io/badge/Liên_hệ-phucsd%40gmail.com-blue?style=for-the-badge&logo=gmail&logoColor=white)](mailto:phucsd@gmail.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
+
 Dự án nghiên cứu, huấn luyện và chẩn đoán nhận diện chữ viết tiếng Chăm dựa trên nền tảng PaddleOCR PP-OCRv4 Multilingual và DBNet, với phạm vi đã được kiểm chứng thực nghiệm trên Chăm Đông Unicode (*Akhar Thrah*) và định hướng mở rộng Chăm Tây (*Cam Srak*), văn bản bản thảo lịch sử và văn bia thời gian tới.
 
 > 📄 **Báo Cáo Kỹ Thuật Nghiên Cứu (Technical Report / Research Preprint)**: Xem toàn bộ tài liệu nghiên cứu, phương pháp luận, đánh giá thực nghiệm và phân tích cổ tự học chi tiết tại **[RESEARCH.md](RESEARCH.md)** hoặc trực tuyến tại **[https://ocr.cham.asia/research](https://ocr.cham.asia/research)**.
@@ -132,6 +138,17 @@ Nếu bạn sử dụng tài liệu, bộ sinh dữ liệu hoặc công cụ Cha
 
 ## 📄 Giấy phép & Tuyên bố Bản quyền
 
-- **Mã nguồn phần mềm**: Phát hành theo giấy phép nguồn mở [MIT License](LICENSE). Bản quyền © 2026 Phuc H. Nguyen.
+- **Software**: Phát hành theo giấy phép nguồn mở [MIT License](LICENSE). Bản quyền © 2026 Phuc H. Nguyen.
 - **Phông chữ & Ngữ liệu Văn bản**: Chi tiết về bản quyền phông chữ Chăm (*Noto Sans Cham* đi kèm repo, các phông chữ tham khảo ngoài), nguồn ngữ liệu văn bản cổ và giấy phép tập dữ liệu tổng hợp được ghi chép đầy đủ tại **[DATA_PROVENANCE.md](DATA_PROVENANCE.md)**.
 - **Kiểm định & Đối chiếu Số liệu**: Xem **[ACADEMIC_AUDIT.md](ACADEMIC_AUDIT.md)** để tra cứu nhật ký kiểm định số liệu thực nghiệm và cam kết minh bạch học thuật.
+
+---
+
+## 📬 Liên hệ & Trao đổi Học thuật
+
+Mọi thắc mắc, đề xuất hợp tác nghiên cứu, báo cáo kỹ thuật hoặc đóng góp tư liệu văn bản Chăm cổ, vui lòng liên hệ:
+- **Tác giả & Duy trì dự án**: Phuc H. Nguyen
+- **Email**: [phucsd@gmail.com](mailto:phucsd@gmail.com)
+- **GitHub**: [@phucsd](https://github.com/phucsd)
+- **Dịch vụ trực tuyến**: [https://ocr.cham.asia](https://ocr.cham.asia)
+

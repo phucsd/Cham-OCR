@@ -16,6 +16,7 @@ pinned: false
 [![Technical Report](https://img.shields.io/badge/Technical-Report-8C533E?style=for-the-badge&logo=googlescholar&logoColor=white)](RESEARCH.md)
 [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-F59E0B?style=for-the-badge)](https://huggingface.co/spaces/phucsd/cham-ocr-studio)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-phucsd%2FCham--OCR-24292e?style=for-the-badge&logo=github)](https://github.com/phucsd/Cham-OCR)
+[![Contact Email](https://img.shields.io/badge/Contact-phucsd%40gmail.com-blue?style=for-the-badge&logo=gmail&logoColor=white)](mailto:phucsd@gmail.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
 An end-to-end deep learning research platform and paleographic transcription system engineered for the digitized preservation, line segmentation, and optical character recognition of **Cham documents**, with validated performance on Unicode Eastern Cham (*Akhar Thrah*) and ongoing extensions toward Western Cham (*Cam Srak*), physical palm-leaf/kertas manuscripts, and stone epigraphy.
@@ -194,3 +195,14 @@ If you utilize Cham-OCR, our synthetic dataset pipeline, or the OCR Studio in yo
 - **Software**: Released under the [MIT License](LICENSE). Copyright © 2026 Phuc H. Nguyen.
 - **Fonts & Linguistic Corpora**: Details on digital typefaces (bundled *Noto Sans Cham*, external reference typefaces), classical literary text sources, and synthetic dataset licensing are documented in **[DATA_PROVENANCE.md](DATA_PROVENANCE.md)**.
 - **Audit & Verification**: See **[ACADEMIC_AUDIT.md](ACADEMIC_AUDIT.md)** for our ground-truth verification log and academic reconciliation ledger.
+
+---
+
+## 📬 Contact & Inquiries
+
+For academic collaborations, questions, bug reports, or contributions to digitized historical Cham archives, please reach out to:
+- **Author & Maintainer**: Phuc H. Nguyen
+- **Email**: [phucsd@gmail.com](mailto:phucsd@gmail.com)
+- **GitHub**: [@phucsd](https://github.com/phucsd)
+- **Live Web Service**: [https://ocr.cham.asia](https://ocr.cham.asia)
+

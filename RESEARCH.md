@@ -2,6 +2,7 @@
 
 > **Technical Report / Research Preprint — Not Peer Reviewed**  
 > **Author**: Phuc H. Nguyen  
+> **Email / Contact**: [phucsd@gmail.com](mailto:phucsd@gmail.com)  
 > **Affiliation**: Independent Researcher and Software Developer, Vietnam — Cham-OCR Project  
 > **Repository**: [https://github.com/phucsd/Cham-OCR](https://github.com/phucsd/Cham-OCR)  
 > **Production Web Service**: [https://ocr.cham.asia](https://ocr.cham.asia)  
@@ -10,6 +11,7 @@
 [![Live Demo](https://img.shields.io/badge/Live_Demo-ocr.cham.asia-C96442?style=for-the-badge&logo=google-chrome&logoColor=white)](https://ocr.cham.asia)
 [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-F59E0B?style=for-the-badge)](https://huggingface.co/spaces/phucsd/cham-ocr-studio)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-phucsd%2FCham--OCR-24292e?style=for-the-badge&logo=github)](https://github.com/phucsd/Cham-OCR)
+[![Contact Email](https://img.shields.io/badge/Contact-phucsd%40gmail.com-blue?style=for-the-badge&logo=gmail&logoColor=white)](mailto:phucsd@gmail.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
 ---
@@ -385,4 +387,4 @@ To protect the integrity, reproducibility, and execution determinism of the acti
 12. Graves, A., Fernández, S., Gomez, F., & Schmidhuber, J. (2006). *Connectionist temporal classification: labelling unsegmented sequence data with recurrent neural networks*. Proceedings of the 23rd International Conference on Machine Learning (ICML '06), 369–376.
 
 ---
-© 2026 Phuc H. Nguyen. Released under the MIT License.
+© 2026 Phuc H. Nguyen. Released under the MIT License. Contact: [phucsd@gmail.com](mailto:phucsd@gmail.com).

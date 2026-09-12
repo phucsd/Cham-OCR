@@ -100,4 +100,4 @@ To preserve scientific reproducibility and execution determinism, the entire V25
 
 ---
 
-© 2026 Phuc H. Nguyen. Cham-OCR Research Project. Released under the MIT License.
+© 2026 Phuc H. Nguyen. Cham-OCR Research Project. Released under the MIT License. Contact: [phucsd@gmail.com](mailto:phucsd@gmail.com).
