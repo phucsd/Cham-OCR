@@ -49,6 +49,15 @@
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 85px;
+        }
+
+        section[id], h2[id], h3[id], [id] {
+            scroll-margin-top: 85px;
+        }
+
         body {
             font-family: var(--font-sans);
             background-color: var(--bg-page);
@@ -1007,7 +1016,7 @@
                     </table>
                 </div>
 
-                <h3 3.3 Hybrid Indic Valley-Cut Heuristic & Boundary Masking Safeguards</h3>
+                <h3 id="sec3-3">3.3 Hybrid Indic Valley-Cut Heuristic & Boundary Masking Safeguards</h3>
                 <p>
                     For CPU execution in low-resource environments (or when DBNet probability maps exhibit ambiguity), we designed an <strong>Indic Valley-Cut Heuristic Engine</strong> operating as a secondary defense layer:
                 </p>
@@ -1596,11 +1605,12 @@ if not hasattr(np, 'typeDict'): np.typeDict = {}</code></pre>
 
     </div>
 
-    <!-- Active Table of Contents ScrollSpy Script -->
+    <!-- Active Table of Contents ScrollSpy & Anchor Offset Script -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const links = document.querySelectorAll('.toc-link, .toc-sublink');
             const sections = [];
+            const NAV_OFFSET = 85; // 58px navbar + 27px breathing margin
             
             links.forEach(link => {
                 const href = link.getAttribute('href');
@@ -1608,21 +1618,50 @@ if not hasattr(np, 'typeDict'): np.typeDict = {}</code></pre>
                     const target = document.querySelector(href);
                     if (target) {
                         sections.push({ link, target });
+
+                        link.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const targetTop = target.getBoundingClientRect().top + window.pageYOffset - NAV_OFFSET;
+                            window.scrollTo({
+                                top: targetTop,
+                                behavior: 'smooth'
+                            });
+                            history.pushState(null, null, href);
+                        });
                     }
                 }
             });
 
-            window.addEventListener('scroll', () => {
+            // Handle direct page load with hash in URL
+            if (window.location.hash) {
+                setTimeout(() => {
+                    const target = document.querySelector(window.location.hash);
+                    if (target) {
+                        const targetTop = target.getBoundingClientRect().top + window.pageYOffset - NAV_OFFSET;
+                        window.scrollTo({
+                            top: targetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                }, 150);
+            }
+
+            // ScrollSpy
+            function onScroll() {
                 const scrollPos = window.scrollY + 120;
                 for (let i = sections.length - 1; i >= 0; i--) {
                     const sec = sections[i];
-                    if (sec.target.offsetTop <= scrollPos) {
+                    const elementTop = sec.target.getBoundingClientRect().top + window.pageYOffset;
+                    if (elementTop <= scrollPos) {
                         links.forEach(l => l.classList.remove('active'));
                         sec.link.classList.add('active');
                         break;
                     }
                 }
-            });
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
         });
     </script>
 </body>
