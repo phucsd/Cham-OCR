@@ -121,12 +121,12 @@ init_kaggle_auth() # Tự động nạp an toàn từ .env hoặc biến môi tr
   - Mapping chính xác theo character thay vì index mù; khởi tạo trọng số ngẫu nhiên nhỏ ($\mathcal{N}(0, 0.02)$) cho các token Việt/Latin mới.
 - **Kích thước đầu vào (Image Shape)**: `[3, 48, 480]` (Mở rộng từ 320 lên 480 để giải quyết triệt để nghẽn co ép glyph trên các câu song ngữ dài).
 - **Độ dài nhãn tối đa (`max_text_length`)**: `80` (Dựa trên phân bố thực tế: P50=15, P90=25, P95=26, P99=29, Max=69 + buffer an toàn).
-- **Batch Size Tối Ưu**: `72` / GPU (Tổng Global Batch Size: **144**).
-- **Chế độ tính toán**: `AMP O1` (Kích hoạt 640 nhân Turing Tensor Cores, Throughput: **~120 mẫu/giây**, VRAM chiếm dụng ~8.5 GB / 15.0 GB mỗi GPU).
-- **Số Epochs & Phân Chặng An Toàn (3-Stage Checkpoint/Resume)**: 40 epochs (~23 giờ), chia làm **3 chặng đệm an toàn** dưới giới hạn cứng 12 tiếng của Kaggle:
-  - **Chặng 1**: Epochs 1 – 14 (~7.8 giờ) $\to$ Xuất checkpoint `latest` & `best_accuracy`.
-  - **Chặng 2**: Epochs 15 – 27 (~7.3 giờ) $\to$ Resume bằng full training checkpoint (`.pdparams` + `.pdopt` + `.states` thông qua `Global.checkpoints`, bảo toàn nguyên vẹn optimizer & LR scheduler).
-  - **Chặng 3**: Epochs 28 – 40 (~7.3 giờ) $\to$ Hoàn tất 40 epochs, xuất model `inference` v25.
+- **Batch Size Tối Ưu**: `32` / GPU (Tổng Global Batch Size: **64**, theo cấu hình chuẩn trong `configs/rec_cham_v25.yml` nhằm tối ưu cho kích thước ảnh `48x480` và tránh OOM).
+- **Chế độ tính toán**: `AMP O1` (Kích hoạt 640 nhân Turing Tensor Cores, Throughput: **~120 mẫu/giây**, VRAM chiếm dụng ~7.8 GB / 15.0 GB mỗi GPU).
+- **Số Epochs & Phân Chặng An Toàn (3-Stage Checkpoint/Resume)**: 40 epochs (~23 giờ), chia làm **3 chặng đệm an toàn** theo `stage_end_epoch` trong `configs/rec_cham_v25.yml` dưới giới hạn cứng 12 tiếng của Kaggle:
+  - **Chặng 1**: Epochs 1 – 12 (~7.5 giờ) $\to$ Ngắt chặng tại epoch 12 (`stage_end_epoch: 12`), xuất checkpoint `latest` & `best_accuracy`.
+  - **Chặng 2**: Epochs 13 – 22 (~6.5 giờ) $\to$ Ngắt chặng tại epoch 22 (`stage_end_epoch: 22`), resume bằng full training checkpoint (`.pdparams` + `.pdopt` + `.states` thông qua `Global.checkpoints`, bảo toàn nguyên vẹn optimizer & LR scheduler).
+  - **Chặng 3**: Epochs 23 – 40 (~11.0 giờ) $\to$ Hoàn tất 40 epochs, xuất model `inference` v25.
 - **Cổng Kiểm Thử Chống Suy Giảm (Non-Regression Gate)**:
   - Sau khi huấn luyện, model v25 bắt buộc phải chạy benchmark trên tập 200 trang A4 nguyên bản sạch.
   - Điều kiện nghiệm thu: $\Delta \text{CER} \le +0.5\%$ so với v24 để đảm bảo không bị suy thoái chất lượng trên văn bản thông thường.

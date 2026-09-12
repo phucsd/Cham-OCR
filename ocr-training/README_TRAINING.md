@@ -1,8 +1,8 @@
 **English** | [Tiếng Việt](README_TRAINING_VI.md)
 
-# Fine-Tuning PaddleOCR PP-OCRv4 for Cham Scripts (Akhar Thrah & Western Cham)
+# Fine-Tuning PaddleOCR PP-OCRv4 for Eastern Cham Script (Akhar Thrah)
 
-This sub-project provides automated pipelines and tooling to synthesize large-scale labeled Cham datasets, configure training parameters, perform character-mapped weight surgery, and fine-tune **PaddleOCR PP-OCRv4** recognition and detection models on **Kaggle GPU Notebooks** (Dual Nvidia Tesla T4) and **Lightning Cloud** (A100 SXM4).
+This sub-project provides automated pipelines and tooling to synthesize large-scale labeled Cham datasets, configure training parameters, perform character-mapped weight surgery, and fine-tune **PaddleOCR PP-OCRv4** recognition and detection models on **Kaggle GPU Notebooks** (Dual Nvidia Tesla T4) and **Lightning Cloud** (A100 SXM4). The current validated scope focuses on Unicode Eastern Cham (*Akhar Thrah*), with Western Cham (*Cam Srak*) and epigraphy planned as future extensions.
 
 > 🌟 **Live Interactive Web Demo**: **[https://ocr.cham.asia](https://ocr.cham.asia)** (mirrored on [Hugging Face Spaces](https://huggingface.co/spaces/phucsd/cham-ocr-studio))
 
@@ -47,10 +47,10 @@ python3 -m paddle.distributed.launch --gpus '0,1' tools/train.py -c configs/rec_
 ```
 
 ### 3. 12-Hour Session Limits & 3-Stage Checkpoints
-Kaggle enforces a strict 12-hour timeout per kernel execution. Training is partitioned into 3 consecutive safe stages:
-- **Stage 1**: Epochs 1 – 14 (~7.8h) $\to$ Exports `latest` and `best_accuracy` checkpoints.
-- **Stage 2**: Epochs 15 – 27 (~7.3h) $\to$ Resumes optimizer and LR state seamlessly via `Global.checkpoints`.
-- **Stage 3**: Epochs 28 – 40 (~7.3h) $\to$ Completes training and exports inference models.
+Kaggle enforces a strict 12-hour timeout per kernel execution. Training is partitioned into 3 consecutive safe stages per `stage_end_epoch` in `configs/rec_cham_v25.yml`:
+- **Stage 1**: Epochs 1 – 12 (~7.5h) $\to$ Stops at epoch 12 (`stage_end_epoch: 12`) and exports `latest` and `best_accuracy` checkpoints.
+- **Stage 2**: Epochs 13 – 22 (~6.5h) $\to$ Stops at epoch 22 (`stage_end_epoch: 22`) and resumes optimizer and LR state seamlessly via `Global.checkpoints`.
+- **Stage 3**: Epochs 23 – 40 (~11.0h) $\to$ Completes training and exports inference models.
 
 ---
 

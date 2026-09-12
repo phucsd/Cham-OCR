@@ -10,7 +10,7 @@ pinned: false
 
 **English** | [Tiếng Việt](README_VI.md)
 
-# Cham OCR Monorepo: Deep Learning Pipeline & Paleographic Transcription Workbench
+# Cham-OCR: A Deep-Learning OCR Pipeline for Unicode Eastern Cham, toward Historical Manuscript and Epigraphic Recognition
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-ocr.cham.asia-C96442?style=for-the-badge&logo=google-chrome&logoColor=white)](https://ocr.cham.asia)
 [![Technical Report](https://img.shields.io/badge/Technical-Report-8C533E?style=for-the-badge&logo=googlescholar&logoColor=white)](RESEARCH.md)
@@ -18,7 +18,7 @@ pinned: false
 [![GitHub Repository](https://img.shields.io/badge/GitHub-phucsd%2FCham--OCR-24292e?style=for-the-badge&logo=github)](https://github.com/phucsd/Cham-OCR)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
-An end-to-end deep learning research platform and paleographic transcription system specifically engineered for the digitized preservation, line segmentation, and optical character recognition of historical **Cham manuscripts** (encompassing traditional *Akhar Thrah* of Eastern Cham and *Cam Srak* of Western Cham).
+An end-to-end deep learning research platform and paleographic transcription system engineered for the digitized preservation, line segmentation, and optical character recognition of **Cham documents**, with validated performance on Unicode Eastern Cham (*Akhar Thrah*) and ongoing extensions toward Western Cham (*Cam Srak*), physical palm-leaf/kertas manuscripts, and stone epigraphy.
 
 > 📄 **Technical Report & Academic Documentation**: Read our comprehensive technical report at **[RESEARCH.md](RESEARCH.md)** or online at **[https://ocr.cham.asia/research](https://ocr.cham.asia/research)** detailing Brahmic paleography, DBNet line segmentation, SVTR recognition, 150K synthetic data generation, and empirical benchmarks.
 > 
@@ -40,8 +40,8 @@ An end-to-end deep learning research platform and paleographic transcription sys
    - Automatically parses recognized grapheme clusters via `normalize_unicode` to reconstruct standard **Brahmic Logical Order** (`Base Consonant + Medials + Pre-Vowels + Dependent Vowels + Vowel Lengthener AA + Finals / Signs / Final VA`), resolving local visual permutation artifacts.
 4. **150,000 Textline Synthetic Pipeline**:
    - Font map validation via `fontTools` cmap parsing, eliminating tofu/missing glyph artifacts.
-   - Dynamic In-RAM augmentation applying directional motion blur (kernels $7\times 7$ to $13\times 13$, $\theta \in [0^\circ, 180^\circ]$ at $35\%$ probability) on clean disk renders to prevent double-blur degradation.
-   - Four stratified training buckets: Classical Literature ($50\%$), Multilingual Code-Switching ($18\%$), Classical Verse Numerals 1–99 ($18\%$), and Adversarial Minimal Pairs ($14\%$).
+   - Dynamic In-RAM augmentation applying directional motion blur on clean disk renders to prevent double-blur degradation.
+   - Calibrated dataset generator (`scripts/generate_data.py`) partitioning 150,000 textlines into 15% evaluation/locked splits and 85% training across 6 categories: clean short (25%), clean medium (20%), clean long (15%), noisy short (15%), noisy long (15%), and hard adversarial examples (10%).
 5. **Distributed Multi-GPU Cloud Training**:
    - Adaptive data-parallel execution (`paddle.distributed.launch --gpus '0,1'`) on Kaggle Nvidia Tesla T4x2 and Lightning Cloud A100 SXM4.
    - 3-Stage Checkpoint & Resume protocol ensuring uninterrupted progress across Kaggle's 12-hour session timeout limits.

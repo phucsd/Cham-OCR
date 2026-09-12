@@ -771,7 +771,7 @@
             <section id="abstract" class="abstract-box">
                 <div class="abstract-title">Abstract</div>
                 <p class="abstract-text">
-                    Historical manuscripts of the Cham civilization—spanning Eastern Cham (<em>Akhar Thrah</em>) and Western Cham (<em>Cam Srak</em>)—represent a fragile, millennia-old Brahmic epigraphic and literary heritage in Southeast Asia. Automatic transcription via Optical Character Recognition (OCR) has historically faced steep barriers due to complex Brahmic abugida orthography, multi-directional dependent vowel diacritics, predominantly continuous script (<em>scriptio continua</em>) in classical manuscripts, physical carrier degradation, and tight interlinear diacritic collisions. In this technical report, we describe the design, implementation, and empirical evaluation of an end-to-end deep learning pipeline and diagnostic transcription workbench engineered for Cham documents: (1) a hybrid text detection and line segmentation engine combining a fine-tuned <strong>Mobile DBNet (PPLCNetV3)</strong> with an <strong>Indic Valley-Cut Heuristic Engine</strong> that preserves boundary strokes via mathematical set-difference masking (<code>difference_update</code>) and \(0.40 \times \text{median line height}\) vertical safety cushions; (2) a neural recognition backbone based on <strong>PP-OCRv4 SVTR-LCNet</strong> with expanded input dimensions \([3, 48, 480]\), joint Connectionist Temporal Classification (CTC) alignment, and post-OCR deterministic Unicode cluster canonicalization; and (3) a 150,000-textline synthetic dataset pipeline featuring on-the-fly motion blur, TrueType cmap tofu filtering, and hard-example adversarial mining for verse numerals (\(1\)–\(99\)) and confusing diacritic minimal pairs. Evaluations across a <strong>controlled 200-page synthetic document stress-test</strong> (903 textlines across 5 difficulty levels) and a <strong>50-test stratified failure-mode benchmark</strong> demonstrate that our line detector demonstrate robust line detection with a <strong>100.0% line detection rate</strong> across standard, aged paper, and narrow-gap folios (Levels 1–3) and graceful degradation up to Level 4 (99.44% detection), before encountering an empirical breaking point at Level 5 (61.45% detection) where interlinear wave amplitude exceeds the interlinear gap. For textline recognition, our validated baseline model (<strong>V24</strong>) achieves <strong>13.88% mean CER</strong> across the 50-test suite (reducing noise CER from 50.59% down to 8.82% over V23), while experimental checkpoints (<strong>V25</strong>) remain under active training and evaluation. Multi-GPU distributed scaling benchmarks across Kaggle Tesla T4x2, Cloud A100, L40S, and L4 characterize hardware efficiency for non-profit cultural preservation. Finally, we discuss critical limitations regarding synthetic-to-real domain gaps and provide a production reference deployed at <code>https://ocr.cham.asia</code>.
+                    Historical manuscripts of the Cham civilization—primarily preserved in Eastern Cham (<em>Akhar Thrah</em>) alongside Western Cham (<em>Cam Srak</em>) traditions—represent a fragile, millennia-old Brahmic epigraphic and literary heritage in Southeast Asia. While this project validates an end-to-end deep learning OCR pipeline specifically on Unicode Eastern Cham (<em>Akhar Thrah</em>), Western Cham (<em>Cam Srak</em>), real physical manuscripts, and epigraphic stone carvings represent active and ongoing future extensions. Automatic transcription via Optical Character Recognition (OCR) has historically faced steep barriers due to complex Brahmic abugida orthography, multi-directional dependent vowel diacritics, predominantly continuous script (<em>scriptio continua</em>) in classical manuscripts, physical carrier degradation, and tight interlinear diacritic collisions. In this technical report, we describe the design, implementation, and empirical evaluation of an end-to-end deep learning pipeline and diagnostic transcription workbench engineered for Cham documents: (1) a hybrid text detection and line segmentation engine combining a fine-tuned <strong>Mobile DBNet (PPLCNetV3)</strong> with an <strong>Indic Valley-Cut Heuristic Engine</strong> that preserves boundary strokes via mathematical set-difference masking (<code>difference_update</code>) and \(0.40 \times \text{median line height}\) vertical safety cushions; (2) a neural recognition backbone based on <strong>PP-OCRv4 SVTR-LCNet</strong> with expanded input dimensions \([3, 48, 480]\), joint Connectionist Temporal Classification (CTC) alignment, and post-OCR deterministic Unicode cluster canonicalization; and (3) a 150,000-textline synthetic dataset pipeline featuring on-the-fly motion blur, TrueType cmap tofu filtering, and hard-example adversarial mining for verse numerals (\(1\)–\(99\)) and confusing diacritic minimal pairs. Evaluations across a <strong>controlled 200-page synthetic document stress-test</strong> (903 textlines across 5 difficulty levels) and a <strong>50-test stratified failure-mode benchmark</strong> demonstrate that our line detector demonstrate robust line detection with a <strong>100.0% line detection rate</strong> across standard, aged paper, and narrow-gap folios (Levels 1–3) and graceful degradation up to Level 4 (99.44% detection), before encountering an empirical breaking point at Level 5 (61.45% detection) where interlinear wave amplitude exceeds the interlinear gap. For textline recognition, our validated baseline model (<strong>V24</strong>) achieves <strong>13.88% mean CER</strong> across the 50-test suite (reducing noise CER from 50.59% down to 8.82% over V23), while experimental checkpoints (<strong>V25</strong>) remain under active training and evaluation. Multi-GPU distributed scaling benchmarks across Kaggle Tesla T4x2, Cloud A100, L40S, and L4 characterize hardware efficiency for non-profit cultural preservation. Finally, we discuss critical limitations regarding synthetic-to-real domain gaps and provide a production reference deployed at <code>https://ocr.cham.asia</code>.
                 </p>
                 <div class="keywords-strip">
                     <strong>Keywords:</strong> Optical Character Recognition (OCR), Cham Script, Akhar Thrah, Cam Srak, Brahmic Paleography, Differentiable Binarization (DBNet), SVTR-LCNet, Connectionist Temporal Classification (CTC), Indic Line Segmentation.
@@ -823,7 +823,7 @@
                         </ul>
                     </li>
                     <li><strong>Final Consonants & Signs ([<code>U+AA40</code>–<code>U+AA4D</code>, <code>U+AA25</code>])</strong>: Explicit syllable codas including separate base glyphs with extended terminal strokes (<code>U+AA40</code>–<code>U+AA4B</code>), combining coda marks (Final Ng <span class="cham-script">ꩃ</span> U+AA43, Final M / Anusvara <span class="cham-script">ꩌ</span> U+AA4C, Final H / Visarga <span class="cham-script">ꩍ</span> U+AA4D), and the base consonant <span class="cham-script">ꨥ</span> (<code>U+AA25</code> CHAM LETTER VA) which, per Unicode Standard Chapter 16 Table 16-16, functions without alteration in both initial and syllable-final positions (e.g., in syllables such as <span class="cham-script">ꨀꨍꨯꨱꨥ</span> and <span class="cham-script">ꨝꨗꨴꨭꨥ</span>).</li>
-                    <li><strong>Scriptio Continua vs Modern Spacing</strong>: Classical literary manuscripts and verse compendia predominantly employ <em>scriptio continua</em> (running script without regular word-boundary spaces), although section divisions, poetic hemistichs, or phrasing pauses are demarcated by punctuation marks (e.g., Danda <span class="cham-script">꩝</span>, Double Danda <span class="cham-script">꩞</span>) and occasional whitespace gaps. Conversely, modern printed publications and textbooks frequently introduce spaces between lexical items or clauses.</li>
+                    <li><strong>Script Spacing Conventions</strong>: Many historical Cham manuscripts exhibit limited or inconsistent inter-word spacing, while modern printed Cham commonly uses spaces. Classical literary texts and verse compendia frequently exhibit continuous running script (<em>scriptio continua</em>), though section divisions, poetic hemistichs, or phrasing pauses are demarcated by punctuation marks (e.g., Danda <span class="cham-script">꩝</span>, Double Danda <span class="cham-script">꩞</span>, Triple Danda <span class="cham-script">꩟</span>) and occasional whitespace gaps.</li>
                     <li><strong>Punctuation & Verse Markers</strong>: Traditional discourse is demarcated via Danda (<span class="cham-script">꩝</span> U+AA5D), Double Danda (<span class="cham-script">꩞</span> U+AA5E, also serving as section/stanza mark), and Triple Danda (<span class="cham-script">꩟</span> U+AA5F). Poetic stanzas frequently open with Cham numerals followed by a section mark (e.g., <span class="cham-script">꩑꩞</span> for Verse 1, <span class="cham-script">꩒꩞</span> for Verse 2).</li>
                 </ol>
 
@@ -835,7 +835,7 @@
                     $$\text{Canonical Cluster} = \text{Base Consonant} + [\text{Medials}] + [\text{Pre-Vowels}] + [\text{Dependent Vowels}] + [\text{Finals / Signs}]$$
                 </div>
                 <p>
-                    However, pre-vowels like <span class="cham-script">ꨯ</span> (Vowel Sign O, U+AA2F) and <span class="cham-script">ꨮ</span> (Vowel Sign OE, U+AA2E) are rendered <em>visually to the left</em> of the base consonant. When an optical sequence decoder scans an image crop left-to-right, its visual perception encounters the pre-vowel ahead of the consonant glyph (e.g. perceiving <span class="cham-script">ꨯ</span> before base <span class="cham-script">ꨕ</span>). Standard CTC models therefore frequently output the illegal sequence <span class="cham-script">ꨯꨕ</span> instead of the canonical Unicode cluster <span class="cham-script">ꨕꨯ</span>. 
+                    However, pre-vowels like <span class="cham-script">ꨯ</span> (Vowel Sign O, U+AA2F) and <span class="cham-script">ꨰ</span> (Vowel Sign AI, U+AA30) are rendered <em>visually to the left</em> of the base consonant. When an optical sequence decoder scans an image crop left-to-right, its visual perception encounters the pre-vowel ahead of the consonant glyph (e.g. perceiving <span class="cham-script">ꨯ</span> before base <span class="cham-script">ꨕ</span>). Standard CTC models therefore frequently output the illegal sequence <span class="cham-script">ꨯꨕ</span> instead of the canonical Unicode cluster <span class="cham-script">ꨕꨯ</span>. 
                 </p>
                 <div class="academic-callout callout-warning">
                     <div class="callout-title">⚠️ Paleographic Pitfall: Visual Parsing Corruption</div>
@@ -849,10 +849,10 @@
 
                 <h3 id="sec2-1">2.1 Early Epigraphic & Glyph Recognition</h3>
                 <p>
-                    Automated processing of Cham script originated in the analysis of stone inscriptions from ancient Champa sanctuaries (Mỹ Sơn, Po Nagar, Đồng Dương). Nguyen, Schweyer, Le, Tran, & Vu (2019a) presented preliminary results on recognizing ancient Cham glyphs extracted from stone rubbings and photographs using hand-crafted feature descriptors and shallow neural networks at the IEEE MAPR 2019 conference. Due to severe stone weathering, erosion, and irregular surface texture, isolated glyph accuracy was constrained.
+                    Automated processing of Cham script originated in the analysis of stone inscriptions from ancient Champa sanctuaries (Mỹ Sơn, Po Nagar, Đồng Dương). Nguyen, Schweyer, Le, Tran, & Vu (2019a) presented preliminary results on recognizing ancient Cham glyphs extracted from stone rubbings and photographs using Histogram of Oriented Gradients (HOG), Non-Parametric Weighted (NPW) features, and CNN-derived feature representations coupled with $k$-NN and linear SVM classifiers at the IEEE MAPR 2019 conference. Due to severe stone weathering, erosion, and irregular surface texture, isolated glyph classification across noisy background substrates was evaluated.
                 </p>
                 <p>
-                    To mitigate extreme sample scarcity in epigraphic corpora, Nguyen, Schweyer, Le, Tran, & Vu (2019b) evaluated data augmentation strategies and transfer learning from modern character shapes to ancient stone inscription glyphs at the ICIAP 2019 Workshops (PatReCH), demonstrating quantitative gains on synthetic-to-real transfer across weathered stone carvings.
+                    To mitigate extreme sample scarcity in epigraphic corpora, Nguyen, Schweyer, Le, Tran, & Vu (2019b) evaluated data augmentation strategies and transfer learning from rendered synthetic character variants to ancient stone inscription glyphs at the ICIAP 2019 Workshops (PatReCH), demonstrating quantitative gains on synthetic-to-real transfer across weathered stone carvings.
                 </p>
 
                 <h3 id="sec2-2">2.2 Deep Learning for Cham Epigraphy & Transliteration</h3>
@@ -860,7 +860,7 @@
                     In his doctoral dissertation, Nguyen (2023) developed comprehensive document image processing and understanding methodologies dedicated to ancient Cham documents. His work investigated stone inscription image restoration, automatic glyph segmentation under rough stone substrate conditions, and deep convolutional representations for historical Brahmic scripts.
                 </p>
                 <p>
-                    Expanding to linguistic representation, Nguyen, Burie, Le, & Schweyer (2023) introduced a two-step sequence transformer model for Cham-to-Latin script transliteration presented at the HIP@ICDAR 2023 workshop. Their system demonstrated the efficacy of sequence-to-sequence transformers in mapping recognized Cham text sequences to standardized Latin phonological romanizations (<em>Cam-Latin</em>). Most recently, Nguyen, Burie, Le, & Schweyer (2025) published a comprehensive study entitled <em>Text line segmentation approach combining deep learning model and traditional image processing techniques - application to transliteration of Cham manuscripts</em> in <em>Multimedia Tools and Applications</em>, evaluating textline segmentation and recognition models across 627 manuscript images and approximately 8,300 textlines.
+                    Complementing glyph recognition, Nguyen, Burie, Le, & Schweyer (2022) proposed an effective multi-stage method for text line segmentation in historical document images presented at the 26th International Conference on Pattern Recognition (ICPR 2022), addressing line curvature and touching diacritics in historical archives. Expanding to linguistic representation, Nguyen, Burie, Le, & Schweyer (2023) introduced a two-step sequence transformer model for Cham-to-Latin script transliteration presented at the HIP@ICDAR 2023 workshop. Their system demonstrated the efficacy of sequence-to-sequence transformers in mapping recognized Cham text sequences to standardized Latin phonological romanizations (<em>Cam-Latin</em>). Most recently, Nguyen, Burie, Le, & Schweyer (2025) published a comprehensive study entitled <em>Text line segmentation approach combining deep learning model and traditional image processing techniques - application to transliteration of Cham manuscripts</em> in <em>Multimedia Tools and Applications</em>, evaluating text-line segmentation and automatic transliteration across 627 manuscript images and approximately 8,300 textlines (focusing on line segmentation and transliteration rather than end-to-end character OCR benchmarking).
                 </p>
 
                 <h3 id="sec2-3">2.3 Manuscript Preservation & Digitization Initiatives</h3>
@@ -889,7 +889,7 @@
 
                 <h3 id="sec3-1">3.1 The Interlinear Diacritic Collision Problem</h3>
                 <p>
-                    Historical Cham manuscripts feature tight interline spacing (often mere 3–12 pixels between lines). Because vowels reach high above the core text band (ascenders up to \(+18\text{px}\)) and medials plunge below (descenders down to \(-22\text{px}\)), ascenders of line \(n+1\) physically touch or intertwine with descenders of line \(n\). Standard off-the-shelf text detection models (such as baseline DBNet trained on natural scene Latin or CJK text) frequently encounter two severe failure modes when applied to dense historical manuscripts:
+                    Historical Cham manuscripts frequently exhibit tight interlinear spacing (observed in synthetic and normalized rendering spaces at standard font scale as tight as 3–12 pixels between lines). Because upper dependent vowels reach high above the core text band (ascender excursions extending up to \(+18	ext{px}\) at nominal 32–36px glyph heights) and subjoined medials plunge below (descender excursions down to \(-22	ext{px}\)), the ascenders of line \(n+1\) routinely touch or intertwine with the descenders of line \(n\) under dense formatting. Standard off-the-shelf text detection models (such as baseline DBNet trained on natural scene Latin or CJK text) frequently encounter two severe failure modes when applied to dense historical manuscripts:
                 </p>
                 <ul>
                     <li>Merging adjacent lines into single monolithic boxes.</li>
@@ -944,7 +944,7 @@
                             <tr>
                                 <td>Training Dataset</td>
                                 <td>2,000 document pages</td>
-                                <td>50% pages deliberately generated with extreme narrow line spacing (3–10px).</td>
+                                <td>50% synthesized with narrow interline spacing (3–10px) to penalize box merging (as configured in <code>launch_h100_full_pipeline.py</code>).</td>
                             </tr>
                             <tr>
                                 <td>Optimizer & Schedule</td>
@@ -1057,7 +1057,7 @@
                     $$\mathcal{L}_{\text{CTC}} = -\ln P(\mathbf{y} \mid \mathbf{x}) = -\ln \sum_{\pi \in \mathcal{B}^{-1}(\mathbf{y})} P(\pi \mid \mathbf{x})$$
                 </div>
                 <p>
-                    During runtime inference, greedy CTC decoding is executed for single-thread CPU performance under 25ms per textline.
+                    During runtime inference, greedy CTC decoding is executed to provide lightweight, low-latency single-thread CPU execution without costly beam search.
                 </p>
 
                 <h3 id="sec4-3">4.3 Post-OCR Deterministic Canonical Normalization</h3>
@@ -1087,52 +1087,77 @@
 
                 <h3 id="sec5-1">5.1 The Data Scarcity Bottleneck</h3>
                 <p>
-                    Deep neural OCR networks require hundreds of thousands of diverse labeled textlines. However, only a few hundred physical Cham manuscripts survive globally, with virtually no character-level bounding box ground truth. To overcome this limitation, we engineered an algorithmic synthesizer (<code>scripts/generate_data.py</code>) that rendered 150,000 high-fidelity synthetic lines.
+                    Deep neural OCR networks require hundreds of thousands of diverse labeled textlines. However, surviving physical Cham manuscripts lack open character-level bounding box ground truth. To overcome this limitation, we engineered an algorithmic synthesizer (<code>scripts/generate_data.py</code>) capable of rendering 150,000 diverse textline crops from authentic literary corpora.
                 </p>
 
-                <h3 id="sec5-2">5.2 4-Tier Stratified Synthesis Corpus</h3>
+                <h3 id="sec5-2">5.2 Calibrated Synthetic Dataset Partitioning</h3>
+                <p>
+                    The synthetic dataset generator (<code>scripts/generate_data.py</code>) partitions the target 150,000 textline synthesis corpus into <strong>15% evaluation/locked splits</strong> (22,500 lines: <code>val_clean_short</code> 3%, <code>val_clean_long</code> 3%, <code>val_noisy_short</code> 3%, <code>val_noisy_long</code> 3%, <code>locked_test</code> 3%) and <strong>85% training split</strong> (127,500 lines) structured across 6 calibrated sub-categories:
+                </p>
                 <div class="table-responsive">
                     <table>
                         <thead>
                             <tr>
-                                <th>Synthesis Tier</th>
+                                <th>Training Sub-Category</th>
                                 <th class="num">Proportion</th>
+                                <th class="num">Line Count</th>
                                 <th>Composition & Generation Protocol</th>
                                 <th>Target Failure Mode Addressed</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Tier 1: Classical Corpus</td>
-                                <td class="num">50%</td>
-                                <td>75,000 lines extracted from classical Cham epics (<em>Akayet Inra Patra</em>, <em>Ariya Po Pareng</em>).</td>
-                                <td>Learns authentic Cham n-gram phonotactic transitions.</td>
+                                <td><code>train_clean_short</code></td>
+                                <td class="num">25%</td>
+                                <td class="num">31,875</td>
+                                <td>Short clean literary phrases (1–4 tokens).</td>
+                                <td>Fast convergence on high-frequency base consonants and common syllables.</td>
                             </tr>
                             <tr>
-                                <td>Tier 2: Multilingual Code-Switching</td>
-                                <td class="num">18%</td>
-                                <td>27,000 lines blending Cham with Latin loanwords (Vietnamese, French, Sanskrit).</td>
-                                <td>Supports multi-lingual archival inventories and glosses.</td>
+                                <td><code>train_clean_medium</code></td>
+                                <td class="num">20%</td>
+                                <td class="num">25,500</td>
+                                <td>Medium-length lines (5–8 tokens) from classical texts (<em>Akayet Inra Patra</em>, <em>Ariya Po Pareng</em>).</td>
+                                <td>Teaches authentic Cham phonotactic and n-gram transitions.</td>
                             </tr>
                             <tr>
-                                <td>Tier 3: Verse Numerals & Section Marks</td>
-                                <td class="num">18%</td>
-                                <td>27,000 lines with pattern <code>{cham_digits}{cham_section_mark} {text}</code> for 1–99.</td>
-                                <td>Eliminates CTC confusion between numerals and letters (<span class="cham-script">꩔</span> vs <span class="cham-script">ꨤ</span>, <span class="cham-script">꩕</span> vs <span class="cham-script">ꨅ</span>).</td>
+                                <td><code>train_clean_long</code></td>
+                                <td class="num">15%</td>
+                                <td class="num">19,125</td>
+                                <td>Long full verse hemistichs and prose sentences (9+ tokens).</td>
+                                <td>Robustness to full-line receptive fields and CTC sequence alignment without truncation.</td>
                             </tr>
                             <tr>
-                                <td>Tier 4: Adversarial Minimal Pairs</td>
-                                <td class="num">14%</td>
-                                <td>21,000 hard-mined lines with confusing diacritics and double dandas.</td>
-                                <td>Prevents collapsing <span class="cham-script">ꨲ</span> (U+AA32) into <span class="cham-script">ꨶ</span> (U+AA36), and <span class="cham-script">꩝꩝</span> into <span class="cham-script">꩝</span>.</td>
+                                <td><code>train_noisy_short</code></td>
+                                <td class="num">15%</td>
+                                <td class="num">19,125</td>
+                                <td>Short lines rendered with Point Spread Function (PSF) blur, noise, and lighting gradients.</td>
+                                <td>Invariance to archival handling artifacts, tremor, and fading ink.</td>
+                            </tr>
+                            <tr>
+                                <td><code>train_noisy_long</code></td>
+                                <td class="num">15%</td>
+                                <td class="num">19,125</td>
+                                <td>Long verse lines with severe photometric degradation and spatial elastic distortion.</td>
+                                <td>Prevents alignment collapse on degraded multi-word lines.</td>
+                            </tr>
+                            <tr>
+                                <td><code>train_hard_examples</code></td>
+                                <td class="num">10%</td>
+                                <td class="num">12,750</td>
+                                <td>Adversarial minimal pairs (<span class="cham-script">ꨲ</span> vs <span class="cham-script">ꨶ</span>, <span class="cham-script">꩝꩝</span> vs <span class="cham-script">꩝</span>), verse numerals (1–99) with section marks (<span class="cham-script">꩑꩞</span>), and stacked subjoined clusters.</td>
+                                <td>Eliminates CTC misclassification of numerals as letters (<span class="cham-script">꩔</span> vs <span class="cham-script">ꨤ</span>, <span class="cham-script">꩕</span> vs <span class="cham-script">ꨅ</span>) and diacritic collapsing.</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <h3 id="sec5-3">5.3 TrueType/OpenType cmap Tofu Glyph Safeguards</h3>
+                <h3 id="sec5-3">5.3 Digital Typefaces & TrueType cmap Tofu Glyph Safeguards</h3>
                 <p>
-                    When rendering synthetic text across multiple open-source Cham fonts (<em>Cham Roman</em>, <em>Noto Sans Cham</em>, <em>EFEO Cham</em>), missing Unicode codepoints frequently produce blank rectangles ("tofu" glyphs). If fed to the neural network, the model associates valid Unicode labels with blank boxes, catastrophically destroying recognition accuracy.
+                    When rendering synthetic text, digital Cham typefaces must be verified for glyph coverage. The primary bundled and reproducible typeface distributed directly within this repository is <strong>Noto Sans Cham</strong> (<code>Regular</code>, <code>Bold</code>, <code>Black</code>; SIL Open Font License 1.1, located in <code>ocr-training/data/fonts/</code>). External reference typefaces evaluated during research—including <em>Cham Roman</em>, <em>EFEO Cham</em>, and community fonts—are not redistributed in this repository and must be acquired independently if researchers wish to reproduce specific historical font variations.
+                </p>
+                <p>
+                    To prevent missing Unicode codepoints from producing blank rectangles ("tofu" glyphs), our generator incorporates pre-render verification via <code>fontTools.ttLib</code> to extract each font's <code>cmap</code> table. Candidate strings are inspected character-by-character; any string containing unmapped glyphs for the active font is rejected prior to rasterization.
                 </p>
                 <p>
                     We implemented pre-render validation using <code>fontTools.ttLib</code> to extract the font's <code>cmap</code> tables. Every string candidate is validated character-by-character; any character lacking glyph outline data in the active font is rejected prior to rasterization.
@@ -1462,7 +1487,7 @@
                             </tr>
                             <tr>
                                 <td><strong>Kaggle Dual Tesla T4x2 (DDP)</strong></td>
-                                <td class="num">144 (72x2)</td>
+                                <td class="num">64 (32x2)</td>
                                 <td class="num"><strong>120.4</strong></td>
                                 <td class="num">92%</td>
                                 <td class="num">83.8%</td>
@@ -1576,22 +1601,25 @@ if not hasattr(np, 'typeDict'): np.typeDict = {}</code></pre>
                     [5] Nguyen, T.-N., Burie, J.-C., Le, T.-L., & Schweyer, A.-V. (2023). <em>A Two-Step Sequence Transformer Based Method for Cham to Latin Script Transliteration</em>. In Proceedings of the 7th International Workshop on Historical Document Imaging and Processing (HIP@ICDAR 2023), ACM, pp. 25–30. DOI: <a href="https://doi.org/10.1145/3604951.3605525" target="_blank" rel="noopener noreferrer">10.1145/3604951.3605525</a>
                 </div>
                 <div class="ref-item">
-                    [6] Nguyen, T.-N., Burie, J.-C., Le, T.-L., & Schweyer, A.-V. (2025). <em>Text line segmentation approach combining deep learning model and traditional image processing techniques - application to transliteration of Cham manuscripts</em>. <em>Multimedia Tools and Applications</em>, Springer. DOI: <a href="https://doi.org/10.1007/s11042-025-20602-x" target="_blank" rel="noopener noreferrer">10.1007/s11042-025-20602-x</a>
+                    [6] Nguyen, T.-N., Burie, J.-C., Le, T.-L., & Schweyer, A.-V. (2022). <em>An effective method for text line segmentation in historical document images</em>. In 26th International Conference on Pattern Recognition (ICPR 2022), IEEE, pp. 2686–2692. DOI: <a href="https://doi.org/10.1109/ICPR56361.2022.9956617" target="_blank" rel="noopener noreferrer">10.1109/ICPR56361.2022.9956617</a>
                 </div>
                 <div class="ref-item">
-                    [7] ANR CHAMDOC Project. (2019–2024). <em>Cham Documentation (CHAMDOC)</em>, Project ANR-19-CE27-0018, Agence Nationale de la Recherche, France.
+                    [7] Nguyen, T.-N., Burie, J.-C., Le, T.-L., & Schweyer, A.-V. (2025). <em>Text line segmentation approach combining deep learning model and traditional image processing techniques - application to transliteration of Cham manuscripts</em>. <em>Multimedia Tools and Applications</em>, Springer. DOI: <a href="https://doi.org/10.1007/s11042-025-20602-x" target="_blank" rel="noopener noreferrer">10.1007/s11042-025-20602-x</a>
                 </div>
                 <div class="ref-item">
-                    [8] Liao, M., Wan, Z., Yao, C., Chen, K., & Bai, X. (2020). <em>Real-time Scene Text Detection with Differentiable Binarization</em>. Proceedings of the AAAI Conference on Artificial Intelligence, 34(07), 11474–11481.
+                    [8] ANR CHAMDOC Project. (2019–2024). <em>Cham Documentation (CHAMDOC)</em>, Project ANR-19-CE27-0018, Agence Nationale de la Recherche, France.
                 </div>
                 <div class="ref-item">
-                    [9] Du, Y., Chen, Z., Jia, C., Yin, X., Zheng, T., Li, C., ... & Yu, K. (2023). <em>PP-OCRv4: A Compact, Accurate and Practical Ultra-Lightweight OCR System</em>. arXiv preprint arXiv:2309.09941.
+                    [9] Liao, M., Wan, Z., Yao, C., Chen, K., & Bai, X. (2020). <em>Real-time Scene Text Detection with Differentiable Binarization</em>. Proceedings of the AAAI Conference on Artificial Intelligence, 34(07), 11474–11481.
                 </div>
                 <div class="ref-item">
-                    [10] Du, Y., Chen, Z., Jia, C., Yin, X., Zheng, T., Li, C., ... & Yu, K. (2022). <em>SVTR: Scene Text Recognition with a Single Visual Model</em>. arXiv preprint arXiv:2205.00159.
+                    [10] Du, Y., Chen, Z., Jia, C., Yin, X., Zheng, T., Li, C., ... & Yu, K. (2023). <em>PP-OCRv4: A Compact, Accurate and Practical Ultra-Lightweight OCR System</em>. arXiv preprint arXiv:2309.09941.
                 </div>
                 <div class="ref-item">
-                    [11] Graves, A., Fernández, S., Gomez, F., & Schmidhuber, J. (2006). <em>Connectionist temporal classification: labelling unsegmented sequence data with recurrent neural networks</em>. Proceedings of the 23rd International Conference on Machine Learning (ICML '06), 369–376.
+                    [11] Du, Y., Chen, Z., Jia, C., Yin, X., Zheng, T., Li, C., ... & Yu, K. (2022). <em>SVTR: Scene Text Recognition with a Single Visual Model</em>. arXiv preprint arXiv:2205.00159.
+                </div>
+                <div class="ref-item">
+                    [12] Graves, A., Fernández, S., Gomez, F., & Schmidhuber, J. (2006). <em>Connectionist temporal classification: labelling unsegmented sequence data with recurrent neural networks</em>. Proceedings of the 23rd International Conference on Machine Learning (ICML '06), 369–376.
                 </div>
             </section>
 

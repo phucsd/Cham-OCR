@@ -1,8 +1,8 @@
 [English](README.md) | **Tiếng Việt**
 
-# Dự án Nhận diện Chữ viết tiếng Chăm (Cham-OCR Monorepo)
+# Cham-OCR: Đường ống Deep Learning cho Chăm Đông Unicode, hướng tới Bản thảo Lịch sử và Văn bia
 
-Dự án nghiên cứu, huấn luyện và chẩn đoán nhận diện chữ viết tiếng Chăm (Akhar Thrah & West Cham/Cam Srak) dựa trên nền tảng PaddleOCR PP-OCRv4 Multilingual và DBNet.
+Dự án nghiên cứu, huấn luyện và chẩn đoán nhận diện chữ viết tiếng Chăm dựa trên nền tảng PaddleOCR PP-OCRv4 Multilingual và DBNet, với phạm vi đã được kiểm chứng thực nghiệm trên Chăm Đông Unicode (*Akhar Thrah*) và định hướng mở rộng Chăm Tây (*Cam Srak*), văn bản bản thảo lịch sử và văn bia thời gian tới.
 
 > 📄 **Báo Cáo Kỹ Thuật Nghiên Cứu (Technical Report / Research Preprint)**: Xem toàn bộ tài liệu nghiên cứu, phương pháp luận, đánh giá thực nghiệm và phân tích cổ tự học chi tiết tại **[RESEARCH.md](RESEARCH.md)** hoặc trực tuyến tại **[https://ocr.cham.asia/research](https://ocr.cham.asia/research)**.
 > 

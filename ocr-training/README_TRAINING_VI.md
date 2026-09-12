@@ -1,8 +1,8 @@
 [English](README_TRAINING.md) | **Tiếng Việt**
 
-# Huấn luyện & Fine-tuning PaddleOCR PP-OCRv4 tiếng Chăm (Akhar Thrah & West Cham)
+# Huấn luyện & Fine-tuning PaddleOCR PP-OCRv4 tiếng Chăm Đông (Akhar Thrah)
 
-Dự án này cung cấp quy trình và công cụ tự động hóa để chuẩn bị dữ liệu tổng hợp tiếng Chăm (Akhar Thrah & West Cham/Srak), tự động hóa việc cấu hình tối ưu và fine-tune mô hình nhận diện chữ viết **PaddleOCR PP-OCRv4 Multilingual** trên môi trường **Kaggle GPU Notebooks** hoặc máy cá nhân chạy CUDA.
+Dự án này cung cấp quy trình và công cụ tự động hóa để chuẩn bị dữ liệu tổng hợp tiếng Chăm Đông (Akhar Thrah, với định hướng mở rộng Chăm Tây/Cam Srak trong tương lai), tự động hóa việc cấu hình tối ưu và fine-tune mô hình nhận diện chữ viết **PaddleOCR PP-OCRv4 Multilingual** trên môi trường **Kaggle GPU Notebooks** hoặc máy cá nhân chạy CUDA.
 
 > 🌟 **Trải nghiệm Trực tuyến Mô hình Đã Huấn luyện**: [https://ocr.cham.asia](https://ocr.cham.asia)
 
@@ -35,4 +35,4 @@ ocr-training/
    ```bash
    python3 -m paddle.distributed.launch --gpus '0,1' tools/train.py -c configs/rec_cham_v25.yml
    ```
-4. **Cơ chế chia chặng 12 tiếng (12-Hour Multi-Stage Checkpoint)**: Chia tiến trình huấn luyện thành 3 chặng an toàn (Epochs 1-14, 15-27, 28-40) để tránh timeout của Kaggle.
+4. **Cơ chế chia chặng 12 tiếng (12-Hour Multi-Stage Checkpoint)**: Chia tiến trình huấn luyện thành 3 chặng an toàn (Epochs 1–12, 13–22, 23–40 theo cấu hình `stage_end_epoch` trong `configs/rec_cham_v25.yml`) để tránh timeout của Kaggle.
