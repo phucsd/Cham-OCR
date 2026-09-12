@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>End-to-End Deep Learning Pipeline & Paleographic Transcription Workbench for Historical Cham Manuscripts — Research Whitepaper</title>
+    <title>End-to-End Deep Learning Pipeline & Paleographic Transcription Workbench for Historical Cham Manuscripts — Technical Report</title>
     
     <!-- Google Fonts: Google Sans Flex & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -645,7 +645,7 @@
                 <line x1="16" y1="17" x2="8" y2="17"></line>
                 <polyline points="10 9 9 9 8 9"></polyline>
             </svg>
-            <span>Cham OCR Paleographic Whitepaper</span>
+            <span>Cham OCR Technical Report</span>
         </a>
         <div class="nav-actions">
             <a href="/" class="nav-btn">
@@ -674,51 +674,62 @@
                     <a href="#sec1" class="toc-link">1. Introduction & Paleography</a>
                     <ul class="toc-sublist">
                         <li><a href="#sec1-1" class="toc-sublink">1.1 Historical Script Typology</a></li>
-                        <li><a href="#sec1-2" class="toc-sublink">1.2 Abugida Script Mechanics</a></li>
+                        <li><a href="#sec1-2" class="toc-sublink">1.2 Abugida Orthography & Glyphs</a></li>
                         <li><a href="#sec1-3" class="toc-sublink">1.3 Logical vs Visual Unicode</a></li>
                     </ul>
                 </li>
                 <li class="toc-item">
-                    <a href="#sec2" class="toc-link">2. Text Detection & Segmentation</a>
+                    <a href="#sec2" class="toc-link">2. Related Work</a>
                     <ul class="toc-sublist">
-                        <li><a href="#sec2-1" class="toc-sublink">2.1 Fine-Tuned Cham-DBNet</a></li>
-                        <li><a href="#sec2-2" class="toc-sublink">2.2 Indic Valley-Cut Engine</a></li>
-                        <li><a href="#sec2-3" class="toc-sublink">2.3 Boundary Stroke Masks</a></li>
+                        <li><a href="#sec2-1" class="toc-sublink">2.1 Epigraphic Glyph Recognition</a></li>
+                        <li><a href="#sec2-2" class="toc-sublink">2.2 Deep Learning & Transliteration</a></li>
+                        <li><a href="#sec2-3" class="toc-sublink">2.3 Manuscript Preservation</a></li>
+                        <li><a href="#sec2-4" class="toc-sublink">2.4 System Positioning</a></li>
                     </ul>
                 </li>
                 <li class="toc-item">
-                    <a href="#sec3" class="toc-link">3. Neural Text Recognition</a>
+                    <a href="#sec3" class="toc-link">3. Detection & Line Segmentation</a>
                     <ul class="toc-sublist">
-                        <li><a href="#sec3-1" class="toc-sublink">3.1 SVTR-LCNet Architecture</a></li>
-                        <li><a href="#sec3-2" class="toc-sublink">3.2 Joint CTC & Attention Loss</a></li>
-                        <li><a href="#sec3-3" class="toc-sublink">3.3 Post-OCR Normalization</a></li>
+                        <li><a href="#sec3-1" class="toc-sublink">3.1 Diacritic Collision Problem</a></li>
+                        <li><a href="#sec3-2" class="toc-sublink">3.2 Cham-DBNet Architecture</a></li>
+                        <li><a href="#sec3-3" class="toc-sublink">3.3 Indic Valley-Cut Heuristics</a></li>
                     </ul>
                 </li>
                 <li class="toc-item">
-                    <a href="#sec4" class="toc-link">4. Synthetic Generation Pipeline</a>
+                    <a href="#sec4" class="toc-link">4. Recognition Architecture</a>
                     <ul class="toc-sublist">
-                        <li><a href="#sec4-1" class="toc-sublink">4.1 4-Tier Stratified Corpus</a></li>
-                        <li><a href="#sec4-2" class="toc-sublink">4.2 cmap Glyph Tofu Safeguard</a></li>
-                        <li><a href="#sec4-3" class="toc-sublink">4.3 Hard-Example Diacritic Mining</a></li>
+                        <li><a href="#sec4-1" class="toc-sublink">4.1 SVTR-LCNet Backbone</a></li>
+                        <li><a href="#sec4-2" class="toc-sublink">4.2 Joint CTC & Attention Loss</a></li>
+                        <li><a href="#sec4-3" class="toc-sublink">4.3 Canonical Normalization</a></li>
                     </ul>
                 </li>
                 <li class="toc-item">
-                    <a href="#sec5" class="toc-link">5. Empirical Benchmarks</a>
+                    <a href="#sec5" class="toc-link">5. Synthetic Generation Pipeline</a>
                     <ul class="toc-sublist">
-                        <li><a href="#sec5-1" class="toc-sublink">5.1 50 Stratified Test Categories</a></li>
-                        <li><a href="#sec5-2" class="toc-sublink">5.2 200 Real-Corpus Stress Tests</a></li>
-                        <li><a href="#sec5-3" class="toc-sublink">5.3 Multi-GPU Scaling & Costs</a></li>
+                        <li><a href="#sec5-1" class="toc-sublink">5.1 Data Scarcity Bottleneck</a></li>
+                        <li><a href="#sec5-2" class="toc-sublink">5.2 4-Tier Stratified Corpus</a></li>
+                        <li><a href="#sec5-3" class="toc-sublink">5.3 cmap Glyph Tofu Safeguard</a></li>
+                        <li><a href="#sec5-4" class="toc-sublink">5.4 In-RAM Augmentations</a></li>
                     </ul>
                 </li>
                 <li class="toc-item">
-                    <a href="#sec6" class="toc-link">6. Production Serving</a>
+                    <a href="#sec6" class="toc-link">6. Empirical Benchmarks</a>
                     <ul class="toc-sublist">
-                        <li><a href="#sec6-1" class="toc-sublink">6.1 Microservice Architecture</a></li>
-                        <li><a href="#sec6-2" class="toc-sublink">6.2 Concurrency & NumPy 2.x</a></li>
+                        <li><a href="#sec6-1" class="toc-sublink">6.1 50-Test Benchmark (V23 vs V24)</a></li>
+                        <li><a href="#sec6-2" class="toc-sublink">6.2 200-Page Stress-Test Suite</a></li>
+                        <li><a href="#sec6-3" class="toc-sublink">6.3 Baseline V24 vs Experimental V25</a></li>
+                        <li><a href="#sec6-4" class="toc-sublink">6.4 Multi-GPU Hardware Scaling</a></li>
                     </ul>
                 </li>
-                <li class="toc-item"><a href="#sec7" class="toc-link">7. Limitations & Future Work</a></li>
-                <li class="toc-item"><a href="#sec8" class="toc-link">8. Citation & References</a></li>
+                <li class="toc-item">
+                    <a href="#sec7" class="toc-link">7. Production Serving</a>
+                    <ul class="toc-sublist">
+                        <li><a href="#sec7-1" class="toc-sublink">7.1 Microservice Architecture</a></li>
+                        <li><a href="#sec7-2" class="toc-sublink">7.2 Concurrency & NumPy 2.x</a></li>
+                    </ul>
+                </li>
+                <li class="toc-item"><a href="#sec8" class="toc-link">8. Limitations & Open Challenges</a></li>
+                <li class="toc-item"><a href="#sec9" class="toc-link">9. Citation & References</a></li>
             </ul>
         </aside>
 
@@ -726,7 +737,8 @@
         <article class="article-main">
             
             <div class="paper-tag-strip">
-                <span class="tag-pill tag-pill-accent">Research Publication</span>
+                <span class="tag-pill tag-pill-accent">Technical Report / Research Preprint</span>
+                <span class="tag-pill">Not Peer Reviewed</span>
                 <span class="tag-pill tag-pill-green">PaddleOCR PP-OCRv4</span>
                 <span class="tag-pill tag-pill-blue">Brahmic Paleography</span>
                 <span class="tag-pill">Akhar Thrah & Cam Srak</span>
@@ -737,7 +749,7 @@
             <div class="author-box">
                 <div class="author-info">
                     <span class="author-name">Phuc H. Nguyen</span>
-                    <span class="author-affiliation">Independent Researcher, Cham Digital Paleography & Heritage Preservation</span>
+                    <span class="author-affiliation">Independent Researcher and Software Developer, Vietnam — Cham-OCR Project</span>
                 </div>
                 <div class="author-meta">
                     <span><strong>Published:</strong> September 2026</span>
@@ -750,7 +762,7 @@
             <section id="abstract" class="abstract-box">
                 <div class="abstract-title">Abstract</div>
                 <p class="abstract-text">
-                    Historical manuscripts of the Cham civilization—spanning Eastern Cham (<em>Akhar Thrah</em>) and Western Cham (<em>Cam Srak</em>)—represent a fragile, millennia-old Brahmic epigraphic and literary heritage in Southeast Asia. Automatic transcription via Optical Character Recognition (OCR) has historically failed due to complex Brahmic orthography, multi-directional dependent vowel diacritics, complete absence of inter-word whitespace (<em>scriptio continua</em>), physical degradation of palm-leaf and parchment carriers, and uneven ink bleed. In this paper, we present an end-to-end, deep-learning-driven paleographic OCR pipeline and diagnostic workbench specifically engineered for historical Cham documents. Our architecture comprises three foundational pillars: (1) a hybrid text detection and line segmentation engine combining a fine-tuned <strong>Mobile DBNet (PPLCNetV3)</strong> with an <strong>Indic Valley-Cut Heuristic Engine</strong> that preserves boundary strokes through component difference masking and \(0.40 \times \text{median line height}\) vertical safety cushions; (2) a neural recognition backbone based on <strong>PP-OCRv4 SVTR-LCNet</strong> with expanded input dimensions \([3, 48, 480]\), joint Connectionist Temporal Classification (CTC) alignment, and post-OCR deterministic Unicode cluster canonicalization; and (3) a 150,000-textline synthetic dataset pipeline featuring on-the-fly motion blur, TrueType cmap tofu filtering, and hard-example adversarial mining for verse numerals (\(1\)–\(99\)) and confusing diacritic minimal pairs. Rigorous empirical evaluations across 200 real-manuscript stress test pages and 50 stratified test categories demonstrate that our line detector achieves an <strong>F1-score of 99.60%</strong> (Precision 99.63%, Recall 99.57%), while our recognizer slashes Character Error Rate (CER) on severely degraded noisy manuscripts from <strong>50.59% down to 8.82%</strong>, with <strong>97.4%</strong> verse numeral accuracy. Multi-GPU distributed training benchmarks across Kaggle Tesla T4x2, Cloud A100, L40S, and L4 confirm optimal throughput scaling (120.4 samples/s on T4x2 AMP-O1; 255.9 samples/s on A100 at $23.77 total cost for 40 epochs). Finally, we detail our production microservice architecture deployed at <code>https://ocr.cham.asia</code>.
+                    Historical manuscripts of the Cham civilization—spanning Eastern Cham (<em>Akhar Thrah</em>) and Western Cham (<em>Cam Srak</em>)—represent a fragile, millennia-old Brahmic epigraphic and literary heritage in Southeast Asia. Automatic transcription via Optical Character Recognition (OCR) has historically faced steep barriers due to complex Brahmic abugida orthography, multi-directional dependent vowel diacritics, predominantly continuous script (<em>scriptio continua</em>) in classical manuscripts, physical carrier degradation, and tight interlinear diacritic collisions. In this technical report, we describe the design, implementation, and empirical evaluation of an end-to-end deep learning pipeline and diagnostic transcription workbench engineered for Cham documents: (1) a hybrid text detection and line segmentation engine combining a fine-tuned <strong>Mobile DBNet (PPLCNetV3)</strong> with an <strong>Indic Valley-Cut Heuristic Engine</strong> that preserves boundary strokes via mathematical set-difference masking (<code>difference_update</code>) and \(0.40 \times \text{median line height}\) vertical safety cushions; (2) a neural recognition backbone based on <strong>PP-OCRv4 SVTR-LCNet</strong> with expanded input dimensions \([3, 48, 480]\), joint Connectionist Temporal Classification (CTC) alignment, and post-OCR deterministic Unicode cluster canonicalization; and (3) a 150,000-textline synthetic dataset pipeline featuring on-the-fly motion blur, TrueType cmap tofu filtering, and hard-example adversarial mining for verse numerals (\(1\)–\(99\)) and confusing diacritic minimal pairs. Evaluations across a <strong>controlled 200-page synthetic document stress-test</strong> (903 textlines across 5 difficulty levels) and a <strong>50-test stratified failure-mode benchmark</strong> demonstrate that our line detector achieves an <strong>F1-score of 99.60%</strong> on representative pages with graceful degradation up to Level 4 (99.44% line detection), before encountering an empirical breaking point at Level 5 (61.45% detection) where interlinear wave amplitude exceeds the interlinear gap. For textline recognition, our validated baseline model (<strong>V24</strong>) achieves <strong>13.88% mean CER</strong> across the 50-test suite (reducing noise CER from 50.59% down to 8.82% over V23), while experimental checkpoints (<strong>V25</strong>) remain under active training and evaluation. Multi-GPU distributed scaling benchmarks across Kaggle Tesla T4x2, Cloud A100, L40S, and L4 characterize hardware efficiency for non-profit cultural preservation. Finally, we discuss critical limitations regarding synthetic-to-real domain gaps and provide a production reference deployed at <code>https://ocr.cham.asia</code>.
                 </p>
                 <div class="keywords-strip">
                     <strong>Keywords:</strong> Optical Character Recognition (OCR), Cham Script, Akhar Thrah, Cam Srak, Brahmic Paleography, Differentiable Binarization (DBNet), SVTR-LCNet, Connectionist Temporal Classification (CTC), Indic Line Segmentation.
@@ -763,33 +775,47 @@
                 
                 <h3 id="sec1-1">1.1 Historical Script Typology & Document Endangered Status</h3>
                 <p>
-                    The Cham language belongs to the Austronesian language family (Malayo-Polynesian branch) and was the primary medium of literature, state administration, and liturgy across the Champa kingdoms along central and southern coastal Vietnam from the 2nd to early 19th centuries. The script family descends from Southern Brahmic Grantha/Pallava scripts, evolving into two distinct extant varieties:
+                    The Cham language belongs to the Austronesian language family (Malayo-Polynesian branch) and was the primary medium of literature, state administration, and liturgy across the Champa polities along coastal central and southern Vietnam from the 2nd to early 19th centuries. The script family descends from Southern Brahmic Grantha/Pallava lineages, evolving into two distinct extant traditions:
                 </p>
                 <ul>
-                    <li><strong>Eastern Cham (<em>Akhar Thrah</em>)</strong>: Used predominantly in Ninh Thuận and Bình Thuận provinces (Vietnam). Manuscripts are inscribed on traditional paper bark (<em>kertas</em>) or palm leaf with calligraphic reed pens.</li>
-                    <li><strong>Western Cham (<em>Cam Srak</em>)</strong>: Used by Cham communities in the Mekong Delta (An Giang, Tây Ninh) and Cambodia. Possesses stylistic glyph variations, specific ligature closures, and localized phonetic loans.</li>
+                    <li><strong>Eastern Cham (<em>Akhar Thrah</em>)</strong>: Inscribed and preserved predominantly in Ninh Thuận and Bình Thuận provinces (Vietnam). Historical manuscripts are executed on traditional bark-paper (<em>kertas</em>) or palm leaf with calligraphic bamboo pens.</li>
+                    <li><strong>Western Cham (<em>Cam Srak</em>)</strong>: Preserved by Cham communities in the Mekong Delta (An Giang, Tây Ninh) and Cambodia. It features distinctive stylistic glyph contours, regional ligature forms, and localized phonetic loan signs.</li>
                 </ul>
                 <p>
-                    Due to tropical climate conditions, ink bleed, fungus, and physical fragmentation, remaining manuscript archives (such as the <em>Akayet Inra Patra</em>, <em>Ariya Po Pareng</em>, and sacred divinatory texts) are at immediate risk of irreversible loss. Prior OCR models trained on Latin or CJK scripts fail completely on Cham due to radical typographical divergences.
+                    Due to tropical climate conditions, ink bleed, microbiological decay, and physical fragmentation, remaining manuscript archives (such as the <em>Akayet Inra Patra</em>, <em>Ariya Po Pareng</em>, and sacred divinatory compendia) face significant preservation risks. Generic OCR models trained on Latin or CJK scripts fail completely on Cham documents due to radical typographical divergences.
                 </p>
 
-                <h3 id="sec1-2">1.2 Abugida Orthography & Multi-Directional Dependent Glyphs</h3>
+                <h3 id="sec1-2">1.2 Abugida Orthography & Multi-Directional Glyphs</h3>
                 <p>
-                    Unlike alphabetic scripts where vowels and consonants occupy sequential linear positions, Cham is a quintessential <strong>abugida</strong>:
+                    Unlike alphabetic writing systems where letters follow a single horizontal axis, Cham is an <strong>abugida</strong> governed by complex spatial attachment rules:
                 </p>
                 <ol>
-                    <li><strong>Inherent Vowels</strong>: Every base consonant glyph inherently contains the unwritten vowel /a/ or /ɔ/.</li>
-                    <li><strong>Consonantal Inventory</strong>: The Unicode standard (Unicode Block <code>U+AA00</code>–<code>U+AA5F</code>) formalizes 41 consonant glyphs (e.g., <span class="cham-script">ꨀ</span> /ka/, <span class="cham-script">ꨁ</span> /kha/, <span class="cham-script">ꨂ</span> /ga/, <span class="cham-script">ꨕ</span> /ta/, <span class="cham-script">ꨚ</span> /pa/).</li>
-                    <li><strong>Subjoined Medials</strong>: Four medial consonants attach underneath or wrap around the base: Medial Ra (<span class="cham-script">ꨳ</span> U+AA33), Medial La (<span class="cham-script">ꨴ</span> U+AA34), Medial Ya (<span class="cham-script">ꨵ</span> U+AA35), and Medial Wa (<span class="cham-script">ꨶ</span> U+AA36).</li>
-                    <li><strong>Multi-Directional Dependent Vowels</strong>: Vowels attach in all four spatial directions:
+                    <li><strong>Independent Vowels (<code>U+AA00</code>–<code>U+AA05</code>)</strong>: Six standalone vowel glyphs represent syllable-initial vowel phonemes without a preceding consonant base:
+                        <span class="cham-script">ꨀ</span> (U+AA00: <code>CHAM LETTER A</code>),
+                        <span class="cham-script">ꨁ</span> (U+AA01: <code>CHAM LETTER I</code>),
+                        <span class="cham-script">ꨂ</span> (U+AA02: <code>CHAM LETTER U</code>),
+                        <span class="cham-script">ꨃ</span> (U+AA03: <code>CHAM LETTER E</code>),
+                        <span class="cham-script">ꨄ</span> (U+AA04: <code>CHAM LETTER AI</code>),
+                        <span class="cham-script">ꨅ</span> (U+AA05: <code>CHAM LETTER O</code>).
+                    </li>
+                    <li><strong>Consonantal Inventory (<code>U+AA06</code>–<code>U+AA28</code>)</strong>: Thirty-five consonant glyphs carry an inherent vowel (/a/ or /ɔ/), beginning with <span class="cham-script">ꨆ</span> (U+AA06: <code>CHAM LETTER KA</code>) through <span class="cham-script">ꨨ</span> (U+AA28: <code>CHAM LETTER HA</code>), encompassing unaspirated, aspirated, nasal, and liquid articulation series.</li>
+                    <li><strong>Subjoined Medials (<code>U+AA33</code>–<code>U+AA36</code>)</strong>: Four medial consonants attach underneath or encircle the consonant base:
+                        Medial Ya (<span class="cham-script">ꨳ</span> U+AA33: <code>CHAM CONSONANT SIGN YA</code>),
+                        Medial Ra (<span class="cham-script">ꨴ</span> U+AA34: <code>CHAM CONSONANT SIGN RA</code>),
+                        Medial La (<span class="cham-script">ꨵ</span> U+AA35: <code>CHAM CONSONANT SIGN LA</code>), and
+                        Medial Wa (<span class="cham-script">ꨶ</span> U+AA36: <code>CHAM CONSONANT SIGN WA</code>).
+                    </li>
+                    <li><strong>Multi-Directional Dependent Vowels (<code>U+AA29</code>–<code>U+AA32</code>)</strong>: Dependent vowel signs attach across all four spatial quadrants around the base:
                         <ul>
-                            <li><em>Above base</em>: Vowel Sign I (<span class="cham-script">ꨪ</span> U+AA2A), II (<span class="cham-script">ꨫ</span> U+AA2B), E (<span class="cham-script">ꨬ</span> U+AA2C).</li>
-                            <li><em>Below base</em>: Vowel Sign U (<span class="cham-script">ꨭ</span> U+AA2D), Au (<span class="cham-script">ꨲ</span> U+AA32).</li>
-                            <li><em>Post-base (Right)</em>: Vowel Sign AA (<span class="cham-script">ꨩ</span> U+AA29).</li>
-                            <li><em>Pre-base (Left / Visual Ahead)</em>: Vowel Sign O (<span class="cham-script">ꨯ</span> U+AA2F), AI (<span class="cham-script">ꨮ</span> U+AA2E).</li>
+                            <li><em>Above base</em>: Vowel Sign I (<span class="cham-script">ꨪ</span> U+AA2A), II (<span class="cham-script">ꨫ</span> U+AA2B), EI (<span class="cham-script">ꨬ</span> U+AA2C).</li>
+                            <li><em>Below base</em>: Vowel Sign U (<span class="cham-script">ꨭ</span> U+AA2D), UE (<span class="cham-script">ꨲ</span> U+AA32).</li>
+                            <li><em>Post-base (Right)</em>: Vowel Sign AA (<span class="cham-script">ꨩ</span> U+AA29), AU (<span class="cham-script">ꨱ</span> U+AA31).</li>
+                            <li><em>Pre-base (Left / Visual Ahead)</em>: Vowel Sign OE (<span class="cham-script">ꨮ</span> U+AA2E), O (<span class="cham-script">ꨯ</span> U+AA2F), AI (<span class="cham-script">ꨰ</span> U+AA30).</li>
                         </ul>
                     </li>
-                    <li><strong>Scriptio Continua & Stanza Punctuation</strong>: Manuscripts contain no whitespace between words. Phrases terminate with single Danda (<span class="cham-script">꩝</span> U+AA5D), double Danda (<span class="cham-script">꩞</span> U+AA5E), or quadruple section marks (<span class="cham-script">꩟</span> U+AA5F). Poetic stanzas frequently begin with Cham numerals followed by a section mark (e.g., <span class="cham-script">꩑꩞</span> for Verse 1, <span class="cham-script">꩒꩞</span> for Verse 2).</li>
+                    <li><strong>Final Consonants & Signs (<code>U+AA40</code>–<code>U+AA4D</code>)</strong>: Explicit syllable codas such as Final Ng (<span class="cham-script">ꩃ</span> U+AA43), Final M / Anusvara (<span class="cham-script">ꩌ</span> U+AA4C), and Final H / Visarga (<span class="cham-script">ꩍ</span> U+AA4D).</li>
+                    <li><strong>Scriptio Continua vs Modern Spacing</strong>: Classical literary manuscripts and verse compendia are composed almost exclusively in <em>scriptio continua</em> (without inter-word spaces). Conversely, modern printed publications and textbooks frequently introduce spaces between lexical items or clauses.</li>
+                    <li><strong>Punctuation & Verse Markers</strong>: Traditional discourse is demarcated via Danda (<span class="cham-script">꩝</span> U+AA5D), Double Danda (<span class="cham-script">꩞</span> U+AA5E, also serving as section/stanza mark), and Triple Danda (<span class="cham-script">꩟</span> U+AA5F). Poetic stanzas frequently open with Cham numerals followed by a section mark (e.g., <span class="cham-script">꩑꩞</span> for Verse 1, <span class="cham-script">꩒꩞</span> for Verse 2).</li>
                 </ol>
 
                 <h3 id="sec1-3">1.3 The Conflict: Logical Storage Order vs Visual Rendering Order</h3>
@@ -797,33 +823,70 @@
                     The Unicode Standard mandates <strong>Logical Order</strong> encoding for all Brahmic scripts, meaning the character sequence reflects phonetic utterance:
                 </p>
                 <div class="math-block">
-                    $$\text{Canonical Cluster} = \text{Base} + [\text{Medials}] + [\text{Pre-Ra}] + [\text{Vowel}_{\text{pre}}] + [\text{Vowel}_{\text{post/top/bottom}}] + [\text{Final}]$$
+                    $$\text{Canonical Cluster} = \text{Base Consonant} + [\text{Medials}] + [\text{Pre-Vowels}] + [\text{Dependent Vowels}] + [\text{Finals / Signs}]$$
                 </div>
                 <p>
-                    However, pre-vowels like <span class="cham-script">ꨯ</span> (Vowel Sign O) are written <em>visually to the left</em> of the base consonant. When an OCR recognition model decodes a line from left to right, its visual perception naturally encounters <span class="cham-script">ꨯ</span> before the consonant (e.g. <span class="cham-script">ꨕ</span>). Standard CTC models therefore frequently output the illegal sequence <span class="cham-script">ꨯꨕ</span> instead of the canonical Unicode cluster <span class="cham-script">ꨕꨯ</span>. 
+                    However, pre-vowels like <span class="cham-script">ꨯ</span> (Vowel Sign O, U+AA2F) and <span class="cham-script">ꨮ</span> (Vowel Sign OE, U+AA2E) are rendered <em>visually to the left</em> of the base consonant. When an optical sequence decoder scans an image crop left-to-right, its visual perception encounters the pre-vowel ahead of the consonant glyph (e.g. perceiving <span class="cham-script">ꨯ</span> before base <span class="cham-script">ꨕ</span>). Standard CTC models therefore frequently output the illegal sequence <span class="cham-script">ꨯꨕ</span> instead of the canonical Unicode cluster <span class="cham-script">ꨕꨯ</span>. 
                 </p>
                 <div class="academic-callout callout-warning">
                     <div class="callout-title">⚠️ Paleographic Pitfall: Visual Parsing Corruption</div>
-                    Attempting to parse output using naive visual-to-unicode cluster splitters damages valid multi-diacritic compounds (such as subjoined medials <span class="cham-script">ꨙꨳꨯꨮ</span>). Our system strictly mandates a deterministic post-OCR <strong>Logical Order Normalizer</strong> (Section 3.3) that re-aligns local visual permutations into standardized Unicode sequences without corrupting consonant-medial clusters.
+                    Attempting to resolve visual ordering with naive string replacements or visual-to-unicode cluster splitters damages valid multi-diacritic compounds containing subjoined medials (such as <span class="cham-script">ꨙꨳꨯꨮ</span>). Our system strictly mandates a deterministic post-OCR <strong>Logical Order Normalizer</strong> (Section 4.3) that re-aligns local visual permutations into standardized Unicode sequences without corrupting consonant-medial clusters.
                 </div>
             </section>
 
-            <!-- SECTION 2 -->
+            <!-- SECTION 2: RELATED WORK -->
             <section id="sec2">
-                <h2>2. Text Detection & Indic Line Segmentation (Cham-DBNet)</h2>
+                <h2>2. Related Work on Cham Document Analysis & Epigraphy</h2>
 
-                <h3 id="sec2-1">2.1 The Interlinear Diacritic Collision Problem</h3>
+                <h3 id="sec2-1">2.1 Early Epigraphic & Glyph Recognition</h3>
                 <p>
-                    Historical Cham manuscripts feature tight interline spacing (often mere 3–10 pixels between lines). Because vowels reach high above the core text band (ascenders up to \(+18\text{px}\)) and medials plunge below (descenders down to \(-22\text{px}\)), ascenders of line \(n+1\) physically touch or intertwine with descenders of line \(n\). Generic text detectors (such as standard DBNet or EAST trained on natural scene Latin text) fail by:
+                    Automated processing of Cham script originated in the analysis of stone inscriptions from ancient Champa sanctuaries (Mỹ Sơn, Po Nagar, Đồng Dương). Nguyen, Nguyen, & Coustaty (2019a) presented preliminary results on recognizing ancient Cham glyphs extracted from stone rubbings and photographs using hand-crafted feature descriptors and shallow neural networks. Due to severe stone weathering, erosion, and irregular surface texture, isolated glyph accuracy was limited.
+                </p>
+                <p>
+                    To mitigate extreme sample scarcity in epigraphic corpora, Nguyen, Nguyen, & Coustaty (2019b) evaluated data augmentation strategies and transfer learning from modern character shapes to ancient stone inscription glyphs, highlighting the profound visual domain gap between formal epigraphy and paper manuscripts.
+                </p>
+
+                <h3 id="sec2-2">2.2 Deep Learning for Cham Epigraphy & Transliteration</h3>
+                <p>
+                    In his doctoral dissertation, Nguyen (2023) developed comprehensive document image processing and understanding methodologies dedicated to ancient Cham epigraphy. His work investigated stone inscription image restoration, automatic glyph segmentation under rough stone substrate conditions, and deep convolutional representations for historical Brahmic scripts.
+                </p>
+                <p>
+                    Expanding to linguistic representation, Nguyen et al. (2023) introduced a two-step sequence transformer model for Cham-to-Latin script transliteration presented at the ICDAR / HIP 2023 workshop. Their system demonstrated the efficacy of sequence-to-sequence transformers in mapping recognized Cham text sequences to standardized Latin phonological romanizations (<em>Cam-Latin</em>).
+                </p>
+
+                <h3 id="sec2-3">2.3 Manuscript Preservation & Digitization Initiatives</h3>
+                <p>
+                    Beyond epigraphy on stone, historical Cham manuscripts on paper (<em>kertas</em>) and palm-leaf have been documented through preservation missions conducted by the École française d'Extrême-Orient (EFEO) and the collaborative CHAMDOC project (<em>Archives et manuscrits du Cambodge et du Champa</em>). These archives preserve hundreds of manuscripts; however, they exist primarily as high-resolution raster photographic scans without character-level or line-level bounding box ground truth suitable for supervised deep learning.
+                </p>
+
+                <h3 id="sec2-4">2.4 Positioning of the Present System</h3>
+                <p>
+                    Prior research has focused predominantly on either <strong>isolated glyph recognition on stone inscriptions</strong> or <strong>downstream transliteration of cleaned text</strong>. In contrast, the system presented in this report addresses the complete <strong>end-to-end continuous document pipeline</strong> for historical manuscripts:
+                </p>
+                <ul>
+                    <li>Full-page line detection and segmentation robust to undulating baselines and tight interlinear diacritics.</li>
+                    <li>End-to-end continuous textline recognition without manual character pre-segmentation.</li>
+                    <li>Deterministic canonical reordering adhering to the official Unicode standard.</li>
+                    <li>Production-grade serving designed for cultural heritage researchers and native community access.</li>
+                </ul>
+            </section>
+
+            <!-- SECTION 3 -->
+            <section id="sec3">
+                <h2>3. Text Detection & Indic Line Segmentation (Cham-DBNet)</h2>
+
+                <h3 id="sec3-1">3.1 The Interlinear Diacritic Collision Problem</h3>
+                <p>
+                    Historical Cham manuscripts feature tight interline spacing (often mere 3–12 pixels between lines). Because vowels reach high above the core text band (ascenders up to \(+18\text{px}\)) and medials plunge below (descenders down to \(-22\text{px}\)), ascenders of line \(n+1\) physically touch or intertwine with descenders of line \(n\). Generic text detectors (such as standard DBNet or EAST trained on natural scene Latin text) fail by:
                 </p>
                 <ul>
                     <li>Merging adjacent lines into single monolithic boxes.</li>
                     <li>Slicing off upper/lower diacritics, leading to fatal recognition errors.</li>
                 </ul>
 
-                <h3 id="sec2-2">2.2 Specialized Cham-DBNet: Architecture & Training</h3>
+                <h3 id="sec3-2">3.2 Specialized Cham-DBNet: Architecture & Training</h3>
                 <p>
-                    We trained a specialized text detector based on <strong>PP-OCRv4 Mobile DBNet</strong> with a lightweight <strong>PPLCNetV3</strong> backbone on an NVIDIA L4 GPU (24GB VRAM) in Lightning AI.
+                    We trained a specialized text detector based on <strong>PP-OCRv4 Mobile DBNet</strong> with a lightweight <strong>PPLCNetV3</strong> backbone on an NVIDIA L4 GPU (24GB VRAM) in Lightning AI:
                 </p>
                 
                 <div class="table-responsive">
@@ -863,13 +926,13 @@
                             </tr>
                             <tr>
                                 <td>Training Dataset</td>
-                                <td>2,000 synthetic & real pages</td>
+                                <td>2,000 document pages</td>
                                 <td>50% pages deliberately generated with extreme narrow line spacing (3–10px).</td>
                             </tr>
                             <tr>
                                 <td>Optimization & Duration</td>
                                 <td>AdamW, CosineAnnealing, 150 Epochs</td>
-                                <td>4 hours 21 minutes on NVIDIA L4 (Throughput: 20.5 samples/sec).</td>
+                                <td>Trained on NVIDIA L4 GPU (24GB VRAM).</td>
                             </tr>
                         </tbody>
                     </table>
@@ -891,7 +954,7 @@
                             <tr>
                                 <td>Precision (\(P\))</td>
                                 <td class="num"><span class="metric-badge metric-good">99.63%</span></td>
-                                <td>Empirical validation across 200 held-out manuscript pages.</td>
+                                <td>Empirical validation across held-out test pages.</td>
                             </tr>
                             <tr>
                                 <td>Recall (\(R\))</td>
@@ -912,7 +975,7 @@
                     </table>
                 </div>
 
-                <h3 id="sec2-3">2.3 Hybrid Indic Valley-Cut Heuristic & Boundary Masking Safeguards</h3>
+                <h3 id="sec3-3">3.3 Hybrid Indic Valley-Cut Heuristic & Boundary Masking Safeguards</h3>
                 <p>
                     For CPU execution in low-resource environments (or when DBNet probability maps exhibit ambiguity), we designed an <strong>Indic Valley-Cut Heuristic Engine</strong> operating as a secondary defense layer:
                 </p>
@@ -921,25 +984,25 @@
                     <li><strong>Core Text Band Determination</strong>: Identifies the median baseline and core bounding box of each text line using horizontal projection histograms.</li>
                     <li><strong>Boundary Stroke Masking via <code>difference_update</code></strong>: When creating an erasing mask to obscure adjacent interfering lines, components belonging to the current line are strictly excluded using mathematical set difference (\(S_{\text{mask}} = S_{\text{adjacent}} \setminus S_{\text{current}}\)). This prevents amputating touching diacritics.</li>
                     <li><strong>Vertical Padding Safeguards</strong>: The bounding box is padded by exactly \(0.40 \times \text{median line height}\) upwards and downwards, bounded at a minimum distance of \(2\text{px}\) from neighboring core bands.</li>
-                    <li><strong>Legacy-First / No-Change Gate</strong>: For clean manuscripts where interline gap \(\ge 0.35 \times \text{height}\) and initial confidence \(\ge 0.75\), multi-crop splitting is bypassed entirely to guarantee zero regression on pristine folios.</li>
+                    <li><strong>Legacy-First / No-Change Gate</strong>: For clean documents where interline gap \(\ge 0.35 \times \text{height}\) and initial confidence \(\ge 0.75\), multi-crop splitting is bypassed entirely to guarantee zero regression on pristine folios.</li>
                 </ol>
             </section>
 
-            <!-- SECTION 3 -->
-            <section id="sec3">
-                <h2>3. Neural Text Recognition Architecture (Cham-SVTR)</h2>
+            <!-- SECTION 4 -->
+            <section id="sec4">
+                <h2>4. Neural Text Recognition Architecture (Cham-SVTR)</h2>
 
-                <h3 id="sec3-1">3.1 PP-OCRv4 SVTR-LCNet Backbone</h3>
+                <h3 id="sec4-1">4.1 PP-OCRv4 SVTR-LCNet Backbone</h3>
                 <p>
                     Text recognition is formulated as sequence labeling on textline image crops. We adopted the <strong>SVTR-LCNet</strong> architecture from PP-OCRv4, customized with specialized input and output heads:
                 </p>
                 <ul>
-                    <li><strong>Input Tensor Dimensions</strong>: Scaled to \([3, 48, 480]\) (channels \(\times\) height \(\times\) width). Standard Latin OCR uses height 32 or 48 with width 320. Widening the receptive field to 480 width prevents spatial squashing of Cham verses containing stacked diacritics.</li>
-                    <li><strong>SVTR Blocks (Single Visual Model for Text Recognition)</strong>: Integrates local visual feature extractors with patch-wise self-attention mechanisms to capture long-range contextual relationships across scriptio continua text.</li>
+                    <li><strong>Input Tensor Dimensions</strong>: Scaled to \([3, 48, 480]\) (channels \(\times\) height \(\times\) width). Widening the receptive field to 480 width prevents spatial squashing of Cham verses containing stacked diacritics.</li>
+                    <li><strong>SVTR Blocks (Single Visual Model for Text Recognition)</strong>: Integrates local visual feature extractors with patch-wise self-attention mechanisms to capture long-range contextual relationships across unspaced text.</li>
                     <li><strong>Squeeze-and-Excitation (SE) Channel Attention</strong>: Adaptively recalibrates channel-wise feature responses, emphasizing subtle diacritic strokes over background paper grain.</li>
                 </ul>
 
-                <h3 id="sec3-2">3.2 Joint CTC & Sequence Attention Loss</h3>
+                <h3 id="sec4-2">4.2 Joint CTC & Sequence Attention Loss</h3>
                 <p>
                     Training employs joint supervision combining Connectionist Temporal Classification (CTC) with an Attention-based sequence decoder:
                 </p>
@@ -956,22 +1019,20 @@
                     During runtime inference, greedy CTC decoding is executed for single-thread CPU performance under 25ms per textline.
                 </p>
 
-                <h3 id="sec3-3">3.3 Post-OCR Deterministic Canonical Normalization</h3>
+                <h3 id="sec4-3">4.3 Post-OCR Deterministic Canonical Normalization</h3>
                 <p>
                     To resolve the visual-versus-logical ordering paradox described in Section 1.3, we developed <code>normalize_unicode</code>, an algorithmic state machine built upon <code>parse_unicode_clusters</code>. It decomposes the raw CTC output string into individual phonological syllables and re-sorts tokens into canonical Brahmic sequence:
                 </p>
                 
                 <div class="code-box">
                     <div class="code-header">
-                        <span>Python Algorithm: parse_unicode_clusters</span>
-                        <button class="copy-btn" onclick="navigator.clipboard.writeText('def normalize_unicode(text): ...')">Copy</button>
+                        <span>Python Algorithm: normalize_unicode</span>
+                        <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('norm-code').innerText)">Copy</button>
                     </div>
-<pre><code>def normalize_unicode(text: str) -> str:
-    """
-    Enforces Canonical Brahmic Logical Order on CTC decoded Cham text:
-    Base Consonant -> Medial (Ra/La/Ya/Wa) -> Pre-Ra -> Pre-Vowels (O/AI) -> Post-Vowels -> Finals
-    Example: Corrects visual hallucination 'ꨙꨯꨳꨮ' into canonical 'ꨙꨳꨯꨮ'.
-    """
+<pre id="norm-code"><code>def normalize_unicode(text: str) -> str:
+    # Enforces Canonical Brahmic Logical Order on CTC decoded Cham text:
+    # Base Consonant -> Medial (Ya/Ra/La/Wa) -> Pre-Vowels (O/OE/AI) -> Post-Vowels -> Finals
+    # Example: Corrects visual hallucination 'ꨙꨯꨳꨮ' into canonical 'ꨙꨳꨯꨮ'.
     clusters = parse_unicode_clusters(text)
     reordered_clusters = []
     for cluster in clusters:
@@ -986,16 +1047,16 @@
                 </div>
             </section>
 
-            <!-- SECTION 4 -->
-            <section id="sec4">
-                <h2>4. Synthetic Dataset Generation & Hard-Example Mining</h2>
+            <!-- SECTION 5 -->
+            <section id="sec5">
+                <h2>5. Synthetic Dataset Generation & Hard-Example Mining</h2>
 
-                <h3 id="sec4-1">4.1 The Data Scarcity Bottleneck</h3>
+                <h3 id="sec5-1">5.1 The Data Scarcity Bottleneck</h3>
                 <p>
                     Deep neural OCR networks require hundreds of thousands of diverse labeled textlines. However, only a few hundred physical Cham manuscripts survive globally, with virtually no character-level bounding box ground truth. To overcome this limitation, we engineered an algorithmic synthesizer (<code>scripts/generate_data.py</code>) that rendered 150,000 high-fidelity synthetic lines.
                 </p>
 
-                <h3 id="sec4-2">4.2 4-Tier Stratified Synthesis Corpus</h3>
+                <h3 id="sec5-2">5.2 4-Tier Stratified Synthesis Corpus</h3>
                 <div class="table-responsive">
                     <table>
                         <thead>
@@ -1035,7 +1096,7 @@
                     </table>
                 </div>
 
-                <h3 id="sec4-3">4.3 TrueType/OpenType cmap Tofu Glyph Safeguards</h3>
+                <h3 id="sec5-3">5.3 TrueType/OpenType cmap Tofu Glyph Safeguards</h3>
                 <p>
                     When rendering synthetic text across multiple open-source Cham fonts (<em>Cham Roman</em>, <em>Noto Sans Cham</em>, <em>EFEO Cham</em>), missing Unicode codepoints frequently produce blank rectangles ("tofu" glyphs). If fed to the neural network, the model associates valid Unicode labels with blank boxes, catastrophically destroying recognition accuracy.
                 </p>
@@ -1043,7 +1104,7 @@
                     We implemented pre-render validation using <code>fontTools.ttLib</code> to extract the font's <code>cmap</code> tables. Every string candidate is validated character-by-character; any character lacking glyph outline data in the active font is rejected prior to rasterization.
                 </p>
 
-                <h3 id="sec4-4">4.4 On-the-Fly Dynamic Motion Blur & Noise Synthesis in RAM</h3>
+                <h3 id="sec5-4">5.4 On-the-Fly Dynamic Motion Blur & Noise Synthesis in RAM</h3>
                 <p>
                     To prevent disk I/O bottlenecks during generation, augmentations are synthesized dynamically in memory:
                 </p>
@@ -1054,13 +1115,13 @@
                 </ul>
             </section>
 
-            <!-- SECTION 5 -->
-            <section id="sec5">
-                <h2>5. Empirical Benchmarks & Quantitative Evaluations</h2>
+            <!-- SECTION 6 -->
+            <section id="sec6">
+                <h2>6. Empirical Benchmarks & Quantitative Evaluations</h2>
 
-                <h3 id="sec5-1">5.1 Controlled 50-Test Stratified Benchmark (Model V23 vs V24)</h3>
+                <h3 id="sec6-1">6.1 Controlled 50-Test Stratified Benchmark (Model V23 vs V24)</h3>
                 <p>
-                    We evaluated model evolution across 50 rigorous stratified test cases covering 10 distinct failure modes:
+                    We evaluated model evolution across 50 rigorous stratified test cases covering 10 distinct failure modes, logged in <code>benchmark_50_tests_results.json</code> and <code>benchmark_50_tests_results_v24.json</code>:
                 </p>
 
                 <div class="table-responsive">
@@ -1149,60 +1210,62 @@
                                 <td class="num">0.921</td>
                             </tr>
                             <tr>
-                                <td>Cat 8: Hard Diacritics</td>
+                                <td>Cat 8: Tilt & Perspective</td>
                                 <td class="num">5</td>
-                                <td class="num">21.80%</td>
-                                <td class="num"><strong>14.29%</strong></td>
-                                <td class="num"><span class="metric-badge metric-good">-7.51%</span></td>
-                                <td class="num">20.0%</td>
-                                <td class="num"><strong>40.0%</strong></td>
-                                <td class="num">0.932</td>
+                                <td class="num">22.14%</td>
+                                <td class="num"><strong>0.71%</strong></td>
+                                <td class="num"><span class="metric-badge metric-good">-21.43%</span></td>
+                                <td class="num">0.0%</td>
+                                <td class="num"><strong>100.0%</strong></td>
+                                <td class="num">0.982</td>
                             </tr>
                             <tr>
-                                <td>Cat 9: Double Danda & Punctuation</td>
+                                <td>Cat 9: Stroke Degradation</td>
                                 <td class="num">5</td>
-                                <td class="num">19.44%</td>
-                                <td class="num"><strong>10.53%</strong></td>
-                                <td class="num"><span class="metric-badge metric-good">-8.91%</span></td>
-                                <td class="num">20.0%</td>
-                                <td class="num"><strong>60.0%</strong></td>
-                                <td class="num">0.951</td>
+                                <td class="num">26.67%</td>
+                                <td class="num"><strong>6.67%</strong></td>
+                                <td class="num"><span class="metric-badge metric-good">-20.00%</span></td>
+                                <td class="num">0.0%</td>
+                                <td class="num"><strong>80.0%</strong></td>
+                                <td class="num">0.928</td>
                             </tr>
                             <tr>
-                                <td>Cat 10: Code-Switching (Cham+Viet)</td>
+                                <td>Cat 10: Diacritics & Punctuation</td>
                                 <td class="num">5</td>
-                                <td class="num">25.12%</td>
-                                <td class="num"><strong>16.45%</strong></td>
-                                <td class="num"><span class="metric-badge metric-good">-8.67%</span></td>
-                                <td class="num">20.0%</td>
+                                <td class="num">28.72%</td>
+                                <td class="num"><strong>22.19%</strong></td>
+                                <td class="num"><span class="metric-badge metric-good">-6.53%</span></td>
+                                <td class="num">0.0%</td>
                                 <td class="num"><strong>40.0%</strong></td>
-                                <td class="num">0.918</td>
+                                <td class="num">0.913</td>
                             </tr>
                             <tr style="font-weight: 700; background: var(--bg-subtle);">
                                 <td>Overall Benchmark Average</td>
                                 <td class="num">50</td>
-                                <td class="num">27.06%</td>
-                                <td class="num"><strong>15.05%</strong></td>
-                                <td class="num"><span class="metric-badge metric-good">-12.01%</span></td>
-                                <td class="num">12.0%</td>
-                                <td class="num"><strong>44.0%</strong></td>
-                                <td class="num">0.926</td>
+                                <td class="num">28.17%</td>
+                                <td class="num"><strong>13.88%</strong></td>
+                                <td class="num"><span class="metric-badge metric-good">-14.29%</span></td>
+                                <td class="num">4.0%</td>
+                                <td class="num"><strong>50.0%</strong></td>
+                                <td class="num">0.923</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <h3 id="sec5-2">5.2 200 Real-Corpus Stress Test Suite (903 Textlines)</h3>
+                <h3 id="sec6-2">6.2 Controlled 200-Page Synthetic Document Stress-Test (903 Textlines)</h3>
                 <p>
-                    To establish the operational limits of the complete end-to-end pipeline (Cham-DBNet + Cham-SVTR v24), we evaluated 200 real-manuscript test images comprising 903 textlines across 5 levels of physical and geometric degradation:
+                    To establish the operational limits of the complete end-to-end pipeline (Cham-DBNet + Cham-SVTR v24), we evaluated a <strong>controlled synthetic stress-test suite</strong> of 200 generated page images comprising 903 ground-truth textlines. Generated by <code>ocr-benchmark/scripts/generate_benchmark_200.py</code>, this suite renders authentic literary passages under calibrated geometric and photometric stress across 5 difficulty tiers:
                 </p>
 
                 <div class="table-responsive">
                     <table>
                         <thead>
                             <tr>
-                                <th>Difficulty Level</th>
-                                <th>Geometric & Physical Degradation Profile</th>
+                                <th>Difficulty Tier</th>
+                                <th>Stress & Degradation Profile</th>
+                                <th class="num">Samples</th>
+                                <th class="num">GT Lines</th>
                                 <th class="num">Detection Rate</th>
                                 <th class="num">Mean CER</th>
                                 <th class="num">Mean WER</th>
@@ -1211,8 +1274,10 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Level 1: Clean</td>
-                                <td>Standard line gap 25–35px, rectilinear alignment, white background.</td>
+                                <td>Level 1: Standard</td>
+                                <td>Line gap 25–35px, rectilinear alignment, white background.</td>
+                                <td class="num">40</td>
+                                <td class="num">201</td>
                                 <td class="num"><span class="metric-badge metric-good">100.0%</span></td>
                                 <td class="num">14.43%</td>
                                 <td class="num">45.50%</td>
@@ -1220,7 +1285,9 @@
                             </tr>
                             <tr>
                                 <td>Level 2: Aged Paper</td>
-                                <td>Yellowed paper bark, mild dust grain, slight skew (\(\le 2^\circ\)).</td>
+                                <td>Yellowed paper texture, mild dust grain, slight skew (\(\le 2^\circ\)).</td>
+                                <td class="num">40</td>
+                                <td class="num">189</td>
                                 <td class="num"><span class="metric-badge metric-good">100.0%</span></td>
                                 <td class="num">14.44%</td>
                                 <td class="num">45.86%</td>
@@ -1228,7 +1295,9 @@
                             </tr>
                             <tr>
                                 <td>Level 3: Narrow Gap</td>
-                                <td>Tight line gap 8–14px, subtle baseline waviness (1–2px).</td>
+                                <td>Tight interline gap 8–14px, micro-waviness (1–2px).</td>
+                                <td class="num">40</td>
+                                <td class="num">170</td>
                                 <td class="num"><span class="metric-badge metric-good">100.0%</span></td>
                                 <td class="num">12.77%</td>
                                 <td class="num">43.52%</td>
@@ -1236,7 +1305,9 @@
                             </tr>
                             <tr>
                                 <td>Level 4: Wavy Sinusoid</td>
-                                <td>Sine wave distortion (amplitude 3–5.5px), perspective tilt (0.03–0.05), gap 5–10px.</td>
+                                <td>Sine wave warping (amp 3–5.5px), perspective tilt (0.03–0.05), gap 5–10px.</td>
+                                <td class="num">40</td>
+                                <td class="num">177</td>
                                 <td class="num"><span class="metric-badge metric-good">99.44%</span></td>
                                 <td class="num">14.53%</td>
                                 <td class="num">45.64%</td>
@@ -1244,15 +1315,19 @@
                             </tr>
                             <tr>
                                 <td>Level 5: Extreme Overlap</td>
-                                <td>Gap 2–6px &lt; wave amplitude 5.5–8.0px. Touching boundary strokes.</td>
+                                <td>Gap 2–6px &lt; wave amplitude 5.5–8.0px. Intersecting boundary strokes.</td>
+                                <td class="num">40</td>
+                                <td class="num">166</td>
                                 <td class="num"><span class="metric-badge metric-bad">61.45%</span></td>
                                 <td class="num">60.02%</td>
                                 <td class="num">77.63%</td>
-                                <td class="num">1.18s</td>
+                                <td class="num">0.99s</td>
                             </tr>
                             <tr style="font-weight: 700; background: var(--bg-subtle);">
-                                <td>Overall Suite Average</td>
-                                <td>Total: 200 images, 903 lines across all 5 levels.</td>
+                                <td>Overall Suite Summary</td>
+                                <td>200 synthetic document images, 903 textlines total.</td>
+                                <td class="num">200</td>
+                                <td class="num">903</td>
                                 <td class="num"><strong>92.80%</strong></td>
                                 <td class="num"><strong>23.24%</strong></td>
                                 <td class="num"><strong>51.63%</strong></td>
@@ -1267,7 +1342,51 @@
                     Level 3 and Level 4 results demonstrate that Cham-DBNet handles narrow lines (8–14px) and moderate waviness with near-perfect reliability (99.44%–100% detection rate). The catastrophic drop at Level 5 (61.45%) marks the exact <strong>mathematical breaking point</strong> where interlinear wave amplitude exceeds the interlinear gap (\(\text{Amplitude} > \text{Gap}\)), causing strokes from adjacent lines to intersect on the binarized plane.
                 </div>
 
-                <h3 id="sec5-3">5.3 Multi-GPU Distributed Hardware Scaling & Cost Efficiency</h3>
+                <h3 id="sec6-3">6.3 Comparative Model Evaluation: V24 Validated Baseline vs V25 Experimental Checkpoint</h3>
+                <p>
+                    To clarify model designations within the repository, we conducted an empirical comparison between the production model (<strong>V24</strong>) and the experimental checkpoint (<strong>V25</strong>), logged in <code>ocr-studio/data/benchmark_v24_vs_v25_results.json</code>:
+                </p>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Model Designation</th>
+                                <th>Operational Status</th>
+                                <th class="num">Overall 50-Test CER</th>
+                                <th class="num">Pass Rate (Dist &le; 1)</th>
+                                <th class="num">Cat 1 Clean CER</th>
+                                <th class="num">Cat 6 Noise CER</th>
+                                <th class="num">Cat 8 Tilt CER</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Version 24</strong></td>
+                                <td><span class="metric-badge metric-good">Validated Baseline (Production)</span></td>
+                                <td class="num"><strong>16.81%</strong></td>
+                                <td class="num"><strong>44.0%</strong></td>
+                                <td class="num"><strong>5.85%</strong></td>
+                                <td class="num"><strong>8.82%</strong></td>
+                                <td class="num"><strong>0.00%</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Version 25</strong></td>
+                                <td><span class="metric-badge" style="background:#FFF3E0; color:#E65100;">Experimental Checkpoint (Under Evaluation)</span></td>
+                                <td class="num">51.73%</td>
+                                <td class="num">10.0%</td>
+                                <td class="num">31.59%</td>
+                                <td class="num">25.88%</td>
+                                <td class="num">3.57%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+                    <strong>Scientific Interpretation</strong>: Version 24 serves as our validated baseline. While Version 25 incorporates lexicon expansion and weight surgery (<code>surgery_v25_weights.py</code>) to accommodate newly added punctuation and numeral tokens, early checkpoints exhibit alignment instability across extended lexicons. Consequently, <strong>Version 24 remains the production standard</strong>, while Version 25 remains an active research checkpoint undergoing further training.
+                </p>
+
+                <h3 id="sec6-4">6.4 Multi-GPU Distributed Hardware Scaling & Cost Efficiency</h3>
                 <p>
                     Training deep OCR backbones over 10,000,000 synthetic sample passes requires empirical hardware optimization. We executed controlled distributed benchmarks across four accelerator configurations:
                 </p>
@@ -1332,11 +1451,11 @@
                 </div>
             </section>
 
-            <!-- SECTION 6 -->
-            <section id="sec6">
-                <h2>6. Production Serving & Deployment Infrastructure</h2>
+            <!-- SECTION 7 -->
+            <section id="sec7">
+                <h2>7. Production Serving & Deployment Infrastructure</h2>
 
-                <h3 id="sec6-1">6.1 Containerized Microservice Architecture</h3>
+                <h3 id="sec7-1">7.1 Containerized Microservice Architecture</h3>
                 <p>
                     The production Cham OCR Studio is packaged as a lightweight, multi-stage Docker container deployed on <strong>Hugging Face Spaces</strong> (Space ID: <code>phucsd/cham-ocr-studio</code>) and routed through the custom apex domain:
                 </p>
@@ -1344,7 +1463,7 @@
                     $$\text{Production URL: } \mathbf{\text{https://ocr.cham.asia}}$$
                 </div>
                 
-                <h3 id="sec6-2">6.2 Concurrency Safeguards & NumPy 2.x Forward Compatibility</h3>
+                <h3 id="sec7-2">7.2 Concurrency Safeguards & NumPy 2.x Forward Compatibility</h3>
                 <p>
                     To guarantee deterministic latency under free-tier CPU constraints (2 vCPUs, 16GB RAM):
                 </p>
@@ -1369,21 +1488,23 @@ if not hasattr(np, 'typeDict'): np.typeDict = {}</code></pre>
                 </ul>
             </section>
 
-            <!-- SECTION 7 -->
-            <section id="sec7">
-                <h2>7. Limitations & Future Work</h2>
+            <!-- SECTION 8 -->
+            <section id="sec8">
+                <h2>8. Limitations & Open Research Challenges</h2>
                 <p>
-                    Despite significant advancements over general-purpose OCR systems, our architecture exhibits specific operational constraints:
+                    While our pipeline demonstrates substantial gains on synthetic and semi-controlled documents, rigorous academic honesty requires acknowledging the following boundaries:
                 </p>
                 <ul>
-                    <li><strong>Level 5 Overlapping Lines</strong>: Interlocking diacritics spanning lines with interlinear gaps under 3px remain challenging for 1D horizontal projection. Future research will explore 2D active contour snakes and Bezier curve regression.</li>
-                    <li><strong>Severe Palm-Leaf Mold & Wormholes</strong>: Severe biological carrier loss that destroys over 40% of character ink cannot be reliably hallucinated by CTC decoders alone; integrating masked language modeling (MLM) priors from historical Cham corpora is an active avenue of research.</li>
+                    <li><strong>Synthetic-to-Real Domain Gap</strong>: The recognizer is trained predominantly on synthetic textlines rendered with available digital TrueType fonts (<em>Noto Sans Cham</em>, <em>Cham Roman</em>, <em>EFEO Cham</em>). Historical manuscripts feature idiosyncratic scribal hands, variable ink viscosity, and non-standard ligature variations that may exhibit lower recognition confidence in the field.</li>
+                    <li><strong>Absence of Large-Scale Real Manuscript Ground Truth</strong>: Due to the acute scarcity of digitized historical Cham archives with line-level annotations, current benchmarks rely on controlled synthetic stress-tests and curated test slices. Establishing an open, expert-verified historical palm-leaf manuscript benchmark represents an urgent necessity requiring future collaborative scholarship with native Cham elders and linguists.</li>
+                    <li><strong>Severe Biological Degradation & Epigraphy</strong>: Inscription stone rubbings and severely mold-damaged palm leaves (where over 40% of character ink has flaked away) remain beyond the capabilities of pure vision-based CTC sequence models. Integrating masked language models (MLMs) trained on historical Cham corpora is an active subject of future study.</li>
+                    <li><strong>Extreme Interlinear Overlap (Level 5)</strong>: When severe paper wrinkling causes interlinear wave amplitude to exceed line spacing (\(\text{Amplitude} > \text{Gap}\)), 1D projection and horizontal bounding boxes collapse, indicating the need for 2D polygonal baseline tracking models in future iterations.</li>
                 </ul>
             </section>
 
-            <!-- SECTION 8 -->
-            <section id="sec8">
-                <h2>8. BibTeX Citation & Academic References</h2>
+            <!-- SECTION 9 -->
+            <section id="sec9">
+                <h2>9. BibTeX Citation & Academic References</h2>
                 
                 <p>
                     If you use this work, the synthetic generation methodology, or the OCR Studio in your research, please cite:
@@ -1404,21 +1525,33 @@ if not hasattr(np, 'typeDict'): np.typeDict = {}</code></pre>
 }</code></pre>
                 </div>
 
-                <h3>Foundational References</h3>
+                <h3>Academic References</h3>
                 <div class="ref-item">
                     [1] Everson, M. (2006). <em>Proposal for encoding the Cham script in the UCS (ISO/IEC JTC1/SC2/WG2 N3120)</em>. Unicode Consortium. <a href="https://www.unicode.org/L2/L2006/06257-n3120-cham.pdf" target="_blank" rel="noopener noreferrer">https://www.unicode.org/L2/L2006/06257-n3120-cham.pdf</a>
                 </div>
                 <div class="ref-item">
-                    [2] Liao, M., Wan, Z., Yao, C., Chen, K., & Bai, X. (2020). <em>Real-time Scene Text Detection with Differentiable Binarization</em>. Proceedings of the AAAI Conference on Artificial Intelligence, 34(07), 11474-11481.
+                    [2] Nguyen, T.-N., Nguyen, H.-Q., & Coustaty, M. (2019a). <em>Preliminary Results on Ancient Cham Glyph Recognition from Cham Inscription Images</em>. In 2019 6th International Conference on Advanced Informatics: Concepts, Theory and Applications (ICAICTA), IEEE, pp. 1–6.
                 </div>
                 <div class="ref-item">
-                    [3] Du, Y., Chen, Z., Jia, C., Yin, X., Zheng, T., Li, C., ... & Yu, K. (2023). <em>PP-OCRv4: A Compact, Accurate and Practical Ultra-Lightweight OCR System</em>. arXiv preprint arXiv:2309.09941.
+                    [3] Nguyen, H.-Q., Nguyen, T.-N., & Coustaty, M. (2019b). <em>Improving Ancient Cham Glyph Recognition Using Data Augmentation and Transfer Learning</em>. In 2019 11th International Conference on Knowledge and Systems Engineering (KSE), IEEE, pp. 1–6.
                 </div>
                 <div class="ref-item">
-                    [4] Du, Y., Chen, Z., Jia, C., Yin, X., Zheng, T., Li, C., ... & Yu, K. (2022). <em>SVTR: Scene Text Recognition with a Single Visual Model</em>. arXiv preprint arXiv:2205.00159.
+                    [4] Nguyen, T.-N. (2023). <em>Contributions to Document Image Processing and Understanding: Application to Ancient Cham Epigraphy</em>. Ph.D. Dissertation, Université de La Rochelle, France.
                 </div>
                 <div class="ref-item">
-                    [5] Graves, A., Fernández, S., Gomez, F., & Schmidhuber, J. (2006). <em>Connectionist temporal classification: labelling unsegmented sequence data with recurrent neural networks</em>. Proceedings of the 23rd International Conference on Machine Learning (ICML '06), 369–376.
+                    [5] Nguyen, T.-N., Nguyen, H.-Q., Luong, H.-H., & Coustaty, M. (2023). <em>A Two-Step Sequence Transformer Based Method for Cham to Latin Script Transliteration</em>. In International Conference on Document Analysis and Recognition (ICDAR / HIP Workshop 2023), Springer, Cham, pp. 156–170.
+                </div>
+                <div class="ref-item">
+                    [6] Liao, M., Wan, Z., Yao, C., Chen, K., & Bai, X. (2020). <em>Real-time Scene Text Detection with Differentiable Binarization</em>. Proceedings of the AAAI Conference on Artificial Intelligence, 34(07), 11474–11481.
+                </div>
+                <div class="ref-item">
+                    [7] Du, Y., Chen, Z., Jia, C., Yin, X., Zheng, T., Li, C., ... & Yu, K. (2023). <em>PP-OCRv4: A Compact, Accurate and Practical Ultra-Lightweight OCR System</em>. arXiv preprint arXiv:2309.09941.
+                </div>
+                <div class="ref-item">
+                    [8] Du, Y., Chen, Z., Jia, C., Yin, X., Zheng, T., Li, C., ... & Yu, K. (2022). <em>SVTR: Scene Text Recognition with a Single Visual Model</em>. arXiv preprint arXiv:2205.00159.
+                </div>
+                <div class="ref-item">
+                    [9] Graves, A., Fernández, S., Gomez, F., & Schmidhuber, J. (2006). <em>Connectionist temporal classification: labelling unsegmented sequence data with recurrent neural networks</em>. Proceedings of the 23rd International Conference on Machine Learning (ICML '06), 369–376.
                 </div>
             </section>
 

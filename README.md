@@ -13,14 +13,14 @@ pinned: false
 # Cham OCR Monorepo: Deep Learning Pipeline & Paleographic Transcription Workbench
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-ocr.cham.asia-C96442?style=for-the-badge&logo=google-chrome&logoColor=white)](https://ocr.cham.asia)
-[![Research Whitepaper](https://img.shields.io/badge/Research-Whitepaper-8C533E?style=for-the-badge&logo=googlescholar&logoColor=white)](RESEARCH.md)
+[![Technical Report](https://img.shields.io/badge/Technical-Report-8C533E?style=for-the-badge&logo=googlescholar&logoColor=white)](RESEARCH.md)
 [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-F59E0B?style=for-the-badge)](https://huggingface.co/spaces/phucsd/cham-ocr-studio)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-phucsd%2FCham--OCR-24292e?style=for-the-badge&logo=github)](https://github.com/phucsd/Cham-OCR)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
 An end-to-end deep learning research platform and paleographic transcription system specifically engineered for the digitized preservation, line segmentation, and optical character recognition of historical **Cham manuscripts** (encompassing traditional *Akhar Thrah* of Eastern Cham and *Cam Srak* of Western Cham).
 
-> 📖 **Full Academic Research Publication**: Read our comprehensive research paper at **[RESEARCH.md](RESEARCH.md)** or online at **[https://ocr.cham.asia/research](https://ocr.cham.asia/research)** detailing Brahmic paleography, DBNet line segmentation, SVTR recognition, 150K synthetic data generation, and empirical benchmarks.
+> 📄 **Technical Report & Academic Documentation**: Read our comprehensive technical report at **[RESEARCH.md](RESEARCH.md)** or online at **[https://ocr.cham.asia/research](https://ocr.cham.asia/research)** detailing Brahmic paleography, DBNet line segmentation, SVTR recognition, 150K synthetic data generation, and empirical benchmarks.
 > 
 > 🌟 **Live Interactive Web Demo**: Experience the full-featured transcription and diagnostic studio online at **[https://ocr.cham.asia](https://ocr.cham.asia)** (hosted via [Hugging Face Spaces](https://huggingface.co/spaces/phucsd/cham-ocr-studio)).
 
@@ -37,7 +37,7 @@ An end-to-end deep learning research platform and paleographic transcription sys
    - Receptive tensor dimensions extended to `[3, 48, 480]` to prevent character compression across lengthy multilingual phrases.
    - Dual-head multi-task learning with **Connectionist Temporal Classification (CTC)** sequence alignment and **NRTR Multi-Head Cross-Attention** auxiliary decoding.
 3. **Canonical Unicode & Logical Order Normalization**:
-   - Automatically parses recognized grapheme clusters via `normalize_unicode` to reconstruct standard **Brahmic Logical Order** (`Base Consonant + Medials + Pre-Ra + Dependent Vowels + Final Consonants / Punctuation`), resolving local visual permutation artifacts.
+   - Automatically parses recognized grapheme clusters via `normalize_unicode` to reconstruct standard **Brahmic Logical Order** (`Base Consonant + Medials + Pre-Vowels + Dependent Vowels + Finals / Signs`), resolving local visual permutation artifacts.
 4. **150,000 Textline Synthetic Pipeline**:
    - Font map validation via `fontTools` cmap parsing, eliminating tofu/missing glyph artifacts.
    - Dynamic In-RAM augmentation applying directional motion blur (kernels $7\times 7$ to $13\times 13$, $\theta \in [0^\circ, 180^\circ]$ at $35\%$ probability) on clean disk renders to prevent double-blur degradation.
@@ -56,6 +56,7 @@ Cham-OCR/
 ├── ocr-studio/                         # 1. Interactive Transcription & Review Studio
 │   ├── app.py                          # Backend HTTP server & multi-crop orchestrator
 │   ├── index.html                      # Studio UI (Academic English, Claude Warm Light Theme)
+│   ├── research.html                   # Interactive Academic Technical Report & Whitepaper
 │   ├── start_studio.py                 # Quick-launch utility
 │   ├── data/                           # Dictionaries & exported inference models (v24, v23, v22)
 │   ├── PaddleOCR/                      # Standalone PaddleOCR inference runtime
@@ -73,6 +74,9 @@ Cham-OCR/
 ├── .dockerignore                       # Build exclusion filter
 ├── .gitignore                          # Git tracking filter
 ├── DESIGN.md                           # Formal Design System tokens (linted with designmd)
+├── LICENSE                             # MIT License & Third-Party Font/Corpus attribution
+├── RESEARCH.md                         # Full Academic Technical Report & Paleographic Study
+├── ACADEMIC_AUDIT.md                   # Formal Audit & Ground-Truth Verification Report
 ├── kernel-metadata.json                # Kaggle Kernel Metadata configuration
 └── requirements.txt                    # Unified dependency specification
 ```
@@ -121,17 +125,44 @@ python3 -m paddle.distributed.launch --gpus '0,1' tools/train.py -c configs/rec_
 
 ---
 
-## 📊 Empirical Benchmarks
+## 📊 Empirical Benchmarks & Quantitative Evaluations
 
-Evaluated across a stratified test suite of **490 benchmark scenarios** (comprising 200 deformed textline crops, 200 multi-paragraph A4 folios, and 90 mobile field photography captures):
+All reported metrics are strictly grounded in empirical evaluation logs located in `ocr-studio/data/` and `ocr-benchmark/results/`.
 
-| Metric | Version 22 (Baseline) | Version 23 (Golden Visual) | Version 24 (Noise Resilient) | Version 25 (Unified SOTA) |
-| :--- | :---: | :---: | :---: | :---: |
-| **Clean Textline CER** | 7.82% | 5.14% | 3.62% | **3.18%** |
-| **Motion Blur CER (Handshake)** | 42.10% | 38.74% | 17.80% | **14.20%** |
-| **Inline Multilingual CER** | 34.50% | 27.84% | 13.20% | **10.85%** |
-| **Verse Numeral Accuracy** | 82.4% | 87.1% | 96.8% | **97.4%** |
-| **Paragraph Flow F1 Score** | 64.2% | 70.7% | 89.5% | **91.4%** |
+### 1. Controlled 50-Test Stratified Benchmark (Model V23 vs V24 Validated Baseline)
+
+| Evaluation Category | Test Count | V23 CER (%) | V24 CER (%) | CER Gain | V23 Pass (%) | V24 Pass (%) | V24 Confidence |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Cat 1: Clean Baseline** | 5 | 14.84% | **6.20%** | -8.64% | 20.0% | **80.0%** | 0.958 |
+| **Cat 2: Single-Digit Stanzas** | 5 | 18.42% | **11.71%** | -6.71% | 0.0% | **40.0%** | 0.944 |
+| **Cat 3: Two-Digit Stanzas** | 5 | 17.59% | **7.65%** | -9.94% | 20.0% | **60.0%** | 0.956 |
+| **Cat 4: Low Height / Low-Res** | 5 | 27.65% | **17.96%** | -9.69% | 0.0% | **20.0%** | 0.848 |
+| **Cat 5: Blur Degradation** | 5 | 41.78% | **35.56%** | -6.22% | 0.0% | 0.0% | 0.839 |
+| **Cat 6: Noise & Grain** | 5 | 50.59% | **8.82%** | -41.77% | 0.0% | **80.0%** | 0.944 |
+| **Cat 7: Paper Texture & Contrast** | 5 | 33.33% | **21.33%** | -12.00% | 0.0% | 0.0% | 0.921 |
+| **Cat 8: Tilt & Perspective** | 5 | 22.14% | **0.71%** | -21.43% | 0.0% | **100.0%** | 0.982 |
+| **Cat 9: Stroke Degradation** | 5 | 26.67% | **6.67%** | -20.00% | 0.0% | **80.0%** | 0.928 |
+| **Cat 10: Diacritics & Punctuation** | 5 | 28.72% | **22.19%** | -6.53% | 0.0% | **40.0%** | 0.913 |
+| **Overall Benchmark Average** | **50** | **28.17%** | **13.88%** | **-14.29%** | **4.0%** | **50.0%** | **0.923** |
+
+### 2. Controlled 200-Page Synthetic Document Stress-Test (903 Textlines)
+
+Evaluated end-to-end (Cham-DBNet + Cham-SVTR V24) on 200 synthetic document images across 5 calibrated difficulty tiers generated by `ocr-benchmark/scripts/generate_benchmark_200.py`:
+
+| Difficulty Tier | Stress & Degradation Profile | Samples | GT Lines | Detection Rate | Mean CER | Mean WER |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| **Level 1: Standard** | Line gap 25–35px, rectilinear alignment | 40 | 201 | **100.0%** | 14.43% | 45.50% |
+| **Level 2: Aged Paper** | Yellowed paper texture, mild grain, skew $\le 2^\circ$ | 40 | 189 | **100.0%** | 14.44% | 45.86% |
+| **Level 3: Narrow Gap** | Tight gap 8–14px, subtle waviness 1–2px | 40 | 170 | **100.0%** | 12.77% | 43.52% |
+| **Level 4: Wavy Sinusoid** | Sine wave amp 3–5.5px, perspective tilt 0.03–0.05 | 40 | 177 | **99.44%** | 14.53% | 45.64% |
+| **Level 5: Extreme Overlap** | Gap 2–6px < wave amp 5.5–8px (Breaking Point) | 40 | 166 | **61.45%** | 60.02% | 77.63% |
+| **Overall Suite Summary** | **Total across all 5 tiers** | **200** | **903** | **92.80%** | **23.24%** | **51.63%** |
+
+### 3. Model Classification: V24 Validated Baseline vs V25 Experimental Checkpoint
+
+Logged in `ocr-studio/data/benchmark_v24_vs_v25_results.json`:
+- **Version 24 (Validated Baseline)**: Demonstrates proven convergence with **16.81% CER** and **44.0% pass rate**, serving as our default production model.
+- **Version 25 (Experimental Checkpoint)**: Ingests lexicon expansions and neural weight surgery (`surgery_v25_weights.py`). Current checkpoints yield **51.73% CER** and **10.0% pass rate** due to early alignment shifts, remaining under active training and calibration.
 
 ---
 
@@ -152,5 +183,8 @@ If you utilize Cham-OCR, our synthetic dataset pipeline, or the OCR Studio in yo
 
 ---
 
-## 📄 License
-This project is licensed under the [MIT License](LICENSE).
+## 📄 License & Attribution
+
+- **Software**: Released under the [MIT License](LICENSE). Copyright © 2026 Phuc H. Nguyen.
+- **Fonts**: Bundled Cham typefaces (e.g. *Noto Sans Cham*) are licensed under the SIL Open Font License 1.1 / Apache 2.0 by their respective creators.
+- **Corpus**: Classical literary excerpts and historical inscriptions belong to the shared cultural heritage of the Cham people and are utilized solely for non-commercial linguistic preservation and scientific research.

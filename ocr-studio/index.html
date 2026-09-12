@@ -1255,7 +1255,7 @@
                 <span class="model-picker-label">Model:</span>
                 <select id="model-select" class="model-select-compact" onchange="updateModelBadge()">
                     <optgroup label="Paleographic Cham Models (Custom Fine-Tuned)">
-                        <option value="v24" selected>Version 24 (SOTA — Verse-Numeral & Noise-Resilient SVTR)</option>
+                        <option value="v24" selected>Version 24 (Validated Baseline — Verse-Numeral & Noise-Resilient SVTR)</option>
                         <option value="v23">Version 23 (Golden Baseline — Visual Order SVTR)</option>
                         <option value="v22">Version 22 (Legacy Fallback Baseline)</option>
                     </optgroup>
@@ -1549,10 +1549,10 @@
                         The Cham script belongs to the Brahmic family of Southern Indic scripts (descended historically from the Grantha and Pallava writing systems of ancient Champa). As an <strong>abugida</strong>, its visual and computational representation poses significant challenges:
                     </p>
                     <ul style="padding-left: 20px; margin: 8px 0;">
-                        <li><strong>Inherent Vowels & Consonant Classification</strong>: Consonants possess an inherent /a/ vowel, classified into low-tone (Dom) and high-tone (Dal) series across 41 primary consonants.</li>
-                        <li><strong>Subjoined Medials (Pang Ka-ak)</strong>: Complex medial signs attach beneath or wrap around initial consonants: <code>ꨳ</code> (Ya-medial), <code>ꨴ</code> (Ra-medial), <code>ꨵ</code> (La-medial), and <code>ꨶ</code> (Wa-medial).</li>
-                        <li><strong>Multi-Directional Dependent Vowels</strong>: Vowel diacritics occupy positions above (e.g., <code>ꨪ</code>, <code>ꨫ</code>), below (<code>ꨲ</code>, <code>ꨭ</code>), before (<code>ꨯ</code>, <code>ꨰ</code>), or flanking both sides of the base glyph.</li>
-                        <li><strong>Scriptio Continua</strong>: Classical Cham text lacks spaces between individual words, delimiting syntax only via section marks (<code>꩞</code>, <code>꩝</code>, <code>꩝꩝</code>).</li>
+                        <li><strong>Independent Vowels & Consonants</strong>: The Unicode Cham block (<code>U+AA00</code>–<code>U+AA5F</code>) specifies 6 independent vowels (<code>U+AA00</code>–<code>U+AA05</code>: A, I, U, E, AI, O) and 35 consonants (<code>U+AA06</code>–<code>U+AA28</code>) possessing an inherent vowel (/a/ or /ɔ/), structured into low-tone (Dom) and high-tone (Dal) series.</li>
+                        <li><strong>Subjoined Medials (Pang Ka-ak)</strong>: Four medial signs attach beneath or wrap around initial consonants: <code>ꨳ</code> (U+AA33: Medial Ya), <code>ꨴ</code> (U+AA34: Medial Ra), <code>ꨵ</code> (U+AA35: Medial La), and <code>ꨶ</code> (U+AA36: Medial Wa).</li>
+                        <li><strong>Multi-Directional Dependent Vowels</strong>: Vowel diacritics occupy positions above (<code>ꨪ</code>, <code>ꨫ</code>, <code>ꨬ</code>), below (<code>ꨭ</code> U, <code>ꨲ</code> UE), post-base right (<code>ꨩ</code> AA, <code>ꨱ</code> AU), or pre-base left (<code>ꨯ</code> O, <code>ꨮ</code> OE, <code>ꨰ</code> AI).</li>
+                        <li><strong>Scriptio Continua & Punctuation</strong>: Classical manuscripts predominantly omit whitespace between words, demarcating syntax via Danda (<code>꩝</code> U+AA5D), Double Danda (<code>꩞</code> U+AA5E), or Triple Danda (<code>꩟</code> U+AA5F). Modern printed Cham publications frequently introduce word-level spacing.</li>
                     </ul>
 
                     <div class="academic-h3">🔤 Canonical Unicode & Logical Order Standardization</div>
@@ -1620,7 +1620,7 @@
                         To resolve local model hallucinations where visual rendering order flips adjacent diacritics, the system applies an algorithmic Unicode cluster re-ordering stage (<code>normalize_unicode</code>):
                     </p>
                     <div class="academic-code-box">Input Artifact:  ꨙ (Nda) + ꨯ (Vowel O) + ꨳ (Medial Ya) + ꨮ (Vowel Oe)
-Normalized SOTA: ꨙ (Nda) + ꨳ (Medial Ya) + ꨯ (Vowel O) + ꨮ (Vowel Oe)</div>
+Canonical Brahmic Cluster: ꨙ (Nda) + ꨳ (Medial Ya) + ꨯ (Vowel O) + ꨮ (Vowel Oe)</div>
                 </div>
 
                 <!-- Tab 4: Synthetic Pipeline & Training -->
@@ -1662,7 +1662,7 @@ Normalized SOTA: ꨙ (Nda) + ꨳ (Medial Ya) + ꨯ (Vowel O) + ꨮ (Vowel Oe)</d
                                 <td><strong>Bucket 4: Adversarial Minimal Pairs</strong></td>
                                 <td>20,000</td>
                                 <td>14.3%</td>
-                                <td>Hard pairs: <code>ꨲ</code> (Au) vs <code>ꨶ</code> (O); variable-gap Double Danda <code>꩝꩝</code></td>
+                                <td>Hard pairs: <code>ꨲ</code> (U+AA32 UE) vs <code>ꨶ</code> (U+AA36 WA); variable-gap Double Danda <code>꩝꩝</code></td>
                             </tr>
                         </tbody>
                     </table>
@@ -1680,59 +1680,161 @@ Normalized SOTA: ꨙ (Nda) + ꨳ (Medial Ya) + ꨯ (Vowel O) + ꨮ (Vowel Oe)</d
                 <div class="modal-tab-pane" id="tab-pane-benchmarks">
                     <div class="academic-h3">📊 Empirical Evaluation on Stratified Test Corpus</div>
                     <p>
-                        Performance evaluated across <strong>490 stratified test cases</strong> (200 deformed line crops, 200 multi-paragraph A4 folios, and 90 mobile field photography captures):
+                        Performance quantitatively validated across a <strong>50-test stratified benchmark</strong> and a <strong>controlled 200-page synthetic stress-test suite</strong> (903 textlines):
                     </p>
 
+                    <div class="academic-h3">1. Controlled 50-Test Benchmark (Model V23 vs V24 Validated Baseline)</div>
                     <table class="academic-table">
                         <thead>
                             <tr>
-                                <th>Model Version</th>
-                                <th>Clean CER</th>
-                                <th>Motion Blur CER</th>
-                                <th>Bilingual Mixed CER</th>
-                                <th>Verse Numeral Acc</th>
-                                <th>Paragraph F1</th>
+                                <th>Evaluation Category</th>
+                                <th>V23 CER</th>
+                                <th>V24 CER</th>
+                                <th>Gain</th>
+                                <th>V23 Pass</th>
+                                <th>V24 Pass</th>
+                                <th>V24 Conf</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td><strong>Version 22 (Baseline)</strong></td>
-                                <td>7.82%</td>
-                                <td>42.10%</td>
-                                <td>34.50%</td>
-                                <td>82.4%</td>
-                                <td>64.2%</td>
+                                <td>Cat 1: Clean Baseline</td>
+                                <td>14.84%</td>
+                                <td><strong>6.20%</strong></td>
+                                <td style="color:#2E7D32;">-8.64%</td>
+                                <td>20.0%</td>
+                                <td><strong>80.0%</strong></td>
+                                <td>0.958</td>
                             </tr>
                             <tr>
-                                <td><strong>Version 23 (Golden Visual)</strong></td>
-                                <td>5.14%</td>
-                                <td>38.74%</td>
-                                <td>27.84%</td>
-                                <td>87.1%</td>
-                                <td>70.7%</td>
+                                <td>Cat 2: Single-Digit Stanzas</td>
+                                <td>18.42%</td>
+                                <td><strong>11.71%</strong></td>
+                                <td style="color:#2E7D32;">-6.71%</td>
+                                <td>0.0%</td>
+                                <td><strong>40.0%</strong></td>
+                                <td>0.944</td>
                             </tr>
                             <tr>
-                                <td><strong>Version 24 (Noise Resilient)</strong></td>
-                                <td><strong>3.62%</strong></td>
-                                <td><strong>17.80%</strong></td>
-                                <td><strong>13.20%</strong></td>
-                                <td><strong>96.8%</strong></td>
-                                <td><strong>89.5%</strong></td>
+                                <td>Cat 3: Two-Digit Stanzas</td>
+                                <td>17.59%</td>
+                                <td><strong>7.65%</strong></td>
+                                <td style="color:#2E7D32;">-9.94%</td>
+                                <td>20.0%</td>
+                                <td><strong>60.0%</strong></td>
+                                <td>0.956</td>
                             </tr>
                             <tr>
-                                <td><strong>Version 25 (Unified SOTA)</strong></td>
-                                <td><strong>3.18%</strong></td>
-                                <td><strong>14.20%</strong></td>
-                                <td><strong>10.85%</strong></td>
-                                <td><strong>97.4%</strong></td>
-                                <td><strong>91.4%</strong></td>
+                                <td>Cat 5: Blur Degradation</td>
+                                <td>41.78%</td>
+                                <td><strong>35.56%</strong></td>
+                                <td style="color:#2E7D32;">-6.22%</td>
+                                <td>0.0%</td>
+                                <td>0.0%</td>
+                                <td>0.839</td>
+                            </tr>
+                            <tr>
+                                <td>Cat 6: Noise & Grain</td>
+                                <td>50.59%</td>
+                                <td><strong>8.82%</strong></td>
+                                <td style="color:#2E7D32;">-41.77%</td>
+                                <td>0.0%</td>
+                                <td><strong>80.0%</strong></td>
+                                <td>0.944</td>
+                            </tr>
+                            <tr>
+                                <td>Cat 8: Tilt & Perspective</td>
+                                <td>22.14%</td>
+                                <td><strong>0.71%</strong></td>
+                                <td style="color:#2E7D32;">-21.43%</td>
+                                <td>0.0%</td>
+                                <td><strong>100.0%</strong></td>
+                                <td>0.982</td>
+                            </tr>
+                            <tr style="font-weight: 700; background: var(--bg-surface-elevated);">
+                                <td>Overall Benchmark Average (50 Tests)</td>
+                                <td>28.17%</td>
+                                <td><strong>13.88%</strong></td>
+                                <td style="color:#2E7D32;">-14.29%</td>
+                                <td>4.0%</td>
+                                <td><strong>50.0%</strong></td>
+                                <td>0.923</td>
                             </tr>
                         </tbody>
                     </table>
 
+                    <div class="academic-h3" style="margin-top: 14px;">2. Controlled 200-Page Synthetic Document Stress-Test (903 Textlines)</div>
+                    <table class="academic-table">
+                        <thead>
+                            <tr>
+                                <th>Difficulty Tier</th>
+                                <th>Degradation Profile</th>
+                                <th>Lines</th>
+                                <th>Det Rate</th>
+                                <th>Mean CER</th>
+                                <th>Mean WER</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Level 1: Standard</td>
+                                <td>Rectilinear, standard gap 25–35px</td>
+                                <td>201</td>
+                                <td>100.0%</td>
+                                <td>14.43%</td>
+                                <td>45.50%</td>
+                            </tr>
+                            <tr>
+                                <td>Level 2: Aged Paper</td>
+                                <td>Yellowed paper texture, mild noise</td>
+                                <td>189</td>
+                                <td>100.0%</td>
+                                <td>14.44%</td>
+                                <td>45.86%</td>
+                            </tr>
+                            <tr>
+                                <td>Level 3: Narrow Gap</td>
+                                <td>Tight line spacing 8–14px, waviness</td>
+                                <td>170</td>
+                                <td>100.0%</td>
+                                <td>12.77%</td>
+                                <td>43.52%</td>
+                            </tr>
+                            <tr>
+                                <td>Level 4: Wavy Sinusoid</td>
+                                <td>Sine wave amp 3–5.5px, gap 5–10px</td>
+                                <td>177</td>
+                                <td>99.44%</td>
+                                <td>14.53%</td>
+                                <td>45.64%</td>
+                            </tr>
+                            <tr>
+                                <td>Level 5: Extreme Overlap</td>
+                                <td>Gap 2–6px &lt; wave amp 5.5–8px (Breaking Point)</td>
+                                <td>166</td>
+                                <td>61.45%</td>
+                                <td>60.02%</td>
+                                <td>77.63%</td>
+                            </tr>
+                            <tr style="font-weight: 700; background: var(--bg-surface-elevated);">
+                                <td>Total Suite Summary</td>
+                                <td>200 synthetic document images</td>
+                                <td>903</td>
+                                <td>92.80%</td>
+                                <td>23.24%</td>
+                                <td>51.63%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="academic-h3" style="margin-top: 14px;">3. Model Classification: V24 Validated Baseline vs V25 Experimental Checkpoint</div>
+                    <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 8px;">
+                        Evaluation from <code>ocr-studio/data/benchmark_v24_vs_v25_results.json</code> establishes <strong>Version 24</strong> as the validated production model (CER 16.81%, pass rate 44.0%). <strong>Version 25</strong> incorporates lexicon expansion and weight surgery (CER 51.73%, pass rate 10.0%) and remains an experimental checkpoint under active training and calibration.
+                    </p>
+
                     <div class="academic-h3">🔍 Error Metrics Definition</div>
                     <p style="font-size: 12.5px; color: var(--text-muted);">
-                        Character Error Rate (CER) computed as Levenshtein distance: <code>CER = (Substitutions + Deletions + Insertions) / Total Ground-Truth Characters</code>.
+                        Character Error Rate (CER) computed as normalized Levenshtein edit distance: <code>CER = (Substitutions + Deletions + Insertions) / Total Ground-Truth Characters</code>.
                     </p>
                 </div>
 

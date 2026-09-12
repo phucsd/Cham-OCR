@@ -1,0 +1,30 @@
+MIT License
+
+Copyright (c) 2026 Phuc H. Nguyen
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+### Third-Party Fonts & Cultural Heritage Corpus Notice
+
+1. **Cham Digital Typefaces**:
+   - Digital fonts bundled or utilized within this repository (including *Noto Sans Cham* by Google under the SIL Open Font License 1.1, and academic Cham typefaces) remain the intellectual property of their respective creators and type foundries.
+2. **Historical Texts & Cultural Heritage Material**:
+   - Classical Cham literary texts, verse excerpts, and historical transcriptions utilized in synthetic benchmark generation and training corpora belong to the shared cultural heritage of the Cham people and international humanity. They are curated and processed solely for non-commercial linguistic preservation, digital paleography, and educational research purposes.

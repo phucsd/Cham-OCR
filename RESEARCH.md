@@ -1,9 +1,11 @@
 # End-to-End Deep Learning Pipeline & Paleographic Transcription Workbench for Historical Cham Manuscripts
 
-**Phuc H. Nguyen**  
-*Independent Researcher, Cham Digital Paleography & Cultural Heritage Preservation*  
-*Project Repository: [https://github.com/phucsd/Cham-OCR](https://github.com/phucsd/Cham-OCR)*  
-*Official Web Service: [https://ocr.cham.asia](https://ocr.cham.asia)*  
+> **Technical Report / Research Preprint — Not Peer Reviewed**  
+> **Author**: Phuc H. Nguyen  
+> **Affiliation**: Independent Researcher and Software Developer, Vietnam — Cham-OCR Project  
+> **Repository**: [https://github.com/phucsd/Cham-OCR](https://github.com/phucsd/Cham-OCR)  
+> **Production Web Service**: [https://ocr.cham.asia](https://ocr.cham.asia)  
+> **Interactive Space**: [https://huggingface.co/spaces/phucsd/cham-ocr-studio](https://huggingface.co/spaces/phucsd/cham-ocr-studio)
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-ocr.cham.asia-C96442?style=for-the-badge&logo=google-chrome&logoColor=white)](https://ocr.cham.asia)
 [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-F59E0B?style=for-the-badge)](https://huggingface.co/spaces/phucsd/cham-ocr-studio)
@@ -14,14 +16,14 @@
 
 ## Abstract
 
-Historical manuscripts of the Cham civilization—spanning Eastern Cham (*Akhar Thrah*) and Western Cham (*Cam Srak*)—represent a fragile, millennia-old Brahmic epigraphic and literary heritage in Southeast Asia. Automatic transcription via Optical Character Recognition (OCR) has historically failed due to complex Brahmic orthography, multi-directional dependent vowel diacritics, complete absence of inter-word whitespace (*scriptio continua*), physical degradation of palm-leaf and parchment carriers, and uneven ink bleed. 
+Historical manuscripts of the Cham civilization—spanning Eastern Cham (*Akhar Thrah*) and Western Cham (*Cam Srak*)—represent a fragile, millennia-old Brahmic epigraphic and literary heritage in Southeast Asia. Automatic transcription via Optical Character Recognition (OCR) has historically faced steep barriers due to complex Brahmic abugida orthography, multi-directional dependent vowel diacritics, predominantly continuous script (*scriptio continua*) in classical literary manuscripts, physical carrier degradation, and tight interlinear diacritic collisions.
 
-In this paper, we present an end-to-end, deep-learning-driven paleographic OCR pipeline and diagnostic workbench specifically engineered for historical Cham documents. Our architecture comprises three foundational pillars:
-1. **Hybrid Text Detection & Line Segmentation**: Fuses a fine-tuned **Mobile DBNet (PPLCNetV3)** with an **Indic Valley-Cut Heuristic Engine** that preserves boundary strokes through component difference masking and $0.40 \times \text{median line height}$ vertical safety cushions.
-2. **Neural Recognition Network**: Based on **PP-OCRv4 SVTR-LCNet** with expanded input dimensions $[3, 48, 480]$, joint Connectionist Temporal Classification (CTC) alignment, and post-OCR deterministic Unicode cluster canonicalization.
-3. **High-Fidelity Synthetic Dataset Pipeline**: Synthesizes 150,000 textlines featuring on-the-fly motion blur, TrueType `cmap` tofu filtering, and hard-example adversarial mining for verse numerals ($1$–$99$) and confusing diacritic minimal pairs.
+In this technical report, we describe the design, implementation, and empirical evaluation of an end-to-end deep learning pipeline and diagnostic transcription workbench engineered for Cham documents:
+1. **Hybrid Text Detection & Line Segmentation**: Combines a fine-tuned **Mobile DBNet (PPLCNetV3)** with an **Indic Valley-Cut Heuristic Engine** that preserves interlinear boundary strokes via mathematical set-difference masking (`difference_update`) and a $0.40 \times \text{median line height}$ vertical safety cushion.
+2. **Neural Textline Recognition**: Employs **PP-OCRv4 SVTR-LCNet** with expanded input dimensions $[3, 48, 480]$, joint Connectionist Temporal Classification (CTC) and sequence attention loss, and post-OCR deterministic Unicode cluster normalization (`normalize_unicode`).
+3. **High-Fidelity Synthetic Dataset Pipeline**: Synthesizes 150,000 textlines featuring dynamic in-RAM motion blur, TrueType `cmap` tofu filtering, and hard-example adversarial mining for verse numerals ($1$–$99$) and confusing diacritic minimal pairs.
 
-Rigorous empirical evaluations across 200 real-manuscript stress test pages and 50 stratified test categories demonstrate that our line detector achieves an **F1-score of 99.60%** (Precision 99.63%, Recall 99.57%), while our recognizer slashes Character Error Rate (CER) on severely degraded noisy manuscripts from **50.59% down to 8.82%**, with **97.4%** verse numeral accuracy. Multi-GPU distributed training benchmarks across Kaggle Tesla T4x2, Cloud A100, L40S, and L4 confirm optimal throughput scaling (120.4 samples/s on T4x2 AMP-O1; 255.9 samples/s on A100 at $23.77 total cost for 40 epochs). Finally, we detail our production microservice architecture deployed at `https://ocr.cham.asia`.
+Evaluations across a **controlled 200-page synthetic document stress-test** (903 textlines across 5 difficulty levels) and a **50-test stratified failure-mode benchmark** demonstrate that our line detector achieves an **F1-score of 99.60%** on representative pages with graceful degradation up to Level 4 (99.44% line detection), before encountering an empirical breaking point at Level 5 (61.45% detection) where interlinear wave amplitude exceeds the interlinear gap. For textline recognition, our validated baseline model (**V24**) achieves **13.88% mean CER** across the 50-test suite (reducing noise CER from 50.59% down to 8.82% over V23), while experimental checkpoints (**V25**) remain under active training and evaluation. Multi-GPU distributed scaling benchmarks across Kaggle Tesla T4x2, Cloud A100, L40S, and L4 characterize hardware efficiency for non-profit cultural preservation. Finally, we discuss critical limitations regarding synthetic-to-real domain gaps and provide a production reference deployed at `https://ocr.cham.asia`.
 
 **Keywords**: Optical Character Recognition (OCR), Cham Script, Akhar Thrah, Cam Srak, Brahmic Paleography, Differentiable Binarization (DBNet), SVTR-LCNet, Connectionist Temporal Classification (CTC), Indic Line Segmentation.
 
@@ -32,130 +34,165 @@ Rigorous empirical evaluations across 200 real-manuscript stress test pages and 
   - [1.1 Historical Script Typology](#11-historical-script-typology)
   - [1.2 Abugida Orthography & Multi-Directional Glyphs](#12-abugida-orthography--multi-directional-glyphs)
   - [1.3 Logical Storage Order vs Visual Rendering Order](#13-logical-storage-order-vs-visual-rendering-order)
-- [2. Text Detection & Indic Line Segmentation (Cham-DBNet)](#2-text-detection--indic-line-segmentation-cham-dbnet)
-  - [2.1 The Interlinear Diacritic Collision Problem](#21-the-interlinear-diacritic-collision-problem)
-  - [2.2 Specialized Cham-DBNet: Architecture & Training](#22-specialized-cham-dbnet-architecture--training)
-  - [2.3 Hybrid Indic Valley-Cut Heuristic & Masking Safeguards](#23-hybrid-indic-valley-cut-heuristic--masking-safeguards)
-- [3. Neural Text Recognition Architecture (Cham-SVTR)](#3-neural-text-recognition-architecture-cham-svtr)
-  - [3.1 PP-OCRv4 SVTR-LCNet Backbone](#31-pp-ocrv4-svtr-lcnet-backbone)
-  - [3.2 Joint CTC & Sequence Attention Loss](#32-joint-ctc--sequence-attention-loss)
-  - [3.3 Post-OCR Deterministic Canonical Normalization](#33-post-ocr-deterministic-canonical-normalization)
-- [4. Synthetic Dataset Generation & Hard-Example Mining](#4-synthetic-dataset-generation--hard-example-mining)
-  - [4.1 The Data Scarcity Bottleneck](#41-the-data-scarcity-bottleneck)
-  - [4.2 4-Tier Stratified Synthesis Corpus](#42-4-tier-stratified-synthesis-corpus)
-  - [4.3 TrueType/OpenType cmap Tofu Glyph Safeguards](#43-truetypeopentype-cmap-tofu-glyph-safeguards)
-  - [4.4 On-the-Fly Dynamic Augmentation in RAM](#44-on-the-fly-dynamic-augmentation-in-ram)
-- [5. Empirical Benchmarks & Quantitative Evaluations](#5-empirical-benchmarks--quantitative-evaluations)
-  - [5.1 Controlled 50-Test Stratified Benchmark (V23 vs V24)](#51-controlled-50-test-stratified-benchmark-v23-vs-v24)
-  - [5.2 200 Real-Corpus Stress Test Suite (903 Textlines)](#52-200-real-corpus-stress-test-suite-903-textlines)
-  - [5.3 Multi-GPU Distributed Hardware Scaling & Cost Efficiency](#53-multi-gpu-distributed-hardware-scaling--cost-efficiency)
-- [6. Production Serving & Deployment Infrastructure](#6-production-serving--deployment-infrastructure)
-  - [6.1 Containerized Microservice Architecture](#61-containerized-microservice-architecture)
-  - [6.2 Concurrency Safeguards & NumPy 2.x Forward Compatibility](#62-concurrency-safeguards--numpy-2x-forward-compatibility)
-- [7. Limitations & Future Work](#7-limitations--future-work)
-- [8. BibTeX Citation & Academic References](#8-bibtex-citation--academic-references)
+- [2. Related Work on Cham Document Analysis & Epigraphy](#2-related-work-on-cham-document-analysis--epigraphy)
+  - [2.1 Early Epigraphic & Glyph Recognition](#21-early-epigraphic--glyph-recognition)
+  - [2.2 Deep Learning for Cham Epigraphy & Transliteration](#22-deep-learning-for-cham-epigraphy--transliteration)
+  - [2.3 Manuscript Preservation & Digitization Initiatives](#23-manuscript-preservation--digitization-initiatives)
+  - [2.4 Positioning of the Present System](#24-positioning-of-the-present-system)
+- [3. Text Detection & Indic Line Segmentation (Cham-DBNet)](#3-text-detection--indic-line-segmentation-cham-dbnet)
+  - [3.1 The Interlinear Diacritic Collision Problem](#31-the-interlinear-diacritic-collision-problem)
+  - [3.2 Specialized Cham-DBNet: Architecture & Training](#32-specialized-cham-dbnet-architecture--training)
+  - [3.3 Hybrid Indic Valley-Cut Heuristic & Masking Safeguards](#33-hybrid-indic-valley-cut-heuristic--masking-safeguards)
+- [4. Neural Text Recognition Architecture (Cham-SVTR)](#4-neural-text-recognition-architecture-cham-svtr)
+  - [4.1 PP-OCRv4 SVTR-LCNet Backbone](#41-pp-ocrv4-svtr-lcnet-backbone)
+  - [4.2 Joint CTC & Sequence Attention Loss](#42-joint-ctc--sequence-attention-loss)
+  - [4.3 Post-OCR Deterministic Canonical Normalization](#43-post-ocr-deterministic-canonical-normalization)
+- [5. Synthetic Dataset Generation & Hard-Example Mining](#5-synthetic-dataset-generation--hard-example-mining)
+  - [5.1 The Data Scarcity Bottleneck](#51-the-data-scarcity-bottleneck)
+  - [5.2 4-Tier Stratified Synthesis Corpus](#52-4-tier-stratified-synthesis-corpus)
+  - [5.3 TrueType/OpenType cmap Tofu Glyph Safeguards](#53-truetypeopentype-cmap-tofu-glyph-safeguards)
+  - [5.4 On-the-Fly Dynamic Augmentation in RAM](#54-on-the-fly-dynamic-augmentation-in-ram)
+- [6. Empirical Benchmarks & Quantitative Evaluations](#6-empirical-benchmarks--quantitative-evaluations)
+  - [6.1 Controlled 50-Test Stratified Benchmark (V23 vs V24)](#61-controlled-50-test-stratified-benchmark-v23-vs-v24)
+  - [6.2 Controlled 200-Page Synthetic Document Stress-Test (903 Textlines)](#62-controlled-200-page-synthetic-document-stress-test-903-textlines)
+  - [6.3 Comparative Model Evaluation: V24 Validated Baseline vs V25 Experimental Checkpoint](#63-comparative-model-evaluation-v24-validated-baseline-vs-v25-experimental-checkpoint)
+  - [6.4 Multi-GPU Distributed Hardware Scaling & Cost Efficiency](#64-multi-gpu-distributed-hardware-scaling--cost-efficiency)
+- [7. Production Serving & Deployment Infrastructure](#7-production-serving--deployment-infrastructure)
+  - [7.1 Containerized Microservice Architecture](#71-containerized-microservice-architecture)
+  - [7.2 Concurrency Safeguards & NumPy 2.x Forward Compatibility](#72-concurrency-safeguards--numpy-2x-forward-compatibility)
+- [8. Limitations & Open Research Challenges](#8-limitations--open-research-challenges)
+- [9. BibTeX Citation & Academic References](#9-bibtex-citation--academic-references)
 
 ---
 
 ## 1. Introduction & Paleographic Foundations
 
 ### 1.1 Historical Script Typology
-The Cham language belongs to the Austronesian language family (Malayo-Polynesian branch) and was the primary medium of literature, state administration, and liturgy across the Champa kingdoms along central and southern coastal Vietnam from the 2nd to early 19th centuries. The script family descends from Southern Brahmic Grantha/Pallava scripts, evolving into two distinct extant varieties:
-* **Eastern Cham (*Akhar Thrah*)**: Used predominantly in Ninh Thuận and Bình Thuận provinces (Vietnam). Manuscripts are inscribed on traditional paper bark (*kertas*) or palm leaf with calligraphic reed pens.
-* **Western Cham (*Cam Srak*)**: Used by Cham communities in the Mekong Delta (An Giang, Tây Ninh) and Cambodia. Possesses stylistic glyph variations, specific ligature closures, and localized phonetic loans.
+The Cham language belongs to the Austronesian language family (Malayo-Polynesian branch) and was the primary medium of state administration, sacred liturgy, and classical literature across the Champa polities along coastal central and southern Vietnam from the 2nd to early 19th centuries. The script descends from Southern Brahmic Grantha/Pallava lineages, diverging over centuries into two principal extant traditions:
+* **Eastern Cham (*Akhar Thrah*)**: Inscribed and preserved primarily in Ninh Thuận and Bình Thuận provinces (Vietnam). Historical manuscripts are executed on traditional bark-paper (*kertas*) or palm-leaf folios using calligraphic bamboo pens.
+* **Western Cham (*Cam Srak*)**: Preserved by Cham communities in the Mekong Delta (An Giang, Tây Ninh) and Cambodia. It features distinctive stylistic glyph contours, regional ligature forms, and specific phonetic loan signs.
 
-Due to tropical climate conditions, ink bleed, fungus, and physical fragmentation, remaining manuscript archives (such as the *Akayet Inra Patra*, *Ariya Po Pareng*, and sacred divinatory texts) are at immediate risk of irreversible loss. Prior OCR models trained on Latin or CJK scripts fail completely on Cham due to radical typographical divergences.
+Due to tropical climate conditions, ink bleed, microbiological decay, and physical fragmentation, remaining manuscript archives (such as the *Akayet Inra Patra*, *Ariya Po Pareng*, and divination compendia) face significant preservation risks. Generic OCR engines designed for Latin or CJK scripts fail entirely on Cham documents due to fundamental typographical divergences.
 
 ### 1.2 Abugida Orthography & Multi-Directional Glyphs
-Unlike alphabetic scripts where vowels and consonants occupy sequential linear positions, Cham is a quintessential **abugida**:
-1. **Inherent Vowels**: Every base consonant glyph inherently contains the unwritten vowel /a/ or /ɔ/.
-2. **Consonantal Inventory**: The Unicode standard (Unicode Block `U+AA00`–`U+AA5F`) formalizes 41 consonant glyphs (e.g., `ꨀ` /ka/, `ꨁ` /kha/, `ꨂ` /ga/, `ꨕ` /ta/, `ꨚ` /pa/).
-3. **Subjoined Medials**: Four medial consonants attach underneath or wrap around the base: Medial Ra (`ꨳ` U+AA33), Medial La (`ꨴ` U+AA34), Medial Ya (`ꨵ` U+AA35), and Medial Wa (`ꨶ` U+AA36).
-4. **Multi-Directional Dependent Vowels**: Vowels attach in all four spatial directions:
-   * *Above base*: Vowel Sign I (`ꨪ` U+AA2A), II (`ꨫ` U+AA2B), E (`ꨬ` U+AA2C).
-   * *Below base*: Vowel Sign U (`ꨭ` U+AA2D), Au (`ꨲ` U+AA32).
-   * *Post-base (Right)*: Vowel Sign AA (`ꨩ` U+AA29).
-   * *Pre-base (Left / Visual Ahead)*: Vowel Sign O (`ꨯ` U+AA2F), AI (`ꨮ` U+AA2E).
-5. **Scriptio Continua & Stanza Punctuation**: Manuscripts contain no whitespace between words. Phrases terminate with single Danda (`꩝` U+AA5D), double Danda (`꩞` U+AA5E), or quadruple section marks (`꩟` U+AA5F). Poetic stanzas frequently begin with Cham numerals followed by a section mark (e.g., `꩑꩞` for Verse 1, `꩒꩞` for Verse 2).
+Unlike alphabetic writing systems where letters follow a single horizontal axis, Cham is an **abugida** governed by complex spatial attachment rules:
+1. **Independent Vowels (`U+AA00`–`U+AA05`)**: Six standalone vowel glyphs represent syllable-initial vowel phonemes without a preceding consonant base:
+   - `ꨀ` (U+AA00: `CHAM LETTER A`)
+   - `ꨁ` (U+AA01: `CHAM LETTER I`)
+   - `ꨂ` (U+AA02: `CHAM LETTER U`)
+   - `ꨃ` (U+AA03: `CHAM LETTER E`)
+   - `ꨄ` (U+AA04: `CHAM LETTER AI`)
+   - `ꨅ` (U+AA05: `CHAM LETTER O`)
+2. **Consonantal Inventory (`U+AA06`–`U+AA28`)**: Thirty-five consonant glyphs carry an inherent vowel (/a/ or /ɔ/), beginning with `ꨆ` (U+AA06: `CHAM LETTER KA`) through `ꨨ` (U+AA28: `CHAM LETTER HA`), including aspiration classes, nasals, and liquids.
+3. **Subjoined Medials (`U+AA33`–`U+AA36`)**: Four medial consonants attach underneath or encircle the consonant base:
+   - `ꨳ` (U+AA33: `CHAM CONSONANT SIGN YA` / Medial Ya)
+   - `ꨴ` (U+AA34: `CHAM CONSONANT SIGN RA` / Medial Ra)
+   - `ꨵ` (U+AA35: `CHAM CONSONANT SIGN LA` / Medial La)
+   - `ꨶ` (U+AA36: `CHAM CONSONANT SIGN WA` / Medial Wa)
+4. **Multi-Directional Dependent Vowels (`U+AA29`–`U+AA32`)**: Dependent vowel signs attach across all four geometric quadrants around the base:
+   - *Above base*: Vowel Sign I (`ꨪ` U+AA2A), II (`ꨫ` U+AA2B), EI (`ꨬ` U+AA2C).
+   - *Below base*: Vowel Sign U (`ꨭ` U+AA2D), UE (`ꨲ` U+AA32).
+   - *Post-base (Right)*: Vowel Sign AA (`ꨩ` U+AA29), AU (`ꨱ` U+AA31).
+   - *Pre-base (Left / Visual Ahead)*: Vowel Sign OE (`ꨮ` U+AA2E), O (`ꨯ` U+AA2F), AI (`ꨰ` U+AA30).
+5. **Final Consonants & Signs (`U+AA40`–`U+AA4D`)**: Explicit syllable codas such as Final Ng (`ꩃ` U+AA43), Final M / Anusvara (`ꩌ` U+AA4C), and Final H / Visarga (`ꩍ` U+AA4D).
+6. **Scriptio Continua vs Modern Spacing**: Classical literary manuscripts and verse compendia are composed almost exclusively in *scriptio continua* (without word-boundary spaces). Conversely, modern printed publications and pedagogical textbooks frequently introduce spaces between words or syntactic clauses.
+7. **Punctuation & Verse Markers**: Traditional texts structure discourse via Danda (`꩝` U+AA5D), Double Danda (`꩞` U+AA5E, also serving as stanza/section mark), and Triple Danda (`꩟` U+AA5F). Poetic stanzas frequently begin with Cham numerals followed by a section mark (e.g., `꩑꩞` for Stanza 1, `꩒꩞` for Stanza 2).
 
 ### 1.3 Logical Storage Order vs Visual Rendering Order
-The Unicode Standard mandates **Logical Order** encoding for all Brahmic scripts, meaning the character sequence reflects phonetic utterance:
+In conformance with Unicode Standard Annex #29 and Brahmic script architecture, the Unicode Standard mandates **Logical Order** encoding:
 
-$$\text{Canonical Cluster} = \text{Base} + [\text{Medials}] + [\text{Pre-Ra}] + [\text{Vowel}_{\text{pre}}] + [\text{Vowel}_{\text{post/top/bottom}}] + [\text{Final}]$$
+$$\text{Canonical Cluster} = \text{Base Consonant} + [\text{Medials}] + [\text{Pre-Vowels}] + [\text{Dependent Vowels}] + [\text{Finals / Signs}]$$
 
-However, pre-vowels like `ꨯ` (Vowel Sign O) are written *visually to the left* of the base consonant. When an OCR recognition model decodes a line from left to right, its visual perception naturally encounters `ꨯ` before the consonant (e.g. `ꨕ`). Standard CTC models therefore frequently output the illegal sequence `ꨯꨕ` instead of the canonical Unicode cluster `ꨕꨯ`. 
+However, pre-vowels such as `ꨯ` (Vowel Sign O, U+AA2F) and `ꨮ` (Vowel Sign OE, U+AA2E) are rendered *visually to the left* of the base consonant. When an optical sequence decoder scans an image crop strictly left-to-right, its visual perception encounters the pre-vowel ahead of the consonant glyph (e.g. perceiving `ꨯ` before base `ꨕ`). Standard CTC decoders trained without canonical sequence constraints naturally emit the non-standard sequence `ꨯꨕ` instead of standard `ꨕꨯ`.
 
 > [!WARNING]
-> **Paleographic Pitfall**: Attempting to parse output using naive visual-to-unicode cluster splitters damages valid multi-diacritic compounds (such as subjoined medials `ꨙꨳꨯꨮ`). Our system strictly mandates a deterministic post-OCR **Logical Order Normalizer** (Section 3.3) that re-aligns local visual permutations into standardized Unicode sequences without corrupting consonant-medial clusters.
+> **Paleographic Pitfall**: Attempting to resolve visual ordering with naive string replacements or visual-to-unicode cluster splitters damages multi-glyph compounds containing subjoined medials (e.g., corrupting `ꨙꨳꨯꨮ`). Our architecture mandates a deterministic post-OCR **Logical Order Normalizer** (Section 4.3) that sorts local visual permutations into canonical Unicode sequences without mangling base-medial complexes.
 
 ---
 
-## 2. Text Detection & Indic Line Segmentation (Cham-DBNet)
+## 2. Related Work on Cham Document Analysis & Epigraphy
 
-### 2.1 The Interlinear Diacritic Collision Problem
-Historical Cham manuscripts feature tight interline spacing (often mere 3–10 pixels between lines). Because vowels reach high above the core text band (ascenders up to $+18\text{px}$) and medials plunge below (descenders down to $-22\text{px}$), ascenders of line $n+1$ physically touch or intertwine with descenders of line $n$. Generic text detectors (such as standard DBNet or EAST trained on natural scene Latin text) fail by:
-* Merging adjacent lines into single monolithic boxes.
-* Slicing off upper/lower diacritics, leading to fatal recognition errors.
+### 2.1 Early Epigraphic & Glyph Recognition
+Automated processing of Cham script originated in the analysis of stone inscriptions from ancient Champa sanctuaries (Mỹ Sơn, Po Nagar, Đồng Dương). Nguyen, Nguyen, & Coustaty (2019a) presented preliminary results on recognizing ancient Cham glyphs extracted from stone rubbings and photographs using hand-crafted feature descriptors and shallow neural networks. Due to severe stone weathering, erosion, and irregular surface texture, isolated glyph accuracy was limited.
 
-### 2.2 Specialized Cham-DBNet: Architecture & Training
-We trained a specialized text detector based on **PP-OCRv4 Mobile DBNet** with a lightweight **PPLCNetV3** backbone on an NVIDIA L4 GPU (24GB VRAM) in Lightning AI:
+To mitigate extreme sample scarcity in epigraphic corpora, Nguyen, Nguyen, & Coustaty (2019b) evaluated data augmentation strategies and transfer learning from modern character shapes to ancient stone inscription glyphs, highlighting the profound visual gap between formal epigraphy and paper manuscripts.
+
+### 2.2 Deep Learning for Cham Epigraphy & Transliteration
+In his doctoral dissertation, Nguyen (2023) developed comprehensive document image processing and understanding methodologies dedicated to ancient Cham epigraphy. His work investigated stone inscription image restoration, automatic glyph segmentation under rough stone substrate conditions, and deep convolutional representations for historical Brahmic scripts.
+
+Expanding to linguistic representation, Nguyen et al. (2023) introduced a two-step sequence transformer model for Cham-to-Latin script transliteration presented at the ICDAR / HIP 2023 workshop. Their system demonstrated the efficacy of sequence-to-sequence transformers in mapping recognized Cham text sequences to standardized Latin phonological romanizations (*Cam-Latin*).
+
+### 2.3 Manuscript Preservation & Digitization Initiatives
+Beyond epigraphy on stone, historical Cham manuscripts on paper (*kertas*) and palm-leaf have been documented through preservation missions conducted by the École française d'Extrême-Orient (EFEO) and the collaborative CHAMDOC project (*Archives et manuscrits du Cambodge et du Champa*). These archives preserve hundreds of manuscripts; however, they exist primarily as high-resolution raster photographic scans without character-level or line-level bounding box ground truth suitable for supervised deep learning.
+
+### 2.4 Positioning of the Present System
+Prior research has focused predominantly on either **isolated glyph recognition on stone inscriptions** or **downstream transliteration of cleaned text**. In contrast, the system presented in this report addresses the complete **end-to-end continuous document pipeline** for historical manuscripts:
+* Full-page line detection and segmentation robust to undulating baselines and tight interlinear diacritics.
+* End-to-end continuous textline recognition without manual character pre-segmentation.
+* Deterministic canonical reordering adhering to the official Unicode standard.
+* Production-grade serving designed for cultural heritage researchers and native community access.
+
+---
+
+## 3. Text Detection & Indic Line Segmentation (Cham-DBNet)
+
+### 3.1 The Interlinear Diacritic Collision Problem
+Historical Cham manuscripts frequently exhibit tight interlinear spacing (often 3–12 pixels between lines). Because upper dependent vowels reach high above the core text band (ascenders up to $+18\text{px}$) and subjoined medials plunge below (descenders down to $-22\text{px}$), the ascenders of line $n+1$ routinely touch or intertwine with the descenders of line $n$. Generic text detection models (e.g., standard DBNet trained on natural scene Latin text) suffer two catastrophic failure modes:
+1. **Line Merging**: Grouping adjacent lines into a single bounding box when diacritics touch.
+2. **Diacritic Amputation**: Slicing off upper vowel signs or subjoined medials during rectangular cropping, which causes fatal downstream recognition errors.
+
+### 3.2 Specialized Cham-DBNet: Architecture & Training
+To overcome these limitations, we fine-tuned a specialized text detector based on **PP-OCRv4 Mobile DBNet** featuring a lightweight **PPLCNetV3** backbone:
 
 | Hyperparameter / Component | Specification | Engineering Rationale |
 | :--- | :--- | :--- |
-| Backbone Network | `PPLCNetV3` | Depthwise separable conv + SE channel attention; ultra-fast CPU inference. |
-| Loss Function | Probability Map Loss ($L_s$) + Binary Loss ($L_b$) + Threshold Loss ($L_{th}$) | Differentiable binarization with adaptive threshold learning. |
-| Unclip Ratio ($\alpha$) | `1.8` | Higher than Latin default (1.5) to capture high ascenders and long subjoined medials. |
-| Binary Threshold | `0.30` | Tuned for faint, faded ink on historical paper bark. |
-| Polygon Box Threshold | `0.50` | Filters out stray ink specks and background parchment artifacts. |
-| Training Dataset | 2,000 synthetic & real pages | 50% pages deliberately generated with extreme narrow line spacing (3–10px). |
-| Optimization & Duration | AdamW, CosineAnnealing, 150 Epochs | 4 hours 21 minutes on NVIDIA L4 (Throughput: 20.5 samples/sec). |
+| Backbone Architecture | `PPLCNetV3` | Depthwise separable convolutions + SE attention; low-latency CPU execution. |
+| Loss Function | Probability Loss ($L_s$) + Binary Loss ($L_b$) + Threshold Loss ($L_{th}$) | Differentiable binarization with adaptive threshold learning. |
+| Unclip Ratio ($\alpha$) | `1.8` | Increased from Latin default (1.5) to encompass high ascenders and deep medials. |
+| Binarization Threshold | `0.30` | Calibrated for faint, faded ink on aged manuscript paper. |
+| Polygon Box Threshold | `0.50` | Suppresses stray ink specks, paper grain, and background bleed-through artifacts. |
+| Training Dataset | 2,000 document pages | 50% synthesized with narrow interline spacing (3–10px) to penalize box merging. |
+| Optimizer & Schedule | AdamW, CosineAnnealing, 150 Epochs | Trained on NVIDIA L4 GPU (24GB VRAM). |
 
-**Empirical Training Convergence**: The model achieved its optimal convergence at Epoch 121 with the following metrics:
+**Empirical Convergence**: The detector achieved optimal convergence at Epoch 121, delivering an **F1-score of 99.60%** (Precision: 99.63%, Recall: 99.57%) on held-out validation pages with an inference speed of 35.26 FPS on GPU ($\approx 28.3\text{ms/page}$).
 
-| Evaluation Metric | Score | Status / Verification |
-| :--- | :---: | :--- |
-| Precision ($P$) | **99.63%** | Empirical validation across 200 held-out manuscript pages. |
-| Recall ($R$) | **99.57%** | Zero missing textlines on clean and moderate degradation. |
-| F1-Score / Hmean ($F_1$) | **99.60%** | Harmonic mean: $2 \cdot (P \cdot R) / (P + R)$. |
-| Inference Speed (NVIDIA L4) | **35.26 FPS** | Real-time line extraction on GPU ($\approx 28.3\text{ms/page}$). |
-
-### 2.3 Hybrid Indic Valley-Cut Heuristic & Masking Safeguards
-For CPU execution in low-resource environments (or when DBNet probability maps exhibit ambiguity), we designed an **Indic Valley-Cut Heuristic Engine** operating as a secondary defense layer:
-1. **Connected Component Analysis (CCA)**: Extracts all connected ink components on the binarized page.
-2. **Core Text Band Determination**: Identifies the median baseline and core bounding box of each text line using horizontal projection histograms.
-3. **Boundary Stroke Masking via `difference_update`**: When creating an erasing mask to obscure adjacent interfering lines, components belonging to the current line are strictly excluded using mathematical set difference ($S_{\text{mask}} = S_{\text{adjacent}} \setminus S_{\text{current}}$). This prevents amputating touching diacritics.
-4. **Vertical Padding Safeguards**: The bounding box is padded by exactly $0.40 \times \text{median line height}$ upwards and downwards, bounded at a minimum distance of $2\text{px}$ from neighboring core bands.
-5. **Legacy-First / No-Change Gate**: For clean manuscripts where interline gap $\ge 0.35 \times \text{height}$ and initial confidence $\ge 0.75$, multi-crop splitting is bypassed entirely to guarantee zero regression on pristine folios.
+### 3.3 Hybrid Indic Valley-Cut Heuristic & Masking Safeguards
+For CPU-bound execution in low-resource environments (or when DBNet probability maps exhibit spatial ambiguity), we implemented an **Indic Valley-Cut Heuristic Engine** operating as a secondary verification layer:
+1. **Connected Component Analysis (CCA)**: Identifies all connected ink components on the binarized page.
+2. **Core Text Band Determination**: Locates the median baseline and core bounding rectangle of each line using horizontal projection histograms.
+3. **Boundary Stroke Masking via `difference_update`**: When constructing an erasing mask to occlude adjacent interfering lines, ink components belonging to the target line are strictly excluded using mathematical set difference ($S_{\text{mask}} = S_{\text{adjacent}} \setminus S_{\text{target}}$). This prevents erasing touching diacritics.
+4. **Vertical Padding Safeguards**: Crop boundaries are padded by $0.40 \times \text{median line height}$ above and below, bounded at a minimum safety distance of $2\text{px}$ from adjacent core bands.
+5. **Legacy-First / No-Change Gate**: For clean documents where interline gap $\ge 0.35 \times \text{height}$ and initial recognition confidence $\ge 0.75$, multi-crop splitting is bypassed entirely to guarantee zero regression on pristine pages.
 
 ---
 
-## 3. Neural Text Recognition Architecture (Cham-SVTR)
+## 4. Neural Text Recognition Architecture (Cham-SVTR)
 
-### 3.1 PP-OCRv4 SVTR-LCNet Backbone
-Text recognition is formulated as sequence labeling on textline image crops. We adopted the **SVTR-LCNet** architecture from PP-OCRv4, customized with specialized input and output heads:
-* **Input Tensor Dimensions**: Scaled to $[3, 48, 480]$ (channels $\times$ height $\times$ width). Widening the receptive field to 480 width prevents spatial squashing of Cham verses containing stacked diacritics.
-* **SVTR Blocks (Single Visual Model for Text Recognition)**: Integrates local visual feature extractors with patch-wise self-attention mechanisms to capture long-range contextual relationships across scriptio continua text.
-* **Squeeze-and-Excitation (SE) Channel Attention**: Adaptively recalibrates channel-wise feature responses, emphasizing subtle diacritic strokes over background paper grain.
+### 4.1 PP-OCRv4 SVTR-LCNet Backbone
+Textline recognition is modeled as continuous sequence labeling. We adapted the **SVTR-LCNet** architecture from PP-OCRv4 with custom input and output configurations:
+* **Input Tensor Dimensions**: Expanded to $[3, 48, 480]$ (channels $\times$ height $\times$ width). Widening the horizontal dimension to 480 prevents spatial compression of long Cham verse lines containing stacked diacritics.
+* **SVTR Blocks**: Combines local convolutional feature extractors with patch-wise self-attention mechanisms to capture contextual dependencies across unspaced text.
+* **Squeeze-and-Excitation (SE) Attention**: Adaptively recalibrates channel-wise feature responses, emphasizing subtle diacritic marks over paper texture noise.
 
-### 3.2 Joint CTC & Sequence Attention Loss
-Training employs joint supervision combining Connectionist Temporal Classification (CTC) with an Attention-based sequence decoder:
+### 4.2 Joint CTC & Sequence Attention Loss
+Training utilizes joint multi-task supervision combining Connectionist Temporal Classification (CTC) with an Attention sequence decoder:
 
 $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CTC}} + \lambda \mathcal{L}_{\text{attention}}$$
 
-Where $\mathcal{L}_{\text{CTC}}$ maximizes the log-likelihood of valid alignments over the transcription sequence $\mathbf{y}$:
+Where $\mathcal{L}_{\text{CTC}}$ maximizes the marginal log-likelihood of all valid sequence alignments over transcription $\mathbf{y}$:
 
 $$\mathcal{L}_{\text{CTC}} = -\ln P(\mathbf{y} \mid \mathbf{x}) = -\ln \sum_{\pi \in \mathcal{B}^{-1}(\mathbf{y})} P(\pi \mid \mathbf{x})$$
 
-During runtime inference, greedy CTC decoding is executed for single-thread CPU performance under 25ms per textline.
+During runtime deployment, greedy CTC decoding is executed to ensure single-thread CPU execution under 25ms per textline crop.
 
-### 3.3 Post-OCR Deterministic Canonical Normalization
-To resolve the visual-versus-logical ordering paradox described in Section 1.3, we developed `normalize_unicode`, an algorithmic state machine built upon `parse_unicode_clusters`. It decomposes the raw CTC output string into individual phonological syllables and re-sorts tokens into canonical Brahmic sequence:
+### 4.3 Post-OCR Deterministic Canonical Normalization
+To reconcile visual ordering with standard Unicode Logical Order, our post-processing pipeline executes `normalize_unicode` (built upon `parse_unicode_clusters`). The normalizer parses raw CTC strings into discrete grapheme clusters and reorders tokens into standard Brahmic sequence:
 
 ```python
 def normalize_unicode(text: str) -> str:
     """
     Enforces Canonical Brahmic Logical Order on CTC decoded Cham text:
-    Base Consonant -> Medial (Ra/La/Ya/Wa) -> Pre-Ra -> Pre-Vowels (O/AI) -> Post-Vowels -> Finals
+    Base Consonant -> Medial (Ya/Ra/La/Wa) -> Pre-Vowels (O/OE/AI) -> Post-Vowels -> Finals
     Example: Corrects visual hallucination 'ꨙꨯꨳꨮ' into canonical 'ꨙꨳꨯꨮ'.
     """
     clusters = parse_unicode_clusters(text)
@@ -173,39 +210,39 @@ def normalize_unicode(text: str) -> str:
 
 ---
 
-## 4. Synthetic Dataset Generation & Hard-Example Mining
+## 5. Synthetic Dataset Generation & Hard-Example Mining
 
-### 4.1 The Data Scarcity Bottleneck
-Deep neural OCR networks require hundreds of thousands of diverse labeled textlines. However, only a few hundred physical Cham manuscripts survive globally, with virtually no character-level bounding box ground truth. To overcome this limitation, we engineered an algorithmic synthesizer (`scripts/generate_data.py`) that rendered 150,000 high-fidelity synthetic lines.
+### 5.1 The Data Scarcity Bottleneck
+Deep neural recognition networks require hundreds of thousands of diverse labeled textline instances. However, surviving physical Cham manuscripts lack character-level bounding box ground truth. To overcome this limitation, we engineered a synthetic generation pipeline (`scripts/generate_data.py`) capable of synthesizing 150,000 diverse textline crops from authentic literary corpora.
 
-### 4.2 4-Tier Stratified Synthesis Corpus
+### 5.2 4-Tier Stratified Synthesis Corpus
 
-| Synthesis Tier | Proportion | Composition & Generation Protocol | Target Failure Mode Addressed |
+| Synthesis Tier | Proportion | Target Composition & Protocol | Target Failure Mode Addressed |
 | :--- | :---: | :--- | :--- |
-| Tier 1: Classical Corpus | **50%** | 75,000 lines extracted from classical Cham epics (*Akayet Inra Patra*, *Ariya Po Pareng*). | Learns authentic Cham n-gram phonotactic transitions. |
-| Tier 2: Multilingual Code-Switching | **18%** | 27,000 lines blending Cham with Latin loanwords (Vietnamese, French, Sanskrit). | Supports multi-lingual archival inventories and glosses. |
-| Tier 3: Verse Numerals & Section Marks | **18%** | 27,000 lines with pattern `{cham_digits}{cham_section_mark} {text}` for 1–99. | Eliminates CTC confusion between numerals and letters (`꩔` vs `ꨤ`, `꩕` vs `ꨅ`). |
-| Tier 4: Adversarial Minimal Pairs | **14%** | 21,000 hard-mined lines with confusing diacritics and double dandas. | Prevents collapsing `ꨲ` (U+AA32) into `ꨶ` (U+AA36), and `꩝꩝` into `꩝`. |
+| Tier 1: Classical Literature | **50%** | 75,000 lines extracted from classical Cham epics (*Akayet Inra Patra*, *Ariya Po Pareng*). | Teaches authentic Cham n-gram phonotactic transitions. |
+| Tier 2: Multilingual Code-Switching | **18%** | 27,000 lines blending Cham script with Vietnamese, French, and Latin loanwords. | Supports bilingual historical inventories, dates, and marginalia. |
+| Tier 3: Verse Numerals & Section Marks | **18%** | 27,000 lines generated with pattern `{cham_digits}{cham_section_mark} {text}` (1–99). | Prevents CTC misclassification of digits as letters (`꩔` vs `ꨤ`, `꩕` vs `ꨅ`). |
+| Tier 4: Adversarial Minimal Pairs | **14%** | 21,000 hard-mined lines featuring confusing diacritics and variable punctuation. | Prevents collapsing `ꨲ` (U+AA32) into `ꨶ` (U+AA36), and `꩝꩝` into `꩝`. |
 
-### 4.3 TrueType/OpenType cmap Tofu Glyph Safeguards
-When rendering synthetic text across multiple open-source Cham fonts (*Cham Roman*, *Noto Sans Cham*, *EFEO Cham*), missing Unicode codepoints frequently produce blank rectangles ("tofu" glyphs). If fed to the neural network, the model associates valid Unicode labels with blank boxes, catastrophically destroying recognition accuracy.
+### 5.3 TrueType/OpenType cmap Tofu Glyph Safeguards
+When rendering synthetic text across multiple open-source and academic Cham fonts (*Noto Sans Cham*, *Cham Roman*, *EFEO Cham*), missing Unicode codepoints frequently produce blank boxes ("tofu" glyphs). If ingested during training, the network maps valid character labels to blank rectangles, causing severe recognition degradation.
 
-We implemented pre-render validation using `fontTools.ttLib` to extract the font's `cmap` tables. Every string candidate is validated character-by-character; any character lacking glyph outline data in the active font is rejected prior to rasterization.
+We incorporated pre-render verification via `fontTools.ttLib` to extract each font's `cmap` tables. Candidate strings are inspected character-by-character; any string containing unmapped glyphs for the active font is rejected prior to rasterization.
 
-### 4.4 On-the-Fly Dynamic Augmentation in RAM
-To prevent disk I/O bottlenecks during generation, augmentations are synthesized dynamically in memory:
-* **Point Spread Function (PSF) Motion Blur**: Simulates hand tremors during mobile photography in archival field trips (kernel size 3–9px, angle $[0, 180^\circ]$).
-* **Gaussian & Salt-and-Pepper Noise**: Simulates coarse paper fibers and dust particles.
-* **Non-Linear Illumination Gradients**: Models uneven natural sunlight across warped manuscript pages.
+### 5.4 On-the-Fly Dynamic Augmentation in RAM
+To avoid disk I/O bottlenecks during generation, photometric distortions are synthesized dynamically in memory:
+* **Point Spread Function (PSF) Motion Blur**: Simulates hand tremors during mobile photography in archival field collections (kernel size 3–9px, angle $[0, 180^\circ]$).
+* **Gaussian & Salt-and-Pepper Noise**: Simulates coarse parchment fibers, dust grain, and ink spatter.
+* **Non-Linear Illumination Gradients**: Models uneven ambient lighting across warped manuscript folios.
 
 ---
 
-## 5. Empirical Benchmarks & Quantitative Evaluations
+## 6. Empirical Benchmarks & Quantitative Evaluations
 
-### 5.1 Controlled 50-Test Stratified Benchmark (V23 vs V24)
-We evaluated model evolution across 50 rigorous stratified test cases covering 10 distinct failure modes:
+### 6.1 Controlled 50-Test Stratified Benchmark (V23 vs V24)
+To measure progression across model iterations, we evaluated 50 stratified test cases categorized across 10 distinct failure modes. The results reflect exact empirical data logged in `benchmark_50_tests_results.json` and `benchmark_50_tests_results_v24.json`:
 
-| Evaluation Category | Count | V23 CER (%) | V24 CER (%) | CER Gain | V23 Pass (%) | V24 Pass (%) | V24 Conf |
+| Evaluation Category | Count | V23 CER (%) | V24 CER (%) | CER Gain | V23 Pass (%) | V24 Pass (%) | V24 Confidence |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | Cat 1: Clean Baseline | 5 | 14.84% | **6.20%** | **-8.64%** | 20.0% | **80.0%** | 0.958 |
 | Cat 2: Single-Digit Stanzas | 5 | 18.42% | **11.71%** | **-6.71%** | 0.0% | **40.0%** | 0.944 |
@@ -214,49 +251,59 @@ We evaluated model evolution across 50 rigorous stratified test cases covering 1
 | Cat 5: Blur Degradation | 5 | 41.78% | **35.56%** | **-6.22%** | 0.0% | 0.0% | 0.839 |
 | Cat 6: Noise & Grain | 5 | 50.59% | **8.82%** | **-41.77%** | 0.0% | **80.0%** | 0.944 |
 | Cat 7: Paper Texture & Contrast | 5 | 33.33% | **21.33%** | **-12.00%** | 0.0% | 0.0% | 0.921 |
-| Cat 8: Hard Diacritics | 5 | 21.80% | **14.29%** | **-7.51%** | 20.0% | **40.0%** | 0.932 |
-| Cat 9: Double Danda & Punctuation | 5 | 19.44% | **10.53%** | **-8.91%** | 20.0% | **60.0%** | 0.951 |
-| Cat 10: Code-Switching (Cham+Viet) | 5 | 25.12% | **16.45%** | **-8.67%** | 20.0% | **40.0%** | 0.918 |
-| **Overall Benchmark Average** | **50** | **27.06%** | **15.05%** | **-12.01%** | **12.0%** | **44.0%** | **0.926** |
+| Cat 8: Tilt & Perspective | 5 | 22.14% | **0.71%** | **-21.43%** | 0.0% | **100.0%** | 0.982 |
+| Cat 9: Stroke Degradation | 5 | 26.67% | **6.67%** | **-20.00%** | 0.0% | **80.0%** | 0.928 |
+| Cat 10: Diacritics & Punctuation | 5 | 28.72% | **22.19%** | **-6.53%** | 0.0% | **40.0%** | 0.913 |
+| **Overall Benchmark Average** | **50** | **28.17%** | **13.88%** | **-14.29%** | **4.0%** | **50.0%** | **0.923** |
 
-### 5.2 200 Real-Corpus Stress Test Suite (903 Textlines)
-To establish the operational limits of the complete end-to-end pipeline (Cham-DBNet + Cham-SVTR v24), we evaluated 200 real-manuscript test images comprising 903 textlines across 5 levels of physical and geometric degradation:
+### 6.2 Controlled 200-Page Synthetic Document Stress-Test (903 Textlines)
+To establish the operational limits of the complete end-to-end pipeline (Cham-DBNet + Cham-SVTR V24), we evaluated a **controlled synthetic stress-test suite** of 200 generated page images comprising 903 ground-truth textlines. Generated by `ocr-benchmark/scripts/generate_benchmark_200.py`, this suite renders authentic literary passages under calibrated geometric and photometric stress across 5 difficulty tiers:
 
-| Difficulty Level | Geometric & Physical Degradation Profile | Detection Rate | Mean CER | Mean WER | CPU Latency |
-| :--- | :--- | :---: | :---: | :---: | :---: |
-| Level 1: Clean | Standard line gap 25–35px, rectilinear alignment, white background. | **100.0%** | 14.43% | 45.50% | 1.68s |
-| Level 2: Aged Paper | Yellowed paper bark, mild dust grain, slight skew ($\le 2^\circ$). | **100.0%** | 14.44% | 45.86% | 1.50s |
-| Level 3: Narrow Gap | Tight line gap 8–14px, subtle baseline waviness (1–2px). | **100.0%** | 12.77% | 43.52% | 1.26s |
-| Level 4: Wavy Sinusoid | Sine wave distortion (amplitude 3–5.5px), perspective tilt (0.03–0.05), gap 5–10px. | **99.44%** | 14.53% | 45.64% | 1.24s |
-| Level 5: Extreme Overlap | Gap 2–6px < wave amplitude 5.5–8.0px. Touching boundary strokes. | **61.45%** | 60.02% | 77.63% | 1.18s |
-| **Overall Suite Average** | **Total: 200 images, 903 lines across all 5 levels.** | **92.80%** | **23.24%** | **51.63%** | **1.33s/page** |
+| Difficulty Tier | Stress & Degradation Profile | Samples | GT Lines | Detection Rate | Mean CER | Mean WER | CPU Latency |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| Level 1: Standard | Line gap 25–35px, rectilinear alignment, white background. | 40 | 201 | **100.0%** | 14.43% | 45.50% | 1.68s |
+| Level 2: Aged Paper | Yellowed paper texture, mild dust grain, slight skew ($\le 2^\circ$). | 40 | 189 | **100.0%** | 14.44% | 45.86% | 1.50s |
+| Level 3: Narrow Gap | Tight interline gap 8–14px, micro-waviness (1–2px). | 40 | 170 | **100.0%** | 12.77% | 43.52% | 1.26s |
+| Level 4: Wavy Sinusoid | Sine wave warping (amp 3–5.5px), perspective tilt (0.03–0.05), gap 5–10px. | 40 | 177 | **99.44%** | 14.53% | 45.64% | 1.24s |
+| Level 5: Extreme Overlap | Gap 2–6px < wave amplitude 5.5–8.0px. Intersecting boundary strokes. | 40 | 166 | **61.45%** | 60.02% | 77.63% | 0.99s |
+| **Overall Suite Summary** | **200 synthetic document images, 903 textlines total.** | **200** | **903** | **92.80%** | **23.24%** | **51.63%** | **1.33s/page** |
 
 > [!NOTE]
-> **The Empirical Breaking Point**: Level 3 and Level 4 results demonstrate that Cham-DBNet handles narrow lines (8–14px) and moderate waviness with near-perfect reliability (99.44%–100% detection rate). The catastrophic drop at Level 5 (61.45%) marks the exact **mathematical breaking point** where interlinear wave amplitude exceeds the interlinear gap ($\text{Amplitude} > \text{Gap}$), causing strokes from adjacent lines to intersect on the binarized plane.
+> **The Empirical Breaking Point**: Results from Level 3 and Level 4 establish that Cham-DBNet handles narrow line spacing (8–14px) and moderate wavy distortions with near-perfect reliability (99.44%–100% detection rate). The sharp decline at Level 5 (61.45% detection rate, 60.02% CER) marks the mathematical breaking point where sinusoidal distortion amplitude exceeds the interlinear gap ($\text{Amplitude} > \text{Gap}$), causing strokes from adjacent lines to physically intersect on the binarized image plane.
 
-### 5.3 Multi-GPU Distributed Hardware Scaling & Cost Efficiency
-Training deep OCR backbones over 10,000,000 synthetic sample passes requires empirical hardware optimization. We executed controlled distributed benchmarks across four accelerator configurations:
+### 6.3 Comparative Model Evaluation: V24 Validated Baseline vs V25 Experimental Checkpoint
+To clarify model designations within the repository, we conducted an empirical comparison between the production model (**V24**) and the experimental checkpoint (**V25**), logged in `ocr-studio/data/benchmark_v24_vs_v25_results.json`:
 
-| Accelerator Environment | Batch Size | Throughput (IPS) | GPU Util | VRAM Usage | Full 40 Epochs | Est. Cost ($) | Cost Efficiency (IPS/$) |
+| Model Designation | Status | Overall 50-Test CER | Pass Rate (Dist $\le 1$) | Cat 1 Clean CER | Cat 6 Noise CER | Cat 8 Tilt CER |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| **Version 24** | **Validated Baseline (Production)** | **16.81%** | **44.0%** | **5.85%** | **8.82%** | **0.00%** |
+| **Version 25** | **Experimental Checkpoint (In Progress)** | 51.73% | 10.0% | 31.59% | 25.88% | 3.57% |
+
+**Scientific Interpretation**: Version 24 serves as our validated baseline. While Version 25 incorporates lexicon expansion and weight surgery (`surgery_v25_weights.py`) to accommodate newly added punctuation and numeral tokens, early checkpoints exhibit alignment instability across extended lexicons. Consequently, **Version 24 remains the production standard**, while Version 25 remains an active research checkpoint undergoing further training.
+
+### 6.4 Multi-GPU Distributed Hardware Scaling & Cost Efficiency
+To support reproducible training across constrained computational budgets, we conducted multi-GPU benchmarks across four hardware environments:
+
+| Accelerator Hardware | Batch Size | Throughput (IPS) | GPU Util | VRAM Usage | Full 40 Epochs | Cost ($) | Cost Efficiency (IPS/$) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **NVIDIA A100 (80GB SXM4)** | 192 | **255.9** | 95% | 88.5% | **10.85 hrs** | **$23.77** | **116.8** (Best P/P) |
-| **NVIDIA L40S (48GB Ada)** | 128 | **209.9** | 94% | 52.5% | 13.23 hrs | $28.32 | **98.1** |
+| **NVIDIA A100 (80GB SXM4)** | 192 | **255.9** | 95% | 88.5% | **10.85 hrs** | **$23.77** | **116.8** |
+| **NVIDIA L40S (48GB Ada)** | 128 | **209.9** | 94% | 52.5% | 13.23 hrs | $28.32 | 98.1 |
 | **Kaggle Dual Tesla T4x2 (DDP)** | 144 (72x2) | **120.4** | 92% | 83.8% | 23.07 hrs | **Free Quota** | **Infinite** |
 | **NVIDIA L4 (24GB)** | 96 | **74.3** | 98% | 79.2% | 37.38 hrs | $29.53 | 94.0 |
 
 ---
 
-## 6. Production Serving & Deployment Infrastructure
+## 7. Production Serving & Deployment Infrastructure
 
-### 6.1 Containerized Microservice Architecture
-The production Cham OCR Studio is packaged as a lightweight, multi-stage Docker container deployed on **Hugging Face Spaces** (Space ID: `phucsd/cham-ocr-studio`) and routed through the custom apex domain:
+### 7.1 Containerized Microservice Architecture
+The production transcription environment is packaged as a multi-stage Docker container deployed on **Hugging Face Spaces** (`phucsd/cham-ocr-studio`) and routed through a Cloudflare edge proxy to the custom apex domain:
 
-$$\text{Production Endpoint: } \mathbf{\text{https://ocr.cham.asia}}$$
+$$\text{Production URL: } \mathbf{\text{https://ocr.cham.asia}}$$
 
-### 6.2 Concurrency Safeguards & NumPy 2.x Forward Compatibility
-To guarantee deterministic latency under free-tier CPU constraints (2 vCPUs, 16GB RAM):
-* **Single-Thread Concurrency Locks**: OpenMP and MKL thread pools are constrained via `OMP_NUM_THREADS=1` and `CPU_THREADS=1`. This eliminates OS context-switching overhead and CPU thrashing during concurrent web requests.
-* **NumPy 2.x Compatibility Layer**: Python 3.12+ environments encounter breaking attribute removals in NumPy 2.x (such as deprecated `np.sctypes`, `np.bool`, and `np.typeDict` required by legacy PaddleOCR and `imgaug` modules). We injected an automatic runtime patch at module initialization:
+### 7.2 Concurrency Safeguards & NumPy 2.x Forward Compatibility
+To ensure stability on free-tier container instances (2 vCPUs, 16GB RAM):
+* **Thread Contention Elimination**: OpenMP and MKL thread pools are constrained via `OMP_NUM_THREADS=1` and `CPU_THREADS=1` to prevent CPU context switching overhead during concurrent HTTP requests.
+* **NumPy 2.x Monkeypatching**: Python 3.12+ environments encounter breaking removals in NumPy 2.x (`np.sctypes`, `np.bool`, `np.typeDict` utilized by legacy PaddleOCR and `imgaug` modules). An automated compatibility shim is executed at module startup:
 
 ```python
 import numpy as np
@@ -274,17 +321,18 @@ if not hasattr(np, 'typeDict'): np.typeDict = {}
 
 ---
 
-## 7. Limitations & Future Work
+## 8. Limitations & Open Research Challenges
 
-Despite significant advancements over general-purpose OCR systems, our architecture exhibits specific operational constraints:
-* **Level 5 Overlapping Lines**: Interlocking diacritics spanning lines with interlinear gaps under 3px remain challenging for 1D horizontal projection. Future research will explore 2D active contour snakes and Bezier curve regression.
-* **Severe Palm-Leaf Mold & Wormholes**: Severe biological carrier loss that destroys over 40% of character ink cannot be reliably hallucinated by CTC decoders alone; integrating masked language modeling (MLM) priors from historical Cham corpora is an active avenue of research.
+While our pipeline demonstrates substantial gains on synthetic and semi-controlled documents, rigorous academic honesty requires acknowledging the following boundaries:
+
+1. **Synthetic-to-Real Domain Gap**: The recognizer is trained predominantly on synthetic textlines rendered with available digital TrueType fonts (*Noto Sans Cham*, *Cham Roman*, *EFEO Cham*). Historical manuscripts feature idiosyncratic scribal hands, variable ink viscosity, and non-standard ligature variations that may exhibit lower recognition confidence in the field.
+2. **Absence of Large-Scale Real Manuscript Ground Truth**: Due to the acute scarcity of digitized historical Cham archives with line-level annotations, current benchmarks rely on controlled synthetic stress-tests and curated test slices. Establishing an open, expert-verified historical palm-leaf manuscript benchmark represents an urgent necessity requiring future collaborative scholarship with native Cham elders and linguists.
+3. **Severe Biological Degradation & Epigraphy**: Inscription stone rubbings and severely mold-damaged palm leaves (where over 40% of character ink has flaked away) remain beyond the capabilities of pure vision-based CTC sequence models. Integrating masked language models (MLMs) trained on historical Cham corpora is an active subject of future study.
+4. **Extreme Interlinear Overlap (Level 5)**: When severe paper wrinkling causes interlinear wave amplitude to exceed line spacing ($\text{Amplitude} > \text{Gap}$), 1D projection and horizontal bounding boxes collapse, indicating the need for 2D polygonal baseline tracking models in future iterations.
 
 ---
 
-## 8. BibTeX Citation & Academic References
-
-If you utilize this work, the synthetic generation pipeline, or the OCR Studio in your research, please cite:
+## 9. BibTeX Citation & Academic References
 
 ```bibtex
 @software{cham_ocr_studio,
@@ -297,12 +345,17 @@ If you utilize this work, the synthetic generation pipeline, or the OCR Studio i
 }
 ```
 
-### Foundational References
+### Academic References
+
 1. Everson, M. (2006). *Proposal for encoding the Cham script in the UCS (ISO/IEC JTC1/SC2/WG2 N3120)*. Unicode Consortium. [https://www.unicode.org/L2/L2006/06257-n3120-cham.pdf](https://www.unicode.org/L2/L2006/06257-n3120-cham.pdf)
-2. Liao, M., Wan, Z., Yao, C., Chen, K., & Bai, X. (2020). *Real-time Scene Text Detection with Differentiable Binarization*. Proceedings of the AAAI Conference on Artificial Intelligence, 34(07), 11474-11481.
-3. Du, Y., Chen, Z., Jia, C., Yin, X., Zheng, T., Li, C., ... & Yu, K. (2023). *PP-OCRv4: A Compact, Accurate and Practical Ultra-Lightweight OCR System*. arXiv preprint arXiv:2309.09941.
-4. Du, Y., Chen, Z., Jia, C., Yin, X., Zheng, T., Li, C., ... & Yu, K. (2022). *SVTR: Scene Text Recognition with a Single Visual Model*. arXiv preprint arXiv:2205.00159.
-5. Graves, A., Fernández, S., Gomez, F., & Schmidhuber, J. (2006). *Connectionist temporal classification: labelling unsegmented sequence data with recurrent neural networks*. Proceedings of the 23rd International Conference on Machine Learning (ICML '06), 369–376.
+2. Nguyen, T.-N., Nguyen, H.-Q., & Coustaty, M. (2019a). *Preliminary Results on Ancient Cham Glyph Recognition from Cham Inscription Images*. In 2019 6th International Conference on Advanced Informatics: Concepts, Theory and Applications (ICAICTA), IEEE, pp. 1–6.
+3. Nguyen, H.-Q., Nguyen, T.-N., & Coustaty, M. (2019b). *Improving Ancient Cham Glyph Recognition Using Data Augmentation and Transfer Learning*. In 2019 11th International Conference on Knowledge and Systems Engineering (KSE), IEEE, pp. 1–6.
+4. Nguyen, T.-N. (2023). *Contributions to Document Image Processing and Understanding: Application to Ancient Cham Epigraphy*. Ph.D. Dissertation, Université de La Rochelle, France.
+5. Nguyen, T.-N., Nguyen, H.-Q., Luong, H.-H., & Coustaty, M. (2023). *A Two-Step Sequence Transformer Based Method for Cham to Latin Script Transliteration*. In International Conference on Document Analysis and Recognition (ICDAR / HIP Workshop 2023), Springer, Cham, pp. 156–170.
+6. Liao, M., Wan, Z., Yao, C., Chen, K., & Bai, X. (2020). *Real-time Scene Text Detection with Differentiable Binarization*. Proceedings of the AAAI Conference on Artificial Intelligence, 34(07), 11474–11481.
+7. Du, Y., Chen, Z., Jia, C., Yin, X., Zheng, T., Li, C., ... & Yu, K. (2023). *PP-OCRv4: A Compact, Accurate and Practical Ultra-Lightweight OCR System*. arXiv preprint arXiv:2309.09941.
+8. Du, Y., Chen, Z., Jia, C., Yin, X., Zheng, T., Li, C., ... & Yu, K. (2022). *SVTR: Scene Text Recognition with a Single Visual Model*. arXiv preprint arXiv:2205.00159.
+9. Graves, A., Fernández, S., Gomez, F., & Schmidhuber, J. (2006). *Connectionist temporal classification: labelling unsegmented sequence data with recurrent neural networks*. Proceedings of the 23rd International Conference on Machine Learning (ICML '06), 369–376.
 
 ---
 © 2026 Phuc H. Nguyen. Released under the MIT License.
