@@ -1551,7 +1551,8 @@
                     <ul style="padding-left: 20px; margin: 8px 0;">
                         <li><strong>Independent Vowels & Consonants</strong>: The Unicode Cham block (<code>U+AA00</code>–<code>U+AA5F</code>) specifies 6 independent vowels (<code>U+AA00</code>–<code>U+AA05</code>: A, I, U, E, AI, O) and 35 consonants (<code>U+AA06</code>–<code>U+AA28</code>) possessing an inherent vowel (/a/ or /ɔ/), structured into low-tone (Dom) and high-tone (Dal) series.</li>
                         <li><strong>Subjoined Medials (Pang Ka-ak)</strong>: Four medial signs attach beneath or wrap around initial consonants: <code>ꨳ</code> (U+AA33: Medial Ya), <code>ꨴ</code> (U+AA34: Medial Ra), <code>ꨵ</code> (U+AA35: Medial La), and <code>ꨶ</code> (U+AA36: Medial Wa).</li>
-                        <li><strong>Multi-Directional Dependent Vowels</strong>: Vowel diacritics occupy positions above (<code>ꨪ</code>, <code>ꨫ</code>, <code>ꨬ</code>), below (<code>ꨭ</code> U, <code>ꨲ</code> UE), post-base right (<code>ꨩ</code> AA, <code>ꨱ</code> AU), or pre-base left (<code>ꨯ</code> O, <code>ꨮ</code> OE, <code>ꨰ</code> AI).</li>
+                        <li><strong>Multi-Directional Dependent Vowels</strong>: Vowel diacritics occupy positions above (<code>ꨪ</code>, <code>ꨫ</code>, <code>ꨬ</code>), below (<code>ꨭ</code> U, <code>ꨲ</code> UE), post-base right (<code>ꨩ</code> AA, <code>ꨮ</code> OE, <code>ꨱ</code> AU), or pre-base left (<code>ꨯ</code> O, <code>ꨰ</code> AI).</li>
+                        <li><strong>Final Consonants & Signs ([<code>U+AA40</code>–<code>U+AA4D</code>, <code>U+AA25</code>])</strong>: Explicit codas with extended terminal strokes, combining coda marks (<code>ꩃ</code> Final Ng, <code>ꩌ</code> Final M, <code>ꩍ</code> Final H), and base consonant <code>ꨥ</code> (U+AA25: VA) serving as syllable-final consonant per Unicode Table 16-16.</li>
                         <li><strong>Scriptio Continua & Punctuation</strong>: Classical manuscripts predominantly omit whitespace between words, demarcating syntax via Danda (<code>꩝</code> U+AA5D), Double Danda (<code>꩞</code> U+AA5E), or Triple Danda (<code>꩟</code> U+AA5F). Modern printed Cham publications frequently introduce word-level spacing.</li>
                     </ul>
 
@@ -1559,7 +1560,7 @@
                     <p>
                         Encoded in Unicode Standard 5.1 within the range <code>U+AA00</code>–<code>U+AA5F</code>, Cham text processing requires strict differentiation between visual rendering order and <strong>Brahmic Logical Order</strong>. The canonical storage sequence enforced in Cham OCR Studio is:
                     </p>
-                    <div class="academic-code-box">Base Consonant + Medials (Ya/Ra/La/Wa) + Pre-Ra + Dependent Vowels + Final Consonants / Punctuation</div>
+                    <div class="academic-code-box">Base Consonant + Medials (Ya/Ra/La/Wa) + Pre-Vowels (O/AI) + Dependent Vowels + Vowel Lengthener AA + Final Consonants / Signs (incl. Final VA)</div>
                 </div>
 
                 <!-- Tab 2: Line Segmentation & DBNet -->

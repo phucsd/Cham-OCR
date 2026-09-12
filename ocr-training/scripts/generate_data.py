@@ -30,7 +30,9 @@ MEDIAL_SIGNS = set('ꨴꨵꨳꨶ')
 MEDIAL_RA_LA = set('ꨴꨵ')
 MEDIAL_YA_WA = set('ꨳꨶ')
 VOWEL_DIACRITIC_SIGNS = set('ꨩꨪꨫꨬꨭꨮꨯꨰꨱꨲ')
-FINAL_SIGNS = set('ꩀꩃꩌꩍꩆꩉꩊꩂꩅ')
+FINAL_SIGNS = set(chr(c) for c in range(0xAA40, 0xAA4E))
+# Per Unicode Standard Chapter 16 Table 16-16, U+AA25 (ꨥ) also functions as syllable-final consonant
+FINAL_CONSONANTS_OR_VA = FINAL_SIGNS | {'ꨥ'}
 CHAM_DIGITS = set('꩐꩑꩒꩓꩔꩕꩖꩗꩘꩙')
 CHAM_PUNCT_SIGNS = set('꩜꩝꩞꩟')
 PUNCT_SIGNS = set('꩜꩝꩞꩟.,;:!?')
@@ -69,7 +71,12 @@ def has_pre(tok):
     return any(ch in PRE_SIGNS for ch in tok)
 
 def has_final(tok):
-    return any(ch in FINAL_SIGNS for ch in tok)
+    if any(ch in FINAL_SIGNS for ch in tok):
+        return True
+    # Per Unicode Standard Chapter 16 Table 16-16, U+AA25 (ꨥ) functions as syllable-final consonant
+    if len(tok) > 1 and tok[-1] == 'ꨥ':
+        return True
+    return False
 
 def shape_key(tok):
     """Phân loại hình thái của token để lập nhóm drill thích hợp"""
@@ -83,7 +90,19 @@ def shape_key(tok):
 
 def token_distance_key(tok):
     """Trả về signature rút gọn của chữ để tìm từ đồng dạng (minimal pairs)"""
-    return ''.join('F' if ch in FINAL_SIGNS else 'P' if ch in PRE_SIGNS else 'M' if ch in MEDIAL_SIGNS else 'V' if ch in VOWEL_DIACRITIC_SIGNS else 'B' for ch in tok)
+    sig = []
+    for idx, ch in enumerate(tok):
+        if ch in FINAL_SIGNS or (idx > 0 and ch == 'ꨥ' and idx == len(tok) - 1):
+            sig.append('F')
+        elif ch in PRE_SIGNS:
+            sig.append('P')
+        elif ch in MEDIAL_SIGNS:
+            sig.append('M')
+        elif ch in VOWEL_DIACRITIC_SIGNS:
+            sig.append('V')
+        else:
+            sig.append('B')
+    return ''.join(sig)
 
 def parse_unicode_clusters(text):
     clusters = []
@@ -95,6 +114,10 @@ def parse_unicode_clusters(text):
             cluster = [char]
             i += 1
             while i < n and (text[i] in diacritics or text[i] in pre_signs):
+                cluster.append(text[i])
+                i += 1
+            # Per Unicode Table 16-16: U+AA25 (ꨥ) functions as syllable-final consonant
+            if i < n and text[i] == 'ꨥ' and len(cluster) > 1 and (i + 1 == n or text[i+1] in ' \t\n\r' or text[i+1] in PUNCT_SIGNS or text[i+1] in consonants):
                 cluster.append(text[i])
                 i += 1
             clusters.append(cluster)
@@ -118,6 +141,10 @@ def parse_visual_clusters(text):
             while i < n and text[i] in diacritics and text[i] not in pre_signs:
                 cluster.append(text[i])
                 i += 1
+            # Check for Table 16-16 final VA
+            if i < n and text[i] == 'ꨥ' and (i + 1 == n or text[i+1] in ' \t\n\r' or text[i+1] in PUNCT_SIGNS or text[i+1] in consonants):
+                cluster.append(text[i])
+                i += 1
             clusters.append(cluster)
         else:
             clusters.append([text[i]])
@@ -138,16 +165,15 @@ def visual_to_unicode_cluster(cluster):
     if not has_consonant:
         return cluster
         
-    base_consonant = [c for c in cluster if c in consonants]
-    
-    # Reconstruct according to official Unicode Cham canonical syllabic order:
+    # Reconstruct according to official Unicode Cham canonical syllabic order (Table 16-16):
     # 1. Base consonant
     # 2. Medial RA / LA (ꨴ U+AA34, ꨵ U+AA35)
     # 3. Medial YA / WA (ꨳ U+AA33, ꨶ U+AA36)
     # 4. Pre-base vowels (ꨯ U+AA2F, ꨰ U+AA30)
     # 5. Other dependent vowels (ꨪ, ꨫ, ꨬ, ꨭ, ꨮ, ꨱ, ꨲ)
     # 6. Vowel lengthener AA (ꨩ U+AA29)
-    # 7. Final consonants & signs (ꩀ-ꩍ, ꩌ, ꩃ)
+    # 7. Final consonants & signs (U+AA40-U+AA4D, and final VA U+AA25 per Table 16-16)
+    base_consonant = []
     medials_ra_la = []
     medials_ya_wa = []
     pre_vowels = []
@@ -158,7 +184,12 @@ def visual_to_unicode_cluster(cluster):
     
     for c in cluster:
         if c in consonants:
-            continue
+            if not base_consonant:
+                base_consonant.append(c)
+            elif c == 'ꨥ':
+                finals.append(c)
+            else:
+                base_consonant.append(c)
         elif c in ('ꨴ', 'ꨵ'):
             medials_ra_la.append(c)
         elif c in ('ꨳ', 'ꨶ'):

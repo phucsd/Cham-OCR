@@ -24,7 +24,7 @@ In accordance with strict academic integrity standards, this audit report provid
 7. **Document Classification**: Re-labeling whitepapers from "Research Publication" to "Technical Report / Research Preprint — Not Peer Reviewed", with single-author attribution to `Phuc H. Nguyen`.
 8. **Licensing & Intellectual Property**: Maintaining a clean MIT License for original source code, with a dedicated `DATA_PROVENANCE.md` governing third-party fonts (SIL Open Font License) and cultural heritage text corpora.
 9. **Academic Bibliography Accuracy**: Corrected 4 heavily misattributed citations with verified authors, conference/journal venues, page ranges, and DOIs (including IEEE MAPR 2019, Springer ICIAP 2019 Workshops LNCS 11808, La Rochelle PhD Dissertation 2023, ACM HIP@ICDAR 2023, and Springer *Multimedia Tools and Applications* 2025; along with ANR CHAMDOC project description).
-10. **Manuscript Preservation Volume**: Corrected manuscript preservation statements to recognize large digitized archives (such as Kyoto Univ CSEAS / EFEO preserving 977 digitized manuscripts, >57,800 pages, and ~3,000 community manuscripts), clarifying that the true scarcity is in expert-annotated line-level OCR ground truth.
+10. **Manuscript Preservation Volume**: Corrected manuscript preservation statements to accurately attribute large digitized archives (specifically the Southeast Asia Digital Library / SEADL at Northern Illinois University preserving 977 digitized manuscripts, >57,800 pages, alongside ~3,000 community manuscripts), clarifying that the true scarcity is in expert-annotated line-level OCR ground truth.
 11. **Detector Parameter & Metric Alignment**: Aligned DBNet hyperparameters (`thresh: 0.25`, `box_thresh: 0.50`, `unclip_ratio: 1.8`, `Adam` optimizer) with active YAML configurations (`det_cham_h100.yml`) and replaced unverified standalone F1 claims with verified end-to-end evaluation metrics from `evaluation_report.json` (Levels 1–3: 100%, Level 4: 99.44%, Level 5: 61.45%).
 12. **Unicode Canonical Implementation & Bug Fixes**: Refactored `generate_data.py`, `validate_unicode_source_labels.py`, and `paddleocr_cham_finetune.ipynb`: removed base consonants `ꨣꨤꨥꨦꨧꨨ` and medials `ꨴꨵ` from `VOWEL_DIACRITIC_SIGNS`; restricted `PRE_SIGNS` to left-side vowels `ꨯꨰ`; included all medials `ꨴꨵꨳꨶ` in `MEDIAL_SIGNS`; and enforced the canonical sequence in `visual_to_unicode_cluster` (`Base -> Medials RA/LA -> Medials YA/WA -> Pre-Vowels -> Dependent Vowels -> AA Lengthener -> Finals`).
 13. **Data Provenance**: Created `DATA_PROVENANCE.md` detailing sources, curation, and licensing for `cham_text.txt`, digital typefaces (*Noto Sans Cham*, *EFEO Cham*), and synthetic datasets.
@@ -44,6 +44,7 @@ An audit of earlier documentation revealed several critical errors regarding Uni
 | `U+AA04` | `ꨄ` | Consonant | `CHAM LETTER AI` (**Independent Vowel**) | Rectified across all docs |
 | `U+AA05` | `ꨅ` | Consonant | `CHAM LETTER O` (**Independent Vowel**) | Rectified across all docs |
 | `U+AA06`–`U+AA28` | `ꨆ`–`ꨨ` | Grouped with independent vowels | **Consonantal Inventory** (35 consonants: `KA` to `HA`) | Grouping formalized |
+| `U+AA25` | `ꨥ` | Treated solely as base consonant | `CHAM LETTER VA` (**Dual Initial / Syllable-Final Consonant per Table 16-16**) | Implemented & verified |
 | `U+AA31` | `ꨱ` | Omitted or misattributed | `CHAM VOWEL SIGN AU` (Dependent Vowel) | Verified in dictionary & generator |
 | `U+AA32` | `ꨲ` | Mislabeled as Vowel Sign "Au" | `CHAM VOWEL SIGN UE` (Dependent Vowel) | Mislabeled "Au" fixed to "Ue" |
 | `U+AA33` | `ꨳ` | Mislabeled as "Medial Ra" | `CHAM CONSONANT SIGN YA` (**Medial Ya**) | Inverted sign fixed to Ya |
@@ -58,6 +59,7 @@ An audit of earlier documentation revealed several critical errors regarding Uni
 1. **Separation of Independent Vowels from Consonants**: `U+AA00`–`U+AA05` represent 6 syllable-initial standalone vowels, not consonants. The consonantal series strictly begins at `U+AA06` (`ꨆ` KA).
 2. **Disentanglement of Subjoined Medials (`U+AA33`–`U+AA35`)**: Previous documentation inadvertently swapped the identities of Medial Ya, Medial Ra, and Medial La.
 3. **Punctuation Triple Danda (`U+AA5F`)**: Corrected from "quadruple section mark" to official Unicode nomenclature: `CHAM PUNCTUATION TRIPLE DANDA`.
+4. **Syllable-Final Consonant VA (`U+AA25`)**: Documented and verified per Unicode Standard Chapter 16 Table 16-16 that base consonant `ꨥ` (`CHAM LETTER VA`) functions without alteration in both initial and syllable-final positions (e.g., `ꨀꨍꨯꨱꨥ`, `ꨝꨗꨴꨭꨥ`).
 
 ---
 
@@ -117,13 +119,13 @@ To adhere to rigorous academic scholarship, multiple unverified or hyperbolic as
 
 To situate this project appropriately within existing scientific literature, a dedicated related work section and bibliography were added citing seminal contributions:
 
-1. **Nguyen, M.-T., Schweyer, A.-V., Le, T.-L., Tran, T.-H., & Vu, H. (2019a)**: *Preliminary Results on Ancient Cham Glyph Recognition from Cham Inscription Images*. In 2019 International Conference on Multimedia Analysis and Pattern Recognition (MAPR 2019), IEEE, pp. 1–6. DOI: 10.1109/MAPR.2019.8743534.
-2. **Nguyen, M.-T., Schweyer, A.-V., Le, T.-L., Tran, T.-H., & Vu, H. (2019b)**: *Improving Ancient Cham Glyph Recognition Using Data Augmentation and Transfer Learning*. In International Conference on Image Analysis and Processing (ICIAP 2019 Workshops: PatReCH), Springer, Cham, LNCS 11808, pp. 115–125. DOI: 10.1007/978-3-030-30754-7_13.
+1. **Nguyen, M.-T., Schweyer, A.-V., Le, T.-L., Tran, T.-H., & Vu, H. (2019a)**: *Preliminary Results on Ancient Cham Glyph Recognition from Cham Inscription Images*. In 2019 International Conference on Multimedia Analysis and Pattern Recognition (MAPR 2019), IEEE, pp. 1–6. DOI: 10.1109/MAPR.2019.8743540.
+2. **Nguyen, M.-T., Schweyer, A.-V., Le, T.-L., Tran, T.-H., & Vu, H. (2019b)**: *Improving Ancient Cham Glyph Recognition Using Data Augmentation and Transfer Learning*. In International Conference on Image Analysis and Processing (ICIAP 2019 Workshops: PatReCH), Springer, Cham, LNCS 11808, pp. 115–125. DOI: 10.1007/978-3-030-30754-7_12.
 3. **Nguyen, T.-N. (2023)**: *Segmentation, Recognition and Indexing of Cham characters in Cham documents* (*Segmentation, reconnaissance et indexation des caractères Cham dans les documents Cham*). Ph.D. Dissertation, Université de La Rochelle, France.
-4. **Nguyen, T.-N., Burie, J.-C., Le, T.-L., & Schweyer, A.-V. (2023)**: *A Two-Step Sequence Transformer Based Method for Cham to Latin Script Transliteration*. In Proceedings of the 7th International Workshop on Historical Document Imaging and Processing (HIP@ICDAR 2023), ACM, pp. 25–30. DOI: 10.1145/3604951.3605513.
-5. **Nguyen, T.-N., Burie, J.-C., Le, T.-L., & Schweyer, A.-V. (2025)**: *Historical Cham manuscript document analysis and transcription*. *Multimedia Tools and Applications*, Springer. DOI: 10.1007/s11042-025-20602-x.
+4. **Nguyen, T.-N., Burie, J.-C., Le, T.-L., & Schweyer, A.-V. (2023)**: *A Two-Step Sequence Transformer Based Method for Cham to Latin Script Transliteration*. In Proceedings of the 7th International Workshop on Historical Document Imaging and Processing (HIP@ICDAR 2023), ACM, pp. 25–30. DOI: 10.1145/3604951.3605525.
+5. **Nguyen, T.-N., Burie, J.-C., Le, T.-L., & Schweyer, A.-V. (2025)**: *Text line segmentation approach combining deep learning model and traditional image processing techniques - application to transliteration of Cham manuscripts*. *Multimedia Tools and Applications*, Springer. DOI: 10.1007/s11042-025-20602-x.
 6. **ANR CHAMDOC Project (2019–2024)**: *Cham Documentation (CHAMDOC)*, Project ANR-19-CE27-0018, Agence Nationale de la Recherche, France.
-7. **Digitization Archives**: *Historic Cham Manuscripts of Vietnam* collection (CSEAS Kyoto University / EFEO, 977 digitized manuscripts, >57,800 pages) and Cham community collections (~3,000 manuscripts).
+7. **Digitization Archives**: *Historic Cham Manuscripts of Vietnam* collection (Southeast Asia Digital Library / SEADL, Northern Illinois University, 977 digitized manuscripts, >57,800 pages) and Cham community collections (~3,000 manuscripts).
 
 ---
 

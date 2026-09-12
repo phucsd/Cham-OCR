@@ -37,7 +37,7 @@ An end-to-end deep learning research platform and paleographic transcription sys
    - Receptive tensor dimensions extended to `[3, 48, 480]` to prevent character compression across lengthy multilingual phrases.
    - Dual-head multi-task learning with **Connectionist Temporal Classification (CTC)** sequence alignment and **NRTR Multi-Head Cross-Attention** auxiliary decoding.
 3. **Canonical Unicode & Logical Order Normalization**:
-   - Automatically parses recognized grapheme clusters via `normalize_unicode` to reconstruct standard **Brahmic Logical Order** (`Base Consonant + Medials + Pre-Vowels + Dependent Vowels + Finals / Signs`), resolving local visual permutation artifacts.
+   - Automatically parses recognized grapheme clusters via `normalize_unicode` to reconstruct standard **Brahmic Logical Order** (`Base Consonant + Medials + Pre-Vowels + Dependent Vowels + Vowel Lengthener AA + Finals / Signs / Final VA`), resolving local visual permutation artifacts.
 4. **150,000 Textline Synthetic Pipeline**:
    - Font map validation via `fontTools` cmap parsing, eliminating tofu/missing glyph artifacts.
    - Dynamic In-RAM augmentation applying directional motion blur (kernels $7\times 7$ to $13\times 13$, $\theta \in [0^\circ, 180^\circ]$ at $35\%$ probability) on clean disk renders to prevent double-blur degradation.
@@ -187,5 +187,5 @@ If you utilize Cham-OCR, our synthetic dataset pipeline, or the OCR Studio in yo
 ## 📄 License & Attribution
 
 - **Software**: Released under the [MIT License](LICENSE). Copyright © 2026 Phuc H. Nguyen.
-- **Fonts & Linguistic Corpora**: Details on third-party digital typefaces (*Noto Sans Cham*, *EFEO Cham*), classical literary text sources, and synthetic dataset licensing are documented in **[DATA_PROVENANCE.md](DATA_PROVENANCE.md)**.
+- **Fonts & Linguistic Corpora**: Details on digital typefaces (bundled *Noto Sans Cham*, external reference typefaces), classical literary text sources, and synthetic dataset licensing are documented in **[DATA_PROVENANCE.md](DATA_PROVENANCE.md)**.
 - **Audit & Verification**: See **[ACADEMIC_AUDIT.md](ACADEMIC_AUDIT.md)** for our ground-truth verification log and academic reconciliation ledger.

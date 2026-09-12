@@ -782,7 +782,7 @@
                     <li><strong>Western Cham (<em>Cam Srak</em>)</strong>: Preserved by Cham communities in the Mekong Delta (An Giang, Tây Ninh) and Cambodia. It features distinctive stylistic glyph contours, regional ligature forms, and localized phonetic loan signs.</li>
                 </ul>
                 <p>
-                    Due to tropical climate conditions, ink bleed, microbiological decay, and physical fragmentation, remaining manuscript archives (such as the <em>Akayet Inra Patra</em>, <em>Ariya Po Pareng</em>, and sacred divinatory compendia) face significant preservation risks. Generic OCR models trained on Latin or CJK scripts fail completely on Cham documents due to radical typographical divergences.
+                    Due to tropical climate conditions, ink bleed, microbiological decay, and physical fragmentation, remaining manuscript archives (such as the <em>Akayet Inra Patra</em>, <em>Ariya Po Pareng</em>, and sacred divinatory compendia) face significant preservation risks. Standard off-the-shelf OCR engines designed primarily for Latin or CJK scripts struggle significantly on historical Cham manuscripts due to fundamental typographical divergences.
                 </p>
 
                 <h3 id="sec1-2">1.2 Abugida Orthography & Multi-Directional Glyphs</h3>
@@ -813,202 +813,8 @@
                             <li><em>Pre-base (Left / Visual Ahead)</em>: Vowel Sign O (<span class="cham-script">ꨯ</span> U+AA2F), AI (<span class="cham-script">ꨰ</span> U+AA30).</li>
                         </ul>
                     </li>
-                    <li><strong>Final Consonants & Signs (<code>U+AA40</code>–<code>U+AA4D</code>)</strong>: Explicit syllable codas such as Final Ng (<span class="cham-script">ꩃ</span> U+AA43), Final M / Anusvara (<span class="cham-script">ꩌ</span> U+AA4C), and Final H / Visarga (<span class="cham-script">ꩍ</span> U+AA4D).</li>
-                    <li><strong>Scriptio Continua vs Modern Spacing</strong>: Classical literary manuscripts and verse compendia are composed almost exclusively in <em>scriptio continua</em> (without inter-word spaces). Conversely, modern printed publications and textbooks frequently introduce spaces between lexical items or clauses.</li>
-                    <li><strong>Punctuation & Verse Markers</strong>: Traditional discourse is demarcated via Danda (<span class="cham-script">꩝</span> U+AA5D), Double Danda (<span class="cham-script">꩞</span> U+AA5E, also serving as section/stanza mark), and Triple Danda (<span class="cham-script">꩟</span> U+AA5F). Poetic stanzas frequently open with Cham numerals followed by a section mark (e.g., <span class="cham-script">꩑꩞</span> for Verse 1, <span class="cham-script">꩒꩞</span> for Verse 2).</li>
-                </ol>
-
-                <h3 id="sec1-3">1.3 The Conflict: Logical Storage Order vs Visual Rendering Order</h3>
-                <p>
-                    The Unicode Standard mandates <strong>Logical Order</strong> encoding for all Brahmic scripts, meaning the character sequence reflects phonetic utterance:
-                </p>
-                <div class="math-block">
-                    $$\text{Canonical Cluster} = \text{Base Consonant} + [\text{Medials RA/LA}] + [\text{Medials YA/WA}] + [\text{Pre-Vowels}] + [\text{Dependent Vowels}] + [\text{Lengthener AA}] + [\text{Finals / Signs}]$$
-                </div>
-                <p>
-                    However, pre-vowels like <span class="cham-script">ꨯ</span> (Vowel Sign O, U+AA2F) and <span class="cham-script">ꨰ</span> (Vowel Sign AI, U+AA30) are rendered <em>visually to the left</em> of the base consonant. When an optical sequence decoder scans an image crop left-to-right, its visual perception encounters the pre-vowel ahead of the consonant glyph (e.g. perceiving <span class="cham-script">ꨯ</span> before base <span class="cham-script">ꨕ</span>). CTC decoders without canonical sequence constraints naturally emit the non-standard visual sequence <span class="cham-script">ꨯꨕ</span> instead of standard <span class="cham-script">ꨕꨯ</span>.
-                </p>dy>
-
-    <!-- Top Sticky Header -->
-    <header class="top-navbar">
-        <a href="/" class="nav-brand">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-                <line x1="16" y1="13" x2="8" y2="13"></line>
-                <line x1="16" y1="17" x2="8" y2="17"></line>
-                <polyline points="10 9 9 9 8 9"></polyline>
-            </svg>
-            <span>Cham OCR Technical Report</span>
-        </a>
-        <div class="nav-actions">
-            <a href="/" class="nav-btn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                <span>Back to OCR Studio</span>
-            </a>
-            <a href="https://github.com/phucsd/Cham-OCR" target="_blank" rel="noopener noreferrer" class="nav-btn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                <span>GitHub Repo</span>
-            </a>
-            <button class="nav-btn nav-btn-primary" onclick="window.print()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-                <span>Print / Save PDF</span>
-            </button>
-        </div>
-    </header>
-
-    <div class="page-container">
-        
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-            <div class="toc-title">Table of Contents</div>
-            <ul class="toc-list">
-                <li class="toc-item"><a href="#abstract" class="toc-link active">Abstract</a></li>
-                <li class="toc-item">
-                    <a href="#sec1" class="toc-link">1. Introduction & Paleography</a>
-                    <ul class="toc-sublist">
-                        <li><a href="#sec1-1" class="toc-sublink">1.1 Historical Script Typology</a></li>
-                        <li><a href="#sec1-2" class="toc-sublink">1.2 Abugida Orthography & Glyphs</a></li>
-                        <li><a href="#sec1-3" class="toc-sublink">1.3 Logical vs Visual Unicode</a></li>
-                    </ul>
-                </li>
-                <li class="toc-item">
-                    <a href="#sec2" class="toc-link">2. Related Work</a>
-                    <ul class="toc-sublist">
-                        <li><a href="#sec2-1" class="toc-sublink">2.1 Epigraphic Glyph Recognition</a></li>
-                        <li><a href="#sec2-2" class="toc-sublink">2.2 Deep Learning & Transliteration</a></li>
-                        <li><a href="#sec2-3" class="toc-sublink">2.3 Manuscript Preservation</a></li>
-                        <li><a href="#sec2-4" class="toc-sublink">2.4 System Positioning</a></li>
-                    </ul>
-                </li>
-                <li class="toc-item">
-                    <a href="#sec3" class="toc-link">3. Detection & Line Segmentation</a>
-                    <ul class="toc-sublist">
-                        <li><a href="#sec3-1" class="toc-sublink">3.1 Diacritic Collision Problem</a></li>
-                        <li><a href="#sec3-2" class="toc-sublink">3.2 Cham-DBNet Architecture</a></li>
-                        <li><a href="#sec3-3" class="toc-sublink">3.3 Indic Valley-Cut Heuristics</a></li>
-                    </ul>
-                </li>
-                <li class="toc-item">
-                    <a href="#sec4" class="toc-link">4. Recognition Architecture</a>
-                    <ul class="toc-sublist">
-                        <li><a href="#sec4-1" class="toc-sublink">4.1 SVTR-LCNet Backbone</a></li>
-                        <li><a href="#sec4-2" class="toc-sublink">4.2 Joint CTC & Attention Loss</a></li>
-                        <li><a href="#sec4-3" class="toc-sublink">4.3 Canonical Normalization</a></li>
-                    </ul>
-                </li>
-                <li class="toc-item">
-                    <a href="#sec5" class="toc-link">5. Synthetic Generation Pipeline</a>
-                    <ul class="toc-sublist">
-                        <li><a href="#sec5-1" class="toc-sublink">5.1 Data Scarcity Bottleneck</a></li>
-                        <li><a href="#sec5-2" class="toc-sublink">5.2 4-Tier Stratified Corpus</a></li>
-                        <li><a href="#sec5-3" class="toc-sublink">5.3 cmap Glyph Tofu Safeguard</a></li>
-                        <li><a href="#sec5-4" class="toc-sublink">5.4 In-RAM Augmentations</a></li>
-                    </ul>
-                </li>
-                <li class="toc-item">
-                    <a href="#sec6" class="toc-link">6. Empirical Benchmarks</a>
-                    <ul class="toc-sublist">
-                        <li><a href="#sec6-1" class="toc-sublink">6.1 50-Test Benchmark (V23 vs V24)</a></li>
-                        <li><a href="#sec6-2" class="toc-sublink">6.2 200-Page Stress-Test Suite</a></li>
-                        <li><a href="#sec6-3" class="toc-sublink">6.3 Baseline V24 vs Experimental V25</a></li>
-                        <li><a href="#sec6-4" class="toc-sublink">6.4 Multi-GPU Hardware Scaling</a></li>
-                    </ul>
-                </li>
-                <li class="toc-item">
-                    <a href="#sec7" class="toc-link">7. Production Serving</a>
-                    <ul class="toc-sublist">
-                        <li><a href="#sec7-1" class="toc-sublink">7.1 Microservice Architecture</a></li>
-                        <li><a href="#sec7-2" class="toc-sublink">7.2 Concurrency & NumPy 2.x</a></li>
-                    </ul>
-                </li>
-                <li class="toc-item"><a href="#sec8" class="toc-link">8. Limitations & Open Challenges</a></li>
-                <li class="toc-item"><a href="#sec9" class="toc-link">9. Citation & References</a></li>
-            </ul>
-        </aside>
-
-        <!-- Article Body -->
-        <article class="article-main">
-            
-            <div class="paper-tag-strip">
-                <span class="tag-pill tag-pill-accent">Technical Report / Research Preprint</span>
-                <span class="tag-pill">Not Peer Reviewed</span>
-                <span class="tag-pill tag-pill-green">PaddleOCR PP-OCRv4</span>
-                <span class="tag-pill tag-pill-blue">Brahmic Paleography</span>
-                <span class="tag-pill">Akhar Thrah & Cam Srak</span>
-            </div>
-
-            <h1 class="paper-title">End-to-End Deep Learning Pipeline & Paleographic Transcription Workbench for Historical Cham Manuscripts</h1>
-
-            <div class="author-box">
-                <div class="author-info">
-                    <span class="author-name">Phuc H. Nguyen</span>
-                    <span class="author-affiliation">Independent Researcher and Software Developer, Vietnam — Cham-OCR Project</span>
-                </div>
-                <div class="author-meta">
-                    <span><strong>Published:</strong> September 2026</span>
-                    <span><strong>Code & Weights:</strong> <a href="https://github.com/phucsd/Cham-OCR" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); font-weight: 600;">GitHub phucsd/Cham-OCR</a></span>
-                    <span><strong>Live Service:</strong> <a href="https://ocr.cham.asia" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); font-weight: 600;">ocr.cham.asia</a></span>
-                </div>
-            </div>
-
-            <!-- Abstract -->
-            <section id="abstract" class="abstract-box">
-                <div class="abstract-title">Abstract</div>
-                <p class="abstract-text">
-                    Historical manuscripts of the Cham civilization—spanning Eastern Cham (<em>Akhar Thrah</em>) and Western Cham (<em>Cam Srak</em>)—represent a fragile, millennia-old Brahmic epigraphic and literary heritage in Southeast Asia. Automatic transcription via Optical Character Recognition (OCR) has historically faced steep barriers due to complex Brahmic abugida orthography, multi-directional dependent vowel diacritics, predominantly continuous script (<em>scriptio continua</em>) in classical manuscripts, physical carrier degradation, and tight interlinear diacritic collisions. In this technical report, we describe the design, implementation, and empirical evaluation of an end-to-end deep learning pipeline and diagnostic transcription workbench engineered for Cham documents: (1) a hybrid text detection and line segmentation engine combining a fine-tuned <strong>Mobile DBNet (PPLCNetV3)</strong> with an <strong>Indic Valley-Cut Heuristic Engine</strong> that preserves boundary strokes via mathematical set-difference masking (<code>difference_update</code>) and \(0.40 \times \text{median line height}\) vertical safety cushions; (2) a neural recognition backbone based on <strong>PP-OCRv4 SVTR-LCNet</strong> with expanded input dimensions \([3, 48, 480]\), joint Connectionist Temporal Classification (CTC) alignment, and post-OCR deterministic Unicode cluster canonicalization; and (3) a 150,000-textline synthetic dataset pipeline featuring on-the-fly motion blur, TrueType cmap tofu filtering, and hard-example adversarial mining for verse numerals (\(1\)–\(99\)) and confusing diacritic minimal pairs. Evaluations across a <strong>controlled 200-page synthetic document stress-test</strong> (903 textlines across 5 difficulty levels) and a <strong>50-test stratified failure-mode benchmark</strong> demonstrate that our line detector demonstrate robust line detection with a <strong>100.0% line detection rate</strong> across standard, aged paper, and narrow-gap folios (Levels 1–3) and graceful degradation up to Level 4 (99.44% detection), before encountering an empirical breaking point at Level 5 (61.45% detection) where interlinear wave amplitude exceeds the interlinear gap. For textline recognition, our validated baseline model (<strong>V24</strong>) achieves <strong>13.88% mean CER</strong> across the 50-test suite (reducing noise CER from 50.59% down to 8.82% over V23), while experimental checkpoints (<strong>V25</strong>) remain under active training and evaluation. Multi-GPU distributed scaling benchmarks across Kaggle Tesla T4x2, Cloud A100, L40S, and L4 characterize hardware efficiency for non-profit cultural preservation. Finally, we discuss critical limitations regarding synthetic-to-real domain gaps and provide a production reference deployed at <code>https://ocr.cham.asia</code>.
-                </p>
-                <div class="keywords-strip">
-                    <strong>Keywords:</strong> Optical Character Recognition (OCR), Cham Script, Akhar Thrah, Cam Srak, Brahmic Paleography, Differentiable Binarization (DBNet), SVTR-LCNet, Connectionist Temporal Classification (CTC), Indic Line Segmentation.
-                </div>
-            </section>
-
-            <!-- SECTION 1 -->
-            <section id="sec1">
-                <h2>1. Introduction & Paleographic Foundations</h2>
-                
-                <h3 id="sec1-1">1.1 Historical Script Typology & Document Endangered Status</h3>
-                <p>
-                    The Cham language belongs to the Austronesian language family (Malayo-Polynesian branch) and was the primary medium of literature, state administration, and liturgy across the Champa polities along coastal central and southern Vietnam from the 2nd to early 19th centuries. The script family descends from Southern Brahmic Grantha/Pallava lineages, evolving into two distinct extant traditions:
-                </p>
-                <ul>
-                    <li><strong>Eastern Cham (<em>Akhar Thrah</em>)</strong>: Inscribed and preserved predominantly in Ninh Thuận and Bình Thuận provinces (Vietnam). Historical manuscripts are executed on traditional bark-paper (<em>kertas</em>) or palm leaf with calligraphic bamboo pens.</li>
-                    <li><strong>Western Cham (<em>Cam Srak</em>)</strong>: Preserved by Cham communities in the Mekong Delta (An Giang, Tây Ninh) and Cambodia. It features distinctive stylistic glyph contours, regional ligature forms, and localized phonetic loan signs.</li>
-                </ul>
-                <p>
-                    Due to tropical climate conditions, ink bleed, microbiological decay, and physical fragmentation, remaining manuscript archives (such as the <em>Akayet Inra Patra</em>, <em>Ariya Po Pareng</em>, and sacred divinatory compendia) face significant preservation risks. Generic OCR models trained on Latin or CJK scripts fail completely on Cham documents due to radical typographical divergences.
-                </p>
-
-                <h3 id="sec1-2">1.2 Abugida Orthography & Multi-Directional Glyphs</h3>
-                <p>
-                    Unlike alphabetic writing systems where letters follow a single horizontal axis, Cham is an <strong>abugida</strong> governed by complex spatial attachment rules:
-                </p>
-                <ol>
-                    <li><strong>Independent Vowels (<code>U+AA00</code>–<code>U+AA05</code>)</strong>: Six standalone vowel glyphs represent syllable-initial vowel phonemes without a preceding consonant base:
-                        <span class="cham-script">ꨀ</span> (U+AA00: <code>CHAM LETTER A</code>),
-                        <span class="cham-script">ꨁ</span> (U+AA01: <code>CHAM LETTER I</code>),
-                        <span class="cham-script">ꨂ</span> (U+AA02: <code>CHAM LETTER U</code>),
-                        <span class="cham-script">ꨃ</span> (U+AA03: <code>CHAM LETTER E</code>),
-                        <span class="cham-script">ꨄ</span> (U+AA04: <code>CHAM LETTER AI</code>),
-                        <span class="cham-script">ꨅ</span> (U+AA05: <code>CHAM LETTER O</code>).
-                    </li>
-                    <li><strong>Consonantal Inventory (<code>U+AA06</code>–<code>U+AA28</code>)</strong>: Thirty-five consonant glyphs carry an inherent vowel (/a/ or /ɔ/), beginning with <span class="cham-script">ꨆ</span> (U+AA06: <code>CHAM LETTER KA</code>) through <span class="cham-script">ꨨ</span> (U+AA28: <code>CHAM LETTER HA</code>), encompassing unaspirated, aspirated, nasal, and liquid articulation series.</li>
-                    <li><strong>Subjoined Medials (<code>U+AA33</code>–<code>U+AA36</code>)</strong>: Four medial consonants attach underneath or encircle the consonant base:
-                        Medial Ya (<span class="cham-script">ꨳ</span> U+AA33: <code>CHAM CONSONANT SIGN YA</code>),
-                        Medial Ra (<span class="cham-script">ꨴ</span> U+AA34: <code>CHAM CONSONANT SIGN RA</code>),
-                        Medial La (<span class="cham-script">ꨵ</span> U+AA35: <code>CHAM CONSONANT SIGN LA</code>), and
-                        Medial Wa (<span class="cham-script">ꨶ</span> U+AA36: <code>CHAM CONSONANT SIGN WA</code>).
-                    </li>
-                    <li><strong>Multi-Directional Dependent Vowels (<code>U+AA29</code>–<code>U+AA32</code>)</strong>: Dependent vowel signs attach across all four spatial quadrants around the base:
-                        <ul>
-                            <li><em>Above base</em>: Vowel Sign I (<span class="cham-script">ꨪ</span> U+AA2A), II (<span class="cham-script">ꨫ</span> U+AA2B), EI (<span class="cham-script">ꨬ</span> U+AA2C).</li>
-                            <li><em>Below base</em>: Vowel Sign U (<span class="cham-script">ꨭ</span> U+AA2D), UE (<span class="cham-script">ꨲ</span> U+AA32).</li>
-                            <li><em>Post-base / Dependent</em>: Vowel Sign AA (<span class="cham-script">ꨩ</span> U+AA29), OE (<span class="cham-script">ꨮ</span> U+AA2E), AU (<span class="cham-script">ꨱ</span> U+AA31).</li>
-                            <li><em>Pre-base (Left / Visual Ahead)</em>: Vowel Sign O (<span class="cham-script">ꨯ</span> U+AA2F), AI (<span class="cham-script">ꨰ</span> U+AA30).</li>
-                        </ul>
-                    </li>
-                    <li><strong>Final Consonants & Signs (<code>U+AA40</code>–<code>U+AA4D</code>)</strong>: Explicit syllable codas such as Final Ng (<span class="cham-script">ꩃ</span> U+AA43), Final M / Anusvara (<span class="cham-script">ꩌ</span> U+AA4C), and Final H / Visarga (<span class="cham-script">ꩍ</span> U+AA4D).</li>
-                    <li><strong>Scriptio Continua vs Modern Spacing</strong>: Classical literary manuscripts and verse compendia are composed almost exclusively in <em>scriptio continua</em> (without inter-word spaces). Conversely, modern printed publications and textbooks frequently introduce spaces between lexical items or clauses.</li>
+                    <li><strong>Final Consonants & Signs ([<code>U+AA40</code>–<code>U+AA4D</code>, <code>U+AA25</code>])</strong>: Explicit syllable codas including separate base glyphs with extended terminal strokes (<code>U+AA40</code>–<code>U+AA4B</code>), combining coda marks (Final Ng <span class="cham-script">ꩃ</span> U+AA43, Final M / Anusvara <span class="cham-script">ꩌ</span> U+AA4C, Final H / Visarga <span class="cham-script">ꩍ</span> U+AA4D), and the base consonant <span class="cham-script">ꨥ</span> (<code>U+AA25</code> CHAM LETTER VA) which, per Unicode Standard Chapter 16 Table 16-16, functions without alteration in both initial and syllable-final positions (e.g., in syllables such as <span class="cham-script">ꨀꨍꨯꨱꨥ</span> and <span class="cham-script">ꨝꨗꨴꨭꨥ</span>).</li>
+                    <li><strong>Scriptio Continua vs Modern Spacing</strong>: Classical literary manuscripts and verse compendia predominantly employ <em>scriptio continua</em> (running script without regular word-boundary spaces), although section divisions, poetic hemistichs, or phrasing pauses are demarcated by punctuation marks (e.g., Danda <span class="cham-script">꩝</span>, Double Danda <span class="cham-script">꩞</span>) and occasional whitespace gaps. Conversely, modern printed publications and textbooks frequently introduce spaces between lexical items or clauses.</li>
                     <li><strong>Punctuation & Verse Markers</strong>: Traditional discourse is demarcated via Danda (<span class="cham-script">꩝</span> U+AA5D), Double Danda (<span class="cham-script">꩞</span> U+AA5E, also serving as section/stanza mark), and Triple Danda (<span class="cham-script">꩟</span> U+AA5F). Poetic stanzas frequently open with Cham numerals followed by a section mark (e.g., <span class="cham-script">꩑꩞</span> for Verse 1, <span class="cham-script">꩒꩞</span> for Verse 2).</li>
                 </ol>
 
@@ -1045,12 +851,12 @@
                     In his doctoral dissertation, Nguyen (2023) developed comprehensive document image processing and understanding methodologies dedicated to ancient Cham documents. His work investigated stone inscription image restoration, automatic glyph segmentation under rough stone substrate conditions, and deep convolutional representations for historical Brahmic scripts.
                 </p>
                 <p>
-                    Expanding to linguistic representation, Nguyen, Burie, Le, & Schweyer (2023) introduced a two-step sequence transformer model for Cham-to-Latin script transliteration presented at the HIP@ICDAR 2023 workshop. Their system demonstrated the efficacy of sequence-to-sequence transformers in mapping recognized Cham text sequences to standardized Latin phonological romanizations (<em>Cam-Latin</em>). Most recently, Nguyen, Burie, Le, & Schweyer (2025) published a comprehensive study on historical Cham manuscript document analysis and transcription in <em>Multimedia Tools and Applications</em>, evaluating textline segmentation and recognition models across 627 manuscript images and approximately 8,300 textlines.
+                    Expanding to linguistic representation, Nguyen, Burie, Le, & Schweyer (2023) introduced a two-step sequence transformer model for Cham-to-Latin script transliteration presented at the HIP@ICDAR 2023 workshop. Their system demonstrated the efficacy of sequence-to-sequence transformers in mapping recognized Cham text sequences to standardized Latin phonological romanizations (<em>Cam-Latin</em>). Most recently, Nguyen, Burie, Le, & Schweyer (2025) published a comprehensive study entitled <em>Text line segmentation approach combining deep learning model and traditional image processing techniques - application to transliteration of Cham manuscripts</em> in <em>Multimedia Tools and Applications</em>, evaluating textline segmentation and recognition models across 627 manuscript images and approximately 8,300 textlines.
                 </p>
 
                 <h3 id="sec2-3">2.3 Manuscript Preservation & Digitization Initiatives</h3>
                 <p>
-                    Beyond epigraphy on stone, historical Cham manuscripts on paper (<em>kertas</em>) and palm-leaf have been documented through preservation missions. Most notably, the <em>Historic Cham Manuscripts of Vietnam</em> collection—jointly cataloged and digitized by the Center for Southeast Asian Studies (CSEAS) at Kyoto University and the École française d'Extrême-Orient (EFEO)—preserves 977 digitized manuscripts comprising more than 57,800 high-resolution page scans. In addition, field surveys estimate approximately 3,000 physical manuscripts preserved within Cham community families and religious dignitaries across Vietnam and Cambodia. The French National Research Agency funded the CHAMDOC project (<em>Cham Documentation</em>, ANR-19-CE27-0018, 2019–2024) to support preservation, cataloging, and linguistic documentation.
+                    Beyond epigraphy on stone, historical Cham manuscripts on paper (<em>kertas</em>) and palm-leaf have been documented through preservation missions. Most notably, the <em>Historic Cham Manuscripts of Vietnam</em> collection—hosted and preserved by the Southeast Asia Digital Library (SEADL) at Northern Illinois University—preserves 977 digitized manuscripts comprising more than 57,800 high-resolution page scans. In addition, field surveys estimate approximately 3,000 physical manuscripts preserved within Cham community families and religious dignitaries across Vietnam and Cambodia. The French National Research Agency funded the CHAMDOC project (<em>Cham Documentation</em>, ANR-19-CE27-0018, 2019–2024) to support preservation, cataloging, and linguistic documentation.
                 </p>
                 <p>
                     However, despite the preservation of tens of thousands of scanned folios, almost none of these archives possess open, machine-readable character-level or line-level bounding box ground-truth annotations suitable for training supervised deep learning models. The bottleneck for Cham OCR is therefore not an absolute absence of physical manuscripts, but rather the severe scarcity of annotated, verified training ground truth.
@@ -1074,7 +880,7 @@
 
                 <h3 id="sec3-1">3.1 The Interlinear Diacritic Collision Problem</h3>
                 <p>
-                    Historical Cham manuscripts feature tight interline spacing (often mere 3–12 pixels between lines). Because vowels reach high above the core text band (ascenders up to \(+18\text{px}\)) and medials plunge below (descenders down to \(-22\text{px}\)), ascenders of line \(n+1\) physically touch or intertwine with descenders of line \(n\). Generic text detectors (such as standard DBNet or EAST trained on natural scene Latin text) fail by:
+                    Historical Cham manuscripts feature tight interline spacing (often mere 3–12 pixels between lines). Because vowels reach high above the core text band (ascenders up to \(+18\text{px}\)) and medials plunge below (descenders down to \(-22\text{px}\)), ascenders of line \(n+1\) physically touch or intertwine with descenders of line \(n\). Standard off-the-shelf text detection models (such as baseline DBNet trained on natural scene Latin or CJK text) frequently encounter two severe failure modes when applied to dense historical manuscripts:
                 </p>
                 <ul>
                     <li>Merging adjacent lines into single monolithic boxes.</li>
@@ -1258,7 +1064,7 @@
 <pre id="norm-code"><code>def normalize_unicode(text: str) -> str:
     # Enforces Canonical Brahmic Logical Order on CTC decoded Cham text:
     # Base Consonant -> Medial RA/LA -> Medial YA/WA -> Pre-Vowels (O/AI) ->
-    # Other Dependent Vowels -> Vowel Lengthener AA -> Final Consonants / Signs
+    # Other Dependent Vowels -> Vowel Lengthener AA -> Final Consonants / Signs (incl. Final VA)
     # Example: Corrects visual sequence 'ꨙꨯꨳꨮ' into canonical 'ꨙꨳꨯꨮ'.
     clusters = parse_unicode_clusters(text)
     uni_clusters = [visual_to_unicode_cluster(c) for c in clusters]
@@ -1749,19 +1555,19 @@ if not hasattr(np, 'typeDict'): np.typeDict = {}</code></pre>
                     [1] Everson, M. (2006). <em>Proposal for encoding the Cham script in the UCS (ISO/IEC JTC1/SC2/WG2 N3120)</em>. Unicode Consortium. <a href="https://www.unicode.org/L2/L2006/06257-n3120-cham.pdf" target="_blank" rel="noopener noreferrer">https://www.unicode.org/L2/L2006/06257-n3120-cham.pdf</a>
                 </div>
                 <div class="ref-item">
-                    [2] Nguyen, M.-T., Schweyer, A.-V., Le, T.-L., Tran, T.-H., & Vu, H. (2019a). <em>Preliminary Results on Ancient Cham Glyph Recognition from Cham Inscription Images</em>. In 2019 International Conference on Multimedia Analysis and Pattern Recognition (MAPR 2019), IEEE, pp. 1–6. DOI: <a href="https://doi.org/10.1109/MAPR.2019.8743534" target="_blank" rel="noopener noreferrer">10.1109/MAPR.2019.8743534</a>
+                    [2] Nguyen, M.-T., Schweyer, A.-V., Le, T.-L., Tran, T.-H., & Vu, H. (2019a). <em>Preliminary Results on Ancient Cham Glyph Recognition from Cham Inscription Images</em>. In 2019 International Conference on Multimedia Analysis and Pattern Recognition (MAPR 2019), IEEE, pp. 1–6. DOI: <a href="https://doi.org/10.1109/MAPR.2019.8743540" target="_blank" rel="noopener noreferrer">10.1109/MAPR.2019.8743540</a>
                 </div>
                 <div class="ref-item">
-                    [3] Nguyen, M.-T., Schweyer, A.-V., Le, T.-L., Tran, T.-H., & Vu, H. (2019b). <em>Improving Ancient Cham Glyph Recognition Using Data Augmentation and Transfer Learning</em>. In International Conference on Image Analysis and Processing (ICIAP 2019 Workshops: PatReCH), Springer, Cham, LNCS 11808, pp. 115–125. DOI: <a href="https://doi.org/10.1007/978-3-030-30754-7_13" target="_blank" rel="noopener noreferrer">10.1007/978-3-030-30754-7_13</a>
+                    [3] Nguyen, M.-T., Schweyer, A.-V., Le, T.-L., Tran, T.-H., & Vu, H. (2019b). <em>Improving Ancient Cham Glyph Recognition Using Data Augmentation and Transfer Learning</em>. In International Conference on Image Analysis and Processing (ICIAP 2019 Workshops: PatReCH), Springer, Cham, LNCS 11808, pp. 115–125. DOI: <a href="https://doi.org/10.1007/978-3-030-30754-7_12" target="_blank" rel="noopener noreferrer">10.1007/978-3-030-30754-7_12</a>
                 </div>
                 <div class="ref-item">
                     [4] Nguyen, T.-N. (2023). <em>Segmentation, Recognition and Indexing of Cham characters in Cham documents</em> (<em>Segmentation, reconnaissance et indexation des caractères Cham dans les documents Cham</em>). Ph.D. Dissertation, Université de La Rochelle, France.
                 </div>
                 <div class="ref-item">
-                    [5] Nguyen, T.-N., Burie, J.-C., Le, T.-L., & Schweyer, A.-V. (2023). <em>A Two-Step Sequence Transformer Based Method for Cham to Latin Script Transliteration</em>. In Proceedings of the 7th International Workshop on Historical Document Imaging and Processing (HIP@ICDAR 2023), ACM, pp. 25–30. DOI: <a href="https://doi.org/10.1145/3604951.3605513" target="_blank" rel="noopener noreferrer">10.1145/3604951.3605513</a>
+                    [5] Nguyen, T.-N., Burie, J.-C., Le, T.-L., & Schweyer, A.-V. (2023). <em>A Two-Step Sequence Transformer Based Method for Cham to Latin Script Transliteration</em>. In Proceedings of the 7th International Workshop on Historical Document Imaging and Processing (HIP@ICDAR 2023), ACM, pp. 25–30. DOI: <a href="https://doi.org/10.1145/3604951.3605525" target="_blank" rel="noopener noreferrer">10.1145/3604951.3605525</a>
                 </div>
                 <div class="ref-item">
-                    [6] Nguyen, T.-N., Burie, J.-C., Le, T.-L., & Schweyer, A.-V. (2025). <em>Historical Cham manuscript document analysis and transcription</em>. <em>Multimedia Tools and Applications</em>, Springer. DOI: <a href="https://doi.org/10.1007/s11042-025-20602-x" target="_blank" rel="noopener noreferrer">10.1007/s11042-025-20602-x</a>
+                    [6] Nguyen, T.-N., Burie, J.-C., Le, T.-L., & Schweyer, A.-V. (2025). <em>Text line segmentation approach combining deep learning model and traditional image processing techniques - application to transliteration of Cham manuscripts</em>. <em>Multimedia Tools and Applications</em>, Springer. DOI: <a href="https://doi.org/10.1007/s11042-025-20602-x" target="_blank" rel="noopener noreferrer">10.1007/s11042-025-20602-x</a>
                 </div>
                 <div class="ref-item">
                     [7] ANR CHAMDOC Project. (2019–2024). <em>Cham Documentation (CHAMDOC)</em>, Project ANR-19-CE27-0018, Agence Nationale de la Recherche, France.

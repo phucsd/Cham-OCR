@@ -16,23 +16,32 @@ This document provides a transparent, verifiable record of the provenance, licen
   - Normalization into standard Unicode 16.0 Cham representation (U+AA00–U+AA5F).
   - Removal of incompatible characters, unmapped symbols, and malformed encoding artifacts.
   - Segment-level line breaking tailored for textline sequence recognition.
-* **Legal & Cultural Status**:
-  - Classical Cham literature belongs to the collective cultural heritage of the Cham people and international humanity.
-  - The curated text corpus is distributed solely for non-commercial linguistic preservation, educational scholarship, and machine learning research under fair use / cultural heritage open research terms.
+* **Legal, Cultural & Research Usage Status**:
+  - Classical Cham literature belongs to the collective cultural heritage of the Cham people. Specific underlying manuscript rights remain unrecorded and traditional.
+  - The curated text corpus (`cham_text.txt`) is compiled and distributed solely for non-commercial linguistic preservation, educational scholarship, and machine learning research under fair use / non-commercial research principles. We make no proprietary claims over the underlying cultural literature, nor do we assert undocumented open-license grants (such as CC BY) over texts of traditional provenance.
 
 ---
 
 ## 2. Digital Typefaces & Fonts
 
-To train neural textline recognition models without bias toward a single rendering engine, multiple digital Cham typefaces were curated and validated:
+To train neural textline recognition models without bias toward a single rendering engine, digital Cham typefaces were evaluated. We strictly distinguish between fonts bundled directly in this repository and external candidate/reference fonts:
 
-| Font Name | Foundry / Origin | License | Primary Use |
+### A. Bundled Repository Fonts
+The following font family is distributed directly within this repository (located in `ocr-training/data/fonts/`):
+
+| Font Name | Foundry / Origin | Bundled Styles | License | Primary Use |
+| :--- | :--- | :--- | :--- | :--- |
+| **Noto Sans Cham** | Google Fonts / Monotype | `Regular`, `Bold`, `Black` | **SIL Open Font License, Version 1.1** (OFL-1.1) | Primary clean rendering baseline for modern and classical orthography in synthetic line generation. |
+
+All bundled font files retain their upstream copyright notices and OFL-1.1 licensing terms.
+
+### B. External Candidate & Reference Fonts (Not Bundled)
+The following typefaces were evaluated as reference designs during research experiments or may be acquired independently by researchers wishing to extend synthetic rendering diversity. **They are not bundled or distributed in this repository**:
+
+| Font Name | Origin / Organization | Access / Licensing Context | Note |
 | :--- | :--- | :--- | :--- |
-| **Noto Sans Cham** (`Regular`, `Bold`, `Black`) | Google Fonts / Monotype | **SIL Open Font License, Version 1.1** (OFL-1.1) | Primary clean rendering baseline for modern and classical orthography. |
-| **EFEO Cham / CamEFEO** | École française d'Extrême-Orient (EFEO) | Academic & Cultural Heritage Research Use | Classical Akhar Thrah calligraphic glyph shapes mirroring historical manuscripts. |
-| **Cham Roman / Community Fonts** | Northern Illinois University (SeaSite) & Cham Community archives | Freely distributed for non-commercial Cham language education | Secondary stylistic diversity and stroke variation during training synthesis. |
-
-All bundled font files retain their respective copyright notices and upstream licensing terms. No proprietary or restricted commercial fonts are included in this repository.
+| **EFEO Cham / CamEFEO** | École française d'Extrême-Orient (EFEO) | Academic research and cultural preservation use | Reference typeface modeling classical *Akhar Thrah* manuscript glyph ductus; not bundled in repo. |
+| **Cham Roman / Community Fonts** | Northern Illinois University (SeaSite) & Cham community archives | Freely available for non-commercial educational use | Reference typefaces evaluated for stylistic variation; not bundled in repo. |
 
 ---
 

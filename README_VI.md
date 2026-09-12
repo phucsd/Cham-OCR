@@ -130,5 +130,5 @@ Nếu bạn sử dụng tài liệu, bộ sinh dữ liệu hoặc công cụ Cha
 ## 📄 Giấy phép & Tuyên bố Bản quyền
 
 - **Mã nguồn phần mềm**: Phát hành theo giấy phép nguồn mở [MIT License](LICENSE). Bản quyền © 2026 Phuc H. Nguyen.
-- **Phông chữ & Ngữ liệu Văn bản**: Chi tiết về bản quyền phông chữ Chăm (*Noto Sans Cham*, *EFEO Cham*), nguồn ngữ liệu văn bản cổ và giấy phép tập dữ liệu tổng hợp được ghi chép đầy đủ tại **[DATA_PROVENANCE.md](DATA_PROVENANCE.md)**.
+- **Phông chữ & Ngữ liệu Văn bản**: Chi tiết về bản quyền phông chữ Chăm (*Noto Sans Cham* đi kèm repo, các phông chữ tham khảo ngoài), nguồn ngữ liệu văn bản cổ và giấy phép tập dữ liệu tổng hợp được ghi chép đầy đủ tại **[DATA_PROVENANCE.md](DATA_PROVENANCE.md)**.
 - **Kiểm định & Đối chiếu Số liệu**: Xem **[ACADEMIC_AUDIT.md](ACADEMIC_AUDIT.md)** để tra cứu nhật ký kiểm định số liệu thực nghiệm và cam kết minh bạch học thuật.
