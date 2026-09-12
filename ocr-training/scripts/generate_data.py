@@ -25,20 +25,22 @@ if sys.stdout and sys.stdout.encoding != 'utf-8':
 # ==============================================================================
 # 1. Cấu hình Tổ hợp Ký tự & Phân nhóm Hình học tiếng Chăm
 # ==============================================================================
-PRE_SIGNS = set('ꨰꨯꨴ')
-VOWEL_DIACRITIC_SIGNS = set('ꨣꨤꨥꨦꨧꨨꨩꨪꨫꨬꨭꨮꨯꨰꨱꨲꨴꨵ')
-MEDIAL_SIGNS = set('ꨳ')
+PRE_SIGNS = set('ꨯꨰ')
+MEDIAL_SIGNS = set('ꨴꨵꨳꨶ')
+MEDIAL_RA_LA = set('ꨴꨵ')
+MEDIAL_YA_WA = set('ꨳꨶ')
+VOWEL_DIACRITIC_SIGNS = set('ꨩꨪꨫꨬꨭꨮꨯꨰꨱꨲ')
 FINAL_SIGNS = set('ꩀꩃꩌꩍꩆꩉꩊꩂꩅ')
 CHAM_DIGITS = set('꩐꩑꩒꩓꩔꩕꩖꩗꩘꩙')
 CHAM_PUNCT_SIGNS = set('꩜꩝꩞꩟')
 PUNCT_SIGNS = set('꩜꩝꩞꩟.,;:!?')
-FOCUS_CHARS = PRE_SIGNS | FINAL_SIGNS | MEDIAL_SIGNS | set('ꨱꨵꨮꨯꨰꨴ')
-CONFUSION_CHARS = set('ꨰꨯꨴꨱꨳꨵꨮꩀꩃꩌꩍꩆꩉꩊꨈꨤꨠꨥꨡꨓꨩ')
+FOCUS_CHARS = PRE_SIGNS | FINAL_SIGNS | MEDIAL_SIGNS | VOWEL_DIACRITIC_SIGNS
+CONFUSION_CHARS = set('ꨯꨰꨴꨵꨳꨶꨪꨫꨬꨭꨮꨱꨲꩀꩃꩌꩍꩆꩉꩊꨈꨤꨠꨥꨡꨓꨩ')
 consonants = set("ꨆꨇꨈꨉꨊꨋꨌꨍꨎꨏꨐꨑꨒꨓꨔꨕꨖꨗꨘꨙꨚꨛꨜꨝꨞꨟꨠꨡꨢꨣꨤꨥꨦꨧꨨꨀꨁꨂꨃꨄꨅ")
 pre_signs = PRE_SIGNS
 diacritics = set(chr(c) for c in range(0xAA29, 0xAA37)) | set(chr(c) for c in range(0xAA40, 0xAA4E))
 COMBINING_MARKS = PRE_SIGNS | diacritics | FINAL_SIGNS | MEDIAL_SIGNS
-HEAL_REGEX = re.compile(r'\s+([ꨰꨯꨴꨳꩀꩃꩌꩍꩆꩉꩊꩂꩅ\uAA29-\uAA36\uAA40-\uAA4D])')
+HEAL_REGEX = re.compile(r'\s+([ꨯꨰꨴꨵꨳꨶꩀꩃꩌꩍꩆꩉꩊꩂꩅ\uAA29-\uAA36\uAA40-\uAA4D])')
 
 # Danh sách từ luyện tập cụm chữ khó hay sai trên TestBench
 CLUSTER_DRILLS = [
@@ -137,23 +139,42 @@ def visual_to_unicode_cluster(cluster):
         return cluster
         
     base_consonant = [c for c in cluster if c in consonants]
-    extracted_pre = [c for c in cluster if c in pre_signs]
-    remaining_diacs = [c for c in cluster if c in diacritics and c not in pre_signs]
     
-    medials = []
-    others = []
-    for d in remaining_diacs:
-        if d in ('ꨳ', 'ꨵ', 'ꨶ'):
-            medials.append(d)
+    # Reconstruct according to official Unicode Cham canonical syllabic order:
+    # 1. Base consonant
+    # 2. Medial RA / LA (ꨴ U+AA34, ꨵ U+AA35)
+    # 3. Medial YA / WA (ꨳ U+AA33, ꨶ U+AA36)
+    # 4. Pre-base vowels (ꨯ U+AA2F, ꨰ U+AA30)
+    # 5. Other dependent vowels (ꨪ, ꨫ, ꨬ, ꨭ, ꨮ, ꨱ, ꨲ)
+    # 6. Vowel lengthener AA (ꨩ U+AA29)
+    # 7. Final consonants & signs (ꩀ-ꩍ, ꩌ, ꩃ)
+    medials_ra_la = []
+    medials_ya_wa = []
+    pre_vowels = []
+    other_vowels = []
+    aa_lengthener = []
+    finals = []
+    unclassified = []
+    
+    for c in cluster:
+        if c in consonants:
+            continue
+        elif c in ('ꨴ', 'ꨵ'):
+            medials_ra_la.append(c)
+        elif c in ('ꨳ', 'ꨶ'):
+            medials_ya_wa.append(c)
+        elif c in ('ꨯ', 'ꨰ'):
+            pre_vowels.append(c)
+        elif c == 'ꨩ':
+            aa_lengthener.append(c)
+        elif c in ('ꨪ', 'ꨫ', 'ꨬ', 'ꨭ', 'ꨮ', 'ꨱ', 'ꨲ'):
+            other_vowels.append(c)
+        elif c in FINAL_SIGNS or (0xAA40 <= ord(c) <= 0xAA4D):
+            finals.append(c)
         else:
-            others.append(d)
+            unclassified.append(c)
             
-    pre_ra = [c for c in extracted_pre if c == 'ꨴ']
-    pre_vowels = [c for c in extracted_pre if c in ('ꨯ', 'ꨰ')]
-    
-    # Reconstruct standard relative order
-    reconstructed_diacs = medials + pre_ra + pre_vowels + others
-    return base_consonant + reconstructed_diacs
+    return base_consonant + medials_ra_la + medials_ya_wa + pre_vowels + other_vowels + aa_lengthener + finals + unclassified
 
 def unicode_to_visual(text):
     clusters = parse_unicode_clusters(text)

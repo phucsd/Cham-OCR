@@ -74,9 +74,10 @@ Cham-OCR/
 ├── .dockerignore                       # Build exclusion filter
 ├── .gitignore                          # Git tracking filter
 ├── DESIGN.md                           # Formal Design System tokens (linted with designmd)
-├── LICENSE                             # MIT License & Third-Party Font/Corpus attribution
+├── LICENSE                             # MIT License (Software code and scripts)
+├── DATA_PROVENANCE.md                  # Linguistic corpora, font licensing & dataset provenance
 ├── RESEARCH.md                         # Full Academic Technical Report & Paleographic Study
-├── ACADEMIC_AUDIT.md                   # Formal Audit & Ground-Truth Verification Report
+├── ACADEMIC_AUDIT.md                   # Internal Documentation Audit & Reconciliation Log
 ├── kernel-metadata.json                # Kaggle Kernel Metadata configuration
 └── requirements.txt                    # Unified dependency specification
 ```
@@ -186,5 +187,5 @@ If you utilize Cham-OCR, our synthetic dataset pipeline, or the OCR Studio in yo
 ## 📄 License & Attribution
 
 - **Software**: Released under the [MIT License](LICENSE). Copyright © 2026 Phuc H. Nguyen.
-- **Fonts**: Bundled Cham typefaces (e.g. *Noto Sans Cham*) are licensed under the SIL Open Font License 1.1 / Apache 2.0 by their respective creators.
-- **Corpus**: Classical literary excerpts and historical inscriptions belong to the shared cultural heritage of the Cham people and are utilized solely for non-commercial linguistic preservation and scientific research.
+- **Fonts & Linguistic Corpora**: Details on third-party digital typefaces (*Noto Sans Cham*, *EFEO Cham*), classical literary text sources, and synthetic dataset licensing are documented in **[DATA_PROVENANCE.md](DATA_PROVENANCE.md)**.
+- **Audit & Verification**: See **[ACADEMIC_AUDIT.md](ACADEMIC_AUDIT.md)** for our ground-truth verification log and academic reconciliation ledger.

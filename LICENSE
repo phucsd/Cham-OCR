@@ -22,9 +22,13 @@ SOFTWARE.
 
 ---
 
-### Third-Party Fonts & Cultural Heritage Corpus Notice
+### Third-Party Typefaces, Corpora & Synthetic Data
 
-1. **Cham Digital Typefaces**:
-   - Digital fonts bundled or utilized within this repository (including *Noto Sans Cham* by Google under the SIL Open Font License 1.1, and academic Cham typefaces) remain the intellectual property of their respective creators and type foundries.
-2. **Historical Texts & Cultural Heritage Material**:
-   - Classical Cham literary texts, verse excerpts, and historical transcriptions utilized in synthetic benchmark generation and training corpora belong to the shared cultural heritage of the Cham people and international humanity. They are curated and processed solely for non-commercial linguistic preservation, digital paleography, and educational research purposes.
+The MIT License above applies to all original software source code, training scripts, and web applications authored for the Cham-OCR project.
+
+For third-party components bundled or referenced in this repository:
+- **Digital Typefaces** (*Noto Sans Cham*, *EFEO Cham*, and community fonts) are distributed under their respective upstream licenses (e.g., SIL Open Font License 1.1).
+- **Text Corpora & Dictionaries** are curated for non-commercial linguistic preservation and scientific research.
+- **Synthetic Benchmarks & Annotation Data** are provided under CC BY 4.0.
+
+Please refer to [DATA_PROVENANCE.md](DATA_PROVENANCE.md) for full licensing terms, attributions, and provenance documentation.

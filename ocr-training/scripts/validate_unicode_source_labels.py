@@ -14,14 +14,14 @@ if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
 # Định nghĩa các tập ký tự tiếng Chăm
-PRE_SIGNS = set('ꨰꨯꨴ')
+PRE_SIGNS = set('ꨯꨰ')
 diacritics = set(chr(c) for c in range(0xAA29, 0xAA37)) | set(chr(c) for c in range(0xAA40, 0xAA4E))
 FINAL_SIGNS = set('ꩀꩃꩌꩍꩆꩉꩊꩂꩅ')
-MEDIAL_SIGNS = set('ꨳ')
+MEDIAL_SIGNS = set('ꨴꨵꨳꨶ')
 consonants = set("ꨆꨇꨈꨉꨊꨋꨌꨍꨎꨏꨐꨑꨒꨓꨔꨕꨖꨗꨘꨙꨚꨛꨜꨝꨞꨟꨠꨡꨢꨣꨤꨥꨦꨧꨨꨀꨁꨂꨃꨄꨅ")
 
 COMBINING_MARKS = PRE_SIGNS | diacritics | FINAL_SIGNS | MEDIAL_SIGNS
-HEAL_REGEX = re.compile(r'\s+([ꨰꨯꨴꨳꩀꩃꩌꩍꩆꩉꩊꩂꩅ\uAA29-\uAA36\uAA40-\uAA4D])')
+HEAL_REGEX = re.compile(r'\s+([ꨯꨰꨴꨵꨳꨶꩀꩃꩌꩍꩆꩉꩊꩂꩅ\uAA29-\uAA36\uAA40-\uAA4D])')
 
 # Whitelist các dòng biểu đồ diacritic hoặc ký tự diacritic rời rạc được chấp nhận cho mục đích chẩn đoán/vocabulary
 WHITELIST_DIAGNOSTIC = {

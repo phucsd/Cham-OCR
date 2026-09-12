@@ -35,9 +35,10 @@ Cham-OCR/
 ├── .dockerignore                       # Cấu hình loại trừ file khi đóng gói Docker
 ├── .gitignore                          # Bộ lọc loại trừ file rác, file tạm và weights nặng
 ├── DESIGN.md                           # Định nghĩa Design System Tokens cho Studio
-├── LICENSE                             # Giấy phép nguồn mở MIT & Điều khoản Font/Ngữ liệu
+├── LICENSE                             # Giấy phép nguồn mở MIT cho mã nguồn phần mềm
+├── DATA_PROVENANCE.md                  # Nguồn gốc ngữ liệu văn bản, bản quyền font & dữ liệu tổng hợp
 ├── RESEARCH.md                         # Toàn văn Báo cáo Kỹ thuật & Khảo sát Cổ tự học Chăm
-├── ACADEMIC_AUDIT.md                   # Báo cáo Kiểm định Học thuật & Đối chiếu Bằng chứng Thực nghiệm
+├── ACADEMIC_AUDIT.md                   # Nhật ký Kiểm định Tài liệu Nội bộ & Đối chiếu Số liệu
 ├── kernel-metadata.json                # Kaggle Kernel Metadata (tài khoản gustavnguyen)
 └── requirements.txt                    # Thư viện phụ thuộc cho toàn dự án
 ```
@@ -81,7 +82,7 @@ Cham-OCR/
 2. **Kiến trúc Nhận diện Chữ viết (Recognition Architecture)**:
    - Mạng nơ-ron **PP-OCRv4 SVTR-LCNet** mở rộng tensor đầu vào lên `[3, 48, 480]`.
    - Cơ chế giải mã kép: CTC Loss kết hợp NRTR Multi-Head Cross-Attention.
-   - Chuẩn hóa thứ tự gõ Logic Chăm `normalize_unicode` (Brahmic Logical Order: Phụ âm cơ sở + Dấu phụ dưới/quấn + Nguyên âm trước + Nguyên âm phụ thuộc + Phụ âm cuối/Dấu ngắt).
+   - Chuẩn hóa thứ tự gõ Logic Chăm `normalize_unicode` (Brahmic Logical Order: Phụ âm cơ sở + Dấu phụ dưới chân/quấn RA/LA + Dấu phụ YA/WA + Nguyên âm đứng trước O/AI + Các nguyên âm phụ thuộc khác + Dấu kéo dài âm AA + Phụ âm cuối/Dấu ngắt).
 3. **Sinh Dữ liệu Tổng hợp & Tăng cường**:
    - 150,000 dòng dữ liệu tổng hợp qua 4 gói phân tầng.
    - Cơ chế lọc chữ lỗi ô vuông (tofu) bằng `fontTools` cmap và làm mờ động học trong RAM (*On-the-Fly Motion Blur*).
@@ -129,5 +130,5 @@ Nếu bạn sử dụng tài liệu, bộ sinh dữ liệu hoặc công cụ Cha
 ## 📄 Giấy phép & Tuyên bố Bản quyền
 
 - **Mã nguồn phần mềm**: Phát hành theo giấy phép nguồn mở [MIT License](LICENSE). Bản quyền © 2026 Phuc H. Nguyen.
-- **Phông chữ Chăm**: Các phông chữ đi kèm (như *Noto Sans Cham* của Google) thuộc bản quyền của tác giả và tổ chức phát hành theo giấy phép SIL Open Font License 1.1 / Apache 2.0.
-- **Ngữ liệu Văn bản Di sản**: Các đoạn trích văn học cổ điển và văn bia Chăm thuộc về di sản văn hóa chung của dân tộc Chăm và nhân loại, được sử dụng thuần túy cho mục đích nghiên cứu khoa học và bảo tồn ngôn ngữ phi thương mại.
+- **Phông chữ & Ngữ liệu Văn bản**: Chi tiết về bản quyền phông chữ Chăm (*Noto Sans Cham*, *EFEO Cham*), nguồn ngữ liệu văn bản cổ và giấy phép tập dữ liệu tổng hợp được ghi chép đầy đủ tại **[DATA_PROVENANCE.md](DATA_PROVENANCE.md)**.
+- **Kiểm định & Đối chiếu Số liệu**: Xem **[ACADEMIC_AUDIT.md](ACADEMIC_AUDIT.md)** để tra cứu nhật ký kiểm định số liệu thực nghiệm và cam kết minh bạch học thuật.

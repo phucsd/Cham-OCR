@@ -71,3 +71,11 @@
     3. **Tự động lưu chỉ thị & sở thích người dùng (`type: "preference"` hoặc `"fact"`)**: Lưu ngay các quy chuẩn về tài khoản Kaggle, hạ tầng, đường dẫn, domain, cờ cấu hình môi trường hoặc yêu cầu nghiệp vụ mà người dùng đưa ra.
   - **Tự động truy hồi ngữ cảnh trước khi hành động (Context Recall First)**: Trước khi code thay đổi kiến trúc, sửa lỗi nhận diện chữ Chăm, tối ưu pipeline hoặc thiết lập huấn luyện Kaggle, Agent bắt buộc phải tự động gọi `memory_recall` hoặc `memory_smart_search` (với các từ khóa liên quan như `v24`, `benchmark`, `kaggle`, `segmentation`...) để kế thừa toàn bộ tri thức của các phiên làm việc trước mà không cần người dùng nhắc lại.
 
+- **Quy tắc Kiểm chứng Số liệu Định lượng & Thời gian Huấn luyện (Ground-Truth Accounting)**:
+  - **Tuyệt đối không ước lượng cảm tính hoặc dùng nhầm phiên thử nghiệm**: Khi báo cáo thời gian huấn luyện, đánh giá mô hình hoặc hạn ngạch GPU, Agent bắt buộc phải kiểm tra đối chiếu trực tiếp từ tệp nhật ký thực tế (`train.log`, Kaggle session log/API), không dùng số liệu phỏng đoán hoặc lấy nhầm từ các lần chạy thử nghiệm/dở dang (trial runs).
+  - **Bóc tách chuẩn xác 3 thành phần thời gian**:
+    1. `Train Loop Duration`: Thời gian chạy thuật toán huấn luyện thuần túy (tính từ timestamp batch đầu tiên đến batch cuối cùng trong `train.log`).
+    2. `Pipeline / Container Overhead`: Thời gian chuẩn bị môi trường, cài đặt gói, sinh dữ liệu tổng hợp, giải nén tập validation đóng băng và đóng gói xuất bản checkpoint.
+    3. `Total Kernel Wall-clock Time`: Tổng thời gian thực tế phiên chạy Kaggle chiếm dụng tài nguyên GPU (tính vào quota).
+
+
