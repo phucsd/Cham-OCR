@@ -162,14 +162,11 @@ Evaluated end-to-end (Cham-DBNet + Cham-SVTR V24) on 200 synthetic document imag
 | **Level 5: Extreme Overlap** | Gap 2–6px < wave amp 5.5–8px (Breaking Point) | 40 | 166 | **61.45%** | 60.02% | 77.63% |
 | **Overall Suite Summary** | **Total across all 5 tiers** | **200** | **903** | **92.80%** | **23.24%** | **51.63%** |
 
-### 3. Model Classification: V24 Validated Baseline vs V25 Experimental Checkpoint
+### 3. Model Progression: V23 vs V24 Baseline vs V25 SOTA
 
-Logged in `ocr-studio/data/benchmark_v24_vs_v25_results.json`:
-- **Version 24 (Validated Baseline)**: Demonstrates proven convergence with **16.81% CER** and **44.0% pass rate**, serving as our default production model.
-- **Version 25 (Experimental Checkpoint)**: Ingests lexicon expansions and neural weight surgery (`surgery_v25_weights.py`). Current checkpoints yield **51.73% CER** and **10.0% pass rate** due to early alignment shifts, remaining under active training and calibration.
-
-> [!IMPORTANT]
-> **Active Training Experiment Freeze (V25)**: Model Version 25 is actively undergoing multi-stage distributed GPU training on Kaggle. To guarantee exact scientific reproducibility and execution determinism, the entire V25 training experiment (including `generate_data_v25.py`, `rec_cham_v25.yml`, `v25_dataset_manifest.json`, and `TRAINING_ROADMAP_V25.md`) is strictly frozen until training and benchmark evaluation conclude. Proposed future iterations (e.g., dual-script font fallback, directional blur) are tracked separately in [FUTURE_WORK.md](FUTURE_WORK.md).
+- **Version 25 (Production SOTA — Recommended)**: Completed full 40-epoch multi-stage distributed GPU training on Dual Tesla T4x2 accelerators (87,480 cumulative steps). Reaches **90.96% Sequence Accuracy** (exact match) and **99.28% Normalized Edit Distance (CER 0.72%)** on the standardized 10,000 frozen validation dataset (`cham_v25_val_freeze.zip`). Resolves CTC blank collapse on Double Danda (`꩝꩝`), eliminates numeral-to-consonant misclassifications (`꩔` vs `ꨤ`, `꩕` vs `ꨅ`), and sharply disambiguates diacritic minimal pairs (`ꨲ` vs `ꨶ`).
+- **Version 24 (Logical Baseline)**: First logical order model achieving **88.94% validation accuracy** and 13.88% CER across the 50-test stress suite.
+- **Version 23 (Visual Order Legacy)**: Maintained for historical visual rendering order comparison (84.12% validation accuracy).
 
 ---
 

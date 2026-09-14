@@ -200,7 +200,7 @@ def get_ocr_model(version):
         return ocr_model
         
     if version == 'auto':
-        cham_model = get_ocr_model('v24')
+        cham_model = get_ocr_model('v25')
         viet_model = get_ocr_model('vi')
         ocr_model = AutoRoutingOCRWrapper(cham_model, viet_model)
         ocr_models[version] = ocr_model
@@ -254,7 +254,7 @@ def get_ocr_model(version):
     
     import paddle
     args.use_gpu = paddle.is_compiled_with_cuda()
-    args.rec_image_shape = "3, 48, 320"
+    args.rec_image_shape = "3, 48, 480" if version == "v25" else "3, 48, 320"
     args.use_space_char = True
     
     # Batch size config: default to 1 on CPU to prevent padding latency blowup from varying crop aspect ratios
@@ -1423,7 +1423,7 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             
             # Extract parameters
             img_b64 = data['image']
-            model_ver = data.get('model', 'v24')
+            model_ver = data.get('model', 'v25')
             method = data.get('method', 'dbnet')
             threshold = float(data.get('threshold', 0.05))
             gap = int(data.get('gap', 12))
@@ -1519,7 +1519,7 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                     pred_text = meta['candidates'][meta['selected_crop_type']]['prediction']
                     confidence = meta['candidates'][meta['selected_crop_type']]['confidence']
                     
-                    if model_ver in ['v24', 'v26']:
+                    if model_ver in ['v24', 'v25', 'v26']:
                         try:
                             from scripts.generate_data import normalize_unicode
                             pred_text = normalize_unicode(pred_text)
@@ -1584,7 +1584,7 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             data = json.loads(post_data.decode('utf-8'))
             
             img_b64 = data.get('image', '')
-            model_ver = data.get('model', 'v24')
+            model_ver = data.get('model', 'v25')
             bbox = data.get('bbox', [0, 0, 0, 0])
             
             if ',' in img_b64:
@@ -1624,7 +1624,7 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                 self.send_json_response({'error': f'Cropped OCR transcription error ({model_ver}): {e}'}, 200)
                 return
                 
-            if model_ver in ['v24', 'v26']:
+            if model_ver in ['v24', 'v25', 'v26']:
                 try:
                     from scripts.generate_data import normalize_unicode
                     pred_text = normalize_unicode(pred_text)
@@ -1637,7 +1637,7 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             self.send_json_response({
                 'text': pred_text,
                 'confidence': float(conf),
-                'image': crop_b64,
+                'crop_image': f"data:image/png;base64,{crop_b64}",
                 'bbox': [x1, y1, x2, y2]
             })
         else:
@@ -1685,9 +1685,9 @@ def run_server():
     print(f"======================================================================")
     
     try:
-        get_ocr_model('v23')
+        get_ocr_model('v25')
     except Exception as e:
-        print(f"⚠️  Could not pre-load model v23: {e}. It will load when requested.")
+        print(f"⚠️  Could not pre-load model v25: {e}. It will load when requested.")
         
     try:
         httpd.serve_forever()

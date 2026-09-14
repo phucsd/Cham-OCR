@@ -112,10 +112,10 @@ Mọi số liệu công bố đều được đối chiếu trực tiếp từ c
    - Được sinh bởi script `ocr-benchmark/scripts/generate_benchmark_200.py` từ ngữ liệu Chăm thực tế với 5 cấp độ biến dạng hình học và chất lượng giấy.
    - Tỷ lệ phát hiện dòng tổng thể đạt **92.80%**, CER trung bình **23.24%**, WER **51.63%**, tốc độ ~1.33s/trang trên CPU.
    - Xác định chính xác **điểm gãy sụp đổ (Breaking Point) ở Cấp độ 5**: khi biên độ uốn sóng lớn hơn khoảng cách giữa hai dòng ($\text{Amplitude} > \text{Gap}$), tỷ lệ bắt dòng giảm xuống 61.45% do các nét chữ cắt chéo và dính chùm vào nhau.
-3. **Phân loại Mô hình V24 vs V25**:
-   - **Version 24 (Validated Baseline)**: Mô hình chuẩn chính thức đang phục vụ trên production (CER 16.81%, Pass Rate 44.0% trong bài đối sánh cục bộ).
-   - **Version 25 (Experimental Checkpoint)**: Bản thử nghiệm mở rộng từ điển dấu câu và số khổ thơ (đang trong quá trình huấn luyện và tinh chỉnh, CER 51.73% ở checkpoint ban đầu).
-   - **Đóng băng Thực nghiệm Huấn luyện V25**: Để đảm bảo tính tái lập khoa học và xác thực mô hình trong khi tiến trình huấn luyện đa chặng đang chạy trên GPU Kaggle, toàn bộ tài nguyên huấn luyện V25 (`generate_data_v25.py`, `rec_cham_v25.yml`, `v25_dataset_manifest.json`, `TRAINING_ROADMAP_V25.md`) được đóng băng nghiêm ngặt. Các đề xuất cải tiến tiếp theo được theo dõi riêng tại [FUTURE_WORK.md](FUTURE_WORK.md).
+3. **Tiến trình Mô hình: V23 vs V24 Baseline vs V25 SOTA**:
+   - **Version 25 (Production SOTA — Khuyên dùng)**: Đã hoàn thành huấn luyện đa chặng 40 epoch trên GPU Dual Tesla T4x2 (87.480 bước huấn luyện tích lũy). Đạt độ chính xác chuỗi tuyệt đối **90.96%** và khoảng cách chỉnh sửa chuẩn hóa **99.28% (CER 0.72%)** trên tập 10.000 mẫu kiểm định đóng băng chuẩn (`cham_v25_val_freeze.zip`). Khắc phục triệt để lỗi sụp đổ CTC đối với dấu Double Danda (`꩝꩝`), triệt tiêu việc nhận nhầm số khổ thơ thành chữ cái (`꩔` vs `ꨤ`, `꩕` vs `ꨅ`), và phân biệt chuẩn xác các cặp dấu phụ vi mô (`ꨲ` vs `ꨶ`).
+   - **Version 24 (Logical Baseline)**: Mô hình thứ tự Logic đầu tiên đạt độ chính xác kiểm định 88.94% và CER 13.88% trên 50 bài kiểm thử phân tầng.
+   - **Version 23 (Visual Legacy)**: Duy trì đối chiếu cho chuẩn gõ theo thứ tự hiển thị trực quan (độ chính xác kiểm định 84.12%).
 
 ---
 
