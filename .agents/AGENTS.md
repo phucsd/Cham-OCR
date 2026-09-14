@@ -78,4 +78,10 @@
     2. `Pipeline / Container Overhead`: Thời gian chuẩn bị môi trường, cài đặt gói, sinh dữ liệu tổng hợp, giải nén tập validation đóng băng và đóng gói xuất bản checkpoint.
     3. `Total Kernel Wall-clock Time`: Tổng thời gian thực tế phiên chạy Kaggle chiếm dụng tài nguyên GPU (tính vào quota).
 
-
+- **Quy tắc Phân định Chuẩn xác Mô hình V25 (Tuyệt đối không nhầm lẫn giữa các phiên làm việc)**:
+  - **Bản thử nghiệm A100 cũ (Ngày 10/09/2026 - ĐÃ HỦY/LỖI THỜI)**: Phiên chạy thử 12 epochs trên Lightning AI Cloud NVIDIA A100 chỉ nhằm mục đích benchmark tốc độ phần cứng (A100 vs L40S vs L4). Checkpoint sơ bộ này có CER 51.73% và **KHÔNG ĐƯỢC COI LÀ MÔ HÌNH V25 CHÍNH THỨC**.
+  - **Bản V25 SOTA Chính thức (Hoàn tất ngày 13/09/2026 trên Kaggle Dual Tesla T4x2)**: Đây là mô hình V25 **DUY NHẤT VÀ CHÍNH THỨC** của dự án:
+    - Huấn luyện trọn vẹn **40 Epochs** (3 chặng, 87,480 steps) trên **Kaggle Dual Tesla T4x2** (tài khoản `gustavnguyen`, kernel `paddleocr-cham-v25-stage3`).
+    - Kết quả kiểm định chuẩn trên 10,000 ảnh đóng băng (`cham_v25_val_freeze.zip`): **Sequence Accuracy 90.96%**, **Normalized Edit Distance 99.28% (CER 0.72%)**.
+    - Đây là mô hình duy nhất được chuyển đổi sang `ocr-studio/data/output/rec_cham_inference_v25/` và triển khai trên dịch vụ thực tế `https://ocr.cham.asia`.
+    - Khi bắt đầu bất kỳ phiên trò chuyện mới nào, Agent **TUYỆT ĐỐI KHÔNG ĐƯỢC NHẦM** với bản thử nghiệm 12 epoch A100 cũ. Mọi báo cáo về V25 bắt buộc phải căn cứ theo kết quả SOTA 40 Epochs Kaggle T4x2 này.
