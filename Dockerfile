@@ -18,8 +18,8 @@ WORKDIR /app
 COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Force cache bust for updated app code & Cham-SVTR V25 SOTA model
-RUN echo "Cache bust 2026-09-14T08:15:00Z - Cham-SVTR V25 SOTA Model (90.96% Acc) Deployed"
+# Force cache bust for updated app code & Cham Paleographic Keyboard 5-row layout
+RUN echo "Cache bust 2026-09-14T09:25:00Z - Cham Paleographic Keyboard 5-Row Compact Layout Deployed"
 
 # Copy application files
 COPY . /app

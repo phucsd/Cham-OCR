@@ -6,8 +6,7 @@
     <title>Cham OCR Studio — Paleographic Transcription & Diagnostic Workbench</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@100..900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Noto+Sans+Cham:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             /* Claude Warm Light Color System */
@@ -45,9 +44,10 @@
 
             /* Typography */
             --font-sans: "Google Sans Flex", "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-cham: 'Noto Sans Cham', 'Google Sans Flex', sans-serif;
 
             /* Bottom Dock Height */
-            --dock-height: 32px;
+            --dock-height: 0px;
         }
 
         * {
@@ -858,162 +858,294 @@
         }
 
         /* -------------------------------------------------------------
-           Bottom Cham Virtual Keyboard Dock (Collapsible Drawer)
+           Cham Paleographic Virtual Keyboard (Floating & Rotate-in)
            ------------------------------------------------------------- */
-        .bottom-keyboard-dock {
+        .cham-kb-fab-container {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 900;
-            background-color: var(--bg-panel);
-            border-top: 1px solid var(--border-medium);
-            box-shadow: 0 -4px 16px rgba(43, 33, 24, 0.08);
-            transition: height 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            height: var(--dock-height);
-        }
-
-        .dock-collapsed-bar {
-            height: 32px;
-            background-color: var(--bg-surface);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 16px;
-            cursor: pointer;
-            user-select: none;
-            transition: background-color 0.15s;
-            flex-shrink: 0;
-        }
-
-        .dock-collapsed-bar:hover {
-            background-color: var(--active-bg);
-        }
-
-        .dock-collapsed-title {
+            bottom: 20px;
+            right: 24px;
+            z-index: 1000;
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-main);
         }
 
-        .dock-collapsed-hint {
-            font-size: 11px;
-            color: var(--text-muted);
+        .cham-kb-fab {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #C96442 0%, #B55336 100%);
+            color: #FFFFFF;
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 16px rgba(201, 100, 66, 0.42), 0 2px 6px rgba(43, 33, 24, 0.16);
+            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
+            font-size: 22px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            outline: none;
+            user-select: none;
         }
 
-        .dock-expanded-content {
+        .cham-kb-fab:hover {
+            transform: scale(1.08) translateY(-2px);
+            box-shadow: 0 8px 24px rgba(201, 100, 66, 0.52);
+        }
+
+        .cham-kb-fab.active {
+            transform: rotate(90deg) scale(1.02);
+            background: linear-gradient(135deg, #2B2118 0%, #4A3B2C 100%);
+            box-shadow: 0 4px 16px rgba(43, 33, 24, 0.35);
+        }
+
+        .cham-kb-panel {
+            position: fixed;
+            bottom: 76px;
+            right: 24px;
+            z-index: 1000;
+            width: var(--cham-kb-width, 715px);
+            max-width: calc(100vw - 32px);
+            max-height: calc(100vh - 96px);
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-md);
+            box-shadow: 0 16px 40px rgba(43, 33, 24, 0.18), 0 4px 12px rgba(43, 33, 24, 0.08);
             display: flex;
             flex-direction: column;
-            flex: 1;
-            min-height: 0;
             overflow: hidden;
-            background-color: var(--bg-panel);
+            transform-origin: bottom right;
+            transition: transform 0.32s cubic-bezier(0.34, 1.35, 0.64, 1), opacity 0.26s ease, visibility 0.32s, width 0.2s ease;
         }
 
-        .dock-header {
-            height: 36px;
-            padding: 0 14px;
+        .cham-kb-panel.closed {
+            transform: scale(0.2) rotate(18deg) translate(80px, 80px);
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+        }
+
+        .cham-kb-panel.open {
+            transform: scale(1) rotate(0deg) translate(0, 0);
+            opacity: 1;
+            pointer-events: auto;
+            visibility: visible;
+        }
+
+        .cham-kb-header {
+            height: 38px;
+            padding: 0 12px;
+            background-color: var(--bg-surface);
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid var(--border-color);
-            background-color: var(--bg-surface);
+            cursor: move;
+            user-select: none;
+            gap: 8px;
             flex-shrink: 0;
         }
 
-        .dock-tabs {
+        .cham-kb-title-group {
             display: flex;
+            align-items: center;
             gap: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-main);
+            min-width: 0;
         }
 
-        .dock-tab-btn {
-            background-color: var(--bg-panel);
+        .cham-kb-drag-handle {
+            color: var(--text-quiet);
+            cursor: grab;
+            font-size: 13px;
+            letter-spacing: -2px;
+            margin-right: 2px;
+        }
+
+        .cham-kb-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .cham-kb-control-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .cham-kb-control-item select {
+            background-color: #FFFFFF;
             border: 1px solid var(--border-medium);
             border-radius: 4px;
-            padding: 3px 10px;
+            padding: 2px 4px;
             font-size: 11px;
-            cursor: pointer;
-            color: var(--text-muted);
             font-family: inherit;
-            font-weight: 500;
+            color: var(--text-main);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .cham-kb-btn-icon {
+            background: none;
+            border: none;
+            font-size: 13px;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 4px;
+            line-height: 1;
             transition: all 0.15s ease;
         }
 
-        .dock-tab-btn:hover {
+        .cham-kb-btn-icon:hover {
             background-color: var(--active-bg);
-            color: var(--text-main);
-            border-color: var(--accent-primary);
+            color: var(--accent-primary);
         }
 
-        .dock-tab-btn.active {
-            background-color: var(--accent-primary);
-            border-color: var(--accent-primary);
-            color: #FFFFFF;
-            font-weight: 700;
-        }
-
-        .dock-actions {
+        .cham-kb-toolbar {
+            padding: 6px 10px;
+            background-color: var(--bg-app);
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
-            gap: 8px;
-        }
-
-        .dock-body {
-            flex: 1;
-            overflow-y: auto;
-            padding: 10px 14px;
-            display: flex;
-            flex-wrap: wrap;
             gap: 6px;
-            align-content: flex-start;
+            flex-shrink: 0;
         }
 
-        .cham-key-btn {
+        .cham-kb-scratchpad-wrap {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            width: 100%;
+        }
+
+        .cham-kb-scratchpad {
+            flex: 1;
+            height: 30px;
+            padding: 3px 8px;
+            font-family: var(--font-cham);
+            font-size: 16px;
+            color: var(--text-main);
             background-color: #FFFFFF;
             border: 1px solid var(--border-medium);
             border-radius: 6px;
-            min-width: 38px;
-            height: 38px;
-            padding: 2px 6px;
-            display: inline-flex;
+            outline: none;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+
+        .cham-kb-scratchpad:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 2px var(--accent-glow);
+        }
+
+        .cham-kb-body {
+            padding: 6px 8px 8px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            background-color: var(--bg-panel);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            max-height: calc(100vh - 210px);
+        }
+
+        .cham-kb-row {
+            display: flex;
+            gap: 3.5px;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .cham-key-btn {
+            flex: 1;
+            min-width: 0;
+            height: 37px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #F9FAFB 100%);
+            border: 1px solid #D1D5DB;
+            border-radius: 6px;
+            box-shadow: 0 1.5px 3px rgba(43, 33, 24, 0.06), 0 1px 0 #CBD5E1;
+            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            padding: 1px 0px;
             cursor: pointer;
-            color: var(--text-main);
-            transition: all 0.12s ease;
             user-select: none;
-            box-shadow: var(--shadow-sm);
-            font-family: var(--font-sans);
+            transition: all 0.12s ease;
+            position: relative;
         }
 
         .cham-key-btn:hover {
-            background-color: var(--active-bg);
+            background: var(--active-bg);
             border-color: var(--accent-primary);
-            color: var(--accent-primary);
             transform: translateY(-1px);
-            box-shadow: 0 2px 6px rgba(201, 100, 66, 0.15);
+            box-shadow: 0 3px 6px rgba(201, 100, 66, 0.2), 0 1px 0 var(--accent-primary);
         }
 
         .cham-key-btn:active {
             transform: translateY(1px);
+            box-shadow: 0 1px 2px rgba(43, 33, 24, 0.1);
+            background: #FCE8DE;
         }
 
-        .cham-key-btn .key-sub {
-            font-size: 8px;
+        .cham-char {
+            font-family: var(--font-cham);
+            font-size: var(--kb-font-size, 18px);
+            font-weight: 600;
+            color: #103B7B;
+            line-height: 1.1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-rendering: optimizeLegibility;
+        }
+
+        .dotted-circle {
+            opacity: 0.38;
+            font-size: 0.85em;
+            color: #64748B;
+            margin: 0 0.5px;
+        }
+
+        .cham-latin {
+            font-family: var(--font-sans);
+            font-size: 8.5px;
             color: var(--text-muted);
+            font-weight: 500;
             line-height: 1;
-            margin-top: 2px;
+            margin-top: 0px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+
+        .cham-key-btn.key-space {
+            flex: 2.3;
+            background: #FFFFFF;
+        }
+
+        .cham-key-btn.key-space .cham-char {
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .cham-key-btn.key-back {
+            flex: 1.15;
+            background: #F8FAFC;
+            color: var(--accent-red);
+        }
+
+        .cham-key-btn.key-enter {
+            flex: 1.15;
+            background: #F8FAFC;
+            color: var(--accent-green);
         }
 
         /* -------------------------------------------------------------
@@ -1468,37 +1600,67 @@
 
     </div>
 
-    <!-- 3. Bottom Cham Virtual Keyboard Dock (Collapsible Drawer) -->
-    <div class="bottom-keyboard-dock" id="cham-keyboard-dock">
-        <!-- Collapsed Bar (Always Visible at Bottom) -->
-        <div class="dock-collapsed-bar" onclick="toggleChamKeyboardDock()">
-            <div class="dock-collapsed-title">
-                <span>⌨️ Cham Paleographic Virtual Keyboard</span>
-                <span class="badge" style="font-size: 9.5px; padding: 1px 6px;">68 Unicode Glyphs</span>
+    <!-- 3. Floating Cham Paleographic Virtual Keyboard & FAB Trigger -->
+    <div class="cham-kb-fab-container" id="cham-kb-fab-container">
+        <button class="cham-kb-fab" id="cham-kb-fab" onclick="toggleChamKeyboardFloating()" title="Cham Paleographic Virtual Keyboard (Alt+K)">
+            <span id="cham-kb-fab-icon">⌨️</span>
+        </button>
+    </div>
+
+    <div class="cham-kb-panel closed" id="cham-kb-panel">
+        <!-- Draggable Header -->
+        <div class="cham-kb-header" id="cham-kb-header">
+            <div class="cham-kb-title-group">
+                <span class="cham-kb-drag-handle" title="Drag to reposition">⋮⋮</span>
+                <span>Bàn phím Cham</span>
+                <span class="badge" style="font-size: 9.5px; padding: 1px 6px;">Akhar Thrah</span>
             </div>
-            <div class="dock-collapsed-hint">
-                <span id="dock-status-hint">Click to expand virtual keyboard (Alt+K)</span>
-                <span id="dock-toggle-arrow" style="font-size: 11px;">▲</span>
+            <div class="cham-kb-controls">
+                <div class="cham-kb-control-item">
+                    <label for="select-row-layout">Bố cục:</label>
+                    <select id="select-row-layout" onchange="changeRowLayout(this.value)">
+                        <option value="5" selected>5 hàng (Gọn)</option>
+                        <option value="6">6 hàng (Cân đối)</option>
+                        <option value="9">9 hàng (Gốc)</option>
+                    </select>
+                </div>
+                <div class="cham-kb-control-item">
+                    <label for="select-pronunciation">Phonetic:</label>
+                    <select id="select-pronunciation" onchange="changePhoneticMode(this.value)">
+                        <option value="traditional" selected>Traditional</option>
+                        <option value="sanskrit">Sanskrit</option>
+                        <option value="none">None</option>
+                    </select>
+                </div>
+                <div class="cham-kb-control-item">
+                    <label for="change-font-size">Size:</label>
+                    <select id="change-font-size" onchange="changeKeyFontSize(this.value)">
+                        <option value="16">16</option>
+                        <option value="18" selected>18</option>
+                        <option value="20">20</option>
+                        <option value="22">22</option>
+                    </select>
+                </div>
+                <button class="cham-kb-btn-icon" onclick="resetKeyboardPosition()" title="Reset keyboard position">⟲</button>
+                <button class="cham-kb-btn-icon" onclick="toggleChamKeyboardFloating(false)" title="Close virtual keyboard (Esc / Alt+K)">✕</button>
             </div>
         </div>
 
-        <!-- Expanded Dock Content -->
-        <div class="dock-expanded-content">
-            <div class="dock-header">
-                <div class="dock-tabs">
-                    <button class="dock-tab-btn active" id="kb-tab-consonants" onclick="switchKeyboardTab('consonants')">Consonants (41)</button>
-                    <button class="dock-tab-btn" id="kb-tab-diacritics" onclick="switchKeyboardTab('diacritics')">Diacritics & Vowels (14)</button>
-                    <button class="dock-tab-btn" id="kb-tab-digits" onclick="switchKeyboardTab('digits')">Numerals & Punctuation (13)</button>
-                </div>
-                <div class="dock-actions">
-                    <button class="btn btn-sm" onclick="insertSpaceCham()" title="Insert space character">⎵ Space</button>
-                    <button class="btn btn-sm" onclick="deleteChamChar()" title="Delete last character (Backspace)">⌫ Backspace</button>
-                    <button class="btn btn-sm" onclick="toggleChamKeyboardDock()" title="Collapse virtual keyboard (Alt+K / Esc)">▼ Collapse</button>
-                </div>
+        <!-- Scratchpad & Action Toolbar (Streamlined Single Row) -->
+        <div class="cham-kb-toolbar">
+            <div class="cham-kb-scratchpad-wrap">
+                <input type="text" id="cham-kb-scratchpad" class="cham-kb-scratchpad" placeholder="Gõ thử hoặc gõ trực tiếp vào dòng OCR đang chọn..." />
+                <button class="btn btn-sm" onclick="copyScratchpadText()" title="Copy text to clipboard">📋 Copy</button>
+                <button class="btn btn-sm" onclick="insertScratchpadToLine()" title="Insert text into selected OCR line">↵ Chèn</button>
+                <button class="btn btn-sm" onclick="clearScratchpadText()" title="Clear scratchpad">🗑</button>
+                <button class="btn btn-sm" onclick="undoText()" title="Undo edit">↶</button>
+                <button class="btn btn-sm" onclick="redoText()" title="Redo edit">↷</button>
             </div>
-            <div class="dock-body" id="keyboard-body">
-                <!-- Cham Character keys dynamically rendered -->
-            </div>
+        </div>
+
+        <!-- Dynamic 9-Row Keyboard Grid -->
+        <div class="cham-kb-body" id="cham-kb-body">
+            <!-- Rendered dynamically by JavaScript -->
         </div>
     </div>
 
@@ -1981,8 +2143,11 @@ python ocr-studio/app.py</div>
         let isDrawingBbox = false;
         let drawStartPoint = null;
         let showLineCrops = false;
-        let isKeyboardDockExpanded = false;
-        let activeChamKeyboardTab = 'consonants';
+        let isChamKeyboardOpen = false;
+        let isKeyboardDockExpanded = false; // legacy alias
+        let chamKeyboardRowLayout = localStorage.getItem('cham_kb_row_layout') || '5'; // '5', '6', '9'
+        let chamKeyboardPhoneticMode = 'traditional'; // 'traditional', 'sanskrit', 'none'
+        let chamKeyboardFontSize = 18;
         let lastActiveInputElement = null;
         
         let currentImageBase64 = "";
@@ -3206,88 +3371,500 @@ python ocr-studio/app.py</div>
         }
 
         // -------------------------------------------------------------
-        // Bottom Cham Virtual Keyboard Dock
+        // Floating Cham Virtual Keyboard (Akhar Thrah) Engine
         // -------------------------------------------------------------
-        const CHAM_KEYBOARD_DATA = {
-            consonants: [
-                { char: 'ꨀ', name: 'A' }, { char: 'ꨁ', name: 'I' }, { char: 'ꨂ', name: 'U' },
-                { char: 'ꨃ', name: 'E' }, { char: 'ꨄ', name: 'Ai' }, { char: 'ꨅ', name: 'O' },
-                { char: 'ꨆ', name: 'Ka' }, { char: 'ꨇ', name: 'Kha' }, { char: 'ꨈ', name: 'Ga' },
-                { char: 'ꨉ', name: 'Gha' }, { char: 'ꨊ', name: 'Nga' }, { char: 'ꨋ', name: 'Nga-fin' },
-                { char: 'ꨌ', name: 'Ca' }, { char: 'ꨍ', name: 'Cha' }, { char: 'ꨎ', name: 'Ja' },
-                { char: 'ꨏ', name: 'Jha' }, { char: 'ꨐ', name: 'Nya' }, { char: 'ꨑ', name: 'Nya-fin' },
-                { char: 'ꨒ', name: 'Nja' }, { char: 'ꨓ', name: 'Ta' }, { char: 'ꨔ', name: 'Tha' },
-                { char: 'ꨕ', name: 'Da' }, { char: 'ꨖ', name: 'Dha' }, { char: 'ꨗ', name: 'Na' },
-                { char: 'ꨘ', name: 'Na-fin' }, { char: 'ꨙ', name: 'Nda' }, { char: 'ꨚ', name: 'Pa' },
-                { char: 'ꨛ', name: 'Pha' }, { char: 'ꨜ', name: 'Ba' }, { char: 'ꨝ', name: 'Bha' },
-                { char: 'ꨞ', name: 'Ma' }, { char: 'ꨟ', name: 'Ma-fin' }, { char: 'ꨠ', name: 'Mba' },
-                { char: 'ꨡ', name: 'Ya' }, { char: 'ꨢ', name: 'Ya-fin' }, { char: 'ꨣ', name: 'Ra' },
-                { char: 'ꨤ', name: 'La' }, { char: 'ꨥ', name: 'Va' }, { char: 'ꨦ', name: 'Sha' },
-                { char: 'ꨧ', name: 'Sa' }, { char: 'ꨨ', name: 'Ha' }
+        const CHAM_KEYBOARD_LAYOUTS = {
+            '5': [
+                // Row 1: Digits (10) + Independent Vowels (6) + Apostrophe (1) = 17 keys
+                [
+                    { char: '꩑', display: '꩑', trad: '1', sanskrit: '1', title: 'U+AA51 Cham Digit One' },
+                    { char: '꩒', display: '꩒', trad: '2', sanskrit: '2', title: 'U+AA52 Cham Digit Two' },
+                    { char: '꩓', display: '꩓', trad: '3', sanskrit: '3', title: 'U+AA53 Cham Digit Three' },
+                    { char: '꩔', display: '꩔', trad: '4', sanskrit: '4', title: 'U+AA54 Cham Digit Four' },
+                    { char: '꩕', display: '꩕', trad: '5', sanskrit: '5', title: 'U+AA55 Cham Digit Five' },
+                    { char: '꩖', display: '꩖', trad: '6', sanskrit: '6', title: 'U+AA56 Cham Digit Six' },
+                    { char: '꩗', display: '꩗', trad: '7', sanskrit: '7', title: 'U+AA57 Cham Digit Seven' },
+                    { char: '꩘', display: '꩘', trad: '8', sanskrit: '8', title: 'U+AA58 Cham Digit Eight' },
+                    { char: '꩙', display: '꩙', trad: '9', sanskrit: '9', title: 'U+AA59 Cham Digit Nine' },
+                    { char: '꩐', display: '꩐', trad: '0', sanskrit: '0', title: 'U+AA50 Cham Digit Zero' },
+                    { char: 'ꨀ', display: 'ꨀ', trad: 'a', sanskrit: 'a', title: 'U+AA00 Cham Letter A' },
+                    { char: 'ꨁ', display: 'ꨁ', trad: 'i', sanskrit: 'i', title: 'U+AA01 Cham Letter I' },
+                    { char: 'ꨂ', display: 'ꨂ', trad: 'u', sanskrit: 'u', title: 'U+AA02 Cham Letter U' },
+                    { char: 'ꨃ', display: 'ꨃ', trad: 'e', sanskrit: 'e', title: 'U+AA03 Cham Letter E' },
+                    { char: 'ꨄ', display: 'ꨄ', trad: 'ai', sanskrit: 'ai', title: 'U+AA04 Cham Letter Ai' },
+                    { char: 'ꨅ', display: 'ꨅ', trad: 'o', sanskrit: 'o', title: 'U+AA05 Cham Letter O' },
+                    { char: "'", display: "'", trad: "'", sanskrit: "'", title: 'Apostrophe' }
+                ],
+                // Row 2: Velars (6), Palatals (6), Retroflex & Dentals 1 (6) = 18 keys
+                [
+                    { char: 'ꨆ', display: 'ꨆ', trad: 'ka', sanskrit: 'ka', title: 'U+AA06 Cham Letter Ka' },
+                    { char: 'ꨇ', display: 'ꨇ', trad: 'kha', sanskrit: 'kha', title: 'U+AA07 Cham Letter Kha' },
+                    { char: 'ꨈ', display: 'ꨈ', trad: 'ga', sanskrit: 'ga', title: 'U+AA08 Cham Letter Ga' },
+                    { char: 'ꨉ', display: 'ꨉ', trad: 'gha', sanskrit: 'gha', title: 'U+AA09 Cham Letter Gha' },
+                    { char: 'ꨊ', display: 'ꨊ', trad: 'nga', sanskrit: 'ṅa', title: 'U+AA0A Cham Letter Nga' },
+                    { char: 'ꨋ', display: 'ꨋ', trad: 'nga', sanskrit: 'ṅga', title: 'U+AA0B Cham Letter Nga-final' },
+                    { char: 'ꨌ', display: 'ꨌ', trad: 'ca', sanskrit: 'ca', title: 'U+AA0C Cham Letter Ca' },
+                    { char: 'ꨍ', display: 'ꨍ', trad: 'cha', sanskrit: 'cha', title: 'U+AA0D Cham Letter Cha' },
+                    { char: 'ꨎ', display: 'ꨎ', trad: 'ja', sanskrit: 'ja', title: 'U+AA0E Cham Letter Ja' },
+                    { char: 'ꨏ', display: 'ꨏ', trad: 'jha', sanskrit: 'jha', title: 'U+AA0F Cham Letter Jha' },
+                    { char: 'ꨐ', display: 'ꨐ', trad: 'nya', sanskrit: 'ña', title: 'U+AA10 Cham Letter Nya' },
+                    { char: 'ꨑ', display: 'ꨑ', trad: 'nya', sanskrit: 'ñja', title: 'U+AA11 Cham Letter Nya-final' },
+                    { char: 'ꨒ', display: 'ꨒ', trad: 'nja', sanskrit: 'ṇḍa', title: 'U+AA12 Cham Letter Nja' },
+                    { char: 'ꨓ', display: 'ꨓ', trad: 'ta', sanskrit: 'ta', title: 'U+AA13 Cham Letter Ta' },
+                    { char: 'ꨔ', display: 'ꨔ', trad: 'tha', sanskrit: 'tha', title: 'U+AA14 Cham Letter Tha' },
+                    { char: 'ꨕ', display: 'ꨕ', trad: 'da', sanskrit: 'da', title: 'U+AA15 Cham Letter Da' },
+                    { char: 'ꨖ', display: 'ꨖ', trad: 'dha', sanskrit: 'dha', title: 'U+AA16 Cham Letter Dha' },
+                    { char: 'ꨗ', display: 'ꨗ', trad: 'na', sanskrit: 'na', title: 'U+AA17 Cham Letter Na' }
+                ],
+                // Row 3: Dentals 2 (2), Labials (8), Semivowels, Sibilants, Ha (7), Backspace (1) = 18 keys
+                [
+                    { char: 'ꨘ', display: 'ꨘ', trad: 'na', sanskrit: 'ṇa', title: 'U+AA18 Cham Letter Na-final' },
+                    { char: 'ꨙ', display: 'ꨙ', trad: 'nda', sanskrit: 'nda', title: 'U+AA19 Cham Letter Nda' },
+                    { char: 'ꨚ', display: 'ꨚ', trad: 'pa', sanskrit: 'pa', title: 'U+AA1A Cham Letter Pa' },
+                    { char: 'ꨛ', display: 'ꨛ', trad: 'pa', sanskrit: 'pha', title: 'U+AA1B Cham Letter Pa-final' },
+                    { char: 'ꨜ', display: 'ꨜ', trad: 'pha', sanskrit: 'ba', title: 'U+AA1C Cham Letter Pha' },
+                    { char: 'ꨝ', display: 'ꨝ', trad: 'ba', sanskrit: 'bha', title: 'U+AA1D Cham Letter Ba' },
+                    { char: 'ꨞ', display: 'ꨞ', trad: 'bha', sanskrit: 'ma', title: 'U+AA1E Cham Letter Bha' },
+                    { char: 'ꨟ', display: 'ꨟ', trad: 'ma', sanskrit: 'ma', title: 'U+AA1F Cham Letter Ma' },
+                    { char: 'ꨠ', display: 'ꨠ', trad: 'ma', sanskrit: 'mba', title: 'U+AA20 Cham Letter Ma-final' },
+                    { char: 'ꨡ', display: 'ꨡ', trad: 'mba', sanskrit: 'ya', title: 'U+AA21 Cham Letter Mba' },
+                    { char: 'ꨢ', display: 'ꨢ', trad: 'ya', sanskrit: 'ya', title: 'U+AA22 Cham Letter Ya' },
+                    { char: 'ꨣ', display: 'ꨣ', trad: 'ra', sanskrit: 'ra', title: 'U+AA23 Cham Letter Ra' },
+                    { char: 'ꨤ', display: 'ꨤ', trad: 'la', sanskrit: 'la', title: 'U+AA24 Cham Letter La' },
+                    { char: 'ꨥ', display: 'ꨥ', trad: 'wa', sanskrit: 'va', title: 'U+AA25 Cham Letter Wa' },
+                    { char: 'ꨦ', display: 'ꨦ', trad: 'sa', sanskrit: 'śa', title: 'U+AA26 Cham Letter Sa/Sha' },
+                    { char: 'ꨧ', display: 'ꨧ', trad: 'sa', sanskrit: 'sa', title: 'U+AA27 Cham Letter Sa' },
+                    { char: 'ꨨ', display: 'ꨨ', trad: 'ha', sanskrit: 'ha', title: 'U+AA28 Cham Letter Ha' },
+                    { type: 'backspace', display: '⌫', trad: 'Back', sanskrit: 'Back', title: 'Backspace (Delete previous character)' }
+                ],
+                // Row 4: Dependent Vowels (10), Medials (4), Cham Punctuation (4) = 18 keys
+                [
+                    { char: 'ꨩ', display: '<span class="dotted-circle">◌</span>ꨩ', trad: '-a', sanskrit: '-ā', title: 'U+AA29 Vowel Sign Aa' },
+                    { char: 'ꨪ', display: '<span class="dotted-circle">◌</span>ꨪ', trad: '-i', sanskrit: '-i', title: 'U+AA2A Vowel Sign I' },
+                    { char: 'ꨫ', display: '<span class="dotted-circle">◌</span>ꨫ', trad: '-i', sanskrit: '-ī', title: 'U+AA2B Vowel Sign Ii' },
+                    { char: 'ꨬ', display: '<span class="dotted-circle">◌</span>ꨬ', trad: '-ei', sanskrit: '-ei', title: 'U+AA2C Vowel Sign Ei' },
+                    { char: 'ꨭ', display: '<span class="dotted-circle">◌</span>ꨭ', trad: '-u', sanskrit: '-u', title: 'U+AA2D Vowel Sign U' },
+                    { char: 'ꨮ', display: '<span class="dotted-circle">◌</span>ꨮ', trad: '-e', sanskrit: '-ē', title: 'U+AA2E Vowel Sign E' },
+                    { char: 'ꨯ', display: 'ꨯ<span class="dotted-circle">◌</span>', trad: '-o', sanskrit: '-o', title: 'U+AA2F Vowel Sign O' },
+                    { char: 'ꨰ', display: 'ꨰ<span class="dotted-circle">◌</span>', trad: '-ai', sanskrit: '-ai', title: 'U+AA30 Vowel Sign Ai' },
+                    { char: 'ꨱ', display: '<span class="dotted-circle">◌</span>ꨱ', trad: '-ao', sanskrit: '-ao', title: 'U+AA31 Vowel Sign Ao' },
+                    { char: 'ꨲ', display: '<span class="dotted-circle">◌</span>ꨲ', trad: '-â', sanskrit: '-au', title: 'U+AA32 Vowel Sign Au' },
+                    { char: 'ꨳ', display: '<span class="dotted-circle">◌</span>ꨳ', trad: '-ia', sanskrit: '-ya', title: 'U+AA33 Medial Ya' },
+                    { char: 'ꨴ', display: '<span class="dotted-circle">◌</span>ꨴ', trad: '-r', sanskrit: '-ra', title: 'U+AA34 Medial Ra' },
+                    { char: 'ꨵ', display: '<span class="dotted-circle">◌</span>ꨵ', trad: '-l', sanskrit: '-la', title: 'U+AA35 Medial La' },
+                    { char: 'ꨶ', display: '<span class="dotted-circle">◌</span>ꨶ', trad: '-ua', sanskrit: '-va', title: 'U+AA36 Medial Wa' },
+                    { char: '꩜', display: '꩜', trad: '@', sanskrit: '@', title: 'U+AA5C Cham Spiral' },
+                    { char: '꩝', display: '꩝', trad: ',', sanskrit: ',', title: 'U+AA5D Cham Danda' },
+                    { char: '꩞', display: '꩞', trad: ';', sanskrit: ';', title: 'U+AA5E Cham Double Danda' },
+                    { char: '꩟', display: '꩟', trad: '.', sanskrit: '.', title: 'U+AA5F Cham Triple Danda' }
+                ],
+                // Row 5: Finals (15), Parentheses (2), Space (1), Enter (1) = 19 keys
+                [
+                    { char: 'ꩀ', display: 'ꩀ', trad: 'k', sanskrit: '-k', title: 'U+AA40 Final K' },
+                    { char: 'ꩁ', display: 'ꩁ', trad: 'g', sanskrit: '-g', title: 'U+AA41 Final G' },
+                    { char: 'ꩂ', display: 'ꩂ', trad: 'ng', sanskrit: '-ṅ', title: 'U+AA42 Final Ng' },
+                    { char: 'ꩃ', display: '<span class="dotted-circle">◌</span>ꩃ', trad: 'ng', sanskrit: '-ṅg', title: 'U+AA43 Consonant Sign Kang' },
+                    { char: 'ꩄ', display: 'ꩄ', trad: 'c', sanskrit: '-c', title: 'U+AA44 Final C' },
+                    { char: 'ꩅ', display: 'ꩅ', trad: 't', sanskrit: '-t', title: 'U+AA45 Final T' },
+                    { char: 'ꩆ', display: 'ꩆ', trad: 'n', sanskrit: '-n', title: 'U+AA46 Final N' },
+                    { char: 'ꩇ', display: 'ꩇ', trad: 'p', sanskrit: '-p', title: 'U+AA47 Final P' },
+                    { char: 'ꩈ', display: 'ꩈ', trad: 'y', sanskrit: '-y', title: 'U+AA48 Final Y' },
+                    { char: 'ꩉ', display: 'ꩉ', trad: 'r', sanskrit: '-r', title: 'U+AA49 Final R' },
+                    { char: 'ꩊ', display: 'ꩊ', trad: 'l', sanskrit: '-l', title: 'U+AA4A Final L' },
+                    { char: 'ꩋ', display: 'ꩋ', trad: 's', sanskrit: '-s', title: 'U+AA4B Final S' },
+                    { char: 'ꩌ', display: '<span class="dotted-circle">◌</span>ꩌ', trad: 'm', sanskrit: '-ṃ', title: 'U+AA4C Sign Final M (Anusvara)' },
+                    { char: 'ꩍ', display: '<span class="dotted-circle">◌</span>ꩍ', trad: 'h', sanskrit: '-ḥ', title: 'U+AA4D Sign Final H (Visarga)' },
+                    { char: 'ꨥ', display: 'ꨥ', trad: 'w', sanskrit: '-v', title: 'U+AA25 Final Wa' },
+                    { char: '(', display: '(', trad: '(', sanskrit: '(', title: 'Left Parenthesis' },
+                    { char: ')', display: ')', trad: ')', sanskrit: ')', title: 'Right Parenthesis' },
+                    { type: 'space', char: ' ', display: 'ꨌꩌꨛꨩ', trad: 'Space', sanskrit: 'Space', title: 'Space (ꨌꩌꨛꨩ / Champa)' },
+                    { type: 'enter', display: '↵', trad: 'Enter', sanskrit: 'Enter', title: 'Enter (Submit / Next line)' }
+                ]
             ],
-            diacritics: [
-                { char: 'ꨳ', name: 'Ya med' }, { char: 'ꨴ', name: 'Ra med' },
-                { char: 'ꨵ', name: 'La med' }, { char: 'ꨶ', name: 'Wa med' },
-                { char: 'ꨲ', name: 'Au sign' }, { char: 'ꨪ', name: 'I sign' },
-                { char: 'ꨫ', name: 'Ii sign' }, { char: 'ꨬ', name: 'Ei sign' },
-                { char: 'ꨭ', name: 'U sign' }, { char: 'ꨮ', name: 'Oe sign' },
-                { char: 'ꨯ', name: 'O sign' }, { char: 'ꨰ', name: 'Ai sign' },
-                { char: 'ꩌ', name: 'Anusvara' }, { char: 'ꩍ', name: 'Visarga' }
+            '6': [
+                // Row 1: Digits (10) + Independent Vowels (4) = 14 keys
+                [
+                    { char: '꩑', display: '꩑', trad: '1', sanskrit: '1', title: 'U+AA51 Cham Digit One' },
+                    { char: '꩒', display: '꩒', trad: '2', sanskrit: '2', title: 'U+AA52 Cham Digit Two' },
+                    { char: '꩓', display: '꩓', trad: '3', sanskrit: '3', title: 'U+AA53 Cham Digit Three' },
+                    { char: '꩔', display: '꩔', trad: '4', sanskrit: '4', title: 'U+AA54 Cham Digit Four' },
+                    { char: '꩕', display: '꩕', trad: '5', sanskrit: '5', title: 'U+AA55 Cham Digit Five' },
+                    { char: '꩖', display: '꩖', trad: '6', sanskrit: '6', title: 'U+AA56 Cham Digit Six' },
+                    { char: '꩗', display: '꩗', trad: '7', sanskrit: '7', title: 'U+AA57 Cham Digit Seven' },
+                    { char: '꩘', display: '꩘', trad: '8', sanskrit: '8', title: 'U+AA58 Cham Digit Eight' },
+                    { char: '꩙', display: '꩙', trad: '9', sanskrit: '9', title: 'U+AA59 Cham Digit Nine' },
+                    { char: '꩐', display: '꩐', trad: '0', sanskrit: '0', title: 'U+AA50 Cham Digit Zero' },
+                    { char: 'ꨀ', display: 'ꨀ', trad: 'a', sanskrit: 'a', title: 'U+AA00 Cham Letter A' },
+                    { char: 'ꨁ', display: 'ꨁ', trad: 'i', sanskrit: 'i', title: 'U+AA01 Cham Letter I' },
+                    { char: 'ꨂ', display: 'ꨂ', trad: 'u', sanskrit: 'u', title: 'U+AA02 Cham Letter U' },
+                    { char: 'ꨃ', display: 'ꨃ', trad: 'e', sanskrit: 'e', title: 'U+AA03 Cham Letter E' }
+                ],
+                // Row 2: Vowels (2) + Velars (6) + Palatals (6) = 14 keys
+                [
+                    { char: 'ꨄ', display: 'ꨄ', trad: 'ai', sanskrit: 'ai', title: 'U+AA04 Cham Letter Ai' },
+                    { char: 'ꨅ', display: 'ꨅ', trad: 'o', sanskrit: 'o', title: 'U+AA05 Cham Letter O' },
+                    { char: 'ꨆ', display: 'ꨆ', trad: 'ka', sanskrit: 'ka', title: 'U+AA06 Cham Letter Ka' },
+                    { char: 'ꨇ', display: 'ꨇ', trad: 'kha', sanskrit: 'kha', title: 'U+AA07 Cham Letter Kha' },
+                    { char: 'ꨈ', display: 'ꨈ', trad: 'ga', sanskrit: 'ga', title: 'U+AA08 Cham Letter Ga' },
+                    { char: 'ꨉ', display: 'ꨉ', trad: 'gha', sanskrit: 'gha', title: 'U+AA09 Cham Letter Gha' },
+                    { char: 'ꨊ', display: 'ꨊ', trad: 'nga', sanskrit: 'ṅa', title: 'U+AA0A Cham Letter Nga' },
+                    { char: 'ꨋ', display: 'ꨋ', trad: 'nga', sanskrit: 'ṅga', title: 'U+AA0B Cham Letter Nga-final' },
+                    { char: 'ꨌ', display: 'ꨌ', trad: 'ca', sanskrit: 'ca', title: 'U+AA0C Cham Letter Ca' },
+                    { char: 'ꨍ', display: 'ꨍ', trad: 'cha', sanskrit: 'cha', title: 'U+AA0D Cham Letter Cha' },
+                    { char: 'ꨎ', display: 'ꨎ', trad: 'ja', sanskrit: 'ja', title: 'U+AA0E Cham Letter Ja' },
+                    { char: 'ꨏ', display: 'ꨏ', trad: 'jha', sanskrit: 'jha', title: 'U+AA0F Cham Letter Jha' },
+                    { char: 'ꨐ', display: 'ꨐ', trad: 'nya', sanskrit: 'ña', title: 'U+AA10 Cham Letter Nya' },
+                    { char: 'ꨑ', display: 'ꨑ', trad: 'nya', sanskrit: 'ñja', title: 'U+AA11 Cham Letter Nya-final' }
+                ],
+                // Row 3: Retroflex & Dentals (8) + Labials (6) = 14 keys
+                [
+                    { char: 'ꨒ', display: 'ꨒ', trad: 'nja', sanskrit: 'ṇḍa', title: 'U+AA12 Cham Letter Nja' },
+                    { char: 'ꨓ', display: 'ꨓ', trad: 'ta', sanskrit: 'ta', title: 'U+AA13 Cham Letter Ta' },
+                    { char: 'ꨔ', display: 'ꨔ', trad: 'tha', sanskrit: 'tha', title: 'U+AA14 Cham Letter Tha' },
+                    { char: 'ꨕ', display: 'ꨕ', trad: 'da', sanskrit: 'da', title: 'U+AA15 Cham Letter Da' },
+                    { char: 'ꨖ', display: 'ꨖ', trad: 'dha', sanskrit: 'dha', title: 'U+AA16 Cham Letter Dha' },
+                    { char: 'ꨗ', display: 'ꨗ', trad: 'na', sanskrit: 'na', title: 'U+AA17 Cham Letter Na' },
+                    { char: 'ꨘ', display: 'ꨘ', trad: 'na', sanskrit: 'ṇa', title: 'U+AA18 Cham Letter Na-final' },
+                    { char: 'ꨙ', display: 'ꨙ', trad: 'nda', sanskrit: 'nda', title: 'U+AA19 Cham Letter Nda' },
+                    { char: 'ꨚ', display: 'ꨚ', trad: 'pa', sanskrit: 'pa', title: 'U+AA1A Cham Letter Pa' },
+                    { char: 'ꨛ', display: 'ꨛ', trad: 'pa', sanskrit: 'pha', title: 'U+AA1B Cham Letter Pa-final' },
+                    { char: 'ꨜ', display: 'ꨜ', trad: 'pha', sanskrit: 'ba', title: 'U+AA1C Cham Letter Pha' },
+                    { char: 'ꨝ', display: 'ꨝ', trad: 'ba', sanskrit: 'bha', title: 'U+AA1D Cham Letter Ba' },
+                    { char: 'ꨞ', display: 'ꨞ', trad: 'bha', sanskrit: 'ma', title: 'U+AA1E Cham Letter Bha' },
+                    { char: 'ꨟ', display: 'ꨟ', trad: 'ma', sanskrit: 'ma', title: 'U+AA1F Cham Letter Ma' }
+                ],
+                // Row 4: Labials/Semivowels/Ha (9) + Medials (4) + Backspace (1) = 14 keys
+                [
+                    { char: 'ꨠ', display: 'ꨠ', trad: 'ma', sanskrit: 'mba', title: 'U+AA20 Cham Letter Ma-final' },
+                    { char: 'ꨡ', display: 'ꨡ', trad: 'mba', sanskrit: 'ya', title: 'U+AA21 Cham Letter Mba' },
+                    { char: 'ꨢ', display: 'ꨢ', trad: 'ya', sanskrit: 'ya', title: 'U+AA22 Cham Letter Ya' },
+                    { char: 'ꨣ', display: 'ꨣ', trad: 'ra', sanskrit: 'ra', title: 'U+AA23 Cham Letter Ra' },
+                    { char: 'ꨤ', display: 'ꨤ', trad: 'la', sanskrit: 'la', title: 'U+AA24 Cham Letter La' },
+                    { char: 'ꨥ', display: 'ꨥ', trad: 'wa', sanskrit: 'va', title: 'U+AA25 Cham Letter Wa' },
+                    { char: 'ꨦ', display: 'ꨦ', trad: 'sa', sanskrit: 'śa', title: 'U+AA26 Cham Letter Sa/Sha' },
+                    { char: 'ꨧ', display: 'ꨧ', trad: 'sa', sanskrit: 'sa', title: 'U+AA27 Cham Letter Sa' },
+                    { char: 'ꨨ', display: 'ꨨ', trad: 'ha', sanskrit: 'ha', title: 'U+AA28 Cham Letter Ha' },
+                    { char: 'ꨳ', display: '<span class="dotted-circle">◌</span>ꨳ', trad: '-ia', sanskrit: '-ya', title: 'U+AA33 Medial Ya' },
+                    { char: 'ꨴ', display: '<span class="dotted-circle">◌</span>ꨴ', trad: '-r', sanskrit: '-ra', title: 'U+AA34 Medial Ra' },
+                    { char: 'ꨵ', display: '<span class="dotted-circle">◌</span>ꨵ', trad: '-l', sanskrit: '-la', title: 'U+AA35 Medial La' },
+                    { char: 'ꨶ', display: '<span class="dotted-circle">◌</span>ꨶ', trad: '-ua', sanskrit: '-va', title: 'U+AA36 Medial Wa' },
+                    { type: 'backspace', display: '⌫', trad: 'Back', sanskrit: 'Back', title: 'Backspace (Delete previous character)' }
+                ],
+                // Row 5: Dependent Vowels (10) + Cham Punctuation (4) = 14 keys
+                [
+                    { char: 'ꨩ', display: '<span class="dotted-circle">◌</span>ꨩ', trad: '-a', sanskrit: '-ā', title: 'U+AA29 Vowel Sign Aa' },
+                    { char: 'ꨪ', display: '<span class="dotted-circle">◌</span>ꨪ', trad: '-i', sanskrit: '-i', title: 'U+AA2A Vowel Sign I' },
+                    { char: 'ꨫ', display: '<span class="dotted-circle">◌</span>ꨫ', trad: '-i', sanskrit: '-ī', title: 'U+AA2B Vowel Sign Ii' },
+                    { char: 'ꨬ', display: '<span class="dotted-circle">◌</span>ꨬ', trad: '-ei', sanskrit: '-ei', title: 'U+AA2C Vowel Sign Ei' },
+                    { char: 'ꨭ', display: '<span class="dotted-circle">◌</span>ꨭ', trad: '-u', sanskrit: '-u', title: 'U+AA2D Vowel Sign U' },
+                    { char: 'ꨮ', display: '<span class="dotted-circle">◌</span>ꨮ', trad: '-e', sanskrit: '-ē', title: 'U+AA2E Vowel Sign E' },
+                    { char: 'ꨯ', display: 'ꨯ<span class="dotted-circle">◌</span>', trad: '-o', sanskrit: '-o', title: 'U+AA2F Vowel Sign O' },
+                    { char: 'ꨰ', display: 'ꨰ<span class="dotted-circle">◌</span>', trad: '-ai', sanskrit: '-ai', title: 'U+AA30 Vowel Sign Ai' },
+                    { char: 'ꨱ', display: '<span class="dotted-circle">◌</span>ꨱ', trad: '-ao', sanskrit: '-ao', title: 'U+AA31 Vowel Sign Ao' },
+                    { char: 'ꨲ', display: '<span class="dotted-circle">◌</span>ꨲ', trad: '-â', sanskrit: '-au', title: 'U+AA32 Vowel Sign Au' },
+                    { char: '꩜', display: '꩜', trad: '@', sanskrit: '@', title: 'U+AA5C Cham Spiral' },
+                    { char: '꩝', display: '꩝', trad: ',', sanskrit: ',', title: 'U+AA5D Cham Danda' },
+                    { char: '꩞', display: '꩞', trad: ';', sanskrit: ';', title: 'U+AA5E Cham Double Danda' },
+                    { char: '꩟', display: '꩟', trad: '.', sanskrit: '.', title: 'U+AA5F Cham Triple Danda' }
+                ],
+                // Row 6: Finals (15), Parentheses (2), Apostrophe (1), Space (1), Enter (1) = 20 keys
+                [
+                    { char: 'ꩀ', display: 'ꩀ', trad: 'k', sanskrit: '-k', title: 'U+AA40 Final K' },
+                    { char: 'ꩁ', display: 'ꩁ', trad: 'g', sanskrit: '-g', title: 'U+AA41 Final G' },
+                    { char: 'ꩂ', display: 'ꩂ', trad: 'ng', sanskrit: '-ṅ', title: 'U+AA42 Final Ng' },
+                    { char: 'ꩃ', display: '<span class="dotted-circle">◌</span>ꩃ', trad: 'ng', sanskrit: '-ṅg', title: 'U+AA43 Consonant Sign Kang' },
+                    { char: 'ꩄ', display: 'ꩄ', trad: 'c', sanskrit: '-c', title: 'U+AA44 Final C' },
+                    { char: 'ꩅ', display: 'ꩅ', trad: 't', sanskrit: '-t', title: 'U+AA45 Final T' },
+                    { char: 'ꩆ', display: 'ꩆ', trad: 'n', sanskrit: '-n', title: 'U+AA46 Final N' },
+                    { char: 'ꩇ', display: 'ꩇ', trad: 'p', sanskrit: '-p', title: 'U+AA47 Final P' },
+                    { char: 'ꩈ', display: 'ꩈ', trad: 'y', sanskrit: '-y', title: 'U+AA48 Final Y' },
+                    { char: 'ꩉ', display: 'ꩉ', trad: 'r', sanskrit: '-r', title: 'U+AA49 Final R' },
+                    { char: 'ꩊ', display: 'ꩊ', trad: 'l', sanskrit: '-l', title: 'U+AA4A Final L' },
+                    { char: 'ꩋ', display: 'ꩋ', trad: 's', sanskrit: '-s', title: 'U+AA4B Final S' },
+                    { char: 'ꩌ', display: '<span class="dotted-circle">◌</span>ꩌ', trad: 'm', sanskrit: '-ṃ', title: 'U+AA4C Sign Final M (Anusvara)' },
+                    { char: 'ꩍ', display: '<span class="dotted-circle">◌</span>ꩍ', trad: 'h', sanskrit: '-ḥ', title: 'U+AA4D Sign Final H (Visarga)' },
+                    { char: 'ꨥ', display: 'ꨥ', trad: 'w', sanskrit: '-v', title: 'U+AA25 Final Wa' },
+                    { char: '(', display: '(', trad: '(', sanskrit: '(', title: 'Left Parenthesis' },
+                    { char: ')', display: ')', trad: ')', sanskrit: ')', title: 'Right Parenthesis' },
+                    { char: "'", display: "'", trad: "'", sanskrit: "'", title: 'Apostrophe' },
+                    { type: 'space', char: ' ', display: 'ꨌꩌꨛꨩ', trad: 'Space', sanskrit: 'Space', title: 'Space (ꨌꩌꨛꨩ / Champa)' },
+                    { type: 'enter', display: '↵', trad: 'Enter', sanskrit: 'Enter', title: 'Enter (Submit / Next line)' }
+                ]
             ],
-            digits: [
-                { char: '꩐', name: '0' }, { char: '꩑', name: '1' }, { char: '꩒', name: '2' },
-                { char: '꩓', name: '3' }, { char: '꩔', name: '4' }, { char: '꩕', name: '5' },
-                { char: '꩖', name: '6' }, { char: '꩗', name: '7' }, { char: '꩘', name: '8' },
-                { char: '꩙', name: '9' },
-                { char: '꩝', name: 'Danda' }, { char: '꩞', name: 'Section' }, { char: '꩟', name: 'Dbl Sec' }
+            '9': [
+                // Row 1: Digits (10 keys)
+                [
+                    { char: '꩑', display: '꩑', trad: '1', sanskrit: '1', title: 'U+AA51 Cham Digit One' },
+                    { char: '꩒', display: '꩒', trad: '2', sanskrit: '2', title: 'U+AA52 Cham Digit Two' },
+                    { char: '꩓', display: '꩓', trad: '3', sanskrit: '3', title: 'U+AA53 Cham Digit Three' },
+                    { char: '꩔', display: '꩔', trad: '4', sanskrit: '4', title: 'U+AA54 Cham Digit Four' },
+                    { char: '꩕', display: '꩕', trad: '5', sanskrit: '5', title: 'U+AA55 Cham Digit Five' },
+                    { char: '꩖', display: '꩖', trad: '6', sanskrit: '6', title: 'U+AA56 Cham Digit Six' },
+                    { char: '꩗', display: '꩗', trad: '7', sanskrit: '7', title: 'U+AA57 Cham Digit Seven' },
+                    { char: '꩘', display: '꩘', trad: '8', sanskrit: '8', title: 'U+AA58 Cham Digit Eight' },
+                    { char: '꩙', display: '꩙', trad: '9', sanskrit: '9', title: 'U+AA59 Cham Digit Nine' },
+                    { char: '꩐', display: '꩐', trad: '0', sanskrit: '0', title: 'U+AA50 Cham Digit Zero' }
+                ],
+                // Row 2: Independent Vowels & Velar Consonants (10 keys)
+                [
+                    { char: 'ꨀ', display: 'ꨀ', trad: 'a', sanskrit: 'a', title: 'U+AA00 Cham Letter A' },
+                    { char: 'ꨁ', display: 'ꨁ', trad: 'i', sanskrit: 'i', title: 'U+AA01 Cham Letter I' },
+                    { char: 'ꨂ', display: 'ꨂ', trad: 'u', sanskrit: 'u', title: 'U+AA02 Cham Letter U' },
+                    { char: 'ꨃ', display: 'ꨃ', trad: 'e', sanskrit: 'e', title: 'U+AA03 Cham Letter E' },
+                    { char: 'ꨄ', display: 'ꨄ', trad: 'ai', sanskrit: 'ai', title: 'U+AA04 Cham Letter Ai' },
+                    { char: 'ꨅ', display: 'ꨅ', trad: 'o', sanskrit: 'o', title: 'U+AA05 Cham Letter O' },
+                    { char: 'ꨆ', display: 'ꨆ', trad: 'ka', sanskrit: 'ka', title: 'U+AA06 Cham Letter Ka' },
+                    { char: 'ꨇ', display: 'ꨇ', trad: 'kha', sanskrit: 'kha', title: 'U+AA07 Cham Letter Kha' },
+                    { char: 'ꨈ', display: 'ꨈ', trad: 'ga', sanskrit: 'ga', title: 'U+AA08 Cham Letter Ga' },
+                    { char: 'ꨉ', display: 'ꨉ', trad: 'gha', sanskrit: 'gha', title: 'U+AA09 Cham Letter Gha' }
+                ],
+                // Row 3: Palatals & Retroflex/Dentals (10 keys)
+                [
+                    { char: 'ꨊ', display: 'ꨊ', trad: 'nga', sanskrit: 'ṅa', title: 'U+AA0A Cham Letter Nga' },
+                    { char: 'ꨋ', display: 'ꨋ', trad: 'nga', sanskrit: 'ṅga', title: 'U+AA0B Cham Letter Nga-final' },
+                    { char: 'ꨌ', display: 'ꨌ', trad: 'ca', sanskrit: 'ca', title: 'U+AA0C Cham Letter Ca' },
+                    { char: 'ꨍ', display: 'ꨍ', trad: 'cha', sanskrit: 'cha', title: 'U+AA0D Cham Letter Cha' },
+                    { char: 'ꨎ', display: 'ꨎ', trad: 'ja', sanskrit: 'ja', title: 'U+AA0E Cham Letter Ja' },
+                    { char: 'ꨏ', display: 'ꨏ', trad: 'jha', sanskrit: 'jha', title: 'U+AA0F Cham Letter Jha' },
+                    { char: 'ꨐ', display: 'ꨐ', trad: 'nya', sanskrit: 'ña', title: 'U+AA10 Cham Letter Nya' },
+                    { char: 'ꨑ', display: 'ꨑ', trad: 'nya', sanskrit: 'ñja', title: 'U+AA11 Cham Letter Nya-final' },
+                    { char: 'ꨒ', display: 'ꨒ', trad: 'nja', sanskrit: 'ṇḍa', title: 'U+AA12 Cham Letter Nja' },
+                    { char: 'ꨓ', display: 'ꨓ', trad: 'ta', sanskrit: 'ta', title: 'U+AA13 Cham Letter Ta' }
+                ],
+                // Row 4: Dentals & Labials (10 keys)
+                [
+                    { char: 'ꨔ', display: 'ꨔ', trad: 'tha', sanskrit: 'tha', title: 'U+AA14 Cham Letter Tha' },
+                    { char: 'ꨕ', display: 'ꨕ', trad: 'da', sanskrit: 'da', title: 'U+AA15 Cham Letter Da' },
+                    { char: 'ꨖ', display: 'ꨖ', trad: 'dha', sanskrit: 'dha', title: 'U+AA16 Cham Letter Dha' },
+                    { char: 'ꨗ', display: 'ꨗ', trad: 'na', sanskrit: 'na', title: 'U+AA17 Cham Letter Na' },
+                    { char: 'ꨘ', display: 'ꨘ', trad: 'na', sanskrit: 'ṇa', title: 'U+AA18 Cham Letter Na-final' },
+                    { char: 'ꨙ', display: 'ꨙ', trad: 'nda', sanskrit: 'nda', title: 'U+AA19 Cham Letter Nda' },
+                    { char: 'ꨚ', display: 'ꨚ', trad: 'pa', sanskrit: 'pa', title: 'U+AA1A Cham Letter Pa' },
+                    { char: 'ꨛ', display: 'ꨛ', trad: 'pa', sanskrit: 'pha', title: 'U+AA1B Cham Letter Pa-final' },
+                    { char: 'ꨜ', display: 'ꨜ', trad: 'pha', sanskrit: 'ba', title: 'U+AA1C Cham Letter Pha' },
+                    { char: 'ꨝ', display: 'ꨝ', trad: 'ba', sanskrit: 'bha', title: 'U+AA1D Cham Letter Ba' }
+                ],
+                // Row 5: Labials, Semivowels, Sibilants (10 keys)
+                [
+                    { char: 'ꨞ', display: 'ꨞ', trad: 'bha', sanskrit: 'ma', title: 'U+AA1E Cham Letter Bha' },
+                    { char: 'ꨟ', display: 'ꨟ', trad: 'ma', sanskrit: 'ma', title: 'U+AA1F Cham Letter Ma' },
+                    { char: 'ꨠ', display: 'ꨠ', trad: 'ma', sanskrit: 'mba', title: 'U+AA20 Cham Letter Ma-final' },
+                    { char: 'ꨡ', display: 'ꨡ', trad: 'mba', sanskrit: 'ya', title: 'U+AA21 Cham Letter Mba' },
+                    { char: 'ꨢ', display: 'ꨢ', trad: 'ya', sanskrit: 'ya', title: 'U+AA22 Cham Letter Ya' },
+                    { char: 'ꨣ', display: 'ꨣ', trad: 'ra', sanskrit: 'ra', title: 'U+AA23 Cham Letter Ra' },
+                    { char: 'ꨤ', display: 'ꨤ', trad: 'la', sanskrit: 'la', title: 'U+AA24 Cham Letter La' },
+                    { char: 'ꨥ', display: 'ꨥ', trad: 'wa', sanskrit: 'va', title: 'U+AA25 Cham Letter Wa' },
+                    { char: 'ꨦ', display: 'ꨦ', trad: 'sa', sanskrit: 'śa', title: 'U+AA26 Cham Letter Sa/Sha' },
+                    { char: 'ꨧ', display: 'ꨧ', trad: 'sa', sanskrit: 'sa', title: 'U+AA27 Cham Letter Sa' }
+                ],
+                // Row 6: Ha & Dependent Vowels with Dotted Circle (10 keys)
+                [
+                    { char: 'ꨨ', display: 'ꨨ', trad: 'ha', sanskrit: 'ha', title: 'U+AA28 Cham Letter Ha' },
+                    { char: 'ꨩ', display: '<span class="dotted-circle">◌</span>ꨩ', trad: '-a', sanskrit: '-ā', title: 'U+AA29 Vowel Sign Aa' },
+                    { char: 'ꨪ', display: '<span class="dotted-circle">◌</span>ꨪ', trad: '-i', sanskrit: '-i', title: 'U+AA2A Vowel Sign I' },
+                    { char: 'ꨫ', display: '<span class="dotted-circle">◌</span>ꨫ', trad: '-i', sanskrit: '-ī', title: 'U+AA2B Vowel Sign Ii' },
+                    { char: 'ꨬ', display: '<span class="dotted-circle">◌</span>ꨬ', trad: '-ei', sanskrit: '-ei', title: 'U+AA2C Vowel Sign Ei' },
+                    { char: 'ꨭ', display: '<span class="dotted-circle">◌</span>ꨭ', trad: '-u', sanskrit: '-u', title: 'U+AA2D Vowel Sign U' },
+                    { char: 'ꨮ', display: '<span class="dotted-circle">◌</span>ꨮ', trad: '-e', sanskrit: '-ē', title: 'U+AA2E Vowel Sign E' },
+                    { char: 'ꨯ', display: 'ꨯ<span class="dotted-circle">◌</span>', trad: '-o', sanskrit: '-o', title: 'U+AA2F Vowel Sign O' },
+                    { char: 'ꨰ', display: 'ꨰ<span class="dotted-circle">◌</span>', trad: '-ai', sanskrit: '-ai', title: 'U+AA30 Vowel Sign Ai' },
+                    { char: 'ꨱ', display: '<span class="dotted-circle">◌</span>ꨱ', trad: '-ao', sanskrit: '-ao', title: 'U+AA31 Vowel Sign Ao' }
+                ],
+                // Row 7: Medials, Dependent Vowels & Finals (10 keys)
+                [
+                    { char: 'ꨲ', display: '<span class="dotted-circle">◌</span>ꨲ', trad: '-â', sanskrit: '-au', title: 'U+AA32 Vowel Sign Au' },
+                    { char: 'ꨳ', display: '<span class="dotted-circle">◌</span>ꨳ', trad: '-ia', sanskrit: '-ya', title: 'U+AA33 Medial Ya' },
+                    { char: 'ꨴ', display: '<span class="dotted-circle">◌</span>ꨴ', trad: '-r', sanskrit: '-ra', title: 'U+AA34 Medial Ra' },
+                    { char: 'ꨵ', display: '<span class="dotted-circle">◌</span>ꨵ', trad: '-l', sanskrit: '-la', title: 'U+AA35 Medial La' },
+                    { char: 'ꨶ', display: '<span class="dotted-circle">◌</span>ꨶ', trad: '-ua', sanskrit: '-va', title: 'U+AA36 Medial Wa' },
+                    { char: 'ꩀ', display: 'ꩀ', trad: 'k', sanskrit: '-k', title: 'U+AA40 Final K' },
+                    { char: 'ꩁ', display: 'ꩁ', trad: 'g', sanskrit: '-g', title: 'U+AA41 Final G' },
+                    { char: 'ꩂ', display: 'ꩂ', trad: 'ng', sanskrit: '-ṅ', title: 'U+AA42 Final Ng' },
+                    { char: 'ꩃ', display: '<span class="dotted-circle">◌</span>ꩃ', trad: 'ng', sanskrit: '-ṅg', title: 'U+AA43 Consonant Sign Kang' },
+                    { char: 'ꩄ', display: 'ꩄ', trad: 'c', sanskrit: '-c', title: 'U+AA44 Final C' }
+                ],
+                // Row 8: Finals, Signs & Backspace (11 keys)
+                [
+                    { char: 'ꩅ', display: 'ꩅ', trad: 't', sanskrit: '-t', title: 'U+AA45 Final T' },
+                    { char: 'ꩆ', display: 'ꩆ', trad: 'n', sanskrit: '-n', title: 'U+AA46 Final N' },
+                    { char: 'ꩇ', display: 'ꩇ', trad: 'p', sanskrit: '-p', title: 'U+AA47 Final P' },
+                    { char: 'ꩈ', display: 'ꩈ', trad: 'y', sanskrit: '-y', title: 'U+AA48 Final Y' },
+                    { char: 'ꩉ', display: 'ꩉ', trad: 'r', sanskrit: '-r', title: 'U+AA49 Final R' },
+                    { char: 'ꩊ', display: 'ꩊ', trad: 'l', sanskrit: '-l', title: 'U+AA4A Final L' },
+                    { char: 'ꩋ', display: 'ꩋ', trad: 's', sanskrit: '-s', title: 'U+AA4B Final S' },
+                    { char: 'ꩌ', display: '<span class="dotted-circle">◌</span>ꩌ', trad: 'm', sanskrit: '-ṃ', title: 'U+AA4C Sign Final M (Anusvara)' },
+                    { char: 'ꩍ', display: '<span class="dotted-circle">◌</span>ꩍ', trad: 'h', sanskrit: '-ḥ', title: 'U+AA4D Sign Final H (Visarga)' },
+                    { char: 'ꨥ', display: 'ꨥ', trad: 'w', sanskrit: '-v', title: 'U+AA25 Final Wa' },
+                    { type: 'backspace', display: '⌫', trad: 'Back', sanskrit: 'Back', title: 'Backspace (Delete previous character)' }
+                ],
+                // Row 9: Punctuation, Space, Parentheses & Enter (9 keys)
+                [
+                    { char: '꩜', display: '꩜', trad: '@', sanskrit: '@', title: 'U+AA5C Cham Spiral' },
+                    { char: '꩝', display: '꩝', trad: ',', sanskrit: ',', title: 'U+AA5D Cham Danda' },
+                    { char: '꩞', display: '꩞', trad: ';', sanskrit: ';', title: 'U+AA5E Cham Double Danda' },
+                    { char: '꩟', display: '꩟', trad: '.', sanskrit: '.', title: 'U+AA5F Cham Triple Danda' },
+                    { type: 'space', char: ' ', display: 'ꨌꩌꨛꨩ', trad: 'Space', sanskrit: 'Space', title: 'Space (ꨌꩌꨛꨩ / Champa)' },
+                    { char: '(', display: '(', trad: '(', sanskrit: '(', title: 'Left Parenthesis' },
+                    { char: ')', display: ')', trad: ')', sanskrit: ')', title: 'Right Parenthesis' },
+                    { char: "'", display: "'", trad: "'", sanskrit: "'", title: 'Apostrophe' },
+                    { type: 'enter', display: '↵', trad: 'Enter', sanskrit: 'Enter', title: 'Enter (Submit / Next line)' }
+                ]
             ]
         };
 
-        function toggleChamKeyboardDock() {
-            isKeyboardDockExpanded = !isKeyboardDockExpanded;
-            const dock = document.getElementById('cham-keyboard-dock');
-            const arrow = document.getElementById('dock-toggle-arrow');
-            const hint = document.getElementById('dock-status-hint');
-            
-            if (isKeyboardDockExpanded) {
-                document.documentElement.style.setProperty('--dock-height', '180px');
-                dock.style.height = '180px';
-                if (arrow) arrow.innerText = '▼';
-                if (hint) hint.innerText = 'Collapse virtual keyboard (Alt+K / Esc)';
-                renderChamKeyboardBody();
+        const CHAM_KEYBOARD_ROWS = CHAM_KEYBOARD_LAYOUTS['5'];
+
+        let hasKeyboardRendered = false;
+
+        function toggleChamKeyboardFloating(forceState) {
+            const panel = document.getElementById('cham-kb-panel');
+            const fab = document.getElementById('cham-kb-fab');
+            const fabIcon = document.getElementById('cham-kb-fab-icon');
+            if (!panel || !fab) return;
+
+            if (typeof forceState === 'boolean') {
+                isChamKeyboardOpen = forceState;
             } else {
-                document.documentElement.style.setProperty('--dock-height', '32px');
-                dock.style.height = '32px';
-                if (arrow) arrow.innerText = '▲';
-                if (hint) hint.innerText = 'Click to expand virtual keyboard (Alt+K)';
+                isChamKeyboardOpen = !isChamKeyboardOpen;
+            }
+            isKeyboardDockExpanded = isChamKeyboardOpen;
+
+            if (isChamKeyboardOpen) {
+                if (!hasKeyboardRendered) {
+                    renderChamKeyboardLayout();
+                    initDraggableKeyboard();
+                    initScratchpadListener();
+                    hasKeyboardRendered = true;
+                }
+                panel.classList.remove('closed');
+                panel.classList.add('open');
+                fab.classList.add('active');
+                if (fabIcon) fabIcon.innerText = '✕';
+                fab.setAttribute('title', 'Close Cham Keyboard (Alt+K / Esc)');
+            } else {
+                panel.classList.remove('open');
+                panel.classList.add('closed');
+                fab.classList.remove('active');
+                if (fabIcon) fabIcon.innerText = '⌨️';
+                fab.setAttribute('title', 'Open Cham Virtual Keyboard (Alt+K)');
             }
         }
 
-        function switchKeyboardTab(tabName) {
-            activeChamKeyboardTab = tabName;
-            document.querySelectorAll('.dock-tab-btn').forEach(btn => btn.classList.remove('active'));
-            const activeBtn = document.getElementById(`kb-tab-${tabName}`);
-            if (activeBtn) activeBtn.classList.add('active');
-            renderChamKeyboardBody();
+        // Legacy compatibility alias
+        function toggleChamKeyboardDock(forceState) {
+            toggleChamKeyboardFloating(forceState);
         }
 
-        function renderChamKeyboardBody() {
-            const kbBody = document.getElementById('keyboard-body');
+        function changeRowLayout(layout) {
+            chamKeyboardRowLayout = layout || '5';
+            localStorage.setItem('cham_kb_row_layout', chamKeyboardRowLayout);
+            renderChamKeyboardLayout();
+        }
+
+        function renderChamKeyboardLayout() {
+            const kbBody = document.getElementById('cham-kb-body');
+            const panel = document.getElementById('cham-kb-panel');
+            const layoutSelect = document.getElementById('select-row-layout');
             if (!kbBody) return;
+
+            if (layoutSelect) {
+                layoutSelect.value = chamKeyboardRowLayout;
+            }
+
+            if (panel) {
+                panel.style.setProperty('--kb-font-size', `${chamKeyboardFontSize}px`);
+                if (chamKeyboardRowLayout === '5') {
+                    panel.style.setProperty('--cham-kb-width', '740px');
+                } else if (chamKeyboardRowLayout === '6') {
+                    panel.style.setProperty('--cham-kb-width', '700px');
+                } else {
+                    panel.style.setProperty('--cham-kb-width', '590px');
+                }
+            }
             kbBody.innerHTML = '';
-            const list = CHAM_KEYBOARD_DATA[activeChamKeyboardTab] || [];
-            list.forEach(item => {
-                const btn = document.createElement('button');
-                btn.className = 'cham-key-btn';
-                btn.title = `${item.char} (${item.name})`;
-                btn.innerHTML = `<span>${item.char}</span><span class="key-sub">${item.name}</span>`;
-                btn.onmousedown = (e) => e.preventDefault();
-                btn.onclick = () => insertChamChar(item.char);
-                kbBody.appendChild(btn);
+
+            const currentLayout = CHAM_KEYBOARD_LAYOUTS[chamKeyboardRowLayout] || CHAM_KEYBOARD_LAYOUTS['5'];
+
+            currentLayout.forEach(rowKeys => {
+                const rowEl = document.createElement('div');
+                rowEl.className = 'cham-kb-row';
+
+                rowKeys.forEach(item => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'cham-key-btn';
+                    btn.title = item.title || `${item.char} (${item.trad || ''})`;
+
+                    if (item.type === 'space') {
+                        btn.classList.add('key-space');
+                    } else if (item.type === 'backspace') {
+                        btn.classList.add('key-back');
+                    } else if (item.type === 'enter') {
+                        btn.classList.add('key-enter');
+                    }
+
+                    // Prevent losing active focus when pressing keys
+                    btn.onmousedown = (e) => e.preventDefault();
+
+                    // Key click action
+                    btn.onclick = () => {
+                        if (item.type === 'backspace') {
+                            deleteChamChar();
+                        } else if (item.type === 'enter') {
+                            handleEnterCham();
+                        } else {
+                            insertChamChar(item.char);
+                        }
+                    };
+
+                    const charSpan = document.createElement('span');
+                    charSpan.className = 'cham-char';
+                    charSpan.innerHTML = item.display || item.char;
+                    btn.appendChild(charSpan);
+
+                    if (chamKeyboardPhoneticMode !== 'none') {
+                        const labelText = (chamKeyboardPhoneticMode === 'sanskrit' && item.sanskrit) 
+                            ? item.sanskrit 
+                            : (item.trad || '');
+                        if (labelText) {
+                            const latinSpan = document.createElement('span');
+                            latinSpan.className = 'cham-latin';
+                            latinSpan.innerText = labelText;
+                            btn.appendChild(latinSpan);
+                        }
+                    }
+
+                    rowEl.appendChild(btn);
+                });
+
+                kbBody.appendChild(rowEl);
             });
         }
 
+        function changePhoneticMode(mode) {
+            chamKeyboardPhoneticMode = mode;
+            renderChamKeyboardLayout();
+        }
+
+        function changeKeyFontSize(size) {
+            chamKeyboardFontSize = Number(size) || 20;
+            const panel = document.getElementById('cham-kb-panel');
+            if (panel) {
+                panel.style.setProperty('--kb-font-size', `${chamKeyboardFontSize}px`);
+            }
+        }
+
+        function initScratchpadListener() {
+            const scratchpad = document.getElementById('cham-kb-scratchpad');
+            if (scratchpad) {
+                scratchpad.addEventListener('focus', () => {
+                    lastActiveInputElement = scratchpad;
+                });
+            }
+        }
+
         function insertChamChar(char) {
+            // Case 1: An active input/textarea is currently focused
             if (lastActiveInputElement && document.body.contains(lastActiveInputElement) && lastActiveInputElement.style.display !== 'none') {
                 const input = lastActiveInputElement;
                 const start = input.selectionStart !== null ? input.selectionStart : input.value.length;
@@ -3296,18 +3873,39 @@ python ocr-studio/app.py</div>
                 input.value = oldVal.substring(0, start) + char + oldVal.substring(end);
                 input.selectionStart = input.selectionEnd = start + char.length;
                 input.focus();
+                input.dispatchEvent(new Event('input', { bubbles: true }));
                 return;
             }
-            
+
+            // Case 2: A transcription line is selected in the review workbench
             if (currentSelection.lineId !== null && responseLines[currentSelection.lineId]) {
                 const lineId = currentSelection.lineId;
                 enterEditMode(lineId);
                 const editInput = document.getElementById(`line-text-edit-${lineId}`);
                 if (editInput) {
                     lastActiveInputElement = editInput;
-                    editInput.value += char;
+                    const start = editInput.selectionStart !== null ? editInput.selectionStart : editInput.value.length;
+                    const end = editInput.selectionEnd !== null ? editInput.selectionEnd : editInput.value.length;
+                    const oldVal = editInput.value;
+                    editInput.value = oldVal.substring(0, start) + char + oldVal.substring(end);
+                    editInput.selectionStart = editInput.selectionEnd = start + char.length;
                     editInput.focus();
+                    editInput.dispatchEvent(new Event('input', { bubbles: true }));
+                    return;
                 }
+            }
+
+            // Case 3: Fallback into the scratchpad
+            const scratchpad = document.getElementById('cham-kb-scratchpad');
+            if (scratchpad) {
+                lastActiveInputElement = scratchpad;
+                const start = scratchpad.selectionStart !== null ? scratchpad.selectionStart : scratchpad.value.length;
+                const end = scratchpad.selectionEnd !== null ? scratchpad.selectionEnd : scratchpad.value.length;
+                const oldVal = scratchpad.value;
+                scratchpad.value = oldVal.substring(0, start) + char + oldVal.substring(end);
+                scratchpad.selectionStart = scratchpad.selectionEnd = start + char.length;
+                scratchpad.focus();
+                scratchpad.dispatchEvent(new Event('input', { bubbles: true }));
             } else {
                 showToast(`Copied glyph ${char} to clipboard`);
                 navigator.clipboard.writeText(char).catch(() => {});
@@ -3331,7 +3929,154 @@ python ocr-studio/app.py</div>
                     input.selectionStart = input.selectionEnd = start;
                 }
                 input.focus();
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+                return;
             }
+
+            // If a line is selected, enter edit and delete last character
+            if (currentSelection.lineId !== null && responseLines[currentSelection.lineId]) {
+                const lineId = currentSelection.lineId;
+                enterEditMode(lineId);
+                const editInput = document.getElementById(`line-text-edit-${lineId}`);
+                if (editInput) {
+                    lastActiveInputElement = editInput;
+                    if (editInput.value.length > 0) {
+                        editInput.value = editInput.value.slice(0, -1);
+                        editInput.focus();
+                        editInput.dispatchEvent(new Event('input', { bubbles: true }));
+                    }
+                }
+            }
+        }
+
+        function handleEnterCham() {
+            if (currentSelection.lineId !== null) {
+                exitEditMode(currentSelection.lineId, true);
+                showToast(`Saved text for line #${currentSelection.lineId + 1}`);
+            } else {
+                insertScratchpadToLine();
+            }
+        }
+
+        function copyScratchpadText() {
+            const scratchpad = document.getElementById('cham-kb-scratchpad');
+            if (scratchpad && scratchpad.value) {
+                navigator.clipboard.writeText(scratchpad.value).then(() => {
+                    showToast(`Copied "${scratchpad.value}" to clipboard`);
+                }).catch(() => {
+                    showToast("Failed to copy to clipboard");
+                });
+            } else {
+                showToast("Scratchpad is empty");
+            }
+        }
+
+        function insertScratchpadToLine() {
+            const scratchpad = document.getElementById('cham-kb-scratchpad');
+            if (!scratchpad || !scratchpad.value) {
+                showToast("Scratchpad is empty");
+                return;
+            }
+            if (currentSelection.lineId !== null && responseLines[currentSelection.lineId]) {
+                const lineId = currentSelection.lineId;
+                enterEditMode(lineId);
+                const editInput = document.getElementById(`line-text-edit-${lineId}`);
+                if (editInput) {
+                    editInput.value += scratchpad.value;
+                    editInput.focus();
+                    exitEditMode(lineId, true);
+                    showToast(`Inserted scratchpad into line #${lineId + 1}`);
+                }
+            } else {
+                copyScratchpadText();
+            }
+        }
+
+        function clearScratchpadText() {
+            const scratchpad = document.getElementById('cham-kb-scratchpad');
+            if (scratchpad) {
+                scratchpad.value = '';
+                scratchpad.focus();
+            }
+        }
+
+        function undoText() {
+            if (lastActiveInputElement) {
+                lastActiveInputElement.focus();
+                document.execCommand('undo', false, null);
+            }
+        }
+
+        function redoText() {
+            if (lastActiveInputElement) {
+                lastActiveInputElement.focus();
+                document.execCommand('redo', false, null);
+            }
+        }
+
+        function resetKeyboardPosition() {
+            const panel = document.getElementById('cham-kb-panel');
+            if (panel) {
+                panel.style.top = '';
+                panel.style.left = '';
+                panel.style.bottom = '76px';
+                panel.style.right = '24px';
+                showToast("Keyboard position reset");
+            }
+        }
+
+        function initDraggableKeyboard() {
+            const header = document.getElementById('cham-kb-header');
+            const panel = document.getElementById('cham-kb-panel');
+            if (!header || !panel) return;
+
+            let isDragging = false;
+            let startX = 0, startY = 0;
+            let initialPanelLeft = 0, initialPanelTop = 0;
+
+            header.addEventListener('mousedown', (e) => {
+                if (e.target.tagName === 'SELECT' || e.target.tagName === 'BUTTON' || e.target.closest('.cham-kb-controls')) {
+                    return;
+                }
+                isDragging = true;
+                const rect = panel.getBoundingClientRect();
+                startX = e.clientX;
+                startY = e.clientY;
+                initialPanelLeft = rect.left;
+                initialPanelTop = rect.top;
+
+                panel.style.bottom = 'auto';
+                panel.style.right = 'auto';
+                panel.style.left = `${rect.left}px`;
+                panel.style.top = `${rect.top}px`;
+                panel.style.transition = 'none'; // temporary disable transition during drag
+                document.body.style.userSelect = 'none';
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                let newLeft = initialPanelLeft + dx;
+                let newTop = initialPanelTop + dy;
+
+                // Restrict within viewport boundaries
+                const maxLeft = window.innerWidth - panel.offsetWidth - 10;
+                const maxTop = window.innerHeight - panel.offsetHeight - 10;
+                newLeft = Math.max(10, Math.min(newLeft, maxLeft));
+                newTop = Math.max(10, Math.min(newTop, maxTop));
+
+                panel.style.left = `${newLeft}px`;
+                panel.style.top = `${newTop}px`;
+            });
+
+            document.addEventListener('mouseup', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    panel.style.transition = '';
+                    document.body.style.userSelect = '';
+                }
+            });
         }
 
         function navLowConfidence(direction) {
@@ -3386,12 +4131,12 @@ python ocr-studio/app.py</div>
         document.addEventListener('keydown', (e) => {
             if (e.altKey && (e.key === 'k' || e.key === 'K')) {
                 e.preventDefault();
-                toggleChamKeyboardDock();
+                toggleChamKeyboardFloating();
                 return;
             }
-            if (e.key === 'Escape' && isKeyboardDockExpanded) {
+            if (e.key === 'Escape' && isChamKeyboardOpen) {
                 e.preventDefault();
-                toggleChamKeyboardDock();
+                toggleChamKeyboardFloating(false);
                 return;
             }
 
