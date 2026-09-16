@@ -18,8 +18,8 @@ WORKDIR /app
 COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Force cache bust for updated app code & Cham Paleographic Keyboard 5-row layout
-RUN echo "Cache bust 2026-09-14T09:25:00Z - Cham Paleographic Keyboard 5-Row Compact Layout Deployed"
+# Force cache bust for updated app code & Cham-SVTR V24 default model
+RUN echo "Cache bust 2026-09-16T11:40:00Z - Temporarily hide V25, set V24 as default model"
 
 # Copy application files
 COPY . /app

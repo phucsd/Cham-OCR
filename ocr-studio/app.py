@@ -200,7 +200,7 @@ def get_ocr_model(version):
         return ocr_model
         
     if version == 'auto':
-        cham_model = get_ocr_model('v25')
+        cham_model = get_ocr_model('v24')
         viet_model = get_ocr_model('vi')
         ocr_model = AutoRoutingOCRWrapper(cham_model, viet_model)
         ocr_models[version] = ocr_model
@@ -310,7 +310,7 @@ def get_det_model():
     import tools.infer.utility as utility
 
     cham_det_dir = os.path.join(PROJECT_ROOT, "data", "output", "ch_PP-OCRv4_det_cham_infer")
-    has_cham_model = os.path.exists(os.path.join(cham_det_dir, "inference.pdmodel")) or os.path.exists(os.path.join(cham_det_dir, "inference.json"))
+    has_cham_model = os.path.exists(os.path.join(cham_det_dir, "inference.pdmodel"))
     if has_cham_model:
         det_model_dir = cham_det_dir
         print(f"🌟 Using dedicated Cham Text Detection model: {det_model_dir}")
@@ -424,6 +424,39 @@ def merge_line_boxes(boxes, img_w, img_h):
     rects = sorted(rects, key=lambda r: (r[1] + r[3]) / 2.0)
     return [r[4] for r in rects]
 
+def check_inverted_polarity(img):
+    """
+    Detects if an image has inverted polarity (light/white text on dark/colored background).
+    """
+    if img is None or img.size == 0:
+        return False
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) if len(img.shape) == 3 else img
+    h, w = gray.shape[:2]
+    pad_h = max(1, int(h * 0.05))
+    pad_w = max(1, int(w * 0.05))
+    border = np.concatenate([
+        gray[0:pad_h, :].flatten(),
+        gray[-pad_h:, :].flatten(),
+        gray[:, 0:pad_w].flatten(),
+        gray[:, -pad_w:].flatten()
+    ])
+    bg_val = float(np.median(border))
+    fg_val = float(np.percentile(gray, 95))
+    return bool(bg_val < 145 and (fg_val - bg_val) > 35)
+
+def preprocess_crop_for_rec(crop_img):
+    """
+    Normalizes a crop for OCR recognition. If inverted (white text on dark background),
+    binarizes via Otsu to ensure black text on clean white background for SVTR/CTC models.
+    """
+    if crop_img is None or crop_img.size == 0:
+        return crop_img
+    if check_inverted_polarity(crop_img):
+        gray = cv2.cvtColor(crop_img, cv2.COLOR_BGR2GRAY) if len(crop_img.shape) == 3 else crop_img
+        _, bin_inv = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+        return cv2.cvtColor(bin_inv, cv2.COLOR_GRAY2BGR)
+    return crop_img
+
 def segment_lines_dbnet(img, det_model):
     """
     Performs deep-learning based text line segmentation using PaddleOCR DBNet.
@@ -434,7 +467,10 @@ def segment_lines_dbnet(img, det_model):
     import tools.infer.utility as utility
     from tools.infer.predict_system import sorted_boxes
 
-    dt_boxes, elapse = det_model(img)
+    is_inverted = check_inverted_polarity(img)
+    det_img = (255 - img) if is_inverted else img
+
+    dt_boxes, elapse = det_model(det_img)
     if dt_boxes is None or len(dt_boxes) == 0:
         return [], []
 
@@ -484,7 +520,9 @@ def segment_lines_dbnet(img, det_model):
 
 def segment_lines_adaptive(img, threshold_pct=0.08, gap_threshold=12):
     """Adaptive Projection Profile line segmentation"""
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    is_inverted = check_inverted_polarity(img)
+    proc_img = (255 - img) if is_inverted else img
+    gray = cv2.cvtColor(proc_img, cv2.COLOR_BGR2GRAY)
     _, thresh = cv2.threshold(gray, 150, 255, cv2.THRESH_BINARY_INV)
     hist = np.sum(thresh, axis=1)
     
@@ -517,7 +555,9 @@ def segment_lines_adaptive(img, threshold_pct=0.08, gap_threshold=12):
 
 def segment_lines_valleys(img, window_size=25, min_dist=35):
     """Valley Detection (local minima) line segmentation"""
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    is_inverted = check_inverted_polarity(img)
+    proc_img = (255 - img) if is_inverted else img
+    gray = cv2.cvtColor(proc_img, cv2.COLOR_BGR2GRAY)
     _, thresh = cv2.threshold(gray, 150, 255, cv2.THRESH_BINARY_INV)
     hist = np.sum(thresh, axis=1)
     
@@ -908,7 +948,7 @@ def segment_lines_advanced(img, base_coords, ocr_model):
     # Phase 3: Pass 1 Batch Recognition
     t_pass1 = time.time()
     if pass1_candidates:
-        imgs = [c["crop_img"] for c in pass1_candidates]
+        imgs = [preprocess_crop_for_rec(c["crop_img"]) for c in pass1_candidates]
         # ocr_model accepts a list of images and returns list of (text, conf)
         # However, PaddleOCR's predict() might fail if empty list or invalid dims.
         valid_imgs = []
@@ -1056,7 +1096,7 @@ def segment_lines_advanced(img, base_coords, ocr_model):
                 seen_boxes[c_box] = ("", 0.0) # mark as pending
                 
         if exec_candidates:
-            imgs = [c["crop_img"] for c in exec_candidates]
+            imgs = [preprocess_crop_for_rec(c["crop_img"]) for c in exec_candidates]
             valid_imgs = []
             valid_indices = []
             for i, m in enumerate(imgs):
@@ -1423,7 +1463,7 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             
             # Extract parameters
             img_b64 = data['image']
-            model_ver = data.get('model', 'v25')
+            model_ver = data.get('model', 'v24')
             method = data.get('method', 'dbnet')
             threshold = float(data.get('threshold', 0.05))
             gap = int(data.get('gap', 12))
@@ -1487,7 +1527,8 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                     final_crops, lines_metadata, profiler_dict = segment_lines_advanced(img, coords, ocr)
                 else:
                     t_rec = time.time()
-                    rec_res, _ = ocr(final_crops)
+                    rec_crops = [preprocess_crop_for_rec(c) for c in final_crops]
+                    rec_res, _ = ocr(rec_crops)
                     rec_sec = time.time() - t_rec
                     print(f"⏱️  DBNet batch recognition ({len(final_crops)} lines) took: {rec_sec:.4f}s")
                     for idx, (pred_text, conf) in enumerate(rec_res):
@@ -1584,7 +1625,7 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             data = json.loads(post_data.decode('utf-8'))
             
             img_b64 = data.get('image', '')
-            model_ver = data.get('model', 'v25')
+            model_ver = data.get('model', 'v24')
             bbox = data.get('bbox', [0, 0, 0, 0])
             
             if ',' in img_b64:
@@ -1685,9 +1726,9 @@ def run_server():
     print(f"======================================================================")
     
     try:
-        get_ocr_model('v25')
+        get_ocr_model('v24')
     except Exception as e:
-        print(f"⚠️  Could not pre-load model v25: {e}. It will load when requested.")
+        print(f"⚠️  Could not pre-load model v24: {e}. It will load when requested.")
         
     try:
         httpd.serve_forever()

@@ -1387,9 +1387,9 @@
                 <span class="model-picker-label">Model:</span>
                 <select id="model-select" class="model-select-compact" onchange="updateModelBadge()">
                     <optgroup label="Paleographic Cham Models">
-                        <option value="v25" selected>Cham V25 (Recommended SOTA — 90.96% Acc)</option>
-                        <option value="v24">Cham V24 (Logical Order Baseline)</option>
-                        <option value="v23">Cham V23 (Visual Order Legacy)</option>
+                        <!-- <option value="v25">Cham V25 (Recommended SOTA — 90.96% Acc)</option> -->
+                        <option value="v24" selected>Cham V24 (Recommended — Logical Order)</option>
+                        <option value="v23">Cham V23 (Visual Order Baseline)</option>
                     </optgroup>
                     <optgroup label="Bilingual & Modern Text">
                         <option value="auto">Auto Dual-Engine (Cham & Vietnamese)</option>
@@ -2438,7 +2438,7 @@ python ocr-studio/app.py</div>
             showToast("Transcribing delineated region...");
             try {
                 const modelSelect = document.getElementById('model-select');
-                const modelVer = modelSelect ? modelSelect.value : 'v25';
+                const modelVer = modelSelect ? modelSelect.value : 'v24';
                 const res = await fetch('/ocr_crop', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
