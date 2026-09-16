@@ -5,6 +5,7 @@ import cv2
 import numpy as np
 import json
 import re
+from PIL import Image, ImageFont, ImageDraw
 try:
     from fontTools.ttLib import TTFont
 except ImportError:

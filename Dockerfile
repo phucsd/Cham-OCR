@@ -5,6 +5,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install system dependencies required for OpenCV, PaddlePaddle, and OpenMP
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
     libgl1 \
     libglib2.0-0 \
     libgomp1 \
