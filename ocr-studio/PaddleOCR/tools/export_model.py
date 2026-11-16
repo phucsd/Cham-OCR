@@ -15,6 +15,15 @@
 import os
 import sys
 
+# Monkeypatch NumPy 2.x compatibility
+import numpy as np
+if not hasattr(np, 'sctypes'):
+    np.sctypes = {'int': [np.int8, np.int16, np.int32, np.int64], 'uint': [np.uint8, np.uint16, np.uint32, np.uint64], 'float': [np.float16, np.float32, np.float64], 'complex': [np.complex64, np.complex128], 'others': [bool, object, bytes, str]}
+if not hasattr(np, 'bool'): np.bool = bool
+if not hasattr(np, 'int'): np.int = int
+if not hasattr(np, 'float'): np.float = float
+if not hasattr(np, 'typeDict'): np.typeDict = {}
+
 __dir__ = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(__dir__)
 sys.path.insert(0, os.path.abspath(os.path.join(__dir__, "..")))

@@ -1,5 +1,9 @@
 # Lộ Trình Huấn Luyện Mô Hình OCR Chăm V25 (V25 Training Roadmap & Action Plan)
 
+> [!WARNING]
+> **THỬ NGHIỆM ĐÃ BỊ LOẠI BỎ KHỎI LINEAGE CHÍNH THỨC (`v25 = rejected / excluded from model lineage`)**  
+> Mô hình v25 mở rộng 160 tokens gặp hiện tượng phân tán xác suất và ảo giác ký tự lạ trên văn bản mờ nhòe, do đó **không được đưa vào sản xuất**. Lineage chuẩn duy nhất của dự án là: `v24 → R1A PASS → R1B → R2 → R3 → R4 → v24.1`. Tài liệu này được bảo lưu chỉ với mục đích lưu trữ lịch sử nghiên cứu và bài học kinh nghiệm (*Rejected experiments / Lessons learned*).
+
 Tài liệu này tổng hợp toàn bộ các kết luận thực nghiệm định lượng từ **490 bài kiểm thử phân tầng** (gồm 200 bài test dòng biến dạng, 200 trang A4 đa đoạn văn và 90 bài test nâng cao 3 hướng: Đa ngữ, Bố cục 2 cột và Ảnh thực địa di động). Đây là bản đặc tả kỹ thuật chi tiết làm cơ sở chuẩn bị dữ liệu và huấn luyện phiên bản mô hình tiếp theo (**Mô hình v25**).
 
 ---

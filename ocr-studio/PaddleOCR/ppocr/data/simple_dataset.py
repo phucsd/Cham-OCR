@@ -59,21 +59,24 @@ class SimpleDataSet(Dataset):
         self.need_reset = True in [x < 1 for x in ratio_list]
 
     def set_epoch_as_seed(self, seed, dataset_config):
-        if self.mode == 'train':
-            try:
-                border_map_id = [index
-                    for index, dictionary in enumerate(dataset_config['transforms'])
-                    if 'MakeBorderMap' in dictionary][0]
-                shrink_map_id = [index
-                    for index, dictionary in enumerate(dataset_config['transforms'])
-                    if 'MakeShrinkMap' in dictionary][0]
-                dataset_config['transforms'][border_map_id]['MakeBorderMap'][
-                    'epoch'] = seed if seed is not None else 0
-                dataset_config['transforms'][shrink_map_id]['MakeShrinkMap'][
-                    'epoch'] = seed if seed is not None else 0
-            except Exception as E:
-                print(E)
-                return
+        if self.mode != 'train':
+            return
+
+        epoch = seed if seed is not None else 0
+        transforms = dataset_config.get('transforms', [])
+
+        # Detection pipelines may contain these transforms; recognition
+        # pipelines normally do not. Absence is expected and should be a
+        # no-op rather than an IndexError printed to stdout.
+        for transform_name in ('MakeBorderMap', 'MakeShrinkMap'):
+            for transform in transforms:
+                if transform_name in transform:
+                    params = transform[transform_name]
+                    if params is None:
+                        params = {}
+                        transform[transform_name] = params
+                    params['epoch'] = epoch
+                    break
 
     def get_image_info_list(self, file_list, ratio_list):
         if isinstance(file_list, str):

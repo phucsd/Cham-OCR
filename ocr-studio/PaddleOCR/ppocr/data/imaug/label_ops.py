@@ -1276,6 +1276,83 @@ class MultiLabelEncode(BaseRecLabelEncode):
         return data_out
 
 
+class BlankAwareMultiLabelEncode(BaseRecLabelEncode):
+    """
+    Blank-Aware Multi-Task Label Encoder
+    ====================================
+    Feature-gated label encoder for blank-aware training.
+    - If label is non-empty: output is identical to MultiLabelEncode, with is_blank=0.
+    - If label is empty (""): returns a valid dictionary instead of None:
+        * label_ctc: all zeros (blank/pad token 0)
+        * label_gtc: [2, 3] + [0] * (max_len - 2) (BOS + EOS immediately)
+        * length: 0
+        * is_blank: 1
+    This prevents SimpleDataSet from dropping blank background images during training.
+    """
+    def __init__(self,
+                 max_text_length,
+                 character_dict_path=None,
+                 use_space_char=False,
+                 gtc_encode=None,
+                 **kwargs):
+        super(BlankAwareMultiLabelEncode, self).__init__(
+            max_text_length, character_dict_path, use_space_char)
+
+        self.ctc_encode = CTCLabelEncode(max_text_length, character_dict_path,
+                                         use_space_char, **kwargs)
+        self.gtc_encode_type = gtc_encode
+        if gtc_encode is None:
+            self.gtc_encode = SARLabelEncode(
+                max_text_length, character_dict_path, use_space_char, **kwargs)
+        else:
+            self.gtc_encode = eval(gtc_encode)(
+                max_text_length, character_dict_path, use_space_char, **kwargs)
+
+    def __call__(self, data):
+        label = data.get('label', '')
+        if label is None:
+            label = ''
+        if isinstance(label, (bytes, bytearray)):
+            label = label.decode('utf-8')
+        label = str(label).strip('\r')
+        data['label'] = label
+
+        # Blank sample handling
+        if len(label) == 0:
+            data_out = dict()
+            data_out['img_path'] = data.get('img_path', None)
+            data_out['image'] = data['image']
+            data_out['label_ctc'] = np.zeros((self.max_text_len,), dtype=np.int64)
+            gtc_label = [2, 3] + [0] * max(0, self.max_text_len - 2)
+            gtc_label = np.array(gtc_label[:self.max_text_len], dtype=np.int64)
+            if self.gtc_encode_type is not None:
+                data_out['label_gtc'] = gtc_label
+            else:
+                data_out['label_sar'] = gtc_label
+            data_out['length'] = np.array(0, dtype=np.int64)
+            data_out['is_blank'] = np.array(1, dtype=np.int64)
+            return data_out
+
+        # Normal sample: strict parity with MultiLabelEncode
+        data_ctc = copy.deepcopy(data)
+        data_gtc = copy.deepcopy(data)
+        data_out = dict()
+        data_out['img_path'] = data.get('img_path', None)
+        data_out['image'] = data['image']
+        ctc = self.ctc_encode.__call__(data_ctc)
+        gtc = self.gtc_encode.__call__(data_gtc)
+        if ctc is None or gtc is None:
+            return None
+        data_out['label_ctc'] = ctc['label']
+        if self.gtc_encode_type is not None:
+            data_out['label_gtc'] = gtc['label']
+        else:
+            data_out['label_sar'] = gtc['label']
+        data_out['length'] = ctc['length']
+        data_out['is_blank'] = np.array(0, dtype=np.int64)
+        return data_out
+
+
 class NRTRLabelEncode(BaseRecLabelEncode):
     """ Convert between text-label and text-index """
 

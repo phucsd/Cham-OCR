@@ -21,7 +21,66 @@ from paddle.static import InputSpec
 from .base_model import BaseModel
 from .distillation_model import DistillationModel
 
-__all__ = ["build_model", "apply_to_static"]
+__all__ = ["build_model", "apply_to_static", "apply_freeze_prefixes"]
+
+
+def apply_freeze_prefixes(model, freeze_prefixes, logger=None):
+    """
+    Applies layer freezing based on parameter name prefixes.
+    Args:
+        model (paddle.nn.Layer): The model instance to freeze.
+        freeze_prefixes (list[str]): List of prefix strings, e.g. ["backbone.conv1", ...].
+        logger: Optional logger for info/error logging.
+    Returns:
+        dict: Freeze summary with exact counts and parameter lists:
+              {'frozen_count': int, 'total_count': int, 'frozen_params': list[str], 'prefix_match_counts': dict}
+    Raises:
+        ValueError: If any prefix matches 0 parameters (fail-fast guarantee).
+    """
+    if not freeze_prefixes:
+        return {
+            'frozen_count': 0,
+            'total_count': len(list(model.parameters())),
+            'frozen_params': [],
+            'prefix_match_counts': {}
+        }
+
+    if isinstance(freeze_prefixes, str):
+        freeze_prefixes = [freeze_prefixes]
+
+    frozen_params = []
+    prefix_match_counts = {p: 0 for p in freeze_prefixes}
+
+    for name, param in model.named_parameters():
+        for prefix in freeze_prefixes:
+            if name.startswith(prefix):
+                param.stop_gradient = True
+                param.trainable = False
+                frozen_params.append(name)
+                prefix_match_counts[prefix] += 1
+                break
+
+    # Fail fast if any configured prefix matches zero parameters
+    zero_match_prefixes = [p for p, cnt in prefix_match_counts.items() if cnt == 0]
+    if zero_match_prefixes:
+        msg = f"Configured freeze_prefixes failed to match any parameter in model: {zero_match_prefixes}"
+        if logger:
+            logger.error(msg)
+        raise ValueError(msg)
+
+    total_params = len(list(model.parameters()))
+    msg = f"Freeze applied: {len(frozen_params)}/{total_params} parameter tensors frozen across prefixes {prefix_match_counts}."
+    if logger:
+        logger.info(msg)
+    else:
+        print(msg)
+
+    return {
+        'frozen_count': len(frozen_params),
+        'total_count': total_params,
+        'frozen_params': frozen_params,
+        'prefix_match_counts': prefix_match_counts
+    }
 
 
 def build_model(config):

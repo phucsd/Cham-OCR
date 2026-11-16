@@ -1,11 +1,27 @@
 import os
 import sys
 import random
-import cv2
-import numpy as np
 import json
 import re
+import cv2
+import numpy as np
+
+# NumPy 2.x backward compatibility monkeypatch
+if not hasattr(np, 'sctypes'):
+    np.sctypes = {
+        'int': [np.int8, np.int16, np.int32, np.int64],
+        'uint': [np.uint8, np.uint16, np.uint32, np.uint64],
+        'float': [np.float16, np.float32, np.float64],
+        'complex': [np.complex64, np.complex128],
+        'others': [bool, object, bytes, str]
+    }
+if not hasattr(np, 'bool'): np.bool = bool
+if not hasattr(np, 'int'): np.int = int
+if not hasattr(np, 'float'): np.float = float
+if not hasattr(np, 'typeDict'): np.typeDict = {}
+
 from PIL import Image, ImageFont, ImageDraw
+
 try:
     from fontTools.ttLib import TTFont
 except ImportError:
@@ -36,9 +52,10 @@ FINAL_SIGNS = set(chr(c) for c in range(0xAA40, 0xAA4E))
 FINAL_CONSONANTS_OR_VA = FINAL_SIGNS | {'ꨥ'}
 CHAM_DIGITS = set('꩐꩑꩒꩓꩔꩕꩖꩗꩘꩙')
 CHAM_PUNCT_SIGNS = set('꩜꩝꩞꩟')
-PUNCT_SIGNS = set('꩜꩝꩞꩟.,;:!?')
+PUNCT_SIGNS = set('꩜꩝꩞꩟.,;:!?-()[]{}/+=%@#&*<>\\_')
 FOCUS_CHARS = PRE_SIGNS | FINAL_SIGNS | MEDIAL_SIGNS | VOWEL_DIACRITIC_SIGNS
-CONFUSION_CHARS = set('ꨯꨰꨴꨵꨳꨶꨪꨫꨬꨭꨮꨱꨲꩀꩃꩌꩍꩆꩉꩊꨈꨤꨠꨥꨡꨓꨩ')
+# Include U+AA56 (꩖) vs U+AA23 (ꨣ) confusion pair found in 2026-11-04 live stress test
+CONFUSION_CHARS = set('ꨯꨰꨴꨵꨳꨶꨪꨫꨬꨭꨮꨱꨲꩀꩃꩌꩍꩆꩉꩊꨈꨤꨠꨥꨡꨓꨩ꩖ꨣ')
 consonants = set("ꨆꨇꨈꨉꨊꨋꨌꨍꨎꨏꨐꨑꨒꨓꨔꨕꨖꨗꨘꨙꨚꨛꨜꨝꨞꨟꨠꨡꨢꨣꨤꨥꨦꨧꨨꨀꨁꨂꨃꨄꨅ")
 pre_signs = PRE_SIGNS
 diacritics = set(chr(c) for c in range(0xAA29, 0xAA37)) | set(chr(c) for c in range(0xAA40, 0xAA4E))
@@ -49,7 +66,8 @@ HEAL_REGEX = re.compile(r'\s+([ꨯꨰꨴꨵꨳꨶꩀꩃꩌꩍꩆꩉꩊꩂꩅ\uAA
 CLUSTER_DRILLS = [
     'ꨨꨰꨳ', 'ꨈꨪꨤꨰ', 'ꨨꨯꨱꩀ',
     'ꨟꨧꨮꩌ', 'ꨟꨧꨮꩃ', 'ꨓꨌꨯꨱꩍ', 'ꨕꩀ', 'ꨀꨣꩌ',
-    'ꨨꨣꩌ', 'ꨨꨣꩃ', 'ꨝꨪꨗꩆ', 'ꨟꨧꨪꩆ', 'ꨀꨳꨩ'
+    'ꨨꨣꩌ', 'ꨨꨣꩃ', 'ꨝꨪꨗꩆ', 'ꨟꨧꨪꩆ', 'ꨀꨳꨩ',
+    '꩖꩞ ꨣꨕꩀ', 'ꨣꨩ ꩖꩖꩞', '꩐ ꩑ ꩒ ꩓ ꩔ ꩕ ꩖ ꩗ ꩘ ꩙'
 ]
 
 # Cache bộ đệm Font
@@ -305,33 +323,42 @@ def apply_morphological_and_resolution_noise(pil_img):
 
 def get_augmentation_pipeline():
     """Tạo pipeline tăng cường ảnh bằng Albumentations"""
-    transform = A.Compose([
-        A.ShiftScaleRotate(
-            shift_limit=0.03,
-            scale_limit=0.03,
-            rotate_limit=6,
-            border_mode=cv2.BORDER_REPLICATE,
-            p=0.7
-        ),
-        A.Perspective(scale=(0.01, 0.025), keep_size=True, pad_mode=cv2.BORDER_REPLICATE, p=0.4),
-        A.OneOf([
-            A.GaussianBlur(blur_limit=(3, 3), p=1.0),
-            A.MotionBlur(blur_limit=(3, 5), p=1.0),
-        ], p=0.35),
-        A.RandomBrightnessContrast(brightness_limit=0.08, contrast_limit=0.08, p=0.6)
-    ])
-    return transform
+    if A is None:
+        return None
+    try:
+        transform = A.Compose([
+            A.ShiftScaleRotate(
+                shift_limit=0.03,
+                scale_limit=0.03,
+                rotate_limit=6,
+                border_mode=cv2.BORDER_REPLICATE,
+                p=0.7
+            ),
+            A.Perspective(scale=(0.01, 0.025), keep_size=True, pad_mode=cv2.BORDER_REPLICATE, p=0.4),
+            A.OneOf([
+                A.GaussianBlur(blur_limit=(3, 3), p=1.0),
+                A.MotionBlur(blur_limit=(3, 5), p=1.0),
+            ], p=0.35),
+            A.RandomBrightnessContrast(brightness_limit=0.08, contrast_limit=0.08, p=0.6)
+        ])
+        return transform
+    except Exception as e:
+        print(f"⚠️ Warning: Albumentations initialization failed: {e}")
+        return None
 
 def apply_augmentations(pil_img, transform):
     # 80% cơ hội trả về ảnh in sạch sắc nét (không nhiễu nhòe mực)
-    if random.random() < 0.8:
+    if random.random() < 0.8 or transform is None:
         return pil_img
         
     # 20% cơ hội chạy tăng cường giả lập scan giấy
     img = apply_morphological_and_resolution_noise(pil_img)
     img_np = np.array(img)
-    augmented = transform(image=img_np)
-    final_img = Image.fromarray(augmented['image'])
+    try:
+        augmented = transform(image=img_np)
+        final_img = Image.fromarray(augmented['image'])
+    except Exception:
+        final_img = img
     return add_paper_noise(final_img, strength='light') # Nhiễu nhẹ nhàng
 
 # ==============================================================================
@@ -547,8 +574,20 @@ def generate_dataset(output_dir, font_dir, num_samples=5000, img_width=280, img_
         for _ in range(50):
             r = random.random()
             if r < 0.08:
-                if random.random() < 0.3:
-                    s = ' '.join(list('꩑꩒꩓꩔꩕꩖꩗꩘꩙꩐'))
+                sub_r = random.random()
+                if sub_r < 0.25:
+                    s = ' '.join(list('꩐꩑꩒꩓꩔꩕꩖꩗꩘꩙'))
+                elif sub_r < 0.50:
+                    # Hard-mining U+AA56 (꩖) vs U+AA23 (ꨣ) and stanza numbers 1..999
+                    num = random.randint(1, 999)
+                    cham_num = ''.join('꩐꩑꩒꩓꩔꩕꩖꩗꩘꩙'[int(d)] for d in str(num))
+                    ra_toks = [t for t in tokens if 'ꨣ' in t] or tokens
+                    s = f"{cham_num}꩞ ꩖꩞ {choose(ra_toks)} ꩖ {choose(ra_toks)}"
+                elif sub_r < 0.75 and {'(', ')', '-', '/', ':'}.issubset(allowed):
+                    # Mixed Cham + brackets + Arabic digits + math/punctuation symbols (stress test 2026-11-04)
+                    yr = random.randint(1900, 2035)
+                    sym_tail = ' / + = % ! ?' if {'+', '=', '%'}.issubset(allowed) else ' / - ! ?'
+                    s = f"- {choose(tokens)} {choose(tokens)}: ꩑꩖꩓꩞ ({choose(very_short_tokens)}) {yr}{sym_tail}"
                 else:
                     s = ' '.join(random.choice(list('꩐꩑꩒꩓꩔꩕꩖꩗꩘꩙')) for _ in range(random.randint(2, 6)))
             elif hard_lines and r < 0.53:
@@ -765,9 +804,15 @@ def generate_dataset(output_dir, font_dir, num_samples=5000, img_width=280, img_
                      augmented_img = clean_img
              elif is_noisy:
                  img_morph = apply_morphological_and_resolution_noise(clean_img)
-                 img_np = np.array(img_morph)
-                 augmented = transform_pipeline(image=img_np)
-                 final_img = Image.fromarray(augmented['image'])
+                 if transform_pipeline is not None:
+                     img_np = np.array(img_morph)
+                     try:
+                         augmented = transform_pipeline(image=img_np)
+                         final_img = Image.fromarray(augmented['image'])
+                     except Exception:
+                         final_img = img_morph
+                 else:
+                     final_img = img_morph
                  augmented_img = add_paper_noise(final_img, strength='medium' if 'long' in category else 'light')
              else:
                  augmented_img = apply_augmentations(clean_img, transform_pipeline)
@@ -808,11 +853,15 @@ def generate_dataset(output_dir, font_dir, num_samples=5000, img_width=280, img_
 
     # 2. Sinh tập locked_test bằng cách cô lập seed ngẫu nhiên
     def seed_pipeline(pipeline, s_seed):
-        for t in pipeline.transforms:
-            t.set_random_seed(s_seed)
+        if pipeline is None:
+            return
+        for t in getattr(pipeline, 'transforms', []):
+            if hasattr(t, 'set_random_seed'):
+                t.set_random_seed(s_seed)
             if hasattr(t, 'transforms'):
                 for sub_t in t.transforms:
-                    sub_t.set_random_seed(s_seed)
+                    if hasattr(sub_t, 'set_random_seed'):
+                        sub_t.set_random_seed(s_seed)
 
     r_state = random.getstate()
     np_state = np.random.get_state()
@@ -850,9 +899,15 @@ def generate_dataset(output_dir, font_dir, num_samples=5000, img_width=280, img_
                 augmented_img = clean_img
             else:
                 img_morph = apply_morphological_and_resolution_noise(clean_img)
-                img_np = np.array(img_morph)
-                augmented = transform_pipeline(image=img_np)
-                final_img = Image.fromarray(augmented['image'])
+                if transform_pipeline is not None:
+                    img_np = np.array(img_morph)
+                    try:
+                        augmented = transform_pipeline(image=img_np)
+                        final_img = Image.fromarray(augmented['image'])
+                    except Exception:
+                        final_img = img_morph
+                else:
+                    final_img = img_morph
                 augmented_img = add_paper_noise(final_img, strength='light')
 
             img_name = f"cham_locked_{success_locked:06d}.png"

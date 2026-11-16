@@ -82,11 +82,13 @@ class Cosine(object):
                  step_each_epoch,
                  epochs,
                  warmup_epoch=0,
+                 eta_min=0.0,
                  last_epoch=-1,
                  **kwargs):
         super(Cosine, self).__init__()
         self.learning_rate = learning_rate
         self.T_max = step_each_epoch * epochs
+        self.eta_min = eta_min
         self.last_epoch = last_epoch
         self.warmup_epoch = round(warmup_epoch * step_each_epoch)
 
@@ -94,6 +96,7 @@ class Cosine(object):
         learning_rate = lr.CosineAnnealingDecay(
             learning_rate=self.learning_rate,
             T_max=self.T_max,
+            eta_min=self.eta_min,
             last_epoch=self.last_epoch)
         if self.warmup_epoch > 0:
             learning_rate = lr.LinearWarmup(

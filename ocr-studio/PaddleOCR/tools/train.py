@@ -28,14 +28,13 @@ import paddle
 import paddle.distributed as dist
 
 from ppocr.data import build_dataloader, set_signal_handlers
-from ppocr.modeling.architectures import build_model
+from ppocr.modeling.architectures import build_model, apply_to_static, apply_freeze_prefixes
 from ppocr.losses import build_loss
 from ppocr.optimizer import build_optimizer
 from ppocr.postprocess import build_post_process
 from ppocr.metrics import build_metric
 from ppocr.utils.save_load import load_model
 from ppocr.utils.utility import set_seed
-from ppocr.modeling.architectures import apply_to_static
 import tools.program as program
 
 dist.get_world_size()
@@ -135,6 +134,11 @@ def main(config, device, logger, vdl_writer, seed):
             config['Loss']['ignore_index'] = char_num - 1
 
     model = build_model(config['Architecture'])
+    
+    # apply layer freeze prefixes if configured
+    freeze_prefixes = config.get("Global", {}).get("freeze_prefixes", None)
+    if freeze_prefixes:
+        apply_freeze_prefixes(model, freeze_prefixes, logger)
 
     use_sync_bn = config["Global"].get("use_sync_bn", False)
     if use_sync_bn:
