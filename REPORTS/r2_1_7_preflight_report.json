@@ -1,0 +1,25 @@
+{
+  "title": "Cham-OCR v24.1 Stage R2.1.7 Preflight Report (SURGICAL-GATE-CLOSURE)",
+  "timestamp": "2026-11-16T06:55:57.481634+00:00",
+  "status": "PASS",
+  "yaml_diff_keys": [
+    "Eval.dataset.data_dir",
+    "Eval.dataset.label_file_list",
+    "Global.config_role",
+    "Global.epoch_num",
+    "Global.save_inference_dir",
+    "Global.save_model_dir",
+    "Global.save_res_path",
+    "Train.dataset.data_dir",
+    "Train.dataset.label_file_list"
+  ],
+  "unexpected_yaml_diffs": [],
+  "base_checkpoint_sha256": "f1cd3d6ebad0cc71fda4e3c2b7cb5148068cf77062ae69be9e998d27fd52ac01",
+  "mixed_batch_idx": 2,
+  "blanks_in_mixed_batch": 4,
+  "total_loss": 9.427932739257812,
+  "ctc_loss": 8.494913101196289,
+  "nrtr_loss": 0.9330194592475891,
+  "optimizer_eligible_finite_grads": 549,
+  "mutated_weights_count": 0
+}

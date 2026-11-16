@@ -1,0 +1,912 @@
+{
+  "title": "Cham-OCR v24.1 Stage R2.1.7 7-Point Contamination, Positional, Width & Baseline Audit",
+  "audit_timestamp": "2026-11-16T06:54:43.388325+00:00",
+  "status": "PASS",
+  "execution_duration_sec": 17.51,
+  "shared_train_image_merkle": "820f13abde67570e38e998b40cda1dc1407b0524e782ac8e8cdeac7335cdda56",
+  "shared_val_image_merkle": "1a1e6da22004004feda4aacc089990fecbb8fc7810cbb38e7250672b04468d1a",
+  "replaced_5000": {
+    "mean_width_px": 142.3,
+    "max_width_px": 263,
+    "over_320px": 0,
+    "height_not_48": 0,
+    "illegal_indep_vowel_medial": 0,
+    "symbol_line_counts": {
+      "?": 222,
+      "!": 200,
+      "#": 145,
+      "&": 166,
+      "*": 73,
+      "<": 178,
+      ">": 73,
+      "{": 422,
+      "}": 422,
+      "\\": 145,
+      "_": 422,
+      "[": 166,
+      "]": 166,
+      "/": 325
+    },
+    "hyphen_group_counts": {
+      "number_number": 422,
+      "line_ending": 133,
+      "double_hyphen": 556,
+      "word_word_tight": 155,
+      "line_beginning": 156,
+      "word_word_spaced": 122,
+      "year_year": 122
+    },
+    "cham_digit6_lines": 205,
+    "cham_ra_lines": 552
+  },
+  "baseline_geometry_probes": [
+    {
+      "offset": 0,
+      "probe": "ꨆ-ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        28,
+        34
+      ],
+      "sym_rows": [
+        22,
+        23
+      ],
+      "line_rows": [
+        19,
+        32
+      ]
+    },
+    {
+      "offset": 0,
+      "probe": "ꨆ_ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        28,
+        37
+      ],
+      "sym_rows": [
+        33,
+        34
+      ],
+      "line_rows": [
+        19,
+        34
+      ]
+    },
+    {
+      "offset": 0,
+      "probe": "ꨆ--ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        28,
+        41
+      ],
+      "sym_rows": [
+        22,
+        23
+      ],
+      "line_rows": [
+        19,
+        32
+      ]
+    },
+    {
+      "offset": 0,
+      "probe": "ꨆ--ꨆ",
+      "gap": 2,
+      "sym_cols": [
+        28,
+        43
+      ],
+      "sym_rows": [
+        22,
+        23
+      ],
+      "line_rows": [
+        19,
+        32
+      ]
+    },
+    {
+      "offset": 0,
+      "probe": "11-11",
+      "gap": 0,
+      "sym_cols": [
+        31,
+        41
+      ],
+      "sym_rows": [
+        25,
+        26
+      ],
+      "line_rows": [
+        17,
+        31
+      ]
+    },
+    {
+      "offset": 1,
+      "probe": "ꨆ-ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        29,
+        34
+      ],
+      "sym_rows": [
+        23,
+        24
+      ],
+      "line_rows": [
+        20,
+        31
+      ]
+    },
+    {
+      "offset": 1,
+      "probe": "ꨆ_ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        29,
+        36
+      ],
+      "sym_rows": [
+        33,
+        34
+      ],
+      "line_rows": [
+        20,
+        34
+      ]
+    },
+    {
+      "offset": 1,
+      "probe": "ꨆ--ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        29,
+        40
+      ],
+      "sym_rows": [
+        23,
+        24
+      ],
+      "line_rows": [
+        20,
+        31
+      ]
+    },
+    {
+      "offset": 1,
+      "probe": "ꨆ--ꨆ",
+      "gap": 2,
+      "sym_cols": [
+        29,
+        42
+      ],
+      "sym_rows": [
+        23,
+        24
+      ],
+      "line_rows": [
+        20,
+        31
+      ]
+    },
+    {
+      "offset": 1,
+      "probe": "11-11",
+      "gap": 0,
+      "sym_cols": [
+        31,
+        40
+      ],
+      "sym_rows": [
+        25,
+        26
+      ],
+      "line_rows": [
+        18,
+        31
+      ]
+    },
+    {
+      "offset": 2,
+      "probe": "ꨆ-ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        30,
+        36
+      ],
+      "sym_rows": [
+        22,
+        23
+      ],
+      "line_rows": [
+        20,
+        31
+      ]
+    },
+    {
+      "offset": 2,
+      "probe": "ꨆ_ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        30,
+        38
+      ],
+      "sym_rows": [
+        33,
+        33
+      ],
+      "line_rows": [
+        20,
+        33
+      ]
+    },
+    {
+      "offset": 2,
+      "probe": "ꨆ--ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        30,
+        41
+      ],
+      "sym_rows": [
+        22,
+        23
+      ],
+      "line_rows": [
+        20,
+        31
+      ]
+    },
+    {
+      "offset": 2,
+      "probe": "ꨆ--ꨆ",
+      "gap": 2,
+      "sym_cols": [
+        30,
+        43
+      ],
+      "sym_rows": [
+        22,
+        23
+      ],
+      "line_rows": [
+        20,
+        31
+      ]
+    },
+    {
+      "offset": 2,
+      "probe": "11-11",
+      "gap": 0,
+      "sym_cols": [
+        32,
+        42
+      ],
+      "sym_rows": [
+        25,
+        26
+      ],
+      "line_rows": [
+        18,
+        30
+      ]
+    },
+    {
+      "offset": 3,
+      "probe": "ꨆ-ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        30,
+        35
+      ],
+      "sym_rows": [
+        22,
+        23
+      ],
+      "line_rows": [
+        20,
+        31
+      ]
+    },
+    {
+      "offset": 3,
+      "probe": "ꨆ_ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        30,
+        38
+      ],
+      "sym_rows": [
+        33,
+        34
+      ],
+      "line_rows": [
+        20,
+        34
+      ]
+    },
+    {
+      "offset": 3,
+      "probe": "ꨆ--ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        30,
+        42
+      ],
+      "sym_rows": [
+        22,
+        23
+      ],
+      "line_rows": [
+        20,
+        31
+      ]
+    },
+    {
+      "offset": 3,
+      "probe": "ꨆ--ꨆ",
+      "gap": 2,
+      "sym_cols": [
+        30,
+        43
+      ],
+      "sym_rows": [
+        22,
+        23
+      ],
+      "line_rows": [
+        20,
+        31
+      ]
+    },
+    {
+      "offset": 3,
+      "probe": "11-11",
+      "gap": 0,
+      "sym_cols": [
+        33,
+        42
+      ],
+      "sym_rows": [
+        25,
+        26
+      ],
+      "line_rows": [
+        17,
+        31
+      ]
+    },
+    {
+      "offset": 4,
+      "probe": "ꨆ-ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        33,
+        37
+      ],
+      "sym_rows": [
+        23,
+        24
+      ],
+      "line_rows": [
+        20,
+        32
+      ]
+    },
+    {
+      "offset": 4,
+      "probe": "ꨆ_ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        33,
+        40
+      ],
+      "sym_rows": [
+        33,
+        34
+      ],
+      "line_rows": [
+        20,
+        34
+      ]
+    },
+    {
+      "offset": 4,
+      "probe": "ꨆ--ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        33,
+        44
+      ],
+      "sym_rows": [
+        23,
+        24
+      ],
+      "line_rows": [
+        20,
+        32
+      ]
+    },
+    {
+      "offset": 4,
+      "probe": "ꨆ--ꨆ",
+      "gap": 2,
+      "sym_cols": [
+        33,
+        46
+      ],
+      "sym_rows": [
+        23,
+        24
+      ],
+      "line_rows": [
+        20,
+        32
+      ]
+    },
+    {
+      "offset": 4,
+      "probe": "11-11",
+      "gap": 0,
+      "sym_cols": [
+        35,
+        44
+      ],
+      "sym_rows": [
+        25,
+        26
+      ],
+      "line_rows": [
+        17,
+        31
+      ]
+    },
+    {
+      "offset": 5,
+      "probe": "ꨆ-ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        32,
+        37
+      ],
+      "sym_rows": [
+        22,
+        23
+      ],
+      "line_rows": [
+        20,
+        31
+      ]
+    },
+    {
+      "offset": 5,
+      "probe": "ꨆ_ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        32,
+        38
+      ],
+      "sym_rows": [
+        32,
+        33
+      ],
+      "line_rows": [
+        20,
+        33
+      ]
+    },
+    {
+      "offset": 5,
+      "probe": "ꨆ--ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        32,
+        42
+      ],
+      "sym_rows": [
+        22,
+        23
+      ],
+      "line_rows": [
+        20,
+        31
+      ]
+    },
+    {
+      "offset": 5,
+      "probe": "ꨆ--ꨆ",
+      "gap": 2,
+      "sym_cols": [
+        32,
+        44
+      ],
+      "sym_rows": [
+        22,
+        23
+      ],
+      "line_rows": [
+        20,
+        31
+      ]
+    },
+    {
+      "offset": 5,
+      "probe": "11-11",
+      "gap": 0,
+      "sym_cols": [
+        34,
+        43
+      ],
+      "sym_rows": [
+        25,
+        26
+      ],
+      "line_rows": [
+        18,
+        30
+      ]
+    },
+    {
+      "offset": 6,
+      "probe": "ꨆ-ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        34,
+        39
+      ],
+      "sym_rows": [
+        22,
+        23
+      ],
+      "line_rows": [
+        19,
+        32
+      ]
+    },
+    {
+      "offset": 6,
+      "probe": "ꨆ_ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        34,
+        41
+      ],
+      "sym_rows": [
+        33,
+        34
+      ],
+      "line_rows": [
+        19,
+        34
+      ]
+    },
+    {
+      "offset": 6,
+      "probe": "ꨆ--ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        34,
+        45
+      ],
+      "sym_rows": [
+        22,
+        23
+      ],
+      "line_rows": [
+        19,
+        32
+      ]
+    },
+    {
+      "offset": 6,
+      "probe": "ꨆ--ꨆ",
+      "gap": 2,
+      "sym_cols": [
+        34,
+        47
+      ],
+      "sym_rows": [
+        22,
+        23
+      ],
+      "line_rows": [
+        19,
+        32
+      ]
+    },
+    {
+      "offset": 6,
+      "probe": "11-11",
+      "gap": 0,
+      "sym_cols": [
+        37,
+        46
+      ],
+      "sym_rows": [
+        25,
+        26
+      ],
+      "line_rows": [
+        17,
+        31
+      ]
+    },
+    {
+      "offset": 7,
+      "probe": "ꨆ-ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        34,
+        39
+      ],
+      "sym_rows": [
+        23,
+        24
+      ],
+      "line_rows": [
+        20,
+        31
+      ]
+    },
+    {
+      "offset": 7,
+      "probe": "ꨆ_ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        34,
+        42
+      ],
+      "sym_rows": [
+        33,
+        34
+      ],
+      "line_rows": [
+        20,
+        34
+      ]
+    },
+    {
+      "offset": 7,
+      "probe": "ꨆ--ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        34,
+        45
+      ],
+      "sym_rows": [
+        23,
+        24
+      ],
+      "line_rows": [
+        20,
+        31
+      ]
+    },
+    {
+      "offset": 7,
+      "probe": "ꨆ--ꨆ",
+      "gap": 2,
+      "sym_cols": [
+        34,
+        47
+      ],
+      "sym_rows": [
+        23,
+        24
+      ],
+      "line_rows": [
+        20,
+        31
+      ]
+    },
+    {
+      "offset": 7,
+      "probe": "11-11",
+      "gap": 0,
+      "sym_cols": [
+        37,
+        45
+      ],
+      "sym_rows": [
+        25,
+        26
+      ],
+      "line_rows": [
+        18,
+        31
+      ]
+    },
+    {
+      "offset": 8,
+      "probe": "ꨆ-ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        28,
+        34
+      ],
+      "sym_rows": [
+        22,
+        23
+      ],
+      "line_rows": [
+        20,
+        31
+      ]
+    },
+    {
+      "offset": 8,
+      "probe": "ꨆ_ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        28,
+        36
+      ],
+      "sym_rows": [
+        33,
+        33
+      ],
+      "line_rows": [
+        20,
+        33
+      ]
+    },
+    {
+      "offset": 8,
+      "probe": "ꨆ--ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        28,
+        40
+      ],
+      "sym_rows": [
+        22,
+        23
+      ],
+      "line_rows": [
+        20,
+        31
+      ]
+    },
+    {
+      "offset": 8,
+      "probe": "ꨆ--ꨆ",
+      "gap": 2,
+      "sym_cols": [
+        28,
+        42
+      ],
+      "sym_rows": [
+        22,
+        23
+      ],
+      "line_rows": [
+        20,
+        31
+      ]
+    },
+    {
+      "offset": 8,
+      "probe": "11-11",
+      "gap": 0,
+      "sym_cols": [
+        30,
+        40
+      ],
+      "sym_rows": [
+        25,
+        26
+      ],
+      "line_rows": [
+        18,
+        30
+      ]
+    },
+    {
+      "offset": 9,
+      "probe": "ꨆ-ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        31,
+        36
+      ],
+      "sym_rows": [
+        24,
+        25
+      ],
+      "line_rows": [
+        18,
+        30
+      ]
+    },
+    {
+      "offset": 9,
+      "probe": "ꨆ_ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        31,
+        39
+      ],
+      "sym_rows": [
+        32,
+        32
+      ],
+      "line_rows": [
+        18,
+        32
+      ]
+    },
+    {
+      "offset": 9,
+      "probe": "ꨆ--ꨆ",
+      "gap": 0,
+      "sym_cols": [
+        31,
+        42
+      ],
+      "sym_rows": [
+        24,
+        25
+      ],
+      "line_rows": [
+        18,
+        30
+      ]
+    },
+    {
+      "offset": 9,
+      "probe": "ꨆ--ꨆ",
+      "gap": 2,
+      "sym_cols": [
+        31,
+        44
+      ],
+      "sym_rows": [
+        24,
+        25
+      ],
+      "line_rows": [
+        18,
+        30
+      ]
+    },
+    {
+      "offset": 9,
+      "probe": "11-11",
+      "gap": 0,
+      "sym_cols": [
+        33,
+        42
+      ],
+      "sym_rows": [
+        24,
+        25
+      ],
+      "line_rows": [
+        16,
+        29
+      ]
+    }
+  ],
+  "violations": {
+    "text_overlap": {},
+    "train_val_overlap": [],
+    "substring": [],
+    "image_overlap": {},
+    "positional": [],
+    "ast": [],
+    "geometry": []
+  },
+  "audits": {
+    "audit_1_text_disjointness": true,
+    "audit_2_train_val_disjointness": true,
+    "audit_3_long_substring_disjointness": true,
+    "audit_4_image_sha256_disjointness_and_15000_shared": true,
+    "audit_5_positional_15000_identity": true,
+    "audit_6_ast_generator_blindness": true,
+    "audit_7_width_phonotactic_coverage_baseline": true
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "title": "Cham-OCR v24.1 Stage R3 Preflight Report (SCAN-DEGRADATION)",
+  "timestamp": "2026-11-16T07:52:54.032218+00:00",
+  "status": "PASS",
+  "yaml_diff_keys": [
+    "Eval.dataset.data_dir",
+    "Eval.dataset.label_file_list",
+    "Global.config_role",
+    "Global.pretrained_model",
+    "Global.save_inference_dir",
+    "Global.save_model_dir",
+    "Global.save_res_path",
+    "Optimizer.lr.eta_min",
+    "Optimizer.lr.learning_rate",
+    "Train.dataset.data_dir",
+    "Train.dataset.label_file_list"
+  ],
+  "unexpected_yaml_diffs": [],
+  "base_checkpoint": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\r2_1_6_surgical_polish_checkpoints\\iter_epoch_2.pdparams",
+  "base_checkpoint_sha256": "cd0c4838a7942bc050509311ae65cdf0e61fff1c1c0488a033e7df70c80cedb2",
+  "mixed_batch_idx": 0,
+  "blanks_in_mixed_batch": 1,
+  "total_loss": 22.505876541137695,
+  "ctc_loss": 21.447717666625977,
+  "nrtr_loss": 1.0581581592559814,
+  "optimizer_eligible_finite_grads": 549,
+  "mutated_weights_count": 0
+}

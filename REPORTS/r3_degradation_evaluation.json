@@ -1,0 +1,536 @@
+{
+  "title": "Cham-OCR v24.1 Stage R3 Scan Degradation Evaluation",
+  "evaluated_at": "2026-11-16T08:55:40.721389+00:00",
+  "r3_degradation": {
+    "epoch_1": {
+      "sha256": "35edb1e456d4c77e4cfe0a6c4d04e04995fb3ed53b8b57440ff445fcbdc24050",
+      "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\r3_degradation_infer_e1",
+      "clean_cer_pct": 5.2128,
+      "clean_raw_cer_pct": 5.161,
+      "char_cer_pct": 4.4096,
+      "char_edits": 214,
+      "char_deletions": 95,
+      "char_substitutions": 59,
+      "char_insertions": 60,
+      "combmark_final_deletions": 57,
+      "del_categories": {
+        "DEPENDENT_VOWEL_COMBINING_MARK": 39,
+        "SPACE": 9,
+        "OTHERS": 2,
+        "CHAM_PUNCTUATION_DANDA": 3,
+        "FINAL_CONSONANT_SIGN": 18,
+        "BASE_CONSONANT": 24
+      },
+      "sub_categories": {
+        "SPACE": 10,
+        "DEPENDENT_VOWEL_COMBINING_MARK": 22,
+        "OTHERS": 4,
+        "FINAL_CONSONANT_SIGN": 9,
+        "CHAM_PUNCTUATION_DANDA": 3,
+        "BASE_CONSONANT": 11
+      },
+      "ins_categories": {
+        "DEPENDENT_VOWEL_COMBINING_MARK": 49,
+        "FINAL_CONSONANT_SIGN": 5,
+        "BASE_CONSONANT": 4,
+        "SPACE": 2
+      },
+      "symbols_acc_pct": 96.7857,
+      "failing_symbols": [
+        "}",
+        "_",
+        "/"
+      ],
+      "hyphen_acc_pct": 88.5714,
+      "blank_passed": true,
+      "fullpage_matched_cer_pct": 6.404,
+      "stress_frozen_cer_pct": 13.1723,
+      "stress_base_8_cer_pct": 5.1282,
+      "composite_score": 0.6384,
+      "valid_for_release": false,
+      "gates_passed_count": 3,
+      "total_gates": 6,
+      "gates": [
+        {
+          "gate": "Gate 1: Clean-Frozen Non-Regression",
+          "baseline": "11.7967%",
+          "tolerance": "+0.20%",
+          "threshold": "11.9967%",
+          "value": "5.2128%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+          "min_acc": "99.0%",
+          "value": "96.7857%",
+          "failing_symbols": [
+            "}",
+            "_",
+            "/"
+          ],
+          "failing_count": 3,
+          "status": "FAIL"
+        },
+        {
+          "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+          "min_acc": "95.0%",
+          "value": "88.5714%",
+          "status": "FAIL"
+        },
+        {
+          "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+          "white_pred": "",
+          "gray_pred": "",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 5: Character-Frozen Non-Regression",
+          "baseline": "4.1830%",
+          "tolerance": "+0.21%",
+          "threshold": "4.3930%",
+          "value": "4.4096%",
+          "status": "FAIL"
+        },
+        {
+          "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+          "threshold": "12.0000%",
+          "value": "6.4040%",
+          "status": "PASS"
+        }
+      ],
+      "per_symbol_count_acc_pct": {
+        "?": 100.0,
+        "!": 100.0,
+        "#": 100.0,
+        "&": 100.0,
+        "*": 100.0,
+        "<": 100.0,
+        ">": 100.0,
+        "{": 100.0,
+        "}": 85.0,
+        "\\": 100.0,
+        "_": 75.0,
+        "[": 100.0,
+        "]": 100.0,
+        "/": 95.0
+      },
+      "per_hyphen_group_count_acc_pct": {
+        "word-word": 100.0,
+        "word - word": 100.0,
+        "number-number": 80.0,
+        "year-year": 100.0,
+        "line ending": 100.0,
+        "line beginning": 80.0,
+        "double hyphen": 60.0
+      },
+      "held_out_probe_100_w320": {
+        "cer_pct": 10.09,
+        "edits": 197,
+        "exact_matches": 48,
+        "deletions": 142,
+        "substitutions": 46,
+        "insertions": 9,
+        "subpeak_top2_top3_suppressed": 95,
+        "subpeak_pct_of_deletions": 66.9,
+        "missing_never_top1": 42,
+        "argmax_alignment_mismatch": 5,
+        "repeated_token_collapse": 0,
+        "combmark_final_deletions": 72,
+        "combmark_subpeak_deletions": 49
+      }
+    },
+    "epoch_2": {
+      "sha256": "d04d02862932593961252d15f2a5d36f2f8edc479168e94e9f72ed5d6f39352e",
+      "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\r3_degradation_infer_e2",
+      "clean_cer_pct": 5.2128,
+      "clean_raw_cer_pct": 5.1481,
+      "char_cer_pct": 4.5127,
+      "char_edits": 219,
+      "char_deletions": 98,
+      "char_substitutions": 61,
+      "char_insertions": 60,
+      "combmark_final_deletions": 59,
+      "del_categories": {
+        "DEPENDENT_VOWEL_COMBINING_MARK": 41,
+        "SPACE": 8,
+        "OTHERS": 3,
+        "CHAM_PUNCTUATION_DANDA": 4,
+        "FINAL_CONSONANT_SIGN": 18,
+        "BASE_CONSONANT": 24
+      },
+      "sub_categories": {
+        "SPACE": 10,
+        "DEPENDENT_VOWEL_COMBINING_MARK": 24,
+        "BASE_CONSONANT": 14,
+        "OTHERS": 3,
+        "FINAL_CONSONANT_SIGN": 8,
+        "CHAM_PUNCTUATION_DANDA": 2
+      },
+      "ins_categories": {
+        "DEPENDENT_VOWEL_COMBINING_MARK": 49,
+        "BASE_CONSONANT": 5,
+        "SPACE": 3,
+        "FINAL_CONSONANT_SIGN": 3
+      },
+      "symbols_acc_pct": 96.7857,
+      "failing_symbols": [
+        "!",
+        "}",
+        "_",
+        "/"
+      ],
+      "hyphen_acc_pct": 87.1429,
+      "blank_passed": true,
+      "fullpage_matched_cer_pct": 6.5015,
+      "stress_frozen_cer_pct": 12.0857,
+      "stress_base_8_cer_pct": 4.4872,
+      "composite_score": 0.634,
+      "valid_for_release": false,
+      "gates_passed_count": 3,
+      "total_gates": 6,
+      "gates": [
+        {
+          "gate": "Gate 1: Clean-Frozen Non-Regression",
+          "baseline": "11.7967%",
+          "tolerance": "+0.20%",
+          "threshold": "11.9967%",
+          "value": "5.2128%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+          "min_acc": "99.0%",
+          "value": "96.7857%",
+          "failing_symbols": [
+            "!",
+            "}",
+            "_",
+            "/"
+          ],
+          "failing_count": 4,
+          "status": "FAIL"
+        },
+        {
+          "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+          "min_acc": "95.0%",
+          "value": "87.1429%",
+          "status": "FAIL"
+        },
+        {
+          "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+          "white_pred": "",
+          "gray_pred": "",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 5: Character-Frozen Non-Regression",
+          "baseline": "4.1830%",
+          "tolerance": "+0.21%",
+          "threshold": "4.3930%",
+          "value": "4.5127%",
+          "status": "FAIL"
+        },
+        {
+          "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+          "threshold": "12.0000%",
+          "value": "6.5015%",
+          "status": "PASS"
+        }
+      ],
+      "per_symbol_count_acc_pct": {
+        "?": 100.0,
+        "!": 95.0,
+        "#": 100.0,
+        "&": 100.0,
+        "*": 100.0,
+        "<": 100.0,
+        ">": 100.0,
+        "{": 100.0,
+        "}": 85.0,
+        "\\": 100.0,
+        "_": 80.0,
+        "[": 100.0,
+        "]": 100.0,
+        "/": 95.0
+      },
+      "per_hyphen_group_count_acc_pct": {
+        "word-word": 90.0,
+        "word - word": 100.0,
+        "number-number": 80.0,
+        "year-year": 100.0,
+        "line ending": 100.0,
+        "line beginning": 70.0,
+        "double hyphen": 70.0
+      },
+      "held_out_probe_100_w320": {
+        "cer_pct": 10.19,
+        "edits": 199,
+        "exact_matches": 48,
+        "deletions": 138,
+        "substitutions": 47,
+        "insertions": 14,
+        "subpeak_top2_top3_suppressed": 90,
+        "subpeak_pct_of_deletions": 65.22,
+        "missing_never_top1": 44,
+        "argmax_alignment_mismatch": 4,
+        "repeated_token_collapse": 0,
+        "combmark_final_deletions": 67,
+        "combmark_subpeak_deletions": 47
+      }
+    },
+    "epoch_3": {
+      "sha256": "f00ae55578a2afae18f951677960ba8dc004174e429123d5d3602137f8ac7318",
+      "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\r3_degradation_infer_e3",
+      "clean_cer_pct": 5.1869,
+      "clean_raw_cer_pct": 5.1222,
+      "char_cer_pct": 4.2654,
+      "char_edits": 207,
+      "char_deletions": 98,
+      "char_substitutions": 59,
+      "char_insertions": 50,
+      "combmark_final_deletions": 55,
+      "del_categories": {
+        "SPACE": 11,
+        "DEPENDENT_VOWEL_COMBINING_MARK": 36,
+        "OTHERS": 2,
+        "CHAM_PUNCTUATION_DANDA": 4,
+        "FINAL_CONSONANT_SIGN": 19,
+        "BASE_CONSONANT": 26
+      },
+      "sub_categories": {
+        "DEPENDENT_VOWEL_COMBINING_MARK": 27,
+        "SPACE": 8,
+        "BASE_CONSONANT": 12,
+        "OTHERS": 4,
+        "FINAL_CONSONANT_SIGN": 6,
+        "CHAM_PUNCTUATION_DANDA": 2
+      },
+      "ins_categories": {
+        "DEPENDENT_VOWEL_COMBINING_MARK": 44,
+        "BASE_CONSONANT": 2,
+        "FINAL_CONSONANT_SIGN": 3,
+        "SPACE": 1
+      },
+      "symbols_acc_pct": 96.7857,
+      "failing_symbols": [
+        "!",
+        "}",
+        "_",
+        "/"
+      ],
+      "hyphen_acc_pct": 88.5714,
+      "blank_passed": true,
+      "fullpage_matched_cer_pct": 6.5293,
+      "stress_frozen_cer_pct": 11.1945,
+      "stress_base_8_cer_pct": 4.4872,
+      "composite_score": 0.6387,
+      "valid_for_release": false,
+      "gates_passed_count": 4,
+      "total_gates": 6,
+      "gates": [
+        {
+          "gate": "Gate 1: Clean-Frozen Non-Regression",
+          "baseline": "11.7967%",
+          "tolerance": "+0.20%",
+          "threshold": "11.9967%",
+          "value": "5.1869%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+          "min_acc": "99.0%",
+          "value": "96.7857%",
+          "failing_symbols": [
+            "!",
+            "}",
+            "_",
+            "/"
+          ],
+          "failing_count": 4,
+          "status": "FAIL"
+        },
+        {
+          "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+          "min_acc": "95.0%",
+          "value": "88.5714%",
+          "status": "FAIL"
+        },
+        {
+          "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+          "white_pred": "",
+          "gray_pred": "",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 5: Character-Frozen Non-Regression",
+          "baseline": "4.1830%",
+          "tolerance": "+0.21%",
+          "threshold": "4.3930%",
+          "value": "4.2654%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+          "threshold": "12.0000%",
+          "value": "6.5293%",
+          "status": "PASS"
+        }
+      ],
+      "per_symbol_count_acc_pct": {
+        "?": 100.0,
+        "!": 90.0,
+        "#": 100.0,
+        "&": 100.0,
+        "*": 100.0,
+        "<": 100.0,
+        ">": 100.0,
+        "{": 100.0,
+        "}": 90.0,
+        "\\": 100.0,
+        "_": 80.0,
+        "[": 100.0,
+        "]": 100.0,
+        "/": 95.0
+      },
+      "per_hyphen_group_count_acc_pct": {
+        "word-word": 80.0,
+        "word - word": 100.0,
+        "number-number": 80.0,
+        "year-year": 100.0,
+        "line ending": 100.0,
+        "line beginning": 80.0,
+        "double hyphen": 80.0
+      },
+      "held_out_probe_100_w320": {
+        "cer_pct": 10.45,
+        "edits": 204,
+        "exact_matches": 48,
+        "deletions": 143,
+        "substitutions": 49,
+        "insertions": 12,
+        "subpeak_top2_top3_suppressed": 93,
+        "subpeak_pct_of_deletions": 65.03,
+        "missing_never_top1": 44,
+        "argmax_alignment_mismatch": 6,
+        "repeated_token_collapse": 0,
+        "combmark_final_deletions": 69,
+        "combmark_subpeak_deletions": 50
+      }
+    }
+  },
+  "best_epoch": 3,
+  "best_epoch_checkpoint": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\r3_degradation_checkpoints\\iter_epoch_3.pdparams",
+  "best_epoch_infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\r3_degradation_infer_e3",
+  "best_epoch_sha256": "f00ae55578a2afae18f951677960ba8dc004174e429123d5d3602137f8ac7318",
+  "valid_for_release": false,
+  "ground_truth_training_accounting": {
+    "first_batch_timestamp": "2026-11-16 08:12:11",
+    "last_batch_timestamp": "2026-11-16 08:21:23",
+    "train_loop_duration_seconds": 552.0,
+    "train_loop_duration_minutes": 9.2,
+    "pipeline_container_overhead_seconds": 1108.4,
+    "pipeline_container_overhead_minutes": 18.47,
+    "total_kernel_wall_clock_seconds": 1660.4,
+    "total_kernel_wall_clock_minutes": 27.67,
+    "epoch_1_final_loss": 8.173333,
+    "epoch_2_final_loss": 7.922428,
+    "epoch_3_final_loss": 7.055275
+  },
+  "level5_fullpage_comparison": {
+    "evaluated_at": "2026-11-16T08:47:31.510399+00:00",
+    "models": {
+      "v24": {
+        "short:5": {
+          "n": 16,
+          "lines": "63/64",
+          "abs_line_err": 3,
+          "doc_cer_pct": 21.97,
+          "matched_cer_pct": 22.52
+        },
+        "a4:5": {
+          "n": 16,
+          "lines": "240/241",
+          "abs_line_err": 1,
+          "doc_cer_pct": 19.58,
+          "matched_cer_pct": 19.9
+        },
+        "audit_18": {
+          "n": 18,
+          "lines": "134/134",
+          "abs_line_err": 0,
+          "doc_cer_pct": 18.26,
+          "matched_cer_pct": 18.77
+        }
+      },
+      "v24_1_r2_1_6": {
+        "short:5": {
+          "n": 16,
+          "lines": "62/64",
+          "abs_line_err": 2,
+          "doc_cer_pct": 17.27,
+          "matched_cer_pct": 17.77
+        },
+        "a4:5": {
+          "n": 16,
+          "lines": "239/241",
+          "abs_line_err": 2,
+          "doc_cer_pct": 13.68,
+          "matched_cer_pct": 13.92
+        },
+        "audit_18": {
+          "n": 18,
+          "lines": "134/134",
+          "abs_line_err": 0,
+          "doc_cer_pct": 11.1,
+          "matched_cer_pct": 11.38
+        }
+      },
+      "r2_1_7_best": {
+        "short:5": {
+          "n": 16,
+          "lines": "62/64",
+          "abs_line_err": 2,
+          "doc_cer_pct": 16.37,
+          "matched_cer_pct": 16.85
+        },
+        "a4:5": {
+          "n": 16,
+          "lines": "239/241",
+          "abs_line_err": 2,
+          "doc_cer_pct": 12.48,
+          "matched_cer_pct": 12.7
+        },
+        "audit_18": {
+          "n": 18,
+          "lines": "134/134",
+          "abs_line_err": 0,
+          "doc_cer_pct": 10.75,
+          "matched_cer_pct": 11.0
+        }
+      },
+      "r3_best": {
+        "short:5": {
+          "n": 16,
+          "lines": "62/64",
+          "abs_line_err": 2,
+          "doc_cer_pct": 16.37,
+          "matched_cer_pct": 16.75
+        },
+        "a4:5": {
+          "n": 16,
+          "lines": "239/241",
+          "abs_line_err": 2,
+          "doc_cer_pct": 12.98,
+          "matched_cer_pct": 13.19
+        },
+        "audit_18": {
+          "n": 18,
+          "lines": "134/134",
+          "abs_line_err": 0,
+          "doc_cer_pct": 10.9,
+          "matched_cer_pct": 11.17
+        }
+      }
+    }
+  }
+}

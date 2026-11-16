@@ -1,0 +1,639 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_id": "realscan_gold_v1",
+  "split_policy": "document_level_frozen_holdout (never used in R2/R3/R4 train or val)",
+  "documents": [
+    {
+      "doc_id": "harum_palei_01",
+      "source_type": "authentic_cham_poem_page",
+      "page_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/original_image.png",
+      "page_sha256": "9566588bd7479ae97251136599cbba18b243dcc5d68531ccbde290d1c0182957",
+      "line_count": 25,
+      "lines": [
+        {
+          "line": 1,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_01.png",
+          "crop_sha256": "de64668419b591d4d6ce300ed01fe2d92e8782c8806e4658f5bf5d118b3730c8",
+          "gt": "ꨨꨣꨭꩌ ꨚꨤꨬ ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ"
+        },
+        {
+          "line": 2,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_02.png",
+          "crop_sha256": "b0a4aa2112a4c63671f54ac049bb19b0dae197cb8022bebe38d6bd2c1c4945d1",
+          "gt": "ꨝꨳꨮꩉ ꨨꨣꨬ ꨁ-ꨗꨫ ꨚꨙꨳꩀ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨬ ꨡꨭꩊ ꨆꨴꩌ"
+        },
+        {
+          "line": 3,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_03.png",
+          "crop_sha256": "68f1691847709d9a53481759685852cbe7395278d7a6410b775533ec135d334d",
+          "gt": "ꨀꨊꨯꨱꩀ ꨤꨊꨪꩀ ꨨꨎꨥ ꨆꨚꨶꨮꩊ ꨌꨳꨪꩌ ꨈꨪꨤꩄ ꨟꨣꨰ"
+        },
+        {
+          "line": 4,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_04.png",
+          "crop_sha256": "4908ea04244772487b800947f09e787808456557b340abd5e2081a8896da986b",
+          "gt": "ꨦꩇ ꨆꨤꩀ ꨈꨵꨮꩃ ꨆꨝꨥ ꨀꨕꨯꨱꩍ ꨀꨊꨯꨱꩀ ꨝꨗꨮꩀ"
+        },
+        {
+          "line": 5,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_05.png",
+          "crop_sha256": "8173ebdee4239ff9a2b833e1d341a2b093f61cdc0394f6af514ba7214687f295",
+          "gt": "ꨆꨤꩀ ꨚꨕꨴꨭꩅ ꨚꨕꨴꨶꨰ ꨆꨣꩌ ꨈꨕꨮꩃ ꨟꨝꨭꩀ ꨟꨝꩉ"
+        },
+        {
+          "line": 6,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_06.png",
+          "crop_sha256": "4cfa1cb60a464e9a46f2efe07bda45c26437619303f911ef0e6d3a25f6fc3bd9",
+          "gt": "ꨀꨓꩍ ꨀꨓꩍ ꨀꨓꩍ ꨆꨥꨯꩌ ꨝꨶꨮꩊ ꨤꨪ-ꨂꨀꨩ ꨈꨤꨮꩌ ꨎꨤꨮꩃ"
+        },
+        {
+          "line": 7,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_07.png",
+          "crop_sha256": "a24cfa7474905211e546dad27bf85fb8a4b8b9fc49166d1a29f8efd1e581561d",
+          "gt": "ꨧꨯꨱꩃ ꨆꨚꨶꨮꩊ ꨆꨝꨥ ꨗꨯꨱ ꨀꨊꨯꨱꩀ ꨎꨤꩆ ꨟꨣꨰ ꨨꨚꩀ"
+        },
+        {
+          "line": 8,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_08.png",
+          "crop_sha256": "d163eadd9f606f4f81764865be0413dfd2fb9606838443c0167024b7fd77bc2e",
+          "gt": "ꨓꨚꨮꩆ ꨕꨮꩍ ꨆꨴꨯꨱꩃ ꨚꨝꨭꩃ ꨀꨈꩀ ꨗꩌ ꨓꨚꨮꩆ ꨓꨓꨶꨩ"
+        },
+        {
+          "line": 9,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_09.png",
+          "crop_sha256": "f4fe14684dd7e9f7eb65d8e6fec7d65b7d5c4ec89a4175da308b04c88ed752a1",
+          "gt": "ꨧꨬ ꨚꨎꨮꩍ ꨟꨯꨱꩃ ꨟꨯꨱꩃ ꨀꨆꨯꨱꩀ ꨌꩃ ꨟꨯꨱꩃ"
+        },
+        {
+          "line": 10,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_10.png",
+          "crop_sha256": "320ec67b5df772af060b8e8ce11b146908cf9df8038ea94db4fc246ac44cb667",
+          "gt": "ꨓꨳꩇ ꨓꨶꨬ ꨀꨊꨪꩆ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨯꩌ ꨦꩇ ꨆꨤꩀ"
+        },
+        {
+          "line": 11,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_11.png",
+          "crop_sha256": "edfb82704292dea986a791f596cd1cfd8266357eebf5abbe40ed84632299bf34",
+          "gt": "ꨣꨤꨮꩃ ꨈꨭꨨꨩ ꨕꨗꩈ ꨆꨣꩌ ꨈꨕꨮꩃ ꨕꨤꩌ ꨡꨵꩃ ꨝꨳꨮꩉ ꨨꨣꨬ"
+        },
+        {
+          "line": 12,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_12.png",
+          "crop_sha256": "fbe03d02a371bc67db7b8def216675fa6296d3f83bfc2038cc492971fbffac17",
+          "gt": "ꨀꨦꩀ ꨓꨡꩀ ꨓꨚꨮꩆ ꨡꨶꨮꩆ ꨤꨨꨶꨰ ꨤꨨꨩ ꨚꨚꩉ"
+        },
+        {
+          "line": 13,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_13.png",
+          "crop_sha256": "6302d8d158151964a20480b8317fdff72bc7f05199f7b8c0d87e13c8ed86a7c5",
+          "gt": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨆꨣꩌ ꨈꨕꨮꩃ ꨚꨗꨪꩀ ꨤꨚꨬ ꨟꨝꨭꩀ"
+        },
+        {
+          "line": 14,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_14.png",
+          "crop_sha256": "99622e351f4e127fd9d069ff04b78999fc14c9d0c8fc1efdb709964fe9568977",
+          "gt": "ꨓꨗꨴꩀ ꨟꨐꩀ ꨕꨯꨱꩀ ꨦꨭꩇ ꨨꨕꩍ ꨚꨍꩃ"
+        },
+        {
+          "line": 15,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_15.png",
+          "crop_sha256": "407ef9e41a937c51cc71cef4a3c7a29fe324af74dfae0c454b3d21a7632c5500",
+          "gt": "ꨕꨯꨱꩀ ꨢꨮꨭ ꨎꨶꨩ ꨤꨊꨶꨬ ꨝꩉ ꨕꨯꨱꩀ ꨟꨝꨭꩀ ꨤꨚꨬ"
+        },
+        {
+          "line": 16,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_16.png",
+          "crop_sha256": "df55745506c5a4cddb21e6185271ef6ed274403d8c2e5378c9047e7fa72fd584",
+          "gt": "ꨧꨯꨱꩃ ꨤꨆꨭꩀ ꨈꨗꨭꨩ ꨥꩊ ꨟꨢꨭꩅ ꨧꨬ ꨎꩌꨎꨫ ꨖꨪꩅ"
+        },
+        {
+          "line": 17,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_17.png",
+          "crop_sha256": "ae98456a5a136b77077cac189c7f858ffc79433a0a71edde7ce982f1b80a098c",
+          "gt": "ꨕꨯꨱꩀ ꨝꩀ ꨚꨕꨮꩃ ꨀꨣꨰ ꨦꨡꨰ ꨨꨕꨳꨮꩇ ꨨꨕꨯꩌ ꨀꨝꨯꨱꩍ ꨧꩃ"
+        },
+        {
+          "line": 18,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_18.png",
+          "crop_sha256": "ca1e72291581299d8f32a4408763d75cdcff92d3722f9cf82e2678f484606a02",
+          "gt": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨓꨡꩀ ꨎꨰꩀ ꨚꨎꨮꨩ ꨚꨣꨤꨯꨱ ꨈꨕꨮꩃ ꨕꨤꩌ ꨆꨤꨪꨟꨭꨩ ꨆꨆꨶꨮꩉ"
+        },
+        {
+          "line": 19,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_19.png",
+          "crop_sha256": "b6f1bb3a4444b9047cbeb55ff389047a27319868292f61c83933f4b593c094f1",
+          "gt": "ꨦꩇ ꨌꨳꨪꩌ ꨓꨤꩍ ꨆꨚꨶꨮꩊ ꨕꨯꨱꩀ ꨎꨶꨩ ꨧꨩ ꨕꨴꨬ ꨗꨯꨱ ꨕꨶꩍ ꨀꨕꨪꩍ"
+        },
+        {
+          "line": 20,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_20.png",
+          "crop_sha256": "bbaf1f30f0599a01db2f058a608180eae65d90df8cd888faec245ec72ec47d33",
+          "gt": "ꨌꨳꨪꩌ ꨤꨮꩈ ꨣꩆ ꨌꩃ ꨝꨵꨯꨱꩍ ꨚꨈꨭꩍ ꨨꨕꩍ ꨚꨍꩃ"
+        },
+        {
+          "line": 21,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_21.png",
+          "crop_sha256": "12c090b76d9eea5bab03ed2c6d4eb380988f90f05ca8a5fa128e65854fb14fb0",
+          "gt": "ꨚꨯꨱꩀ ꨞꨯꩂ ꨟꨣꨰ ꨣꨝꨮꨭ ꨓꨗꨴꩀ ꨚꨙꨳꩀ ꨀꨧꩅ ꨦꨮꩍ ꨟꨤꨮꩃ ..."
+        },
+        {
+          "line": 22,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_22.png",
+          "crop_sha256": "a9cc3048da665f593aeff69af7da3baae483bbc46e428b7eb2947a1cffdcfcde",
+          "gt": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/꩒꩐꩒꩖"
+        },
+        {
+          "line": 23,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_23.png",
+          "crop_sha256": "a25927b7865d8a5c09f2b1245f0974d245a4a7e4c324179dca6a52628e30dd5c",
+          "gt": "ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ"
+        },
+        {
+          "line": 24,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_24.png",
+          "crop_sha256": "1998a0769aef4fbd746e2528a57cdeadcf781dee38bd774c16112c746541224d",
+          "gt": "ꨦꨮꩍ ꨟꨤꨮꩃ : ꨨꨭꩈ ꨨꨯꨀꩃ"
+        },
+        {
+          "line": 25,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_25.png",
+          "crop_sha256": "49aa070f0c9e84b2c00246defaaeffe336dc2cd838d2f3269c20cccdf973da77",
+          "gt": "ꨈꨗꨭꨩ ꨥꩊ : ꨝꨭꩄ ꨟꩆꨨꨩ"
+        }
+      ]
+    },
+    {
+      "doc_id": "handoff_multiscript_01",
+      "source_type": "script_routing_and_script_purity_crops",
+      "counts": {
+        "cham_script": 27,
+        "vietnamese_english": 24,
+        "latin": 25
+      },
+      "groups": {
+        "cham_script": [
+          {
+            "crop_id": 0,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0000.png",
+            "source_page": "page_0000.png",
+            "crop_sha256": "9c264e53bac3974c66c97d1a611dd5c389b199a6b6d113ef999eefc3c097acc9"
+          },
+          {
+            "crop_id": 1,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0001.png",
+            "source_page": "page_0000.png",
+            "crop_sha256": "6a55816be343d31805b9e7e7a8c8fa1714db377abd4423f29494a4c775354bac"
+          },
+          {
+            "crop_id": 2,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0002.png",
+            "source_page": "page_0000.png",
+            "crop_sha256": "7b271a0c72ae5e242ff0b016cd1306b3eefef9a1c9303c103ffc9cc2582fbd41"
+          },
+          {
+            "crop_id": 3,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0003.png",
+            "source_page": "page_0000.png",
+            "crop_sha256": "5621d8f41af968aede2b849736f35d76616e9aab66fc1f9638f1e1a555bc88ce"
+          },
+          {
+            "crop_id": 4,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0004.png",
+            "source_page": "page_0000.png",
+            "crop_sha256": "98cdc2f2ffe00f7e084c024527c419981ce20fe563efdad8ce01ff1b30d2cbb0"
+          },
+          {
+            "crop_id": 5,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0005.png",
+            "source_page": "page_0000.png",
+            "crop_sha256": "bd0a59f9e231653e351dd545d03a0d0a2aa6b9192f8016440840b466320f53b1"
+          },
+          {
+            "crop_id": 6,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0006.png",
+            "source_page": "page_0000.png",
+            "crop_sha256": "9d9fda6cb59957455f07c641d334c287c336e46317fa86df968edaca31cb1fc3"
+          },
+          {
+            "crop_id": 7,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0007.png",
+            "source_page": "page_0000.png",
+            "crop_sha256": "20f9296de850390edc56192e3250e6be3dcaceb363fa2f9182ce2fb8893d6b6b"
+          },
+          {
+            "crop_id": 8,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0008.png",
+            "source_page": "page_0001.png",
+            "crop_sha256": "edc9a53fe97f923b8897db99c4ce6766cd065b42f536b7a3b4fee833362958ab"
+          },
+          {
+            "crop_id": 9,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0009.png",
+            "source_page": "page_0001.png",
+            "crop_sha256": "7af87ca9ea7e52cff272529fe33da483d40f54e2e67614d0c375570b0a83152f"
+          },
+          {
+            "crop_id": 10,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0010.png",
+            "source_page": "page_0001.png",
+            "crop_sha256": "84be50a62a2439e160dee830b60f3922ea05634e22cedd6652a46b6234ea97ea"
+          },
+          {
+            "crop_id": 11,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0011.png",
+            "source_page": "page_0001.png",
+            "crop_sha256": "8f75e74153e35664addf1974fbf46a7a88c5977c2b5cc28cb8342a7ecbb9a4aa"
+          },
+          {
+            "crop_id": 12,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0012.png",
+            "source_page": "page_0001.png",
+            "crop_sha256": "ea501f0f17f100cfcfef6fd6077d22225b8bd7497df2cbfa028c87ef51f6e436"
+          },
+          {
+            "crop_id": 13,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0013.png",
+            "source_page": "page_0001.png",
+            "crop_sha256": "2817f17968ba59f13093c5abdded29918ebe8975aee87ecd4328ad369496c22c"
+          },
+          {
+            "crop_id": 14,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0014.png",
+            "source_page": "page_0001.png",
+            "crop_sha256": "303ff724f052dc8fa8addedcb21e15c02d6c1f59cfc5cf294978235dfdd16b4f"
+          },
+          {
+            "crop_id": 15,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0015.png",
+            "source_page": "page_0001.png",
+            "crop_sha256": "0608f0f0a9de9c44c25f74cea002d4cb394656b7c448ea04ea218e236d4dd2ba"
+          },
+          {
+            "crop_id": 16,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0016.png",
+            "source_page": "page_0001.png",
+            "crop_sha256": "76a9926e180968880d6b38038fae27274cc805a9e9d6b3fd4562e4e108668fbe"
+          },
+          {
+            "crop_id": 17,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0017.png",
+            "source_page": "page_0002.png",
+            "crop_sha256": "6aa7fb784e50629d560a436ef06f18928eb3af3b897476747ba6107eba53a9a7"
+          },
+          {
+            "crop_id": 18,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0018.png",
+            "source_page": "page_0002.png",
+            "crop_sha256": "a22da16cfa4b5d3403721719c0e1f1ddd5edb563381f85dbace1199b29bf70ed"
+          },
+          {
+            "crop_id": 19,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0019.png",
+            "source_page": "page_0002.png",
+            "crop_sha256": "22877fb186a5d8a2737c6bb38c544c4a4700153a3e992088754a9db0a161a3fe"
+          },
+          {
+            "crop_id": 20,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0020.png",
+            "source_page": "page_0002.png",
+            "crop_sha256": "da309517f4e420fccf8f869d87c36dc3641015750ab46f69c2ed640e3bda2550"
+          },
+          {
+            "crop_id": 21,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0021.png",
+            "source_page": "page_0002.png",
+            "crop_sha256": "226900e294afebaf22184ab68206ce73dafb0a716850c903e56279df94192509"
+          },
+          {
+            "crop_id": 22,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0022.png",
+            "source_page": "page_0002.png",
+            "crop_sha256": "02288b5c1c61b6af9b6da6c5e876b69ca2bd2628d22de66517aad0e140f55999"
+          },
+          {
+            "crop_id": 23,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0023.png",
+            "source_page": "page_0002.png",
+            "crop_sha256": "436c48649e033132b95b306c8aa2dc46eab1bfdb69d5c47ad87fe3a43328bda1"
+          },
+          {
+            "crop_id": 24,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0024.png",
+            "source_page": "page_0002.png",
+            "crop_sha256": "cc55088d8f26e7a0faaebf502879c5465458397cf8b0b2f3bd1c851d5369f696"
+          },
+          {
+            "crop_id": 25,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0025.png",
+            "source_page": "page_0002.png",
+            "crop_sha256": "31c857cbc746c0c0dc7da6c684bc1a84ebed2a20ed1ec32734ad11e95a470097"
+          },
+          {
+            "crop_id": 26,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0026.png",
+            "source_page": "page_0002.png",
+            "crop_sha256": "c733702ef470089115ab93d31dd4de388ff7bab0fe98f6d1d18714e71d297fb1"
+          }
+        ],
+        "vietnamese_english": [
+          {
+            "crop_id": 52,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0052.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "9219860836975a0dc816790d91a642ae800f2ed4593a0d43c84776e2e0f8b95f"
+          },
+          {
+            "crop_id": 53,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0053.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "7837258a6dc00434f3309d52e0c7e3e27e660a6dcd80d94ab7bc544210d482a9"
+          },
+          {
+            "crop_id": 54,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0054.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "ffd5d7e045599eb0fcb523ba597bed5fc569eff2d6f726a5e46d6761380ce3da"
+          },
+          {
+            "crop_id": 55,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0055.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "9219860836975a0dc816790d91a642ae800f2ed4593a0d43c84776e2e0f8b95f"
+          },
+          {
+            "crop_id": 56,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0056.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "0ad2ac5cd4020e8397793e42984e950d9aacfb2e013a03a1fac9c972e01cfb3b"
+          },
+          {
+            "crop_id": 57,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0057.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "a619de19d73ef9ec71594ee5eca902ca6bf337ddb2ebe04cfec10de6baca0d92"
+          },
+          {
+            "crop_id": 58,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0058.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "9219860836975a0dc816790d91a642ae800f2ed4593a0d43c84776e2e0f8b95f"
+          },
+          {
+            "crop_id": 59,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0059.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "a619de19d73ef9ec71594ee5eca902ca6bf337ddb2ebe04cfec10de6baca0d92"
+          },
+          {
+            "crop_id": 60,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0060.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "0082fa362804858357e63d251e9fa4d7af47320c638e65a1d2bff0fbd0eb8c45"
+          },
+          {
+            "crop_id": 61,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0061.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "9219860836975a0dc816790d91a642ae800f2ed4593a0d43c84776e2e0f8b95f"
+          },
+          {
+            "crop_id": 62,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0062.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "a978be7e40323757c3a40db680490abc462e38ad673e98c4da8d813f7df0aafc"
+          },
+          {
+            "crop_id": 63,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0063.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "0ad2ac5cd4020e8397793e42984e950d9aacfb2e013a03a1fac9c972e01cfb3b"
+          },
+          {
+            "crop_id": 64,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0064.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "7837258a6dc00434f3309d52e0c7e3e27e660a6dcd80d94ab7bc544210d482a9"
+          },
+          {
+            "crop_id": 65,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0065.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "7837258a6dc00434f3309d52e0c7e3e27e660a6dcd80d94ab7bc544210d482a9"
+          },
+          {
+            "crop_id": 66,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0066.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "9219860836975a0dc816790d91a642ae800f2ed4593a0d43c84776e2e0f8b95f"
+          },
+          {
+            "crop_id": 67,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0067.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "a619de19d73ef9ec71594ee5eca902ca6bf337ddb2ebe04cfec10de6baca0d92"
+          },
+          {
+            "crop_id": 68,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0068.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "0ad2ac5cd4020e8397793e42984e950d9aacfb2e013a03a1fac9c972e01cfb3b"
+          },
+          {
+            "crop_id": 69,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0069.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "0ad2ac5cd4020e8397793e42984e950d9aacfb2e013a03a1fac9c972e01cfb3b"
+          },
+          {
+            "crop_id": 70,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0070.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "0ad2ac5cd4020e8397793e42984e950d9aacfb2e013a03a1fac9c972e01cfb3b"
+          },
+          {
+            "crop_id": 71,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0071.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "a978be7e40323757c3a40db680490abc462e38ad673e98c4da8d813f7df0aafc"
+          },
+          {
+            "crop_id": 72,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0072.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "a619de19d73ef9ec71594ee5eca902ca6bf337ddb2ebe04cfec10de6baca0d92"
+          },
+          {
+            "crop_id": 73,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0073.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "a44061aa05227e45eb7cb9ee509dc0c057245e875e8e558f3c1e165a8b27422b"
+          },
+          {
+            "crop_id": 74,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0074.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "a978be7e40323757c3a40db680490abc462e38ad673e98c4da8d813f7df0aafc"
+          },
+          {
+            "crop_id": 75,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0075.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "b5f553ebd2a772428daf72cd0924cf4cb840930df709820ab62ce7147cf1ba58"
+          }
+        ],
+        "latin": [
+          {
+            "crop_id": 27,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0027.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "cdc19422c532dfe76f9087154002d76fb1d92700622dff20d3d90ed5affc242c"
+          },
+          {
+            "crop_id": 28,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0028.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "847c043ec9b1884e4606d5fc962cc074a9a5074b6e8a4c052974edcb86ef30f5"
+          },
+          {
+            "crop_id": 29,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0029.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "57139d1022a5dcd47ea32708b6e4db3da768ece3f2c02560ef03c3581738f623"
+          },
+          {
+            "crop_id": 30,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0030.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "f7440fb36232d47198df329c209b320c49ff2b66383426ddf519a437ac51eab8"
+          },
+          {
+            "crop_id": 31,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0031.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "9dba9ddca5e56a71995503967c544dc8d5b51804704a5d1c55db848994339e7b"
+          },
+          {
+            "crop_id": 32,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0032.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "7f5c35329b3f9aa500e88131b8e7d5af2f129a181d26c213d626c8f13fa79f05"
+          },
+          {
+            "crop_id": 33,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0033.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "e6adad8ce8e386955bc109f04501d81ac15a798e2b1664b915865c1a6b928bee"
+          },
+          {
+            "crop_id": 34,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0034.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "7f5c35329b3f9aa500e88131b8e7d5af2f129a181d26c213d626c8f13fa79f05"
+          },
+          {
+            "crop_id": 35,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0035.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "95bc050cdc29eea609bfd899fb2732bb55807d7bec68a0a9db17946f20f0bab5"
+          },
+          {
+            "crop_id": 36,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0036.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "95bc050cdc29eea609bfd899fb2732bb55807d7bec68a0a9db17946f20f0bab5"
+          },
+          {
+            "crop_id": 37,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0037.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "7f5c35329b3f9aa500e88131b8e7d5af2f129a181d26c213d626c8f13fa79f05"
+          },
+          {
+            "crop_id": 38,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0038.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "9dba9ddca5e56a71995503967c544dc8d5b51804704a5d1c55db848994339e7b"
+          },
+          {
+            "crop_id": 39,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0039.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "280c678df113f6253a444f8943ed374839ec8adde48790ad5bf29fe3cdf594af"
+          },
+          {
+            "crop_id": 40,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0040.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "7f5c35329b3f9aa500e88131b8e7d5af2f129a181d26c213d626c8f13fa79f05"
+          },
+          {
+            "crop_id": 41,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0041.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "7f5c35329b3f9aa500e88131b8e7d5af2f129a181d26c213d626c8f13fa79f05"
+          },
+          {
+            "crop_id": 42,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0042.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "95bc050cdc29eea609bfd899fb2732bb55807d7bec68a0a9db17946f20f0bab5"
+          },
+          {
+            "crop_id": 43,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0043.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "280c678df113f6253a444f8943ed374839ec8adde48790ad5bf29fe3cdf594af"
+          },
+          {
+            "crop_id": 44,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0044.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "9dba9ddca5e56a71995503967c544dc8d5b51804704a5d1c55db848994339e7b"
+          },
+          {
+            "crop_id": 45,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0045.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "7f5c35329b3f9aa500e88131b8e7d5af2f129a181d26c213d626c8f13fa79f05"
+          },
+          {
+            "crop_id": 46,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0046.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "f7440fb36232d47198df329c209b320c49ff2b66383426ddf519a437ac51eab8"
+          },
+          {
+            "crop_id": 47,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0047.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "95bc050cdc29eea609bfd899fb2732bb55807d7bec68a0a9db17946f20f0bab5"
+          },
+          {
+            "crop_id": 48,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0048.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "57139d1022a5dcd47ea32708b6e4db3da768ece3f2c02560ef03c3581738f623"
+          },
+          {
+            "crop_id": 49,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0049.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "7f5c35329b3f9aa500e88131b8e7d5af2f129a181d26c213d626c8f13fa79f05"
+          },
+          {
+            "crop_id": 50,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0050.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "95bc050cdc29eea609bfd899fb2732bb55807d7bec68a0a9db17946f20f0bab5"
+          },
+          {
+            "crop_id": 51,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0051.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "e6adad8ce8e386955bc109f04501d81ac15a798e2b1664b915865c1a6b928bee"
+          }
+        ]
+      }
+    }
+  ]
+}

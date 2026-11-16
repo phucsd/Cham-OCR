@@ -1,0 +1,53 @@
+{
+  "title": "Cham-OCR v24.1 Stage R3 Scan Degradation 6-Point Audit",
+  "audit_timestamp": "2026-11-16T07:51:52.326136+00:00",
+  "status": "PASS",
+  "execution_duration_sec": 18.76,
+  "degraded_5000": {
+    "mean_width_px": 155.9,
+    "max_width_px": 320,
+    "over_320px": 0,
+    "height_not_48": 0
+  },
+  "symbol_line_counts": {
+    "?": 243,
+    "!": 240,
+    "#": 109,
+    "&": 193,
+    "*": 125,
+    "<": 134,
+    ">": 127,
+    "{": 257,
+    "}": 257,
+    "\\": 185,
+    "_": 363,
+    "[": 196,
+    "]": 196,
+    "/": 460
+  },
+  "hyphen_group_counts": {
+    "double_hyphen": 502,
+    "number_number": 393,
+    "line_ending": 206,
+    "word_word_spaced": 198,
+    "year_year": 196,
+    "line_beginning": 199,
+    "word_word_tight": 237
+  },
+  "missing_dict_tokens": [],
+  "audits": {
+    "audit_1_text_disjointness": true,
+    "audit_2_train_val_disjointness": true,
+    "audit_3_long_substring_disjointness": true,
+    "audit_4_image_sha256_disjointness_and_20000_unique": true,
+    "audit_5_ast_generator_blindness": true,
+    "audit_6_width_phonotactics_coverage": true
+  },
+  "violations": {
+    "text_overlap": {},
+    "train_val_overlap": [],
+    "substring": [],
+    "image_overlap": {},
+    "ast": []
+  }
+}
