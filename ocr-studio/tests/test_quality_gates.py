@@ -162,6 +162,108 @@ def test_model_info_always_reports_detector_and_paddle():
         app.det_model_info.update(saved)
 
 
+def test_default_cham_model_and_auto_info():
+    assert app.DEFAULT_CHAM_MODEL.startswith('v24_1'), app.DEFAULT_CHAM_MODEL
+    info = app.get_model_info('auto')
+    # When ocr_model_paths is not yet populated in unit tests, ensure get_model_info runs cleanly;
+    # when populated, recognizer #0 must match DEFAULT_CHAM_MODEL.
+    recs = info.get('recognizers', [])
+    if recs:
+        assert recs[0]['version'] == app.DEFAULT_CHAM_MODEL, recs
+    app.ocr_model_paths.setdefault(
+        app.DEFAULT_CHAM_MODEL,
+        {'model_dir': os.path.join(app.PROJECT_ROOT, 'data', 'output', f'rec_cham_inference_{app.DEFAULT_CHAM_MODEL}'),
+         'dict_path': os.path.join(app.PROJECT_ROOT, 'data', 'cham_dict_v24_1.txt')}
+    )
+    info2 = app.get_model_info('auto')
+    assert info2['recognizers'][0]['version'] == app.DEFAULT_CHAM_MODEL, info2
+
+
+def test_confidence_calibration_temperature_scaling():
+    # Identity at T = 1.0
+    assert abs(app.calibrate_line_confidence(0.85, temperature=1.0) - 0.85) < 1e-6
+    assert app.calibrate_line_confidence(0.0, temperature=2.0) == 0.0
+    assert app.calibrate_line_confidence(1.0, temperature=2.0) == 1.0
+
+    # T > 1.0 softens high confidence (0.95 -> closer to 0.5) and stays strictly monotone
+    c_low = app.calibrate_line_confidence(0.60, temperature=1.8)
+    c_high = app.calibrate_line_confidence(0.95, temperature=1.8)
+    assert 0.50 < c_low < 0.60, c_low
+    assert 0.50 < c_high < 0.95, c_high
+    assert c_low < c_high
+
+    # T < 1.0 sharpens high confidence (> 0.5 moves closer to 1.0)
+    c_sharp = app.calibrate_line_confidence(0.80, temperature=0.5)
+    assert c_sharp > 0.80, c_sharp
+
+
+def test_active_learning_save_correction_and_export_r4():
+    import base64
+    import json
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        # Prepare 5 fake line crops across 2 synthetic documents
+        imgs_b64 = []
+        for idx in range(5):
+            arr = np.full((32, 120, 3), 240 - idx * 10, dtype=np.uint8)
+            cv2.putText(arr, f'T{idx}', (10, 22), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (20, 20, 20), 2)
+            ok, buf = cv2.imencode('.png', arr)
+            assert ok
+            imgs_b64.append('data:image/png;base64,' + base64.b64encode(buf.tobytes()).decode('ascii'))
+
+        # Verify Logical Order normalize_unicode on out-of-order Cham text (ꨙꨯꨳꨮ -> ꨙꨳꨯꨮ)
+        samples = [
+            ('doc_alpha.png', 1, 'ꨙꨯꨳꨮ', 'ꨙꨯꨳꨮ', imgs_b64[0]),
+            ('doc_alpha.png', 2, 'ꨨꨣꨭꩌ ꨚꨤꨬ', 'ꨨꨣꨭꩌ', imgs_b64[1]),
+            ('doc_beta.png', 1, 'ꨌꩌ ꨚꨤꨬ ꨣꩌ', 'ꨌꩌ ꨚꨤꨬ', imgs_b64[2]),
+            ('doc_gamma.png', 1, '꩒꩐꩐꩞ ꨀꨇꩉ', '꩒꩐꩞', imgs_b64[3]),
+            ('doc_delta.png', 1, 'ꨓꨶꨮꩉ ꨆꨭꨖꨩ', 'ꨓꨶꨮꩉ', imgs_b64[4]),
+        ]
+        res0 = None
+        for doc_name, lidx, submitted, orig, b64 in samples:
+            r = app.save_correction_entry({
+                'text': submitted,
+                'original_text': orig,
+                'confidence': 0.87,
+                'calibrated_confidence': 0.81,
+                'model': 'v24_1_r2_1_6',
+                'bbox': [10, 20, 130, 52],
+                'image_name': doc_name,
+                'line_idx': lidx,
+                'crop_image': b64,
+            }, base_dir=tmpdir)
+            if res0 is None:
+                res0 = r
+            assert r['success'] is True
+
+        assert res0['normalized_text'] == 'ꨙꨳꨯꨮ', res0
+        txt_lines = open(os.path.join(tmpdir, 'ocr_corrections.txt'), encoding='utf-8').read().splitlines()
+        assert len(txt_lines) == 5 and txt_lines[0] == 'ꨙꨳꨯꨮ', txt_lines
+        jsonl_path = os.path.join(tmpdir, 'active_learning', 'corrections.jsonl')
+        rows = [json.loads(l) for l in open(jsonl_path, encoding='utf-8') if l.strip()]
+        assert len(rows) == 5
+        assert rows[0]['text'] == 'ꨙꨳꨯꨮ'
+        assert rows[0]['crop_relpath'].startswith('active_learning/crops/')
+        assert os.path.exists(os.path.join(tmpdir, rows[0]['crop_relpath']))
+
+        # Test export_active_learning_r4.py document-grouped 80/20 export
+        training_scripts = os.path.join(os.path.dirname(app.PROJECT_ROOT), 'ocr-training', 'scripts')
+        if training_scripts not in sys.path:
+            sys.path.insert(0, training_scripts)
+        from export_active_learning_r4 import export_active_learning_dataset
+        out_r4 = os.path.join(tmpdir, 'export_r4')
+        manifest = export_active_learning_dataset(jsonl_path, out_r4, val_ratio=0.25, seed=42, crops_root=tmpdir)
+        assert manifest['train_samples'] + manifest['val_samples'] == 5, manifest
+        assert manifest['train_samples'] >= 3 and manifest['val_samples'] >= 1, manifest
+        tr_rel = open(manifest['train_list'], encoding='utf-8').read().splitlines()
+        va_rel = open(manifest['val_list'], encoding='utf-8').read().splitlines()
+        for entry in tr_rel + va_rel:
+            img_rel, lbl = entry.split('\t', 1)
+            assert os.path.exists(os.path.join(out_r4, img_rel)), img_rel
+            assert len(lbl) > 0
+
+
 if __name__ == '__main__':
     tests = [v for k, v in sorted(globals().items()) if k.startswith('test_') and callable(v)]
     for t in tests:

@@ -10,6 +10,9 @@ import json
 import base64
 import cv2
 import re
+import math
+import hashlib
+from datetime import datetime, timezone
 import numpy as np
 
 # Monkeypatch NumPy 2.x to support legacy symbols removed/deprecated for PaddleOCR and imgaug
@@ -63,6 +66,7 @@ _cham_det_failed = False
 ocr_model_paths = {}
 det_model_info = {}
 _fingerprint_cache = {}
+_model_manifest_cache = {}
 
 # ------------------------------------------------------------------------------
 # Detection / quality-gate configuration (stress test 2026-11-04 fixes)
@@ -72,6 +76,7 @@ _fingerprint_cache = {}
 #                      only when the legacy detector leaves text-like ink uncovered (missed / merged lines).
 #           'cham'    : Cham-DBNet only.   'generic': legacy detector only (pre-2026-11-04 behaviour).
 DET_MODE = os.getenv("DET_MODE", "hybrid").lower()
+DEFAULT_CHAM_MODEL = os.getenv("DEFAULT_CHAM_MODEL", "v24_1_r3")
 CHAM_DET_DB_THRESH = float(os.getenv("CHAM_DET_DB_THRESH", "0.3"))
 CHAM_DET_BOX_THRESH = float(os.getenv("CHAM_DET_BOX_THRESH", "0.4"))
 CHAM_DET_UNCLIP = float(os.getenv("CHAM_DET_UNCLIP", "1.6"))
@@ -237,7 +242,7 @@ def get_ocr_model(version):
         return ocr_model
         
     if version == 'auto':
-        cham_model = get_ocr_model('v24')
+        cham_model = get_ocr_model(DEFAULT_CHAM_MODEL)
         viet_model = get_ocr_model('vi')
         ocr_model = AutoRoutingOCRWrapper(cham_model, viet_model)
         ocr_models[version] = ocr_model
@@ -407,11 +412,22 @@ def get_cham_det_model():
     if cham_det_model is not None or _cham_det_failed:
         return cham_det_model
     cham_det_dir = os.path.join(PROJECT_ROOT, "data", "output", "ch_PP-OCRv4_det_cham_infer")
-    has_cham_model = os.path.exists(os.path.join(cham_det_dir, "inference.pdiparams")) and (
-        os.path.exists(os.path.join(cham_det_dir, "inference.pdmodel")) or os.path.exists(os.path.join(cham_det_dir, "inference.json")))
+    has_pdmodel = os.path.exists(os.path.join(cham_det_dir, "inference.pdmodel"))
+    has_json = os.path.exists(os.path.join(cham_det_dir, "inference.json"))
+    has_cham_model = os.path.exists(os.path.join(cham_det_dir, "inference.pdiparams")) and (has_pdmodel or has_json)
     if not has_cham_model:
         _cham_det_failed = True
         return None
+    if not has_pdmodel and has_json:
+        try:
+            import paddle as _paddle
+            major_ver = int(str(getattr(_paddle, "__version__", "0")).split(".")[0])
+        except Exception:
+            major_ver = 0
+        if major_ver < 3:
+            _cham_det_failed = True
+            print("⚠️  Cham DBNet is PIR (.json) and requires Paddle >= 3.0; skipping on Paddle 2.x.")
+            return None
     try:
         cham_det_model = _build_text_detector(cham_det_dir, CHAM_DET_DB_THRESH, CHAM_DET_BOX_THRESH, CHAM_DET_UNCLIP)
         print(f"🌟 Cham Text Detection model ready: {cham_det_dir}")
@@ -577,19 +593,69 @@ def _file_fingerprint(path):
         _fingerprint_cache[path] = h.hexdigest()[:16]
     return _fingerprint_cache[path]
 
+def get_model_manifest(version):
+    """Loads and caches model_manifest.json for the given recognizer version (returns {} if absent)."""
+    if not version or version in ('auto', 'en', 'fr', 'japan'):
+        return {}
+    p = ocr_model_paths.get(version)
+    model_dir = p["model_dir"] if p else os.path.join(PROJECT_ROOT, "data", "output", f"rec_cham_inference_{version}")
+    manifest_path = os.path.join(model_dir, "model_manifest.json")
+    if not os.path.exists(manifest_path):
+        return {}
+    mtime = os.path.getmtime(manifest_path)
+    cache_key = (manifest_path, mtime)
+    if cache_key not in _model_manifest_cache:
+        try:
+            with open(manifest_path, 'r', encoding='utf-8') as f:
+                _model_manifest_cache[cache_key] = json.load(f)
+        except Exception:
+            _model_manifest_cache[cache_key] = {}
+    return _model_manifest_cache[cache_key]
+
+def calibrate_line_confidence(raw_conf, model_ver=None, text="", temperature=None):
+    """Post-hoc logit temperature scaling for recognizer confidence (identity when T=1.0)."""
+    val = float(raw_conf)
+    if val <= 0.0:
+        return 0.0
+    if val >= 1.0:
+        return 1.0
+    if temperature is None:
+        target_ver = model_ver
+        if model_ver == 'auto':
+            has_cham = any('\uAA00' <= ch <= '\uAA5F' for ch in (text or ''))
+            target_ver = DEFAULT_CHAM_MODEL if has_cham else None
+        manifest = get_model_manifest(target_ver)
+        try:
+            T = float(manifest.get("confidence_temperature", 1.0))
+        except (TypeError, ValueError):
+            T = 1.0
+    else:
+        T = float(temperature)
+    if T <= 0.0 or abs(T - 1.0) < 1e-6:
+        return round(val, 6)
+    p = min(max(val, 1e-6), 1.0 - 1e-6)
+    z = math.log(p / (1.0 - p))
+    return round(1.0 / (1.0 + math.exp(-z / T)), 6)
+
 def get_model_info(model_ver):
     """Returns provenance info (model id, weight fingerprints, detector, normalizer) for the response."""
     info = {"model": model_ver, "normalizer": None}
-    rec_versions = ['v24', 'vi'] if model_ver == 'auto' else [model_ver]
+    rec_versions = [DEFAULT_CHAM_MODEL, 'vi'] if model_ver == 'auto' else [model_ver]
     recs = []
     for v in rec_versions:
         p = ocr_model_paths.get(v)
         if p:
+            manifest = get_model_manifest(v)
+            try:
+                conf_temp = float(manifest.get("confidence_temperature", 1.0))
+            except (TypeError, ValueError):
+                conf_temp = 1.0
             recs.append({"version": v,
                          "model_dir": os.path.relpath(p["model_dir"], PROJECT_ROOT),
                          "weights_sha256_16": _file_fingerprint(os.path.join(p["model_dir"], "inference.pdiparams")),
                          "dict": os.path.basename(p["dict_path"]),
-                         "dict_sha256_16": _file_fingerprint(p["dict_path"])})
+                         "dict_sha256_16": _file_fingerprint(p["dict_path"]),
+                         "confidence_temperature": conf_temp})
     info["recognizers"] = recs
     if not det_model_info:
         info["detector"] = {"name": None, "mode": DET_MODE, "loaded": False}
@@ -1889,7 +1955,7 @@ def segment_lines_advanced(img, base_coords, ocr_model):
 # ==============================================================================
 # OCR Pipeline (shared by the HTTP handler and offline benchmark scripts)
 # ==============================================================================
-def run_ocr_pipeline(img, model_ver='v24', method='dbnet', threshold=0.05, gap=12, win=25,
+def run_ocr_pipeline(img, model_ver=None, method='dbnet', threshold=0.05, gap=12, win=25,
                      reading_order='auto', t_start=None):
     """Runs segmentation + recognition + quality gates on a BGR image.
 
@@ -1897,6 +1963,7 @@ def run_ocr_pipeline(img, model_ver='v24', method='dbnet', threshold=0.05, gap=1
     """
     import time
     t_start = t_start or time.time()
+    model_ver = model_ver or DEFAULT_CHAM_MODEL
     ocr = get_ocr_model(model_ver)
 
     t_seg = time.time()
@@ -2005,11 +2072,14 @@ def run_ocr_pipeline(img, model_ver='v24', method='dbnet', threshold=0.05, gap=1
         _, buffer = cv2.imencode('.png', line_img)
         line_b64 = base64.b64encode(buffer).decode('utf-8')
 
+        cal_conf = calibrate_line_confidence(confidence, model_ver, pred_text)
+
         # Backward-compatible format
         results.append({
             'index': idx + 1,
             'text': pred_text,
             'confidence': float(confidence),
+            'calibrated_confidence': cal_conf,
             'coords': meta['core_box'],
             'bbox': meta.get('bbox', [0, meta['core_box'][0], img.shape[1], meta['core_box'][1]]),
             'polygon': meta.get('polygon'),
@@ -2032,6 +2102,82 @@ def run_ocr_pipeline(img, model_ver='v24', method='dbnet', threshold=0.05, gap=1
     profiler_dict['base_segmentation_sec'] = round(base_segmentation_sec, 4)
     document = build_document_status(results, doc_reasons, doc_extra)
     return {'lines': results, 'profiler': profiler_dict, 'document': document, 'model_info': get_model_info(model_ver)}
+
+def save_correction_entry(data, base_dir=None):
+    """Persists a verified/corrected text line to legacy ocr_corrections.txt and Stage R4 active learning storage."""
+    base_dir = base_dir or os.path.join(PROJECT_ROOT, "data")
+    os.makedirs(base_dir, exist_ok=True)
+
+    raw_text = (data.get('text') or '').strip()
+    normalized_text = raw_text
+    if any('\uAA00' <= ch <= '\uAA5F' for ch in raw_text):
+        try:
+            from scripts.generate_data import normalize_unicode
+            normalized_text = normalize_unicode(raw_text)
+        except Exception as e:
+            print(f"Warning: normalize_unicode in save_correction_entry failed: {e}")
+
+    dest_file = os.path.join(base_dir, "ocr_corrections.txt")
+    with open(dest_file, 'a', encoding='utf-8', newline='\n') as f:
+        f.write(normalized_text + '\n')
+
+    al_dir = os.path.join(base_dir, "active_learning")
+    crops_dir = os.path.join(al_dir, "crops")
+    os.makedirs(crops_dir, exist_ok=True)
+
+    crop_sha256 = None
+    crop_relpath = None
+    crop_b64 = data.get('crop_image') or ''
+    if isinstance(crop_b64, str) and crop_b64.strip():
+        if ',' in crop_b64:
+            crop_b64 = crop_b64.split(',', 1)[1]
+        missing_pad = len(crop_b64) % 4
+        if missing_pad:
+            crop_b64 += '=' * (4 - missing_pad)
+        try:
+            raw_bytes = base64.b64decode(crop_b64)
+            nparr = np.frombuffer(raw_bytes, np.uint8)
+            decoded_img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+            if decoded_img is not None and decoded_img.size > 0:
+                ok, png_buf = cv2.imencode('.png', decoded_img)
+                if ok:
+                    png_bytes = png_buf.tobytes()
+                    crop_sha256 = hashlib.sha256(png_bytes).hexdigest()
+                    crop_fname = f"{crop_sha256[:16]}.png"
+                    crop_abs = os.path.join(crops_dir, crop_fname)
+                    if not os.path.exists(crop_abs):
+                        with open(crop_abs, 'wb') as cf:
+                            cf.write(png_bytes)
+                    crop_relpath = f"active_learning/crops/{crop_fname}"
+        except Exception as e:
+            print(f"Warning: failed to decode active learning crop image: {e}")
+
+    jsonl_file = os.path.join(al_dir, "corrections.jsonl")
+    record = {
+        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+        "image_name": str(data.get("image_name") or "unknown.png"),
+        "line_idx": data.get("line_idx"),
+        "text": normalized_text,
+        "raw_submitted_text": raw_text,
+        "original_text": data.get("original_text"),
+        "confidence": data.get("confidence"),
+        "calibrated_confidence": data.get("calibrated_confidence"),
+        "model": data.get("model"),
+        "bbox": data.get("bbox"),
+        "crop_sha256": crop_sha256,
+        "crop_relpath": crop_relpath,
+    }
+    with open(jsonl_file, 'a', encoding='utf-8', newline='\n') as jf:
+        jf.write(json.dumps(record, ensure_ascii=False) + '\n')
+
+    return {
+        'success': True,
+        'path': dest_file,
+        'jsonl_path': jsonl_file,
+        'crop_relpath': crop_relpath,
+        'normalized_text': normalized_text,
+    }
+
 
 # ==============================================================================
 # Web Server Request Handler
@@ -2107,7 +2253,7 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             
             # Extract parameters
             img_b64 = data['image']
-            model_ver = data.get('model', 'v24')
+            model_ver = data.get('model') or DEFAULT_CHAM_MODEL
             method = data.get('method', 'dbnet')
             threshold = float(data.get('threshold', 0.05))
             gap = int(data.get('gap', 12))
@@ -2166,22 +2312,15 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             content_length = int(self.headers['Content-Length'])
             post_data = self.rfile.read(content_length)
             data = json.loads(post_data.decode('utf-8'))
-            
-            text = data.get('text', '')
-            dest_file = os.path.join(PROJECT_ROOT, "data", "ocr_corrections.txt")
-            os.makedirs(os.path.dirname(dest_file), exist_ok=True)
-            
-            with open(dest_file, 'a', encoding='utf-8', newline='\n') as f:
-                f.write(text.strip() + '\n')
-                
-            self.send_json_response({'success': True, 'path': dest_file})
+            result = save_correction_entry(data)
+            self.send_json_response(result)
         elif self.path == '/ocr_crop':
             content_length = int(self.headers['Content-Length'])
             post_data = self.rfile.read(content_length)
             data = json.loads(post_data.decode('utf-8'))
             
             img_b64 = data.get('image', '')
-            model_ver = data.get('model', 'v24')
+            model_ver = data.get('model') or DEFAULT_CHAM_MODEL
             bbox = data.get('bbox', [0, 0, 0, 0])
             
             if ',' in img_b64:
@@ -2234,6 +2373,7 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             self.send_json_response({
                 'text': pred_text,
                 'confidence': float(conf),
+                'calibrated_confidence': calibrate_line_confidence(conf, model_ver, pred_text),
                 'crop_image': f"data:image/png;base64,{crop_b64}",
                 'bbox': [x1, y1, x2, y2]
             })
@@ -2281,7 +2421,7 @@ def run_server():
     print(f"📁 Corrections will be saved to: ocr-studio/data/ocr_corrections.txt")
     print(f"======================================================================")
     
-    for _preload_ver in ('v24', 'v24_1_r2_1_6'):
+    for _preload_ver in dict.fromkeys([DEFAULT_CHAM_MODEL, 'v24_1_r2_1_6', 'v24']):
         try:
             get_ocr_model(_preload_ver)
         except Exception as e:

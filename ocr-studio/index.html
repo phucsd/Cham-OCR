@@ -1401,8 +1401,9 @@
                 <select id="model-select" class="model-select-compact" onchange="updateModelBadge()">
                     <optgroup label="Paleographic Cham Models">
                         <!-- <option value="v25">Cham V25 (Recommended SOTA — 90.96% Acc)</option> -->
-                        <option value="v24" selected>Cham V24 (Recommended — Logical Order)</option>
-                        <option value="v24_1_r2_1_6">Cham V24.1-R2.1.6 (HarfBuzz Symbol &amp; Hyphen Polish)</option>
+                        <option value="v24_1_r3" selected>Cham V24.1-R3 (Recommended — Scan-Robust &amp; HarfBuzz Polish)</option>
+                        <option value="v24_1_r2_1_6">Cham V24.1-R2.1.6 (Clean HarfBuzz Symbol &amp; Hyphen Polish)</option>
+                        <option value="v24">Cham V24 (Legacy Baseline — Logical Order)</option>
                         <option value="v23">Cham V23 (Visual Order Baseline)</option>
                     </optgroup>
                     <optgroup label="Bilingual & Modern Text">
@@ -2452,7 +2453,7 @@ python ocr-studio/app.py</div>
             showToast("Transcribing delineated region...");
             try {
                 const modelSelect = document.getElementById('model-select');
-                const modelVer = modelSelect ? modelSelect.value : 'v24';
+                const modelVer = modelSelect ? modelSelect.value : 'v24_1_r3';
                 const res = await fetch('/ocr_crop', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -2975,13 +2976,21 @@ python ocr-studio/app.py</div>
             if (!text || !text.trim()) return;
             const activeItem = imageQueue.find(x => x.active === true);
             const imageName = activeItem ? activeItem.name : "unknown.png";
+            const lineObj = (responseLines && responseLines[lineIdx]) ? responseLines[lineIdx] : {};
+            const modelSelectEl = document.getElementById('model-select');
             fetch('/save_correction', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     text: text.trim(),
                     line_idx: lineIdx + 1,
-                    image_name: imageName
+                    image_name: imageName,
+                    original_text: (lineObj.original_text !== undefined) ? lineObj.original_text : (lineObj.text || ""),
+                    confidence: (lineObj.original_confidence !== undefined) ? lineObj.original_confidence : (lineObj.confidence ?? null),
+                    calibrated_confidence: (lineObj.original_calibrated_confidence !== undefined) ? lineObj.original_calibrated_confidence : (lineObj.calibrated_confidence ?? null),
+                    model: modelSelectEl ? modelSelectEl.value : "",
+                    bbox: lineObj.bbox || null,
+                    crop_image: lineObj.image || null
                 })
             }).then(res => res.json())
               .then(data => {
@@ -3119,6 +3128,9 @@ python ocr-studio/app.py</div>
                 } else {
                     responseLines = (data.lines || []).map(line => {
                         line.human_verified = false;
+                        line.original_text = line.text || "";
+                        line.original_confidence = (typeof line.confidence === 'number') ? line.confidence : null;
+                        line.original_calibrated_confidence = (typeof line.calibrated_confidence === 'number') ? line.calibrated_confidence : null;
                         if (line.segmentation && !Array.isArray(line.segmentation.reason)) {
                             line.segmentation.reason = line.segmentation.reason ? [line.segmentation.reason] : [];
                         }

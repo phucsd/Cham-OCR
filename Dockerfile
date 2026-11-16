@@ -19,8 +19,8 @@ WORKDIR /app
 COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Force cache bust for updated app code & Cham-SVTR V24 default model
-RUN echo "Cache bust 2026-11-16T08:25:00+07:00 - Stress-test 2026-11-04 fixes: Legacy-First hybrid Cham-DBNet, tilt-aware line merge, blank-page gate, column reading order, honest status"
+# Force cache bust for updated app code & Cham-SVTR V24.1-R3 default model
+RUN echo "Cache bust 2026-11-16T16:15:00+07:00 - V24.1-R3 default promotion (POSIX paths fix), Temperature Scaling calibrated_confidence, Stage R4 active learning loop"
 
 # Copy application files
 COPY . /app

@@ -74,3 +74,22 @@ ocr-studio/PaddleOCR/test_tipc/
 ocr-studio/PaddleOCR/tests/
 ocr-studio/PaddleOCR/benchmark/
 ocr-studio/PaddleOCR/applications/
+
+# Local Python Virtual Environments & Heavy/Experimental Artifacts
+.venv*/
+ocr-benchmark/data/images_diagnostic/
+ocr-benchmark/data/images_stress_500/
+ocr-benchmark/data/frozen_suite/crops/
+ocr-benchmark/results/*_raw/
+ocr-benchmark/results/*_raw_results/
+ocr-studio/data/output/rec_cham_inference_v24_1_r1*/
+ocr-studio/data/output/rec_cham_inference_v24_1_r2/
+ocr-studio/data/cham_dict_v24_1_optional.txt
+ocr-studio/data/cham_dict_v24_1_r1*.txt
+ocr-studio/data/cham_dict_v24_1_r2.txt
+ocr-studio/data/active_learning/
+ocr-training/kernels/
+ocr-training/kernel-metadata*.json
+ocr-training/paddleocr_cham_v24_1_*.ipynb
+ocr-training/data/r2_2_*/
+REPORTS/r2_2_render_previews/

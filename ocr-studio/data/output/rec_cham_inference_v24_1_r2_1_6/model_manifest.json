@@ -51,5 +51,17 @@
     "blank_hallucination_guard": "PASS",
     "composite_score": 0.6535,
     "held_out_probe_100_cer_pct": 9.78
+  },
+  "confidence_temperature": 0.934484,
+  "confidence_calibration": {
+    "fit_split": "held_out_diagnostic_probe_100",
+    "eval_split": "realscan_gold_v1/harum_palei_01",
+    "policy": "raw_probe_100_mle",
+    "ece_before": 0.002795,
+    "ece_after": 0.006625,
+    "brier_before": 0.002274,
+    "brier_after": 0.002283,
+    "nll_before": 0.214051,
+    "nll_after": 0.214654
   }
 }
