@@ -456,6 +456,19 @@
             border: 1px solid var(--border-color);
         }
 
+        /* Automatic OCR finished without flags: NOT human-verified */
+        .status-ocr_done {
+            background-color: var(--accent-glow);
+            color: var(--accent-primary);
+        }
+
+        /* Blank page: nothing to transcribe */
+        .status-no_text {
+            background-color: var(--bg-surface);
+            color: var(--text-quiet);
+            border: 1px dashed var(--border-color);
+        }
+
         /* 2. Center Pane (Document Viewer) */
         .viewer-pane {
             flex: 1;
@@ -1389,6 +1402,7 @@
                     <optgroup label="Paleographic Cham Models">
                         <!-- <option value="v25">Cham V25 (Recommended SOTA — 90.96% Acc)</option> -->
                         <option value="v24" selected>Cham V24 (Recommended — Logical Order)</option>
+                        <option value="v24_1_r2_1_6">Cham V24.1-R2.1.6 (HarfBuzz Symbol &amp; Hyphen Polish)</option>
                         <option value="v23">Cham V23 (Visual Order Baseline)</option>
                     </optgroup>
                     <optgroup label="Bilingual & Modern Text">
@@ -2468,8 +2482,9 @@ python ocr-studio/app.py</div>
                         selected_crop_type: 'manual_draw',
                         crop_sanity_score: 1.0,
                         needs_review: false,
-                        reason: 'manual_drawn'
-                    }
+                        reason: ['manual_drawn']
+                    },
+                    human_verified: true
                 };
                 
                 // Insert maintaining vertical position
@@ -2492,7 +2507,7 @@ python ocr-studio/app.py</div>
                 selectLine(insertIdx, true);
                 enterEditMode(insertIdx);
                 
-                updateQueueItemStatus(imageQueue.findIndex(x => x.active === true), 'Verified');
+                refreshActiveDocStatus();
                 saveCorrectionToBackend(insertIdx, newLine.text);
                 showToast(`Added new textline #${insertIdx + 1}!`);
                 
@@ -2944,9 +2959,10 @@ python ocr-studio/app.py</div>
                 if (responseLines[idx] && responseLines[idx].text !== newVal) {
                     responseLines[idx].text = newVal;
                     responseLines[idx].confidence = 1.0;
+                    responseLines[idx].human_verified = true;
                     renderEditor();
                     renderBboxes();
-                    updateQueueItemStatus(imageQueue.findIndex(x => x.active === true), 'Verified');
+                    refreshActiveDocStatus();
                     saveCorrectionToBackend(idx, newVal);
                 }
             }
@@ -3101,18 +3117,40 @@ python ocr-studio/app.py</div>
                     appendLog('Server Error: ' + data.error, 'error');
                     updateActiveQueueItemStatus('Not processed');
                 } else {
-                    responseLines = data.lines || [];
-                    
-                    let needsReview = responseLines.some(line => line.segmentation && line.segmentation.needs_review);
-                    let finalStatus = needsReview ? 'Needs review' : 'Verified';
+                    responseLines = (data.lines || []).map(line => {
+                        line.human_verified = false;
+                        if (line.segmentation && !Array.isArray(line.segmentation.reason)) {
+                            line.segmentation.reason = line.segmentation.reason ? [line.segmentation.reason] : [];
+                        }
+                        return line;
+                    });
+                    const documentInfo = data.document || null;
+                    const activeIdx = imageQueue.findIndex(x => x.active === true);
+                    if (activeIdx !== -1 && imageQueue[activeIdx]) {
+                        imageQueue[activeIdx].document = documentInfo;
+                    }
+                    const finalStatus = computeDocStatus(responseLines, documentInfo);
                     
                     updateActiveQueueItemStatus(finalStatus, responseLines);
                     renderEditor();
                     renderBboxes();
                     updateLineCountBadge();
                     
-                    showToast(`Transcription completed: ${responseLines.length} lines extracted!`);
-                    appendLog(`Extracted ${responseLines.length} textlines. Status: ${finalStatus}`, 'success');
+                    const reasons = (documentInfo && documentInfo.reasons) || [];
+                    if (reasons.includes('blank_page')) {
+                        showToast('No text detected on this page.');
+                    } else if (reasons.includes('possible_missed_lines')) {
+                        showToast(`Extracted ${responseLines.length} lines. Some text may not have been detected: please check the page.`);
+                    } else if (reasons.includes('unreadable_lines_dropped')) {
+                        const nDropped = (documentInfo && documentInfo.unreadable_lines_dropped) || 1;
+                        showToast(`Extracted ${responseLines.length} lines. ${nDropped} unreadable line(s) were skipped: please check the page.`);
+                    } else {
+                        showToast(`Transcription completed: ${responseLines.length} lines extracted!`);
+                    }
+                    const layout = documentInfo && documentInfo.layout;
+                    const layoutNote = (layout && layout.columns > 1) ? ` | Layout: ${layout.columns} columns (column-wise reading order)` : '';
+                    const reasonNote = reasons.length ? ` | Flags: ${reasons.join(', ')}` : '';
+                    appendLog(`Extracted ${responseLines.length} textlines. Status: ${finalStatus}${layoutNote}${reasonNote}`, reasons.length ? 'warn' : 'success');
                 }
             })
             .catch(err => {
@@ -3125,6 +3163,31 @@ python ocr-studio/app.py</div>
                 btn.removeAttribute('disabled');
                 btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>Execute Transcription</span>';
             });
+        }
+
+        // Document status semantics:
+        //  - 'OCR done'     : automatic OCR finished with no flags (NOT human-verified)
+        //  - 'Needs review' : server or user flagged lines / page (low confidence, possible missed lines...)
+        //  - 'No text'      : blank page, nothing to transcribe
+        //  - 'Verified'     : only after a human confirmed every line (accept / edit / add / split / merge)
+        function computeDocStatus(lines, documentInfo = null) {
+            if (!lines || lines.length === 0) {
+                return (documentInfo && documentInfo.status === 'needs_review') ? 'Needs review' : 'No text';
+            }
+            if (lines.every(l => l.human_verified === true)) {
+                return 'Verified';
+            }
+            const lineFlagged = lines.some(l => l.human_verified !== true && l.segmentation && l.segmentation.needs_review);
+            if (lineFlagged || (documentInfo && documentInfo.needs_review)) {
+                return 'Needs review';
+            }
+            return 'OCR done';
+        }
+
+        function refreshActiveDocStatus() {
+            const idx = imageQueue.findIndex(x => x.active === true);
+            if (idx === -1 || !imageQueue[idx]) return;
+            updateQueueItemStatus(idx, computeDocStatus(responseLines, imageQueue[idx].document || null));
         }
 
         function updateActiveQueueItemStatus(status, lines = null) {
@@ -3241,13 +3304,14 @@ python ocr-studio/app.py</div>
             if (currentSelection.lineId !== null) {
                 const lineId = currentSelection.lineId;
                 responseLines[lineId].confidence = 1.0;
+                responseLines[lineId].human_verified = true;
                 if (responseLines[lineId].segmentation) {
                     responseLines[lineId].segmentation.needs_review = false;
                 }
                 renderEditor();
                 renderBboxes();
                 showToast(`Verified line #${lineId + 1}`);
-                updateQueueItemStatus(imageQueue.findIndex(x => x.active === true), 'Verified');
+                refreshActiveDocStatus();
                 saveCorrectionToBackend(lineId, responseLines[lineId].text);
                 
                 if (lineId + 1 < responseLines.length) {
@@ -3262,8 +3326,13 @@ python ocr-studio/app.py</div>
             if (currentSelection.lineId !== null) {
                 const lineId = currentSelection.lineId;
                 responseLines[lineId].confidence = 0.0;
+                responseLines[lineId].human_verified = false;
                 if (responseLines[lineId].segmentation) {
                     responseLines[lineId].segmentation.needs_review = true;
+                    if (!Array.isArray(responseLines[lineId].segmentation.reason)) {
+                        const r = responseLines[lineId].segmentation.reason;
+                        responseLines[lineId].segmentation.reason = r ? [r] : [];
+                    }
                     if (!responseLines[lineId].segmentation.reason.includes('user_flagged_wrong')) {
                         responseLines[lineId].segmentation.reason.push('user_flagged_wrong');
                     }
@@ -3297,11 +3366,13 @@ python ocr-studio/app.py</div>
                 line1.text = firstHalf;
                 line1.bbox[3] = y_mid;
                 line1.confidence = 1.0;
+                line1.human_verified = true;
                 
                 const line2 = JSON.parse(JSON.stringify(responseLines[lineId]));
                 line2.text = secondHalf;
                 line2.bbox[1] = y_mid;
                 line2.confidence = 1.0;
+                line2.human_verified = true;
                 
                 responseLines.splice(lineId, 1, line1, line2);
                 responseLines.forEach((l, idx) => l.index = idx + 1);
@@ -3310,7 +3381,7 @@ python ocr-studio/app.py</div>
                 renderBboxes();
                 updateLineCountBadge();
                 showToast(`Split line #${lineId + 1} into two segments`);
-                updateQueueItemStatus(imageQueue.findIndex(x => x.active === true), 'Verified');
+                refreshActiveDocStatus();
             } else {
                 showToast("Please select a textline first");
             }
@@ -3354,6 +3425,7 @@ python ocr-studio/app.py</div>
             lineA.bbox = mergedBbox;
             lineA.coords = mergedCoords;
             lineA.confidence = Math.min(1.0, (Number(lineA.confidence || 0.8) + Number(lineB.confidence || 0.8)) / 2);
+            lineA.human_verified = true;
             if (lineA.segmentation) {
                 lineA.segmentation.needs_review = false;
             }
@@ -3365,7 +3437,7 @@ python ocr-studio/app.py</div>
             renderBboxes();
             updateLineCountBadge();
             selectLine(lineId, true);
-            updateQueueItemStatus(imageQueue.findIndex(x => x.active === true), 'Verified');
+            refreshActiveDocStatus();
             saveCorrectionToBackend(lineId, mergedText);
             showToast(`Merged line #${lineId + 1} and #${lineId + 2}`);
         }
@@ -4117,6 +4189,7 @@ python ocr-studio/app.py</div>
             responseLines.forEach(item => {
                 if (item.confidence >= 0.75) {
                     item.confidence = 1.0;
+                    item.human_verified = true;
                     if (item.segmentation) item.segmentation.needs_review = false;
                     approved++;
                 }
@@ -4124,7 +4197,7 @@ python ocr-studio/app.py</div>
             renderEditor();
             renderBboxes();
             showToast(`Batch approved ${approved} high-confidence lines`);
-            updateQueueItemStatus(imageQueue.findIndex(x => x.active === true), 'Verified');
+            refreshActiveDocStatus();
         }
 
         // Keyboard Shortcuts

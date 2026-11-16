@@ -56,6 +56,43 @@ if ocr_training_dir not in sys.path:
 # Global variables for OCR models
 ocr_models = {}
 det_model = None
+generic_det_model = None
+cham_det_model = None
+_cham_det_failed = False
+# Model provenance registry (populated at load time) for response traceability
+ocr_model_paths = {}
+det_model_info = {}
+_fingerprint_cache = {}
+
+# ------------------------------------------------------------------------------
+# Detection / quality-gate configuration (stress test 2026-11-04 fixes)
+# ------------------------------------------------------------------------------
+# DET_MODE: 'hybrid'  (default, Legacy-First): the legacy generic PP-OCRv4 DBNet stays primary, so clean
+#                      pages keep exactly the previous output; the fine-tuned Cham-DBNet takes over the page
+#                      only when the legacy detector leaves text-like ink uncovered (missed / merged lines).
+#           'cham'    : Cham-DBNet only.   'generic': legacy detector only (pre-2026-11-04 behaviour).
+DET_MODE = os.getenv("DET_MODE", "hybrid").lower()
+CHAM_DET_DB_THRESH = float(os.getenv("CHAM_DET_DB_THRESH", "0.3"))
+CHAM_DET_BOX_THRESH = float(os.getenv("CHAM_DET_BOX_THRESH", "0.4"))
+CHAM_DET_UNCLIP = float(os.getenv("CHAM_DET_UNCLIP", "1.6"))
+# Lines below this recognition confidence are flagged for human review
+LINE_REVIEW_CONF = 0.60
+# Fraction of text-like ink outside every detected line that marks the page as possibly incomplete
+UNCOVERED_INK_REVIEW_RATIO = 0.12
+# Legacy-First gate: try the Cham detector only when the legacy detector leaves this much ink uncovered
+LEGACY_GATE_UNCOVERED_RATIO = 0.05
+# ... and switch to it only if it covers clearly more ink than the legacy detector
+DET_SWITCH_MIN_GAIN = 0.03
+# Legacy-First gate trigger #3: two horizontally overlapping legacy boxes whose vertical overlap
+# exceeds this fraction of the smaller box are two tilted / wavy lines the legacy detector could not
+# separate (or one box swallowing a neighbour). Clean pages stay <= 0.25 (lvl1-2) and lvl3 pages
+# trigger only a comparison, never a switch, because Cham-DBNet then finds the same line count.
+LEGACY_GATE_STACKED_OVERLAP = float(os.getenv("LEGACY_GATE_STACKED_OVERLAP", "0.45"))
+# Optional vertical padding (fraction of line height) around Cham-DBNet boxes before recognition.
+# Default 0: on the audit + benchmark sample, padding (0.15) and a larger unclip ratio (1.8) both
+# raised CER on tightly spaced pages because the crop picks up ink from neighbouring lines.
+CHAM_DET_CROP_PAD = float(os.getenv("CHAM_DET_CROP_PAD", "0.0"))
+NORMALIZER_VERSION = "generate_data.normalize_unicode/parse_unicode_clusters"
 
 class OfficialPaddleOCRWrapper:
     def __init__(self, lang):
@@ -242,7 +279,12 @@ def get_ocr_model(version):
             # Fallback to Golden Baseline v23 if version-specific folder is missing
             model_dir = os.path.join(PROJECT_ROOT, "data", "output", "rec_cham_inference_v23")
         if not os.path.exists(dict_path):
-            dict_path = os.path.join(PROJECT_ROOT, "data", "cham_dict_v23.txt")
+            if str(version).startswith("v24_1"):
+                dict_path = os.path.join(PROJECT_ROOT, "data", "cham_dict_v24_1.txt")
+            elif str(version).startswith("v24"):
+                dict_path = os.path.join(PROJECT_ROOT, "data", "cham_dict_v24.txt")
+            else:
+                dict_path = os.path.join(PROJECT_ROOT, "data", "cham_dict_v23.txt")
         
     sys_argv_backup = sys.argv
     sys.argv = [sys.argv[0]]
@@ -288,6 +330,7 @@ def get_ocr_model(version):
         
     print(f"⚙️  Loading PaddleOCR Model {version} (GPU: {args.use_gpu}, MKLDNN: {args.enable_mkldnn}, Batch: {args.rec_batch_num}, Threads: {args.cpu_threads})...")
     ocr_model = TextRecognizer(args)
+    ocr_model_paths[version] = {"model_dir": model_dir, "dict_path": dict_path}
     
     # Warmup the model with a dummy image to trigger compilation/allocator caching
     try:
@@ -300,22 +343,9 @@ def get_ocr_model(version):
     ocr_models[version] = ocr_model
     return ocr_model
 
-def get_det_model():
-    """Loads and caches the PaddleOCR TextDetector model for DBNet segmentation."""
-    global det_model
-    if det_model is not None:
-        return det_model
-
-    from tools.infer.predict_det import TextDetector
-    import tools.infer.utility as utility
-
-    cham_det_dir = os.path.join(PROJECT_ROOT, "data", "output", "ch_PP-OCRv4_det_cham_infer")
-    has_cham_model = os.path.exists(os.path.join(cham_det_dir, "inference.pdmodel"))
-    if has_cham_model:
-        det_model_dir = cham_det_dir
-        print(f"🌟 Using dedicated Cham Text Detection model: {det_model_dir}")
-    else:
-        det_model_dir = os.path.join(PROJECT_ROOT, "data", "output", "ch_PP-OCRv4_det_infer")
+def _ensure_generic_det_dir():
+    """Returns the generic PP-OCRv4 detector directory, downloading it if missing."""
+    det_model_dir = os.path.join(PROJECT_ROOT, "data", "output", "ch_PP-OCRv4_det_infer")
     model_file_exists = os.path.exists(os.path.join(det_model_dir, "inference.pdmodel")) or os.path.exists(os.path.join(det_model_dir, "inference.json"))
     if not model_file_exists:
         print(f"📥 Downloading ch_PP-OCRv4_det_infer to {det_model_dir}...")
@@ -334,6 +364,11 @@ def get_det_model():
         if os.path.exists(tar_path):
             os.remove(tar_path)
         print("✅ Downloaded and extracted ch_PP-OCRv4_det_infer successfully.")
+    return det_model_dir
+
+def _build_text_detector(det_model_dir, db_thresh, box_thresh, unclip_ratio):
+    from tools.infer.predict_det import TextDetector
+    import tools.infer.utility as utility
 
     sys_argv_backup = sys.argv
     sys.argv = [sys.argv[0]]
@@ -345,14 +380,90 @@ def get_det_model():
     args.ir_optim = False
     args.det_algorithm = 'DB'
     args.det_model_dir = det_model_dir
-    args.det_db_thresh = 0.25
-    args.det_db_box_thresh = 0.5
-    args.det_db_unclip_ratio = 1.8
-
-    print(f"⚙️  Loading PaddleOCR DBNet Detector from {det_model_dir}...")
-    det_model = TextDetector(args)
+    args.det_db_thresh = db_thresh
+    args.det_db_box_thresh = box_thresh
+    args.det_db_unclip_ratio = unclip_ratio
+    print(f"⚙️  Loading PaddleOCR DBNet Detector from {det_model_dir} (thresh={db_thresh}, box={box_thresh}, unclip={unclip_ratio})...")
+    detector = TextDetector(args)
     print("🔥 PaddleOCR DBNet Detector loaded successfully.")
+    return detector
+
+def get_generic_det_model():
+    """Loads and caches the legacy generic PP-OCRv4 DBNet detector."""
+    global generic_det_model
+    if generic_det_model is None:
+        generic_det_model = _build_text_detector(_ensure_generic_det_dir(), 0.25, 0.5, 1.8)
+    return generic_det_model
+
+def get_cham_det_model():
+    """Loads and caches the fine-tuned Cham-DBNet detector; returns None if unavailable.
+
+    The model is exported in the Paddle 3 PIR format (inference.json + inference.pdiparams).
+    Earlier code only looked for the legacy inference.pdmodel file, so this detector was never
+    used in production (stress test 2026-11-04: legacy detector returned 4/8, 2/8, 1/5, 3/14 lines
+    on wavy / perspective / tightly spaced pages where Cham-DBNet finds 8/8, 7/8, 5/5, 14/14).
+    """
+    global cham_det_model, _cham_det_failed
+    if cham_det_model is not None or _cham_det_failed:
+        return cham_det_model
+    cham_det_dir = os.path.join(PROJECT_ROOT, "data", "output", "ch_PP-OCRv4_det_cham_infer")
+    has_cham_model = os.path.exists(os.path.join(cham_det_dir, "inference.pdiparams")) and (
+        os.path.exists(os.path.join(cham_det_dir, "inference.pdmodel")) or os.path.exists(os.path.join(cham_det_dir, "inference.json")))
+    if not has_cham_model:
+        _cham_det_failed = True
+        return None
+    try:
+        cham_det_model = _build_text_detector(cham_det_dir, CHAM_DET_DB_THRESH, CHAM_DET_BOX_THRESH, CHAM_DET_UNCLIP)
+        print(f"🌟 Cham Text Detection model ready: {cham_det_dir}")
+    except Exception as e:
+        _cham_det_failed = True
+        print(f"⚠️  Failed to load Cham DBNet detector ({e}); legacy generic detector only.")
+    return cham_det_model
+
+def get_det_model():
+    """Loads and caches the primary PaddleOCR TextDetector model for DBNet segmentation.
+
+    DET_MODE='hybrid' (default) and 'generic' keep the legacy generic detector as primary;
+    'cham' uses the Cham-DBNet detector as primary (falls back to generic if it cannot load).
+    """
+    global det_model
+    if det_model is not None:
+        return det_model
+    if DET_MODE == 'cham' and get_cham_det_model() is not None:
+        det_model = get_cham_det_model()
+        det_model_info.update({"name": "cham_dbnet", "dir": os.path.join(PROJECT_ROOT, "data", "output", "ch_PP-OCRv4_det_cham_infer"), "mode": DET_MODE})
+    else:
+        det_model = get_generic_det_model()
+        det_model_info.update({"name": "generic_ppocrv4_dbnet", "dir": _ensure_generic_det_dir(), "mode": DET_MODE})
+    if DET_MODE == 'hybrid':
+        get_cham_det_model()  # preload so the first hard page doesn't pay the load cost
     return det_model
+
+def _quad_centerline(pts):
+    """(y-at-x function, perpendicular thickness) of a 4-point text quad (tl, tr, br, bl)."""
+    p = np.array(pts, dtype=np.float32)
+    if p.shape != (4, 2):
+        x1, y1, x2, y2 = float(p[:, 0].min()), float(p[:, 1].min()), float(p[:, 0].max()), float(p[:, 1].max())
+        return (lambda x, c=(y1 + y2) / 2.0: c), (y2 - y1)
+    left, right = (p[0] + p[3]) / 2.0, (p[1] + p[2]) / 2.0
+    if right[0] < left[0]:
+        left, right = right, left
+    dx = float(right[0] - left[0])
+    slope = float(right[1] - left[1]) / dx if dx > 1e-3 else 0.0
+    thickness = (float(np.linalg.norm(p[3] - p[0])) + float(np.linalg.norm(p[2] - p[1]))) / 2.0
+    return (lambda x, l=left, s=slope: float(l[1]) + s * (x - float(l[0]))), thickness
+
+def _stacked_by_centerline(pts1, pts2, ox1, ox2, ratio=0.5):
+    """True when two horizontally overlapping quads are distinct stacked lines: their centerlines,
+    evaluated at the middle of the horizontal overlap [ox1, ox2], are further apart than
+    `ratio` x the thinner quad's perpendicular thickness."""
+    f1, t1 = _quad_centerline(pts1)
+    f2, t2 = _quad_centerline(pts2)
+    t = min(t1, t2)
+    if t <= 0:
+        return False
+    xm = (ox1 + ox2) / 2.0
+    return abs(f1(xm) - f2(xm)) > ratio * t
 
 def merge_line_boxes(boxes, img_w, img_h):
     """
@@ -372,6 +483,9 @@ def merge_line_boxes(boxes, img_w, img_h):
             continue
         rects.append([x1, y1, x2, y2, pts])
 
+    if not rects:
+        return []
+    median_h = float(np.median([r[3] - r[1] for r in rects]))
     rects = sorted(rects, key=lambda r: (r[1], r[0]))
 
     merged = True
@@ -389,12 +503,17 @@ def merge_line_boxes(boxes, img_w, img_h):
                 r2 = rects[j]
                 h1 = r1[3] - r1[1]
                 h2 = r2[3] - r2[1]
+                w1 = r1[2] - r1[0]
+                w2 = r2[2] - r2[0]
                 min_h = min(h1, h2)
-                if min_h <= 0:
+                min_w = min(w1, w2)
+                if min_h <= 0 or min_w <= 0:
                     continue
 
                 v_inter = max(0.0, min(r1[3], r2[3]) - max(r1[1], r2[1]))
                 v_overlap = v_inter / min_h
+                h_inter = max(0.0, min(r1[2], r2[2]) - max(r1[0], r2[0]))
+                h_overlap = h_inter / min_w
 
                 if r1[2] <= r2[0]:
                     x_dist = r2[0] - r1[2]
@@ -403,11 +522,29 @@ def merge_line_boxes(boxes, img_w, img_h):
                 else:
                     x_dist = 0.0
 
+                new_y1 = max(0.0, min(r1[1], r2[1]))
+                new_y2 = min(float(img_h), max(r1[3], r2[3]))
+                new_h = new_y2 - new_y1
+                cy1 = (r1[1] + r1[3]) / 2.0
+                cy2 = (r2[1] + r2[3]) / 2.0
+
+                # Guard against merging two vertically stacked lines whose AABBs overlap due to wave/tilt
+                # (stress test 2026-11-04: test_161_lvl5 lines 6 & 7 had v_overlap=0.57 and h_overlap=1.0)
+                if h_overlap > 0.25 and (abs(cy1 - cy2) > 0.45 * min_h or new_h > 1.35 * max(h1, h2)):
+                    continue
+                if median_h > 0 and new_h > 1.75 * median_h and new_h > 1.25 * max(h1, h2):
+                    continue
+                # Tilt-aware guard: on perspective / rotated pages the AABB of each line is several
+                # times taller than the text itself, so the AABB tests above cannot tell two stacked
+                # tilted lines apart (benchmark test_384_a4_lvl5: Cham-DBNet found 19/20 lines, AABB
+                # merging collapsed them to 14). Compare the quads' own centerlines at the middle of the
+                # horizontal overlap against their true (perpendicular) thickness instead.
+                if h_overlap > 0.25 and _stacked_by_centerline(r1[4], r2[4], max(r1[0], r2[0]), min(r1[2], r2[2])):
+                    continue
+
                 if v_overlap >= 0.50 and x_dist <= max(40.0, 2.5 * min_h):
                     new_x1 = max(0.0, min(r1[0], r2[0]))
-                    new_y1 = max(0.0, min(r1[1], r2[1]))
                     new_x2 = min(float(img_w), max(r1[2], r2[2]))
-                    new_y2 = min(float(img_h), max(r1[3], r2[3]))
                     new_pts = np.array([
                         [new_x1, new_y1],
                         [new_x2, new_y1],
@@ -423,6 +560,239 @@ def merge_line_boxes(boxes, img_w, img_h):
     # Line sorting: sort by vertical center
     rects = sorted(rects, key=lambda r: (r[1] + r[3]) / 2.0)
     return [r[4] for r in rects]
+
+# ==============================================================================
+# Page-level quality gates & reading order (stress test 2026-11-04 fixes)
+# ==============================================================================
+def _file_fingerprint(path):
+    """Short SHA-256 fingerprint of a model weight file (cached) for response traceability."""
+    if not path or not os.path.exists(path):
+        return None
+    if path not in _fingerprint_cache:
+        import hashlib
+        h = hashlib.sha256()
+        with open(path, 'rb') as f:
+            for chunk in iter(lambda: f.read(1 << 20), b''):
+                h.update(chunk)
+        _fingerprint_cache[path] = h.hexdigest()[:16]
+    return _fingerprint_cache[path]
+
+def get_model_info(model_ver):
+    """Returns provenance info (model id, weight fingerprints, detector, normalizer) for the response."""
+    info = {"model": model_ver, "normalizer": None}
+    rec_versions = ['v24', 'vi'] if model_ver == 'auto' else [model_ver]
+    recs = []
+    for v in rec_versions:
+        p = ocr_model_paths.get(v)
+        if p:
+            recs.append({"version": v,
+                         "model_dir": os.path.relpath(p["model_dir"], PROJECT_ROOT),
+                         "weights_sha256_16": _file_fingerprint(os.path.join(p["model_dir"], "inference.pdiparams")),
+                         "dict": os.path.basename(p["dict_path"]),
+                         "dict_sha256_16": _file_fingerprint(p["dict_path"])})
+    info["recognizers"] = recs
+    if not det_model_info:
+        info["detector"] = {"name": None, "mode": DET_MODE, "loaded": False}
+    else:
+        info["detector"] = {"name": det_model_info.get("name"), "mode": det_model_info.get("mode"), "loaded": True,
+                            "weights_sha256_16": _file_fingerprint(os.path.join(det_model_info.get("dir", ""), "inference.pdiparams")),
+                            # Exposed so a deployment can be verified: False means the fine-tuned Cham-DBNet
+                            # failed to load (e.g. PIR model on an old Paddle) and only the legacy detector runs.
+                            "cham_dbnet_available": cham_det_model is not None,
+                            "cham_dbnet_sha256_16": _file_fingerprint(os.path.join(PROJECT_ROOT, "data", "output", "ch_PP-OCRv4_det_cham_infer", "inference.pdiparams")) if cham_det_model is not None else None}
+    try:
+        import paddle as _paddle
+        info["paddle_version"] = _paddle.__version__
+    except Exception:
+        info["paddle_version"] = None
+    if model_ver in ['v24', 'v25', 'v26'] or str(model_ver).startswith('v24'):
+        info["normalizer"] = NORMALIZER_VERSION
+    return info
+
+def analyze_text_ink(img):
+    """Estimates text-like ink components against a locally estimated paper background.
+
+    Background is estimated with a grey-level morphological closing (removes thin dark strokes),
+    so paper texture, vignetting and soft shadows are not counted as ink.
+    Returns a dict with component stats/centroids, total ink pixels and ink ratio.
+    """
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) if len(img.shape) == 3 else img
+    if check_inverted_polarity(img):
+        gray = 255 - gray
+    h, w = gray.shape[:2]
+    k = int(max(15, min(41, round(min(h, w) / 40)))) | 1
+    bg = cv2.morphologyEx(gray, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_RECT, (k, k)))
+    diff = cv2.subtract(bg, gray)
+    mask = (diff > 45).astype(np.uint8)
+    n, _, stats, cents = cv2.connectedComponentsWithStats(mask, connectivity=8)
+    keep = []
+    for i in range(1, n):
+        cw, ch, area = stats[i, cv2.CC_STAT_WIDTH], stats[i, cv2.CC_STAT_HEIGHT], stats[i, cv2.CC_STAT_AREA]
+        if area >= 10 and ch >= 3 and cw >= 2 and ch < 0.5 * h and cw < 0.9 * w:
+            keep.append(i)
+    stats_k = stats[keep] if keep else np.zeros((0, 5), dtype=np.int32)
+    cents_k = cents[keep] if keep else np.zeros((0, 2), dtype=np.float64)
+    ink_px = int(stats_k[:, cv2.CC_STAT_AREA].sum()) if len(keep) else 0
+    return {"stats": stats_k, "centroids": cents_k, "ink_px": ink_px,
+            "ink_ratio": ink_px / float(max(1, h * w)), "num_components": len(keep), "shape": (h, w)}
+
+def is_blank_page(ink):
+    """True when the page has no text-like ink (blank / near-blank paper)."""
+    return ink["num_components"] < 4 or ink["ink_ratio"] < 0.0003
+
+def compute_uncovered_ink(ink, polygons, median_line_h=None):
+    """Fraction of text-like ink (area-weighted) whose component centroid lies outside every detected line.
+
+    Returns (ratio, uncovered_component_indices).
+    """
+    h, w = ink["shape"]
+    stats, cents = ink["stats"], ink["centroids"]
+    if len(stats) == 0:
+        return 0.0, []
+    cover = np.zeros((h, w), dtype=np.uint8)
+    for poly in polygons:
+        cv2.fillPoly(cover, [np.round(np.array(poly, dtype=np.float32)).astype(np.int32)], 1)
+    pad = int(max(3, round(0.25 * median_line_h))) if median_line_h else 5
+    cover = cv2.dilate(cover, np.ones((2 * pad + 1, 2 * pad + 1), np.uint8))
+    total, uncovered, idxs = 0, 0, []
+    for i in range(len(stats)):
+        ch, area = stats[i, cv2.CC_STAT_HEIGHT], stats[i, cv2.CC_STAT_AREA]
+        if median_line_h and ch < 0.12 * median_line_h:
+            continue  # dust / speckle, not a glyph
+        total += area
+        cx = int(min(w - 1, max(0, round(cents[i][0]))))
+        cy = int(min(h - 1, max(0, round(cents[i][1]))))
+        if cover[cy, cx] == 0:
+            uncovered += area
+            idxs.append(i)
+    return (uncovered / float(total) if total else 0.0), idxs
+
+def _split_columns(idx, rects, median_h, img_w):
+    """Splits a group of non-spanning line boxes into side-by-side columns using vertical gutters."""
+    ivs = sorted(idx, key=lambda i: rects[i][0])
+    runs = []  # [x_start, x_end, members]
+    for i in ivs:
+        x1, _, x2, _ = rects[i]
+        if runs and x1 <= runs[-1][1]:
+            runs[-1][1] = max(runs[-1][1], x2)
+            runs[-1][2].append(i)
+        else:
+            runs.append([x1, x2, [i]])
+    if len(runs) < 2:
+        return [idx]
+    min_gutter = max(1.5 * median_h, 0.025 * img_w)
+    cols = [runs[0]]
+    for r in runs[1:]:
+        if r[0] - cols[-1][1] >= min_gutter:
+            cols.append([r[0], r[1], list(r[2])])
+        else:
+            cols[-1][1] = max(cols[-1][1], r[1])
+            cols[-1][2].extend(r[2])
+    if len(cols) < 2 or any(len(c[2]) < 3 for c in cols):
+        return [idx]
+    # Columns must sit side by side (overlapping vertical extents), not be stacked blocks
+    for a, b in zip(cols, cols[1:]):
+        ay1, ay2 = min(rects[i][1] for i in a[2]), max(rects[i][3] for i in a[2])
+        by1, by2 = min(rects[i][1] for i in b[2]), max(rects[i][3] for i in b[2])
+        inter = max(0.0, min(ay2, by2) - max(ay1, by1))
+        if inter < 0.5 * min(ay2 - ay1, by2 - by1):
+            return [idx]
+    return [c[2] for c in cols]
+
+def order_lines_reading(rects, img_w):
+    """Column-aware reading order for line boxes [x1, y1, x2, y2].
+
+    Full-width (spanning) lines split the page into sections; inside each section, side-by-side
+    columns separated by a clear vertical gutter are read top-to-bottom, left column first.
+    Single-column pages keep the legacy top-to-bottom order.
+    Returns (order, layout) where layout = {"reading_order": "rows"|"columns", "columns": k}.
+    """
+    n = len(rects)
+    yc = lambda i: (rects[i][1] + rects[i][3]) / 2.0
+    order_y = sorted(range(n), key=yc)
+    layout = {"reading_order": "rows", "columns": 1}
+    if n < 6:
+        return order_y, layout
+    median_h = float(np.median([r[3] - r[1] for r in rects]))
+    x0 = min(r[0] for r in rects)
+    x1 = max(r[2] for r in rects)
+    text_w = max(1.0, x1 - x0)
+    spanning = {i for i in range(n) if (rects[i][2] - rects[i][0]) > 0.6 * text_w}
+    sections, cur = [], []
+    for i in order_y:
+        if i in spanning:
+            if cur:
+                sections.append(cur)
+                cur = []
+            sections.append([i])
+        else:
+            cur.append(i)
+    if cur:
+        sections.append(cur)
+    order = []
+    for sec in sections:
+        cols = _split_columns(sec, rects, median_h, img_w) if len(sec) >= 6 else [sec]
+        if len(cols) > 1:
+            layout = {"reading_order": "columns", "columns": max(layout["columns"], len(cols))}
+        for col in cols:
+            order.extend(sorted(col, key=yc))
+    return order, layout
+
+def apply_line_quality_gates(lines_metadata, final_crops, dropped=None):
+    """Drops empty / background-noise lines and flags uncertain lines for human review (DBNet path).
+
+    dropped: optional list; receives the metadata of dropped lines that look like real text lines
+             (Cham text in a box at least ~half the page's typical line size). The caller must
+             surface these at document level instead of silently losing them (benchmark
+             test_393_a4_lvl5: 4/5 lines dropped while the page still reported 'ocr_done').
+    """
+    all_w = [m['bbox'][2] - m['bbox'][0] for m in lines_metadata]
+    all_h = [m['bbox'][3] - m['bbox'][1] for m in lines_metadata]
+    med_w = float(np.median(all_w)) if all_w else 0.0
+    med_h = float(np.median(all_h)) if all_h else 0.0
+    kept_meta, kept_crops = [], []
+    for meta, crop in zip(lines_metadata, final_crops):
+        cand = meta['candidates'][meta['selected_crop_type']]
+        pred = (cand.get('prediction') or '').strip()
+        conf = float(cand.get('confidence') or 0.0)
+        has_cham = any('\uAA00' <= ch <= '\uAA5F' or '\uA800' <= ch <= '\uA87F' for ch in pred)
+        has_alnum = any(ch.isalnum() for ch in pred)
+        if not pred or conf < 0.15 or (conf < 0.35 and not has_cham and not has_alnum):
+            bw, bh = meta['bbox'][2] - meta['bbox'][0], meta['bbox'][3] - meta['bbox'][1]
+            if dropped is not None and has_cham and bw >= 0.5 * med_w and bh >= 0.5 * med_h:
+                dropped.append(meta)
+            continue
+        kept_meta.append(meta)
+        kept_crops.append(crop)
+
+    heights = [m['bbox'][3] - m['bbox'][1] for m in kept_meta]
+    median_h = float(np.median(heights)) if heights else 0.0
+    for meta in kept_meta:
+        cand = meta['candidates'][meta['selected_crop_type']]
+        conf = float(cand.get('confidence') or 0.0)
+        reasons = list(meta.get('reason') or [])
+        if conf < LINE_REVIEW_CONF:
+            reasons.append('low_confidence')
+        if len(kept_meta) >= 3 and median_h > 0 and (meta['bbox'][3] - meta['bbox'][1]) > 1.8 * median_h:
+            reasons.append('possible_merged_lines')
+        meta['reason'] = reasons
+        meta['needs_review'] = len(reasons) > 0
+        meta['crop_confidence'] = 'high' if conf > 0.8 else ('medium' if conf > 0.5 else 'low')
+    return kept_meta, kept_crops
+
+def build_document_status(results, reasons, extra=None):
+    """Document-level OCR status. 'verified' is never set by the server: only a human can verify."""
+    reasons = list(dict.fromkeys(reasons))
+    if not results:
+        status = 'no_text' if (not reasons or reasons == ['blank_page']) else 'needs_review'
+    elif reasons or any(r['segmentation'].get('needs_review') for r in results):
+        status = 'needs_review'
+    else:
+        status = 'ocr_done'
+    doc = {"status": status, "needs_review": status == 'needs_review', "reasons": reasons, "line_count": len(results)}
+    if extra:
+        doc.update(extra)
+    return doc
 
 def check_inverted_polarity(img):
     """
@@ -457,26 +827,145 @@ def preprocess_crop_for_rec(crop_img):
         return cv2.cvtColor(bin_inv, cv2.COLOR_GRAY2BGR)
     return crop_img
 
-def segment_lines_dbnet(img, det_model):
+def _aabb(poly):
+    pts = np.array(poly, dtype=np.float32)
+    return float(np.min(pts[:, 0])), float(np.min(pts[:, 1])), float(np.max(pts[:, 0])), float(np.max(pts[:, 1]))
+
+def _iom(a, b):
+    """Intersection over the smaller box area for axis-aligned boxes (x1, y1, x2, y2)."""
+    ix = max(0.0, min(a[2], b[2]) - max(a[0], b[0]))
+    iy = max(0.0, min(a[3], b[3]) - max(a[1], b[1]))
+    sa = max(1.0, (a[2] - a[0]) * (a[3] - a[1]))
+    sb = max(1.0, (b[2] - b[0]) * (b[3] - b[1]))
+    return (ix * iy) / min(sa, sb)
+
+def expand_quad(pts, pad_v, pad_h, img_w, img_h):
+    """Expands a (tl, tr, br, bl) quad along its own vertical / horizontal axes by a fraction of its height."""
+    p = np.array(pts, dtype=np.float32).copy()
+    if p.shape != (4, 2):
+        return p
+    v = ((p[3] + p[2]) - (p[0] + p[1])) / 2.0
+    line_h = float(np.linalg.norm(v)) + 1e-6
+    v /= line_h
+    u = ((p[1] + p[2]) - (p[0] + p[3])) / 2.0
+    u /= (float(np.linalg.norm(u)) + 1e-6)
+    dv, dh = v * pad_v * line_h, u * pad_h * line_h
+    p[0] += -dv - dh
+    p[1] += -dv + dh
+    p[2] += dv + dh
+    p[3] += dv - dh
+    p[:, 0] = np.clip(p[:, 0], 0, img_w - 1)
+    p[:, 1] = np.clip(p[:, 1], 0, img_h - 1)
+    return p
+
+def max_stacked_overlap(boxes):
+    """Max vertical overlap (fraction of the smaller AABB height) between two boxes that also
+    overlap horizontally by more than 25% of the narrower one (i.e. stacked, not side by side)."""
+    r = [_aabb(b) for b in boxes]
+    best = 0.0
+    for i in range(len(r)):
+        for j in range(i + 1, len(r)):
+            a, b = r[i], r[j]
+            hx = min(a[2], b[2]) - max(a[0], b[0])
+            if hx <= 0.25 * min(a[2] - a[0], b[2] - b[0]):
+                continue
+            vy = min(a[3], b[3]) - max(a[1], b[1])
+            best = max(best, vy / max(1.0, min(a[3] - a[1], b[3] - b[1])))
+    return best
+
+def segment_lines_dbnet(img, det_model, ink=None, return_info=False, reading_order='auto'):
     """
     Performs deep-learning based text line segmentation using PaddleOCR DBNet.
+    Args:
+        ink: optional result of analyze_text_ink(img); enables the uncovered-ink check and
+             (in DET_MODE='hybrid') the Legacy-First switch to Cham-DBNet for missed / merged lines.
+        return_info: also return a dict with detector diagnostics and layout.
+        reading_order: 'auto' (column-aware) or 'rows' (legacy top-to-bottom).
     Returns:
         final_crops: list of cropped BGR images corresponding to each detected line
         lines_metadata: list of metadata dicts matching the Studio response schema
+        (info): only when return_info=True
     """
     import tools.infer.utility as utility
-    from tools.infer.predict_system import sorted_boxes
+
+    info = {"raw_boxes": 0, "lines_detected": 0, "detector": None, "detector_switched": False,
+            "uncovered_ink_ratio": None, "uncovered_ink_ratio_primary": None,
+            "layout": {"reading_order": "rows", "columns": 1}}
+
+    def _ret(crops, metas):
+        return (crops, metas, info) if return_info else (crops, metas)
 
     is_inverted = check_inverted_polarity(img)
     det_img = (255 - img) if is_inverted else img
-
-    dt_boxes, elapse = det_model(det_img)
-    if dt_boxes is None or len(dt_boxes) == 0:
-        return [], []
-
     h, w = img.shape[:2]
-    # Merge horizontal box fragments on the same line
-    dt_boxes = merge_line_boxes(dt_boxes, w, h)
+
+    def _detect(detector):
+        boxes, _ = detector(det_img)
+        boxes = [] if boxes is None else [np.array(b, dtype=np.float32) for b in boxes]
+        return merge_line_boxes(boxes, w, h)
+
+    def _coverage(boxes):
+        """(uncovered ink ratio, max box height / glyph height) for a candidate box set."""
+        if not boxes:
+            return 1.0, 0.0
+        hs = [float(np.ptp(np.array(b)[:, 1])) for b in boxes]
+        unc = compute_uncovered_ink(ink, boxes, float(np.median(hs)))[0] if ink is not None else 0.0
+        return unc, (max(hs) / glyph_h if glyph_h > 0 else 0.0)
+
+    glyph_h = 0.0
+    if ink is not None and len(ink["stats"]):
+        comp_h = ink["stats"][:, cv2.CC_STAT_HEIGHT]
+        comp_h = comp_h[comp_h >= 6]
+        glyph_h = float(np.median(comp_h)) if len(comp_h) else 0.0
+
+    dt_boxes = _detect(det_model)
+    info["raw_boxes"] = len(dt_boxes)
+    info["detector"] = det_model_info.get("name", "primary")
+    use_cham_crop_pad = det_model is cham_det_model
+
+    # Legacy-First gate: keep the legacy detector result unless it leaves text-like ink uncovered
+    # or produced a box tall enough to contain several merged lines; only then try Cham-DBNet and
+    # switch the whole page to it if it clearly covers the text better.
+    if ink is not None and DET_MODE == 'hybrid' and det_model is not cham_det_model:
+        unc_p, tall_p = _coverage(dt_boxes)
+        stacked_p = max_stacked_overlap(dt_boxes)
+        info["uncovered_ink_ratio_primary"] = round(unc_p, 4)
+        info["stacked_overlap_primary"] = round(stacked_p, 3)
+        missed = unc_p >= LEGACY_GATE_UNCOVERED_RATIO
+        stacked = stacked_p >= LEGACY_GATE_STACKED_OVERLAP
+        if missed or stacked or tall_p >= 3.5:
+            cham = get_cham_det_model()
+            if cham is not None:
+                cham_boxes = _detect(cham)
+                unc_c, tall_c = _coverage(cham_boxes)
+                better_cover = cham_boxes and unc_c + DET_SWITCH_MIN_GAIN <= unc_p
+                splits_merged = (cham_boxes and tall_p >= 3.5 and tall_c < 3.5
+                                 and len(cham_boxes) > len(dt_boxes) and unc_c <= unc_p + 0.01)
+                # Legacy boxes visibly stacked / missing ink and Cham-DBNet separates more lines
+                # without losing coverage (benchmark test_128 / test_148_lvl4: 5 -> 6 of 6 lines).
+                more_lines = ((missed or stacked) and len(cham_boxes) > len(dt_boxes)
+                              and unc_c <= unc_p + 0.01)
+                if better_cover or splits_merged or more_lines:
+                    print(f"🔀 Legacy-First gate: switching to Cham-DBNet ({len(dt_boxes)} -> {len(cham_boxes)} lines, "
+                          f"uncovered {unc_p:.3f} -> {unc_c:.3f}, tallest box/glyph {tall_p:.1f} -> {tall_c:.1f})")
+                    dt_boxes = cham_boxes
+                    info["detector"] = "cham_dbnet"
+                    info["detector_switched"] = True
+                    use_cham_crop_pad = True
+
+    info["lines_detected"] = len(dt_boxes)
+    if len(dt_boxes) == 0:
+        return _ret([], [])
+
+    if ink is not None:
+        info["uncovered_ink_ratio"] = round(_coverage(dt_boxes)[0], 4)
+
+    # Column-aware reading order (fixes left/right interleaving on multi-column pages)
+    if reading_order != 'rows' and len(dt_boxes) > 1:
+        rects = [_aabb(b) for b in dt_boxes]
+        order, layout = order_lines_reading(rects, w)
+        dt_boxes = [dt_boxes[i] for i in order]
+        info["layout"] = layout
 
     final_crops = []
     lines_metadata = []
@@ -487,9 +976,10 @@ def segment_lines_dbnet(img, det_model):
         x_max = int(min(w, np.max(pts[:, 0])))
         y_min = int(max(0, np.min(pts[:, 1])))
         y_max = int(min(h, np.max(pts[:, 1])))
-
-        # Get perspective crop
-        crop_img = utility.get_rotate_crop_image(img, pts)
+        # Get perspective crop (Cham-DBNet boxes are tighter than the legacy detector's: pad them
+        # along the line's own vertical axis so stacked diacritics are not clipped)
+        crop_pts = expand_quad(pts, CHAM_DET_CROP_PAD, 0.05, w, h) if use_cham_crop_pad and CHAM_DET_CROP_PAD > 0 else pts
+        crop_img = utility.get_rotate_crop_image(img, crop_pts)
         final_crops.append(crop_img)
 
         meta = {
@@ -503,6 +993,7 @@ def segment_lines_dbnet(img, det_model):
             'selected_crop_type': 'dbnet',
             'crop_sanity_score': 1.0,
             'needs_review': False,
+            'detector': info.get('detector'),
             'candidates': {
                 'dbnet': {
                     'prediction': '',
@@ -512,7 +1003,7 @@ def segment_lines_dbnet(img, det_model):
         }
         lines_metadata.append(meta)
 
-    return final_crops, lines_metadata
+    return _ret(final_crops, lines_metadata)
 
 # ==============================================================================
 # Line Segmentation Algorithms
@@ -1278,11 +1769,17 @@ def segment_lines_advanced(img, base_coords, ocr_model):
             filtered_lines_meta.append(meta)
             filtered_final_crops.append(crop)
             
-    # Safeguard: If all lines were filtered, preserve the single highest-confidence candidate line
+    # Safeguard: If all lines were filtered, preserve the single highest-confidence candidate line,
+    # but only when it is real text. Blank / noise-only pages must return no lines instead of an
+    # empty or hallucinated line (stress test 2026-11-04: blank page -> '' / 'R' marked VERIFIED).
     if not filtered_lines_meta and lines_meta:
         best_i = max(range(len(lines_meta)), key=lambda i: lines_meta[i]["candidates"].get(lines_meta[i].get("selected_crop_type", "safe"), {}).get("confidence", 0.0))
-        filtered_lines_meta = [lines_meta[best_i]]
-        filtered_final_crops = [final_crops[best_i]]
+        best_cand = lines_meta[best_i]["candidates"].get(lines_meta[best_i].get("selected_crop_type", "safe"), {})
+        if best_cand.get("confidence", 0.0) >= 0.5 and best_cand.get("prediction", "").strip():
+            lines_meta[best_i]["needs_review"] = True
+            lines_meta[best_i]["reason"] = list(lines_meta[best_i].get("reason") or []) + ["only_low_quality_candidates"]
+            filtered_lines_meta = [lines_meta[best_i]]
+            filtered_final_crops = [final_crops[best_i]]
         
     # Non-Maximum Suppression (NMS) with 2D IoM (checks both vertical and horizontal overlaps)
     if len(filtered_lines_meta) > 1:
@@ -1390,6 +1887,153 @@ def segment_lines_advanced(img, base_coords, ocr_model):
 
 
 # ==============================================================================
+# OCR Pipeline (shared by the HTTP handler and offline benchmark scripts)
+# ==============================================================================
+def run_ocr_pipeline(img, model_ver='v24', method='dbnet', threshold=0.05, gap=12, win=25,
+                     reading_order='auto', t_start=None):
+    """Runs segmentation + recognition + quality gates on a BGR image.
+
+    Returns the /ocr JSON response dict: {'lines', 'profiler', 'document', 'model_info'}.
+    """
+    import time
+    t_start = t_start or time.time()
+    ocr = get_ocr_model(model_ver)
+
+    t_seg = time.time()
+    base_segmentation_sec = 0.0
+    profiler_dict = {
+        'method': method,
+        'base_segmentation_sec': 0.0,
+        'legacy_fast_pass_count': 0,
+        'pass2_rescue_count': 0
+    }
+    doc_reasons = []
+    doc_extra = {}
+
+    if method == 'dbnet':
+        ink = analyze_text_ink(img)
+        doc_extra['ink_ratio'] = round(ink['ink_ratio'], 5)
+        if is_blank_page(ink):
+            # No text-like ink: never hallucinate a line on blank / near-blank paper
+            print("📄 Blank page detected (no text-like ink); skipping detection and recognition.")
+            final_crops, lines_metadata = [], []
+            doc_reasons.append('blank_page')
+            profiler_dict['blank_page'] = True
+        else:
+            print("🔍 Running PaddleOCR DBNet segmentation...")
+            det_info = {}
+            try:
+                det = get_det_model()
+                final_crops, lines_metadata, det_info = segment_lines_dbnet(
+                    img, det, ink=ink, return_info=True, reading_order=reading_order)
+            except Exception:
+                import traceback
+                print(f"❌ DBNet segmentation error: {traceback.format_exc()}")
+                final_crops, lines_metadata = [], []
+
+            base_segmentation_sec = time.time() - t_seg
+            if det_info:
+                doc_extra['layout'] = det_info.get('layout')
+                doc_extra['uncovered_ink_ratio'] = det_info.get('uncovered_ink_ratio')
+                profiler_dict['det_lines'] = det_info.get('lines_detected')
+                profiler_dict['detector'] = det_info.get('detector')
+                profiler_dict['detector_switched'] = det_info.get('detector_switched')
+                profiler_dict['uncovered_ink_ratio_primary'] = det_info.get('uncovered_ink_ratio_primary')
+
+            if not final_crops:
+                print("⚠️ DBNet found 0 text lines, falling back to Valley segmentation...")
+                _, coords = segment_lines_valleys(img, window_size=win, min_dist=gap)
+                final_crops, lines_metadata, adv_profiler = segment_lines_advanced(img, coords, ocr)
+                profiler_dict.update(adv_profiler)
+                profiler_dict['fallback'] = 'valley'
+                doc_reasons.append('detector_found_no_lines')
+            else:
+                t_rec = time.time()
+                rec_crops = [preprocess_crop_for_rec(c) for c in final_crops]
+                rec_res, _ = ocr(rec_crops)
+                rec_sec = time.time() - t_rec
+                print(f"⏱️  DBNet batch recognition ({len(final_crops)} lines) took: {rec_sec:.4f}s")
+                for idx, (pred_text, conf) in enumerate(rec_res):
+                    lines_metadata[idx]['candidates']['dbnet']['prediction'] = pred_text
+                    lines_metadata[idx]['candidates']['dbnet']['confidence'] = conf
+                num_detected = len(lines_metadata)
+                dropped_text_lines = []
+                lines_metadata, final_crops = apply_line_quality_gates(lines_metadata, final_crops, dropped_text_lines)
+                profiler_dict['dropped_empty_or_noise_lines'] = num_detected - len(lines_metadata)
+                if dropped_text_lines:
+                    doc_reasons.append('unreadable_lines_dropped')
+                    doc_extra['unreadable_lines_dropped'] = len(dropped_text_lines)
+                if not lines_metadata:
+                    doc_reasons.append('no_reliable_text')
+                unc = det_info.get('uncovered_ink_ratio') if det_info else None
+                if unc is not None and unc >= UNCOVERED_INK_REVIEW_RATIO:
+                    doc_reasons.append('possible_missed_lines')
+                profiler_dict['base_segmentation_sec'] = round(base_segmentation_sec, 4)
+                profiler_dict['rec_inference_sec'] = round(rec_sec, 4)
+                profiler_dict['num_lines'] = len(final_crops)
+                profiler_dict['total_segmentation_sec'] = round(base_segmentation_sec, 4)
+                profiler_dict['ocr_model_calls'] = 1
+    else:
+        if method == 'valley':
+            _, coords = segment_lines_valleys(img, window_size=win, min_dist=gap)
+        else:
+            _, coords = segment_lines_adaptive(img, threshold_pct=threshold, gap_threshold=gap)
+        base_segmentation_sec = time.time() - t_seg
+        print(f"⏱️  Base line segmentation took: {base_segmentation_sec:.4f}s")
+
+        t_adv = time.time()
+        # Apply Advanced Segmentation and Multi-Crop
+        final_crops, lines_metadata, adv_profiler = segment_lines_advanced(img, coords, ocr)
+        profiler_dict.update(adv_profiler)
+        print(f"⏱️  segment_lines_advanced took: {time.time() - t_adv:.4f}s")
+
+    t_resp = time.time()
+    # Prepare backward-compatible response
+    results = []
+    for idx, (line_img, meta) in enumerate(zip(final_crops, lines_metadata)):
+        pred_text = meta['candidates'][meta['selected_crop_type']]['prediction']
+        confidence = meta['candidates'][meta['selected_crop_type']]['confidence']
+
+        if model_ver in ['v24', 'v25', 'v26'] or str(model_ver).startswith('v24'):
+            try:
+                from scripts.generate_data import normalize_unicode
+                pred_text = normalize_unicode(pred_text)
+            except Exception as e:
+                print(f"Warning: normalize_unicode failed: {e}")
+
+        # Encode cropped line to base64 for frontend display
+        _, buffer = cv2.imencode('.png', line_img)
+        line_b64 = base64.b64encode(buffer).decode('utf-8')
+
+        # Backward-compatible format
+        results.append({
+            'index': idx + 1,
+            'text': pred_text,
+            'confidence': float(confidence),
+            'coords': meta['core_box'],
+            'bbox': meta.get('bbox', [0, meta['core_box'][0], img.shape[1], meta['core_box'][1]]),
+            'polygon': meta.get('polygon'),
+            'image': line_b64,
+            'segmentation': {
+                'overlap_prev_px': meta.get('overlap_prev_px', 0),
+                'overlap_next_px': meta.get('overlap_next_px', 0),
+                'crop_confidence': meta.get('crop_confidence', 1.0),
+                'selected_crop_type': meta.get('selected_crop_type', 'standard'),
+                'crop_sanity_score': meta.get('crop_sanity_score', 1.0),
+                'needs_review': bool(meta.get('needs_review', False)),
+                'reason': meta.get('reason', '')
+            }
+        })
+        print(f"📥 [DO_POST RESULT] Line {idx+1}: text='{pred_text[:15]}...', conf={float(confidence):.4f}, bbox={meta.get('bbox')}")
+    print(f"⏱️  Formatted response in: {time.time() - t_resp:.4f}s")
+
+    profiler_dict['method'] = method
+    profiler_dict['backend_total_sec'] = round(time.time() - t_start, 4)
+    profiler_dict['base_segmentation_sec'] = round(base_segmentation_sec, 4)
+    document = build_document_status(results, doc_reasons, doc_extra)
+    return {'lines': results, 'profiler': profiler_dict, 'document': document, 'model_info': get_model_info(model_ver)}
+
+# ==============================================================================
 # Web Server Request Handler
 # ==============================================================================
 
@@ -1468,6 +2112,9 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             threshold = float(data.get('threshold', 0.05))
             gap = int(data.get('gap', 12))
             win = int(data.get('window', 25))
+            reading_order = data.get('reading_order', 'auto')
+            if reading_order not in ('auto', 'rows'):
+                reading_order = 'auto'
             
             # Decode image
             if ',' in img_b64:
@@ -1490,121 +2137,30 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                 self.send_json_response({'error': 'Unable to read image (corrupted base64 payload)'}, 400)
                 return
                 
-            # Perform segmentation
+            # Load model (errors are reported to the client as before)
             t_model = time.time()
             try:
-                ocr = get_ocr_model(model_ver)
+                get_ocr_model(model_ver)
             except Exception as e:
                 import traceback
                 print(f"❌ Error loading OCR model '{model_ver}': {traceback.format_exc()}")
                 self.send_json_response({'error': f'Model loading failure ({model_ver}): {e}'}, 200)
                 return
             print(f"⏱️  Loaded model in: {time.time() - t_model:.4f}s")
-                
-            t_seg = time.time()
-            base_segmentation_sec = 0.0
-            profiler_dict = {
-                'method': method,
-                'base_segmentation_sec': 0.0,
-                'legacy_fast_pass_count': 0,
-                'pass2_rescue_count': 0
-            }
-            
-            if method == 'dbnet':
-                print("🔍 Running PaddleOCR DBNet segmentation...")
-                try:
-                    det = get_det_model()
-                    final_crops, lines_metadata = segment_lines_dbnet(img, det)
-                except Exception as e:
-                    import traceback
-                    print(f"❌ DBNet segmentation error: {traceback.format_exc()}")
-                    final_crops, lines_metadata = [], []
-                
-                base_segmentation_sec = time.time() - t_seg
-                if not final_crops:
-                    print("⚠️ DBNet found 0 text lines, falling back to Valley segmentation...")
-                    _, coords = segment_lines_valleys(img, window_size=win, min_dist=gap)
-                    final_crops, lines_metadata, profiler_dict = segment_lines_advanced(img, coords, ocr)
-                else:
-                    t_rec = time.time()
-                    rec_crops = [preprocess_crop_for_rec(c) for c in final_crops]
-                    rec_res, _ = ocr(rec_crops)
-                    rec_sec = time.time() - t_rec
-                    print(f"⏱️  DBNet batch recognition ({len(final_crops)} lines) took: {rec_sec:.4f}s")
-                    for idx, (pred_text, conf) in enumerate(rec_res):
-                        lines_metadata[idx]['candidates']['dbnet']['prediction'] = pred_text
-                        lines_metadata[idx]['candidates']['dbnet']['confidence'] = conf
-                    profiler_dict['base_segmentation_sec'] = round(base_segmentation_sec, 4)
-                    profiler_dict['rec_inference_sec'] = round(rec_sec, 4)
-                    profiler_dict['num_lines'] = len(final_crops)
-                    profiler_dict['total_segmentation_sec'] = round(base_segmentation_sec, 4)
-                    profiler_dict['ocr_model_calls'] = 1
-            else:
-                if method == 'valley':
-                    _, coords = segment_lines_valleys(img, window_size=win, min_dist=gap)
-                else:
-                    _, coords = segment_lines_adaptive(img, threshold_pct=threshold, gap_threshold=gap)
-                base_segmentation_sec = time.time() - t_seg
-                print(f"⏱️  Base line segmentation took: {base_segmentation_sec:.4f}s")
-                    
-                t_adv = time.time()
-                # Apply Advanced Segmentation and Multi-Crop
-                final_crops, lines_metadata, profiler_dict = segment_lines_advanced(img, coords, ocr)
-                print(f"⏱️  segment_lines_advanced took: {time.time() - t_adv:.4f}s")
-                
-            t_resp = time.time()
-            # Prepare backward-compatible response
-            results = []
+
             try:
-                for idx, (line_img, meta) in enumerate(zip(final_crops, lines_metadata)):
-                    pred_text = meta['candidates'][meta['selected_crop_type']]['prediction']
-                    confidence = meta['candidates'][meta['selected_crop_type']]['confidence']
-                    
-                    if model_ver in ['v24', 'v25', 'v26']:
-                        try:
-                            from scripts.generate_data import normalize_unicode
-                            pred_text = normalize_unicode(pred_text)
-                        except Exception as e:
-                            print(f"Warning: normalize_unicode failed: {e}")
-                        
-                    # Encode cropped line to base64 for frontend display
-                    _, buffer = cv2.imencode('.png', line_img)
-                    line_b64 = base64.b64encode(buffer).decode('utf-8')
-                    
-                    # Backward-compatible format
-                    print(f"📥 [DO_POST RAW META] line_id={meta.get('line_id')}, bbox={meta.get('bbox')}, keys={list(meta.keys())}")
-                    results.append({
-                        'index': idx + 1,
-                        'text': pred_text,
-                        'confidence': float(confidence),
-                        'coords': meta['core_box'],
-                        'bbox': meta.get('bbox', [0, meta['core_box'][0], img.shape[1], meta['core_box'][1]]),
-                        'polygon': meta.get('polygon'),
-                        'image': line_b64,
-                        'segmentation': {
-                            'overlap_prev_px': meta.get('overlap_prev_px', 0),
-                            'overlap_next_px': meta.get('overlap_next_px', 0),
-                            'crop_confidence': meta.get('crop_confidence', 1.0),
-                            'selected_crop_type': meta.get('selected_crop_type', 'standard'),
-                            'crop_sanity_score': meta.get('crop_sanity_score', 1.0),
-                            'needs_review': meta.get('needs_review', False),
-                            'reason': meta.get('reason', '')
-                        }
-                    })
-                    print(f"📥 [DO_POST RESULT] Line {meta['line_id']+1}: text='{pred_text[:15]}...', conf={confidence:.4f}, bbox={meta.get('bbox')}")
+                response = run_ocr_pipeline(img, model_ver=model_ver, method=method, threshold=threshold,
+                                            gap=gap, win=win, reading_order=reading_order, t_start=t_start)
             except Exception as e:
                 import traceback
-                print(f"❌ Error during OCR formatting: {traceback.format_exc()}")
+                print(f"❌ Error during OCR pipeline: {traceback.format_exc()}")
                 self.send_json_response({'error': f'OCR transcription engine error: {e}'}, 200)
                 return
-            print(f"⏱️  Formatted response in: {time.time() - t_resp:.4f}s")
-            
+
             t_send = time.time()
-            profiler_dict['backend_total_sec'] = round(time.time() - t_start, 4)
-            profiler_dict['base_segmentation_sec'] = round(base_segmentation_sec, 4)
-            self.send_json_response({'lines': results, 'profiler': profiler_dict})
+            self.send_json_response(response)
             print(f"⏱️  Sent response in: {time.time() - t_send:.4f}s")
-            print(f"🎉 Total POST /ocr execution time: {profiler_dict['backend_total_sec']:.4f}s")
+            print(f"🎉 Total POST /ocr execution time: {response['profiler']['backend_total_sec']:.4f}s (document status: {response['document']['status']})")
             
         elif self.path == '/save_correction':
             content_length = int(self.headers['Content-Length'])
@@ -1665,7 +2221,7 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                 self.send_json_response({'error': f'Cropped OCR transcription error ({model_ver}): {e}'}, 200)
                 return
                 
-            if model_ver in ['v24', 'v25', 'v26']:
+            if model_ver in ['v24', 'v25', 'v26'] or str(model_ver).startswith('v24'):
                 try:
                     from scripts.generate_data import normalize_unicode
                     pred_text = normalize_unicode(pred_text)
@@ -1725,10 +2281,15 @@ def run_server():
     print(f"📁 Corrections will be saved to: ocr-studio/data/ocr_corrections.txt")
     print(f"======================================================================")
     
+    for _preload_ver in ('v24', 'v24_1_r2_1_6'):
+        try:
+            get_ocr_model(_preload_ver)
+        except Exception as e:
+            print(f"⚠️  Could not pre-load model {_preload_ver}: {e}. It will load when requested.")
     try:
-        get_ocr_model('v24')
+        get_det_model()  # in DET_MODE='hybrid' this also pre-loads Cham-DBNet
     except Exception as e:
-        print(f"⚠️  Could not pre-load model v24: {e}. It will load when requested.")
+        print(f"⚠️  Could not pre-load the DBNet detector: {e}. It will load when requested.")
         
     try:
         httpd.serve_forever()

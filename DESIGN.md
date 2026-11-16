@@ -71,6 +71,14 @@ Sử dụng bóng đổ rất nhẹ và mềm (`rgba(43, 33, 24, 0.06)`) kết h
 ## Shapes
 Sử dụng các góc bo mềm mại ở mức vừa phải (8px đến 12px) để tạo cảm giác thân thiện nhưng vẫn giữ được sự chuyên nghiệp, ngăn nắp.
 
+## Components
+### Document status badges (hàng đợi bản thảo)
+Badge trạng thái chỉ dùng token màu sẵn có, không thêm màu mới:
+- **OCR done** (`accent_soft` nền / `accent` chữ): OCR tự động hoàn tất, không có cờ cảnh báo. Đây **không** phải là đã kiểm chứng.
+- **Needs review** (`confidence_medium_bg` / `confidence_medium`): server hoặc người dùng gắn cờ (độ tin cậy thấp, nghi bỏ sót dòng, nghi gộp dòng...).
+- **No text** (`bg_panel` nền, viền nét đứt `border_subtle`, chữ `tertiary`): trang trắng, không có chữ để phiên âm.
+- **Verified** (`confidence_high_bg` / `confidence_high`): chỉ hiển thị sau khi người dùng xác nhận **tất cả** các dòng (accept / sửa / thêm / tách / gộp). Hệ thống tự động không bao giờ gán trạng thái này.
+
 ## Do's and Don'ts
 - **Nên**: Sử dụng màu nền ngà ấm cho các khung đọc sách và hiệu chỉnh.
 - **Nên**: Giữ viền mảnh màu cát sẫm (#E8DED2) để phân định các vùng làm việc rõ ràng.
