@@ -1,0 +1,55 @@
+{
+  "model_id": "v24_1_r2_1_6",
+  "display_name": "Cham V24.1-R2.1.6 (HarfBuzz Symbol & Hyphen Polish)",
+  "stage": "R2.1.6-SURGICAL-SYMBOL-HYPHEN-POLISH",
+  "epoch": 2,
+  "source_kernel": "gustavnguyen/paddleocr-cham-v24-1-r2-1-6-surgical-polish",
+  "source_checkpoint": "ocr-training/output/r2_1_6_surgical_polish_checkpoints/iter_epoch_2.pdparams",
+  "source_checkpoint_sha256": "cd0c4838a7942bc050509311ae65cdf0e61fff1c1c0488a033e7df70c80cedb2",
+  "dictionary_path": "ocr-studio/data/cham_dict_v24_1_r2_1_6.txt",
+  "dictionary_sha256": "ec1e1f08254dbde6f71604c6581d712a59e724bdb410d98d5d85d3b3446a7643",
+  "dictionary_tokens": 114,
+  "rec_image_shape": "3, 48, 320",
+  "logical_order": true,
+  "export_with_pir": false,
+  "files": {
+    "inference.pdiparams": {
+      "size_bytes": 7616465,
+      "sha256": "ad43ddcf19397a94c97f1dd74452ea8515c3e70f686a672a566fcaba42e0fac1"
+    },
+    "inference.pdiparams.info": {
+      "size_bytes": 102540,
+      "sha256": "92cf05e99e9371a7b7d4ce2c08b7ea2632b32a06fc104d9188a26241ea4d87db"
+    },
+    "inference.pdmodel": {
+      "size_bytes": 137964,
+      "sha256": "6ba5572c81eee4250a7c83cc53a4688078ef8606e737ff4f67a7bf5f23a2361c"
+    },
+    "inference.json": {
+      "size_bytes": 217712,
+      "sha256": "207f52bcdab782cf5c94d0f23f81a785844a96f6dfaf8965893661629763bdcb"
+    },
+    "inference.yml": {
+      "size_bytes": 1770,
+      "sha256": "e7b42ee21e94cf9854080c66d93867e364dfe484d118363e19790a08f73be70b"
+    },
+    "cham_dict_v24_1.txt": {
+      "size_bytes": 394,
+      "sha256": "ec1e1f08254dbde6f71604c6581d712a59e724bdb410d98d5d85d3b3446a7643"
+    }
+  },
+  "benchmark_metrics": {
+    "clean_frozen_norm_cer_pct": 4.8247,
+    "clean_frozen_raw_cer_pct": 4.6048,
+    "character_frozen_cer_pct": 4.286,
+    "character_frozen_edits": 208,
+    "mandatory_14_symbols_acc_pct": 98.21,
+    "mandatory_14_symbols_passed": "275/280",
+    "hyphen_multi_context_acc_pct": 91.43,
+    "hyphen_multi_context_passed": "64/70",
+    "fullpage_matched_cer_pct": 6.21,
+    "blank_hallucination_guard": "PASS",
+    "composite_score": 0.6535,
+    "held_out_probe_100_cer_pct": 9.78
+  }
+}
