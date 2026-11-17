@@ -1,0 +1,56 @@
+{
+  "title": "Cham-OCR v24.1 Stage R4 Wide-Canvas (W=480) 6-Point Audit",
+  "audit_timestamp": "2026-11-17T03:22:50.432962+00:00",
+  "status": "PASS",
+  "execution_duration_sec": 41.25,
+  "new_rendered_17160": {
+    "mean_width_px": 368.1,
+    "max_width_px": 480,
+    "wide_gt_320px": 12242,
+    "over_480px": 0,
+    "height_not_48": 0,
+    "max_text_len": 52,
+    "over_len_100": 0
+  },
+  "symbol_line_counts": {
+    "?": 452,
+    "!": 334,
+    "#": 271,
+    "&": 228,
+    "*": 274,
+    "<": 225,
+    ">": 269,
+    "{": 435,
+    "}": 435,
+    "\\": 211,
+    "_": 642,
+    "[": 315,
+    "]": 315,
+    "/": 395
+  },
+  "hyphen_group_counts": {
+    "double_hyphen": 795,
+    "number_number": 328,
+    "line_beginning": 446,
+    "word_word_tight": 1413,
+    "year_year": 286,
+    "line_ending": 167,
+    "word_word_spaced": 162
+  },
+  "missing_dict_tokens": [],
+  "audits": {
+    "audit_1_text_disjointness": true,
+    "audit_2_train_val_disjointness": true,
+    "audit_3_long_substring_disjointness": true,
+    "audit_4_image_sha256_disjointness_and_26400_unique": true,
+    "audit_5_ast_generator_blindness": true,
+    "audit_6_width_480_wide_coverage_phonotactics": true
+  },
+  "violations": {
+    "text_overlap": {},
+    "train_val_overlap": [],
+    "substring": [],
+    "image_overlap": {},
+    "ast": []
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "title": "Cham-OCR Cham-DBNet v2 Evaluation & Promotion Gate",
+  "evaluated_at": "2026-11-17T05:32:39.242418+00:00",
+  "selected_epoch": "latest",
+  "checkpoint_sha256": "0d3d104009eefdd55373068cfb91096968b5777de143074dd2f84068db960abd",
+  "recognizer_fixed": "v24_1_r4",
+  "ground_truth_training_accounting": {
+    "first_batch_timestamp": "2026-11-17 04:51:23",
+    "last_batch_timestamp": "2026-11-17 05:20:11",
+    "train_loop_duration_seconds": 1728.0,
+    "train_loop_duration_minutes": 28.8,
+    "pipeline_container_overhead_seconds": 564.37,
+    "pipeline_container_overhead_minutes": 9.41,
+    "total_kernel_wall_clock_seconds": 2292.37,
+    "total_kernel_wall_clock_minutes": 38.21,
+    "epoch_1_final_loss": 1.276204,
+    "epoch_2_final_loss": 1.030676,
+    "epoch_3_final_loss": 0.998284,
+    "epoch_4_final_loss": 0.990048,
+    "epoch_5_final_loss": 0.980212,
+    "epoch_6_final_loss": 0.918247,
+    "epoch_7_final_loss": 0.907369,
+    "epoch_8_final_loss": 0.951984,
+    "epoch_9_final_loss": 0.867658,
+    "epoch_10_final_loss": 0.925689,
+    "epoch_11_final_loss": 0.867001,
+    "epoch_12_final_loss": 0.844708,
+    "epoch_13_final_loss": 0.833601,
+    "epoch_14_final_loss": 0.83749,
+    "epoch_15_final_loss": 0.83361,
+    "epoch_16_final_loss": 0.807664,
+    "epoch_17_final_loss": 0.798799,
+    "epoch_18_final_loss": 0.800371,
+    "epoch_19_final_loss": 0.82177,
+    "epoch_20_final_loss": 0.805259,
+    "epoch_21_final_loss": 0.765659,
+    "epoch_22_final_loss": 0.77839,
+    "epoch_23_final_loss": 0.771967,
+    "epoch_24_final_loss": 0.771619,
+    "epoch_25_final_loss": 0.73812
+  },
+  "val_120_harfbuzz": {
+    "cham_dbnet_v1": {
+      "pages": 120,
+      "gt_lines": 1473,
+      "dt_lines": 1560,
+      "recall_pct": 97.08,
+      "precision_pct": 91.67,
+      "hmean_pct": 94.3,
+      "usable_crop_pct": 14.39,
+      "mean_iou": 0.7705
+    },
+    "cham_dbnet_v2": {
+      "pages": 120,
+      "gt_lines": 1473,
+      "dt_lines": 1473,
+      "recall_pct": 100.0,
+      "precision_pct": 100.0,
+      "hmean_pct": 100.0,
+      "usable_crop_pct": 5.5,
+      "mean_iou": 0.7469
+    }
+  },
+  "end_to_end": {
+    "cham_dbnet_v1": {
+      "harum_palei_01": {
+        "gt_lines": 25,
+        "pred_lines": 25,
+        "matched_lines": 25,
+        "line_recall_pct": 100.0,
+        "matched_line_cer_pct": 3.28,
+        "e2e_doc_cer_pct": 3.19,
+        "unmatched_gt_chars": 0,
+        "unmatched_pred_chars": 0
+      },
+      "level5_and_audit": {
+        "short:5": {
+          "n": 16,
+          "lines": "62/64",
+          "abs_line_err": 2,
+          "doc_cer_pct": 16.47,
+          "matched_cer_pct": 16.89
+        },
+        "a4:5": {
+          "n": 16,
+          "lines": "240/241",
+          "abs_line_err": 1,
+          "doc_cer_pct": 12.78,
+          "matched_cer_pct": 12.98
+        },
+        "audit_18": {
+          "n": 18,
+          "lines": "134/134",
+          "abs_line_err": 0,
+          "doc_cer_pct": 11.32,
+          "matched_cer_pct": 11.72
+        }
+      }
+    },
+    "cham_dbnet_v2": {
+      "harum_palei_01": {
+        "gt_lines": 25,
+        "pred_lines": 25,
+        "matched_lines": 25,
+        "line_recall_pct": 100.0,
+        "matched_line_cer_pct": 3.28,
+        "e2e_doc_cer_pct": 3.19,
+        "unmatched_gt_chars": 0,
+        "unmatched_pred_chars": 0
+      },
+      "level5_and_audit": {
+        "short:5": {
+          "n": 16,
+          "lines": "37/64",
+          "abs_line_err": 27,
+          "doc_cer_pct": 60.9,
+          "matched_cer_pct": 62.0
+        },
+        "a4:5": {
+          "n": 16,
+          "lines": "160/241",
+          "abs_line_err": 81,
+          "doc_cer_pct": 53.33,
+          "matched_cer_pct": 54.04
+        },
+        "audit_18": {
+          "n": 18,
+          "lines": "124/134",
+          "abs_line_err": 10,
+          "doc_cer_pct": 20.9,
+          "matched_cer_pct": 21.38
+        }
+      }
+    }
+  },
+  "promote_v2": false,
+  "promotion_action": "kept_v1_no_promotion"
+}

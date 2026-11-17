@@ -71,7 +71,22 @@ def verify_manifest_integrity(manifest_path: str) -> dict:
     return m
 
 
-def _build_direct_rec(model_dir: str, dict_path: str):
+def _detect_rec_shape(model_dir: str, alias: str = "") -> str:
+    mp = os.path.join(model_dir, "model_manifest.json")
+    if os.path.exists(mp):
+        try:
+            s = (json.load(open(mp, "r", encoding="utf-8")) or {}).get("rec_image_shape")
+            if isinstance(s, str) and len(s.split(",")) == 3:
+                return s
+        except Exception:
+            pass
+    h_low = f"{alias} {os.path.basename(os.path.normpath(model_dir))}".lower()
+    if "w480" in h_low or "r4" in h_low or "v25" in h_low:
+        return "3, 48, 480"
+    return "3, 48, 320"
+
+
+def _build_direct_rec(model_dir: str, dict_path: str, alias: str = ""):
     from tools.infer.predict_rec import TextRecognizer
     import tools.infer.utility as utility
 
@@ -82,7 +97,7 @@ def _build_direct_rec(model_dir: str, dict_path: str):
     args.rec_model_dir = os.path.abspath(model_dir)
     args.rec_char_dict_path = os.path.abspath(dict_path)
     args.use_gpu = False
-    args.rec_image_shape = "3, 48, 320"
+    args.rec_image_shape = _detect_rec_shape(model_dir, alias)
     args.use_space_char = True
     args.rec_batch_num = 1
     args.enable_mkldnn = False
@@ -113,7 +128,7 @@ def resolve_model_runner(spec_str: str):
     if "=" in spec_str:
         alias, rest = spec_str.split("=", 1)
         mdir, dpath = _split_model_dict(rest)
-        rec = _build_direct_rec(mdir, dpath)
+        rec = _build_direct_rec(mdir, dpath, alias=alias)
         studio_app.ocr_models[alias] = rec
         studio_app.ocr_model_paths[alias] = {"model_dir": os.path.abspath(mdir), "dict_path": os.path.abspath(dpath)}
         is_logical = True
@@ -288,6 +303,8 @@ def main():
         required=True,
         help="Model names ('v24', 'v24_1_r2_1_6', 'auto') or 'alias=model_dir:dict_path'",
     )
+    parser.add_argument("--output-json", default=None, help="Optional JSON output path")
+    parser.add_argument("--output-md", default=None, help="Optional Markdown output path")
     args = parser.parse_args()
 
     manifest_path = os.path.join(BENCHMARK_DIR, "data", "realscan_gold_v1", "manifest.json")
@@ -307,7 +324,8 @@ def main():
         "models": results,
     }
     os.makedirs(os.path.join(PROJECT_ROOT, "REPORTS"), exist_ok=True)
-    out_json = os.path.join(PROJECT_ROOT, "REPORTS", "realscan_gold_v1_evaluation.json")
+    out_json = os.path.abspath(args.output_json) if args.output_json else os.path.join(PROJECT_ROOT, "REPORTS", "realscan_gold_v1_evaluation.json")
+    os.makedirs(os.path.dirname(out_json), exist_ok=True)
     with open(out_json, "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2, ensure_ascii=False)
 
@@ -339,7 +357,8 @@ def main():
             f"{g['latin']['pct_has_latin_viet']}% ({g['latin']['mean_conf']:.3f}) | "
             f"{g['vietnamese_english']['pct_has_latin_viet']}% ({g['vietnamese_english']['mean_conf']:.3f}) |"
         )
-    out_md = os.path.join(PROJECT_ROOT, "REPORTS", "REALSCAN_GOLD_V1_REPORT.md")
+    out_md = os.path.abspath(args.output_md) if args.output_md else os.path.join(PROJECT_ROOT, "REPORTS", "REALSCAN_GOLD_V1_REPORT.md")
+    os.makedirs(os.path.dirname(out_md), exist_ok=True)
     with open(out_md, "w", encoding="utf-8") as f:
         f.write("\n".join(md) + "\n")
     print(f"\n✅ RealScan-Gold v1 reports written:\n  • {out_json}\n  • {out_md}")

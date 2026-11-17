@@ -1,6 +1,6 @@
 {
   "title": "Cham-OCR RealScan-Gold v1 End-to-End & Multiscript Evaluation",
-  "evaluated_at": "2026-11-16T09:05:41.283956+00:00",
+  "evaluated_at": "2026-11-17T05:38:25.336671+00:00",
   "manifest_path": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-benchmark\\data\\realscan_gold_v1\\manifest.json",
   "models": [
     {
@@ -21,15 +21,15 @@
       },
       "harum_palei_fullpage": {
         "gt_lines": 25,
-        "pred_lines": 28,
+        "pred_lines": 25,
         "matched_lines": 25,
         "line_recall_pct": 100.0,
         "matched_line_cer_pct": 6.33,
-        "e2e_doc_cer_pct": 6.97,
+        "e2e_doc_cer_pct": 6.15,
         "unmatched_gt_chars": 0,
-        "unmatched_pred_chars": 4,
+        "unmatched_pred_chars": 0,
         "detector": "generic_ppocrv4_dbnet",
-        "doc_status": "needs_review"
+        "doc_status": "ocr_done"
       },
       "harum_palei_line_details": [
         {
@@ -275,15 +275,15 @@
       },
       "harum_palei_fullpage": {
         "gt_lines": 25,
-        "pred_lines": 28,
+        "pred_lines": 25,
         "matched_lines": 25,
         "line_recall_pct": 100.0,
         "matched_line_cer_pct": 5.84,
-        "e2e_doc_cer_pct": 6.97,
+        "e2e_doc_cer_pct": 5.67,
         "unmatched_gt_chars": 0,
-        "unmatched_pred_chars": 8,
+        "unmatched_pred_chars": 0,
         "detector": "generic_ppocrv4_dbnet",
-        "doc_status": "needs_review"
+        "doc_status": "ocr_done"
       },
       "harum_palei_line_details": [
         {
@@ -512,515 +512,7 @@
       }
     },
     {
-      "model": "r2_1_7_best",
-      "harum_palei_crops": {
-        "lines": 25,
-        "raw_cer_pct": 5.84,
-        "norm_cer_pct": 5.96,
-        "wer_pct": 22.46,
-        "exact_lines": "7/25",
-        "exact_line_pct": 28.0,
-        "mean_raw_conf": 0.9422,
-        "mean_calibrated_conf": 0.9422,
-        "line2_hyphen_ok": true,
-        "line6_hyphen_ok": true,
-        "line22_date_pred": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/꩒꩒꩖",
-        "line22_date_exact": false
-      },
-      "harum_palei_fullpage": {
-        "gt_lines": 25,
-        "pred_lines": 28,
-        "matched_lines": 25,
-        "line_recall_pct": 100.0,
-        "matched_line_cer_pct": 5.84,
-        "e2e_doc_cer_pct": 7.33,
-        "unmatched_gt_chars": 0,
-        "unmatched_pred_chars": 11,
-        "detector": "generic_ppocrv4_dbnet",
-        "doc_status": "needs_review"
-      },
-      "harum_palei_line_details": [
-        {
-          "line": 1,
-          "gt": "ꨨꨣꨭꩌ ꨚꨤꨬ ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
-          "pred": "ꨨꨣꨭꩌ ꨚꨤꨬ ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
-          "cer_pct": 0.0,
-          "raw_conf": 0.9319,
-          "calibrated_conf": 0.9319
-        },
-        {
-          "line": 2,
-          "gt": "ꨝꨳꨮꩉ ꨨꨣꨬ ꨁ-ꨗꨫ ꨚꨙꨳꩀ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨬ ꨡꨭꩊ ꨆꨴꩌ",
-          "pred": "ꨝꨳꨮꩉ ꨨꨣꨬ ꨁ-ꨚꨗꨫ ꨚꨙꨳꩀ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨯꨮꨥ ꨨꨕꨬ ꨡꨭꩊ ꨆꨴꩌ",
-          "cer_pct": 4.76,
-          "raw_conf": 0.9404,
-          "calibrated_conf": 0.9404
-        },
-        {
-          "line": 3,
-          "gt": "ꨀꨊꨯꨱꩀ ꨤꨊꨪꩀ ꨨꨎꨥ ꨆꨚꨶꨮꩊ ꨌꨳꨪꩌ ꨈꨪꨤꩄ ꨟꨣꨰ",
-          "pred": "ꨀꨯꨊꨯꨱꩀ ꨤꨊꨫꨪꩀ ꨨꨎꨥ ꨆꨚꨶꨮꩊ ꨌꨳꨪꩌ ꨈꨪꨤꩄ ꨟꨰ",
-          "cer_pct": 8.82,
-          "raw_conf": 0.9852,
-          "calibrated_conf": 0.9852
-        },
-        {
-          "line": 4,
-          "gt": "ꨦꩇ ꨆꨤꩀ ꨈꨵꨮꩃ ꨆꨝꨥ ꨀꨕꨯꨱꩍ ꨀꨊꨯꨱꩀ ꨝꨗꨮꩀ",
-          "pred": "ꨦꩇ ꨆꨤꩀ ꨈꨵꨮꩃ ꨆꨝꨥ ꨀꨯꨕꨯꨱꩍ ꨀꨯꨊꨯꨱꩀ ꨝꨗꨮꩀ",
-          "cer_pct": 6.25,
-          "raw_conf": 0.9368,
-          "calibrated_conf": 0.9368
-        },
-        {
-          "line": 5,
-          "gt": "ꨆꨤꩀ ꨚꨕꨴꨭꩅ ꨚꨕꨴꨶꨰ ꨆꨣꩌ ꨈꨕꨮꩃ ꨟꨝꨭꩀ ꨟꨝꩉ",
-          "pred": "ꨆꨤꩀ ꨚꨴꨕꨭꩅ ꨚꨴꨰꨕꨶ ꨆꨣꩌ ꨈꨕꨮ ꨟꨝꨭꩀ ꨟꨝꩉꩉ",
-          "cer_pct": 24.24,
-          "raw_conf": 0.9135,
-          "calibrated_conf": 0.9135
-        },
-        {
-          "line": 6,
-          "gt": "ꨀꨓꩍ ꨀꨓꩍ ꨀꨓꩍ ꨆꨥꨯꩌ ꨝꨶꨮꩊ ꨤꨪ-ꨂꨀꨩ ꨈꨤꨮꩌ ꨎꨤꨮꩃ",
-          "pred": "ꨀꨓꨰꩍ ꨀꨓꩍ ꨀꨓꩍ ꨆꨯꩌ ꨝꨶꨮꩊ ꨤꨪ-ꨂꨀꨩ ꨈꨤꨮꩌ ꨎꨤꨮꩃ",
-          "cer_pct": 5.26,
-          "raw_conf": 0.9433,
-          "calibrated_conf": 0.9433
-        },
-        {
-          "line": 7,
-          "gt": "ꨧꨯꨱꩃ ꨆꨚꨶꨮꩊ ꨆꨝꨥ ꨗꨯꨱ ꨀꨊꨯꨱꩀ ꨎꨤꩆ ꨟꨣꨰ ꨨꨚꩀ",
-          "pred": "ꨧꨯꨱ ꨆꨚꨶꨮꩊ ꨆꨝꨥ ꨗꨯꨱ ꨀꨯꨊꨯꨱꩀ ꨎꨤꩆ ꨟꨰ ꨨꨚꩀ",
-          "cer_pct": 8.33,
-          "raw_conf": 0.9486,
-          "calibrated_conf": 0.9486
-        },
-        {
-          "line": 8,
-          "gt": "ꨓꨚꨮꩆ ꨕꨮꩍ ꨆꨴꨯꨱꩃ ꨚꨝꨭꩃ ꨀꨈꩀ ꨗꩌ ꨓꨚꨮꩆ ꨓꨓꨶꨩ",
-          "pred": "ꨓꨚꨮꩆ ꨕꨮꩍ ꨆꨴꨯꨱꩃ ꨚꨝꨭꩃ ꨀꨈꩀ ꨗꩌ ꨓꨚꨮꩆ ꨓꨓꨶꨩ",
-          "cer_pct": 0.0,
-          "raw_conf": 0.9458,
-          "calibrated_conf": 0.9458
-        },
-        {
-          "line": 9,
-          "gt": "ꨧꨬ ꨚꨎꨮꩍ ꨟꨯꨱꩃ ꨟꨯꨱꩃ ꨀꨆꨯꨱꩀ ꨌꩃ ꨟꨯꨱꩃ",
-          "pred": "ꨧꨬ ꨚꨎꨮꩍ ꨟꨯꨱ ꨟꨯꨱ ꨀꨆꨯꨱꩀ ꨌꩃ ꨟꨯꨱ",
-          "cer_pct": 9.68,
-          "raw_conf": 0.8973,
-          "calibrated_conf": 0.8973
-        },
-        {
-          "line": 10,
-          "gt": "ꨓꨳꩇ ꨓꨶꨬ ꨀꨊꨪꩆ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨯꩌ ꨦꩇ ꨆꨤꩀ",
-          "pred": "ꨓꨳꩇ ꨓꨶꨬ ꨀꨊꨪꩆ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨯꩌ ꨦꩇ ꨆꨤꩀ",
-          "cer_pct": 2.78,
-          "raw_conf": 0.933,
-          "calibrated_conf": 0.933
-        },
-        {
-          "line": 11,
-          "gt": "ꨣꨤꨮꩃ ꨈꨭꨨꨩ ꨕꨗꩈ ꨆꨣꩌ ꨈꨕꨮꩃ ꨕꨤꩌ ꨡꨵꩃ ꨝꨳꨮꩉ ꨨꨣꨬ",
-          "pred": "ꨣꨤꨮꩃ ꨈꨭꨨꨩ ꨕꨗꩈ ꨆꨣꩌ ꨈꨕꨮꩃ ꨕꨤꩌ ꨡꨵꩃ ꨝꨳꨮꩉ ꨨꨣꨬ",
-          "cer_pct": 0.0,
-          "raw_conf": 0.9864,
-          "calibrated_conf": 0.9864
-        },
-        {
-          "line": 12,
-          "gt": "ꨀꨦꩀ ꨓꨡꩀ ꨓꨚꨮꩆ ꨡꨶꨮꩆ ꨤꨨꨶꨰ ꨤꨨꨩ ꨚꨚꩉ",
-          "pred": "ꨀꨦꩀ ꨓꨡꩀ ꨓꨚꨮꩆ ꨡꨶꨮꩆ ꨤꨰꨨꨶꨰ ꨤꨨꨩ ꨚꨚꩉ",
-          "cer_pct": 3.33,
-          "raw_conf": 0.9247,
-          "calibrated_conf": 0.9247
-        },
-        {
-          "line": 13,
-          "gt": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨆꨣꩌ ꨈꨕꨮꩃ ꨚꨗꨪꩀ ꨤꨚꨬ ꨟꨝꨭꩀ",
-          "pred": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨆꨣꩌ ꨈꨕꨮꩃ ꨚꨗꨪꩀ ꨤꨚꨬ ꨟꨝꨭꩀ",
-          "cer_pct": 0.0,
-          "raw_conf": 0.9743,
-          "calibrated_conf": 0.9743
-        },
-        {
-          "line": 14,
-          "gt": "ꨓꨗꨴꩀ ꨟꨐꩀ ꨕꨯꨱꩀ ꨦꨭꩇ ꨨꨕꩍ ꨚꨍꩃ",
-          "pred": "ꨓꨴꨗꩀ ꨟꨐꩀ ꨕꨯꨱꩀ ꨦꨭꩇ ꨨꨕꩍ ꨚꨂꩃ",
-          "cer_pct": 12.0,
-          "raw_conf": 0.9181,
-          "calibrated_conf": 0.9181
-        },
-        {
-          "line": 15,
-          "gt": "ꨕꨯꨱꩀ ꨢꨮꨭ ꨎꨶꨩ ꨤꨊꨶꨬ ꨝꩉ ꨕꨯꨱꩀ ꨟꨝꨭꩀ ꨤꨚꨬ",
-          "pred": "ꨕꨯꨱꩀ ꨢꨮꨭ ꨎꨶꨩ ꨤꨊꨶꨬ ꨝꩉ ꨕꨯꨱꩀ ꨟꨝꨭꩀ ꨤꨚꨬꨬ",
-          "cer_pct": 2.94,
-          "raw_conf": 0.975,
-          "calibrated_conf": 0.975
-        },
-        {
-          "line": 16,
-          "gt": "ꨧꨯꨱꩃ ꨤꨆꨭꩀ ꨈꨗꨭꨩ ꨥꩊ ꨟꨢꨭꩅ ꨧꨬ ꨎꩌꨎꨫ ꨖꨪꩅ",
-          "pred": "ꨧꨯꨱꩃ ꨤꨆꨭꩀ ꨈꨗꨭꨩ ꨥꩊ ꨟꨢꨭꩅ ꨧꨬ ꨎꩌꨎꨫ ꨖꨪꩅ",
-          "cer_pct": 0.0,
-          "raw_conf": 0.9328,
-          "calibrated_conf": 0.9328
-        },
-        {
-          "line": 17,
-          "gt": "ꨕꨯꨱꩀ ꨝꩀ ꨚꨕꨮꩃ ꨀꨣꨰ ꨦꨡꨰ ꨨꨕꨳꨮꩇ ꨨꨕꨯꩌ ꨀꨝꨯꨱꩍ ꨧꩃ",
-          "pred": "ꨕꨯꨱꩀ ꨝꩀ ꨚꨕꨮꩃ ꨀꨰ ꨦꨰ ꨨꨕꨳꨯꨮꩇ ꨨꨯꩌ ꨀꨯꨝꨯꨱꩍ ꨧꩃ",
-          "cer_pct": 12.5,
-          "raw_conf": 0.9558,
-          "calibrated_conf": 0.9558
-        },
-        {
-          "line": 18,
-          "gt": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨓꨡꩀ ꨎꨰꩀ ꨚꨎꨮꨩ ꨚꨣꨤꨯꨱ ꨈꨕꨮꩃ ꨕꨤꩌ ꨆꨤꨪꨟꨭꨩ ꨆꨆꨶꨮꩉ",
-          "pred": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨓꨡꩀ ꨎꩀ ꨚꨎꨩ ꨚꨣꨯꨤꨯꨱ ꨈꨕꨮꩃ ꨕꨤꩌ ꨆꨤꨪꨟꨭꨩ ꨆꨆꨶꨮꩉ",
-          "cer_pct": 6.12,
-          "raw_conf": 0.9765,
-          "calibrated_conf": 0.9765
-        },
-        {
-          "line": 19,
-          "gt": "ꨦꩇ ꨌꨳꨪꩌ ꨓꨤꩍ ꨆꨚꨶꨮꩊ ꨕꨯꨱꩀ ꨎꨶꨩ ꨧꨩ ꨕꨴꨬ ꨗꨯꨱ ꨕꨶꩍ ꨀꨕꨪꩍ",
-          "pred": "ꨦꩇ ꨌꨳꨪꩌ ꨓꨤꩍ ꨆꨚꨶꨮꩊ ꨕꨯꨱꩀ ꨎꨶꨩ ꨧꨩ ꨴꨬ ꨗꨯꨱ ꨕꨶꩍ ꨀꨕꨪꩍ",
-          "cer_pct": 2.17,
-          "raw_conf": 0.9656,
-          "calibrated_conf": 0.9656
-        },
-        {
-          "line": 20,
-          "gt": "ꨌꨳꨪꩌ ꨤꨮꩈ ꨣꩆ ꨌꩃ ꨝꨵꨯꨱꩍ ꨚꨈꨭꩍ ꨨꨕꩍ ꨚꨍꩃ",
-          "pred": "ꨌꨳꨪꩌ ꨤꨮꩈ ꨣꩆ ꨌꩃ ꨝꨵꨯꨱꩍ ꨚꨈꨭꩍ ꨨꨕꩍ ꨚꨍꩃ",
-          "cer_pct": 0.0,
-          "raw_conf": 0.944,
-          "calibrated_conf": 0.944
-        },
-        {
-          "line": 21,
-          "gt": "ꨚꨯꨱꩀ ꨞꨯꩂ ꨟꨣꨰ ꨣꨝꨮꨭ ꨓꨗꨴꩀ ꨚꨙꨳꩀ ꨀꨧꩅ ꨦꨮꩍ ꨟꨤꨮꩃ ...",
-          "pred": "ꨚꨯꨱꩀ ꨉꨞꨯꩂ ꨟꨰꨣꨰ ꨣꨝꨯꨮꨭ ꨓꨴꨗꨴꩀ ꨚꨙꨳꩀ ꨀꨧꩅ ꨦꨮꩍ ꨟꨤꨮꩃ!_",
-          "cer_pct": 18.18,
-          "raw_conf": 0.8511,
-          "calibrated_conf": 0.8511
-        },
-        {
-          "line": 22,
-          "gt": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/꩒꩐꩒꩖",
-          "pred": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/꩒꩒꩖",
-          "cer_pct": 4.35,
-          "raw_conf": 0.9829,
-          "calibrated_conf": 0.9829
-        },
-        {
-          "line": 23,
-          "gt": "ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
-          "pred": "ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
-          "cer_pct": 0.0,
-          "raw_conf": 0.985,
-          "calibrated_conf": 0.985
-        },
-        {
-          "line": 24,
-          "gt": "ꨦꨮꩍ ꨟꨤꨮꩃ : ꨨꨭꩈ ꨨꨯꨀꩃ",
-          "pred": "ꨦꨮꩍ ꨟꨤꨮꩃ - ꨨꨭꩈ ꨨꨯꨀꩃ",
-          "cer_pct": 5.26,
-          "raw_conf": 0.8552,
-          "calibrated_conf": 0.8552
-        },
-        {
-          "line": 25,
-          "gt": "ꨈꨗꨭꨩ ꨥꩊ : ꨝꨭꩄ ꨟꩆꨨꨩ",
-          "pred": "ꨈꨗꨭꨩ ꨥꩊ - ꨝꨭꩄ ꨟꩆꨨꨩ",
-          "cer_pct": 5.56,
-          "raw_conf": 0.9513,
-          "calibrated_conf": 0.9513
-        }
-      ],
-      "handoff_multiscript_01": {
-        "cham_script": {
-          "count": 27,
-          "mean_conf": 0.922,
-          "pct_ge_065": 100.0,
-          "pct_has_cham_script": 100.0,
-          "pct_has_latin_viet": 0.0
-        },
-        "vietnamese_english": {
-          "count": 24,
-          "mean_conf": 0.3178,
-          "pct_ge_065": 0.0,
-          "pct_has_cham_script": 100.0,
-          "pct_has_latin_viet": 0.0
-        },
-        "latin": {
-          "count": 25,
-          "mean_conf": 0.3986,
-          "pct_ge_065": 0.0,
-          "pct_has_cham_script": 100.0,
-          "pct_has_latin_viet": 0.0
-        }
-      }
-    },
-    {
       "model": "v24_1_r3",
-      "harum_palei_crops": {
-        "lines": 25,
-        "raw_cer_pct": 6.2,
-        "norm_cer_pct": 6.33,
-        "wer_pct": 24.6,
-        "exact_lines": "6/25",
-        "exact_line_pct": 24.0,
-        "mean_raw_conf": 0.94,
-        "mean_calibrated_conf": 0.9502,
-        "line2_hyphen_ok": true,
-        "line6_hyphen_ok": true,
-        "line22_date_pred": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/꩒꩒꩖",
-        "line22_date_exact": false
-      },
-      "harum_palei_fullpage": {
-        "gt_lines": 25,
-        "pred_lines": 28,
-        "matched_lines": 25,
-        "line_recall_pct": 100.0,
-        "matched_line_cer_pct": 6.69,
-        "e2e_doc_cer_pct": 7.21,
-        "unmatched_gt_chars": 0,
-        "unmatched_pred_chars": 3,
-        "detector": "generic_ppocrv4_dbnet",
-        "doc_status": "needs_review"
-      },
-      "harum_palei_line_details": [
-        {
-          "line": 1,
-          "gt": "ꨨꨣꨭꩌ ꨚꨤꨬ ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
-          "pred": "ꨨꨣꨭꩌ ꨚꨤꨬ ꨔꨮꩀ ꨖꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
-          "cer_pct": 8.33,
-          "raw_conf": 0.9671,
-          "calibrated_conf": 0.9745
-        },
-        {
-          "line": 2,
-          "gt": "ꨝꨳꨮꩉ ꨨꨣꨬ ꨁ-ꨗꨫ ꨚꨙꨳꩀ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨬ ꨡꨭꩊ ꨆꨴꩌ",
-          "pred": "ꨝꨳꨮꩉ ꨨꨣꨬ ꨁ-ꨗꨫꩌ ꨚꨙꨳꩀ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨯꨮꨥ ꨨꨕꨬ ꨡꨭꩊ ꨆꨴꩌ",
-          "cer_pct": 4.76,
-          "raw_conf": 0.9226,
-          "calibrated_conf": 0.9352
-        },
-        {
-          "line": 3,
-          "gt": "ꨀꨊꨯꨱꩀ ꨤꨊꨪꩀ ꨨꨎꨥ ꨆꨚꨶꨮꩊ ꨌꨳꨪꩌ ꨈꨪꨤꩄ ꨟꨣꨰ",
-          "pred": "ꨀꨯꨊꨯꨱꩀ ꨤꨊꨫꨪꩀ ꨨꨎꨥ ꨆꨚꨶꨮꩊ ꨌꨳꨪꩌ ꨈꨪꨤꩄ ꨟꨰꨣꨰ",
-          "cer_pct": 8.82,
-          "raw_conf": 0.9681,
-          "calibrated_conf": 0.9753
-        },
-        {
-          "line": 4,
-          "gt": "ꨦꩇ ꨆꨤꩀ ꨈꨵꨮꩃ ꨆꨝꨥ ꨀꨕꨯꨱꩍ ꨀꨊꨯꨱꩀ ꨝꨗꨮꩀ",
-          "pred": "ꨦꩇ ꨆꨤꩀ ꨈꨵꨮꩃ ꨆꨝꨥ ꨀꨯꨕꨯꨱꩍ ꨀꨯꨊꨯꨱꩀ ꨝꨗꨮꩀ",
-          "cer_pct": 6.25,
-          "raw_conf": 0.9399,
-          "calibrated_conf": 0.9509
-        },
-        {
-          "line": 5,
-          "gt": "ꨆꨤꩀ ꨚꨕꨴꨭꩅ ꨚꨕꨴꨶꨰ ꨆꨣꩌ ꨈꨕꨮꩃ ꨟꨝꨭꩀ ꨟꨝꩉ",
-          "pred": "ꨆꨤꩀ ꨚꨴꨕꨭꩅ ꨚꨴꨰꨕꨶ ꨆꨣꩌ ꨈꨕꨮ ꨟꨝꨭꩀ ꨟꨝꩉ",
-          "cer_pct": 21.21,
-          "raw_conf": 0.9134,
-          "calibrated_conf": 0.9268
-        },
-        {
-          "line": 6,
-          "gt": "ꨀꨓꩍ ꨀꨓꩍ ꨀꨓꩍ ꨆꨥꨯꩌ ꨝꨶꨮꩊ ꨤꨪ-ꨂꨀꨩ ꨈꨤꨮꩌ ꨎꨤꨮꩃ",
-          "pred": "ꨀꨓꩍ ꨀꨓꩍ ꨀꨓꩍ ꨆꨯꩌ ꨝꨶꨮꩊ ꨤꨪ-ꨂꨀꨩ ꨈꨤꨮ ꨎꨤꨮꩃ",
-          "cer_pct": 5.26,
-          "raw_conf": 0.9789,
-          "calibrated_conf": 0.9843
-        },
-        {
-          "line": 7,
-          "gt": "ꨧꨯꨱꩃ ꨆꨚꨶꨮꩊ ꨆꨝꨥ ꨗꨯꨱ ꨀꨊꨯꨱꩀ ꨎꨤꩆ ꨟꨣꨰ ꨨꨚꩀ",
-          "pred": "ꨧꨯꨱ ꨆꨚꨶꨮꩊ ꨆꨝꨥ ꨀꨗꨯꨱ ꨀꨯꨊꨯꨱꩀ ꨎꨤꩆ ꨟꨰꨣꨰ ꨨꨚꩀ",
-          "cer_pct": 11.11,
-          "raw_conf": 0.9351,
-          "calibrated_conf": 0.9466
-        },
-        {
-          "line": 8,
-          "gt": "ꨓꨚꨮꩆ ꨕꨮꩍ ꨆꨴꨯꨱꩃ ꨚꨝꨭꩃ ꨀꨈꩀ ꨗꩌ ꨓꨚꨮꩆ ꨓꨓꨶꨩ",
-          "pred": "ꨓꨚꨮꩆ ꨕꨮꩍ ꨆꨴꨯꨱꩃ ꨚꨝꨭꩃ ꨀꨈꩀ ꨗꩌ ꨓꨚꨮꩆ ꨓꨓꨶꨩ",
-          "cer_pct": 0.0,
-          "raw_conf": 0.9053,
-          "calibrated_conf": 0.9193
-        },
-        {
-          "line": 9,
-          "gt": "ꨧꨬ ꨚꨎꨮꩍ ꨟꨯꨱꩃ ꨟꨯꨱꩃ ꨀꨆꨯꨱꩀ ꨌꩃ ꨟꨯꨱꩃ",
-          "pred": "ꨧꨬ ꨚꨎꨮꩍ ꨕꨟꨯꨱ ꨟꨯꨱ ꨀꨆꨯꨱꩀ ꨌꩃ ꨟꨯꨱ",
-          "cer_pct": 12.9,
-          "raw_conf": 0.8958,
-          "calibrated_conf": 0.9104
-        },
-        {
-          "line": 10,
-          "gt": "ꨓꨳꩇ ꨓꨶꨬ ꨀꨊꨪꩆ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨯꩌ ꨦꩇ ꨆꨤꩀ",
-          "pred": "ꨓꨳꩇ ꨓꨶꨬ ꨀꨊꨫꩆ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨯꨮꨥ ꨨꨯꩌ ꨦꩇ ꨆꨤꩀ",
-          "cer_pct": 8.33,
-          "raw_conf": 0.9559,
-          "calibrated_conf": 0.9649
-        },
-        {
-          "line": 11,
-          "gt": "ꨣꨤꨮꩃ ꨈꨭꨨꨩ ꨕꨗꩈ ꨆꨣꩌ ꨈꨕꨮꩃ ꨕꨤꩌ ꨡꨵꩃ ꨝꨳꨮꩉ ꨨꨣꨬ",
-          "pred": "ꨣꨤꨮꩃ ꨈꨭꨨꨩ ꨕꨗꩈ ꨆꨣꩌ ꨈꨕꨮꩃ ꨕꨤꩌ ꨡꨵꩃ ꨝꨳꨮꩉ ꨨꨣꨬ",
-          "cer_pct": 0.0,
-          "raw_conf": 0.9782,
-          "calibrated_conf": 0.9837
-        },
-        {
-          "line": 12,
-          "gt": "ꨀꨦꩀ ꨓꨡꩀ ꨓꨚꨮꩆ ꨡꨶꨮꩆ ꨤꨨꨶꨰ ꨤꨨꨩ ꨚꨚꩉ",
-          "pred": "ꨀꨦꩀ ꨓꨡꩀ ꨓꨚꨮꩆ ꨡꨶꨮꩆ ꨤꨨꨶꨰ ꨤꨨꨩ ꨚꨚꩉ",
-          "cer_pct": 0.0,
-          "raw_conf": 0.9524,
-          "calibrated_conf": 0.9619
-        },
-        {
-          "line": 13,
-          "gt": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨆꨣꩌ ꨈꨕꨮꩃ ꨚꨗꨪꩀ ꨤꨚꨬ ꨟꨝꨭꩀ",
-          "pred": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨆꨣꩌ ꨈꨕꨮꩃ ꨚꨗꨪꩀ ꨤꨚꨬ ꨟꨝꨭꩀ",
-          "cer_pct": 0.0,
-          "raw_conf": 0.9368,
-          "calibrated_conf": 0.9481
-        },
-        {
-          "line": 14,
-          "gt": "ꨓꨗꨴꩀ ꨟꨐꩀ ꨕꨯꨱꩀ ꨦꨭꩇ ꨨꨕꩍ ꨚꨍꩃ",
-          "pred": "ꨓꨴꨗꨴꩀ ꨟꨐꩀ ꨀꨕꨯꨱꩀ ꨦꨭꩇ ꨨꨕꩍ ꨚꨌꩃ",
-          "cer_pct": 12.0,
-          "raw_conf": 0.92,
-          "calibrated_conf": 0.9329
-        },
-        {
-          "line": 15,
-          "gt": "ꨕꨯꨱꩀ ꨢꨮꨭ ꨎꨶꨩ ꨤꨊꨶꨬ ꨝꩉ ꨕꨯꨱꩀ ꨟꨝꨭꩀ ꨤꨚꨬ",
-          "pred": "ꨕꨯꨱꩀ ꨢꨮꨭ ꨎꨶꨩ ꨤꨊꨶꨬ ꨝꩉ ꨕꨯꨱꩀ ꨟꨝꨭꩀ ꨤꨚꨬꨬ",
-          "cer_pct": 2.94,
-          "raw_conf": 0.9884,
-          "calibrated_conf": 0.9917
-        },
-        {
-          "line": 16,
-          "gt": "ꨧꨯꨱꩃ ꨤꨆꨭꩀ ꨈꨗꨭꨩ ꨥꩊ ꨟꨢꨭꩅ ꨧꨬ ꨎꩌꨎꨫ ꨖꨪꩅ",
-          "pred": "ꨧꨯꨱꩃ ꨤꨆꨭꩀ ꨈꨗꨭꨩ ꨥꩊ ꨟꨢꨭꩅ ꨧꨬ ꨎꩌꨎꨫ ꨖꨪꩅ",
-          "cer_pct": 0.0,
-          "raw_conf": 0.92,
-          "calibrated_conf": 0.9329
-        },
-        {
-          "line": 17,
-          "gt": "ꨕꨯꨱꩀ ꨝꩀ ꨚꨕꨮꩃ ꨀꨣꨰ ꨦꨡꨰ ꨨꨕꨳꨮꩇ ꨨꨕꨯꩌ ꨀꨝꨯꨱꩍ ꨧꩃ",
-          "pred": "ꨕꨯꨱꩀ ꨝꩀ ꨚꨕꨮꩃ ꨀꨰꨣꨰ ꨦꨰꨡꨰ ꨨꨕꨳꨯꨮꩇ ꨨꨯꩌ ꨀꨯꨝꨯꨱꩍ ꨧꩃ",
-          "cer_pct": 12.5,
-          "raw_conf": 0.9427,
-          "calibrated_conf": 0.9534
-        },
-        {
-          "line": 18,
-          "gt": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨓꨡꩀ ꨎꨰꩀ ꨚꨎꨮꨩ ꨚꨣꨤꨯꨱ ꨈꨕꨮꩃ ꨕꨤꩌ ꨆꨤꨪꨟꨭꨩ ꨆꨆꨶꨮꩉ",
-          "pred": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨓꨡꩀ ꨎꩀ ꨚꨎꨩ ꨚꨣꨯꨤꨯꨱ ꨈꨕꨮꩃ ꨕꨤꩌ ꨆꨤꨪꨟꨭꨩ ꨆꨆꨶꨮꩉ",
-          "cer_pct": 6.12,
-          "raw_conf": 0.9708,
-          "calibrated_conf": 0.9776
-        },
-        {
-          "line": 19,
-          "gt": "ꨦꩇ ꨌꨳꨪꩌ ꨓꨤꩍ ꨆꨚꨶꨮꩊ ꨕꨯꨱꩀ ꨎꨶꨩ ꨧꨩ ꨕꨴꨬ ꨗꨯꨱ ꨕꨶꩍ ꨀꨕꨪꩍ",
-          "pred": "ꨦꩇ ꨌꨳꨪꨬꩌ ꨓꨤꩍ ꨆꨚꨶꨮꩊ ꨕꨯꨱꩀ ꨎꨶꨩ ꨧꨩ ꨕꨴꨬ ꨀꨗꨯꨱ ꨕꨶꩍ ꨀꨕꨪꩍ",
-          "cer_pct": 4.35,
-          "raw_conf": 0.9357,
-          "calibrated_conf": 0.9471
-        },
-        {
-          "line": 20,
-          "gt": "ꨌꨳꨪꩌ ꨤꨮꩈ ꨣꩆ ꨌꩃ ꨝꨵꨯꨱꩍ ꨚꨈꨭꩍ ꨨꨕꩍ ꨚꨍꩃ",
-          "pred": "ꨌꨳꨪꩌ ꨤꨮꩈ ꨣꩆ ꨌꩃ ꨝꨵꨯꨱꩍ ꨚꨈꨭꩍ ꨨꨕꩍ ꨚꨍꩃ",
-          "cer_pct": 0.0,
-          "raw_conf": 0.9443,
-          "calibrated_conf": 0.9548
-        },
-        {
-          "line": 21,
-          "gt": "ꨚꨯꨱꩀ ꨞꨯꩂ ꨟꨣꨰ ꨣꨝꨮꨭ ꨓꨗꨴꩀ ꨚꨙꨳꩀ ꨀꨧꩅ ꨦꨮꩍ ꨟꨤꨮꩃ ...",
-          "pred": "ꨚꨯꨱꩀ ꨞꨯꩂ ꨟꨣꨰ ꨣꨝꨮꩍ ꨓꨴꨗꨴꩀ ꨚꨙꨳꩀ ꨀꨧꩅ ꨦꨮꩍ ꨟꨤꨮꩃ ",
-          "cer_pct": 11.36,
-          "raw_conf": 0.8809,
-          "calibrated_conf": 0.8963
-        },
-        {
-          "line": 22,
-          "gt": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/꩒꩐꩒꩖",
-          "pred": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/꩒꩒꩖",
-          "cer_pct": 4.35,
-          "raw_conf": 0.9642,
-          "calibrated_conf": 0.9721
-        },
-        {
-          "line": 23,
-          "gt": "ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
-          "pred": "ꨔꨮꩀ ꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
-          "cer_pct": 6.67,
-          "raw_conf": 0.9923,
-          "calibrated_conf": 0.9947
-        },
-        {
-          "line": 24,
-          "gt": "ꨦꨮꩍ ꨟꨤꨮꩃ : ꨨꨭꩈ ꨨꨯꨀꩃ",
-          "pred": "ꨦꨮꩍ ꨟꨤꨮꩃ ꨓ ꨨꨭꩈ ꨨꨯꨀꩃ",
-          "cer_pct": 5.26,
-          "raw_conf": 0.8782,
-          "calibrated_conf": 0.8936
-        },
-        {
-          "line": 25,
-          "gt": "ꨈꨗꨭꨩ ꨥꩊ : ꨝꨭꩄ ꨟꩆꨨꨩ",
-          "pred": "ꨈꨗꨭꨩ ꨥꩊ _ ꨝꨭꩄ ꨟꩆꨨꨩ",
-          "cer_pct": 5.56,
-          "raw_conf": 0.9122,
-          "calibrated_conf": 0.9257
-        }
-      ],
-      "handoff_multiscript_01": {
-        "cham_script": {
-          "count": 27,
-          "mean_conf": 0.9372,
-          "pct_ge_065": 100.0,
-          "pct_has_cham_script": 100.0,
-          "pct_has_latin_viet": 0.0
-        },
-        "vietnamese_english": {
-          "count": 24,
-          "mean_conf": 0.3095,
-          "pct_ge_065": 0.0,
-          "pct_has_cham_script": 100.0,
-          "pct_has_latin_viet": 0.0
-        },
-        "latin": {
-          "count": 25,
-          "mean_conf": 0.378,
-          "pct_ge_065": 0.0,
-          "pct_has_cham_script": 100.0,
-          "pct_has_latin_viet": 0.0
-        }
-      }
-    },
-    {
-      "model": "auto",
       "harum_palei_crops": {
         "lines": 25,
         "raw_cer_pct": 6.2,
@@ -1259,6 +751,768 @@
         },
         "vietnamese_english": {
           "count": 24,
+          "mean_conf": 0.3095,
+          "pct_ge_065": 0.0,
+          "pct_has_cham_script": 100.0,
+          "pct_has_latin_viet": 0.0
+        },
+        "latin": {
+          "count": 25,
+          "mean_conf": 0.378,
+          "pct_ge_065": 0.0,
+          "pct_has_cham_script": 100.0,
+          "pct_has_latin_viet": 0.0
+        }
+      }
+    },
+    {
+      "model": "v24_1_r3_1",
+      "harum_palei_crops": {
+        "lines": 25,
+        "raw_cer_pct": 4.5,
+        "norm_cer_pct": 4.62,
+        "wer_pct": 17.65,
+        "exact_lines": "7/25",
+        "exact_line_pct": 28.0,
+        "mean_raw_conf": 0.9515,
+        "mean_calibrated_conf": 0.9622,
+        "line2_hyphen_ok": true,
+        "line6_hyphen_ok": true,
+        "line22_date_pred": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/꩒꩐꩒꩖",
+        "line22_date_exact": true
+      },
+      "harum_palei_fullpage": {
+        "gt_lines": 25,
+        "pred_lines": 25,
+        "matched_lines": 25,
+        "line_recall_pct": 100.0,
+        "matched_line_cer_pct": 5.23,
+        "e2e_doc_cer_pct": 5.08,
+        "unmatched_gt_chars": 0,
+        "unmatched_pred_chars": 0,
+        "detector": "generic_ppocrv4_dbnet",
+        "doc_status": "ocr_done"
+      },
+      "harum_palei_line_details": [
+        {
+          "line": 1,
+          "gt": "ꨨꨣꨭꩌ ꨚꨤꨬ ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
+          "pred": "ꨨꨣꨭꩌ ꨚꨤꨬ ꨔꨮꩀ ꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
+          "cer_pct": 4.17,
+          "raw_conf": 0.9907,
+          "calibrated_conf": 0.994
+        },
+        {
+          "line": 2,
+          "gt": "ꨝꨳꨮꩉ ꨨꨣꨬ ꨁ-ꨗꨫ ꨚꨙꨳꩀ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨬ ꨡꨭꩊ ꨆꨴꩌ",
+          "pred": "ꨝꨳꨮꩉ ꨨꨣꨬ ꨁ-ꨗꨫꩌ ꨚꨙꨳꩀ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨯꨮꨥ ꨨꨕꨬ ꨡꨭꩊ ꨆꨴꩌ",
+          "cer_pct": 4.76,
+          "raw_conf": 0.9164,
+          "calibrated_conf": 0.9319
+        },
+        {
+          "line": 3,
+          "gt": "ꨀꨊꨯꨱꩀ ꨤꨊꨪꩀ ꨨꨎꨥ ꨆꨚꨶꨮꩊ ꨌꨳꨪꩌ ꨈꨪꨤꩄ ꨟꨣꨰ",
+          "pred": "ꨀꨯꨊꨯꨱꩀ ꨤꨊꨫꨪꩀ ꨨꨎꨥ ꨆꨚꨶꨮꩊ ꨌꨳꨪꩌ ꨈꨪꨤꩄ ꨟꨣꨰ",
+          "cer_pct": 5.88,
+          "raw_conf": 0.9681,
+          "calibrated_conf": 0.9766
+        },
+        {
+          "line": 4,
+          "gt": "ꨦꩇ ꨆꨤꩀ ꨈꨵꨮꩃ ꨆꨝꨥ ꨀꨕꨯꨱꩍ ꨀꨊꨯꨱꩀ ꨝꨗꨮꩀ",
+          "pred": "ꨦꩇ ꨆꨤꩀ ꨈꨵꨮꩃ ꨆꨝꨥ ꨀꨯꨕꨯꨱꩍ ꨀꨯꨊꨯꨱꩀ ꨝꨗꨮꩀ",
+          "cer_pct": 6.25,
+          "raw_conf": 0.9474,
+          "calibrated_conf": 0.9593
+        },
+        {
+          "line": 5,
+          "gt": "ꨆꨤꩀ ꨚꨕꨴꨭꩅ ꨚꨕꨴꨶꨰ ꨆꨣꩌ ꨈꨕꨮꩃ ꨟꨝꨭꩀ ꨟꨝꩉ",
+          "pred": "ꨆꨤꩀ ꨚꨴꨕꨭꩅ ꨚꨴꨰꨕꨶ ꨆꨣꩌ ꨈꨕꨮ ꨟꨝꨭꩀ ꨟꨝꩉ",
+          "cer_pct": 21.21,
+          "raw_conf": 0.9123,
+          "calibrated_conf": 0.9282
+        },
+        {
+          "line": 6,
+          "gt": "ꨀꨓꩍ ꨀꨓꩍ ꨀꨓꩍ ꨆꨥꨯꩌ ꨝꨶꨮꩊ ꨤꨪ-ꨂꨀꨩ ꨈꨤꨮꩌ ꨎꨤꨮꩃ",
+          "pred": "ꨀꨓꩍ ꨀꨓꩍ ꨀꨓꩍ ꨆꨥꨯꩌ ꨝꨶꨮꩊ ꨤꨪ-ꨂꨀꨩ ꨈꨤꨮꩌ ꨎꨤꨮꩃ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9667,
+          "calibrated_conf": 0.9755
+        },
+        {
+          "line": 7,
+          "gt": "ꨧꨯꨱꩃ ꨆꨚꨶꨮꩊ ꨆꨝꨥ ꨗꨯꨱ ꨀꨊꨯꨱꩀ ꨎꨤꩆ ꨟꨣꨰ ꨨꨚꩀ",
+          "pred": "ꨧꨯꨱ ꨆꨚꨶꨮꩊ ꨆꨝꨥ ꨗꨯꨱ ꨀꨯꨊꨯꨱꩀ ꨎꨤꩆ ꨟꨣꨰ ꨨꨚꩀ",
+          "cer_pct": 5.56,
+          "raw_conf": 0.9617,
+          "calibrated_conf": 0.9714
+        },
+        {
+          "line": 8,
+          "gt": "ꨓꨚꨮꩆ ꨕꨮꩍ ꨆꨴꨯꨱꩃ ꨚꨝꨭꩃ ꨀꨈꩀ ꨗꩌ ꨓꨚꨮꩆ ꨓꨓꨶꨩ",
+          "pred": "ꨓꨚꨮꩆ ꨕꨮꩍ ꨆꨴꨯꨱ ꨚꨝꨭꩃ ꨀꨈꩀ ꨗꩌ ꨓꨚꨮꩆ ꨓꨓꨶꨩ",
+          "cer_pct": 2.78,
+          "raw_conf": 0.9661,
+          "calibrated_conf": 0.975
+        },
+        {
+          "line": 9,
+          "gt": "ꨧꨬ ꨚꨎꨮꩍ ꨟꨯꨱꩃ ꨟꨯꨱꩃ ꨀꨆꨯꨱꩀ ꨌꩃ ꨟꨯꨱꩃ",
+          "pred": "ꨧꨬ ꨚꨎꨮꩍ ꨦꨟꨯꨱ ꨟꨯꨱ ꨀꨆꨯꨱꩀ ꨌꩃ ꨟꨯꨱ",
+          "cer_pct": 12.9,
+          "raw_conf": 0.9053,
+          "calibrated_conf": 0.9219
+        },
+        {
+          "line": 10,
+          "gt": "ꨓꨳꩇ ꨓꨶꨬ ꨀꨊꨪꩆ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨯꩌ ꨦꩇ ꨆꨤꩀ",
+          "pred": "ꨓꨳꩇ ꨓꨶꨬ ꨀꨊꨫꩆ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨯꩌ ꨦꩇ ꨆꨤꩀ",
+          "cer_pct": 2.78,
+          "raw_conf": 0.9611,
+          "calibrated_conf": 0.9708
+        },
+        {
+          "line": 11,
+          "gt": "ꨣꨤꨮꩃ ꨈꨭꨨꨩ ꨕꨗꩈ ꨆꨣꩌ ꨈꨕꨮꩃ ꨕꨤꩌ ꨡꨵꩃ ꨝꨳꨮꩉ ꨨꨣꨬ",
+          "pred": "ꨣꨤꨮꩃ ꨈꨭꨨꨩ ꨕꨗꩈ ꨆꨣꩌ ꨈꨕꨮꩃ ꨕꨤꩌ ꨡꨵꩃ ꨝꨳꨮꩉ ꨨꨣꨬ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9853,
+          "calibrated_conf": 0.99
+        },
+        {
+          "line": 12,
+          "gt": "ꨀꨦꩀ ꨓꨡꩀ ꨓꨚꨮꩆ ꨡꨶꨮꩆ ꨤꨨꨶꨰ ꨤꨨꨩ ꨚꨚꩉ",
+          "pred": "ꨀꨦꩀ ꨓꨡꩀ ꨓꨚꨮꩆ ꨡꨶꨮꩆ ꨤꨨꨶꨰ ꨤꨨꨩ ꨚꨚꩉ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9505,
+          "calibrated_conf": 0.962
+        },
+        {
+          "line": 13,
+          "gt": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨆꨣꩌ ꨈꨕꨮꩃ ꨚꨗꨪꩀ ꨤꨚꨬ ꨟꨝꨭꩀ",
+          "pred": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨆꨣꩌ ꨈꨕꨮꩃ ꨚꨗꨪꩀ ꨤꨚꨬꩌ ꨟꨝꨭꩀ",
+          "cer_pct": 3.23,
+          "raw_conf": 0.958,
+          "calibrated_conf": 0.9683
+        },
+        {
+          "line": 14,
+          "gt": "ꨓꨗꨴꩀ ꨟꨐꩀ ꨕꨯꨱꩀ ꨦꨭꩇ ꨨꨕꩍ ꨚꨍꩃ",
+          "pred": "ꨓꨗꨴꩀ ꨟꨐꩀ ꨀꨕꨯꨱꩀ ꨦꨭꩇ ꨨꨕꩍ ꨚꨍꩃ",
+          "cer_pct": 4.0,
+          "raw_conf": 0.946,
+          "calibrated_conf": 0.9581
+        },
+        {
+          "line": 15,
+          "gt": "ꨕꨯꨱꩀ ꨢꨮꨭ ꨎꨶꨩ ꨤꨊꨶꨬ ꨝꩉ ꨕꨯꨱꩀ ꨟꨝꨭꩀ ꨤꨚꨬ",
+          "pred": "ꨕꨯꨱꩀ ꨢꨮꨭ ꨎꨶꨩ ꨤꨊꨶꨬ ꨝꩉ ꨕꨯꨱꩀ ꨟꨝꨭꩀ ꨤꨚꨬꨬ",
+          "cer_pct": 2.94,
+          "raw_conf": 0.9775,
+          "calibrated_conf": 0.984
+        },
+        {
+          "line": 16,
+          "gt": "ꨧꨯꨱꩃ ꨤꨆꨭꩀ ꨈꨗꨭꨩ ꨥꩊ ꨟꨢꨭꩅ ꨧꨬ ꨎꩌꨎꨫ ꨖꨪꩅ",
+          "pred": "ꨧꨯꨱꩃ ꨤꨆꨭꩀ ꨈꨗꨭꨩ ꨥꩊ ꨟꨢꨭꩅ ꨧꨬ ꨎꩌꨎꨫ ꨖꨪꩅ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9486,
+          "calibrated_conf": 0.9604
+        },
+        {
+          "line": 17,
+          "gt": "ꨕꨯꨱꩀ ꨝꩀ ꨚꨕꨮꩃ ꨀꨣꨰ ꨦꨡꨰ ꨨꨕꨳꨮꩇ ꨨꨕꨯꩌ ꨀꨝꨯꨱꩍ ꨧꩃ",
+          "pred": "ꨕꨯꨱꩀ ꨝꩀ ꨚꨕꨮꩃ ꨀꨣꨰ ꨦꨡꨰ ꨨꨕꨳꨯꨮꩇ ꨨꨯꨕꨯꩌ ꨀꨯꨝꨯꨱꩍ ꨧꩃ",
+          "cer_pct": 7.5,
+          "raw_conf": 0.9401,
+          "calibrated_conf": 0.953
+        },
+        {
+          "line": 18,
+          "gt": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨓꨡꩀ ꨎꨰꩀ ꨚꨎꨮꨩ ꨚꨣꨤꨯꨱ ꨈꨕꨮꩃ ꨕꨤꩌ ꨆꨤꨪꨟꨭꨩ ꨆꨆꨶꨮꩉ",
+          "pred": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨓꨡꩀ ꨎꩀ ꨚꨎꨩ ꨚꨣꨤꨯꨱ ꨈꨕꨮꩃ ꨕꨤꩌ ꨆꨤꨪꨟꨭꨩ ꨆꨆꨶꨮꩉ",
+          "cer_pct": 4.08,
+          "raw_conf": 0.9887,
+          "calibrated_conf": 0.9925
+        },
+        {
+          "line": 19,
+          "gt": "ꨦꩇ ꨌꨳꨪꩌ ꨓꨤꩍ ꨆꨚꨶꨮꩊ ꨕꨯꨱꩀ ꨎꨶꨩ ꨧꨩ ꨕꨴꨬ ꨗꨯꨱ ꨕꨶꩍ ꨀꨕꨪꩍ",
+          "pred": "ꨦꩇ ꨌꨳꨪꩌ ꨓꨤꩍ ꨆꨚꨶꨮꩊ ꨕꨯꨱꩀ ꨎꨶꨩ ꨧꨩ ꨕꨴꨬ ꨗꨯꨱ ꨕꨶꩍ ꨀꨕꨪꩍ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9477,
+          "calibrated_conf": 0.9595
+        },
+        {
+          "line": 20,
+          "gt": "ꨌꨳꨪꩌ ꨤꨮꩈ ꨣꩆ ꨌꩃ ꨝꨵꨯꨱꩍ ꨚꨈꨭꩍ ꨨꨕꩍ ꨚꨍꩃ",
+          "pred": "ꨌꨳꨪꩌ ꨤꨮꩈ ꨣꩆ ꨌꩃ ꨝꨵꨯꨱꩍ ꨚꨈꨭꩍ ꨨꨕꩍ ꨚꨍꩃ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9509,
+          "calibrated_conf": 0.9623
+        },
+        {
+          "line": 21,
+          "gt": "ꨚꨯꨱꩀ ꨞꨯꩂ ꨟꨣꨰ ꨣꨝꨮꨭ ꨓꨗꨴꩀ ꨚꨙꨳꩀ ꨀꨧꩅ ꨦꨮꩍ ꨟꨤꨮꩃ ...",
+          "pred": "ꨚꨯꨱꩀ ꨞꨯꩂ ꨟꨣꨰ ꨣꨝꨮ ꨓꨴꨗꨴꩀ ꨚꨙꨳꩀ ꨀꨧꩅ ꨦꨮꩍ ꨟꨤꨮꩃ ",
+          "cer_pct": 11.36,
+          "raw_conf": 0.9458,
+          "calibrated_conf": 0.9579
+        },
+        {
+          "line": 22,
+          "gt": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/꩒꩐꩒꩖",
+          "pred": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/꩒꩐꩒꩖",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9566,
+          "calibrated_conf": 0.9671
+        },
+        {
+          "line": 23,
+          "gt": "ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
+          "pred": "ꨔꨮꩀ ꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
+          "cer_pct": 6.67,
+          "raw_conf": 0.9786,
+          "calibrated_conf": 0.9849
+        },
+        {
+          "line": 24,
+          "gt": "ꨦꨮꩍ ꨟꨤꨮꩃ : ꨨꨭꩈ ꨨꨯꨀꩃ",
+          "pred": "ꨦꨮꩍ ꨟꨤꨮꩃ ꨓ ꨨꨭꩈ ꨨꨯꨀꩃ",
+          "cer_pct": 5.26,
+          "raw_conf": 0.9075,
+          "calibrated_conf": 0.9239
+        },
+        {
+          "line": 25,
+          "gt": "ꨈꨗꨭꨩ ꨥꩊ : ꨝꨭꩄ ꨟꩆꨨꨩ",
+          "pred": "ꨈꨗꨭꨩ ꨥꩊ _ ꨝꨭꩄ ꨟꩆꨨꨩ",
+          "cer_pct": 5.56,
+          "raw_conf": 0.9105,
+          "calibrated_conf": 0.9266
+        }
+      ],
+      "handoff_multiscript_01": {
+        "cham_script": {
+          "count": 27,
+          "mean_conf": 0.9134,
+          "pct_ge_065": 100.0,
+          "pct_has_cham_script": 100.0,
+          "pct_has_latin_viet": 0.0
+        },
+        "vietnamese_english": {
+          "count": 24,
+          "mean_conf": 0.2931,
+          "pct_ge_065": 0.0,
+          "pct_has_cham_script": 100.0,
+          "pct_has_latin_viet": 0.0
+        },
+        "latin": {
+          "count": 25,
+          "mean_conf": 0.3685,
+          "pct_ge_065": 0.0,
+          "pct_has_cham_script": 100.0,
+          "pct_has_latin_viet": 0.0
+        }
+      }
+    },
+    {
+      "model": "v24_1_r4",
+      "harum_palei_crops": {
+        "lines": 25,
+        "raw_cer_pct": 2.68,
+        "norm_cer_pct": 2.68,
+        "wer_pct": 9.63,
+        "exact_lines": "12/25",
+        "exact_line_pct": 48.0,
+        "mean_raw_conf": 0.9502,
+        "mean_calibrated_conf": 0.9611,
+        "line2_hyphen_ok": true,
+        "line6_hyphen_ok": true,
+        "line22_date_pred": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/ꨐ꩐꩒꩖",
+        "line22_date_exact": false
+      },
+      "harum_palei_fullpage": {
+        "gt_lines": 25,
+        "pred_lines": 25,
+        "matched_lines": 25,
+        "line_recall_pct": 100.0,
+        "matched_line_cer_pct": 3.28,
+        "e2e_doc_cer_pct": 3.19,
+        "unmatched_gt_chars": 0,
+        "unmatched_pred_chars": 0,
+        "detector": "generic_ppocrv4_dbnet",
+        "doc_status": "ocr_done"
+      },
+      "harum_palei_line_details": [
+        {
+          "line": 1,
+          "gt": "ꨨꨣꨭꩌ ꨚꨤꨬ ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
+          "pred": "ꨨꨣꨭꩌ ꨚꨤꨬ ꨔꨮꩀ ꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
+          "cer_pct": 4.17,
+          "raw_conf": 0.9759,
+          "calibrated_conf": 0.9829
+        },
+        {
+          "line": 2,
+          "gt": "ꨝꨳꨮꩉ ꨨꨣꨬ ꨁ-ꨗꨫ ꨚꨙꨳꩀ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨬ ꨡꨭꩊ ꨆꨴꩌ",
+          "pred": "ꨝꨳꨮꩉ ꨨꨣꨬ ꨁ-ꨗꨫꨬꩌ ꨚꨙꨳꩀ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨯꨮꨥ ꨨꨕꨬ ꨡꨭꩊ ꨆꨴꩌ",
+          "cer_pct": 7.14,
+          "raw_conf": 0.8991,
+          "calibrated_conf": 0.9163
+        },
+        {
+          "line": 3,
+          "gt": "ꨀꨊꨯꨱꩀ ꨤꨊꨪꩀ ꨨꨎꨥ ꨆꨚꨶꨮꩊ ꨌꨳꨪꩌ ꨈꨪꨤꩄ ꨟꨣꨰ",
+          "pred": "ꨀꨊꨯꨱꩀ ꨤꨊꨪꩀ ꨨꨎꨥ ꨆꨚꨶꨮꩊ ꨌꨳꨪꩌ ꨈꨪꨤꩄ ꨟꨣꨰ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9894,
+          "calibrated_conf": 0.9931
+        },
+        {
+          "line": 4,
+          "gt": "ꨦꩇ ꨆꨤꩀ ꨈꨵꨮꩃ ꨆꨝꨥ ꨀꨕꨯꨱꩍ ꨀꨊꨯꨱꩀ ꨝꨗꨮꩀ",
+          "pred": "ꨦꩇ ꨆꨤꩀ ꨈꨵꨮꩃ ꨆꨝꨥ ꨀꨕꨯꨱꩍ ꨀꨊꨯꨱꩀ ꨝꨗꨮꩀ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.975,
+          "calibrated_conf": 0.9822
+        },
+        {
+          "line": 5,
+          "gt": "ꨆꨤꩀ ꨚꨕꨴꨭꩅ ꨚꨕꨴꨶꨰ ꨆꨣꩌ ꨈꨕꨮꩃ ꨟꨝꨭꩀ ꨟꨝꩉ",
+          "pred": "ꨆꨤꩀ ꨚꨕꨴꨭꩅ ꨚꨰꨔꨴꨶ ꨆꨣꩌ ꨈꨕꨮ ꨟꨝꨭꩀ ꨟꨝꩉ",
+          "cer_pct": 12.12,
+          "raw_conf": 0.9089,
+          "calibrated_conf": 0.9253
+        },
+        {
+          "line": 6,
+          "gt": "ꨀꨓꩍ ꨀꨓꩍ ꨀꨓꩍ ꨆꨥꨯꩌ ꨝꨶꨮꩊ ꨤꨪ-ꨂꨀꨩ ꨈꨤꨮꩌ ꨎꨤꨮꩃ",
+          "pred": "ꨀꨓꩍ ꨀꨓꩍ ꨀꨓꩍ ꨆꨥꨯꩌ ꨝꨶꨮꩊ ꨤꨪ-ꨂꨀꨩ ꨈꨤꨮꩌ ꨎꨤꨮꩃ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.921,
+          "calibrated_conf": 0.9363
+        },
+        {
+          "line": 7,
+          "gt": "ꨧꨯꨱꩃ ꨆꨚꨶꨮꩊ ꨆꨝꨥ ꨗꨯꨱ ꨀꨊꨯꨱꩀ ꨎꨤꩆ ꨟꨣꨰ ꨨꨚꩀ",
+          "pred": "ꨧꨯꨱ ꨆꨚꨶꨮꩊ ꨆꨝꨥ ꨗꨯꨱ ꨀꨊꨯꨱꩀ ꨎꨤꩆ ꨟꨣꨰ ꨨꨚꩀ",
+          "cer_pct": 2.78,
+          "raw_conf": 0.946,
+          "calibrated_conf": 0.9582
+        },
+        {
+          "line": 8,
+          "gt": "ꨓꨚꨮꩆ ꨕꨮꩍ ꨆꨴꨯꨱꩃ ꨚꨝꨭꩃ ꨀꨈꩀ ꨗꩌ ꨓꨚꨮꩆ ꨓꨓꨶꨩ",
+          "pred": "ꨓꨚꨮꩆ ꨕꨮꩍ ꨆꨴꨯꨱ ꨚꨝꨭꩃ ꨀꨈꩀ ꨗꩌ ꨓꨚꨮꩆ ꨓꨓꨶꨩ",
+          "cer_pct": 2.78,
+          "raw_conf": 0.9523,
+          "calibrated_conf": 0.9636
+        },
+        {
+          "line": 9,
+          "gt": "ꨧꨬ ꨚꨎꨮꩍ ꨟꨯꨱꩃ ꨟꨯꨱꩃ ꨀꨆꨯꨱꩀ ꨌꩃ ꨟꨯꨱꩃ",
+          "pred": "ꨧꨬ ꨚꨎꨮꩍ ꨟꨯꨱ ꨟꨯꨱ ꨀꨆꨯꨱꩀ ꨌꩃ ꨟꨯꨱ",
+          "cer_pct": 9.68,
+          "raw_conf": 0.9111,
+          "calibrated_conf": 0.9273
+        },
+        {
+          "line": 10,
+          "gt": "ꨓꨳꩇ ꨓꨶꨬ ꨀꨊꨪꩆ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨯꩌ ꨦꩇ ꨆꨤꩀ",
+          "pred": "ꨓꨳꩇ ꨓꨶꨬ ꨀꨊꨪꩆ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨯꩌ ꨦꩇ ꨆꨤꩀ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9655,
+          "calibrated_conf": 0.9746
+        },
+        {
+          "line": 11,
+          "gt": "ꨣꨤꨮꩃ ꨈꨭꨨꨩ ꨕꨗꩈ ꨆꨣꩌ ꨈꨕꨮꩃ ꨕꨤꩌ ꨡꨵꩃ ꨝꨳꨮꩉ ꨨꨣꨬ",
+          "pred": "ꨣꨤꨮꩃ ꨈꨭꨨꨩ ꨕꨗꩈ ꨆꨣꩌ ꨈꨕꨮꩃ ꨕꨤꩌ ꨡꨵꩃ ꨝꨳꨮꩉ ꨨꨣꨬ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9813,
+          "calibrated_conf": 0.987
+        },
+        {
+          "line": 12,
+          "gt": "ꨀꨦꩀ ꨓꨡꩀ ꨓꨚꨮꩆ ꨡꨶꨮꩆ ꨤꨨꨶꨰ ꨤꨨꨩ ꨚꨚꩉ",
+          "pred": "ꨀꨦꩀ ꨓꨡꩀ ꨓꨚꨮꩆ ꨡꨶꨮꩆ ꨤꨨꨶꨰ ꨤꨨꨩ ꨚꨚꩉ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9688,
+          "calibrated_conf": 0.9772
+        },
+        {
+          "line": 13,
+          "gt": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨆꨣꩌ ꨈꨕꨮꩃ ꨚꨗꨪꩀ ꨤꨚꨬ ꨟꨝꨭꩀ",
+          "pred": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨆꨣꩌ ꨈꨕꨮꩃ ꨚꨗꨪꩀ ꨤꨚꨬꩌ ꨟꨝꨭꩀ",
+          "cer_pct": 3.23,
+          "raw_conf": 0.9514,
+          "calibrated_conf": 0.9628
+        },
+        {
+          "line": 14,
+          "gt": "ꨓꨗꨴꩀ ꨟꨐꩀ ꨕꨯꨱꩀ ꨦꨭꩇ ꨨꨕꩍ ꨚꨍꩃ",
+          "pred": "ꨓꨗꨴꩀ ꨟꨐꩀ ꨕꨯꨱꩀ ꨦꨭꩇ ꨨꨕꩍ ꨚꨍꩃ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9502,
+          "calibrated_conf": 0.9618
+        },
+        {
+          "line": 15,
+          "gt": "ꨕꨯꨱꩀ ꨢꨮꨭ ꨎꨶꨩ ꨤꨊꨶꨬ ꨝꩉ ꨕꨯꨱꩀ ꨟꨝꨭꩀ ꨤꨚꨬ",
+          "pred": "ꨕꨯꨱꩀ ꨢꨮꨭ ꨎꨶꨩ ꨤꨊꨶꨬ ꨝꩉ ꨕꨯꨱꩀ ꨟꨝꨭꩀ ꨤꨚꨬꨬ",
+          "cer_pct": 2.94,
+          "raw_conf": 0.9835,
+          "calibrated_conf": 0.9887
+        },
+        {
+          "line": 16,
+          "gt": "ꨧꨯꨱꩃ ꨤꨆꨭꩀ ꨈꨗꨭꨩ ꨥꩊ ꨟꨢꨭꩅ ꨧꨬ ꨎꩌꨎꨫ ꨖꨪꩅ",
+          "pred": "ꨧꨯꨱꩃ ꨤꨆꨭꩀ ꨈꨗꨭꨩ ꨥꩊ ꨟꨢꨭꩅ ꨧꨬ ꨎꩌꨎꨫ ꨖꨪꩅ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9252,
+          "calibrated_conf": 0.9401
+        },
+        {
+          "line": 17,
+          "gt": "ꨕꨯꨱꩀ ꨝꩀ ꨚꨕꨮꩃ ꨀꨣꨰ ꨦꨡꨰ ꨨꨕꨳꨮꩇ ꨨꨕꨯꩌ ꨀꨝꨯꨱꩍ ꨧꩃ",
+          "pred": "ꨕꨯꨱꩀ ꨝꩀ ꨚꨕꨮꩃ ꨀꨣꨰ ꨦꨡꨰ ꨨꨕꨳꨮꩇ ꨨꨕꨯꩌ ꨀꨝꨯꨱꩍ ꨧꩃ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9252,
+          "calibrated_conf": 0.9401
+        },
+        {
+          "line": 18,
+          "gt": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨓꨡꩀ ꨎꨰꩀ ꨚꨎꨮꨩ ꨚꨣꨤꨯꨱ ꨈꨕꨮꩃ ꨕꨤꩌ ꨆꨤꨪꨟꨭꨩ ꨆꨆꨶꨮꩉ",
+          "pred": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨓꨡꩀ ꨎꨰꩀ ꨚꨎꨩ ꨚꨣꨤꨯꨱ ꨈꨕꨮꩃ ꨕꨤꩌ ꨆꨤꨪꨟꨭꨩ ꨆꨆꨶꨮꩉ",
+          "cer_pct": 2.04,
+          "raw_conf": 0.9777,
+          "calibrated_conf": 0.9843
+        },
+        {
+          "line": 19,
+          "gt": "ꨦꩇ ꨌꨳꨪꩌ ꨓꨤꩍ ꨆꨚꨶꨮꩊ ꨕꨯꨱꩀ ꨎꨶꨩ ꨧꨩ ꨕꨴꨬ ꨗꨯꨱ ꨕꨶꩍ ꨀꨕꨪꩍ",
+          "pred": "ꨦꩇ ꨌꨳꨪꩌ ꨓꨤꩍ ꨆꨚꨶꨮꩊ ꨕꨯꨱꩀ ꨎꨶꨩ ꨧꨩ ꨕꨴꨬ ꨗꨯꨱ ꨕꨶꩍ ꨀꨕꨪꩍ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9681,
+          "calibrated_conf": 0.9767
+        },
+        {
+          "line": 20,
+          "gt": "ꨌꨳꨪꩌ ꨤꨮꩈ ꨣꩆ ꨌꩃ ꨝꨵꨯꨱꩍ ꨚꨈꨭꩍ ꨨꨕꩍ ꨚꨍꩃ",
+          "pred": "ꨌꨳꨪꩌ ꨤꨮꩈ ꨣꩆ ꨌꩃ ꨝꨵꨯꨱꩍ ꨚꨈꨭꩍ ꨨꨕꩍ ꨚꨍꩃ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9703,
+          "calibrated_conf": 0.9784
+        },
+        {
+          "line": 21,
+          "gt": "ꨚꨯꨱꩀ ꨞꨯꩂ ꨟꨣꨰ ꨣꨝꨮꨭ ꨓꨗꨴꩀ ꨚꨙꨳꩀ ꨀꨧꩅ ꨦꨮꩍ ꨟꨤꨮꩃ ...",
+          "pred": "ꨚꨯꨱꩀ ꨞꨯꩂ ꨟꨣꨰ ꨣꨝꨮꨭ ꨓꨗꨴꩀ ꨚꨙꨳꩀ ꨀꨧꩅ ꨦꨮꩍ ꨟꨤꨮꩃ ",
+          "cer_pct": 6.82,
+          "raw_conf": 0.9393,
+          "calibrated_conf": 0.9525
+        },
+        {
+          "line": 22,
+          "gt": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/꩒꩐꩒꩖",
+          "pred": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/ꨐ꩐꩒꩖",
+          "cer_pct": 4.35,
+          "raw_conf": 0.9317,
+          "calibrated_conf": 0.9458
+        },
+        {
+          "line": 23,
+          "gt": "ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
+          "pred": "ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9782,
+          "calibrated_conf": 0.9847
+        },
+        {
+          "line": 24,
+          "gt": "ꨦꨮꩍ ꨟꨤꨮꩃ : ꨨꨭꩈ ꨨꨯꨀꩃ",
+          "pred": "ꨦꨮꩍ ꨟꨤꨮꩃ ꨓ ꨨꨭꩈ ꨨꨯꨀꩃ",
+          "cer_pct": 5.26,
+          "raw_conf": 0.9464,
+          "calibrated_conf": 0.9586
+        },
+        {
+          "line": 25,
+          "gt": "ꨈꨗꨭꨩ ꨥꩊ : ꨝꨭꩄ ꨟꩆꨨꨩ",
+          "pred": "ꨈꨗꨭꨩ ꨥꩊ _ ꨝꨭꩄ ꨟꩆꨨꨩ",
+          "cer_pct": 5.56,
+          "raw_conf": 0.9133,
+          "calibrated_conf": 0.9293
+        }
+      ],
+      "handoff_multiscript_01": {
+        "cham_script": {
+          "count": 27,
+          "mean_conf": 0.9061,
+          "pct_ge_065": 100.0,
+          "pct_has_cham_script": 100.0,
+          "pct_has_latin_viet": 0.0
+        },
+        "vietnamese_english": {
+          "count": 24,
+          "mean_conf": 0.2946,
+          "pct_ge_065": 0.0,
+          "pct_has_cham_script": 87.5,
+          "pct_has_latin_viet": 0.0
+        },
+        "latin": {
+          "count": 25,
+          "mean_conf": 0.3517,
+          "pct_ge_065": 0.0,
+          "pct_has_cham_script": 64.0,
+          "pct_has_latin_viet": 0.0
+        }
+      }
+    },
+    {
+      "model": "auto",
+      "harum_palei_crops": {
+        "lines": 25,
+        "raw_cer_pct": 2.68,
+        "norm_cer_pct": 2.68,
+        "wer_pct": 9.63,
+        "exact_lines": "12/25",
+        "exact_line_pct": 48.0,
+        "mean_raw_conf": 0.9502,
+        "mean_calibrated_conf": 0.9611,
+        "line2_hyphen_ok": true,
+        "line6_hyphen_ok": true,
+        "line22_date_pred": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/ꨐ꩐꩒꩖",
+        "line22_date_exact": false
+      },
+      "harum_palei_fullpage": {
+        "gt_lines": 25,
+        "pred_lines": 25,
+        "matched_lines": 25,
+        "line_recall_pct": 100.0,
+        "matched_line_cer_pct": 3.28,
+        "e2e_doc_cer_pct": 3.19,
+        "unmatched_gt_chars": 0,
+        "unmatched_pred_chars": 0,
+        "detector": "generic_ppocrv4_dbnet",
+        "doc_status": "ocr_done"
+      },
+      "harum_palei_line_details": [
+        {
+          "line": 1,
+          "gt": "ꨨꨣꨭꩌ ꨚꨤꨬ ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
+          "pred": "ꨨꨣꨭꩌ ꨚꨤꨬ ꨔꨮꩀ ꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
+          "cer_pct": 4.17,
+          "raw_conf": 0.9759,
+          "calibrated_conf": 0.9829
+        },
+        {
+          "line": 2,
+          "gt": "ꨝꨳꨮꩉ ꨨꨣꨬ ꨁ-ꨗꨫ ꨚꨙꨳꩀ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨬ ꨡꨭꩊ ꨆꨴꩌ",
+          "pred": "ꨝꨳꨮꩉ ꨨꨣꨬ ꨁ-ꨗꨫꨬꩌ ꨚꨙꨳꩀ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨯꨮꨥ ꨨꨕꨬ ꨡꨭꩊ ꨆꨴꩌ",
+          "cer_pct": 7.14,
+          "raw_conf": 0.8991,
+          "calibrated_conf": 0.9163
+        },
+        {
+          "line": 3,
+          "gt": "ꨀꨊꨯꨱꩀ ꨤꨊꨪꩀ ꨨꨎꨥ ꨆꨚꨶꨮꩊ ꨌꨳꨪꩌ ꨈꨪꨤꩄ ꨟꨣꨰ",
+          "pred": "ꨀꨊꨯꨱꩀ ꨤꨊꨪꩀ ꨨꨎꨥ ꨆꨚꨶꨮꩊ ꨌꨳꨪꩌ ꨈꨪꨤꩄ ꨟꨣꨰ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9894,
+          "calibrated_conf": 0.9931
+        },
+        {
+          "line": 4,
+          "gt": "ꨦꩇ ꨆꨤꩀ ꨈꨵꨮꩃ ꨆꨝꨥ ꨀꨕꨯꨱꩍ ꨀꨊꨯꨱꩀ ꨝꨗꨮꩀ",
+          "pred": "ꨦꩇ ꨆꨤꩀ ꨈꨵꨮꩃ ꨆꨝꨥ ꨀꨕꨯꨱꩍ ꨀꨊꨯꨱꩀ ꨝꨗꨮꩀ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.975,
+          "calibrated_conf": 0.9822
+        },
+        {
+          "line": 5,
+          "gt": "ꨆꨤꩀ ꨚꨕꨴꨭꩅ ꨚꨕꨴꨶꨰ ꨆꨣꩌ ꨈꨕꨮꩃ ꨟꨝꨭꩀ ꨟꨝꩉ",
+          "pred": "ꨆꨤꩀ ꨚꨕꨴꨭꩅ ꨚꨰꨔꨴꨶ ꨆꨣꩌ ꨈꨕꨮ ꨟꨝꨭꩀ ꨟꨝꩉ",
+          "cer_pct": 12.12,
+          "raw_conf": 0.9089,
+          "calibrated_conf": 0.9253
+        },
+        {
+          "line": 6,
+          "gt": "ꨀꨓꩍ ꨀꨓꩍ ꨀꨓꩍ ꨆꨥꨯꩌ ꨝꨶꨮꩊ ꨤꨪ-ꨂꨀꨩ ꨈꨤꨮꩌ ꨎꨤꨮꩃ",
+          "pred": "ꨀꨓꩍ ꨀꨓꩍ ꨀꨓꩍ ꨆꨥꨯꩌ ꨝꨶꨮꩊ ꨤꨪ-ꨂꨀꨩ ꨈꨤꨮꩌ ꨎꨤꨮꩃ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.921,
+          "calibrated_conf": 0.9363
+        },
+        {
+          "line": 7,
+          "gt": "ꨧꨯꨱꩃ ꨆꨚꨶꨮꩊ ꨆꨝꨥ ꨗꨯꨱ ꨀꨊꨯꨱꩀ ꨎꨤꩆ ꨟꨣꨰ ꨨꨚꩀ",
+          "pred": "ꨧꨯꨱ ꨆꨚꨶꨮꩊ ꨆꨝꨥ ꨗꨯꨱ ꨀꨊꨯꨱꩀ ꨎꨤꩆ ꨟꨣꨰ ꨨꨚꩀ",
+          "cer_pct": 2.78,
+          "raw_conf": 0.946,
+          "calibrated_conf": 0.9582
+        },
+        {
+          "line": 8,
+          "gt": "ꨓꨚꨮꩆ ꨕꨮꩍ ꨆꨴꨯꨱꩃ ꨚꨝꨭꩃ ꨀꨈꩀ ꨗꩌ ꨓꨚꨮꩆ ꨓꨓꨶꨩ",
+          "pred": "ꨓꨚꨮꩆ ꨕꨮꩍ ꨆꨴꨯꨱ ꨚꨝꨭꩃ ꨀꨈꩀ ꨗꩌ ꨓꨚꨮꩆ ꨓꨓꨶꨩ",
+          "cer_pct": 2.78,
+          "raw_conf": 0.9523,
+          "calibrated_conf": 0.9636
+        },
+        {
+          "line": 9,
+          "gt": "ꨧꨬ ꨚꨎꨮꩍ ꨟꨯꨱꩃ ꨟꨯꨱꩃ ꨀꨆꨯꨱꩀ ꨌꩃ ꨟꨯꨱꩃ",
+          "pred": "ꨧꨬ ꨚꨎꨮꩍ ꨟꨯꨱ ꨟꨯꨱ ꨀꨆꨯꨱꩀ ꨌꩃ ꨟꨯꨱ",
+          "cer_pct": 9.68,
+          "raw_conf": 0.9111,
+          "calibrated_conf": 0.9273
+        },
+        {
+          "line": 10,
+          "gt": "ꨓꨳꩇ ꨓꨶꨬ ꨀꨊꨪꩆ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨯꩌ ꨦꩇ ꨆꨤꩀ",
+          "pred": "ꨓꨳꩇ ꨓꨶꨬ ꨀꨊꨪꩆ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨯꩌ ꨦꩇ ꨆꨤꩀ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9655,
+          "calibrated_conf": 0.9746
+        },
+        {
+          "line": 11,
+          "gt": "ꨣꨤꨮꩃ ꨈꨭꨨꨩ ꨕꨗꩈ ꨆꨣꩌ ꨈꨕꨮꩃ ꨕꨤꩌ ꨡꨵꩃ ꨝꨳꨮꩉ ꨨꨣꨬ",
+          "pred": "ꨣꨤꨮꩃ ꨈꨭꨨꨩ ꨕꨗꩈ ꨆꨣꩌ ꨈꨕꨮꩃ ꨕꨤꩌ ꨡꨵꩃ ꨝꨳꨮꩉ ꨨꨣꨬ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9813,
+          "calibrated_conf": 0.987
+        },
+        {
+          "line": 12,
+          "gt": "ꨀꨦꩀ ꨓꨡꩀ ꨓꨚꨮꩆ ꨡꨶꨮꩆ ꨤꨨꨶꨰ ꨤꨨꨩ ꨚꨚꩉ",
+          "pred": "ꨀꨦꩀ ꨓꨡꩀ ꨓꨚꨮꩆ ꨡꨶꨮꩆ ꨤꨨꨶꨰ ꨤꨨꨩ ꨚꨚꩉ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9688,
+          "calibrated_conf": 0.9772
+        },
+        {
+          "line": 13,
+          "gt": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨆꨣꩌ ꨈꨕꨮꩃ ꨚꨗꨪꩀ ꨤꨚꨬ ꨟꨝꨭꩀ",
+          "pred": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨆꨣꩌ ꨈꨕꨮꩃ ꨚꨗꨪꩀ ꨤꨚꨬꩌ ꨟꨝꨭꩀ",
+          "cer_pct": 3.23,
+          "raw_conf": 0.9514,
+          "calibrated_conf": 0.9628
+        },
+        {
+          "line": 14,
+          "gt": "ꨓꨗꨴꩀ ꨟꨐꩀ ꨕꨯꨱꩀ ꨦꨭꩇ ꨨꨕꩍ ꨚꨍꩃ",
+          "pred": "ꨓꨗꨴꩀ ꨟꨐꩀ ꨕꨯꨱꩀ ꨦꨭꩇ ꨨꨕꩍ ꨚꨍꩃ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9502,
+          "calibrated_conf": 0.9618
+        },
+        {
+          "line": 15,
+          "gt": "ꨕꨯꨱꩀ ꨢꨮꨭ ꨎꨶꨩ ꨤꨊꨶꨬ ꨝꩉ ꨕꨯꨱꩀ ꨟꨝꨭꩀ ꨤꨚꨬ",
+          "pred": "ꨕꨯꨱꩀ ꨢꨮꨭ ꨎꨶꨩ ꨤꨊꨶꨬ ꨝꩉ ꨕꨯꨱꩀ ꨟꨝꨭꩀ ꨤꨚꨬꨬ",
+          "cer_pct": 2.94,
+          "raw_conf": 0.9835,
+          "calibrated_conf": 0.9887
+        },
+        {
+          "line": 16,
+          "gt": "ꨧꨯꨱꩃ ꨤꨆꨭꩀ ꨈꨗꨭꨩ ꨥꩊ ꨟꨢꨭꩅ ꨧꨬ ꨎꩌꨎꨫ ꨖꨪꩅ",
+          "pred": "ꨧꨯꨱꩃ ꨤꨆꨭꩀ ꨈꨗꨭꨩ ꨥꩊ ꨟꨢꨭꩅ ꨧꨬ ꨎꩌꨎꨫ ꨖꨪꩅ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9252,
+          "calibrated_conf": 0.9401
+        },
+        {
+          "line": 17,
+          "gt": "ꨕꨯꨱꩀ ꨝꩀ ꨚꨕꨮꩃ ꨀꨣꨰ ꨦꨡꨰ ꨨꨕꨳꨮꩇ ꨨꨕꨯꩌ ꨀꨝꨯꨱꩍ ꨧꩃ",
+          "pred": "ꨕꨯꨱꩀ ꨝꩀ ꨚꨕꨮꩃ ꨀꨣꨰ ꨦꨡꨰ ꨨꨕꨳꨮꩇ ꨨꨕꨯꩌ ꨀꨝꨯꨱꩍ ꨧꩃ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9252,
+          "calibrated_conf": 0.9401
+        },
+        {
+          "line": 18,
+          "gt": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨓꨡꩀ ꨎꨰꩀ ꨚꨎꨮꨩ ꨚꨣꨤꨯꨱ ꨈꨕꨮꩃ ꨕꨤꩌ ꨆꨤꨪꨟꨭꨩ ꨆꨆꨶꨮꩉ",
+          "pred": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨓꨡꩀ ꨎꨰꩀ ꨚꨎꨩ ꨚꨣꨤꨯꨱ ꨈꨕꨮꩃ ꨕꨤꩌ ꨆꨤꨪꨟꨭꨩ ꨆꨆꨶꨮꩉ",
+          "cer_pct": 2.04,
+          "raw_conf": 0.9777,
+          "calibrated_conf": 0.9843
+        },
+        {
+          "line": 19,
+          "gt": "ꨦꩇ ꨌꨳꨪꩌ ꨓꨤꩍ ꨆꨚꨶꨮꩊ ꨕꨯꨱꩀ ꨎꨶꨩ ꨧꨩ ꨕꨴꨬ ꨗꨯꨱ ꨕꨶꩍ ꨀꨕꨪꩍ",
+          "pred": "ꨦꩇ ꨌꨳꨪꩌ ꨓꨤꩍ ꨆꨚꨶꨮꩊ ꨕꨯꨱꩀ ꨎꨶꨩ ꨧꨩ ꨕꨴꨬ ꨗꨯꨱ ꨕꨶꩍ ꨀꨕꨪꩍ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9681,
+          "calibrated_conf": 0.9767
+        },
+        {
+          "line": 20,
+          "gt": "ꨌꨳꨪꩌ ꨤꨮꩈ ꨣꩆ ꨌꩃ ꨝꨵꨯꨱꩍ ꨚꨈꨭꩍ ꨨꨕꩍ ꨚꨍꩃ",
+          "pred": "ꨌꨳꨪꩌ ꨤꨮꩈ ꨣꩆ ꨌꩃ ꨝꨵꨯꨱꩍ ꨚꨈꨭꩍ ꨨꨕꩍ ꨚꨍꩃ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9703,
+          "calibrated_conf": 0.9784
+        },
+        {
+          "line": 21,
+          "gt": "ꨚꨯꨱꩀ ꨞꨯꩂ ꨟꨣꨰ ꨣꨝꨮꨭ ꨓꨗꨴꩀ ꨚꨙꨳꩀ ꨀꨧꩅ ꨦꨮꩍ ꨟꨤꨮꩃ ...",
+          "pred": "ꨚꨯꨱꩀ ꨞꨯꩂ ꨟꨣꨰ ꨣꨝꨮꨭ ꨓꨗꨴꩀ ꨚꨙꨳꩀ ꨀꨧꩅ ꨦꨮꩍ ꨟꨤꨮꩃ ",
+          "cer_pct": 6.82,
+          "raw_conf": 0.9393,
+          "calibrated_conf": 0.9525
+        },
+        {
+          "line": 22,
+          "gt": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/꩒꩐꩒꩖",
+          "pred": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/ꨐ꩐꩒꩖",
+          "cer_pct": 4.35,
+          "raw_conf": 0.9317,
+          "calibrated_conf": 0.9458
+        },
+        {
+          "line": 23,
+          "gt": "ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
+          "pred": "ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9782,
+          "calibrated_conf": 0.9847
+        },
+        {
+          "line": 24,
+          "gt": "ꨦꨮꩍ ꨟꨤꨮꩃ : ꨨꨭꩈ ꨨꨯꨀꩃ",
+          "pred": "ꨦꨮꩍ ꨟꨤꨮꩃ ꨓ ꨨꨭꩈ ꨨꨯꨀꩃ",
+          "cer_pct": 5.26,
+          "raw_conf": 0.9464,
+          "calibrated_conf": 0.9586
+        },
+        {
+          "line": 25,
+          "gt": "ꨈꨗꨭꨩ ꨥꩊ : ꨝꨭꩄ ꨟꩆꨨꨩ",
+          "pred": "ꨈꨗꨭꨩ ꨥꩊ _ ꨝꨭꩄ ꨟꩆꨨꨩ",
+          "cer_pct": 5.56,
+          "raw_conf": 0.9133,
+          "calibrated_conf": 0.9293
+        }
+      ],
+      "handoff_multiscript_01": {
+        "cham_script": {
+          "count": 27,
+          "mean_conf": 0.9061,
+          "pct_ge_065": 100.0,
+          "pct_has_cham_script": 100.0,
+          "pct_has_latin_viet": 0.0
+        },
+        "vietnamese_english": {
+          "count": 24,
           "mean_conf": 0.591,
           "pct_ge_065": 0.0,
           "pct_has_cham_script": 0.0,
@@ -1266,10 +1520,10 @@
         },
         "latin": {
           "count": 25,
-          "mean_conf": 0.5127,
+          "mean_conf": 0.5368,
           "pct_ge_065": 0.0,
-          "pct_has_cham_script": 28.0,
-          "pct_has_latin_viet": 72.0
+          "pct_has_cham_script": 8.0,
+          "pct_has_latin_viet": 92.0
         }
       }
     }

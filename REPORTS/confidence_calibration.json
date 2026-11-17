@@ -1,6 +1,6 @@
 {
   "title": "Cham-OCR Confidence Calibration (Post-Hoc Temperature Scaling)",
-  "generated_at": "2026-11-16T08:59:50.262036+00:00",
+  "generated_at": "2026-11-17T05:20:41.115132+00:00",
   "models": [
     {
       "model_id": "v24_1_r2_1_6",
@@ -192,6 +192,188 @@
             "count": 23,
             "mean_conf": 0.955,
             "mean_acc": 0.9385
+          }
+        ]
+      }
+    },
+    {
+      "model_id": "v24_1_r3_1",
+      "model_dir": "ocr-studio/data/output/rec_cham_inference_v24_1_r3_1",
+      "fitted_temperature": 0.914851,
+      "deployed_temperature": 0.914851,
+      "policy": "raw_probe_100_mle",
+      "manifest_updated": true,
+      "probe_100_before": {
+        "temperature": 1.0,
+        "n_samples": 100,
+        "mean_conf": 0.956855,
+        "mean_acc": 0.967027,
+        "ece_10bin": 0.010172,
+        "brier": 0.001843,
+        "nll": 0.139434,
+        "bins": [
+          {
+            "bin": "[0.8,0.9]",
+            "count": 5,
+            "mean_conf": 0.8878,
+            "mean_acc": 0.9371
+          },
+          {
+            "bin": "[0.9,1.0]",
+            "count": 95,
+            "mean_conf": 0.9605,
+            "mean_acc": 0.9686
+          }
+        ]
+      },
+      "probe_100_after": {
+        "temperature": 0.914851,
+        "n_samples": 100,
+        "mean_conf": 0.96643,
+        "mean_acc": 0.967027,
+        "ece_10bin": 0.00067,
+        "brier": 0.001693,
+        "nll": 0.138173,
+        "bins": [
+          {
+            "bin": "[0.8,0.9]",
+            "count": 2,
+            "mean_conf": 0.8947,
+            "mean_acc": 0.8929
+          },
+          {
+            "bin": "[0.9,1.0]",
+            "count": 98,
+            "mean_conf": 0.9679,
+            "mean_acc": 0.9685
+          }
+        ]
+      },
+      "realscan_oos_before": {
+        "temperature": 1.0,
+        "n_samples": 25,
+        "mean_conf": 0.951522,
+        "mean_acc": 0.953246,
+        "ece_10bin": 0.001724,
+        "brier": 0.001739,
+        "nll": 0.185365,
+        "bins": [
+          {
+            "bin": "[0.9,1.0]",
+            "count": 25,
+            "mean_conf": 0.9515,
+            "mean_acc": 0.9532
+          }
+        ]
+      },
+      "realscan_oos_after": {
+        "temperature": 0.914851,
+        "n_samples": 25,
+        "mean_conf": 0.962197,
+        "mean_acc": 0.953246,
+        "ece_10bin": 0.008951,
+        "brier": 0.001801,
+        "nll": 0.186705,
+        "bins": [
+          {
+            "bin": "[0.9,1.0]",
+            "count": 25,
+            "mean_conf": 0.9622,
+            "mean_acc": 0.9532
+          }
+        ]
+      }
+    },
+    {
+      "model_id": "v24_1_r4",
+      "model_dir": "ocr-studio/data/output/rec_cham_inference_v24_1_r4",
+      "fitted_temperature": 0.913876,
+      "deployed_temperature": 0.913876,
+      "policy": "raw_probe_100_mle",
+      "manifest_updated": true,
+      "probe_100_before": {
+        "temperature": 1.0,
+        "n_samples": 100,
+        "mean_conf": 0.95024,
+        "mean_acc": 0.962176,
+        "ece_10bin": 0.011936,
+        "brier": 0.003015,
+        "nll": 0.15765,
+        "bins": [
+          {
+            "bin": "[0.8,0.9]",
+            "count": 9,
+            "mean_conf": 0.8819,
+            "mean_acc": 0.9295
+          },
+          {
+            "bin": "[0.9,1.0]",
+            "count": 91,
+            "mean_conf": 0.957,
+            "mean_acc": 0.9654
+          }
+        ]
+      },
+      "probe_100_after": {
+        "temperature": 0.913876,
+        "n_samples": 100,
+        "mean_conf": 0.960971,
+        "mean_acc": 0.962176,
+        "ece_10bin": 0.001205,
+        "brier": 0.002804,
+        "nll": 0.156278,
+        "bins": [
+          {
+            "bin": "[0.8,0.9]",
+            "count": 4,
+            "mean_conf": 0.8906,
+            "mean_acc": 0.9068
+          },
+          {
+            "bin": "[0.9,1.0]",
+            "count": 96,
+            "mean_conf": 0.9639,
+            "mean_acc": 0.9645
+          }
+        ]
+      },
+      "realscan_oos_before": {
+        "temperature": 1.0,
+        "n_samples": 25,
+        "mean_conf": 0.950195,
+        "mean_acc": 0.972458,
+        "ece_10bin": 0.022263,
+        "brier": 0.001234,
+        "nll": 0.125595,
+        "bins": [
+          {
+            "bin": "[0.8,0.9]",
+            "count": 1,
+            "mean_conf": 0.8991,
+            "mean_acc": 0.9286
+          },
+          {
+            "bin": "[0.9,1.0]",
+            "count": 24,
+            "mean_conf": 0.9523,
+            "mean_acc": 0.9743
+          }
+        ]
+      },
+      "realscan_oos_after": {
+        "temperature": 0.913876,
+        "n_samples": 25,
+        "mean_conf": 0.961111,
+        "mean_acc": 0.972458,
+        "ece_10bin": 0.011346,
+        "brier": 0.000827,
+        "nll": 0.121042,
+        "bins": [
+          {
+            "bin": "[0.9,1.0]",
+            "count": 25,
+            "mean_conf": 0.9611,
+            "mean_acc": 0.9725
           }
         ]
       }

@@ -1,0 +1,28 @@
+{
+  "title": "Cham-OCR v24.1 Stage R4 Wide-Canvas (W=480, T=60) Preflight Report",
+  "timestamp": "2026-11-17T03:27:13.786328+00:00",
+  "status": "PASS",
+  "input_tensor_shape": [
+    32,
+    3,
+    48,
+    480
+  ],
+  "ctc_logits_shape": [
+    32,
+    60,
+    116
+  ],
+  "parameter_tensors_transferred": 968,
+  "warmup_steps": 150,
+  "step_each_epoch": 375,
+  "base_checkpoint": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\r3_1_closure_checkpoints\\iter_epoch_3.pdparams",
+  "base_checkpoint_sha256": "ae8631e38ba7057c8449c65ba52bcc77d7089f83e817ba2ef74c590a3f554d21",
+  "mixed_batch_idx": 0,
+  "blanks_in_mixed_batch": 2,
+  "total_loss": 21.05917739868164,
+  "ctc_loss": 18.962141036987305,
+  "nrtr_loss": 2.097036838531494,
+  "optimizer_eligible_finite_grads": 549,
+  "mutated_weights_count": 0
+}

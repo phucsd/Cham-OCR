@@ -1,0 +1,23 @@
+{
+  "title": "Cham-OCR Cham-DBNet v2 Preflight Report",
+  "timestamp": "2026-11-17T04:43:07.996464+00:00",
+  "status": "PASS",
+  "base_checkpoint": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\data\\pretrain_models\\ch_PP-OCRv4_det_best_accuracy.pdparams",
+  "base_checkpoint_sha256": "8c5658919257f57ac6c9192dead425ab64628a11b9dc3d250aa59268437e5067",
+  "matched_tensors": 873,
+  "batch_image_shape": [
+    4,
+    3,
+    640,
+    640
+  ],
+  "maps_pred_shape": [
+    4,
+    3,
+    640,
+    640
+  ],
+  "total_loss": 1.7849010229110718,
+  "finite_grads": 597,
+  "mutated_weights_count": 0
+}

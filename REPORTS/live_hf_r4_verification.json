@@ -1,0 +1,206 @@
+{
+  "verified_at": "2026-11-17T05:46:05.045270+00:00",
+  "space_id": "phucsd/cham-ocr-studio",
+  "live_url": "https://ocr.cham.asia",
+  "commit_sha": "0c39847df2a78150998f50fcb73ec7fde478e043",
+  "files_uploaded": [
+    "Dockerfile",
+    "DESIGN.md",
+    "ocr-studio/app.py",
+    "ocr-studio/index.html",
+    "ocr-studio/tests/test_quality_gates.py",
+    "ocr-studio/PaddleOCR/ppocr/modeling/backbones/rec_lcnetv3.py",
+    "ocr-studio/data/cham_dict_v24_1_r3_1.txt",
+    "ocr-studio/data/cham_dict_v24_1_r4.txt",
+    "ocr-studio/data/output/rec_cham_inference_v24_1_r2_1_6/model_manifest.json",
+    "ocr-studio/data/output/rec_cham_inference_v24_1_r3/model_manifest.json",
+    "ocr-training/scripts/export_active_learning_r4.py",
+    "ocr-studio/data/output/rec_cham_inference_v24_1_r3_1/cham_dict_v24_1.txt",
+    "ocr-studio/data/output/rec_cham_inference_v24_1_r3_1/inference.json",
+    "ocr-studio/data/output/rec_cham_inference_v24_1_r3_1/inference.pdiparams",
+    "ocr-studio/data/output/rec_cham_inference_v24_1_r3_1/inference.pdiparams.info",
+    "ocr-studio/data/output/rec_cham_inference_v24_1_r3_1/inference.pdmodel",
+    "ocr-studio/data/output/rec_cham_inference_v24_1_r3_1/inference.yml",
+    "ocr-studio/data/output/rec_cham_inference_v24_1_r3_1/model_manifest.json",
+    "ocr-studio/data/output/rec_cham_inference_v24_1_r4/cham_dict_v24_1.txt",
+    "ocr-studio/data/output/rec_cham_inference_v24_1_r4/inference.json",
+    "ocr-studio/data/output/rec_cham_inference_v24_1_r4/inference.pdiparams",
+    "ocr-studio/data/output/rec_cham_inference_v24_1_r4/inference.pdiparams.info",
+    "ocr-studio/data/output/rec_cham_inference_v24_1_r4/inference.pdmodel",
+    "ocr-studio/data/output/rec_cham_inference_v24_1_r4/inference.yml",
+    "ocr-studio/data/output/rec_cham_inference_v24_1_r4/model_manifest.json",
+    "ocr-studio/data/output/ch_PP-OCRv4_det_cham_infer/inference.json",
+    "ocr-studio/data/output/ch_PP-OCRv4_det_cham_infer/inference.pdiparams"
+  ],
+  "rollout": {
+    "rollout_seconds": 61,
+    "stage": "RUNNING",
+    "health_body": "OK",
+    "probe_model_info": {
+      "model": "v24_1_r4",
+      "normalizer": "generate_data.normalize_unicode/parse_unicode_clusters",
+      "recognizers": [
+        {
+          "version": "v24_1_r4",
+          "model_dir": "data/output/rec_cham_inference_v24_1_r4",
+          "weights_sha256_16": "508141c596bf43cb",
+          "dict": "cham_dict_v24_1_r4.txt",
+          "dict_sha256_16": "ec1e1f08254dbde6",
+          "rec_image_shape": "3, 48, 480",
+          "confidence_temperature": 0.913876
+        }
+      ],
+      "detector": {
+        "name": "generic_ppocrv4_dbnet",
+        "mode": "hybrid",
+        "loaded": true,
+        "weights_sha256_16": "49ee815e30cff43c",
+        "cham_dbnet_available": true,
+        "cham_dbnet_sha256_16": "cfc65a686ecaa5fd"
+      },
+      "paddle_version": "3.3.1"
+    }
+  },
+  "blank_guard": {
+    "lines": 0,
+    "document": {
+      "status": "no_text",
+      "needs_review": false,
+      "reasons": [
+        "blank_page"
+      ],
+      "line_count": 0,
+      "ink_ratio": 0.0
+    }
+  },
+  "live_harum_palei_01": {
+    "default_v24_1_r4": {
+      "wall_sec": 10.852,
+      "backend_sec": 8.2042,
+      "has_calibrated_confidence": true,
+      "model_info": {
+        "model": "v24_1_r4",
+        "normalizer": "generate_data.normalize_unicode/parse_unicode_clusters",
+        "recognizers": [
+          {
+            "version": "v24_1_r4",
+            "model_dir": "data/output/rec_cham_inference_v24_1_r4",
+            "weights_sha256_16": "508141c596bf43cb",
+            "dict": "cham_dict_v24_1_r4.txt",
+            "dict_sha256_16": "ec1e1f08254dbde6",
+            "rec_image_shape": "3, 48, 480",
+            "confidence_temperature": 0.913876
+          }
+        ],
+        "detector": {
+          "name": "generic_ppocrv4_dbnet",
+          "mode": "hybrid",
+          "loaded": true,
+          "weights_sha256_16": "49ee815e30cff43c",
+          "cham_dbnet_available": true,
+          "cham_dbnet_sha256_16": "cfc65a686ecaa5fd"
+        },
+        "paddle_version": "3.3.1"
+      },
+      "gt_lines": 25,
+      "pred_lines": 25,
+      "matched_lines": 25,
+      "line_recall_pct": 100.0,
+      "matched_line_cer_pct": 3.28,
+      "e2e_doc_cer_pct": 3.19,
+      "unmatched_gt_chars": 0,
+      "unmatched_pred_chars": 0
+    },
+    "v24_1_r3_1": {
+      "wall_sec": 12.301,
+      "backend_sec": 9.645,
+      "has_calibrated_confidence": true,
+      "model_info": {
+        "model": "v24_1_r3_1",
+        "normalizer": "generate_data.normalize_unicode/parse_unicode_clusters",
+        "recognizers": [
+          {
+            "version": "v24_1_r3_1",
+            "model_dir": "data/output/rec_cham_inference_v24_1_r3_1",
+            "weights_sha256_16": "5fb0d8e4d512b4c0",
+            "dict": "cham_dict_v24_1_r3_1.txt",
+            "dict_sha256_16": "ec1e1f08254dbde6",
+            "rec_image_shape": "3, 48, 320",
+            "confidence_temperature": 0.914851
+          }
+        ],
+        "detector": {
+          "name": "generic_ppocrv4_dbnet",
+          "mode": "hybrid",
+          "loaded": true,
+          "weights_sha256_16": "49ee815e30cff43c",
+          "cham_dbnet_available": true,
+          "cham_dbnet_sha256_16": "cfc65a686ecaa5fd"
+        },
+        "paddle_version": "3.3.1"
+      },
+      "gt_lines": 25,
+      "pred_lines": 25,
+      "matched_lines": 25,
+      "line_recall_pct": 100.0,
+      "matched_line_cer_pct": 5.23,
+      "e2e_doc_cer_pct": 5.08,
+      "unmatched_gt_chars": 0,
+      "unmatched_pred_chars": 0
+    },
+    "auto": {
+      "wall_sec": 10.93,
+      "backend_sec": 8.6371,
+      "has_calibrated_confidence": true,
+      "model_info": {
+        "model": "auto",
+        "normalizer": null,
+        "recognizers": [
+          {
+            "version": "v24_1_r4",
+            "model_dir": "data/output/rec_cham_inference_v24_1_r4",
+            "weights_sha256_16": "508141c596bf43cb",
+            "dict": "cham_dict_v24_1_r4.txt",
+            "dict_sha256_16": "ec1e1f08254dbde6",
+            "rec_image_shape": "3, 48, 480",
+            "confidence_temperature": 0.913876
+          },
+          {
+            "version": "vi",
+            "model_dir": "data/output/rec_vietnamese_infer",
+            "weights_sha256_16": "eb929c47e349f528",
+            "dict": "vietnamese_dict.txt",
+            "dict_sha256_16": "aee6e6d4c5023ba7",
+            "rec_image_shape": "3, 48, 320",
+            "confidence_temperature": 1.0
+          }
+        ],
+        "detector": {
+          "name": "generic_ppocrv4_dbnet",
+          "mode": "hybrid",
+          "loaded": true,
+          "weights_sha256_16": "49ee815e30cff43c",
+          "cham_dbnet_available": true,
+          "cham_dbnet_sha256_16": "cfc65a686ecaa5fd"
+        },
+        "paddle_version": "3.3.1"
+      },
+      "gt_lines": 25,
+      "pred_lines": 25,
+      "matched_lines": 25,
+      "line_recall_pct": 100.0,
+      "matched_line_cer_pct": 3.28,
+      "e2e_doc_cer_pct": 3.19,
+      "unmatched_gt_chars": 0,
+      "unmatched_pred_chars": 0
+    }
+  },
+  "live_audit_18": {
+    "pages": 18,
+    "lines": "134/134",
+    "abs_line_err": 0,
+    "blank_page_zero_lines": true,
+    "doc_cer_pct": 11.32,
+    "matched_cer_pct": 11.72
+  }
+}

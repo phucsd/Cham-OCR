@@ -1,0 +1,30 @@
+{
+  "title": "Cham-OCR v24.1 Stage R3.1 Preflight Report (GATE_CLOSURE_SESQUISYLLABIC_EROSION)",
+  "timestamp": "2026-11-17T02:10:29.361340+00:00",
+  "status": "PASS",
+  "yaml_diff_keys": [
+    "Eval.dataset.data_dir",
+    "Eval.dataset.label_file_list",
+    "Global.config_role",
+    "Global.pretrained_model",
+    "Global.save_inference_dir",
+    "Global.save_model_dir",
+    "Global.save_res_path",
+    "Optimizer.lr.eta_min",
+    "Optimizer.lr.warmup_epoch",
+    "Train.dataset.data_dir",
+    "Train.dataset.label_file_list"
+  ],
+  "unexpected_yaml_diffs": [],
+  "warmup_steps": 150,
+  "step_each_epoch": 337,
+  "base_checkpoint": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\r3_degradation_checkpoints\\iter_epoch_3.pdparams",
+  "base_checkpoint_sha256": "f00ae55578a2afae18f951677960ba8dc004174e429123d5d3602137f8ac7318",
+  "mixed_batch_idx": 1,
+  "blanks_in_mixed_batch": 1,
+  "total_loss": 6.865472793579102,
+  "ctc_loss": 5.9491119384765625,
+  "nrtr_loss": 0.9163610339164734,
+  "optimizer_eligible_finite_grads": 549,
+  "mutated_weights_count": 0
+}

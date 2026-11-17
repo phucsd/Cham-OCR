@@ -47,7 +47,22 @@ from scripts.generate_data import normalize_unicode
 DEFAULT_AUDIT_DIR = pathlib.Path(r"C:\Users\admin\Documents\Codex\2026-11-04\ti\outputs\ocr-audit-2026-11-04")
 
 
-def _build_direct_rec(model_dir: str, dict_path: str):
+def _detect_rec_shape(model_dir: str, alias: str = "") -> str:
+    mp = os.path.join(model_dir, "model_manifest.json")
+    if os.path.exists(mp):
+        try:
+            s = (json.load(open(mp, "r", encoding="utf-8")) or {}).get("rec_image_shape")
+            if isinstance(s, str) and len(s.split(",")) == 3:
+                return s
+        except Exception:
+            pass
+    h_low = f"{alias} {os.path.basename(os.path.normpath(model_dir))}".lower()
+    if "w480" in h_low or "r4" in h_low or "v25" in h_low:
+        return "3, 48, 480"
+    return "3, 48, 320"
+
+
+def _build_direct_rec(model_dir: str, dict_path: str, alias: str = ""):
     from tools.infer.predict_rec import TextRecognizer
     import tools.infer.utility as utility
 
@@ -58,7 +73,7 @@ def _build_direct_rec(model_dir: str, dict_path: str):
     args.rec_model_dir = os.path.abspath(model_dir)
     args.rec_char_dict_path = os.path.abspath(dict_path)
     args.use_gpu = False
-    args.rec_image_shape = "3, 48, 320"
+    args.rec_image_shape = _detect_rec_shape(model_dir, alias)
     args.use_space_char = True
     args.rec_batch_num = 1
     args.enable_mkldnn = False
@@ -83,7 +98,7 @@ def register_model(spec_str: str):
     if "=" in spec_str:
         alias, rest = spec_str.split("=", 1)
         mdir, dpath = _split_model_dict(rest)
-        rec = _build_direct_rec(mdir, dpath)
+        rec = _build_direct_rec(mdir, dpath, alias=alias)
         studio_app.ocr_models[alias] = rec
         studio_app.ocr_model_paths[alias] = {"model_dir": os.path.abspath(mdir), "dict_path": os.path.abspath(dpath)}
         return alias

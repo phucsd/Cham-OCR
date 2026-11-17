@@ -1,0 +1,54 @@
+{
+  "title": "Cham-OCR v24.1 Stage R3.1 Gate Closure + Sesquisyllabic + Erosion 6-Point Audit",
+  "audit_timestamp": "2026-11-17T02:09:16.273786+00:00",
+  "status": "PASS",
+  "execution_duration_sec": 21.26,
+  "new_rendered_13200": {
+    "mean_width_px": 183.1,
+    "max_width_px": 319,
+    "over_320px": 0,
+    "height_not_48": 0
+  },
+  "sesquisyllabic_train_lines": 11486,
+  "symbol_line_counts": {
+    "?": 232,
+    "!": 398,
+    "#": 232,
+    "&": 100,
+    "*": 232,
+    "<": 100,
+    ">": 233,
+    "{": 488,
+    "}": 488,
+    "\\": 100,
+    "_": 667,
+    "[": 194,
+    "]": 194,
+    "/": 378
+  },
+  "hyphen_group_counts": {
+    "double_hyphen": 510,
+    "number_number": 512,
+    "line_beginning": 288,
+    "word_word_tight": 268,
+    "year_year": 178,
+    "line_ending": 122,
+    "word_word_spaced": 122
+  },
+  "missing_dict_tokens": [],
+  "audits": {
+    "audit_1_text_disjointness": true,
+    "audit_2_train_val_disjointness": true,
+    "audit_3_long_substring_disjointness": true,
+    "audit_4_image_sha256_disjointness_and_24000_unique": true,
+    "audit_5_ast_generator_blindness": true,
+    "audit_6_width_phonotactics_coverage_sesquisyllabic": true
+  },
+  "violations": {
+    "text_overlap": {},
+    "train_val_overlap": [],
+    "substring": [],
+    "image_overlap": {},
+    "ast": []
+  }
+}

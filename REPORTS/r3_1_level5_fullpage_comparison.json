@@ -1,0 +1,97 @@
+{
+  "evaluated_at": "2026-11-17T03:19:34.238633+00:00",
+  "models": {
+    "v24": {
+      "short:5": {
+        "n": 16,
+        "lines": "63/64",
+        "abs_line_err": 3,
+        "doc_cer_pct": 21.97,
+        "matched_cer_pct": 22.52
+      },
+      "a4:5": {
+        "n": 16,
+        "lines": "240/241",
+        "abs_line_err": 1,
+        "doc_cer_pct": 19.58,
+        "matched_cer_pct": 19.9
+      },
+      "audit_18": {
+        "n": 18,
+        "lines": "134/134",
+        "abs_line_err": 0,
+        "doc_cer_pct": 18.26,
+        "matched_cer_pct": 18.77
+      }
+    },
+    "v24_1_r2_1_6": {
+      "short:5": {
+        "n": 16,
+        "lines": "62/64",
+        "abs_line_err": 2,
+        "doc_cer_pct": 17.27,
+        "matched_cer_pct": 17.77
+      },
+      "a4:5": {
+        "n": 16,
+        "lines": "239/241",
+        "abs_line_err": 2,
+        "doc_cer_pct": 13.68,
+        "matched_cer_pct": 13.92
+      },
+      "audit_18": {
+        "n": 18,
+        "lines": "134/134",
+        "abs_line_err": 0,
+        "doc_cer_pct": 11.1,
+        "matched_cer_pct": 11.38
+      }
+    },
+    "v24_1_r3": {
+      "short:5": {
+        "n": 16,
+        "lines": "62/64",
+        "abs_line_err": 2,
+        "doc_cer_pct": 16.37,
+        "matched_cer_pct": 16.75
+      },
+      "a4:5": {
+        "n": 16,
+        "lines": "239/241",
+        "abs_line_err": 2,
+        "doc_cer_pct": 12.98,
+        "matched_cer_pct": 13.19
+      },
+      "audit_18": {
+        "n": 18,
+        "lines": "134/134",
+        "abs_line_err": 0,
+        "doc_cer_pct": 10.9,
+        "matched_cer_pct": 11.17
+      }
+    },
+    "r3_1_best": {
+      "short:5": {
+        "n": 16,
+        "lines": "62/64",
+        "abs_line_err": 2,
+        "doc_cer_pct": 15.67,
+        "matched_cer_pct": 16.05
+      },
+      "a4:5": {
+        "n": 16,
+        "lines": "240/241",
+        "abs_line_err": 1,
+        "doc_cer_pct": 12.05,
+        "matched_cer_pct": 12.24
+      },
+      "audit_18": {
+        "n": 18,
+        "lines": "134/134",
+        "abs_line_err": 0,
+        "doc_cer_pct": 10.82,
+        "matched_cer_pct": 11.1
+      }
+    }
+  }
+}

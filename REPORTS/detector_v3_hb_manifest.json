@@ -1,0 +1,11 @@
+{
+  "stage": "CHAM_DBNET_V2_DETECTOR_V3_HB",
+  "generated_at": "2026-11-17T02:31:33.462798+00:00",
+  "duration_sec": 89.28,
+  "train_pages": 1000,
+  "val_pages": 120,
+  "train_line_polygons": 12174,
+  "val_line_polygons": 1473,
+  "train_label_sha256": "115c30752928e49e6b2f83af611b71366e9dc8f5926fac789796dfd72b23d99f",
+  "val_label_sha256": "18c4b227b595ddc3570d7a0f1aaf4aa3b93a6845dbe92019ba4c8afad94b0128"
+}

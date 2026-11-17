@@ -88,7 +88,7 @@ def parse_train_log(log_path: str) -> dict:
     }
 
 
-def evaluate_probe_100(cp_path: str) -> dict:
+def evaluate_probe_100(cp_path: str, target_w: int = 320) -> dict:
     import paddle
     import paddle.nn.functional as F
     from ppocr.modeling.architectures import build_model
@@ -116,7 +116,7 @@ def evaluate_probe_100(cp_path: str) -> dict:
         "NRTRLabelDecode": len(postprocess_op.character) + 3
     }
 
-    tensors_320 = [preprocess_aspect_preserve_cap(img, target_w=320, target_h=48)[0] for img in images]
+    tensors_w = [preprocess_aspect_preserve_cap(img, target_w=target_w, target_h=48)[0] for img in images]
 
     model = build_model(cfg["Architecture"])
     model.eval()
@@ -131,7 +131,7 @@ def evaluate_probe_100(cp_path: str) -> dict:
         gt_str = item["gt"]
         gt_tokens = [char_to_idx[c] for c in gt_str if c in char_to_idx]
         with paddle.no_grad():
-            out = model(tensors_320[idx])
+            out = model(tensors_w[idx])
             logits = out["ctc"] if isinstance(out, dict) else out
         probs = F.softmax(logits, axis=-1).numpy()[0]
         log_probs = F.log_softmax(logits, axis=-1).numpy()[0]

@@ -222,10 +222,22 @@ def resolve_dict_path(dict_arg=None, verify_baseline=False):
     raise FileNotFoundError(f"Could not locate dictionary file: {default_name}")
 
 class RecognizerEvaluator:
-    def __init__(self, model_dir=None, dict_path=None, verify_baseline=False, det_dir=None):
+    def __init__(self, model_dir=None, dict_path=None, verify_baseline=False, det_dir=None, rec_image_shape=None):
         self.model_dir = model_dir or os.path.join(STUDIO_DIR, "data", "output", "rec_cham_inference_v24")
         self.verify_baseline = verify_baseline
         self.dict_path = resolve_dict_path(dict_path, verify_baseline)
+        if rec_image_shape:
+            self.rec_image_shape = str(rec_image_shape)
+        else:
+            m_path = os.path.join(self.model_dir, "model_manifest.json")
+            m_shape = None
+            if os.path.exists(m_path):
+                try:
+                    with open(m_path, "r", encoding="utf-8") as mf:
+                        m_shape = json.load(mf).get("rec_image_shape")
+                except Exception:
+                    m_shape = None
+            self.rec_image_shape = str(m_shape or "3, 48, 320")
         self.engine = None
         self.model_sha256 = None
         self.dict_token_count = 0
@@ -293,7 +305,7 @@ class RecognizerEvaluator:
             args.rec_model_dir = os.path.abspath(self.model_dir)
             args.rec_char_dict_path = os.path.abspath(self.dict_path)
             args.use_gpu = False
-            args.rec_image_shape = "3, 48, 320"
+            args.rec_image_shape = self.rec_image_shape
             args.use_space_char = True
             args.rec_batch_num = 1
             args.enable_mkldnn = False
@@ -401,7 +413,8 @@ class RecognizerEvaluator:
         if self.det_model is not None:
             try:
                 import app
-                crops, metas = app.segment_lines_dbnet(img_bgr, self.det_model)
+                ink = app.analyze_text_ink(img_bgr)
+                crops, metas = app.segment_lines_dbnet(img_bgr, self.det_model, ink=ink)
                 results = []
                 for crop, meta in zip(crops, metas):
                     raw, norm, conf = self.predict_line(crop)
@@ -1510,6 +1523,7 @@ def main():
     parser.add_argument("--model-dir", type=str, default=None, help="Path to recognizer model directory")
     parser.add_argument("--det-dir", type=str, default=None, help="Path to detector model directory (optional)")
     parser.add_argument("--dict-path", type=str, default=None, help="Path to recognition dictionary (e.g. cham_dict_v24.txt or cham_dict_v24_1.txt)")
+    parser.add_argument("--rec-image-shape", type=str, default=None, help="Override recognizer image shape (e.g. '3, 48, 480')")
     parser.add_argument("--verify-baseline", action="store_true", help="Assert that model matches v24 baseline SHA256")
     parser.add_argument("--output", type=str, default=None, help="Path to output JSON report")
     args = parser.parse_args()
@@ -1529,7 +1543,8 @@ def main():
         model_dir=args.model_dir,
         dict_path=args.dict_path,
         verify_baseline=args.verify_baseline,
-        det_dir=args.det_dir
+        det_dir=args.det_dir,
+        rec_image_shape=args.rec_image_shape
     )
 
     res_blank = run_suite_blank(evaluator)
