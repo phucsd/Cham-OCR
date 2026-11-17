@@ -1,0 +1,24 @@
+{
+  "stage": "R4_2_INKTIGHT_GATE_CLOSURE_W480",
+  "generated_at": "2026-11-17T09:50:16.708767+00:00",
+  "elapsed_sec": 24.98,
+  "train": {
+    "total": 12800,
+    "replay": 7680,
+    "symbols_all_14": 2560,
+    "hyphens_all_7": 1600,
+    "optical_and_blanks": 960,
+    "blanks": 473
+  },
+  "val": {
+    "total": 1280,
+    "replay": 768,
+    "symbols_all_14": 256,
+    "hyphens_all_7": 160,
+    "optical_and_blanks": 96,
+    "blanks": 50
+  },
+  "unique_image_sha256": 14080,
+  "dict_coverage": "114/114",
+  "zero_benchmark_exact_overlap": true
+}

@@ -2008,9 +2008,9 @@ Canonical Brahmic Cluster: ꨙ (Nda) + ꨳ (Medial Ya) + ꨯ (Vowel O) + ꨮ (Vo
                         </tbody>
                     </table>
 
-                    <div class="academic-h3" style="margin-top: 14px;">3. Model Classification: V25 Validated SOTA vs V24 Logical Baseline</div>
+                    <div class="academic-h3" style="margin-top: 14px;">3. Model Progression: V24.1-R4.1 Wide-Canvas Default, V25 Bilingual SOTA &amp; RealScan-Gold v2</div>
                     <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 8px;">
-                        Evaluation across 10,000 frozen validation samples establishes <strong>Version 25</strong> as the new production SOTA model (Sequence Accuracy <strong>90.96%</strong>, Normalized Edit Distance <strong>99.28%</strong>, CER <strong>0.72%</strong>) following 40 epochs of multi-stage training on Dual Tesla T4x2 GPUs. <strong>Version 24</strong> serves as the logical order baseline (Accuracy 88.94%), while <strong>Version 23</strong> is maintained for legacy visual order comparison.
+                        <strong>V24.1-R4.1 WiSE-FT (Default Production SOTA, <code>[3, 48, 480]</code>, \(T=60\))</strong> enforces vocabulary-isolated 114-token pure-Cham recognition with 100% HarfBuzz shaping and Temperature-Scaled confidence (\(T^*=0.9467\)), passing <strong>5/6 Frozen-838 Release Gates</strong> (<strong>2.64%</strong> Character CER, <strong>99.29%</strong> on 14 Mandatory Symbols, <strong>95.71%</strong> on Multi-Context Hyphens) and reaching <strong>2.55% Crop CER (8.56% WER)</strong> on real mobile-camera poetry (<code>harum_palei_01</code>, 25/25 lines). Paired with <strong>V24.1-R3.1 (<code>W=320</code>)</strong>, cross-domain evaluation on the 212-line uncontaminated <strong>RealScan-Gold v2</strong> benchmark achieves <strong>100.0% line recall (180/180)</strong> and cuts unseen camera-book E2E CER from 15.14% (V24) to <strong>7.19%</strong>. <strong>Version 25</strong> (162-token bilingual track) achieved <strong>90.96% Sequence Accuracy (CER 0.72%)</strong> on the 10K frozen validation archive after 40 epochs on Dual Tesla T4x2 GPUs; <strong>V24</strong> (88.94% Acc) and <strong>V23</strong> (visual legacy) remain available for historical comparison.
                     </p>
 
                     <div class="academic-h3">🔍 Error Metrics Definition</div>
@@ -2455,7 +2455,7 @@ python ocr-studio/app.py</div>
             showToast("Transcribing delineated region...");
             try {
                 const modelSelect = document.getElementById('model-select');
-                const modelVer = modelSelect ? modelSelect.value : 'v24_1_r3';
+                const modelVer = modelSelect ? modelSelect.value : 'v24_1_r4';
                 const res = await fetch('/ocr_crop', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },

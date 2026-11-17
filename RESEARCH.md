@@ -329,6 +329,37 @@ To support reproducible training across constrained computational budgets, we co
 | **Kaggle Dual Tesla T4x2 (DDP)** | 64 (32x2) | **120.4** | 92% | 83.8% | 23.07 hrs | **Free Quota** | **Infinite** |
 | **NVIDIA L4 (24GB)** | 96 | **74.3** | 98% | 79.2% | 37.38 hrs | $29.53 | 94.0 |
 
+### 6.5 Vocabulary-Isolated Pure-Cham Production Lineage (`V24.1-R4.1`) & `RealScan-Gold v2` Cross-Domain Evaluation
+
+While the 162-token bilingual `V25` checkpoint established peak frozen validation accuracy (`90.96%` Sequence Accuracy, `0.72%` CER on `cham_v25_val_freeze.zip`), expanding a single CTC output softmax over mixed Cham and Vietnamese/Latin characters introduces probability dispersion on blurred historical folios (occasionally inserting stray Latin tokens on degraded ink). To enforce strict **Vocabulary Layering**, we engineered a dedicated **114-token Pure-Cham + Mandatory Editorial Punctuation lineage (`V24.1`)** paired with `AutoRoutingOCRWrapper` for bilingual code-switching, culminating in **`V24.1-R3.1` (`[3, 48, 320]`, $T = 40$)** and **`V24.1-R4.1 WiSE-FT` (`[3, 48, 480]`, $T = 60$, default production SOTA on `https://ocr.cham.asia`)**:
+
+1. **HarfBuzz OpenType Shaping Parity (`uharfbuzz` + `freetype`)**: Replaced legacy PIL `ImageDraw.text` rasterization with full OpenType GSUB/GPOS shaping, eliminating pre-vowel (`ꨯ`, `ꨰ`), subjoined medial (`ꨳ`–`ꨶ`), and contextual hyphen (`hyphen.cham` `gid=10` vs `hyphen` `gid=118`) rendering discrepancies.
+2. **`PPLCNetV3` Dynamic Width Pooling Fix (`rec_lcnetv3.py`)**: Discovered and patched a hardcoded `F.adaptive_avg_pool2d(x, [1, 40])` squeeze in PaddleOCR's training-mode `PPLCNetV3` backbone (`F.adaptive_avg_pool2d(x, [1, int(x.shape[3]) // 2])`), restoring exact train-eval temporal stride parity ($T = W / 8 = 60$ at $W = 480$).
+3. **`DBNet` `MakeShrinkMap` `seed=1024` Bug Fix & Detached Diacritic Suppression**: Identified and patched a silent zero-GT bug where `build_dataloader(..., seed=1024)` overwrote `kwargs['epoch'] = 1024 > total_epoch` (causing `shrink_ratio > 1.0` and empty shrink maps), and added geometric micro-diacritic speck suppression in `merge_line_boxes` (`100.0%` line recall across both `harum_palei_01` `25/25` and `RealScan-Gold v2` `180/180` OOD lines). Controlled evaluation of `Cham-DBNet v2.1` (`100.00%` H-Mean on `Val-120`, `99.77%` H-Mean / `100.0%` Precision on 16-vertex curved `Val-160`) further proved that rigid 4-point `minAreaRect` (`box_type='quad'`) inflates bounding-box height on intersecting `Level-5` waves, motivating polygonal TPS rectification (`box_type='poly'`) for `v3`.
+4. **Post-Hoc Logit Temperature Scaling ($T^*$) & Active Learning Loop**: Fitted $T^* = 0.9467$ on held-out `Probe-100` (reducing out-of-domain ECE on `harum_palei_01` by `-29.0%`, from `0.0228` to `0.0162`), exposed `calibrated_confidence` in `/ocr`, and deployed lossless Active Learning ingestion (`/save_correction` $\to$ `export_active_learning_r4.py` & `ingest_studio_to_realscan_gold.py`).
+
+#### Table 6.5a: Controlled `Frozen-838` & `Stress-82` Progression Across `V24.1` Stages
+
+| Model / Stage | Input $(C,H,W)$ | Clean-Frozen CER | Character-Frozen CER | 14 Mandatory Symbols | Multi-Context Hyphens | Stress-82 CER | Blank Guard | Release Gates |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **`V24` (PIL Baseline)** | `[3, 48, 320]` | 11.80% | 4.18% | N/A (103 tokens) | N/A | 27.64% | PASS | Baseline |
+| **`V24.1-R2.1.6`** | `[3, 48, 320]` | **4.82%** | 4.29% | 98.21% (`275/280`) | 91.43% (`64/70`) | 16.89% | PASS | `4/6` |
+| **`V24.1-R3`** | `[3, 48, 320]` | 5.19% | 4.27% | 96.79% (`271/280`) | 88.57% (`62/70`) | 11.19% | PASS | `4/6` |
+| **`V24.1-R3.1`** | `[3, 48, 320]` | 4.98% | 3.67% | 97.14% (`272/280`) | 92.86% (`65/70`) | **6.46%** | PASS | `4/6` |
+| **`V24.1-R4.1 WiSE-FT` (Default)** | **`[3, 48, 480]`** | **5.28%** | **2.64%** | **99.29% (`278/280`)** | **95.71% (`67/70`)** | **6.93%** | **PASS** | **`5/6`** |
+
+#### Table 6.5b: Uncontaminated Cross-Domain Generalization on `RealScan-Gold v2` (`212` Lines, 100% Unseen Typefaces & Camera Scans)
+
+To rigorously quantify synthetic-to-real and unseen-typeface generalization without training contamination, we constructed **`RealScan-Gold v2`** (`ocr-benchmark/data/realscan_gold_v2/manifest.json`, `225` SHA-256-locked assets): `25` authentic mobile-camera poem lines (`harum_palei_01`), `7` public-domain Wikimedia Commons specimens, and `12` unseen archival pages (`180` lines across 1-column and 2-column folios rendered exclusively from 12 unseen *EFEO Cam* fonts and 6 held-out print fonts never used in training):
+
+| Model | `harum_palei_01` Camera Crop CER (WER) | `efeo_palm_leaf_agal` E2E CER (`58/58`) | `efeo_regional_folio` 1–2 Col E2E CER (`62/62`) | `heldout_camera_book` E2E CER (`60/60`) | Overall OOD-180 E2E Doc CER (`180/180` Recall) |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **`V24` (Legacy PIL)** | 6.33% (20.86%) | 35.29% | 49.11% | 15.14% | 32.10% |
+| **`V24.1-R3` (`W=320`)** | 6.33% (24.60%) | 33.65% | 48.96% | 8.97% | 29.26% |
+| **`V24.1-R3.1` (`W=320`)** | 4.62% (17.65%) | **25.79%** | **43.23%** | **7.19%** | **24.24%** |
+| **`V24.1-R4.1` (`W=480` Default)** | **2.55% (8.56%)** | 28.86% | 43.77% | 7.57% | 25.58% |
+| **`Auto` Dual-Engine** | **2.55% (8.56%)** | 28.86% | 45.55% | 7.57% | 26.12% |
+
 ---
 
 ## 7. Production Serving & Deployment Infrastructure
@@ -368,12 +399,11 @@ While our pipeline demonstrates substantial gains on synthetic and semi-controll
 3. **Severe Biological Degradation & Epigraphy**: Inscription stone rubbings and severely mold-damaged palm leaves (where character ink has substantially eroded) remain beyond the capabilities of pure vision-based CTC sequence models. Integrating masked language models (MLMs) trained on historical Cham corpora is an active subject of future study.
 4. **Extreme Interlinear Overlap (Level 5)**: When severe paper wrinkling causes interlinear wave amplitude to exceed line spacing ($\text{Amplitude} > \text{Gap}$), 1D projection and horizontal bounding boxes collapse, indicating the need for 2D polygonal baseline tracking models in future iterations.
 
-### 8.5 Post-V25 Future Iterations (Planned V25.1 / V26 Improvements)
-Following the successful training and deployment of Model Version 25 (90.96% Sequence Accuracy), all subsequent pipeline enhancements are tracked systematically for future V25.1 and V26 releases (see [FUTURE_WORK.md](file:///FUTURE_WORK.md)):
-1. **Dual-Script Font Fallback & Glyph Validation**: Implementation of a coordinated rendering pipeline for mixed Cham and Vietnamese/Latin text with fontTools cmap validation across both scripts to eliminate tofu artifacts in bilingual annotations.
-2. **Dedicated Directional Motion-Blur Augmentation**: Physics-grounded Point Spread Function (PSF) kernels modeling hand tremor motion angles and shutter exposure times.
-3. **Manifest-Driven Exact Package Allocation**: Deterministic line count allocation per category instead of probabilistic multinomial sampling.
-4. **Deterministic Frozen Validation Generation**: Permanent pre-generated frozen validation splits to guarantee zero-variance benchmark comparisons across epochs.
+### 8.5 Completed V24.1 Enhancements & Next-Generation V26 / Cham-DBNet v3 Roadmap
+Following the deployment of both Model Version 25 (`90.96%` Sequence Accuracy on frozen 10K validation) and the vocabulary-isolated `V24.1-R4.1 WiSE-FT` wide-canvas production model (`2.55%` real-camera CER, `5/6` Frozen-838 Release Gates), open research priorities tracked in [FUTURE_WORK.md](FUTURE_WORK.md) include:
+1. **Polygonal Bezier/TPS Curved Baseline Rectification (`Cham-DBNet v3`, `box_type='poly'`)**: Replacing 4-point `minAreaRect` (`box_type='quad'`) with 16-vertex polygonal contour extraction and Thin-Plate Spline (TPS) de-warping to resolve intersecting `Level-5` sinusoidal baselines ($\text{Amplitude} > \text{Gap}$).
+2. **Padding-Masked SVTR Self-Attention**: Incorporating `valid_ratio` key-padding masks inside SVTR global attention blocks so ultra-short crops (`< 160px`) and full-width stanzas (`480px`) share identical attention sharpness without right-padding dilution.
+3. **Dual-Script Composite Rendering & Field Manuscript Active Learning (`RealScan-Gold v3`)**: Expanding verified palm-leaf (*agal*) and regional manuscript benchmarks via human-in-the-loop Studio exports (`scripts/ingest_studio_to_realscan_gold.py`) to close the ~43% paleographic gap on unseen historical regional hands (`efeo_regional_folio`).
 
 ---
 

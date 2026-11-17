@@ -728,6 +728,7 @@
                         <li><a href="#sec6-2" class="toc-sublink">6.2 200-Page Stress-Test Suite</a></li>
                         <li><a href="#sec6-3" class="toc-sublink">6.3 Model Progression: V23 vs V24 vs V25 SOTA</a></li>
                         <li><a href="#sec6-4" class="toc-sublink">6.4 Multi-GPU Hardware Scaling</a></li>
+                        <li><a href="#sec6-5" class="toc-sublink">6.5 V24.1 Pure-Cham &amp; RealScan-Gold v2</a></li>
                     </ul>
                 </li>
                 <li class="toc-item">
@@ -1579,6 +1580,123 @@
                         </tbody>
                     </table>
                 </div>
+
+                <h3 id="sec6-5">6.5 Vocabulary-Isolated Pure-Cham Production Lineage (V24.1-R4.1) &amp; RealScan-Gold v2 Cross-Domain Evaluation</h3>
+                <p>
+                    Complementing the 162-token bilingual <strong>V25</strong> milestone (90.96% Sequence Accuracy, 0.72% CER on <code>cham_v25_val_freeze.zip</code>), we engineered a vocabulary-isolated <strong>114-token Pure-Cham + Mandatory Punctuation lineage (V24.1)</strong> paired with <code>AutoRoutingOCRWrapper</code> to prevent CTC probability dispersion on blurred historical folios. Key architectural advances include: (1) <strong>100% HarfBuzz OpenType shaping</strong> (<code>uharfbuzz</code> + <code>freetype</code>); (2) patching PaddleOCR's hardcoded <code>F.adaptive_avg_pool2d(x, [1, 40])</code> squeeze in <code>rec_lcnetv3.py</code> to dynamic <code>int(x.shape[3]) // 2</code> (\(T = 60\) at \(W = 480\)); (3) resolving <code>MakeShrinkMap</code>'s silent <code>seed=1024</code> zero-GT bug and adding geometric micro-diacritic suppression in <code>merge_line_boxes</code>; and (4) post-hoc logit Temperature Scaling (\(T^* = 0.9467\)) alongside lossless Active Learning ingestion.
+                </p>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Model / Stage</th>
+                                <th class="num">Input \((C, H, W)\)</th>
+                                <th class="num">Clean-Frozen CER</th>
+                                <th class="num">Character CER</th>
+                                <th class="num">14 Symbols Acc</th>
+                                <th class="num">Hyphen Acc</th>
+                                <th class="num">Stress-82 CER</th>
+                                <th class="num">Release Gates</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>V24 (PIL Baseline)</strong></td>
+                                <td class="num">\([3, 48, 320]\)</td>
+                                <td class="num">11.80%</td>
+                                <td class="num">4.18%</td>
+                                <td class="num">N/A (103 tok)</td>
+                                <td class="num">N/A</td>
+                                <td class="num">27.64%</td>
+                                <td class="num">Baseline</td>
+                            </tr>
+                            <tr>
+                                <td><strong>V24.1-R2.1.6</strong></td>
+                                <td class="num">\([3, 48, 320]\)</td>
+                                <td class="num"><strong>4.82%</strong></td>
+                                <td class="num">4.29%</td>
+                                <td class="num">98.21%</td>
+                                <td class="num">91.43%</td>
+                                <td class="num">16.89%</td>
+                                <td class="num">4/6</td>
+                            </tr>
+                            <tr>
+                                <td><strong>V24.1-R3.1</strong></td>
+                                <td class="num">\([3, 48, 320]\)</td>
+                                <td class="num">4.98%</td>
+                                <td class="num">3.67%</td>
+                                <td class="num">97.14%</td>
+                                <td class="num">92.86%</td>
+                                <td class="num"><span class="metric-badge metric-good">6.46%</span></td>
+                                <td class="num">4/6</td>
+                            </tr>
+                            <tr>
+                                <td><strong>V24.1-R4.1 WiSE-FT (Default)</strong></td>
+                                <td class="num"><strong>\([3, 48, 480]\)</strong></td>
+                                <td class="num">5.28%</td>
+                                <td class="num"><span class="metric-badge metric-good">2.64%</span></td>
+                                <td class="num"><span class="metric-badge metric-good">99.29% (278/280)</span></td>
+                                <td class="num"><span class="metric-badge metric-good">95.71%</span></td>
+                                <td class="num">6.93%</td>
+                                <td class="num"><strong>5/6</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p style="margin-top: 14px;">
+                    <strong>Uncontaminated Cross-Domain Generalization (<code>RealScan-Gold v2</code>, 212 Lines)</strong>: Evaluated across 25 authentic mobile-camera lines (<code>harum_palei_01</code>), 7 public-domain Wikimedia specimens, and 12 unseen OOD archival pages (180 lines across 1-column and 2-column folios rendered exclusively from 12 unseen <em>EFEO Cam</em> fonts and 6 held-out print fonts), the hybrid detector achieves <strong>100.0% line recall (180/180)</strong> while <code>V24.1-R4.1</code> and <code>V24.1-R3.1</code> substantially reduce cross-domain CER:
+                </p>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Model</th>
+                                <th class="num"><code>harum_palei_01</code> Camera CER (WER)</th>
+                                <th class="num"><code>efeo_palm_leaf_agal</code> E2E</th>
+                                <th class="num"><code>efeo_regional_folio</code> 1–2 Col E2E</th>
+                                <th class="num"><code>heldout_camera_book</code> E2E</th>
+                                <th class="num">Overall OOD-180 E2E CER</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>V24 (Legacy PIL)</strong></td>
+                                <td class="num">6.33% (20.86%)</td>
+                                <td class="num">35.29%</td>
+                                <td class="num">49.11%</td>
+                                <td class="num">15.14%</td>
+                                <td class="num">32.10% (180/180)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>V24.1-R3 (W=320)</strong></td>
+                                <td class="num">6.33% (24.60%)</td>
+                                <td class="num">33.65%</td>
+                                <td class="num">48.96%</td>
+                                <td class="num">8.97%</td>
+                                <td class="num">29.26% (180/180)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>V24.1-R3.1 (W=320)</strong></td>
+                                <td class="num">4.62% (17.65%)</td>
+                                <td class="num"><span class="metric-badge metric-good">25.79%</span></td>
+                                <td class="num"><strong>43.23%</strong></td>
+                                <td class="num"><span class="metric-badge metric-good">7.19%</span></td>
+                                <td class="num"><span class="metric-badge metric-good">24.24% (180/180)</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>V24.1-R4.1 (W=480 Default)</strong></td>
+                                <td class="num"><span class="metric-badge metric-good">2.55% (8.56%)</span></td>
+                                <td class="num">28.86%</td>
+                                <td class="num">43.77%</td>
+                                <td class="num">7.57%</td>
+                                <td class="num">25.58% (180/180)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </section>
 
             <!-- SECTION 7 -->
@@ -1631,15 +1749,14 @@ if not hasattr(np, 'typeDict'): np.typeDict = {}</code></pre>
                     <li><strong>Extreme Interlinear Overlap (Level 5)</strong>: When severe paper wrinkling causes interlinear wave amplitude to exceed line spacing (\(\text{Amplitude} > \text{Gap}\)), 1D projection and horizontal bounding boxes collapse, indicating the need for 2D polygonal baseline tracking models in future iterations.</li>
                 </ul>
 
-                <h3 id="sec8-5">8.5 Post-V25 Future Iterations (Planned V25.1 / V26 Improvements)</h3>
+                <h3 id="sec8-5">8.5 Completed V24.1 Milestones &amp; Next-Generation V26 / Cham-DBNet v3 Roadmap</h3>
                 <p>
-                    Following the successful training and deployment of Model Version 25 (90.96% Sequence Accuracy), all subsequent pipeline enhancements are tracked systematically in <a href="https://github.com/phucsd/Cham-OCR/blob/main/FUTURE_WORK.md" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); font-weight: 600;">FUTURE_WORK.md</a>:
+                    Following the validation of Model Version 25 (90.96% Sequence Accuracy) and the deployment of the vocabulary-isolated <strong>V24.1-R4.1 WiSE-FT</strong> wide-canvas model (2.55% real-camera CER, 5/6 Frozen-838 Release Gates), open research priorities tracked in <a href="https://github.com/phucsd/Cham-OCR/blob/main/FUTURE_WORK.md" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); font-weight: 600;">FUTURE_WORK.md</a> include:
                 </p>
                 <ol style="margin-bottom: 1.5rem; line-height: 1.7; color: var(--text-secondary);">
-                    <li><strong>Dual-Script Font Fallback & Combined Glyph Validation</strong>: Coordinated rendering pipeline for mixed Cham and Vietnamese/Latin text with fontTools cmap validation across both scripts to eliminate tofu artifacts in bilingual annotations.</li>
-                    <li><strong>Dedicated Directional Motion-Blur Augmentation</strong>: Physics-grounded Point Spread Function (PSF) kernels modeling hand tremor motion angles and camera exposure duration.</li>
-                    <li><strong>Manifest-Driven Exact Package Allocation</strong>: Deterministic line count allocation per category instead of probabilistic multinomial sampling.</li>
-                    <li><strong>Deterministic Frozen Validation Generation</strong>: Pre-generated, permanent frozen validation splits for zero-variance benchmark comparisons across training stages.</li>
+                    <li><strong>Polygonal Bezier/TPS Curved Baseline Rectification (<code>Cham-DBNet v3</code>, <code>box_type='poly'</code>)</strong>: Replacing 4-point <code>minAreaRect</code> (<code>box_type='quad'</code>) with 16-vertex polygonal contour extraction and Thin-Plate Spline (TPS) de-warping to resolve intersecting Level-5 sinusoidal waves (\(\text{Amplitude} > \text{Gap}\)).</li>
+                    <li><strong>Padding-Masked SVTR Self-Attention</strong>: Incorporating <code>valid_ratio</code> key-padding masks inside SVTR global attention blocks so ultra-short crops (&lt; 160px) and full-width stanzas (480px) share identical attention sharpness without zero-padding dilution.</li>
+                    <li><strong>Dual-Script Composite Rendering &amp; Field Manuscript Active Learning (<code>RealScan-Gold v3</code>)</strong>: Expanding verified palm-leaf (<em>agal</em>) and regional manuscript benchmarks via human-in-the-loop Studio exports (<code>scripts/ingest_studio_to_realscan_gold.py</code>) to close the ~43% paleographic gap on unseen historical regional hands.</li>
                 </ol>
             </section>
 

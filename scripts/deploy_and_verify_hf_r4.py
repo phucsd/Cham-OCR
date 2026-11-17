@@ -5,7 +5,7 @@ Cham-OCR Production HF Space Deployment & Live End-to-End Verification (Stage R3
 =====================================================================================================
 1. Uploads POSIX-normalized production files to Hugging Face Space `phucsd/cham-ocr-studio`.
 2. Polls Space runtime build -> RUNNING and waits for `https://ocr.cham.asia/health == 200 OK`
-   with the newly deployed default model (`v24_1_r4`, `weights_sha256_16 == 508141c596bf43cb`).
+   with the newly deployed default model (`v24_1_r4`, `weights_sha256_16 == 85525b0ca091acaf`).
 3. Executes read-only live verification against `https://ocr.cham.asia/ocr` (NEVER writes to `/save_correction`):
    - Blank page guard (`0` lines, `document.status == "no_text"`).
    - Live `RealScan-Gold v1 / harum_palei_01` full-page camera photo across `v24_1_r4` (default),
@@ -44,7 +44,7 @@ from evaluate_level5_pages import load_pages, norm_audit, matched_cer
 
 SPACE_ID = "phucsd/cham-ocr-studio"
 LIVE_BASE_URL = "https://ocr.cham.asia"
-EXPECTED_R4_SHA16 = "508141c596bf43cb"
+EXPECTED_R4_SHA16 = "85525b0ca091acaf"
 EXPECTED_R31_SHA16 = "5fb0d8e4d512b4c0"
 
 
@@ -63,8 +63,13 @@ def collect_operations() -> list:
     explicit_relpaths = [
         "Dockerfile",
         "DESIGN.md",
+        "README.md",
+        "README_VI.md",
+        "RESEARCH.md",
+        "FUTURE_WORK.md",
         "ocr-studio/app.py",
         "ocr-studio/index.html",
+        "ocr-studio/research.html",
         "ocr-studio/tests/test_quality_gates.py",
         "ocr-studio/PaddleOCR/ppocr/modeling/backbones/rec_lcnetv3.py",
         "ocr-studio/data/cham_dict_v24_1_r3_1.txt",
@@ -72,6 +77,7 @@ def collect_operations() -> list:
         "ocr-studio/data/output/rec_cham_inference_v24_1_r2_1_6/model_manifest.json",
         "ocr-studio/data/output/rec_cham_inference_v24_1_r3/model_manifest.json",
         "ocr-training/scripts/export_active_learning_r4.py",
+        "scripts/ingest_studio_to_realscan_gold.py",
     ]
     dir_relpaths = [
         "ocr-studio/data/output/rec_cham_inference_v24_1_r3_1",
@@ -193,13 +199,17 @@ def main():
             repo_id=SPACE_ID,
             repo_type="space",
             operations=ops,
-            commit_message="Deploy Cham-OCR v24.1-R4 (W=480 default SOTA) + v24.1-R3.1 (W=320), diacritic suppression & calibrated confidence",
+            commit_message="Deploy Cham-OCR v24.1-R4.1 WiSE-FT (W=480 5/6 Gates, 2.55% RealScan CER) + Research Whitepaper & RealScan-Gold v2 sync",
         )
         commit_sha = str(getattr(commit_info, "oid", "") or getattr(commit_info, "commit_url", "").rstrip("/").split("/")[-1])
         print(f"🚀 Commit created on `{SPACE_ID}`: `{commit_sha}`")
         rollout = wait_for_space_rollout(api, commit_sha=commit_sha)
 
-    # 1. Blank-page guard verification
+    # 1. Blank-page guard & /research whitepaper verification
+    res_page = requests.get(f"{LIVE_BASE_URL}/research", timeout=30)
+    assert res_page.status_code == 200 and "RealScan-Gold v2" in res_page.text, f"/research check failed: {res_page.status_code}"
+    print("✅ [Live Check 0/3] Live `/research` whitepaper PASSED (`200 OK`, includes `RealScan-Gold v2`).")
+
     blank_img = np.full((480, 1200, 3), 252, dtype=np.uint8)
     blank_resp = post_live_ocr(blank_img, model=None)
     assert len(blank_resp.get("lines", [])) == 0, f"Blank guard failed: {blank_resp}"

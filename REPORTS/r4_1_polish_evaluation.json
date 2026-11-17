@@ -1,0 +1,347 @@
+{
+  "title": "Cham-OCR v24.1 Stage R4.1 Surgical Gate-Closure (W=480) Evaluation",
+  "evaluated_at": "2026-11-17T09:27:45.713733+00:00",
+  "ground_truth_training_accounting": {
+    "first_batch_timestamp": "2026-11-17 08:13:23",
+    "last_batch_timestamp": "2026-11-17 08:24:52",
+    "train_loop_duration_seconds": 689.0,
+    "train_loop_duration_minutes": 11.48,
+    "pipeline_container_overhead_seconds": 751.9,
+    "pipeline_container_overhead_minutes": 12.53,
+    "total_kernel_wall_clock_seconds": 1440.9,
+    "total_kernel_wall_clock_minutes": 24.02,
+    "epoch_1_final_loss": 8.142678,
+    "epoch_2_final_loss": 7.8103,
+    "epoch_3_final_loss": 8.292135
+  },
+  "r4_1_polish": {
+    "epoch_1": {
+      "sha256": "09bdbedc275f26c32eba7b30eb38d82f03c1e571712d5934a66c0c236fd84d19",
+      "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\r4_1_w480_infer_e1",
+      "clean_cer_pct": 5.4197,
+      "char_cer_pct": 2.6994,
+      "symbols_acc_pct": 98.9286,
+      "failing_symbols": [
+        "*",
+        "_",
+        "/"
+      ],
+      "hyphen_acc_pct": 95.7143,
+      "blank_passed": true,
+      "fullpage_matched_cer_pct": 7.5285,
+      "stress_frozen_cer_pct": 6.9887,
+      "probe_100_w480": {
+        "cer_pct": 4.2,
+        "edits": 82,
+        "exact_matches": 55,
+        "deletions": 50,
+        "substitutions": 19,
+        "insertions": 13,
+        "subpeak_top2_top3_suppressed": 28,
+        "subpeak_pct_of_deletions": 56.0,
+        "missing_never_top1": 22,
+        "argmax_alignment_mismatch": 0,
+        "repeated_token_collapse": 0,
+        "combmark_final_deletions": 46,
+        "combmark_subpeak_deletions": 25
+      },
+      "composite_score": 0.6707,
+      "valid_for_release": false,
+      "gates_passed_count": 5,
+      "total_gates": 6,
+      "gates": [
+        {
+          "gate": "Gate 1: Clean-Frozen Non-Regression",
+          "baseline": "11.7967%",
+          "tolerance": "+0.20%",
+          "threshold": "11.9967%",
+          "value": "5.4197%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+          "min_acc": "99.0%",
+          "value": "98.9286%",
+          "failing_symbols": [
+            "*",
+            "_",
+            "/"
+          ],
+          "failing_count": 3,
+          "status": "FAIL"
+        },
+        {
+          "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+          "min_acc": "95.0%",
+          "value": "95.7143%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+          "white_pred": "",
+          "gray_pred": "",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 5: Character-Frozen Non-Regression",
+          "baseline": "4.1830%",
+          "tolerance": "+0.21%",
+          "threshold": "4.3930%",
+          "value": "2.6994%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+          "threshold": "12.0000%",
+          "value": "7.5285%",
+          "status": "PASS"
+        }
+      ],
+      "per_symbol_count_acc_pct": {
+        "?": 100.0,
+        "!": 100.0,
+        "#": 100.0,
+        "&": 100.0,
+        "*": 95.0,
+        "<": 100.0,
+        ">": 100.0,
+        "{": 100.0,
+        "}": 100.0,
+        "\\": 100.0,
+        "_": 95.0,
+        "[": 100.0,
+        "]": 100.0,
+        "/": 95.0
+      },
+      "per_hyphen_group_count_acc_pct": {
+        "word-word": 100.0,
+        "word - word": 100.0,
+        "number-number": 100.0,
+        "year-year": 100.0,
+        "line ending": 100.0,
+        "line beginning": 100.0,
+        "double hyphen": 70.0
+      }
+    },
+    "epoch_2": {
+      "sha256": "c70ef93284df25ff1c42d2c5ab239efdbf82f3c862d4904c17b44df45b703594",
+      "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\r4_1_w480_infer_e2",
+      "clean_cer_pct": 5.575,
+      "char_cer_pct": 2.5345,
+      "symbols_acc_pct": 97.1429,
+      "failing_symbols": [
+        "*",
+        "_",
+        "/"
+      ],
+      "hyphen_acc_pct": 94.2857,
+      "blank_passed": true,
+      "fullpage_matched_cer_pct": 7.4737,
+      "stress_frozen_cer_pct": 6.9653,
+      "probe_100_w480": {
+        "cer_pct": 4.41,
+        "edits": 86,
+        "exact_matches": 53,
+        "deletions": 51,
+        "substitutions": 21,
+        "insertions": 14,
+        "subpeak_top2_top3_suppressed": 27,
+        "subpeak_pct_of_deletions": 52.94,
+        "missing_never_top1": 24,
+        "argmax_alignment_mismatch": 0,
+        "repeated_token_collapse": 0,
+        "combmark_final_deletions": 48,
+        "combmark_subpeak_deletions": 25
+      },
+      "composite_score": 0.6593,
+      "valid_for_release": false,
+      "gates_passed_count": 4,
+      "total_gates": 6,
+      "gates": [
+        {
+          "gate": "Gate 1: Clean-Frozen Non-Regression",
+          "baseline": "11.7967%",
+          "tolerance": "+0.20%",
+          "threshold": "11.9967%",
+          "value": "5.5750%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+          "min_acc": "99.0%",
+          "value": "97.1429%",
+          "failing_symbols": [
+            "*",
+            "_",
+            "/"
+          ],
+          "failing_count": 3,
+          "status": "FAIL"
+        },
+        {
+          "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+          "min_acc": "95.0%",
+          "value": "94.2857%",
+          "status": "FAIL"
+        },
+        {
+          "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+          "white_pred": "",
+          "gray_pred": "",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 5: Character-Frozen Non-Regression",
+          "baseline": "4.1830%",
+          "tolerance": "+0.21%",
+          "threshold": "4.3930%",
+          "value": "2.5345%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+          "threshold": "12.0000%",
+          "value": "7.4737%",
+          "status": "PASS"
+        }
+      ],
+      "per_symbol_count_acc_pct": {
+        "?": 100.0,
+        "!": 100.0,
+        "#": 100.0,
+        "&": 100.0,
+        "*": 80.0,
+        "<": 100.0,
+        ">": 100.0,
+        "{": 100.0,
+        "}": 100.0,
+        "\\": 100.0,
+        "_": 85.0,
+        "[": 100.0,
+        "]": 100.0,
+        "/": 95.0
+      },
+      "per_hyphen_group_count_acc_pct": {
+        "word-word": 100.0,
+        "word - word": 100.0,
+        "number-number": 100.0,
+        "year-year": 100.0,
+        "line ending": 100.0,
+        "line beginning": 100.0,
+        "double hyphen": 60.0
+      }
+    },
+    "epoch_3": {
+      "sha256": "c67145597ba2f438d8845f4207d8c0ac23d91925f806a81cce2761dd7d9f6669",
+      "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\r4_1_w480_infer_e3",
+      "clean_cer_pct": 5.4327,
+      "char_cer_pct": 2.6169,
+      "symbols_acc_pct": 98.9286,
+      "failing_symbols": [
+        "*",
+        "_",
+        "/"
+      ],
+      "hyphen_acc_pct": 94.2857,
+      "blank_passed": true,
+      "fullpage_matched_cer_pct": 7.4846,
+      "stress_frozen_cer_pct": 7.0591,
+      "probe_100_w480": {
+        "cer_pct": 4.56,
+        "edits": 89,
+        "exact_matches": 52,
+        "deletions": 50,
+        "substitutions": 25,
+        "insertions": 14,
+        "subpeak_top2_top3_suppressed": 27,
+        "subpeak_pct_of_deletions": 54.0,
+        "missing_never_top1": 23,
+        "argmax_alignment_mismatch": 0,
+        "repeated_token_collapse": 0,
+        "combmark_final_deletions": 47,
+        "combmark_subpeak_deletions": 25
+      },
+      "composite_score": 0.6665,
+      "valid_for_release": false,
+      "gates_passed_count": 4,
+      "total_gates": 6,
+      "gates": [
+        {
+          "gate": "Gate 1: Clean-Frozen Non-Regression",
+          "baseline": "11.7967%",
+          "tolerance": "+0.20%",
+          "threshold": "11.9967%",
+          "value": "5.4327%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+          "min_acc": "99.0%",
+          "value": "98.9286%",
+          "failing_symbols": [
+            "*",
+            "_",
+            "/"
+          ],
+          "failing_count": 3,
+          "status": "FAIL"
+        },
+        {
+          "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+          "min_acc": "95.0%",
+          "value": "94.2857%",
+          "status": "FAIL"
+        },
+        {
+          "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+          "white_pred": "",
+          "gray_pred": "",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 5: Character-Frozen Non-Regression",
+          "baseline": "4.1830%",
+          "tolerance": "+0.21%",
+          "threshold": "4.3930%",
+          "value": "2.6169%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+          "threshold": "12.0000%",
+          "value": "7.4846%",
+          "status": "PASS"
+        }
+      ],
+      "per_symbol_count_acc_pct": {
+        "?": 100.0,
+        "!": 100.0,
+        "#": 100.0,
+        "&": 100.0,
+        "*": 95.0,
+        "<": 100.0,
+        ">": 100.0,
+        "{": 100.0,
+        "}": 100.0,
+        "\\": 100.0,
+        "_": 95.0,
+        "[": 100.0,
+        "]": 100.0,
+        "/": 95.0
+      },
+      "per_hyphen_group_count_acc_pct": {
+        "word-word": 90.0,
+        "word - word": 100.0,
+        "number-number": 100.0,
+        "year-year": 100.0,
+        "line ending": 100.0,
+        "line beginning": 100.0,
+        "double hyphen": 70.0
+      }
+    }
+  },
+  "best_epoch": 1,
+  "best_epoch_sha256": "09bdbedc275f26c32eba7b30eb38d82f03c1e571712d5934a66c0c236fd84d19",
+  "valid_for_release": false,
+  "upgraded_v24_1_r4_in_place": false
+}

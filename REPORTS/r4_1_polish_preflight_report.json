@@ -1,0 +1,14 @@
+{
+  "stage": "R4_1_GATE_POLISH_W480",
+  "timestamp": "2026-11-17T07:50:20.632274+00:00",
+  "status": "PASS",
+  "base_sha256": "b98e0c3400d520d4ba1d4d80ca513619036fa32c8da1b9b811219c668f1b7de2",
+  "transferred_tensors": 968,
+  "ctc_shape": [
+    32,
+    60,
+    116
+  ],
+  "finite_grad_tensors": 549,
+  "sample_loss": 13.4838
+}

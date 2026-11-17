@@ -1,6 +1,6 @@
 {
   "title": "Cham-OCR RealScan-Gold v1 End-to-End & Multiscript Evaluation",
-  "evaluated_at": "2026-11-17T05:38:25.336671+00:00",
+  "evaluated_at": "2026-11-17T11:20:31.170476+00:00",
   "manifest_path": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-benchmark\\data\\realscan_gold_v1\\manifest.json",
   "models": [
     {
@@ -1023,13 +1023,13 @@
       "model": "v24_1_r4",
       "harum_palei_crops": {
         "lines": 25,
-        "raw_cer_pct": 2.68,
-        "norm_cer_pct": 2.68,
-        "wer_pct": 9.63,
+        "raw_cer_pct": 2.55,
+        "norm_cer_pct": 2.55,
+        "wer_pct": 8.56,
         "exact_lines": "12/25",
         "exact_line_pct": 48.0,
-        "mean_raw_conf": 0.9502,
-        "mean_calibrated_conf": 0.9611,
+        "mean_raw_conf": 0.9517,
+        "mean_calibrated_conf": 0.9583,
         "line2_hyphen_ok": true,
         "line6_hyphen_ok": true,
         "line22_date_pred": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/ꨐ꩐꩒꩖",
@@ -1040,8 +1040,8 @@
         "pred_lines": 25,
         "matched_lines": 25,
         "line_recall_pct": 100.0,
-        "matched_line_cer_pct": 3.28,
-        "e2e_doc_cer_pct": 3.19,
+        "matched_line_cer_pct": 3.53,
+        "e2e_doc_cer_pct": 3.43,
         "unmatched_gt_chars": 0,
         "unmatched_pred_chars": 0,
         "detector": "generic_ppocrv4_dbnet",
@@ -1051,224 +1051,224 @@
         {
           "line": 1,
           "gt": "ꨨꨣꨭꩌ ꨚꨤꨬ ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
-          "pred": "ꨨꨣꨭꩌ ꨚꨤꨬ ꨔꨮꩀ ꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
-          "cer_pct": 4.17,
-          "raw_conf": 0.9759,
-          "calibrated_conf": 0.9829
+          "pred": "ꨨꨣꨭꩌ ꨚꨤꨬ ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9942,
+          "calibrated_conf": 0.9956
         },
         {
           "line": 2,
           "gt": "ꨝꨳꨮꩉ ꨨꨣꨬ ꨁ-ꨗꨫ ꨚꨙꨳꩀ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨬ ꨡꨭꩊ ꨆꨴꩌ",
-          "pred": "ꨝꨳꨮꩉ ꨨꨣꨬ ꨁ-ꨗꨫꨬꩌ ꨚꨙꨳꩀ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨯꨮꨥ ꨨꨕꨬ ꨡꨭꩊ ꨆꨴꩌ",
+          "pred": "ꨝꨳꨮꩉ ꨨꨣꨬ ꨁ-ꨔꨗꨫꨬꩌ ꨚꨙꨳꩀ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨬ ꨡꨭꩊ ꨆꨴꩌ",
           "cer_pct": 7.14,
-          "raw_conf": 0.8991,
-          "calibrated_conf": 0.9163
+          "raw_conf": 0.9217,
+          "calibrated_conf": 0.9311
         },
         {
           "line": 3,
           "gt": "ꨀꨊꨯꨱꩀ ꨤꨊꨪꩀ ꨨꨎꨥ ꨆꨚꨶꨮꩊ ꨌꨳꨪꩌ ꨈꨪꨤꩄ ꨟꨣꨰ",
           "pred": "ꨀꨊꨯꨱꩀ ꨤꨊꨪꩀ ꨨꨎꨥ ꨆꨚꨶꨮꩊ ꨌꨳꨪꩌ ꨈꨪꨤꩄ ꨟꨣꨰ",
           "cer_pct": 0.0,
-          "raw_conf": 0.9894,
-          "calibrated_conf": 0.9931
+          "raw_conf": 0.9913,
+          "calibrated_conf": 0.9933
         },
         {
           "line": 4,
           "gt": "ꨦꩇ ꨆꨤꩀ ꨈꨵꨮꩃ ꨆꨝꨥ ꨀꨕꨯꨱꩍ ꨀꨊꨯꨱꩀ ꨝꨗꨮꩀ",
           "pred": "ꨦꩇ ꨆꨤꩀ ꨈꨵꨮꩃ ꨆꨝꨥ ꨀꨕꨯꨱꩍ ꨀꨊꨯꨱꩀ ꨝꨗꨮꩀ",
           "cer_pct": 0.0,
-          "raw_conf": 0.975,
-          "calibrated_conf": 0.9822
+          "raw_conf": 0.9793,
+          "calibrated_conf": 0.9833
         },
         {
           "line": 5,
           "gt": "ꨆꨤꩀ ꨚꨕꨴꨭꩅ ꨚꨕꨴꨶꨰ ꨆꨣꩌ ꨈꨕꨮꩃ ꨟꨝꨭꩀ ꨟꨝꩉ",
-          "pred": "ꨆꨤꩀ ꨚꨕꨴꨭꩅ ꨚꨰꨔꨴꨶ ꨆꨣꩌ ꨈꨕꨮ ꨟꨝꨭꩀ ꨟꨝꩉ",
-          "cer_pct": 12.12,
-          "raw_conf": 0.9089,
-          "calibrated_conf": 0.9253
+          "pred": "ꨆꨤꩀ ꨚꨕꨴꨭꩅ ꨚꨴꨶ ꨆꨣꩌ ꨈꨕꨮ ꨟꨝꨭꩀ ꨟꨝꩉ",
+          "cer_pct": 9.09,
+          "raw_conf": 0.8896,
+          "calibrated_conf": 0.9006
         },
         {
           "line": 6,
           "gt": "ꨀꨓꩍ ꨀꨓꩍ ꨀꨓꩍ ꨆꨥꨯꩌ ꨝꨶꨮꩊ ꨤꨪ-ꨂꨀꨩ ꨈꨤꨮꩌ ꨎꨤꨮꩃ",
           "pred": "ꨀꨓꩍ ꨀꨓꩍ ꨀꨓꩍ ꨆꨥꨯꩌ ꨝꨶꨮꩊ ꨤꨪ-ꨂꨀꨩ ꨈꨤꨮꩌ ꨎꨤꨮꩃ",
           "cer_pct": 0.0,
-          "raw_conf": 0.921,
-          "calibrated_conf": 0.9363
+          "raw_conf": 0.9245,
+          "calibrated_conf": 0.9338
         },
         {
           "line": 7,
           "gt": "ꨧꨯꨱꩃ ꨆꨚꨶꨮꩊ ꨆꨝꨥ ꨗꨯꨱ ꨀꨊꨯꨱꩀ ꨎꨤꩆ ꨟꨣꨰ ꨨꨚꩀ",
           "pred": "ꨧꨯꨱ ꨆꨚꨶꨮꩊ ꨆꨝꨥ ꨗꨯꨱ ꨀꨊꨯꨱꩀ ꨎꨤꩆ ꨟꨣꨰ ꨨꨚꩀ",
           "cer_pct": 2.78,
-          "raw_conf": 0.946,
-          "calibrated_conf": 0.9582
+          "raw_conf": 0.9632,
+          "calibrated_conf": 0.9692
         },
         {
           "line": 8,
           "gt": "ꨓꨚꨮꩆ ꨕꨮꩍ ꨆꨴꨯꨱꩃ ꨚꨝꨭꩃ ꨀꨈꩀ ꨗꩌ ꨓꨚꨮꩆ ꨓꨓꨶꨩ",
           "pred": "ꨓꨚꨮꩆ ꨕꨮꩍ ꨆꨴꨯꨱ ꨚꨝꨭꩃ ꨀꨈꩀ ꨗꩌ ꨓꨚꨮꩆ ꨓꨓꨶꨩ",
           "cer_pct": 2.78,
-          "raw_conf": 0.9523,
-          "calibrated_conf": 0.9636
+          "raw_conf": 0.9664,
+          "calibrated_conf": 0.9721
         },
         {
           "line": 9,
           "gt": "ꨧꨬ ꨚꨎꨮꩍ ꨟꨯꨱꩃ ꨟꨯꨱꩃ ꨀꨆꨯꨱꩀ ꨌꩃ ꨟꨯꨱꩃ",
           "pred": "ꨧꨬ ꨚꨎꨮꩍ ꨟꨯꨱ ꨟꨯꨱ ꨀꨆꨯꨱꩀ ꨌꩃ ꨟꨯꨱ",
           "cer_pct": 9.68,
-          "raw_conf": 0.9111,
-          "calibrated_conf": 0.9273
+          "raw_conf": 0.8896,
+          "calibrated_conf": 0.9007
         },
         {
           "line": 10,
           "gt": "ꨓꨳꩇ ꨓꨶꨬ ꨀꨊꨪꩆ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨯꩌ ꨦꩇ ꨆꨤꩀ",
           "pred": "ꨓꨳꩇ ꨓꨶꨬ ꨀꨊꨪꩆ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨯꩌ ꨦꩇ ꨆꨤꩀ",
           "cer_pct": 0.0,
-          "raw_conf": 0.9655,
-          "calibrated_conf": 0.9746
+          "raw_conf": 0.9663,
+          "calibrated_conf": 0.9719
         },
         {
           "line": 11,
           "gt": "ꨣꨤꨮꩃ ꨈꨭꨨꨩ ꨕꨗꩈ ꨆꨣꩌ ꨈꨕꨮꩃ ꨕꨤꩌ ꨡꨵꩃ ꨝꨳꨮꩉ ꨨꨣꨬ",
           "pred": "ꨣꨤꨮꩃ ꨈꨭꨨꨩ ꨕꨗꩈ ꨆꨣꩌ ꨈꨕꨮꩃ ꨕꨤꩌ ꨡꨵꩃ ꨝꨳꨮꩉ ꨨꨣꨬ",
           "cer_pct": 0.0,
-          "raw_conf": 0.9813,
-          "calibrated_conf": 0.987
+          "raw_conf": 0.9734,
+          "calibrated_conf": 0.9782
         },
         {
           "line": 12,
           "gt": "ꨀꨦꩀ ꨓꨡꩀ ꨓꨚꨮꩆ ꨡꨶꨮꩆ ꨤꨨꨶꨰ ꨤꨨꨩ ꨚꨚꩉ",
           "pred": "ꨀꨦꩀ ꨓꨡꩀ ꨓꨚꨮꩆ ꨡꨶꨮꩆ ꨤꨨꨶꨰ ꨤꨨꨩ ꨚꨚꩉ",
           "cer_pct": 0.0,
-          "raw_conf": 0.9688,
-          "calibrated_conf": 0.9772
+          "raw_conf": 0.9855,
+          "calibrated_conf": 0.9886
         },
         {
           "line": 13,
           "gt": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨆꨣꩌ ꨈꨕꨮꩃ ꨚꨗꨪꩀ ꨤꨚꨬ ꨟꨝꨭꩀ",
           "pred": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨆꨣꩌ ꨈꨕꨮꩃ ꨚꨗꨪꩀ ꨤꨚꨬꩌ ꨟꨝꨭꩀ",
           "cer_pct": 3.23,
-          "raw_conf": 0.9514,
-          "calibrated_conf": 0.9628
+          "raw_conf": 0.942,
+          "calibrated_conf": 0.95
         },
         {
           "line": 14,
           "gt": "ꨓꨗꨴꩀ ꨟꨐꩀ ꨕꨯꨱꩀ ꨦꨭꩇ ꨨꨕꩍ ꨚꨍꩃ",
           "pred": "ꨓꨗꨴꩀ ꨟꨐꩀ ꨕꨯꨱꩀ ꨦꨭꩇ ꨨꨕꩍ ꨚꨍꩃ",
           "cer_pct": 0.0,
-          "raw_conf": 0.9502,
-          "calibrated_conf": 0.9618
+          "raw_conf": 0.9667,
+          "calibrated_conf": 0.9723
         },
         {
           "line": 15,
           "gt": "ꨕꨯꨱꩀ ꨢꨮꨭ ꨎꨶꨩ ꨤꨊꨶꨬ ꨝꩉ ꨕꨯꨱꩀ ꨟꨝꨭꩀ ꨤꨚꨬ",
           "pred": "ꨕꨯꨱꩀ ꨢꨮꨭ ꨎꨶꨩ ꨤꨊꨶꨬ ꨝꩉ ꨕꨯꨱꩀ ꨟꨝꨭꩀ ꨤꨚꨬꨬ",
           "cer_pct": 2.94,
-          "raw_conf": 0.9835,
-          "calibrated_conf": 0.9887
+          "raw_conf": 0.9716,
+          "calibrated_conf": 0.9766
         },
         {
           "line": 16,
           "gt": "ꨧꨯꨱꩃ ꨤꨆꨭꩀ ꨈꨗꨭꨩ ꨥꩊ ꨟꨢꨭꩅ ꨧꨬ ꨎꩌꨎꨫ ꨖꨪꩅ",
           "pred": "ꨧꨯꨱꩃ ꨤꨆꨭꩀ ꨈꨗꨭꨩ ꨥꩊ ꨟꨢꨭꩅ ꨧꨬ ꨎꩌꨎꨫ ꨖꨪꩅ",
           "cer_pct": 0.0,
-          "raw_conf": 0.9252,
-          "calibrated_conf": 0.9401
+          "raw_conf": 0.9196,
+          "calibrated_conf": 0.9292
         },
         {
           "line": 17,
           "gt": "ꨕꨯꨱꩀ ꨝꩀ ꨚꨕꨮꩃ ꨀꨣꨰ ꨦꨡꨰ ꨨꨕꨳꨮꩇ ꨨꨕꨯꩌ ꨀꨝꨯꨱꩍ ꨧꩃ",
           "pred": "ꨕꨯꨱꩀ ꨝꩀ ꨚꨕꨮꩃ ꨀꨣꨰ ꨦꨡꨰ ꨨꨕꨳꨮꩇ ꨨꨕꨯꩌ ꨀꨝꨯꨱꩍ ꨧꩃ",
           "cer_pct": 0.0,
-          "raw_conf": 0.9252,
-          "calibrated_conf": 0.9401
+          "raw_conf": 0.95,
+          "calibrated_conf": 0.9573
         },
         {
           "line": 18,
           "gt": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨓꨡꩀ ꨎꨰꩀ ꨚꨎꨮꨩ ꨚꨣꨤꨯꨱ ꨈꨕꨮꩃ ꨕꨤꩌ ꨆꨤꨪꨟꨭꨩ ꨆꨆꨶꨮꩉ",
           "pred": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨓꨡꩀ ꨎꨰꩀ ꨚꨎꨩ ꨚꨣꨤꨯꨱ ꨈꨕꨮꩃ ꨕꨤꩌ ꨆꨤꨪꨟꨭꨩ ꨆꨆꨶꨮꩉ",
           "cer_pct": 2.04,
-          "raw_conf": 0.9777,
-          "calibrated_conf": 0.9843
+          "raw_conf": 0.9865,
+          "calibrated_conf": 0.9894
         },
         {
           "line": 19,
           "gt": "ꨦꩇ ꨌꨳꨪꩌ ꨓꨤꩍ ꨆꨚꨶꨮꩊ ꨕꨯꨱꩀ ꨎꨶꨩ ꨧꨩ ꨕꨴꨬ ꨗꨯꨱ ꨕꨶꩍ ꨀꨕꨪꩍ",
-          "pred": "ꨦꩇ ꨌꨳꨪꩌ ꨓꨤꩍ ꨆꨚꨶꨮꩊ ꨕꨯꨱꩀ ꨎꨶꨩ ꨧꨩ ꨕꨴꨬ ꨗꨯꨱ ꨕꨶꩍ ꨀꨕꨪꩍ",
-          "cer_pct": 0.0,
-          "raw_conf": 0.9681,
-          "calibrated_conf": 0.9767
+          "pred": "ꨦꩇ ꨌꨳꨪꩌ ꨓꨤꩍ ꨆꨚꨶꨮꩊ ꨕꨯꨱꩀ ꨎꨶꨩ ꨧꨩ ꨕꨴꨬ ꨗꨯꨱ ꨕꨶꩍ ꨀꨕꨪꩍꩍ",
+          "cer_pct": 2.17,
+          "raw_conf": 0.9563,
+          "calibrated_conf": 0.963
         },
         {
           "line": 20,
           "gt": "ꨌꨳꨪꩌ ꨤꨮꩈ ꨣꩆ ꨌꩃ ꨝꨵꨯꨱꩍ ꨚꨈꨭꩍ ꨨꨕꩍ ꨚꨍꩃ",
           "pred": "ꨌꨳꨪꩌ ꨤꨮꩈ ꨣꩆ ꨌꩃ ꨝꨵꨯꨱꩍ ꨚꨈꨭꩍ ꨨꨕꩍ ꨚꨍꩃ",
           "cer_pct": 0.0,
-          "raw_conf": 0.9703,
-          "calibrated_conf": 0.9784
+          "raw_conf": 0.9557,
+          "calibrated_conf": 0.9625
         },
         {
           "line": 21,
           "gt": "ꨚꨯꨱꩀ ꨞꨯꩂ ꨟꨣꨰ ꨣꨝꨮꨭ ꨓꨗꨴꩀ ꨚꨙꨳꩀ ꨀꨧꩅ ꨦꨮꩍ ꨟꨤꨮꩃ ...",
           "pred": "ꨚꨯꨱꩀ ꨞꨯꩂ ꨟꨣꨰ ꨣꨝꨮꨭ ꨓꨗꨴꩀ ꨚꨙꨳꩀ ꨀꨧꩅ ꨦꨮꩍ ꨟꨤꨮꩃ ",
           "cer_pct": 6.82,
-          "raw_conf": 0.9393,
-          "calibrated_conf": 0.9525
+          "raw_conf": 0.9448,
+          "calibrated_conf": 0.9526
         },
         {
           "line": 22,
           "gt": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/꩒꩐꩒꩖",
           "pred": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/ꨐ꩐꩒꩖",
           "cer_pct": 4.35,
-          "raw_conf": 0.9317,
-          "calibrated_conf": 0.9458
+          "raw_conf": 0.9224,
+          "calibrated_conf": 0.9318
         },
         {
           "line": 23,
           "gt": "ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
           "pred": "ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
           "cer_pct": 0.0,
-          "raw_conf": 0.9782,
-          "calibrated_conf": 0.9847
+          "raw_conf": 0.9686,
+          "calibrated_conf": 0.974
         },
         {
           "line": 24,
           "gt": "ꨦꨮꩍ ꨟꨤꨮꩃ : ꨨꨭꩈ ꨨꨯꨀꩃ",
           "pred": "ꨦꨮꩍ ꨟꨤꨮꩃ ꨓ ꨨꨭꩈ ꨨꨯꨀꩃ",
           "cer_pct": 5.26,
-          "raw_conf": 0.9464,
-          "calibrated_conf": 0.9586
+          "raw_conf": 0.9397,
+          "calibrated_conf": 0.9479
         },
         {
           "line": 25,
           "gt": "ꨈꨗꨭꨩ ꨥꩊ : ꨝꨭꩄ ꨟꩆꨨꨩ",
           "pred": "ꨈꨗꨭꨩ ꨥꩊ _ ꨝꨭꩄ ꨟꩆꨨꨩ",
           "cer_pct": 5.56,
-          "raw_conf": 0.9133,
-          "calibrated_conf": 0.9293
+          "raw_conf": 0.923,
+          "calibrated_conf": 0.9324
         }
       ],
       "handoff_multiscript_01": {
         "cham_script": {
           "count": 27,
-          "mean_conf": 0.9061,
+          "mean_conf": 0.9276,
           "pct_ge_065": 100.0,
           "pct_has_cham_script": 100.0,
           "pct_has_latin_viet": 0.0
         },
         "vietnamese_english": {
           "count": 24,
-          "mean_conf": 0.2946,
+          "mean_conf": 0.3097,
           "pct_ge_065": 0.0,
-          "pct_has_cham_script": 87.5,
+          "pct_has_cham_script": 100.0,
           "pct_has_latin_viet": 0.0
         },
         "latin": {
           "count": 25,
-          "mean_conf": 0.3517,
+          "mean_conf": 0.3649,
           "pct_ge_065": 0.0,
-          "pct_has_cham_script": 64.0,
+          "pct_has_cham_script": 44.0,
           "pct_has_latin_viet": 0.0
         }
       }
@@ -1277,13 +1277,13 @@
       "model": "auto",
       "harum_palei_crops": {
         "lines": 25,
-        "raw_cer_pct": 2.68,
-        "norm_cer_pct": 2.68,
-        "wer_pct": 9.63,
+        "raw_cer_pct": 2.55,
+        "norm_cer_pct": 2.55,
+        "wer_pct": 8.56,
         "exact_lines": "12/25",
         "exact_line_pct": 48.0,
-        "mean_raw_conf": 0.9502,
-        "mean_calibrated_conf": 0.9611,
+        "mean_raw_conf": 0.9517,
+        "mean_calibrated_conf": 0.9583,
         "line2_hyphen_ok": true,
         "line6_hyphen_ok": true,
         "line22_date_pred": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/ꨐ꩐꩒꩖",
@@ -1294,8 +1294,8 @@
         "pred_lines": 25,
         "matched_lines": 25,
         "line_recall_pct": 100.0,
-        "matched_line_cer_pct": 3.28,
-        "e2e_doc_cer_pct": 3.19,
+        "matched_line_cer_pct": 3.53,
+        "e2e_doc_cer_pct": 3.43,
         "unmatched_gt_chars": 0,
         "unmatched_pred_chars": 0,
         "detector": "generic_ppocrv4_dbnet",
@@ -1305,224 +1305,224 @@
         {
           "line": 1,
           "gt": "ꨨꨣꨭꩌ ꨚꨤꨬ ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
-          "pred": "ꨨꨣꨭꩌ ꨚꨤꨬ ꨔꨮꩀ ꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
-          "cer_pct": 4.17,
-          "raw_conf": 0.9759,
-          "calibrated_conf": 0.9829
+          "pred": "ꨨꨣꨭꩌ ꨚꨤꨬ ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
+          "cer_pct": 0.0,
+          "raw_conf": 0.9942,
+          "calibrated_conf": 0.9956
         },
         {
           "line": 2,
           "gt": "ꨝꨳꨮꩉ ꨨꨣꨬ ꨁ-ꨗꨫ ꨚꨙꨳꩀ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨬ ꨡꨭꩊ ꨆꨴꩌ",
-          "pred": "ꨝꨳꨮꩉ ꨨꨣꨬ ꨁ-ꨗꨫꨬꩌ ꨚꨙꨳꩀ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨯꨮꨥ ꨨꨕꨬ ꨡꨭꩊ ꨆꨴꩌ",
+          "pred": "ꨝꨳꨮꩉ ꨨꨣꨬ ꨁ-ꨔꨗꨫꨬꩌ ꨚꨙꨳꩀ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨬ ꨡꨭꩊ ꨆꨴꩌ",
           "cer_pct": 7.14,
-          "raw_conf": 0.8991,
-          "calibrated_conf": 0.9163
+          "raw_conf": 0.9217,
+          "calibrated_conf": 0.9311
         },
         {
           "line": 3,
           "gt": "ꨀꨊꨯꨱꩀ ꨤꨊꨪꩀ ꨨꨎꨥ ꨆꨚꨶꨮꩊ ꨌꨳꨪꩌ ꨈꨪꨤꩄ ꨟꨣꨰ",
           "pred": "ꨀꨊꨯꨱꩀ ꨤꨊꨪꩀ ꨨꨎꨥ ꨆꨚꨶꨮꩊ ꨌꨳꨪꩌ ꨈꨪꨤꩄ ꨟꨣꨰ",
           "cer_pct": 0.0,
-          "raw_conf": 0.9894,
-          "calibrated_conf": 0.9931
+          "raw_conf": 0.9913,
+          "calibrated_conf": 0.9933
         },
         {
           "line": 4,
           "gt": "ꨦꩇ ꨆꨤꩀ ꨈꨵꨮꩃ ꨆꨝꨥ ꨀꨕꨯꨱꩍ ꨀꨊꨯꨱꩀ ꨝꨗꨮꩀ",
           "pred": "ꨦꩇ ꨆꨤꩀ ꨈꨵꨮꩃ ꨆꨝꨥ ꨀꨕꨯꨱꩍ ꨀꨊꨯꨱꩀ ꨝꨗꨮꩀ",
           "cer_pct": 0.0,
-          "raw_conf": 0.975,
-          "calibrated_conf": 0.9822
+          "raw_conf": 0.9793,
+          "calibrated_conf": 0.9833
         },
         {
           "line": 5,
           "gt": "ꨆꨤꩀ ꨚꨕꨴꨭꩅ ꨚꨕꨴꨶꨰ ꨆꨣꩌ ꨈꨕꨮꩃ ꨟꨝꨭꩀ ꨟꨝꩉ",
-          "pred": "ꨆꨤꩀ ꨚꨕꨴꨭꩅ ꨚꨰꨔꨴꨶ ꨆꨣꩌ ꨈꨕꨮ ꨟꨝꨭꩀ ꨟꨝꩉ",
-          "cer_pct": 12.12,
-          "raw_conf": 0.9089,
-          "calibrated_conf": 0.9253
+          "pred": "ꨆꨤꩀ ꨚꨕꨴꨭꩅ ꨚꨴꨶ ꨆꨣꩌ ꨈꨕꨮ ꨟꨝꨭꩀ ꨟꨝꩉ",
+          "cer_pct": 9.09,
+          "raw_conf": 0.8896,
+          "calibrated_conf": 0.9006
         },
         {
           "line": 6,
           "gt": "ꨀꨓꩍ ꨀꨓꩍ ꨀꨓꩍ ꨆꨥꨯꩌ ꨝꨶꨮꩊ ꨤꨪ-ꨂꨀꨩ ꨈꨤꨮꩌ ꨎꨤꨮꩃ",
           "pred": "ꨀꨓꩍ ꨀꨓꩍ ꨀꨓꩍ ꨆꨥꨯꩌ ꨝꨶꨮꩊ ꨤꨪ-ꨂꨀꨩ ꨈꨤꨮꩌ ꨎꨤꨮꩃ",
           "cer_pct": 0.0,
-          "raw_conf": 0.921,
-          "calibrated_conf": 0.9363
+          "raw_conf": 0.9245,
+          "calibrated_conf": 0.9338
         },
         {
           "line": 7,
           "gt": "ꨧꨯꨱꩃ ꨆꨚꨶꨮꩊ ꨆꨝꨥ ꨗꨯꨱ ꨀꨊꨯꨱꩀ ꨎꨤꩆ ꨟꨣꨰ ꨨꨚꩀ",
           "pred": "ꨧꨯꨱ ꨆꨚꨶꨮꩊ ꨆꨝꨥ ꨗꨯꨱ ꨀꨊꨯꨱꩀ ꨎꨤꩆ ꨟꨣꨰ ꨨꨚꩀ",
           "cer_pct": 2.78,
-          "raw_conf": 0.946,
-          "calibrated_conf": 0.9582
+          "raw_conf": 0.9632,
+          "calibrated_conf": 0.9692
         },
         {
           "line": 8,
           "gt": "ꨓꨚꨮꩆ ꨕꨮꩍ ꨆꨴꨯꨱꩃ ꨚꨝꨭꩃ ꨀꨈꩀ ꨗꩌ ꨓꨚꨮꩆ ꨓꨓꨶꨩ",
           "pred": "ꨓꨚꨮꩆ ꨕꨮꩍ ꨆꨴꨯꨱ ꨚꨝꨭꩃ ꨀꨈꩀ ꨗꩌ ꨓꨚꨮꩆ ꨓꨓꨶꨩ",
           "cer_pct": 2.78,
-          "raw_conf": 0.9523,
-          "calibrated_conf": 0.9636
+          "raw_conf": 0.9664,
+          "calibrated_conf": 0.9721
         },
         {
           "line": 9,
           "gt": "ꨧꨬ ꨚꨎꨮꩍ ꨟꨯꨱꩃ ꨟꨯꨱꩃ ꨀꨆꨯꨱꩀ ꨌꩃ ꨟꨯꨱꩃ",
           "pred": "ꨧꨬ ꨚꨎꨮꩍ ꨟꨯꨱ ꨟꨯꨱ ꨀꨆꨯꨱꩀ ꨌꩃ ꨟꨯꨱ",
           "cer_pct": 9.68,
-          "raw_conf": 0.9111,
-          "calibrated_conf": 0.9273
+          "raw_conf": 0.8896,
+          "calibrated_conf": 0.9007
         },
         {
           "line": 10,
           "gt": "ꨓꨳꩇ ꨓꨶꨬ ꨀꨊꨪꩆ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨯꩌ ꨦꩇ ꨆꨤꩀ",
           "pred": "ꨓꨳꩇ ꨓꨶꨬ ꨀꨊꨪꩆ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨯꩌ ꨦꩇ ꨆꨤꩀ",
           "cer_pct": 0.0,
-          "raw_conf": 0.9655,
-          "calibrated_conf": 0.9746
+          "raw_conf": 0.9663,
+          "calibrated_conf": 0.9719
         },
         {
           "line": 11,
           "gt": "ꨣꨤꨮꩃ ꨈꨭꨨꨩ ꨕꨗꩈ ꨆꨣꩌ ꨈꨕꨮꩃ ꨕꨤꩌ ꨡꨵꩃ ꨝꨳꨮꩉ ꨨꨣꨬ",
           "pred": "ꨣꨤꨮꩃ ꨈꨭꨨꨩ ꨕꨗꩈ ꨆꨣꩌ ꨈꨕꨮꩃ ꨕꨤꩌ ꨡꨵꩃ ꨝꨳꨮꩉ ꨨꨣꨬ",
           "cer_pct": 0.0,
-          "raw_conf": 0.9813,
-          "calibrated_conf": 0.987
+          "raw_conf": 0.9734,
+          "calibrated_conf": 0.9782
         },
         {
           "line": 12,
           "gt": "ꨀꨦꩀ ꨓꨡꩀ ꨓꨚꨮꩆ ꨡꨶꨮꩆ ꨤꨨꨶꨰ ꨤꨨꨩ ꨚꨚꩉ",
           "pred": "ꨀꨦꩀ ꨓꨡꩀ ꨓꨚꨮꩆ ꨡꨶꨮꩆ ꨤꨨꨶꨰ ꨤꨨꨩ ꨚꨚꩉ",
           "cer_pct": 0.0,
-          "raw_conf": 0.9688,
-          "calibrated_conf": 0.9772
+          "raw_conf": 0.9855,
+          "calibrated_conf": 0.9886
         },
         {
           "line": 13,
           "gt": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨆꨣꩌ ꨈꨕꨮꩃ ꨚꨗꨪꩀ ꨤꨚꨬ ꨟꨝꨭꩀ",
           "pred": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨆꨣꩌ ꨈꨕꨮꩃ ꨚꨗꨪꩀ ꨤꨚꨬꩌ ꨟꨝꨭꩀ",
           "cer_pct": 3.23,
-          "raw_conf": 0.9514,
-          "calibrated_conf": 0.9628
+          "raw_conf": 0.942,
+          "calibrated_conf": 0.95
         },
         {
           "line": 14,
           "gt": "ꨓꨗꨴꩀ ꨟꨐꩀ ꨕꨯꨱꩀ ꨦꨭꩇ ꨨꨕꩍ ꨚꨍꩃ",
           "pred": "ꨓꨗꨴꩀ ꨟꨐꩀ ꨕꨯꨱꩀ ꨦꨭꩇ ꨨꨕꩍ ꨚꨍꩃ",
           "cer_pct": 0.0,
-          "raw_conf": 0.9502,
-          "calibrated_conf": 0.9618
+          "raw_conf": 0.9667,
+          "calibrated_conf": 0.9723
         },
         {
           "line": 15,
           "gt": "ꨕꨯꨱꩀ ꨢꨮꨭ ꨎꨶꨩ ꨤꨊꨶꨬ ꨝꩉ ꨕꨯꨱꩀ ꨟꨝꨭꩀ ꨤꨚꨬ",
           "pred": "ꨕꨯꨱꩀ ꨢꨮꨭ ꨎꨶꨩ ꨤꨊꨶꨬ ꨝꩉ ꨕꨯꨱꩀ ꨟꨝꨭꩀ ꨤꨚꨬꨬ",
           "cer_pct": 2.94,
-          "raw_conf": 0.9835,
-          "calibrated_conf": 0.9887
+          "raw_conf": 0.9716,
+          "calibrated_conf": 0.9766
         },
         {
           "line": 16,
           "gt": "ꨧꨯꨱꩃ ꨤꨆꨭꩀ ꨈꨗꨭꨩ ꨥꩊ ꨟꨢꨭꩅ ꨧꨬ ꨎꩌꨎꨫ ꨖꨪꩅ",
           "pred": "ꨧꨯꨱꩃ ꨤꨆꨭꩀ ꨈꨗꨭꨩ ꨥꩊ ꨟꨢꨭꩅ ꨧꨬ ꨎꩌꨎꨫ ꨖꨪꩅ",
           "cer_pct": 0.0,
-          "raw_conf": 0.9252,
-          "calibrated_conf": 0.9401
+          "raw_conf": 0.9196,
+          "calibrated_conf": 0.9292
         },
         {
           "line": 17,
           "gt": "ꨕꨯꨱꩀ ꨝꩀ ꨚꨕꨮꩃ ꨀꨣꨰ ꨦꨡꨰ ꨨꨕꨳꨮꩇ ꨨꨕꨯꩌ ꨀꨝꨯꨱꩍ ꨧꩃ",
           "pred": "ꨕꨯꨱꩀ ꨝꩀ ꨚꨕꨮꩃ ꨀꨣꨰ ꨦꨡꨰ ꨨꨕꨳꨮꩇ ꨨꨕꨯꩌ ꨀꨝꨯꨱꩍ ꨧꩃ",
           "cer_pct": 0.0,
-          "raw_conf": 0.9252,
-          "calibrated_conf": 0.9401
+          "raw_conf": 0.95,
+          "calibrated_conf": 0.9573
         },
         {
           "line": 18,
           "gt": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨓꨡꩀ ꨎꨰꩀ ꨚꨎꨮꨩ ꨚꨣꨤꨯꨱ ꨈꨕꨮꩃ ꨕꨤꩌ ꨆꨤꨪꨟꨭꨩ ꨆꨆꨶꨮꩉ",
           "pred": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨓꨡꩀ ꨎꨰꩀ ꨚꨎꨩ ꨚꨣꨤꨯꨱ ꨈꨕꨮꩃ ꨕꨤꩌ ꨆꨤꨪꨟꨭꨩ ꨆꨆꨶꨮꩉ",
           "cer_pct": 2.04,
-          "raw_conf": 0.9777,
-          "calibrated_conf": 0.9843
+          "raw_conf": 0.9865,
+          "calibrated_conf": 0.9894
         },
         {
           "line": 19,
           "gt": "ꨦꩇ ꨌꨳꨪꩌ ꨓꨤꩍ ꨆꨚꨶꨮꩊ ꨕꨯꨱꩀ ꨎꨶꨩ ꨧꨩ ꨕꨴꨬ ꨗꨯꨱ ꨕꨶꩍ ꨀꨕꨪꩍ",
-          "pred": "ꨦꩇ ꨌꨳꨪꩌ ꨓꨤꩍ ꨆꨚꨶꨮꩊ ꨕꨯꨱꩀ ꨎꨶꨩ ꨧꨩ ꨕꨴꨬ ꨗꨯꨱ ꨕꨶꩍ ꨀꨕꨪꩍ",
-          "cer_pct": 0.0,
-          "raw_conf": 0.9681,
-          "calibrated_conf": 0.9767
+          "pred": "ꨦꩇ ꨌꨳꨪꩌ ꨓꨤꩍ ꨆꨚꨶꨮꩊ ꨕꨯꨱꩀ ꨎꨶꨩ ꨧꨩ ꨕꨴꨬ ꨗꨯꨱ ꨕꨶꩍ ꨀꨕꨪꩍꩍ",
+          "cer_pct": 2.17,
+          "raw_conf": 0.9563,
+          "calibrated_conf": 0.963
         },
         {
           "line": 20,
           "gt": "ꨌꨳꨪꩌ ꨤꨮꩈ ꨣꩆ ꨌꩃ ꨝꨵꨯꨱꩍ ꨚꨈꨭꩍ ꨨꨕꩍ ꨚꨍꩃ",
           "pred": "ꨌꨳꨪꩌ ꨤꨮꩈ ꨣꩆ ꨌꩃ ꨝꨵꨯꨱꩍ ꨚꨈꨭꩍ ꨨꨕꩍ ꨚꨍꩃ",
           "cer_pct": 0.0,
-          "raw_conf": 0.9703,
-          "calibrated_conf": 0.9784
+          "raw_conf": 0.9557,
+          "calibrated_conf": 0.9625
         },
         {
           "line": 21,
           "gt": "ꨚꨯꨱꩀ ꨞꨯꩂ ꨟꨣꨰ ꨣꨝꨮꨭ ꨓꨗꨴꩀ ꨚꨙꨳꩀ ꨀꨧꩅ ꨦꨮꩍ ꨟꨤꨮꩃ ...",
           "pred": "ꨚꨯꨱꩀ ꨞꨯꩂ ꨟꨣꨰ ꨣꨝꨮꨭ ꨓꨗꨴꩀ ꨚꨙꨳꩀ ꨀꨧꩅ ꨦꨮꩍ ꨟꨤꨮꩃ ",
           "cer_pct": 6.82,
-          "raw_conf": 0.9393,
-          "calibrated_conf": 0.9525
+          "raw_conf": 0.9448,
+          "calibrated_conf": 0.9526
         },
         {
           "line": 22,
           "gt": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/꩒꩐꩒꩖",
           "pred": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/ꨐ꩐꩒꩖",
           "cer_pct": 4.35,
-          "raw_conf": 0.9317,
-          "calibrated_conf": 0.9458
+          "raw_conf": 0.9224,
+          "calibrated_conf": 0.9318
         },
         {
           "line": 23,
           "gt": "ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
           "pred": "ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
           "cer_pct": 0.0,
-          "raw_conf": 0.9782,
-          "calibrated_conf": 0.9847
+          "raw_conf": 0.9686,
+          "calibrated_conf": 0.974
         },
         {
           "line": 24,
           "gt": "ꨦꨮꩍ ꨟꨤꨮꩃ : ꨨꨭꩈ ꨨꨯꨀꩃ",
           "pred": "ꨦꨮꩍ ꨟꨤꨮꩃ ꨓ ꨨꨭꩈ ꨨꨯꨀꩃ",
           "cer_pct": 5.26,
-          "raw_conf": 0.9464,
-          "calibrated_conf": 0.9586
+          "raw_conf": 0.9397,
+          "calibrated_conf": 0.9479
         },
         {
           "line": 25,
           "gt": "ꨈꨗꨭꨩ ꨥꩊ : ꨝꨭꩄ ꨟꩆꨨꨩ",
           "pred": "ꨈꨗꨭꨩ ꨥꩊ _ ꨝꨭꩄ ꨟꩆꨨꨩ",
           "cer_pct": 5.56,
-          "raw_conf": 0.9133,
-          "calibrated_conf": 0.9293
+          "raw_conf": 0.923,
+          "calibrated_conf": 0.9324
         }
       ],
       "handoff_multiscript_01": {
         "cham_script": {
           "count": 27,
-          "mean_conf": 0.9061,
+          "mean_conf": 0.9276,
           "pct_ge_065": 100.0,
           "pct_has_cham_script": 100.0,
           "pct_has_latin_viet": 0.0
         },
         "vietnamese_english": {
           "count": 24,
-          "mean_conf": 0.591,
+          "mean_conf": 0.5615,
           "pct_ge_065": 0.0,
-          "pct_has_cham_script": 0.0,
-          "pct_has_latin_viet": 100.0
+          "pct_has_cham_script": 20.8,
+          "pct_has_latin_viet": 79.2
         },
         "latin": {
           "count": 25,
-          "mean_conf": 0.5368,
+          "mean_conf": 0.5412,
           "pct_ge_065": 0.0,
-          "pct_has_cham_script": 8.0,
+          "pct_has_cham_script": 0.0,
           "pct_has_latin_viet": 92.0
         }
       }

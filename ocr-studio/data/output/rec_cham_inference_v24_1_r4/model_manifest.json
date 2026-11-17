@@ -1,12 +1,12 @@
 {
   "model_id": "v24_1_r4",
-  "display_name": "Cham-OCR v24.1 Stage R4 (W=480 Wide-Canvas Corpus + Optical)",
-  "stage": "R4_WIDE_CANVAS_W480",
-  "epoch": 3,
-  "packaged_at": "2026-11-17T04:55:43.150569+00:00",
-  "source_kernel": "gustavnguyen/paddleocr-cham-v24-1-r4-wide-w480",
-  "source_checkpoint": "ocr-training/output/r4_w480_checkpoints/iter_epoch_3.pdparams",
-  "source_checkpoint_sha256": "b98e0c3400d520d4ba1d4d80ca513619036fa32c8da1b9b811219c668f1b7de2",
+  "display_name": "Cham-OCR v24.1 Stage R4.1 WiSE-FT (W=480 5/6 Gates Wide-Canvas SOTA)",
+  "stage": "R4_1_WISE_FT_W480",
+  "epoch": 1,
+  "packaged_at": "2026-11-17T11:13:25.650250+00:00",
+  "source_kernel": "gustavnguyen/paddleocr-cham-v24-1-r4-1-gate-polish-w480",
+  "source_checkpoint": "ocr-training/output/r4_1_wise83_ckpt/best.pdparams",
+  "source_checkpoint_sha256": "300b3ef5aec4417985bf70c0ac3548216f8c27272207747c77f28a69d50402a3",
   "dictionary_path": "ocr-studio/data/cham_dict_v24_1_r4.txt",
   "dictionary_sha256": "ec1e1f08254dbde6f71604c6581d712a59e724bdb410d98d5d85d3b3446a7643",
   "dictionary_tokens": 114,
@@ -24,11 +24,11 @@
     },
     "inference.pdiparams": {
       "size_bytes": 7616465,
-      "sha256": "508141c596bf43cbdbe0efea6cfbb2c4e68aa2d1cfab1b0a144c570721ecfe88"
+      "sha256": "85525b0ca091acaf81a4693fbdd93f53309b4203e68a467560fa5dcaead86417"
     },
     "inference.pdiparams.info": {
       "size_bytes": 102540,
-      "sha256": "80e0b00bf7ee7d84785905b18f82791a37d99271271151510c236cae3addb93d"
+      "sha256": "fc4a4c6ef66a028e0f9a801ac94b46dfbf66f36a61b0ace76ee6a09bc34f62c3"
     },
     "inference.pdmodel": {
       "size_bytes": 137964,
@@ -40,26 +40,32 @@
     }
   },
   "benchmark_metrics": {
-    "clean_cer_pct": 5.06,
-    "char_cer_pct": 2.76,
-    "symbols_acc_pct": 98.93,
-    "hyphen_acc_pct": 94.29,
-    "stress_82_cer_pct": 6.45,
-    "erode_3_cer_pct": 18.59,
-    "harum_crops_cer_pct": 2.68,
-    "harum_wer_pct": 9.63,
-    "harum_e2e_cer_pct": 3.19
+    "clean_cer_pct": 5.28,
+    "char_cer_pct": 2.64,
+    "symbols_acc_pct": 99.29,
+    "symbols_passed": "278/280",
+    "failing_symbols": [
+      "_",
+      "/"
+    ],
+    "hyphen_acc_pct": 95.71,
+    "fullpage_cer_pct": 7.51,
+    "stress_82_cer_pct": 6.93,
+    "probe_100_w480_cer_pct": 4.2,
+    "harum_crops_cer_pct": 2.55,
+    "gates_passed": "5/6",
+    "valid_for_release": false
   },
-  "confidence_temperature": 0.913876,
+  "confidence_temperature": 0.946667,
   "confidence_calibration": {
     "fit_split": "held_out_diagnostic_probe_100",
     "eval_split": "realscan_gold_v1/harum_palei_01",
     "policy": "raw_probe_100_mle",
-    "ece_before": 0.022263,
-    "ece_after": 0.011346,
-    "brier_before": 0.001234,
-    "brier_after": 0.000827,
-    "nll_before": 0.125595,
-    "nll_after": 0.121042
+    "ece_before": 0.022792,
+    "ece_after": 0.016179,
+    "brier_before": 0.001003,
+    "brier_after": 0.000711,
+    "nll_before": 0.117358,
+    "nll_after": 0.114144
   }
 }

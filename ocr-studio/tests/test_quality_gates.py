@@ -308,10 +308,66 @@ def test_v24_1_r4_and_r3_1_manifest_and_shapes():
     info_r4 = app.get_model_info('v24_1_r4')
     info_r31 = app.get_model_info('v24_1_r3_1')
     assert info_r4['recognizers'][0]['rec_image_shape'] == '3, 48, 480', info_r4
-    assert info_r4['recognizers'][0]['weights_sha256_16'] == '508141c596bf43cb', info_r4
+    assert info_r4['recognizers'][0]['weights_sha256_16'] == '85525b0ca091acaf', info_r4
     assert '\\' not in info_r4['recognizers'][0]['model_dir'], info_r4
     assert info_r31['recognizers'][0]['rec_image_shape'] == '3, 48, 320', info_r31
     assert info_r31['recognizers'][0]['weights_sha256_16'] == '5fb0d8e4d512b4c0', info_r31
+
+
+def test_ingest_studio_to_realscan_gold_cli():
+    import json
+    import tempfile
+
+    repo_root = os.path.dirname(app.PROJECT_ROOT)
+    scripts_dir = os.path.join(repo_root, 'scripts')
+    if scripts_dir not in sys.path:
+        sys.path.insert(0, scripts_dir)
+    from ingest_studio_to_realscan_gold import ingest_page_json, sha256_file
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        v2_dir = os.path.join(tmpdir, 'ocr-benchmark', 'data', 'realscan_gold_v2')
+        os.makedirs(v2_dir, exist_ok=True)
+        manifest_p = os.path.join(v2_dir, 'manifest.json')
+        seed_manifest = {
+            'benchmark_id': 'realscan_gold_v2_test',
+            'summary': {'real_camera_pages': 0, 'real_camera_lines': 0, 'total_evaluated_lines': 0},
+            'documents': [],
+        }
+        with open(manifest_p, 'w', encoding='utf-8') as f:
+            json.dump(seed_manifest, f)
+
+        # Create synthetic manuscript page and Studio JSON export with out-of-order Cham cluster
+        page_img = np.full((200, 500, 3), 245, dtype=np.uint8)
+        cv2.putText(page_img, 'Cham Folio', (30, 60), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (25, 25, 25), 2)
+        src_img_p = os.path.join(tmpdir, 'folio_01.png')
+        cv2.imwrite(src_img_p, page_img)
+
+        export_p = os.path.join(tmpdir, 'cham_ocr_transcription.json')
+        with open(export_p, 'w', encoding='utf-8') as f:
+            json.dump({
+                'lines': [
+                    {'text': 'ꨙꨯꨳꨮ ꨨꨣꨭꩌ', 'bbox': [20, 25, 420, 80]},
+                    {'text': '꩒꩐꩐꩞ ꨚꨤꨬ', 'bbox': [20, 100, 410, 155]},
+                ]
+            }, f, ensure_ascii=False)
+
+        updated = ingest_page_json(
+            src_img_p,
+            export_p,
+            doc_id='panduranga_test_01',
+            domain='user_verified_manuscript',
+            manifest_path=manifest_p,
+            project_root=tmpdir,
+        )
+        assert updated['summary']['real_camera_pages'] == 1
+        assert updated['summary']['real_camera_lines'] == 2
+        doc = updated['documents'][0]
+        assert doc['lines'][0]['gt'] == 'ꨙꨳꨯꨮ ꨨꨣꨭꩌ', doc['lines'][0]
+        assert '\\' not in doc['page_relpath']
+        assert sha256_file(os.path.join(tmpdir, doc['page_relpath'])) == doc['page_sha256']
+        for ln in doc['lines']:
+            assert '\\' not in ln['crop_relpath']
+            assert sha256_file(os.path.join(tmpdir, ln['crop_relpath'])) == ln['crop_sha256']
 
 
 import unittest  # noqa: E402

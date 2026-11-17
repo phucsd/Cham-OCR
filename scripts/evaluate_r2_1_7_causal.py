@@ -43,12 +43,16 @@ from frozen_gate_policy import FrozenGatePolicy
 def parse_kernel_wall_clock(kernel_log_path: str) -> float:
     if not os.path.exists(kernel_log_path):
         return None
+    raw_txt = open(kernel_log_path, "r", encoding="utf-8", errors="replace").read()
     try:
-        entries = json.loads(open(kernel_log_path, "r", encoding="utf-8", errors="replace").read())
+        entries = json.loads(raw_txt)
         times = [float(e["time"]) for e in entries if isinstance(e, dict) and "time" in e]
-        return round(max(times), 2) if times else None
+        if times:
+            return round(max(times), 2)
     except Exception:
-        return None
+        pass
+    txt_times = [float(m) for m in re.findall(r"^(\d+(?:\.\d+)?)s\s+\d+\s", raw_txt, flags=re.M)]
+    return round(max(txt_times), 2) if txt_times else None
 
 
 def parse_train_log(log_path: str, total_epochs: int = 3, kernel_log_path: str = None) -> dict:

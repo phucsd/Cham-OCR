@@ -1,0 +1,41 @@
+{
+  "title": "Cham-OCR v24.1 Stage R4.1 Surgical Gate-Closure (W=480) 6-Point Audit",
+  "audit_timestamp": "2026-11-17T07:48:34.344809+00:00",
+  "status": "PASS",
+  "execution_duration_sec": 10.11,
+  "wide_gt_320px": 7616,
+  "symbol_line_counts": {
+    "?": 230,
+    "!": 193,
+    "#": 127,
+    "&": 114,
+    "*": 149,
+    "<": 108,
+    ">": 131,
+    "{": 203,
+    "}": 203,
+    "\\": 114,
+    "_": 2571,
+    "[": 164,
+    "]": 164,
+    "/": 1504
+  },
+  "hyphen_group_counts": {
+    "double_hyphen": 2119,
+    "number_number": 883,
+    "line_beginning": 252,
+    "word_word_tight": 1167,
+    "year_year": 860,
+    "line_ending": 97,
+    "word_word_spaced": 84
+  },
+  "missing_dict_tokens": [],
+  "audits": {
+    "audit_1_text_disjointness": true,
+    "audit_2_train_val_disjointness": true,
+    "audit_3_long_substring_disjointness": true,
+    "audit_4_image_sha256_disjointness_and_21120_unique": true,
+    "audit_5_ast_generator_blindness": true,
+    "audit_6_width_480_targeted_parity": true
+  }
+}

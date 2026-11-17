@@ -82,6 +82,8 @@ ocr-studio/PaddleOCR/applications/
 ocr-benchmark/data/images_diagnostic/
 ocr-benchmark/data/images_stress_500/
 ocr-benchmark/data/frozen_suite/crops/
+ocr-benchmark/data/realscan_gold_v*/pages/
+ocr-benchmark/data/realscan_gold_v*/crops/
 ocr-benchmark/results/*_raw/
 ocr-benchmark/results/*_raw_results/
 ocr-studio/data/output/rec_cham_inference_v24_1_r1*/

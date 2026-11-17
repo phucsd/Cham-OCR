@@ -1,0 +1,152 @@
+{
+  "title": "Cham-OCR Cham-DBNet v2.1 Hybrid Wave+MultiLayout Evaluation & Promotion Gate",
+  "evaluated_at": "2026-11-17T10:13:01.337972+00:00",
+  "selected_epoch": 10,
+  "checkpoint_sha256": "5a2cb125ed99edfb4fd5066add607c77e61ec5b0af54a12a796b8f70ced5f52d",
+  "ground_truth_training_accounting": {
+    "first_batch_timestamp": "2026-11-17 09:06:03",
+    "last_batch_timestamp": "2026-11-17 09:57:49",
+    "train_loop_duration_seconds": 3106.0,
+    "train_loop_duration_minutes": 51.77,
+    "pipeline_container_overhead_seconds": 525.3,
+    "pipeline_container_overhead_minutes": 8.75,
+    "total_kernel_wall_clock_seconds": 3631.3,
+    "total_kernel_wall_clock_minutes": 60.52,
+    "epoch_1_final_loss": 0.723369,
+    "epoch_2_final_loss": 0.691128,
+    "epoch_3_final_loss": 0.687002,
+    "epoch_4_final_loss": 0.67891,
+    "epoch_5_final_loss": 0.642975,
+    "epoch_6_final_loss": 0.669254,
+    "epoch_7_final_loss": 0.637739,
+    "epoch_8_final_loss": 0.637117,
+    "epoch_9_final_loss": 0.632919,
+    "epoch_10_final_loss": 0.603754,
+    "epoch_11_final_loss": 0.624795,
+    "epoch_12_final_loss": 0.625599,
+    "epoch_13_final_loss": 0.604885,
+    "epoch_14_final_loss": 0.611399,
+    "epoch_15_final_loss": 0.585207,
+    "epoch_16_final_loss": 0.603116,
+    "epoch_17_final_loss": 0.606439,
+    "epoch_18_final_loss": 0.609417,
+    "epoch_19_final_loss": 0.598249,
+    "epoch_20_final_loss": 0.598584
+  },
+  "val_120_harfbuzz": {
+    "cham_dbnet_v1": {
+      "pages": 120,
+      "gt_lines": 1473,
+      "dt_lines": 1560,
+      "recall_pct": 97.08,
+      "precision_pct": 91.67,
+      "hmean_pct": 94.3,
+      "usable_crop_pct": 14.39,
+      "mean_iou": 0.7705
+    },
+    "cham_dbnet_v2_1": {
+      "pages": 120,
+      "gt_lines": 1473,
+      "dt_lines": 1473,
+      "recall_pct": 100.0,
+      "precision_pct": 100.0,
+      "hmean_pct": 100.0,
+      "usable_crop_pct": 6.86,
+      "mean_iou": 0.7405
+    }
+  },
+  "val_160_hybrid_wave": {
+    "cham_dbnet_v1": {
+      "pages": 160,
+      "gt_lines": 1949,
+      "dt_lines": 2031,
+      "recall_pct": 98.61,
+      "precision_pct": 94.63,
+      "hmean_pct": 96.58,
+      "usable_crop_pct": 34.38
+    },
+    "cham_dbnet_v2_1": {
+      "pages": 160,
+      "gt_lines": 1949,
+      "dt_lines": 1940,
+      "recall_pct": 99.54,
+      "precision_pct": 100.0,
+      "hmean_pct": 99.77,
+      "usable_crop_pct": 26.73
+    }
+  },
+  "end_to_end": {
+    "cham_dbnet_v1": {
+      "harum_palei_01": {
+        "gt_lines": 25,
+        "pred_lines": 25,
+        "matched_lines": 25,
+        "line_recall_pct": 100.0,
+        "matched_line_cer_pct": 3.28,
+        "e2e_doc_cer_pct": 3.19,
+        "unmatched_gt_chars": 0,
+        "unmatched_pred_chars": 0
+      },
+      "level5_and_audit": {
+        "short:5": {
+          "n": 16,
+          "lines": "62/64",
+          "abs_line_err": 2,
+          "doc_cer_pct": 16.47,
+          "matched_cer_pct": 16.89
+        },
+        "a4:5": {
+          "n": 16,
+          "lines": "240/241",
+          "abs_line_err": 1,
+          "doc_cer_pct": 12.78,
+          "matched_cer_pct": 12.98
+        },
+        "audit_18": {
+          "n": 18,
+          "lines": "134/134",
+          "abs_line_err": 0,
+          "doc_cer_pct": 11.32,
+          "matched_cer_pct": 11.72
+        }
+      }
+    },
+    "cham_dbnet_v2_1": {
+      "harum_palei_01": {
+        "gt_lines": 25,
+        "pred_lines": 25,
+        "matched_lines": 25,
+        "line_recall_pct": 100.0,
+        "matched_line_cer_pct": 3.28,
+        "e2e_doc_cer_pct": 3.19,
+        "unmatched_gt_chars": 0,
+        "unmatched_pred_chars": 0
+      },
+      "level5_and_audit": {
+        "short:5": {
+          "n": 16,
+          "lines": "36/64",
+          "abs_line_err": 28,
+          "doc_cer_pct": 67.34,
+          "matched_cer_pct": 68.9
+        },
+        "a4:5": {
+          "n": 16,
+          "lines": "125/241",
+          "abs_line_err": 116,
+          "doc_cer_pct": 63.23,
+          "matched_cer_pct": 63.92
+        },
+        "audit_18": {
+          "n": 18,
+          "lines": "124/134",
+          "abs_line_err": 10,
+          "doc_cer_pct": 21.03,
+          "matched_cer_pct": 21.54
+        }
+      }
+    }
+  },
+  "promote_v2_1": false,
+  "promotion_action": "kept_v1_no_promotion"
+}

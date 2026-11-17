@@ -19,8 +19,8 @@ WORKDIR /app
 COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Force cache bust for updated app code & Cham-SVTR V24.1-R4 (W=480) + V24.1-R3.1 (W=320) models
-RUN echo "Cache bust 2026-11-17T12:25:00+07:00 - V24.1-R4 (W=480) default SOTA + V24.1-R3.1 (W=320), diacritic fragment suppression, Temperature Scaling calibrated_confidence"
+# Force cache bust for updated app code & Cham-SVTR V24.1-R4.1 WiSE-FT (W=480) + V24.1-R3.1 (W=320) models
+RUN echo "Cache bust 2026-11-17T18:35:00+07:00 - V24.1-R4.1 WiSE-FT (W=480 5/6 Gates, 2.55% RealScan CER) + Research Whitepaper & RealScan-Gold v2 Sync"
 
 # Copy application files
 COPY . /app

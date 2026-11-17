@@ -252,6 +252,46 @@ BRANCH_SPECS = {
         "base_ckpt_filename": "best.pdparams",
         "base_sha": "AUTO_FROM_R3_1",
         "dataset_slug": "gustavnguyen/cham-ocr-v24-1-r2-1-4d-training-assets"
+    },
+    "stage_r4_1_polish": {
+        "slug": "paddleocr-cham-v24-1-r4-1-gate-polish-w480",
+        "title": "PaddleOCR Cham v24.1 R4.1 Gate Polish W480",
+        "folder": "cham_synthetic_r4_1_polish",
+        "dataset_zip": "r4_1_polish_dataset.zip",
+        "config_file": "rec_cham_v24_1_r4_1_polish.yml",
+        "train_samples": 19200,
+        "val_samples": 1920,
+        "epochs": 3,
+        "warmup_epoch": 0.5,
+        "step_each_epoch": 300,
+        "warmup_steps": 150,
+        "lr": 0.000010,
+        "eta_min": 1.5e-6,
+        "output_subpath": "rec_cham_v24_1_r4_1_polish",
+        "base_ckpt_subdir": "r4_best",
+        "base_ckpt_filename": "best.pdparams",
+        "base_sha": "b98e0c3400d520d4ba1d4d80ca513619036fa32c8da1b9b811219c668f1b7de2",
+        "dataset_slug": "gustavnguyen/cham-ocr-v24-1-r2-1-4d-training-assets"
+    },
+    "stage_r4_2_inktight": {
+        "slug": "paddleocr-cham-v24-1-r4-2-inktight-w480",
+        "title": "PaddleOCR Cham v24 1 R4 2 Inktight W480",
+        "folder": "cham_synthetic_r4_2_inktight",
+        "dataset_zip": "r4_2_inktight_dataset.zip",
+        "config_file": "rec_cham_v24_1_r4_2_inktight.yml",
+        "train_samples": 12800,
+        "val_samples": 1280,
+        "epochs": 2,
+        "warmup_epoch": 0.25,
+        "step_each_epoch": 200,
+        "warmup_steps": 50,
+        "lr": 0.000006,
+        "eta_min": 1.0e-6,
+        "output_subpath": "rec_cham_v24_1_r4_2_inktight",
+        "base_ckpt_subdir": "r4_2_base",
+        "base_ckpt_filename": "best.pdparams",
+        "base_sha": "1e38d5623858c5c9a85888c177da001ff8b1cea6a7588248f1e1036455e8db2f",
+        "dataset_slug": "gustavnguyen/cham-ocr-v24-1-r2-1-4d-training-assets"
     }
 }
 
@@ -798,6 +838,8 @@ def upload_training_assets(bundle_name: str = "r2_1_4c_training_bundle", target_
     print(f"🚀 UPLOADING ASSET BUNDLE ({bundle_name}) TO KAGGLE DATASET ({target_slug})")
     print("=" * 80)
 
+    import socket
+    socket.setdefaulttimeout(60)
     from kaggle.api.kaggle_api_extended import KaggleApi
     api = KaggleApi()
     api.authenticate()
@@ -846,6 +888,8 @@ def push_and_run_kernel(b_key: str):
     generate_kernel_files(b_key, kernel_dir)
 
     print(f"\n🚀 Pushing kernel {spec['slug']} to Kaggle...")
+    import socket
+    socket.setdefaulttimeout(60)
     from kaggle.api.kaggle_api_extended import KaggleApi
     api = KaggleApi()
     api.authenticate()
@@ -874,6 +918,8 @@ def monitor_kernel(b_key: str, poll_interval: int = 30, max_stall_seconds: int =
     if max_stall_seconds is None:
         max_stall_seconds = max(1200, int(est_train_seconds * 1.5))
 
+    import socket
+    socket.setdefaulttimeout(60)
     from kaggle.api.kaggle_api_extended import KaggleApi
     api = KaggleApi()
     api.authenticate()
@@ -1009,6 +1055,8 @@ def download_artifacts(b_key: str):
     print(f"📥 DOWNLOADING ARTIFACTS FOR {b_key} -> {dl_dir}")
     print("=" * 80)
 
+    import socket
+    socket.setdefaulttimeout(60)
     from kaggle.api.kaggle_api_extended import KaggleApi
     api = KaggleApi()
     api.authenticate()
@@ -1066,6 +1114,8 @@ def main():
     parser.add_argument("--run-r3", action="store_true", help="Run Stage R3 (SCAN-DEGRADATION) end-to-end")
     parser.add_argument("--run-r3-1", action="store_true", help="Run Stage R3.1 (GATE-CLOSURE + SESQUISYLLABIC + EROSION) end-to-end")
     parser.add_argument("--run-r4", action="store_true", help="Run Stage R4 (WIDE-CANVAS W=480) end-to-end")
+    parser.add_argument("--run-r4-1", action="store_true", help="Run Stage R4.1 (GATE-POLISH W=480) end-to-end")
+    parser.add_argument("--run-r4-2", action="store_true", help="Run Stage R4.2 (INKTIGHT-CLOSURE W=480) end-to-end")
     args = parser.parse_args()
 
     if args.upload_assets:
@@ -1131,6 +1181,16 @@ def main():
         push_and_run_kernel("stage_r4_w480")
         monitor_kernel("stage_r4_w480")
         download_artifacts("stage_r4_w480")
+    elif args.run_r4_1:
+        print("\n🚀 EXECUTING STAGE R4.1 (GATE-POLISH W=480) END-TO-END...")
+        push_and_run_kernel("stage_r4_1_polish")
+        monitor_kernel("stage_r4_1_polish")
+        download_artifacts("stage_r4_1_polish")
+    elif args.run_r4_2:
+        print("\n🚀 EXECUTING STAGE R4.2 (INKTIGHT-CLOSURE W=480) END-TO-END...")
+        push_and_run_kernel("stage_r4_2_inktight")
+        monitor_kernel("stage_r4_2_inktight")
+        download_artifacts("stage_r4_2_inktight")
     else:
         parser.print_help()
 

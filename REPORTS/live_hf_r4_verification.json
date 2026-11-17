@@ -1,13 +1,18 @@
 {
-  "verified_at": "2026-11-17T05:46:05.045270+00:00",
+  "verified_at": "2026-11-17T11:45:37.353070+00:00",
   "space_id": "phucsd/cham-ocr-studio",
   "live_url": "https://ocr.cham.asia",
-  "commit_sha": "0c39847df2a78150998f50fcb73ec7fde478e043",
+  "commit_sha": "f4a6b4835cf77bf6c4065c68d28a1743511dacad",
   "files_uploaded": [
     "Dockerfile",
     "DESIGN.md",
+    "README.md",
+    "README_VI.md",
+    "RESEARCH.md",
+    "FUTURE_WORK.md",
     "ocr-studio/app.py",
     "ocr-studio/index.html",
+    "ocr-studio/research.html",
     "ocr-studio/tests/test_quality_gates.py",
     "ocr-studio/PaddleOCR/ppocr/modeling/backbones/rec_lcnetv3.py",
     "ocr-studio/data/cham_dict_v24_1_r3_1.txt",
@@ -15,6 +20,7 @@
     "ocr-studio/data/output/rec_cham_inference_v24_1_r2_1_6/model_manifest.json",
     "ocr-studio/data/output/rec_cham_inference_v24_1_r3/model_manifest.json",
     "ocr-training/scripts/export_active_learning_r4.py",
+    "scripts/ingest_studio_to_realscan_gold.py",
     "ocr-studio/data/output/rec_cham_inference_v24_1_r3_1/cham_dict_v24_1.txt",
     "ocr-studio/data/output/rec_cham_inference_v24_1_r3_1/inference.json",
     "ocr-studio/data/output/rec_cham_inference_v24_1_r3_1/inference.pdiparams",
@@ -33,7 +39,7 @@
     "ocr-studio/data/output/ch_PP-OCRv4_det_cham_infer/inference.pdiparams"
   ],
   "rollout": {
-    "rollout_seconds": 61,
+    "rollout_seconds": 45,
     "stage": "RUNNING",
     "health_body": "OK",
     "probe_model_info": {
@@ -43,11 +49,11 @@
         {
           "version": "v24_1_r4",
           "model_dir": "data/output/rec_cham_inference_v24_1_r4",
-          "weights_sha256_16": "508141c596bf43cb",
+          "weights_sha256_16": "85525b0ca091acaf",
           "dict": "cham_dict_v24_1_r4.txt",
           "dict_sha256_16": "ec1e1f08254dbde6",
           "rec_image_shape": "3, 48, 480",
-          "confidence_temperature": 0.913876
+          "confidence_temperature": 0.946667
         }
       ],
       "detector": {
@@ -75,8 +81,8 @@
   },
   "live_harum_palei_01": {
     "default_v24_1_r4": {
-      "wall_sec": 10.852,
-      "backend_sec": 8.2042,
+      "wall_sec": 16.12,
+      "backend_sec": 7.1728,
       "has_calibrated_confidence": true,
       "model_info": {
         "model": "v24_1_r4",
@@ -85,11 +91,11 @@
           {
             "version": "v24_1_r4",
             "model_dir": "data/output/rec_cham_inference_v24_1_r4",
-            "weights_sha256_16": "508141c596bf43cb",
+            "weights_sha256_16": "85525b0ca091acaf",
             "dict": "cham_dict_v24_1_r4.txt",
             "dict_sha256_16": "ec1e1f08254dbde6",
             "rec_image_shape": "3, 48, 480",
-            "confidence_temperature": 0.913876
+            "confidence_temperature": 0.946667
           }
         ],
         "detector": {
@@ -106,14 +112,14 @@
       "pred_lines": 25,
       "matched_lines": 25,
       "line_recall_pct": 100.0,
-      "matched_line_cer_pct": 3.28,
-      "e2e_doc_cer_pct": 3.19,
+      "matched_line_cer_pct": 3.53,
+      "e2e_doc_cer_pct": 3.43,
       "unmatched_gt_chars": 0,
       "unmatched_pred_chars": 0
     },
     "v24_1_r3_1": {
-      "wall_sec": 12.301,
-      "backend_sec": 9.645,
+      "wall_sec": 16.422,
+      "backend_sec": 7.649,
       "has_calibrated_confidence": true,
       "model_info": {
         "model": "v24_1_r3_1",
@@ -149,8 +155,8 @@
       "unmatched_pred_chars": 0
     },
     "auto": {
-      "wall_sec": 10.93,
-      "backend_sec": 8.6371,
+      "wall_sec": 18.085,
+      "backend_sec": 7.6788,
       "has_calibrated_confidence": true,
       "model_info": {
         "model": "auto",
@@ -159,11 +165,11 @@
           {
             "version": "v24_1_r4",
             "model_dir": "data/output/rec_cham_inference_v24_1_r4",
-            "weights_sha256_16": "508141c596bf43cb",
+            "weights_sha256_16": "85525b0ca091acaf",
             "dict": "cham_dict_v24_1_r4.txt",
             "dict_sha256_16": "ec1e1f08254dbde6",
             "rec_image_shape": "3, 48, 480",
-            "confidence_temperature": 0.913876
+            "confidence_temperature": 0.946667
           },
           {
             "version": "vi",
@@ -189,8 +195,8 @@
       "pred_lines": 25,
       "matched_lines": 25,
       "line_recall_pct": 100.0,
-      "matched_line_cer_pct": 3.28,
-      "e2e_doc_cer_pct": 3.19,
+      "matched_line_cer_pct": 3.53,
+      "e2e_doc_cer_pct": 3.43,
       "unmatched_gt_chars": 0,
       "unmatched_pred_chars": 0
     }
@@ -200,7 +206,7 @@
     "lines": "134/134",
     "abs_line_err": 0,
     "blank_page_zero_lines": true,
-    "doc_cer_pct": 11.32,
-    "matched_cer_pct": 11.72
+    "doc_cer_pct": 11.25,
+    "matched_cer_pct": 11.65
   }
 }

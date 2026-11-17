@@ -1,0 +1,72 @@
+{
+  "title": "Cham-OCR v24.1 Stage R4.1 WiSE-FT (0.17*R4.0_E3 + 0.83*R4.1_E1) Final Promotion",
+  "evaluated_at": "2026-11-17T11:13:27.825336+00:00",
+  "checkpoint_sha256": "300b3ef5aec4417985bf70c0ac3548216f8c27272207747c77f28a69d50402a3",
+  "packaged_pdiparams_sha256": "85525b0ca091acaf81a4693fbdd93f53309b4203e68a467560fa5dcaead86417",
+  "packaged_pdiparams_sha256_16": "85525b0ca091acaf",
+  "metrics": {
+    "clean_cer_pct": 5.28,
+    "char_cer_pct": 2.64,
+    "symbols_acc_pct": 99.29,
+    "symbols_passed": "278/280",
+    "failing_symbols": [
+      "_",
+      "/"
+    ],
+    "hyphen_acc_pct": 95.71,
+    "fullpage_cer_pct": 7.51,
+    "stress_82_cer_pct": 6.93,
+    "probe_100_w480_cer_pct": 4.2,
+    "harum_crops_cer_pct": 2.55,
+    "gates_passed": "5/6",
+    "valid_for_release": false
+  },
+  "gates": [
+    {
+      "gate": "Gate 1: Clean-Frozen Non-Regression",
+      "baseline": "11.7967%",
+      "tolerance": "+0.20%",
+      "threshold": "11.9967%",
+      "value": "5.2775%",
+      "status": "PASS"
+    },
+    {
+      "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+      "min_acc": "99.0%",
+      "value": "99.2857%",
+      "failing_symbols": [
+        "_",
+        "/"
+      ],
+      "failing_count": 2,
+      "status": "FAIL"
+    },
+    {
+      "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+      "min_acc": "95.0%",
+      "value": "95.7143%",
+      "status": "PASS"
+    },
+    {
+      "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+      "white_pred": "",
+      "gray_pred": "",
+      "status": "PASS"
+    },
+    {
+      "gate": "Gate 5: Character-Frozen Non-Regression",
+      "baseline": "4.1830%",
+      "tolerance": "+0.21%",
+      "threshold": "4.3930%",
+      "value": "2.6375%",
+      "status": "PASS"
+    },
+    {
+      "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+      "threshold": "12.0000%",
+      "value": "7.5066%",
+      "status": "PASS"
+    }
+  ],
+  "valid_for_release": false
+}
