@@ -1,0 +1,65 @@
+{
+  "model_id": "v24_1_r4",
+  "display_name": "Cham-OCR v24.1 Stage R4 (W=480 Wide-Canvas Corpus + Optical)",
+  "stage": "R4_WIDE_CANVAS_W480",
+  "epoch": 3,
+  "packaged_at": "2026-11-17T04:55:43.150569+00:00",
+  "source_kernel": "gustavnguyen/paddleocr-cham-v24-1-r4-wide-w480",
+  "source_checkpoint": "ocr-training/output/r4_w480_checkpoints/iter_epoch_3.pdparams",
+  "source_checkpoint_sha256": "b98e0c3400d520d4ba1d4d80ca513619036fa32c8da1b9b811219c668f1b7de2",
+  "dictionary_path": "ocr-studio/data/cham_dict_v24_1_r4.txt",
+  "dictionary_sha256": "ec1e1f08254dbde6f71604c6581d712a59e724bdb410d98d5d85d3b3446a7643",
+  "dictionary_tokens": 114,
+  "rec_image_shape": "3, 48, 480",
+  "logical_order": true,
+  "export_with_pir": false,
+  "files": {
+    "cham_dict_v24_1.txt": {
+      "size_bytes": 394,
+      "sha256": "ec1e1f08254dbde6f71604c6581d712a59e724bdb410d98d5d85d3b3446a7643"
+    },
+    "inference.json": {
+      "size_bytes": 217712,
+      "sha256": "207f52bcdab782cf5c94d0f23f81a785844a96f6dfaf8965893661629763bdcb"
+    },
+    "inference.pdiparams": {
+      "size_bytes": 7616465,
+      "sha256": "508141c596bf43cbdbe0efea6cfbb2c4e68aa2d1cfab1b0a144c570721ecfe88"
+    },
+    "inference.pdiparams.info": {
+      "size_bytes": 102540,
+      "sha256": "80e0b00bf7ee7d84785905b18f82791a37d99271271151510c236cae3addb93d"
+    },
+    "inference.pdmodel": {
+      "size_bytes": 137964,
+      "sha256": "6ba5572c81eee4250a7c83cc53a4688078ef8606e737ff4f67a7bf5f23a2361c"
+    },
+    "inference.yml": {
+      "size_bytes": 1614,
+      "sha256": "942f160dbbb5b8ddbb0630ac2dce87c2c74b83381818006ba10011e3f8df4d9e"
+    }
+  },
+  "benchmark_metrics": {
+    "clean_cer_pct": 5.06,
+    "char_cer_pct": 2.76,
+    "symbols_acc_pct": 98.93,
+    "hyphen_acc_pct": 94.29,
+    "stress_82_cer_pct": 6.45,
+    "erode_3_cer_pct": 18.59,
+    "harum_crops_cer_pct": 2.68,
+    "harum_wer_pct": 9.63,
+    "harum_e2e_cer_pct": 3.19
+  },
+  "confidence_temperature": 0.913876,
+  "confidence_calibration": {
+    "fit_split": "held_out_diagnostic_probe_100",
+    "eval_split": "realscan_gold_v1/harum_palei_01",
+    "policy": "raw_probe_100_mle",
+    "ece_before": 0.022263,
+    "ece_after": 0.011346,
+    "brier_before": 0.001234,
+    "brier_after": 0.000827,
+    "nll_before": 0.125595,
+    "nll_after": 0.121042
+  }
+}

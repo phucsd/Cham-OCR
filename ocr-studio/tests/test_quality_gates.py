@@ -264,6 +264,68 @@ def test_active_learning_save_correction_and_export_r4():
             assert len(lbl) > 0
 
 
+def test_suppress_detached_diacritic_fragments_keeps_short_lines():
+    def _q(x1, y1, x2, y2):
+        return [[float(x1), float(y1)], [float(x2), float(y1)], [float(x2), float(y2)], [float(x1), float(y2)]]
+
+    # Main full-height lines (~45px tall) + 3 real harum_palei_01 detached diacritic specks (~10x9px)
+    # + 1 standalone short stanza header ('꩑꩞') + 1 standalone page number ('12')
+    raw_boxes = [
+        _q(30, 5, 85, 42),        # standalone short stanza header (h=37, w=55) -> MUST KEEP
+        _q(21, 55, 780, 100),     # Line 1
+        _q(235, 99, 245, 108),    # Speck #1 (w=10, h=9) touching Line 1/2 -> MUST DROP
+        _q(17, 105, 788, 152),    # Line 2
+        _q(18, 160, 683, 206),    # Line 3
+        _q(16, 411, 656, 463),    # Line 4
+        _q(67, 415, 78, 423),     # Speck #2 (w=11, h=8) inside Line 4 -> MUST DROP
+        _q(22, 496, 585, 540),    # Line 5
+        _q(295, 497, 307, 505),   # Speck #3 (w=12, h=8) inside Line 5 -> MUST DROP
+        _q(480, 960, 498, 994),   # standalone page number (h=34, w=18, far below) -> MUST KEEP
+    ]
+    merged = app.merge_line_boxes(raw_boxes, 900, 1050)
+    assert len(merged) == 7, f"Expected 7 valid lines (3 specks dropped), got {len(merged)}"
+    widths = [float(np.ptp(np.array(b)[:, 0])) for b in merged]
+    assert all(w >= 17.0 for w in widths), widths
+
+
+def test_v24_1_r4_and_r3_1_manifest_and_shapes():
+    assert app.DEFAULT_CHAM_MODEL == 'v24_1_r4', app.DEFAULT_CHAM_MODEL
+    m_r4 = app.get_model_manifest('v24_1_r4')
+    m_r31 = app.get_model_manifest('v24_1_r3_1')
+    assert m_r4.get('rec_image_shape') == '3, 48, 480', m_r4
+    assert m_r31.get('rec_image_shape') == '3, 48, 320', m_r31
+    assert 0.80 <= float(m_r4.get('confidence_temperature', 0)) <= 1.20, m_r4
+    assert 0.80 <= float(m_r31.get('confidence_temperature', 0)) <= 1.20, m_r31
+
+    app.ocr_model_paths['v24_1_r4'] = {
+        'model_dir': os.path.join(app.PROJECT_ROOT, 'data', 'output', 'rec_cham_inference_v24_1_r4'),
+        'dict_path': os.path.join(app.PROJECT_ROOT, 'data', 'cham_dict_v24_1_r4.txt'),
+    }
+    app.ocr_model_paths['v24_1_r3_1'] = {
+        'model_dir': os.path.join(app.PROJECT_ROOT, 'data', 'output', 'rec_cham_inference_v24_1_r3_1'),
+        'dict_path': os.path.join(app.PROJECT_ROOT, 'data', 'cham_dict_v24_1_r3_1.txt'),
+    }
+    info_r4 = app.get_model_info('v24_1_r4')
+    info_r31 = app.get_model_info('v24_1_r3_1')
+    assert info_r4['recognizers'][0]['rec_image_shape'] == '3, 48, 480', info_r4
+    assert info_r4['recognizers'][0]['weights_sha256_16'] == '508141c596bf43cb', info_r4
+    assert '\\' not in info_r4['recognizers'][0]['model_dir'], info_r4
+    assert info_r31['recognizers'][0]['rec_image_shape'] == '3, 48, 320', info_r31
+    assert info_r31['recognizers'][0]['weights_sha256_16'] == '5fb0d8e4d512b4c0', info_r31
+
+
+import unittest  # noqa: E402
+
+
+class TestQualityGates(unittest.TestCase):
+    pass
+
+
+for _fn_name, _fn_obj in list(globals().items()):
+    if _fn_name.startswith('test_') and callable(_fn_obj):
+        setattr(TestQualityGates, _fn_name, staticmethod(_fn_obj))
+
+
 if __name__ == '__main__':
     tests = [v for k, v in sorted(globals().items()) if k.startswith('test_') and callable(v)]
     for t in tests:

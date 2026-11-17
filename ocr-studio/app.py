@@ -76,7 +76,7 @@ _model_manifest_cache = {}
 #                      only when the legacy detector leaves text-like ink uncovered (missed / merged lines).
 #           'cham'    : Cham-DBNet only.   'generic': legacy detector only (pre-2026-11-04 behaviour).
 DET_MODE = os.getenv("DET_MODE", "hybrid").lower()
-DEFAULT_CHAM_MODEL = os.getenv("DEFAULT_CHAM_MODEL", "v24_1_r3")
+DEFAULT_CHAM_MODEL = os.getenv("DEFAULT_CHAM_MODEL", "v24_1_r4")
 CHAM_DET_DB_THRESH = float(os.getenv("CHAM_DET_DB_THRESH", "0.3"))
 CHAM_DET_BOX_THRESH = float(os.getenv("CHAM_DET_BOX_THRESH", "0.4"))
 CHAM_DET_UNCLIP = float(os.getenv("CHAM_DET_UNCLIP", "1.6"))
@@ -301,7 +301,17 @@ def get_ocr_model(version):
     
     import paddle
     args.use_gpu = paddle.is_compiled_with_cuda()
-    args.rec_image_shape = "3, 48, 480" if version == "v25" else "3, 48, 320"
+    manifest_for_shape = {}
+    if version != 'vi':
+        manifest_file = os.path.join(model_dir, "model_manifest.json")
+        if os.path.exists(manifest_file):
+            try:
+                with open(manifest_file, 'r', encoding='utf-8') as mf:
+                    manifest_for_shape = json.load(mf)
+            except Exception:
+                manifest_for_shape = {}
+    default_rec_shape = "3, 48, 480" if (version == "v25" or str(version).startswith("v24_1_r4")) else "3, 48, 320"
+    args.rec_image_shape = str(manifest_for_shape.get("rec_image_shape") or default_rec_shape)
     args.use_space_char = True
     
     # Batch size config: default to 1 on CPU to prevent padding latency blowup from varying crop aspect ratios
@@ -339,7 +349,8 @@ def get_ocr_model(version):
     
     # Warmup the model with a dummy image to trigger compilation/allocator caching
     try:
-        dummy_img = np.zeros((48, 320, 3), dtype=np.uint8)
+        dummy_w = int(args.rec_image_shape.split(",")[-1].strip())
+        dummy_img = np.zeros((48, dummy_w, 3), dtype=np.uint8)
         ocr_model([dummy_img])
         print(f"🔥 Model {version} warmed up successfully.")
     except Exception as e:
@@ -573,6 +584,35 @@ def merge_line_boxes(boxes, img_w, img_h):
             new_rects.append(r1)
         rects = new_rects
 
+    # Suppress detached micro-diacritic fragments (e.g., isolated upper/lower Cham vowel specks
+    # ~10x9px duplicated inside or touching an adjacent full-height line on harum_palei_01)
+    # while strictly preserving standalone short headers, stanza numbers, and page numbers.
+    if len(rects) >= 2:
+        post_median_h = float(np.median([r[3] - r[1] for r in rects]))
+        if post_median_h >= 14.0:
+            filtered_rects = []
+            for idx_r, r_cand in enumerate(rects):
+                bw = r_cand[2] - r_cand[0]
+                bh = r_cand[3] - r_cand[1]
+                if bh < 0.38 * post_median_h and bw < 0.55 * post_median_h:
+                    is_diacritic_speck = False
+                    for idx_m, r_main in enumerate(rects):
+                        if idx_m == idx_r:
+                            continue
+                        mw = r_main[2] - r_main[0]
+                        mh = r_main[3] - r_main[1]
+                        if mh < 0.65 * post_median_h or mw < 2.0 * bw:
+                            continue
+                        h_inter = max(0.0, min(r_cand[2], r_main[2]) - max(r_cand[0], r_main[0]))
+                        v_gap = max(0.0, max(r_cand[1] - r_main[3], r_main[1] - r_cand[3]))
+                        if h_inter >= 0.70 * max(1.0, bw) and v_gap <= 0.25 * post_median_h:
+                            is_diacritic_speck = True
+                            break
+                    if is_diacritic_speck:
+                        continue
+                filtered_rects.append(r_cand)
+            rects = filtered_rects
+
     # Line sorting: sort by vertical center
     rects = sorted(rects, key=lambda r: (r[1] + r[3]) / 2.0)
     return [r[4] for r in rects]
@@ -650,11 +690,15 @@ def get_model_info(model_ver):
                 conf_temp = float(manifest.get("confidence_temperature", 1.0))
             except (TypeError, ValueError):
                 conf_temp = 1.0
+            rec_shape_info = manifest.get("rec_image_shape") or (
+                "3, 48, 480" if (v == "v25" or str(v).startswith("v24_1_r4")) else "3, 48, 320"
+            )
             recs.append({"version": v,
-                         "model_dir": os.path.relpath(p["model_dir"], PROJECT_ROOT),
+                         "model_dir": os.path.relpath(p["model_dir"], PROJECT_ROOT).replace("\\", "/"),
                          "weights_sha256_16": _file_fingerprint(os.path.join(p["model_dir"], "inference.pdiparams")),
                          "dict": os.path.basename(p["dict_path"]),
                          "dict_sha256_16": _file_fingerprint(p["dict_path"]),
+                         "rec_image_shape": rec_shape_info,
                          "confidence_temperature": conf_temp})
     info["recognizers"] = recs
     if not det_model_info:

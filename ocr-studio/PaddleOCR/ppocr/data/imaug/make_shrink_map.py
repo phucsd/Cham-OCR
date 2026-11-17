@@ -39,9 +39,9 @@ class MakeShrinkMap(object):
         self.min_text_size = min_text_size
         self.shrink_ratio = shrink_ratio
         if 'total_epoch' in kwargs and 'epoch' in kwargs and kwargs[
-                'epoch'] != "None":
-            self.shrink_ratio = self.shrink_ratio + 0.2 * kwargs[
-                'epoch'] / float(kwargs['total_epoch'])
+                'epoch'] != "None" and float(kwargs['epoch']) <= float(kwargs['total_epoch']):
+            self.shrink_ratio = self.shrink_ratio + 0.2 * float(kwargs[
+                'epoch']) / float(kwargs['total_epoch'])
 
     def __call__(self, data):
         image = data['image']
@@ -72,7 +72,7 @@ class MakeShrinkMap(object):
                 # Increase the shrink ratio every time we get multiple polygon returned back
                 possible_ratios = np.arange(self.shrink_ratio, 1,
                                             self.shrink_ratio)
-                np.append(possible_ratios, 1)
+                possible_ratios = np.append(possible_ratios, 1)
                 # print(possible_ratios)
                 for ratio in possible_ratios:
                     # print(f"Change shrink ratio to {ratio}")

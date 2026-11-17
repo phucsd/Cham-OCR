@@ -1,0 +1,63 @@
+{
+  "model_id": "v24_1_r3_1",
+  "display_name": "Cham-OCR v24.1 Stage R3.1 (W=320 Sesquisyllabic + Erosion)",
+  "stage": "R3_1_CLOSURE",
+  "epoch": 3,
+  "packaged_at": "2026-11-17T03:32:01.336967+00:00",
+  "source_kernel": "gustavnguyen/paddleocr-cham-v24-1-r3-1-gate-closure",
+  "source_checkpoint": "ocr-training/output/r3_1_closure_checkpoints/iter_epoch_3.pdparams",
+  "source_checkpoint_sha256": "ae8631e38ba7057c8449c65ba52bcc77d7089f83e817ba2ef74c590a3f554d21",
+  "dictionary_path": "ocr-studio/data/cham_dict_v24_1_r3_1.txt",
+  "dictionary_sha256": "ec1e1f08254dbde6f71604c6581d712a59e724bdb410d98d5d85d3b3446a7643",
+  "dictionary_tokens": 114,
+  "rec_image_shape": "3, 48, 320",
+  "logical_order": true,
+  "export_with_pir": false,
+  "files": {
+    "cham_dict_v24_1.txt": {
+      "size_bytes": 394,
+      "sha256": "ec1e1f08254dbde6f71604c6581d712a59e724bdb410d98d5d85d3b3446a7643"
+    },
+    "inference.json": {
+      "size_bytes": 217712,
+      "sha256": "207f52bcdab782cf5c94d0f23f81a785844a96f6dfaf8965893661629763bdcb"
+    },
+    "inference.pdiparams": {
+      "size_bytes": 7616465,
+      "sha256": "5fb0d8e4d512b4c0d20933a103e9b7f940d97c14ded247dcabeba353c47e215b"
+    },
+    "inference.pdiparams.info": {
+      "size_bytes": 102540,
+      "sha256": "7921a250bcb88c0ecc83e5a107dcb6acda5853d4697273dfb8b4aa0719bbf793"
+    },
+    "inference.pdmodel": {
+      "size_bytes": 137964,
+      "sha256": "6ba5572c81eee4250a7c83cc53a4688078ef8606e737ff4f67a7bf5f23a2361c"
+    },
+    "inference.yml": {
+      "size_bytes": 1614,
+      "sha256": "b166ddd1f59e2b6c05d324076dfa2b15b21b3dee067c61545c619069abab89fc"
+    }
+  },
+  "benchmark_metrics": {
+    "clean_cer_pct": 4.98,
+    "char_cer_pct": 3.67,
+    "stress_82_cer_pct": 6.46,
+    "hyphen_acc_pct": 92.86,
+    "harum_crops_cer_pct": 4.62,
+    "harum_e2e_cer_pct": 5.08,
+    "audit_18_doc_cer_pct": 10.82
+  },
+  "confidence_temperature": 0.914851,
+  "confidence_calibration": {
+    "fit_split": "held_out_diagnostic_probe_100",
+    "eval_split": "realscan_gold_v1/harum_palei_01",
+    "policy": "raw_probe_100_mle",
+    "ece_before": 0.001724,
+    "ece_after": 0.008951,
+    "brier_before": 0.001739,
+    "brier_after": 0.001801,
+    "nll_before": 0.185365,
+    "nll_after": 0.186705
+  }
+}
