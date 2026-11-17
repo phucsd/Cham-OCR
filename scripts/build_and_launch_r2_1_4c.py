@@ -212,6 +212,46 @@ BRANCH_SPECS = {
         "base_ckpt_filename": "best.pdparams",
         "base_sha": "cd0c4838a7942bc050509311ae65cdf0e61fff1c1c0488a033e7df70c80cedb2",
         "dataset_slug": "gustavnguyen/cham-ocr-v24-1-r2-1-4d-training-assets"
+    },
+    "stage_r3_1_closure": {
+        "slug": "paddleocr-cham-v24-1-r3-1-gate-closure",
+        "title": "PaddleOCR Cham v24.1 R3.1 Gate Closure",
+        "folder": "cham_synthetic_r3_1_closure",
+        "dataset_zip": "r3_1_closure_dataset.zip",
+        "config_file": "rec_cham_v24_1_r3_1_closure.yml",
+        "train_samples": 21600,
+        "val_samples": 2400,
+        "epochs": 3,
+        "warmup_epoch": 0.4451038576,
+        "step_each_epoch": 337,
+        "warmup_steps": 150,
+        "lr": 0.000015,
+        "eta_min": 2.5e-6,
+        "output_subpath": "rec_cham_v24_1_r3_1_closure",
+        "base_ckpt_subdir": "r3_best",
+        "base_ckpt_filename": "best.pdparams",
+        "base_sha": "f00ae55578a2afae18f951677960ba8dc004174e429123d5d3602137f8ac7318",
+        "dataset_slug": "gustavnguyen/cham-ocr-v24-1-r2-1-4d-training-assets"
+    },
+    "stage_r4_w480": {
+        "slug": "paddleocr-cham-v24-1-r4-wide-w480",
+        "title": "PaddleOCR Cham v24.1 R4 Wide W480",
+        "folder": "cham_synthetic_r4_w480",
+        "dataset_zip": "r4_w480_dataset.zip",
+        "config_file": "rec_cham_v24_1_r4_w480.yml",
+        "train_samples": 24000,
+        "val_samples": 2400,
+        "epochs": 3,
+        "warmup_epoch": 0.4,
+        "step_each_epoch": 375,
+        "warmup_steps": 150,
+        "lr": 0.000015,
+        "eta_min": 2.5e-6,
+        "output_subpath": "rec_cham_v24_1_r4_w480",
+        "base_ckpt_subdir": "r3_1_best",
+        "base_ckpt_filename": "best.pdparams",
+        "base_sha": "AUTO_FROM_R3_1",
+        "dataset_slug": "gustavnguyen/cham-ocr-v24-1-r2-1-4d-training-assets"
     }
 }
 
@@ -242,6 +282,10 @@ def build_notebook_cells(b_key: str) -> list:
     base_ckpt_subdir = spec["base_ckpt_subdir"]
     base_ckpt_filename = spec["base_ckpt_filename"]
     base_sha = spec["base_sha"]
+    if base_sha == "AUTO_FROM_R3_1":
+        r31_eval_p = os.path.join(PROJECT_ROOT, "REPORTS", "r3_1_closure_evaluation.json")
+        assert os.path.exists(r31_eval_p), f"Cannot resolve AUTO_FROM_R3_1: missing {r31_eval_p}"
+        base_sha = json.load(open(r31_eval_p, "r", encoding="utf-8"))["best_epoch_sha256"].lower()
 
     patches_json_str = json.dumps(EXPECTED_RUNTIME_PATCHES, indent=4)
 
@@ -354,6 +398,14 @@ def build_notebook_cells(b_key: str) -> list:
                 "    print(f'  • Patched & verified: {rel_path} -> {actual_h[:12]}... OK')\n",
                 "print('✅ ALL 7 AUDITED RUNTIME PATCHES OVERLAID AND PROVENANCE-VERIFIED.')\n",
                 "\n",
+                "# 3b. Dynamic width pooling fix in rec_lcnetv3.py (prevents hardcoded [1, 40] squeeze when W > 320, e.g. W=480 -> T=60)\n",
+                "_lcnet_p = os.path.join(paddle_dir, 'ppocr', 'modeling', 'backbones', 'rec_lcnetv3.py')\n",
+                "_lcnet_t = open(_lcnet_p, 'r', encoding='utf-8').read().replace('F.adaptive_avg_pool2d(x, [1, 40])', 'F.adaptive_avg_pool2d(x, [1, int(x.shape[3]) // 2])')\n",
+                "with open(_lcnet_p, 'w', encoding='utf-8') as _lc_f:\n",
+                "    _lc_f.write(_lcnet_t)\n",
+                "assert 'int(x.shape[3]) // 2' in open(_lcnet_p, 'r', encoding='utf-8').read()\n",
+                "print('✅ Patched rec_lcnetv3.py dynamic width pooling (W/8 CTC frames in train == eval).')\n",
+                "\n",
                 "# 4. Locate & Setup Branch Dataset\n",
                 "ds_zips = glob.glob(f'/kaggle/input/**/{DATASET_ZIP_NAME}', recursive=True)\n",
                 "if not ds_zips:\n",
@@ -392,8 +444,13 @@ def build_notebook_cells(b_key: str) -> list:
                 "dict_cands = glob.glob(f'{assets_base}/**/cham_dict_v24_1.txt', recursive=True) or glob.glob('/kaggle/input/**/cham_dict_v24_1.txt', recursive=True)\n",
                 "assert dict_cands, 'Could not find cham_dict_v24_1.txt in /kaggle/input'\n",
                 "shutil.copy2(dict_cands[0], '/kaggle/working/data/cham_dict_v24_1.txt')\n",
-                "ckpt_cands = glob.glob(f'{assets_base}/**/{BASE_CKPT_FILENAME}', recursive=True) or glob.glob(f'/kaggle/input/**/{BASE_CKPT_FILENAME}', recursive=True)\n",
-                "assert ckpt_cands, f'Could not find base checkpoint {BASE_CKPT_FILENAME} in /kaggle/input'\n",
+                "ckpt_cands = (\n",
+                "    glob.glob(f'{assets_base}/**/{BASE_CKPT_SUBDIR}/{BASE_CKPT_FILENAME}', recursive=True)\n",
+                "    or glob.glob(f'/kaggle/input/**/{BASE_CKPT_SUBDIR}/{BASE_CKPT_FILENAME}', recursive=True)\n",
+                "    or glob.glob(f'{assets_base}/**/{BASE_CKPT_FILENAME}', recursive=True)\n",
+                "    or glob.glob(f'/kaggle/input/**/{BASE_CKPT_FILENAME}', recursive=True)\n",
+                ")\n",
+                "assert ckpt_cands, f'Could not find base checkpoint {BASE_CKPT_SUBDIR}/{BASE_CKPT_FILENAME} in /kaggle/input'\n",
                 "os.makedirs(f'/kaggle/working/data/{BASE_CKPT_SUBDIR}', exist_ok=True)\n",
                 "dst_base_ckpt = f'/kaggle/working/data/{BASE_CKPT_SUBDIR}/{BASE_CKPT_FILENAME}'\n",
                 "shutil.copy2(ckpt_cands[0], dst_base_ckpt)\n",
@@ -774,7 +831,9 @@ def upload_training_assets(bundle_name: str = "r2_1_4c_training_bundle", target_
             st_str = f"processing ({e})"
         print(f"  [{ (i+1)*10 }s] Dataset status: {st_str}", flush=True)
         if "ready" in st_str:
-            print("✅ Dataset is READY on Kaggle!", flush=True)
+            print("Waiting 75s for Kaggle backend zip/mount propagation...", flush=True)
+            time.sleep(75)
+            print("✅ Dataset is READY & PROPAGATED on Kaggle!", flush=True)
             return True
     raise RuntimeError(f"Dataset {target_slug} did not become ready within 600s!")
 
@@ -1005,6 +1064,8 @@ def main():
     parser.add_argument("--run-r2-1-6", action="store_true", help="Run Stage R2.1.6 (SURGICAL-SYMBOL-HYPHEN-POLISH) end-to-end")
     parser.add_argument("--run-r2-1-7", action="store_true", help="Run Stage R2.1.7 (SURGICAL-GATE-CLOSURE) end-to-end")
     parser.add_argument("--run-r3", action="store_true", help="Run Stage R3 (SCAN-DEGRADATION) end-to-end")
+    parser.add_argument("--run-r3-1", action="store_true", help="Run Stage R3.1 (GATE-CLOSURE + SESQUISYLLABIC + EROSION) end-to-end")
+    parser.add_argument("--run-r4", action="store_true", help="Run Stage R4 (WIDE-CANVAS W=480) end-to-end")
     args = parser.parse_args()
 
     if args.upload_assets:
@@ -1060,6 +1121,16 @@ def main():
         push_and_run_kernel("stage_r3_degradation")
         monitor_kernel("stage_r3_degradation")
         download_artifacts("stage_r3_degradation")
+    elif args.run_r3_1:
+        print("\n🚀 EXECUTING STAGE R3.1 (GATE-CLOSURE + SESQUISYLLABIC + EROSION) END-TO-END...")
+        push_and_run_kernel("stage_r3_1_closure")
+        monitor_kernel("stage_r3_1_closure")
+        download_artifacts("stage_r3_1_closure")
+    elif args.run_r4:
+        print("\n🚀 EXECUTING STAGE R4 (WIDE-CANVAS W=480) END-TO-END...")
+        push_and_run_kernel("stage_r4_w480")
+        monitor_kernel("stage_r4_w480")
+        download_artifacts("stage_r4_w480")
     else:
         parser.print_help()
 

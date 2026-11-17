@@ -39,7 +39,22 @@ from evaluate_pipeline import levenshtein_distance
 from scripts.generate_data import normalize_unicode
 
 
-def build_text_recognizer(model_dir: str, dict_path: str):
+def _detect_rec_shape(model_dir: str, hint: str = "") -> str:
+    mp = os.path.join(model_dir, "model_manifest.json")
+    if os.path.exists(mp):
+        try:
+            s = (json.load(open(mp, "r", encoding="utf-8")) or {}).get("rec_image_shape")
+            if isinstance(s, str) and len(s.split(",")) == 3:
+                return s
+        except Exception:
+            pass
+    h_low = f"{hint} {os.path.basename(os.path.normpath(model_dir))}".lower()
+    if "w480" in h_low or "_r4" in h_low or "v25" in h_low:
+        return "3, 48, 480"
+    return "3, 48, 320"
+
+
+def build_text_recognizer(model_dir: str, dict_path: str, model_id: str = ""):
     from tools.infer.predict_rec import TextRecognizer
     import tools.infer.utility as utility
 
@@ -51,7 +66,7 @@ def build_text_recognizer(model_dir: str, dict_path: str):
     args.rec_model_dir = os.path.abspath(model_dir)
     args.rec_char_dict_path = os.path.abspath(dict_path)
     args.use_gpu = False
-    args.rec_image_shape = "3, 48, 320"
+    args.rec_image_shape = _detect_rec_shape(model_dir, model_id)
     args.use_space_char = True
     args.rec_batch_num = 1
     args.enable_mkldnn = False
@@ -156,7 +171,7 @@ def calibrate_one_model(spec: dict) -> dict:
     model_dir = spec["model_dir"]
     dict_path = spec["dict_path"]
     print(f"\n[Calibrate] {model_id} ({model_dir})...")
-    rec = build_text_recognizer(model_dir, dict_path)
+    rec = build_text_recognizer(model_dir, dict_path, model_id=model_id)
 
     probe_items = load_probe_100_items()
     real_items = load_realscan_harum_items()

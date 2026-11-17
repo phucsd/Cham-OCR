@@ -51,8 +51,16 @@ def main():
     parser.add_argument("--ckpt-path", required=True, help="Path to iter_epoch_N.pdparams")
     parser.add_argument("--config-path", required=True, help="Path to training YAML config")
     parser.add_argument("--dict-path", default=os.path.join(PROJECT_ROOT, "ocr-training", "data", "cham_dict_v24_1.txt"))
+    parser.add_argument("--rec-image-shape", default=None, help="Optional override e.g. '3, 48, 480' (auto-detected from config YAML)")
     parser.add_argument("--metrics-json", default=None, help="Optional JSON metrics blob")
     args = parser.parse_args()
+
+    import yaml
+    cfg_obj = yaml.safe_load(open(os.path.abspath(args.config_path), "r", encoding="utf-8"))
+    d2s_shape = (cfg_obj.get("Global") or {}).get("d2s_train_image_shape") or [3, 48, 320]
+    auto_rec_shape = f"{int(d2s_shape[0])}, {int(d2s_shape[1])}, {int(d2s_shape[2])}"
+    rec_image_shape = args.rec_image_shape or auto_rec_shape
+    rec_w = int([x.strip() for x in rec_image_shape.split(",")][2])
 
     ckpt_abs = os.path.abspath(args.ckpt_path)
     assert ckpt_abs.endswith(".pdparams") and os.path.exists(ckpt_abs), f"Missing {ckpt_abs}"
@@ -98,9 +106,15 @@ def main():
     shutil.rmtree(tmp_pir)
 
     # 3. Copy inference.yml + dictionary copies
+    pir_yml = os.path.join(tmp_pir, "inference.yml") if os.path.exists(tmp_pir) else ""
     yml_tpl = os.path.join(STUDIO_DIR, "data", "output", "rec_cham_inference_v24_1_r2_1_6", "inference.yml")
     if os.path.exists(yml_tpl):
-        shutil.copy2(yml_tpl, os.path.join(out_dir, "inference.yml"))
+        yml_txt = open(yml_tpl, "r", encoding="utf-8").read()
+        if rec_w != 320:
+            yml_txt = yml_txt.replace("      - 3\n      - 48\n      - 320", f"      - 3\n      - 48\n      - {rec_w}")
+            yml_txt = yml_txt.replace("          - 48\n          - 320\n", f"          - 48\n          - {rec_w}\n")
+        with open(os.path.join(out_dir, "inference.yml"), "w", encoding="utf-8", newline="\n") as yf:
+            yf.write(yml_txt)
     shutil.copy2(dict_abs, os.path.join(out_dir, "cham_dict_v24_1.txt"))
     studio_dict = os.path.join(STUDIO_DIR, "data", f"cham_dict_{args.model_id}.txt")
     shutil.copy2(dict_abs, studio_dict)
@@ -124,7 +138,7 @@ def main():
         "dictionary_path": os.path.relpath(studio_dict, PROJECT_ROOT).replace("\\", "/"),
         "dictionary_sha256": sha256_file(studio_dict),
         "dictionary_tokens": len(dict_tokens),
-        "rec_image_shape": "3, 48, 320",
+        "rec_image_shape": rec_image_shape,
         "logical_order": True,
         "export_with_pir": False,
         "files": files_meta,
