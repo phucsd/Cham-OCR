@@ -1,0 +1,14 @@
+{
+  "base_ckpt_sha256": "300b3ef5aec4417985bf70c0ac3548216f8c27272207747c77f28a69d50402a3",
+  "extra_patches": {
+    "ppocr/modeling/architectures/base_model.py": "900f0ec2042eb9656e76c7fb0457c2629daed3eaf4fd520bbcde2944113f92b5",
+    "ppocr/modeling/heads/rec_multi_head.py": "ff8f5957269b4d07c92cf8a2e3180f50507db71d2a2f25a20b4ec77b7c6a9977",
+    "ppocr/modeling/necks/rnn.py": "cefca1d0ebe7bd798f155901ef7b979ccab3f4dfcf17fb9be8da9f25463bf720",
+    "ppocr/modeling/backbones/rec_svtrnet.py": "a7c3cc0f4ccfa0067356cfa0af065bfc6f6b9c4a9e277e3e8ef45d4b0c45edb6",
+    "ppocr/modeling/backbones/rec_lcnetv3.py": "b0fc558e3e97c4fa5658b5a888aa6ce3a4d24667b72243fef019713a2502416d"
+  },
+  "dataset_zip": "v26_ft_dataset.zip",
+  "dataset_files": 47874,
+  "dataset_zip_bytes": 299027174,
+  "base_and_configs_sha256": "e02d2ace8a30ba001d1e096cbd5dee68ee9fdf8a78134a03b0a0e232e0fd71e4"
+}

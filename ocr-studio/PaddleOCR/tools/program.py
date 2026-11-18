@@ -480,6 +480,11 @@ def train(config,
                 log_writer.log_model(
                     is_best=False, prefix='iter_epoch_{}'.format(epoch))
 
+        stage_end_epoch = config.get("Global", {}).get("stage_end_epoch", None)
+        if stage_end_epoch is not None and epoch >= int(stage_end_epoch):
+            logger.info("[STAGE EXIT] Reached stage_end_epoch {} at epoch {} (global_step {}).".format(stage_end_epoch, epoch, global_step))
+            break
+
     best_str = 'best metric, {}'.format(', '.join(
         ['{}: {}'.format(k, v) for k, v in best_model_dict.items()]))
     logger.info(best_str)

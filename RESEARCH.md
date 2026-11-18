@@ -59,11 +59,13 @@ Evaluations across a **controlled 200-page synthetic document stress-test** (903
   - [6.2 Controlled 200-Page Synthetic Document Stress-Test (903 Textlines)](#62-controlled-200-page-synthetic-document-stress-test-903-textlines)
   - [6.3 Model Progression & Empirical Validation: V23 vs V24 vs V25 SOTA](#63-model-progression--empirical-validation-v23-vs-v24-vs-v25-sota)
   - [6.4 Multi-GPU Distributed Hardware Scaling & Cost Efficiency](#64-multi-gpu-distributed-hardware-scaling--cost-efficiency)
+  - [6.5 Vocabulary-Isolated Pure-Cham Production Lineage (`V24.1-R4.1`) & `RealScan-Gold v2`](#65-vocabulary-isolated-pure-cham-production-lineage-v241-r41--realscan-gold-v2-cross-domain-evaluation)
+  - [6.6 `Cham-DBNet` Polygon Rectification & `V26` Padding-Masked SVTR (30 Epochs)](#66-cham-dbnet-polygon-rectification-v26-causal-ablation--v26-full-30-epoch-evaluation)
 - [7. Production Serving & Deployment Infrastructure](#7-production-serving--deployment-infrastructure)
   - [7.1 Containerized Microservice Architecture](#71-containerized-microservice-architecture)
   - [7.2 Concurrency Safeguards & NumPy 2.x Forward Compatibility](#72-concurrency-safeguards--numpy-2x-forward-compatibility)
 - [8. Limitations & Open Research Challenges](#8-limitations--open-research-challenges)
-  - [8.5 Post-V25 Future Iterations (Planned V25.1 / V26 Improvements)](#85-post-v25-future-iterations-planned-v251--v26-improvements)
+  - [8.5 Completed `Cham-DBNet poly` & `V26` Milestones + `V26.1` Roadmap](#85-completed-v241--v26-milestones--v261--realscan-gold-v3-roadmap)
 - [9. BibTeX Citation & Academic References](#9-bibtex-citation--academic-references)
 
 ---
@@ -360,6 +362,34 @@ To rigorously quantify synthetic-to-real and unseen-typeface generalization with
 | **`V24.1-R4.1` (`W=480` Default)** | **2.55% (8.56%)** | 28.86% | 43.77% | 7.57% | 25.58% |
 | **`Auto` Dual-Engine** | **2.55% (8.56%)** | 28.86% | 45.55% | 7.57% | 26.12% |
 
+### 6.6 `Cham-DBNet` Polygon Rectification, `V26` Causal Ablation & `V26-Full` 30-Epoch Evaluation
+
+1. **`Cham-DBNet` Polygon Extraction & Ribbon Rectification (`v1_poly_u1.8`, Deployed Live on `https://ocr.cham.asia`)**:
+   Replacing 4-point `minAreaRect` (`box_type='quad'`) with native `DBPostProcess(box_type='poly')`, `unclip=1.8`, `merge_line_polygons`, and centerline `rectify_polygon_line` (`vpad=0.15`, neighboring-polygon masking) while keeping `v24_1_r4` fixed resolved the sinusoidal **Level-5** line-overlap breaking point without re-training detector weights (`REPORTS/CHAM_DBNET_POLY_RECTIFY_EVALUATION.md`):
+   - **`FullPage-Frozen 50` (239 GT lines)**: Overall recall increased from `95.40%` $\to$ **`99.58%`** (**Level-5 recall `77.27%` $\to$ `100.00%`**, Level-5 Matched CER `11.92%` $\to$ `10.12%`), cutting overall End-to-End CER nearly in half from **`14.43%` $\to$ `7.99%`**.
+   - **Curved & Audit Stress Slices**: `short:5` Document CER fell from `16.40%` $\to$ **`7.37%`** (`64/64` exact lines), `a4:5` fell from `12.95%` $\to$ **`6.96%`** (`241/241` exact lines), and `audit_18` improved from `11.25%` $\to$ **`10.14%`** (`134/134`), with zero regression on Level 1–4 pages (`a4:1-4`: `6.45%` $\to$ `6.31%`, `1153/1153`) and `3.43%` E2E Doc CER on `harum_palei_01` (`25/25`, `100.0%`).
+   - **Live Production Verification (`phucsd/cham-ocr-studio` Commit `e46e8328`)**: Confirmed **`0` blank hallucinations** (`no_text`), **`3.43%`** E2E Doc CER (`3.53%` Matched CER) on `harum_palei_01` (`25/25` lines), and **`10.16%`** Live Document CER (`10.53%` Matched CER, `134/134` lines) across `audit_18` (`REPORTS/LIVE_HF_R4_VERIFICATION.md`).
+
+2. **`V26` Phase A — Controlled Causal `use_valid_mask` Ablation (Zero Extra Parameters)**:
+   To eliminate right-padding dilution inside `W=480` global self-attention and channel squeeze-and-excitation on narrow `<160px` crops, we injected a `valid_ratio` key-padding mask into `SVTRNet` global attention blocks and valid-width-masked pooling into `PPLCNetV3` `SELayer` (`use_valid_mask=True`, 0 extra trainable weights). In a strictly paired 6-epoch Dual T4x2 ablation (`REPORTS/V26_MASKED_FT_EVALUATION.md`), `V26 Masked` (`3,188.0s` Train Loop, `4,514.35s` Wall-clock) improved Stress-82 CER (`4.64%` at E3, `3.99%` at E4, `4.28%` in-basin soup `soup_50e3_50e4`) over both active production (`6.93%`) and the identically trained `use_valid_mask=False` `V26 Control` (`5.43%` at E2, `4.64%` at E6; `3,235.0s` Train Loop, `4,305.16s` Wall-clock) while cutting `harum` CER to `1.95%` (E4) / `2.31%` (`soup_50e3_50e4`).
+
+3. **`V26-Full` Phase B — 30-Epoch 3-Stage Unfrozen Training & In-Basin WiSE-FT Barrier Audit**:
+   Building on the causal gain, we synthesized **`64,000` train / `6,400` val** HarfBuzz `W=480` lines (`REPORTS/v26_full_dataset_manifest.json`: `999/999` Cham stanza numerals, `6,357` `ꨲ`/`ꨶ` minimal pairs, `2,318` Double Danda `꩝꩝`, `1,592` multi-tier clusters `ꨣꨳꨪꩌ`, `0` benchmark overlap) and trained all `PPLCNetV3 + SVTR + MultiHead` parameters unfrozen across 3 state-preserving Kaggle Dual T4x2 stages (`global_step = 30,000`, Cosine LR `2.0e-5` $\to$ `1.0e-6`):
+   - **Verified 3-Part Training Accounting (`REPORTS/V26_FULL_EVALUATION.md`)**: Stage 1 (`E1–10`: `8,737.0s` Train Loop / `969.65s` Overhead / `9,706.65s` Wall-clock, val `81.72%` Acc / `98.08%` NED) + Stage 2 (`E11–20`: `8,929.0s` / `638.42s` / `9,567.42s`, val `84.92%` Acc / `98.47%` NED) + Stage 3 (`E21–30`: `8,848.0s` / `1,069.09s` / `9,917.09s`, val `85.22%` Acc / `98.55%` NED) = **`26,514.0s` (`441.90m`) Train Loop / `2,677.16s` Overhead / `29,191.16s` (`486.52m`) Total Wall-clock**.
+   - **Controlled & RealScan Results (under `box_type='poly'`)**:
+
+| Model Candidate | Clean CER | Char CER | 14 Symbols Acc | Hyphen Acc | FullPage CER | Stress-82 CER | Harum Crop CER | OOD-180 Crop (E2E Doc CER) | Release Gates |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **`V24.1-R4.1` (Prod `85525b0c`)** | 5.28% | 2.64% | 99.29% (`278/280`) | 95.71% | 7.39% | 6.93% | 2.55% | **26.35%** (25.58%) | `5/6` |
+| **`V26-Full S1 E10`** | **4.63%** | 1.59% | **100.0%** | **100.0%** | 6.24% | 2.69% | **1.46%** | 29.09% (25.40%) | **`6/6`** |
+| **`V26-Full S2 E20`** | 4.73% | 1.52% | **100.0%** | 97.14% | **5.99%** | 2.46% | **1.46%** | — | **`6/6`** |
+| **`V26-Full S3 E25`** (`epoch_best`) | 4.72% | **1.42%** | **100.0%** | 97.14% | 6.02% | 2.49% | 1.58% | 27.92% (**24.96%**) | **`6/6`** |
+| **`V26-Full S3 E26`** | 4.73% | 1.57% | **100.0%** | 97.14% | **5.99%** | **2.41%** | **1.46%** | — | **`6/6`** |
+| **`V26-Full soup_top2_e25_e27`** | 4.72% | 1.44% | **100.0%** | 97.14% | 6.04% | 2.43% | 1.58% | 27.89% (**24.98%**) | **`6/6`** |
+| **`inbasin_wise_a25..lw_20_55`** | 5.24–5.50% | 2.62–2.86% | 96.07–98.57% | 87.14–91.43% | 6.51–6.65% | 4.67–5.28% | 1.58–1.70% | Barrier (`4/6` Gates) | `4/6` |
+
+   - **Strict Non-Relaxation Gate Decision & Basin Barrier Finding (`promoted=False`)**: Every single evaluated `V26-Full` checkpoint (`E10, E20, E24..E30` + Stage 3 soups) passed **`6/6` Frozen-838 Release Gates** (`100.0%` symbols, `97.14%–100.0%` hyphens), halved Character/Stress/Harum CER (`2.64%` $\to$ `1.42%`, `6.93%` $\to$ `2.41%`, `2.55%` $\to$ `1.46%`), and beat production on **OOD-12 E2E Doc CER** (`24.96%` vs `25.58%`, `heldout_camera_book` `7.98%` vs `9.37%`, `efeo_palm_leaf_agal` E2E `26.20%` vs `28.86%`). However, 30 unfrozen epochs specialized `efeo_regional_folio` crop CER (`43.0%` $\to$ `47.77%`), leaving overall `OOD-180` Crop CER at `27.89%–27.92%` vs the strict non-regression ceiling (`26.65%`). A 5-point in-basin WiSE-FT sweep bridging back to 6-epoch `V26-Masked` landed on a loss barrier (`4/6` gates), proving 30k unfrozen steps move out of the 6-epoch basin while Stage 3 trajectories retain linear mode connectivity. Strictly honoring unrelaxed gate integrity, `v24_1_r4` (`85525b0ca091acaf`) remains production default while `V26-Full` defines the validated `6/6` staging benchmark for `V26.1`.
+
 ---
 
 ## 7. Production Serving & Deployment Infrastructure
@@ -399,11 +429,11 @@ While our pipeline demonstrates substantial gains on synthetic and semi-controll
 3. **Severe Biological Degradation & Epigraphy**: Inscription stone rubbings and severely mold-damaged palm leaves (where character ink has substantially eroded) remain beyond the capabilities of pure vision-based CTC sequence models. Integrating masked language models (MLMs) trained on historical Cham corpora is an active subject of future study.
 4. **Extreme Interlinear Overlap (Level 5)**: When severe paper wrinkling causes interlinear wave amplitude to exceed line spacing ($\text{Amplitude} > \text{Gap}$), 1D projection and horizontal bounding boxes collapse, indicating the need for 2D polygonal baseline tracking models in future iterations.
 
-### 8.5 Completed V24.1 Enhancements & Next-Generation V26 / Cham-DBNet v3 Roadmap
-Following the deployment of both Model Version 25 (`90.96%` Sequence Accuracy on frozen 10K validation) and the vocabulary-isolated `V24.1-R4.1 WiSE-FT` wide-canvas production model (`2.55%` real-camera CER, `5/6` Frozen-838 Release Gates), open research priorities tracked in [FUTURE_WORK.md](FUTURE_WORK.md) include:
-1. **Polygonal Bezier/TPS Curved Baseline Rectification (`Cham-DBNet v3`, `box_type='poly'`)**: Replacing 4-point `minAreaRect` (`box_type='quad'`) with 16-vertex polygonal contour extraction and Thin-Plate Spline (TPS) de-warping to resolve intersecting `Level-5` sinusoidal baselines ($\text{Amplitude} > \text{Gap}$).
-2. **Padding-Masked SVTR Self-Attention**: Incorporating `valid_ratio` key-padding masks inside SVTR global attention blocks so ultra-short crops (`< 160px`) and full-width stanzas (`480px`) share identical attention sharpness without right-padding dilution.
-3. **Dual-Script Composite Rendering & Field Manuscript Active Learning (`RealScan-Gold v3`)**: Expanding verified palm-leaf (*agal*) and regional manuscript benchmarks via human-in-the-loop Studio exports (`scripts/ingest_studio_to_realscan_gold.py`) to close the ~43% paleographic gap on unseen historical regional hands (`efeo_regional_folio`).
+### 8.5 Completed `V24.1` & `V26` Milestones + `V26.1` / `RealScan-Gold v3` Roadmap
+Following Model Version 25 (`90.96%` Sequence Accuracy, `0.72%` CER on frozen 10K validation), the `V24.1-R4.1 WiSE-FT` wide-canvas production model (`85525b0ca091acaf`, `2.55%` real-camera CER), live deployment of **`Cham-DBNet` `v1_poly_u1.8` (`box_type='poly'` + `rectify_polygon_line`)** (`FullPage-Frozen 50` `14.43% -> 7.99%` E2E, `100.0%` Level-5 recall), and **30-epoch `V26-Full` Padding-Masked SVTR** (`6/6` Frozen-838 Release Gates, `1.42%` Char CER, `2.41%` Stress-82 CER, `1.46%` Harum CER, `24.96%` OOD-12 E2E), remaining open research priorities tracked in [FUTURE_WORK.md](FUTURE_WORK.md) are:
+1. **Curved Baseline Poly Detector Re-Training (`Cham-DBNet v3`)**: End-to-end joint fine-tuning of DBNet regression heads directly under polygonal curvature targets to push beyond the fixed `v1_poly_u1.8` inference upgrade.
+2. **OOD Regional Paleographic Regularization (`V26.1` Masked-SVTR)**: Adding multi-style calligraphic / `efeo_regional_folio`-proxy stroke jitter and early-backbone regularization inside the `use_valid_mask=True` `W=480` architecture so `6/6` Frozen-838 Gates hold jointly with `<= 26.35%` OOD-180 Crop CER for automatic production promotion.
+3. **Dual-Script Composite Rendering & Field Manuscript Active Learning (`RealScan-Gold v3`)**: Expanding verified palm-leaf (*agal*) and regional manuscript benchmarks via human-in-the-loop Studio exports (`scripts/ingest_studio_to_realscan_gold.py`) to close the ~43%–44% paleographic gap on unseen historical regional hands (`efeo_regional_folio`).
 
 ---
 

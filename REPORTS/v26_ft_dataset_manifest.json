@@ -1,0 +1,41 @@
+{
+  "title": "Cham-OCR V26 masked-attention fine-tune dataset (union of audited R4/R4.1/R4.2 W=480 sets)",
+  "built_at": "2026-11-18T01:35:18.010358+00:00",
+  "out_dir": "ocr-training/data/cham_synthetic_v26_ft",
+  "sources": [
+    {
+      "tag": "r4_w480",
+      "folder": "cham_synthetic_r4_w480",
+      "contamination_audit": "REPORTS/r4_w480_contamination_audit.json"
+    },
+    {
+      "tag": "r4_1_polish",
+      "folder": "cham_synthetic_r4_1_polish",
+      "contamination_audit": "REPORTS/r4_1_polish_contamination_audit.json"
+    },
+    {
+      "tag": "r4_2_inktight",
+      "folder": "cham_synthetic_r4_2_inktight",
+      "contamination_audit": "REPORTS/r4_2_inktight_dataset_manifest.json"
+    }
+  ],
+  "train_samples": 43520,
+  "val_samples": 4352,
+  "train_by_source": {
+    "r4_w480": 24000,
+    "r4_1_polish": 6720,
+    "r4_2_inktight": 12800
+  },
+  "val_by_source": {
+    "r4_w480": 2400,
+    "r4_1_polish": 672,
+    "r4_2_inktight": 1280
+  },
+  "duplicates_skipped": {
+    "train": 12480,
+    "val": 1248
+  },
+  "train_images_removed_for_val_overlap": 0,
+  "train_val_sha256_overlap": 0,
+  "step_each_epoch_dual_t4_bs32": 680
+}

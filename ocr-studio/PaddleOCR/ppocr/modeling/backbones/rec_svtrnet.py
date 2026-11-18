@@ -183,7 +183,7 @@ class Attention(nn.Layer):
             self.mask = mask.unsqueeze([0, 1])
         self.mixer = mixer
 
-    def forward(self, x):
+    def forward(self, x, mask=None):
         qkv = self.qkv(x).reshape(
             (0, -1, 3, self.num_heads, self.head_dim)).transpose(
                 (2, 0, 3, 1, 4))
@@ -192,6 +192,9 @@ class Attention(nn.Layer):
         attn = (q.matmul(k.transpose((0, 1, 3, 2))))
         if self.mixer == 'Local':
             attn += self.mask
+        if mask is not None:
+            # Cham-OCR V26: additive key-padding bias [B, 1, 1, N] (0 = valid, -1e4 = padding)
+            attn = attn + mask.astype(attn.dtype)
         attn = nn.functional.softmax(attn, axis=-1)
         attn = self.attn_drop(attn)
 
@@ -253,13 +256,22 @@ class Block(nn.Layer):
                        drop=drop)
         self.prenorm = prenorm
 
-    def forward(self, x):
-        if self.prenorm:
-            x = self.norm1(x + self.drop_path(self.mixer(x)))
-            x = self.norm2(x + self.drop_path(self.mlp(x)))
+    def forward(self, x, mask=None):
+        if mask is not None:
+            # Cham-OCR V26: key-padding mask is forwarded to the attention mixer only
+            if self.prenorm:
+                x = self.norm1(x + self.drop_path(self.mixer(x, mask)))
+                x = self.norm2(x + self.drop_path(self.mlp(x)))
+            else:
+                x = x + self.drop_path(self.mixer(self.norm1(x), mask))
+                x = x + self.drop_path(self.mlp(self.norm2(x)))
         else:
-            x = x + self.drop_path(self.mixer(self.norm1(x)))
-            x = x + self.drop_path(self.mlp(self.norm2(x)))
+            if self.prenorm:
+                x = self.norm1(x + self.drop_path(self.mixer(x)))
+                x = self.norm2(x + self.drop_path(self.mlp(x)))
+            else:
+                x = x + self.drop_path(self.mixer(self.norm1(x)))
+                x = x + self.drop_path(self.mlp(self.norm2(x)))
         return x
 
 

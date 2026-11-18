@@ -79,7 +79,7 @@ DET_MODE = os.getenv("DET_MODE", "hybrid").lower()
 DEFAULT_CHAM_MODEL = os.getenv("DEFAULT_CHAM_MODEL", "v24_1_r4")
 CHAM_DET_DB_THRESH = float(os.getenv("CHAM_DET_DB_THRESH", "0.3"))
 CHAM_DET_BOX_THRESH = float(os.getenv("CHAM_DET_BOX_THRESH", "0.4"))
-CHAM_DET_UNCLIP = float(os.getenv("CHAM_DET_UNCLIP", "1.6"))
+CHAM_DET_UNCLIP = float(os.getenv("CHAM_DET_UNCLIP", "1.8"))
 # Lines below this recognition confidence are flagged for human review
 LINE_REVIEW_CONF = 0.60
 # Fraction of text-like ink outside every detected line that marks the page as possibly incomplete
@@ -93,10 +93,26 @@ DET_SWITCH_MIN_GAIN = 0.03
 # separate (or one box swallowing a neighbour). Clean pages stay <= 0.25 (lvl1-2) and lvl3 pages
 # trigger only a comparison, never a switch, because Cham-DBNet then finds the same line count.
 LEGACY_GATE_STACKED_OVERLAP = float(os.getenv("LEGACY_GATE_STACKED_OVERLAP", "0.45"))
-# Optional vertical padding (fraction of line height) around Cham-DBNet boxes before recognition.
-# Default 0: on the audit + benchmark sample, padding (0.15) and a larger unclip ratio (1.8) both
-# raised CER on tightly spaced pages because the crop picks up ink from neighbouring lines.
+# Optional vertical padding (fraction of line height) around Cham-DBNet quad boxes before recognition.
+# Default 0: in quad mode, padding (0.15) and larger unclip raised CER on tightly spaced pages because
+# rigid quad crops pick up neighbour-line ink; in poly mode (CHAM_DET_UNCLIP=1.8, CHAM_DET_POLY_VPAD=0.15,
+# CHAM_DET_POLY_MASK=1), neighbour-line ink is masked out along the straightened ribbon.
 CHAM_DET_CROP_PAD = float(os.getenv("CHAM_DET_CROP_PAD", "0.0"))
+# Cham-DBNet model directory (default: the production Cham-DBNet v1 export). Point it at another export
+# (e.g. ocr-training/output/ch_PP-OCRv4_det_cham_v2_1_dual_infer) to A/B test a detector without copying weights.
+CHAM_DET_DIR = os.getenv("CHAM_DET_DIR", "").strip() or os.path.join(PROJECT_ROOT, "data", "output", "ch_PP-OCRv4_det_cham_infer")
+# Cham-DBNet box type: 'poly' (production default v1_poly_u1.8: DBPostProcess polygon contours +
+# curved-line "ribbon" rectification, promoted over quad after cutting Level-5 short:5/a4:5/FullPage-50
+# E2E CER without L1-4 regression) or 'quad' (legacy cv2.minAreaRect boxes + perspective crop).
+# Only the Cham-DBNet output is affected: legacy generic-detector quads are always cropped as before.
+CHAM_DET_BOX_TYPE = os.getenv("CHAM_DET_BOX_TYPE", "poly").strip().lower()
+if CHAM_DET_BOX_TYPE not in ("quad", "poly"):
+    CHAM_DET_BOX_TYPE = "poly"
+# Ribbon rectification (poly mode only): extra vertical padding beyond the detected polygon, as a fraction
+# of the page's median line thickness, and whether pixels outside the (dilated) own polygon / inside
+# neighbouring line polygons are blanked with the paper colour.
+CHAM_DET_POLY_VPAD = float(os.getenv("CHAM_DET_POLY_VPAD", "0.15"))
+CHAM_DET_POLY_MASK = os.getenv("CHAM_DET_POLY_MASK", "1").strip().lower() in ("1", "true", "yes", "on")
 NORMALIZER_VERSION = "generate_data.normalize_unicode/parse_unicode_clusters"
 
 class OfficialPaddleOCRWrapper:
@@ -382,7 +398,62 @@ def _ensure_generic_det_dir():
         print("✅ Downloaded and extracted ch_PP-OCRv4_det_infer successfully.")
     return det_model_dir
 
-def _build_text_detector(det_model_dir, db_thresh, box_thresh, unclip_ratio):
+def _clip_poly_det_res(dt_boxes, image_shape):
+    """Poly-mode replacement for TextDetector.filter_tag_det_res_only_clip.
+
+    The upstream helper ends with np.array(list_of_polygons): DBPostProcess(box_type='poly') returns
+    polygons with different vertex counts, which is a ragged array (ValueError on NumPy >= 1.24).
+    Returns a plain list of clipped float32 (N, 2) polygons instead.
+    """
+    img_h, img_w = image_shape[0:2]
+    out = []
+    for box in dt_boxes if dt_boxes is not None else []:
+        p = np.array(box, dtype=np.float32).reshape(-1, 2)
+        if len(p) < 3:
+            continue
+        p[:, 0] = np.clip(p[:, 0], 0, img_w - 1)
+        p[:, 1] = np.clip(p[:, 1], 0, img_h - 1)
+        out.append(p)
+    return out
+
+def _safe_polygons_from_bitmap(postprocess, pred, _bitmap, dest_width, dest_height):
+    """DBPostProcess.polygons_from_bitmap with guards for degenerate contours (bound per instance in poly mode).
+
+    Same algorithm as upstream (approxPolyDP contour -> box_score_fast -> unclip -> min-size filter ->
+    rescale), but skips contours whose unclip result is empty / has < 3 points (upstream then calls
+    cv2.minAreaRect on an empty array and raises), and keeps coordinates float32 for OpenCV.
+    """
+    bitmap = _bitmap
+    height, width = bitmap.shape
+    boxes, scores = [], []
+    contours, _ = cv2.findContours((bitmap * 255).astype(np.uint8), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+    for contour in contours[:postprocess.max_candidates]:
+        epsilon = 0.002 * cv2.arcLength(contour, True)
+        points = cv2.approxPolyDP(contour, epsilon, True).reshape((-1, 2))
+        if points.shape[0] < 4:
+            continue
+        score = postprocess.box_score_fast(pred, points.reshape(-1, 2))
+        if postprocess.box_thresh > score:
+            continue
+        try:
+            box = postprocess.unclip(points, postprocess.unclip_ratio)
+        except Exception:
+            continue
+        if len(box) != 1:
+            continue
+        box = np.array(box, dtype=np.float32).reshape(-1, 2)
+        if box.shape[0] < 3:
+            continue
+        _, sside = postprocess.get_mini_boxes(box.reshape((-1, 1, 2)))
+        if sside < postprocess.min_size + 2:
+            continue
+        box[:, 0] = np.clip(np.round(box[:, 0] / width * dest_width), 0, dest_width)
+        box[:, 1] = np.clip(np.round(box[:, 1] / height * dest_height), 0, dest_height)
+        boxes.append(box.tolist())
+        scores.append(score)
+    return boxes, scores
+
+def _build_text_detector(det_model_dir, db_thresh, box_thresh, unclip_ratio, box_type='quad'):
     from tools.infer.predict_det import TextDetector
     import tools.infer.utility as utility
 
@@ -399,10 +470,23 @@ def _build_text_detector(det_model_dir, db_thresh, box_thresh, unclip_ratio):
     args.det_db_thresh = db_thresh
     args.det_db_box_thresh = box_thresh
     args.det_db_unclip_ratio = unclip_ratio
-    print(f"⚙️  Loading PaddleOCR DBNet Detector from {det_model_dir} (thresh={db_thresh}, box={box_thresh}, unclip={unclip_ratio})...")
+    if box_type == 'poly':
+        args.det_box_type = 'poly'
+    print(f"⚙️  Loading PaddleOCR DBNet Detector from {det_model_dir} (thresh={db_thresh}, box={box_thresh}, unclip={unclip_ratio}, box_type={box_type})...")
     detector = TextDetector(args)
+    if box_type == 'poly':
+        # Instance-level overrides (PaddleOCR sources stay untouched; quad detectors are unaffected)
+        detector.filter_tag_det_res_only_clip = _clip_poly_det_res
+        post = detector.postprocess_op
+        if hasattr(post, 'polygons_from_bitmap') and hasattr(post, 'unclip'):
+            post.polygons_from_bitmap = (lambda pred, bm, dw, dh, _p=post: _safe_polygons_from_bitmap(_p, pred, bm, dw, dh))
     print("🔥 PaddleOCR DBNet Detector loaded successfully.")
     return detector
+
+def _is_poly_detector(detector):
+    """True when the TextDetector emits variable-length polygons (det_box_type='poly')."""
+    args = getattr(detector, 'args', None)
+    return str(getattr(args, 'det_box_type', 'quad')).lower() == 'poly'
 
 def get_generic_det_model():
     """Loads and caches the legacy generic PP-OCRv4 DBNet detector."""
@@ -422,7 +506,7 @@ def get_cham_det_model():
     global cham_det_model, _cham_det_failed
     if cham_det_model is not None or _cham_det_failed:
         return cham_det_model
-    cham_det_dir = os.path.join(PROJECT_ROOT, "data", "output", "ch_PP-OCRv4_det_cham_infer")
+    cham_det_dir = CHAM_DET_DIR
     has_pdmodel = os.path.exists(os.path.join(cham_det_dir, "inference.pdmodel"))
     has_json = os.path.exists(os.path.join(cham_det_dir, "inference.json"))
     has_cham_model = os.path.exists(os.path.join(cham_det_dir, "inference.pdiparams")) and (has_pdmodel or has_json)
@@ -440,8 +524,9 @@ def get_cham_det_model():
             print("⚠️  Cham DBNet is PIR (.json) and requires Paddle >= 3.0; skipping on Paddle 2.x.")
             return None
     try:
-        cham_det_model = _build_text_detector(cham_det_dir, CHAM_DET_DB_THRESH, CHAM_DET_BOX_THRESH, CHAM_DET_UNCLIP)
-        print(f"🌟 Cham Text Detection model ready: {cham_det_dir}")
+        cham_det_model = _build_text_detector(cham_det_dir, CHAM_DET_DB_THRESH, CHAM_DET_BOX_THRESH, CHAM_DET_UNCLIP,
+                                              box_type=CHAM_DET_BOX_TYPE)
+        print(f"🌟 Cham Text Detection model ready: {cham_det_dir} (box_type={CHAM_DET_BOX_TYPE})")
     except Exception as e:
         _cham_det_failed = True
         print(f"⚠️  Failed to load Cham DBNet detector ({e}); legacy generic detector only.")
@@ -458,7 +543,7 @@ def get_det_model():
         return det_model
     if DET_MODE == 'cham' and get_cham_det_model() is not None:
         det_model = get_cham_det_model()
-        det_model_info.update({"name": "cham_dbnet", "dir": os.path.join(PROJECT_ROOT, "data", "output", "ch_PP-OCRv4_det_cham_infer"), "mode": DET_MODE})
+        det_model_info.update({"name": "cham_dbnet", "dir": CHAM_DET_DIR, "mode": DET_MODE})
     else:
         det_model = get_generic_det_model()
         det_model_info.update({"name": "generic_ppocrv4_dbnet", "dir": _ensure_generic_det_dir(), "mode": DET_MODE})
@@ -618,6 +703,313 @@ def merge_line_boxes(boxes, img_w, img_h):
     return [r[4] for r in rects]
 
 # ==============================================================================
+# Curved-line (polygon) support for Cham-DBNet box_type='poly' (CHAM_DET_BOX_TYPE=poly)
+#   ribbon = per-column upper / lower boundary of a text-line polygon; it replaces the AABB height
+#   (which on a wavy line spans several neighbouring lines) in merging, gating and rectification.
+# ==============================================================================
+def _odd(n, lo=3):
+    n = int(max(lo, round(float(n))))
+    return n if n % 2 == 1 else n + 1
+
+def _smooth1d(a, k, mode='mean'):
+    """Edge-padded moving mean / median of a 1-D signal (window k, forced odd and <= len)."""
+    a = np.asarray(a, dtype=np.float32)
+    n = len(a)
+    if n < 3:
+        return a.copy()
+    k = min(int(k), n if n % 2 == 1 else n - 1)
+    if k <= 1:
+        return a.copy()
+    k = k if k % 2 == 1 else k - 1
+    r = k // 2
+    pad = np.pad(a, r, mode='edge')
+    if mode == 'median':
+        return np.median(np.lib.stride_tricks.sliding_window_view(pad, k), axis=1).astype(np.float32)
+    c = np.cumsum(np.insert(pad.astype(np.float64), 0, 0.0))
+    return ((c[k:] - c[:-k]) / k).astype(np.float32)
+
+def poly_ribbon(poly):
+    """Per-column boundary of a (possibly curved, variable-length) text polygon.
+
+    Returns (x0, top, bottom): float32 arrays where top[i] / bottom[i] are the polygon's upper edge and
+    lower edge (exclusive) at page column x0 + i. Columns without polygon pixels are interpolated.
+    """
+    p = np.asarray(poly, dtype=np.float32).reshape(-1, 2)
+    x0, y0 = int(np.floor(p[:, 0].min())), int(np.floor(p[:, 1].min()))
+    x1, y1 = int(np.ceil(p[:, 0].max())), int(np.ceil(p[:, 1].max()))
+    w, h = max(1, x1 - x0 + 1), max(1, y1 - y0 + 1)
+    m = np.zeros((h, w), np.uint8)
+    cv2.fillPoly(m, [np.round(p - np.float32([x0, y0])).astype(np.int32)], 1)
+    has = m.any(axis=0)
+    if not has.any():
+        return x0, np.full(w, float(y0), np.float32), np.full(w, float(y1 + 1), np.float32)
+    top = np.argmax(m, axis=0).astype(np.float32)
+    bot = (h - np.argmax(m[::-1], axis=0)).astype(np.float32)
+    if not has.all():
+        xs = np.arange(w, dtype=np.float32)
+        top = np.interp(xs, xs[has], top[has]).astype(np.float32)
+        bot = np.interp(xs, xs[has], bot[has]).astype(np.float32)
+    return x0, top + y0, bot + y0
+
+def poly_thickness(poly):
+    """Median perpendicular-ish thickness (ribbon height) of a text polygon (not its AABB height)."""
+    _, top, bot = poly_ribbon(poly)
+    return float(np.median(bot - top)) if len(top) else 0.0
+
+def _line_height(box):
+    """Line height used by the page gates: AABB height for 4-point quads (legacy behaviour, unchanged),
+    ribbon thickness for curved polygons (a wavy line's AABB spans several neighbouring lines)."""
+    pts = np.asarray(box, dtype=np.float32).reshape(-1, 2)
+    if len(pts) > 4:
+        return poly_thickness(pts)
+    return float(np.ptp(np.array(box)[:, 1]))
+
+def _ribbon_info(pts):
+    x0, top, bot = poly_ribbon(pts)
+    c = (top + bot) / 2.0
+    t = float(np.median(bot - top)) if len(top) else 1.0
+    return {'pts': np.asarray(pts, dtype=np.float32).reshape(-1, 2), 'x0': x0, 'x1': x0 + len(top) - 1,
+            'top': top, 'bot': bot, 'c': c, 't': max(1.0, t), 'cy': float(np.median(c)),
+            'y1': float(np.min(pts[:, 1])), 'y2': float(np.max(pts[:, 1]))}
+
+def _reading_rect(box):
+    """[x1, y1, x2, y2] used for reading order: AABB for quads, a centerline band for polygons
+    (AABBs of consecutive wavy lines overlap heavily and would scramble top-to-bottom order)."""
+    pts = np.asarray(box, dtype=np.float32).reshape(-1, 2)
+    if len(pts) <= 4:
+        return _aabb(box)
+    r = _ribbon_info(pts)
+    return float(r['x0']), r['cy'] - r['t'] / 2.0, float(r['x1'] + 1), r['cy'] + r['t'] / 2.0
+
+def _ribbon_center_at(r, x, span):
+    """Centerline y of ribbon r at page column x (linear extrapolation from the nearest `span` columns)."""
+    n = len(r['c'])
+    if r['x0'] < x < r['x1']:
+        return float(r['c'][int(round(x)) - r['x0']])
+    if x <= r['x0']:
+        seg = r['c'][:min(n, span)]
+        xs = r['x0'] + np.arange(len(seg), dtype=np.float64)
+    else:
+        seg = r['c'][max(0, n - span):]
+        xs = r['x0'] + np.arange(n - len(seg), n, dtype=np.float64)
+    if len(seg) < 3:
+        return float(np.mean(seg))
+    slope = float(np.polyfit(xs, seg.astype(np.float64), 1)[0])
+    slope = float(np.clip(slope, -0.35, 0.35))
+    return float(np.mean(seg)) + slope * (x - float(np.mean(xs)))
+
+def _ribbons_same_line(a, b):
+    """True when two ribbons are fragments of ONE text line (shared centerline), False for stacked lines."""
+    t = min(a['t'], b['t'])
+    ox1, ox2 = max(a['x0'], b['x0']), min(a['x1'], b['x1'])
+    if ox2 >= ox1:
+        ca = a['c'][ox1 - a['x0']: ox2 - a['x0'] + 1]
+        cb = b['c'][ox1 - b['x0']: ox2 - b['x0'] + 1]
+        return float(np.median(np.abs(ca - cb))) <= 0.5 * t
+    gap = ox1 - ox2
+    if gap > max(40.0, 2.5 * t):
+        return False
+    left, right = (a, b) if a['x1'] < b['x0'] else (b, a)
+    xm = (left['x1'] + right['x0']) / 2.0
+    span = int(max(6, 2 * t))
+    return abs(_ribbon_center_at(left, xm, span) - _ribbon_center_at(right, xm, span)) <= 0.5 * t
+
+def _merge_ribbon_polys(a, b):
+    """Union of two fragments of one curved line as a single polygon that keeps the curvature
+    (mask union + a bridge between the facing ends, then the outer contour) instead of an AABB."""
+    allp = np.vstack([a['pts'], b['pts']])
+    x0, y0 = int(np.floor(allp[:, 0].min())) - 2, int(np.floor(allp[:, 1].min())) - 2
+    x1, y1 = int(np.ceil(allp[:, 0].max())) + 2, int(np.ceil(allp[:, 1].max())) + 2
+    m = np.zeros((y1 - y0 + 1, x1 - x0 + 1), np.uint8)
+    off = np.float32([x0, y0])
+    for r in (a, b):
+        cv2.fillPoly(m, [np.round(r['pts'] - off).astype(np.int32)], 1)
+    left, right = (a, b) if (a['x0'] + a['x1']) <= (b['x0'] + b['x1']) else (b, a)
+    nl, nr = len(left['c']), len(right['c'])
+    k = int(max(1, min(0.5 * min(left['t'], right['t']), nl // 2, nr // 2)))
+    xl, xr = left['x1'] - k, right['x0'] + k
+    if xr > xl:
+        il, ir = nl - 1 - k, k
+        bridge = np.float32([[xl, left['top'][il]], [xr, right['top'][ir]],
+                             [xr, right['bot'][ir]], [xl, left['bot'][il]]])
+        cv2.fillPoly(m, [np.round(bridge - off).astype(np.int32)], 1)
+    contours, _ = cv2.findContours(m, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    if len(contours) > 1:
+        kv = _odd(0.5 * min(a['t'], b['t']))
+        m = cv2.morphologyEx(m, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_RECT, (kv, kv)))
+        contours, _ = cv2.findContours(m, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    if len(contours) > 1:
+        cnt = cv2.convexHull(np.vstack(contours))
+    else:
+        cnt = contours[0]
+    cnt = cv2.approxPolyDP(cnt, 1.0, True).reshape(-1, 2).astype(np.float32) + off
+    return _ribbon_info(cnt)
+
+def merge_line_polygons(polys, img_w, img_h):
+    """Polygon counterpart of merge_line_boxes() for Cham-DBNet box_type='poly'.
+
+    Fragments of one curved line (shared, extrapolated centerline) are merged into one curved polygon;
+    vertically stacked wavy lines are never merged even though their AABBs overlap (the decision uses
+    ribbon centerlines / thickness, not AABB heights). Detached micro-diacritic specks next to a full line
+    are suppressed as in merge_line_boxes. Returns polygons sorted by centerline y.
+    """
+    items = []
+    for b in (polys if polys is not None else []):
+        p = np.array(b, dtype=np.float32).reshape(-1, 2)
+        if len(p) < 3 or np.ptp(p[:, 0]) <= 3 or np.ptp(p[:, 1]) <= 3:
+            continue
+        p[:, 0] = np.clip(p[:, 0], 0, max(0, img_w - 1))
+        p[:, 1] = np.clip(p[:, 1], 0, max(0, img_h - 1))
+        items.append(_ribbon_info(p))
+    if not items:
+        return []
+    items.sort(key=lambda r: (r['cy'], r['x0']))
+
+    merged = True
+    while merged:
+        merged = False
+        out, used = [], [False] * len(items)
+        for i in range(len(items)):
+            if used[i]:
+                continue
+            r1 = items[i]
+            for j in range(i + 1, len(items)):
+                if used[j]:
+                    continue
+                if _ribbons_same_line(r1, items[j]):
+                    r1 = _merge_ribbon_polys(r1, items[j])
+                    used[j] = True
+                    merged = True
+            out.append(r1)
+        items = out
+
+    if len(items) >= 2:
+        med_t = float(np.median([r['t'] for r in items]))
+        if med_t >= 14.0:
+            kept = []
+            for r in items:
+                bw, bh = r['x1'] - r['x0'], r['y2'] - r['y1']
+                speck = False
+                if bh < 0.38 * med_t and bw < 0.55 * med_t:
+                    for mr in items:
+                        if mr is r or mr['t'] < 0.65 * med_t or (mr['x1'] - mr['x0']) < 2.0 * bw:
+                            continue
+                        ox1, ox2 = max(r['x0'], mr['x0']), min(r['x1'], mr['x1'])
+                        if ox2 - ox1 < 0.70 * max(1.0, bw):
+                            continue
+                        band_t = float(mr['top'][ox1 - mr['x0']: ox2 - mr['x0'] + 1].min())
+                        band_b = float(mr['bot'][ox1 - mr['x0']: ox2 - mr['x0'] + 1].max())
+                        if max(0.0, r['y1'] - band_b, band_t - r['y2']) <= 0.25 * med_t:
+                            speck = True
+                            break
+                if not speck:
+                    kept.append(r)
+            items = kept
+    items.sort(key=lambda r: r['cy'])
+    return [r['pts'] for r in items]
+
+def rectify_polygon_line(img, poly, others=(), median_h=None, vpad=None, mask_outside=None, inverted=False):
+    """Straightens a curved text-line polygon into a fixed-height horizontal strip ("ribbon" crop).
+
+    1. The polygon is expressed in a frame rotated by its principal angle (only when |angle| >= 3 deg).
+    2. Per column, the ribbon's upper / lower boundary gives a centerline, smoothed (median then mean,
+       windows ~0.6x / 1.0x the line thickness) so glyph shapes are not warped locally.
+    3. cv2.remap samples a strip centred on that centerline: height = polygon extent above / below the
+       centerline (98th pct) + `vpad` x median page line thickness on each side (ascender / descender
+       protection on top of the DBNet unclip margin).
+    4. With mask_outside, pixels outside the own polygon (dilated by the padding) and inside neighbouring
+       line polygons are replaced by the paper colour; ink components that belong mostly to the own line
+       are kept whole, components belonging mostly to a neighbour line are removed (difference_update).
+    Returns (strip_bgr, info).
+    """
+    vpad = CHAM_DET_POLY_VPAD if vpad is None else float(vpad)
+    mask_outside = CHAM_DET_POLY_MASK if mask_outside is None else bool(mask_outside)
+    H, W = img.shape[:2]
+    p = np.asarray(poly, dtype=np.float32).reshape(-1, 2)
+    mom = cv2.moments(p.reshape(-1, 1, 2))
+    if mom['m00'] > 1.0:
+        c = np.float32([mom['m10'] / mom['m00'], mom['m01'] / mom['m00']])
+        theta = 0.5 * float(np.arctan2(2.0 * mom['mu11'], mom['mu20'] - mom['mu02']))
+    else:
+        c, theta = p.mean(axis=0), 0.0
+    if abs(np.degrees(theta)) < 3.0 or abs(np.degrees(theta)) > 45.0:
+        theta = 0.0
+    cs, sn = float(np.cos(theta)), float(np.sin(theta))
+    d = p - c
+    q = np.stack([d[:, 0] * cs + d[:, 1] * sn, -d[:, 0] * sn + d[:, 1] * cs], axis=1)
+    qo = np.float32([np.floor(q[:, 0].min()), np.floor(q[:, 1].min())])
+    rx0, top, bot = poly_ribbon(q - qo)
+    top, bot = top + qo[1], bot + qo[1]
+    n = len(top)
+    t_med = max(2.0, float(np.median(bot - top)))
+    mh = float(median_h) if median_h else t_med
+    cen = _smooth1d((top + bot) / 2.0, _odd(0.6 * t_med), 'median')
+    cen = _smooth1d(cen, _odd(1.0 * t_med), 'mean')
+    up = max(1.0, float(np.percentile(cen - top, 98)))
+    dn = max(1.0, float(np.percentile(bot - cen, 98)))
+    pad = max(1.0, vpad * mh)
+    hpad = int(max(2, round(0.08 * t_med)))
+    up_h = up + pad
+    Hs = int(max(8, round(up + dn + 2.0 * pad)))
+    Ws = n + 2 * hpad
+    idx = np.clip(np.arange(Ws) - hpad, 0, n - 1)
+    xr = np.broadcast_to((qo[0] + rx0 - hpad + np.arange(Ws, dtype=np.float32))[None, :], (Hs, Ws))
+    yr = cen[idx][None, :] - up_h + np.arange(Hs, dtype=np.float32)[:, None]
+    mapx = (xr * cs - yr * sn + c[0]).astype(np.float32)
+    mapy = (xr * sn + yr * cs + c[1]).astype(np.float32)
+    strip = cv2.remap(img, mapx, mapy, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    info = {'angle_deg': round(float(np.degrees(theta)), 2), 'thickness': round(t_med, 2),
+            'strip_h': Hs, 'pad_px': round(pad, 2), 'masked': False}
+    if not mask_outside:
+        return strip, info
+
+    bx0, by0 = int(max(0, np.floor(mapx.min()) - 2)), int(max(0, np.floor(mapy.min()) - 2))
+    bx1, by1 = int(min(W, np.ceil(mapx.max()) + 3)), int(min(H, np.ceil(mapy.max()) + 3))
+    if bx1 - bx0 < 2 or by1 - by0 < 2:
+        return strip, info
+    off = np.float32([bx0, by0])
+    own = np.zeros((by1 - by0, bx1 - bx0), np.uint8)
+    cv2.fillPoly(own, [np.round(p - off).astype(np.int32)], 1)
+    oth = np.zeros_like(own)
+    for o in others or []:
+        op = np.asarray(o, dtype=np.float32).reshape(-1, 2)
+        if (op[:, 0].max() < bx0 or op[:, 0].min() > bx1 or op[:, 1].max() < by0 or op[:, 1].min() > by1):
+            continue
+        cv2.fillPoly(oth, [np.round(op - off).astype(np.int32)], 1)
+    oth[own > 0] = 0  # the own polygon always wins (never erase own strokes)
+    ry = int(max(1, round(pad + 0.10 * t_med)))
+    rxk = int(max(1, round(0.10 * t_med)))
+    keep = cv2.dilate(own, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * rxk + 1, 2 * ry + 1)))
+    keep[oth > 0] = 0
+    roi = img[by0:by1, bx0:bx1]
+    gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY) if roi.ndim == 3 else roi
+    if inverted:
+        gray = 255 - gray
+    kb = _odd(float(np.clip(0.6 * t_med, 7, 41)))
+    bgk = cv2.morphologyEx(gray, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_RECT, (kb, kb)))
+    ink = (cv2.subtract(bgk, gray) > 40).astype(np.uint8)
+    n_cc, lab, stats, _ = cv2.connectedComponentsWithStats(ink, connectivity=8)
+    if n_cc > 1:
+        a_own = np.bincount(lab[own > 0], minlength=n_cc)
+        a_oth = np.bincount(lab[oth > 0], minlength=n_cc)
+        glyph_sized = stats[:, cv2.CC_STAT_HEIGHT] <= 1.6 * t_med
+        add = (a_own > 0) & (a_own >= a_oth) & glyph_sized
+        rem = a_oth > a_own
+        add[0] = rem[0] = False
+        keep[(add.astype(np.uint8)[lab] > 0)] = 1
+        keep[(rem.astype(np.uint8)[lab] > 0) & (own == 0)] = 0
+    keep_f = cv2.GaussianBlur(keep.astype(np.float32), (3, 3), 0)
+    km = cv2.remap(keep_f, mapx - off[0], mapy - off[1], cv2.INTER_LINEAR,
+                   borderMode=cv2.BORDER_CONSTANT, borderValue=0)
+    sel = km > 0.5
+    flat = strip[sel] if sel.sum() >= 16 else strip.reshape(-1, strip.shape[2]) if strip.ndim == 3 else strip.reshape(-1)
+    bgc = np.median(flat, axis=0).astype(np.float32)
+    kmc = km[..., None] if strip.ndim == 3 else km
+    strip = np.clip(strip.astype(np.float32) * kmc + bgc * (1.0 - kmc), 0, 255).astype(np.uint8)
+    info['masked'] = True
+    return strip, info
+
+# ==============================================================================
 # Page-level quality gates & reading order (stress test 2026-11-04 fixes)
 # ==============================================================================
 def _file_fingerprint(path):
@@ -709,7 +1101,8 @@ def get_model_info(model_ver):
                             # Exposed so a deployment can be verified: False means the fine-tuned Cham-DBNet
                             # failed to load (e.g. PIR model on an old Paddle) and only the legacy detector runs.
                             "cham_dbnet_available": cham_det_model is not None,
-                            "cham_dbnet_sha256_16": _file_fingerprint(os.path.join(PROJECT_ROOT, "data", "output", "ch_PP-OCRv4_det_cham_infer", "inference.pdiparams")) if cham_det_model is not None else None}
+                            "cham_dbnet_sha256_16": _file_fingerprint(os.path.join(CHAM_DET_DIR, "inference.pdiparams")) if cham_det_model is not None else None,
+                            "cham_dbnet_box_type": ("poly" if _is_poly_detector(cham_det_model) else "quad") if cham_det_model is not None else None}
     try:
         import paddle as _paddle
         info["paddle_version"] = _paddle.__version__
@@ -856,8 +1249,11 @@ def apply_line_quality_gates(lines_metadata, final_crops, dropped=None):
              surface these at document level instead of silently losing them (benchmark
              test_393_a4_lvl5: 4/5 lines dropped while the page still reported 'ocr_done').
     """
+    # Line height: AABB height, or the ribbon thickness for rectified curved polygons (whose AABB
+    # spans neighbouring lines and would wrongly look like 'possible_merged_lines').
+    _mh = lambda m: float(m['line_thickness']) if m.get('line_thickness') else (m['bbox'][3] - m['bbox'][1])
     all_w = [m['bbox'][2] - m['bbox'][0] for m in lines_metadata]
-    all_h = [m['bbox'][3] - m['bbox'][1] for m in lines_metadata]
+    all_h = [_mh(m) for m in lines_metadata]
     med_w = float(np.median(all_w)) if all_w else 0.0
     med_h = float(np.median(all_h)) if all_h else 0.0
     kept_meta, kept_crops = [], []
@@ -868,14 +1264,14 @@ def apply_line_quality_gates(lines_metadata, final_crops, dropped=None):
         has_cham = any('\uAA00' <= ch <= '\uAA5F' or '\uA800' <= ch <= '\uA87F' for ch in pred)
         has_alnum = any(ch.isalnum() for ch in pred)
         if not pred or conf < 0.15 or (conf < 0.35 and not has_cham and not has_alnum):
-            bw, bh = meta['bbox'][2] - meta['bbox'][0], meta['bbox'][3] - meta['bbox'][1]
+            bw, bh = meta['bbox'][2] - meta['bbox'][0], _mh(meta)
             if dropped is not None and has_cham and bw >= 0.5 * med_w and bh >= 0.5 * med_h:
                 dropped.append(meta)
             continue
         kept_meta.append(meta)
         kept_crops.append(crop)
 
-    heights = [m['bbox'][3] - m['bbox'][1] for m in kept_meta]
+    heights = [_mh(m) for m in kept_meta]
     median_h = float(np.median(heights)) if heights else 0.0
     for meta in kept_meta:
         cand = meta['candidates'][meta['selected_crop_type']]
@@ -883,7 +1279,7 @@ def apply_line_quality_gates(lines_metadata, final_crops, dropped=None):
         reasons = list(meta.get('reason') or [])
         if conf < LINE_REVIEW_CONF:
             reasons.append('low_confidence')
-        if len(kept_meta) >= 3 and median_h > 0 and (meta['bbox'][3] - meta['bbox'][1]) > 1.8 * median_h:
+        if len(kept_meta) >= 3 and median_h > 0 and _mh(meta) > 1.8 * median_h:
             reasons.append('possible_merged_lines')
         meta['reason'] = reasons
         meta['needs_review'] = len(reasons) > 0
@@ -970,14 +1366,35 @@ def expand_quad(pts, pad_v, pad_h, img_w, img_h):
 
 def max_stacked_overlap(boxes):
     """Max vertical overlap (fraction of the smaller AABB height) between two boxes that also
-    overlap horizontally by more than 25% of the narrower one (i.e. stacked, not side by side)."""
+    overlap horizontally by more than 25% of the narrower one (i.e. stacked, not side by side).
+
+    Curved polygons (> 4 points) are compared by their ribbons instead: median per-column overlap of
+    the [top, bottom] bands over the shared columns / the thinner ribbon's thickness (the AABBs of two
+    adjacent wavy lines overlap heavily even when the lines themselves are cleanly separated)."""
     r = [_aabb(b) for b in boxes]
+    is_poly = [len(np.asarray(b).reshape(-1, 2)) > 4 for b in boxes]
+    ribbons = {}
+
+    def _rib(k):
+        if k not in ribbons:
+            ribbons[k] = _ribbon_info(np.asarray(boxes[k], dtype=np.float32).reshape(-1, 2))
+        return ribbons[k]
+
     best = 0.0
     for i in range(len(r)):
         for j in range(i + 1, len(r)):
             a, b = r[i], r[j]
             hx = min(a[2], b[2]) - max(a[0], b[0])
             if hx <= 0.25 * min(a[2] - a[0], b[2] - b[0]):
+                continue
+            if is_poly[i] or is_poly[j]:
+                ra, rb = _rib(i), _rib(j)
+                ox1, ox2 = max(ra['x0'], rb['x0']), min(ra['x1'], rb['x1'])
+                if ox2 < ox1:
+                    continue
+                sa, sb = slice(ox1 - ra['x0'], ox2 - ra['x0'] + 1), slice(ox1 - rb['x0'], ox2 - rb['x0'] + 1)
+                inter = np.minimum(ra['bot'][sa], rb['bot'][sb]) - np.maximum(ra['top'][sa], rb['top'][sb])
+                best = max(best, float(np.median(np.maximum(inter, 0.0))) / max(1.0, min(ra['t'], rb['t'])))
                 continue
             vy = min(a[3], b[3]) - max(a[1], b[1])
             best = max(best, vy / max(1.0, min(a[3] - a[1], b[3] - b[1])))
@@ -1011,14 +1428,18 @@ def segment_lines_dbnet(img, det_model, ink=None, return_info=False, reading_ord
 
     def _detect(detector):
         boxes, _ = detector(det_img)
+        if _is_poly_detector(detector):
+            boxes = [] if boxes is None else [np.array(b, dtype=np.float32).reshape(-1, 2) for b in boxes]
+            return merge_line_polygons(boxes, w, h)
         boxes = [] if boxes is None else [np.array(b, dtype=np.float32) for b in boxes]
         return merge_line_boxes(boxes, w, h)
 
     def _coverage(boxes):
-        """(uncovered ink ratio, max box height / glyph height) for a candidate box set."""
+        """(uncovered ink ratio, max box height / glyph height) for a candidate box set.
+        Box height = AABB height for quads, ribbon thickness for curved polygons."""
         if not boxes:
             return 1.0, 0.0
-        hs = [float(np.ptp(np.array(b)[:, 1])) for b in boxes]
+        hs = [_line_height(b) for b in boxes]
         unc = compute_uncovered_ink(ink, boxes, float(np.median(hs)))[0] if ink is not None else 0.0
         return unc, (max(hs) / glyph_h if glyph_h > 0 else 0.0)
 
@@ -1032,6 +1453,7 @@ def segment_lines_dbnet(img, det_model, ink=None, return_info=False, reading_ord
     info["raw_boxes"] = len(dt_boxes)
     info["detector"] = det_model_info.get("name", "primary")
     use_cham_crop_pad = det_model is cham_det_model
+    use_poly = _is_poly_detector(det_model)
 
     # Legacy-First gate: keep the legacy detector result unless it leaves text-like ink uncovered
     # or produced a box tall enough to contain several merged lines; only then try Cham-DBNet and
@@ -1062,6 +1484,7 @@ def segment_lines_dbnet(img, det_model, ink=None, return_info=False, reading_ord
                     info["detector"] = "cham_dbnet"
                     info["detector_switched"] = True
                     use_cham_crop_pad = True
+                    use_poly = _is_poly_detector(cham)
 
     info["lines_detected"] = len(dt_boxes)
     if len(dt_boxes) == 0:
@@ -1072,13 +1495,14 @@ def segment_lines_dbnet(img, det_model, ink=None, return_info=False, reading_ord
 
     # Column-aware reading order (fixes left/right interleaving on multi-column pages)
     if reading_order != 'rows' and len(dt_boxes) > 1:
-        rects = [_aabb(b) for b in dt_boxes]
+        rects = [_reading_rect(b) for b in dt_boxes] if use_poly else [_aabb(b) for b in dt_boxes]
         order, layout = order_lines_reading(rects, w)
         dt_boxes = [dt_boxes[i] for i in order]
         info["layout"] = layout
 
     final_crops = []
     lines_metadata = []
+    poly_median_h = float(np.median([_line_height(b) for b in dt_boxes])) if use_poly else None
 
     for idx, box in enumerate(dt_boxes):
         pts = np.array(box, dtype=np.float32)
@@ -1086,10 +1510,16 @@ def segment_lines_dbnet(img, det_model, ink=None, return_info=False, reading_ord
         x_max = int(min(w, np.max(pts[:, 0])))
         y_min = int(max(0, np.min(pts[:, 1])))
         y_max = int(min(h, np.max(pts[:, 1])))
-        # Get perspective crop (Cham-DBNet boxes are tighter than the legacy detector's: pad them
-        # along the line's own vertical axis so stacked diacritics are not clipped)
-        crop_pts = expand_quad(pts, CHAM_DET_CROP_PAD, 0.05, w, h) if use_cham_crop_pad and CHAM_DET_CROP_PAD > 0 else pts
-        crop_img = utility.get_rotate_crop_image(img, crop_pts)
+        rect_info = None
+        if use_poly:
+            # Curved Cham-DBNet polygon: straighten along its centerline into a padded, neighbour-masked strip
+            others = [b for k, b in enumerate(dt_boxes) if k != idx]
+            crop_img, rect_info = rectify_polygon_line(img, pts, others, median_h=poly_median_h, inverted=is_inverted)
+        else:
+            # Get perspective crop (Cham-DBNet boxes are tighter than the legacy detector's: pad them
+            # along the line's own vertical axis so stacked diacritics are not clipped)
+            crop_pts = expand_quad(pts, CHAM_DET_CROP_PAD, 0.05, w, h) if use_cham_crop_pad and CHAM_DET_CROP_PAD > 0 else pts
+            crop_img = utility.get_rotate_crop_image(img, crop_pts)
         final_crops.append(crop_img)
 
         meta = {
@@ -1111,6 +1541,10 @@ def segment_lines_dbnet(img, det_model, ink=None, return_info=False, reading_ord
                 }
             }
         }
+        if rect_info is not None:
+            meta['crop_mode'] = 'ribbon_rectified'
+            meta['line_thickness'] = rect_info['thickness']
+            meta['rectify'] = rect_info
         lines_metadata.append(meta)
 
     return _ret(final_crops, lines_metadata)

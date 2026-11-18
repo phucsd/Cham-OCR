@@ -41,11 +41,33 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, "scripts"))
 from evaluate_pipeline import levenshtein_distance
 from evaluate_realscan_gold import matched_line_stats
 from evaluate_level5_pages import load_pages, norm_audit, matched_cer
+import app as studio_app
 
 SPACE_ID = "phucsd/cham-ocr-studio"
 LIVE_BASE_URL = "https://ocr.cham.asia"
-EXPECTED_R4_SHA16 = "85525b0ca091acaf"
+
+
+def _sha256_16(p: str) -> str:
+    import hashlib
+    h = hashlib.sha256()
+    with open(p, "rb") as f:
+        for c in iter(lambda: f.read(1 << 20), b""):
+            h.update(c)
+    return h.hexdigest().lower()[:16]
+
+
+def _load_expected_r4_sha16() -> str:
+    man_p = os.path.join(PROJECT_ROOT, "ocr-studio", "data", "output", "rec_cham_inference_v24_1_r4", "model_manifest.json")
+    man = json.load(open(man_p, "r", encoding="utf-8"))
+    sha = ((man.get("files") or {}).get("inference.pdiparams") or {}).get("sha256", "")
+    assert len(sha) >= 16, f"Missing inference.pdiparams sha256 in {man_p}"
+    return sha[:16].lower()
+
+
+EXPECTED_R4_SHA16 = _load_expected_r4_sha16()
 EXPECTED_R31_SHA16 = "5fb0d8e4d512b4c0"
+EXPECTED_CHAM_DET_BOX_TYPE = studio_app.CHAM_DET_BOX_TYPE
+EXPECTED_CHAM_DET_SHA16 = _sha256_16(os.path.join(PROJECT_ROOT, "ocr-studio", "data", "output", "ch_PP-OCRv4_det_cham_infer", "inference.pdiparams"))
 
 
 def load_dotenv_safe():
@@ -71,6 +93,10 @@ def collect_operations() -> list:
         "ocr-studio/index.html",
         "ocr-studio/research.html",
         "ocr-studio/tests/test_quality_gates.py",
+        "ocr-studio/PaddleOCR/ppocr/modeling/architectures/base_model.py",
+        "ocr-studio/PaddleOCR/ppocr/modeling/heads/rec_multi_head.py",
+        "ocr-studio/PaddleOCR/ppocr/modeling/necks/rnn.py",
+        "ocr-studio/PaddleOCR/ppocr/modeling/backbones/rec_svtrnet.py",
         "ocr-studio/PaddleOCR/ppocr/modeling/backbones/rec_lcnetv3.py",
         "ocr-studio/data/cham_dict_v24_1_r3_1.txt",
         "ocr-studio/data/cham_dict_v24_1_r4.txt",
@@ -157,14 +183,18 @@ def wait_for_space_rollout(api: HfApi, commit_sha: str, max_wait_s: int = 900) -
                 if hr.status_code == 200:
                     # Probe default model_info via live /ocr on tiny image to confirm NEW container is live
                     resp = post_live_ocr(probe_img, model=None, timeout=60)
-                    recs = (resp.get("model_info") or {}).get("recognizers") or []
-                    if recs and recs[0].get("version") == "v24_1_r4" and recs[0].get("weights_sha256_16") == EXPECTED_R4_SHA16:
-                        print(f"✅ Live `{LIVE_BASE_URL}` confirmed serving new `v24_1_r4` container in {el}s!")
+                    mi = resp.get("model_info") or {}
+                    recs = mi.get("recognizers") or []
+                    det = mi.get("detector") or {}
+                    rec_ok = (recs and recs[0].get("version") == "v24_1_r4" and recs[0].get("weights_sha256_16") == EXPECTED_R4_SHA16)
+                    det_ok = (det.get("cham_dbnet_box_type") == EXPECTED_CHAM_DET_BOX_TYPE and det.get("cham_dbnet_sha256_16") == EXPECTED_CHAM_DET_SHA16)
+                    if rec_ok and det_ok:
+                        print(f"✅ Live `{LIVE_BASE_URL}` confirmed serving `v24_1_r4` ({EXPECTED_R4_SHA16}) + detector `box_type={EXPECTED_CHAM_DET_BOX_TYPE}` ({EXPECTED_CHAM_DET_SHA16}) in {el}s!")
                         try:
                             h_body = hr.json()
                         except Exception:
                             h_body = hr.text.strip()
-                        return {"rollout_seconds": el, "stage": stage, "health_body": h_body, "probe_model_info": resp.get("model_info")}
+                        return {"rollout_seconds": el, "stage": stage, "health_body": h_body, "probe_model_info": mi}
             except Exception as exc:
                 print(f"    (probe retry: {exc})", flush=True)
         time.sleep(15)

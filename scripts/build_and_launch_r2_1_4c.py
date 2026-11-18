@@ -292,8 +292,172 @@ BRANCH_SPECS = {
         "base_ckpt_filename": "best.pdparams",
         "base_sha": "1e38d5623858c5c9a85888c177da001ff8b1cea6a7588248f1e1036455e8db2f",
         "dataset_slug": "gustavnguyen/cham-ocr-v24-1-r2-1-4d-training-assets"
+    },
+    # V26: SVTR key-padding mask fine-tune from the production R4.1 WiSE-FT weights, plus an
+    # identical-data/identical-schedule UNMASKED control for causal attribution.
+    # train/val counts & step_each_epoch are filled from REPORTS/v26_ft_dataset_manifest.json.
+    "v26_masked_ft": {
+        "slug": "paddleocr-cham-v26-masked-svtr-ft",
+        "title": "PaddleOCR Cham V26 Masked SVTR FT",
+        "folder": "cham_synthetic_v26_ft",
+        "dataset_zip": "v26_ft_dataset.zip",
+        "config_file": "rec_cham_v26_masked_ft.yml",
+        "train_samples": "AUTO_V26",
+        "val_samples": "AUTO_V26",
+        "epochs": 6,
+        "warmup_epoch": 0.4,
+        "step_each_epoch": "AUTO_V26",
+        "warmup_steps": "AUTO_V26",
+        "lr": 0.000015,
+        "eta_min": 2.0e-6,
+        "output_subpath": "rec_cham_v26_masked_ft",
+        "base_ckpt_subdir": "v26_base",
+        "base_ckpt_filename": "best.pdparams",
+        "base_sha": "300b3ef5aec4417985bf70c0ac3548216f8c27272207747c77f28a69d50402a3",
+        "extra_patches": "AUTO_V26",
+        "expect_valid_mask": True,
+        "dataset_slug": "gustavnguyen/cham-ocr-v24-1-r2-1-4d-training-assets"
+    },
+    "v26_control_ft": {
+        "slug": "paddleocr-cham-v26-control-unmasked-ft",
+        "title": "PaddleOCR Cham V26 Control Unmasked FT",
+        "folder": "cham_synthetic_v26_ft",
+        "dataset_zip": "v26_ft_dataset.zip",
+        "config_file": "rec_cham_v26_control_ft.yml",
+        "train_samples": "AUTO_V26",
+        "val_samples": "AUTO_V26",
+        "epochs": 6,
+        "warmup_epoch": 0.4,
+        "step_each_epoch": "AUTO_V26",
+        "warmup_steps": "AUTO_V26",
+        "lr": 0.000015,
+        "eta_min": 2.0e-6,
+        "output_subpath": "rec_cham_v26_control_ft",
+        "base_ckpt_subdir": "v26_base",
+        "base_ckpt_filename": "best.pdparams",
+        "base_sha": "300b3ef5aec4417985bf70c0ac3548216f8c27272207747c77f28a69d50402a3",
+        "extra_patches": "AUTO_V26",
+        "expect_valid_mask": False,
+        "dataset_slug": "gustavnguyen/cham-ocr-v24-1-r2-1-4d-training-assets"
+    },
+    # Phase B: V26-Full 30-epoch unfrozen multi-stage training on 64,000 train / 6,400 val (W=480)
+    "v26_full_s1": {
+        "slug": "paddleocr-cham-v26-full-stage1",
+        "remote_slug": "paddleocr-cham-v26-full-stage-1-e1-10",
+        "title": "PaddleOCR Cham V26 Full Stage 1 E1-10",
+        "folder": "cham_synthetic_v26_full",
+        "dataset_zip": "v26_full_dataset.zip",
+        "config_file": "rec_cham_v26_full_s1.yml",
+        "train_samples": "AUTO_V26_FULL",
+        "val_samples": "AUTO_V26_FULL",
+        "epochs": 30,
+        "stage_epochs": 10,
+        "stage_end_epoch": 10,
+        "warmup_epoch": 1.0,
+        "step_each_epoch": "AUTO_V26_FULL",
+        "warmup_steps": "AUTO_V26_FULL",
+        "lr": 0.000020,
+        "eta_min": 1.0e-6,
+        "output_subpath": "rec_cham_v26_full_s1",
+        "base_ckpt_subdir": "v26_s1_base",
+        "base_ckpt_filename": "best.pdparams",
+        "base_ckpt_local_path": "ocr-training/output/v26_masked_checkpoints/iter_epoch_4.pdparams",
+        "base_sha": "AUTO_V26_FULL",
+        "require_resume_state": False,
+        "extra_patches": "AUTO_V26",
+        "expect_valid_mask": True,
+        "dataset_slug": "gustavnguyen/cham-ocr-v24-1-r2-1-4d-training-assets"
+    },
+    "v26_full_s2": {
+        "slug": "paddleocr-cham-v26-full-stage2",
+        "title": "PaddleOCR Cham V26 Full Stage2",
+        "folder": "cham_synthetic_v26_full",
+        "dataset_zip": "v26_full_dataset.zip",
+        "config_file": "rec_cham_v26_full_s2.yml",
+        "train_samples": "AUTO_V26_FULL",
+        "val_samples": "AUTO_V26_FULL",
+        "epochs": 30,
+        "stage_epochs": 10,
+        "stage_end_epoch": 20,
+        "warmup_epoch": 1.0,
+        "step_each_epoch": "AUTO_V26_FULL",
+        "warmup_steps": "AUTO_V26_FULL",
+        "lr": 0.000020,
+        "eta_min": 1.0e-6,
+        "output_subpath": "rec_cham_v26_full_s2",
+        "base_ckpt_subdir": "v26_s1_e10",
+        "base_ckpt_filename": "iter_epoch_10.pdparams",
+        "base_ckpt_local_path": "ocr-training/output/r2_1_4c_v26_full_s1_kaggle_output/extracted_checkpoints/iter_epoch_10.pdparams",
+        "base_sha": "AUTO_V26_FULL",
+        "require_resume_state": True,
+        "extra_patches": "AUTO_V26",
+        "expect_valid_mask": True,
+        "dataset_slug": "gustavnguyen/cham-ocr-v24-1-r2-1-4d-training-assets"
+    },
+    "v26_full_s3": {
+        "slug": "paddleocr-cham-v26-full-stage3",
+        "title": "PaddleOCR Cham V26 Full Stage3",
+        "folder": "cham_synthetic_v26_full",
+        "dataset_zip": "v26_full_dataset.zip",
+        "config_file": "rec_cham_v26_full_s3.yml",
+        "train_samples": "AUTO_V26_FULL",
+        "val_samples": "AUTO_V26_FULL",
+        "epochs": 30,
+        "stage_epochs": 10,
+        "stage_end_epoch": 30,
+        "warmup_epoch": 1.0,
+        "step_each_epoch": "AUTO_V26_FULL",
+        "warmup_steps": "AUTO_V26_FULL",
+        "lr": 0.000020,
+        "eta_min": 1.0e-6,
+        "output_subpath": "rec_cham_v26_full_s3",
+        "base_ckpt_subdir": "v26_s2_e20",
+        "base_ckpt_filename": "iter_epoch_20.pdparams",
+        "base_ckpt_local_path": "ocr-training/output/r2_1_4c_v26_full_s2_kaggle_output/extracted_checkpoints/iter_epoch_20.pdparams",
+        "base_sha": "AUTO_V26_FULL",
+        "require_resume_state": True,
+        "extra_patches": "AUTO_V26",
+        "expect_valid_mask": True,
+        "dataset_slug": "gustavnguyen/cham-ocr-v24-1-r2-1-4d-training-assets"
     }
 }
+
+# Files overlaid on top of the 7 audited patches for V26 (shipped under `extra_patches/` in
+# r2_1_4c_base_and_configs.zip). Identical code for masked & control: the mask is opt-in via
+# `Architecture.use_valid_mask`, so the control run executes the exact pre-V26 graph.
+V26_EXTRA_PATCH_FILES = [
+    "ppocr/modeling/architectures/base_model.py",
+    "ppocr/modeling/heads/rec_multi_head.py",
+    "ppocr/modeling/necks/rnn.py",
+    "ppocr/modeling/backbones/rec_svtrnet.py",
+    "ppocr/modeling/backbones/rec_lcnetv3.py",
+    "tools/program.py",
+]
+
+
+def _remote_slug(spec: dict) -> str:
+    """Return the Kaggle kernel slug (may differ from artifact slug if Kaggle rewrote the Clean URL)."""
+    return spec.get("remote_slug") or spec["slug"]
+
+
+def _resolve_v26_spec(spec: dict) -> dict:
+    """Fills AUTO_V26 / AUTO_V26_FULL fields from the dataset manifest and local patched PaddleOCR files."""
+    spec = dict(spec)
+    if spec.get("train_samples") in ("AUTO_V26", "AUTO_V26_FULL"):
+        man_name = "v26_full_dataset_manifest.json" if spec.get("train_samples") == "AUTO_V26_FULL" else "v26_ft_dataset_manifest.json"
+        man = json.load(open(os.path.join(PROJECT_ROOT, "REPORTS", man_name), "r", encoding="utf-8"))
+        spec["train_samples"] = int(man["train_samples"])
+        spec["val_samples"] = int(man["val_samples"])
+        spec["step_each_epoch"] = int(man["train_samples"]) // 2 // 32
+        spec["warmup_steps"] = int(round(spec["warmup_epoch"] * spec["step_each_epoch"]))
+    if spec.get("base_sha") == "AUTO_V26_FULL":
+        local_ckpt = os.path.join(PROJECT_ROOT, *spec["base_ckpt_local_path"].split("/"))
+        assert os.path.exists(local_ckpt), f"Missing V26-Full base/resume checkpoint: {local_ckpt}"
+        spec["base_sha"] = file_sha256(local_ckpt)
+    if spec.get("extra_patches") == "AUTO_V26":
+        studio_paddle = os.path.join(PROJECT_ROOT, "ocr-studio", "PaddleOCR")
+        spec["extra_patches"] = {rel: file_sha256(os.path.join(studio_paddle, *rel.split("/"))) for rel in V26_EXTRA_PATCH_FILES}
+    return spec
 
 
 def file_sha256(filepath: str) -> str:
@@ -305,7 +469,7 @@ def file_sha256(filepath: str) -> str:
 
 
 def build_notebook_cells(b_key: str) -> list:
-    spec = BRANCH_SPECS[b_key]
+    spec = _resolve_v26_spec(BRANCH_SPECS[b_key])
     slug = spec["slug"]
     title = spec["title"]
     folder = spec["folder"]
@@ -328,6 +492,10 @@ def build_notebook_cells(b_key: str) -> list:
         base_sha = json.load(open(r31_eval_p, "r", encoding="utf-8"))["best_epoch_sha256"].lower()
 
     patches_json_str = json.dumps(EXPECTED_RUNTIME_PATCHES, indent=4)
+    extra_patches_json_str = json.dumps(spec.get("extra_patches") or {}, indent=4)
+    expect_valid_mask = spec.get("expect_valid_mask")
+    local_cfg_path = os.path.join(PROJECT_ROOT, "ocr-training", "configs", config_file)
+    local_cfg_text = open(local_cfg_path, "r", encoding="utf-8").read() if os.path.exists(local_cfg_path) else None
 
     cells = [
         {
@@ -362,6 +530,9 @@ def build_notebook_cells(b_key: str) -> list:
                 f"EXP_TRAIN_LINES = {train_samples}\n",
                 f"EXP_VAL_LINES = {val_samples}\n",
                 f"EXPECTED_PATCHES = {patches_json_str}\n",
+                f"EXTRA_PATCHES = {extra_patches_json_str}\n",
+                f"REQUIRE_RESUME_STATE = {bool(spec.get('require_resume_state', False))}\n",
+                f"LOCAL_CFG_TEXT = {repr(local_cfg_text)}\n",
                 "\n",
                 "def sha(p):\n",
                 "    h = hashlib.sha256()\n",
@@ -379,7 +550,18 @@ def build_notebook_cells(b_key: str) -> list:
                 "if not _ff_zip and not _ff_dir:\n",
                 "    _tops = sorted(set('/'.join(p.split('/')[:6]) for p in glob.glob('/kaggle/input/**/*', recursive=True)))[:40]\n",
                 "    raise FileNotFoundError(f'FAIL-FAST: dataset for {BRANCH_FOLDER} not mounted (stale dataset version?). /kaggle/input tops: {_tops}')\n",
-                "print(f'✅ FAIL-FAST check passed: dataset for {BRANCH_FOLDER} is mounted ({(_ff_zip or _ff_dir)[0]})')\n",
+                "_ff_bzips = glob.glob('/kaggle/input/**/r2_1_4c_base_and_configs.zip', recursive=True)\n",
+                "if _ff_bzips:\n",
+                "    with zipfile.ZipFile(_ff_bzips[0]) as _zf:\n",
+                "        _bn = set(_zf.namelist())\n",
+                "    _need = f'{BASE_CKPT_SUBDIR}/{BASE_CKPT_FILENAME}'\n",
+                "    if _need not in _bn:\n",
+                "        raise FileNotFoundError(f'FAIL-FAST: {_need} missing inside {_ff_bzips[0]} (stale dataset mount?)')\n",
+                "else:\n",
+                "    _ff_ck = glob.glob(f'/kaggle/input/**/{BASE_CKPT_SUBDIR}/{BASE_CKPT_FILENAME}', recursive=True)\n",
+                "    if not _ff_ck:\n",
+                "        raise FileNotFoundError(f'FAIL-FAST: {BASE_CKPT_SUBDIR}/{BASE_CKPT_FILENAME} not found in /kaggle/input (stale dataset mount?)')\n",
+                "print(f'✅ FAIL-FAST check passed: dataset & {BASE_CKPT_SUBDIR}/{BASE_CKPT_FILENAME} mounted ({(_ff_zip or _ff_dir)[0]})')\n",
                 "\n",
                 "paddle_dir = os.path.join(work, 'PaddleOCR')\n",
                 "if os.path.exists(paddle_dir):\n",
@@ -446,6 +628,18 @@ def build_notebook_cells(b_key: str) -> list:
                 "assert 'int(x.shape[3]) // 2' in open(_lcnet_p, 'r', encoding='utf-8').read()\n",
                 "print('✅ Patched rec_lcnetv3.py dynamic width pooling (W/8 CTC frames in train == eval).')\n",
                 "\n",
+                "# 3c. Optional extra audited overlays (V26 SVTR key-padding mask + padding-aware SE), SHA-256 verified\n",
+                "for rel_path, exp_hash in EXTRA_PATCHES.items():\n",
+                "    src_patch = glob.glob(f'{assets_base}/**/extra_patches/{rel_path}', recursive=True)\n",
+                "    assert len(src_patch) > 0, f'Extra patch source missing: {rel_path}'\n",
+                "    dst_patch = os.path.join(paddle_dir, rel_path)\n",
+                "    shutil.copy2(src_patch[0], dst_patch)\n",
+                "    assert sha(dst_patch) == exp_hash, f'SHA256 mismatch for extra overlay {rel_path}: {sha(dst_patch)} != {exp_hash}'\n",
+                "    print(f'  • Extra overlay verified: {rel_path} -> {exp_hash[:12]}... OK')\n",
+                "if EXTRA_PATCHES:\n",
+                "    assert 'int(x.shape[3]) // 2' in open(_lcnet_p, 'r', encoding='utf-8').read(), 'dynamic pooling fix lost after overlay'\n",
+                "    print(f'✅ {len(EXTRA_PATCHES)} extra overlays applied and provenance-verified.')\n",
+                "\n",
                 "# 4. Locate & Setup Branch Dataset\n",
                 "ds_zips = glob.glob(f'/kaggle/input/**/{DATASET_ZIP_NAME}', recursive=True)\n",
                 "if not ds_zips:\n",
@@ -495,12 +689,24 @@ def build_notebook_cells(b_key: str) -> list:
                 "dst_base_ckpt = f'/kaggle/working/data/{BASE_CKPT_SUBDIR}/{BASE_CKPT_FILENAME}'\n",
                 "shutil.copy2(ckpt_cands[0], dst_base_ckpt)\n",
                 "assert sha(dst_base_ckpt) == BASE_SHA, f'Base checkpoint hash mismatch: {sha(dst_base_ckpt)} != {BASE_SHA}'\n",
+                "for _ext in ('.pdopt', '.states'):\n",
+                "    _sib = os.path.splitext(ckpt_cands[0])[0] + _ext\n",
+                "    if os.path.exists(_sib):\n",
+                "        shutil.copy2(_sib, os.path.splitext(dst_base_ckpt)[0] + _ext)\n",
+                "        print('  • Copied resume state:', os.path.basename(_sib))\n",
+                "    elif REQUIRE_RESUME_STATE:\n",
+                "        raise FileNotFoundError(f'Missing required resume state file: {_sib}')\n",
                 "print('✅ Base checkpoint verified:', BASE_SHA)\n",
-                "cfg_cands = glob.glob(f'{assets_base}/**/{CONFIG_NAME}', recursive=True) or glob.glob(f'/kaggle/input/**/{CONFIG_NAME}', recursive=True)\n",
-                "assert cfg_cands, f'Could not find config {CONFIG_NAME} in /kaggle/input'\n",
                 "os.makedirs('/kaggle/working/configs', exist_ok=True)\n",
-                "shutil.copy2(cfg_cands[0], f'/kaggle/working/configs/{CONFIG_NAME}')\n",
-                "print(f'✅ Config installed: /kaggle/working/configs/{CONFIG_NAME}')\n",
+                "if LOCAL_CFG_TEXT is not None:\n",
+                "    with open(f'/kaggle/working/configs/{CONFIG_NAME}', 'w', encoding='utf-8', newline='\\n') as _cf:\n",
+                "        _cf.write(LOCAL_CFG_TEXT)\n",
+                "    print(f'✅ Config installed (inline verified): /kaggle/working/configs/{CONFIG_NAME} ({len(LOCAL_CFG_TEXT)} bytes)')\n",
+                "else:\n",
+                "    cfg_cands = glob.glob(f'{assets_base}/**/{CONFIG_NAME}', recursive=True) or glob.glob(f'/kaggle/input/**/{CONFIG_NAME}', recursive=True)\n",
+                "    assert cfg_cands, f'Could not find config {CONFIG_NAME} in /kaggle/input'\n",
+                "    shutil.copy2(cfg_cands[0], f'/kaggle/working/configs/{CONFIG_NAME}')\n",
+                "    print(f'✅ Config installed: /kaggle/working/configs/{CONFIG_NAME}')\n",
                 "\n",
                 "# 6. Setup sitecustomize.py for NumPy 2.x and visualdl fallback\n",
                 "sitecustomize_code = (\n",
@@ -599,10 +805,20 @@ def build_notebook_cells(b_key: str) -> list:
                 "\n",
                 "print('Using Python executable for training & dependencies:', PY_EXE)\n",
                 "os.environ['PATH'] = f\"{os.path.dirname(PY_EXE)}:{os.environ['PATH']}\"\n",
+                "os.environ['UV_HTTP_TIMEOUT'] = '300'\n",
                 "\n",
-                "# Install runtime dependencies\n",
+                "# Install runtime dependencies (retry transient PyPI / uv network timeouts on 724MB paddle wheel)\n",
+                "import time as _pip_time\n",
                 "print('Installing runtime dependencies into active Python environment...')\n",
-                "subprocess.run(install_cmd, check=True)\n",
+                "for _pip_att in range(1, 4):\n",
+                "    try:\n",
+                "        subprocess.run(install_cmd, check=True)\n",
+                "        break\n",
+                "    except subprocess.CalledProcessError as _pip_err:\n",
+                "        if _pip_att == 3:\n",
+                "            raise\n",
+                "        print(f'⚠️ Install attempt {_pip_att} failed ({_pip_err}); retrying in 15s...')\n",
+                "        _pip_time.sleep(15)\n",
                 "\n",
                 "# Deploy sitecustomize into active site-packages if py311 was created\n",
                 "for sp in glob.glob('/tmp/py311/lib*/python*/site-packages'):\n",
@@ -634,6 +850,20 @@ def build_notebook_cells(b_key: str) -> list:
                 f"    \"assert getattr(inner, 'eta_min', None) == {eta_min}, f'eta_min not properly wired: {{getattr(inner, \\\"eta_min\\\", None)}}'\\n\"\n",
                 f"    \"assert s.warmup_steps == {warmup_steps}, f'Warmup steps mismatch: {{s.warmup_steps}} != {warmup_steps}'\\n\"\n",
                 f"    \"print('✅ Preflight imports & LR scheduler verified: eta_min={eta_min}, warmup_steps={warmup_steps} OK!')\\n\"\n",
+            ] + ([
+                "    \"import yaml\\n\"\n",
+                "    \"from ppocr.modeling.architectures import build_model\\n\"\n",
+                f"    \"_cfg = yaml.safe_load(open('/kaggle/working/configs/{config_file}', 'r', encoding='utf-8'))\\n\"\n",
+                "    \"_m = build_model(_cfg['Architecture'])\\n\"\n",
+                f"    \"assert bool(_m.use_valid_mask) == {bool(expect_valid_mask)} and bool(_m.backbone.use_valid_mask) == {bool(expect_valid_mask)}, 'V26 mask flag mismatch'\\n\"\n",
+                "    \"for _m_k in ('Train', 'Eval'):\\n\"\n",
+                "    \"    for _l_k in ('batch_size_per_card', 'drop_last', 'shuffle', 'num_workers'):\\n\"\n",
+                "    \"        assert _l_k in _cfg[_m_k]['loader'], f'Missing {_m_k}.loader.{_l_k}'\\n\"\n",
+                f"    \"print('✅ V26 model & Train/Eval loader schema verified: use_valid_mask={bool(expect_valid_mask)}')\\n\"\n",
+            ] if expect_valid_mask is not None else []) + ([
+                "    \"assert 'stage_end_epoch' in open('/kaggle/working/PaddleOCR/tools/program.py', 'r', encoding='utf-8').read(), 'Missing stage_end_epoch hook in tools/program.py'\\n\"\n",
+                "    \"print('✅ Multi-stage stage_end_epoch hook verified in tools/program.py')\\n\"\n",
+            ] if spec.get("stage_end_epoch") is not None else []) + [
                 ")\n",
                 "with open('/kaggle/working/preflight_check.py', 'w', encoding='utf-8') as f:\n",
                 "    f.write(preflight_test_code)\n",
@@ -805,7 +1035,7 @@ def generate_kernel_files(b_key: str, output_dir: str):
     print(f"✅ Pre-Flight Static Scope & AST validation passed 100% for all cells in {spec['slug']}")
 
     meta = {
-        "id": f"gustavnguyen/{spec['slug']}",
+        "id": f"gustavnguyen/{_remote_slug(spec)}",
         "title": spec["title"],
         "code_file": nb_filename,
         "language": "python",
@@ -873,8 +1103,8 @@ def upload_training_assets(bundle_name: str = "r2_1_4c_training_bundle", target_
             st_str = f"processing ({e})"
         print(f"  [{ (i+1)*10 }s] Dataset status: {st_str}", flush=True)
         if "ready" in st_str:
-            print("Waiting 75s for Kaggle backend zip/mount propagation...", flush=True)
-            time.sleep(75)
+            print("Waiting 135s for Kaggle backend zip/mount propagation...", flush=True)
+            time.sleep(135)
             print("✅ Dataset is READY & PROPAGATED on Kaggle!", flush=True)
             return True
     raise RuntimeError(f"Dataset {target_slug} did not become ready within 600s!")
@@ -900,9 +1130,16 @@ def push_and_run_kernel(b_key: str):
     err_msg = getattr(res, "error", None)
     if err_msg:
         raise RuntimeError(f"Kaggle kernels_push returned error: {err_msg}")
-    pushed_ref = getattr(res, "ref", f"{u}/{spec['slug']}")
+    expected_remote_slug = _remote_slug(spec)
+    pushed_ref = getattr(res, "ref", None) or f"{u}/{expected_remote_slug}"
     print(f"✅ Kernel pushed successfully: {pushed_ref} (url: {getattr(res, 'url', 'N/A')})")
     assert f"/{u.lower()}/" in f"/{str(pushed_ref).lower()}", f"FATAL: Kernel pushed to wrong owner: {pushed_ref}"
+    actual_pushed_slug = str(pushed_ref).rstrip("/").split("/")[-1]
+    if actual_pushed_slug != expected_remote_slug:
+        raise RuntimeError(
+            f"Kaggle Clean URL resolved pushed slug to '{actual_pushed_slug}', expected '{expected_remote_slug}' "
+            f"(pushed_ref={pushed_ref}, title={spec['title']!r})"
+        )
 
 
 def monitor_kernel(b_key: str, poll_interval: int = 30, max_stall_seconds: int = None):
@@ -910,11 +1147,13 @@ def monitor_kernel(b_key: str, poll_interval: int = 30, max_stall_seconds: int =
     Monitor running kernel status with autonomous stall & deadlock detection.
     """
     u = init_kaggle_auth()
-    spec = BRANCH_SPECS[b_key]
-    kernel_ref = f"{u}/{spec['slug']}"
+    spec = _resolve_v26_spec(BRANCH_SPECS[b_key])
+    kernel_ref = f"{u}/{_remote_slug(spec)}"
 
-    total_steps = spec['epochs'] * spec['step_each_epoch']
-    est_train_seconds = int(total_steps * 2.0 + 300)
+    stage_epochs = spec.get('stage_epochs', spec['epochs'])
+    total_steps = stage_epochs * spec['step_each_epoch']
+    target_end_step = total_steps
+    est_train_seconds = int(stage_epochs * spec['step_each_epoch'] * 2.0 + 900)
     if max_stall_seconds is None:
         max_stall_seconds = max(1200, int(est_train_seconds * 1.5))
 
@@ -928,7 +1167,7 @@ def monitor_kernel(b_key: str, poll_interval: int = 30, max_stall_seconds: int =
 
     print("=" * 80)
     print(f"👀 MONITORING KERNEL: {kernel_ref}")
-    print(f"   Branch: {b_key} | Epochs: {spec['epochs']} | Steps: {total_steps} (Est: ~{est_train_seconds/60:.1f}m | Timeout: {max_stall_seconds/60:.1f}m)")
+    print(f"   Branch: {b_key} | Stage Epochs: {stage_epochs}/{spec['epochs']} | Target End Step: {target_end_step} (Est: ~{est_train_seconds/60:.1f}m | Timeout: {max_stall_seconds/60:.1f}m)")
     print("=" * 80, flush=True)
 
     start_time = time.time()
@@ -1017,10 +1256,10 @@ def monitor_kernel(b_key: str, poll_interval: int = 30, max_stall_seconds: int =
 
         # Step-progress stall & deadlock watchdog (armed only once training steps are visible,
         # so environment setup / data unpacking does not trigger false alarms).
-        if status == "running" and last_step_time is not None and last_step < total_steps:
+        if status == "running" and last_step_time is not None and last_step < target_end_step:
             stall_s = time.time() - last_step_time
             if stall_s >= 600:
-                print(f"\n🛑 DEADLOCK: no new global_step for {stall_s:.0f}s (last step {last_step}/{total_steps}). Aborting.", flush=True)
+                print(f"\n🛑 DEADLOCK: no new global_step for {stall_s:.0f}s (last step {last_step}/{target_end_step}). Aborting.", flush=True)
                 cancel_fn = getattr(api, "kernels_cancel", None) or getattr(api, "kernel_cancel", None)
                 if cancel_fn is not None:
                     try:
@@ -1030,24 +1269,49 @@ def monitor_kernel(b_key: str, poll_interval: int = 30, max_stall_seconds: int =
                         print(f"   Cancel request failed ({e}); cancel manually on kaggle.com.", flush=True)
                 else:
                     print("   Kaggle API has no cancel method; cancel manually on kaggle.com.", flush=True)
-                raise TimeoutError(f"Kernel {kernel_ref} stalled {stall_s:.0f}s at step {last_step}/{total_steps} (is_stalled=true)")
+                raise TimeoutError(f"Kernel {kernel_ref} stalled {stall_s:.0f}s at step {last_step}/{target_end_step} (is_stalled=true)")
             elif stall_s >= 300 and not stall_warned:
-                print(f"\n⚠️  STALL WARNING (is_stalled=true): no new global_step for {stall_s:.0f}s (last step {last_step}/{total_steps}).", flush=True)
+                print(f"\n⚠️  STALL WARNING (is_stalled=true): no new global_step for {stall_s:.0f}s (last step {last_step}/{target_end_step}).", flush=True)
                 stall_warned = True
 
         # Periodic heartbeat
-        if status == "running" and (now - last_heartbeat >= 60):
+        if status in ("running", "queued") and (now - last_heartbeat >= 60):
             print(f"[{elapsed:.0f}s | {elapsed/60:.1f}m] Status: {raw_status} (Est total: ~{est_train_seconds/60:.1f}m)", flush=True)
             last_heartbeat = now
 
         time.sleep(poll_interval)
 
 
+def _verify_ckpt_zip_against_manifest(zip_path: str, manifest_path: str) -> bool:
+    """Return True iff zip_path passes ZIP CRC test and matches all manifest SHA-256s."""
+    if not (os.path.exists(zip_path) and os.path.exists(manifest_path)):
+        return False
+    try:
+        manifest = json.load(open(manifest_path, "r", encoding="utf-8"))
+        if not isinstance(manifest, dict) or not manifest:
+            return False
+        if not zipfile.is_zipfile(zip_path):
+            return False
+        with zipfile.ZipFile(zip_path, "r") as z:
+            if z.testzip() is not None:
+                return False
+            for member, expected_sha in manifest.items():
+                actual_sha = hashlib.sha256(z.read(member)).hexdigest().lower()
+                if actual_sha != str(expected_sha).lower():
+                    return False
+        return True
+    except Exception:
+        return False
+
+
 def download_artifacts(b_key: str):
-    """Download checkpoints and inference outputs from Kaggle."""
+    """Download essential Kaggle checkpoints + log via filtered 4 MB chunked streaming."""
     init_kaggle_auth()
     spec = BRANCH_SPECS[b_key]
-    kernel_ref = f"gustavnguyen/{spec['slug']}"
+    slug = spec["slug"]
+    remote_slug = _remote_slug(spec)
+    kernel_ref = f"gustavnguyen/{remote_slug}"
+    kernel_url = f"https://www.kaggle.com/code/{kernel_ref}"
     dl_dir = os.path.join(PROJECT_ROOT, "ocr-training", "output", f"r2_1_4c_{b_key}_kaggle_output")
     os.makedirs(dl_dir, exist_ok=True)
 
@@ -1056,43 +1320,198 @@ def download_artifacts(b_key: str):
     print("=" * 80)
 
     import socket
-    socket.setdefaulttimeout(60)
+    import requests
     from kaggle.api.kaggle_api_extended import KaggleApi
+    from kagglesdk.kernels.types.kernels_api_service import ApiListKernelSessionOutputRequest
+
+    socket.setdefaulttimeout(45)
     api = KaggleApi()
     api.authenticate()
 
-    max_retries = 5
-    for attempt in range(1, max_retries + 1):
+    keep_re = re.compile(r"^(checkpoints_.*\.zip|checkpoint_manifest_.*\.json|[^/\\]+\.log)$")
+    items = []
+    log_saved = False
+    log_out = os.path.join(dl_dir, f"{slug}.log")
+
+    try:
+        with api.build_kaggle_client() as kaggle:
+            client = kaggle.kernels.kernels_api_client
+            token = None
+            while True:
+                req = ApiListKernelSessionOutputRequest()
+                req.user_name = "gustavnguyen"
+                req.kernel_slug = remote_slug
+                req.page_size = 100
+                if token:
+                    req.page_token = token
+                resp = client.list_kernel_session_output(req)
+                log_blob = getattr(resp, "log", None)
+                if log_blob and (not log_saved or not os.path.exists(log_out) or os.path.getsize(log_out) == 0):
+                    with open(log_out, "w", encoding="utf-8", newline="\n") as lf:
+                        lf.write(str(log_blob))
+                    log_saved = True
+                    print(f"  ✅ Saved kernel log -> {slug}.log ({os.path.getsize(log_out):,} bytes)", flush=True)
+                for item in (resp.files or []):
+                    fn = str(getattr(item, "file_name", "") or "").replace("\\", "/")
+                    if keep_re.match(fn):
+                        items.append(item)
+                token = getattr(resp, "next_page_token", None) or None
+                if not token:
+                    break
+    except Exception as exc:
+        print(f"❌ Kaggle output listing failed on single API attempt: {exc}", flush=True)
+        print(f"BROWSER_FALLBACK_REQUIRED: {kernel_url}", flush=True)
+        raise RuntimeError("BROWSER_FALLBACK_REQUIRED") from exc
+
+    # Ensure checkpoint_manifest_*.json is downloaded before checkpoints_*.zip
+    items.sort(key=lambda it: (0 if str(it.file_name).endswith(".json") else 1, str(it.file_name)))
+    manifest_path = os.path.join(dl_dir, f"checkpoint_manifest_{slug}.json")
+
+    for item in items:
+        fn = os.path.basename(str(item.file_name).replace("\\", "/"))
+        outfile = os.path.join(dl_dir, fn)
+
+        if fn.startswith("checkpoints_") and fn.endswith(".zip"):
+            if _verify_ckpt_zip_against_manifest(outfile, manifest_path):
+                print(f"  ⏩ Skipping {fn} (existing archive verified against manifest: {os.path.getsize(outfile):,} bytes)", flush=True)
+                continue
+        elif fn.endswith(".log") and os.path.exists(outfile) and os.path.getsize(outfile) > 0:
+            print(f"  ⏩ Skipping {fn} (already exists: {os.path.getsize(outfile):,} bytes)", flush=True)
+            continue
+
+        part_file = outfile + ".part"
         try:
-            print(f"[Attempt {attempt}/{max_retries}] Downloading kernel output for {kernel_ref}...")
-            api.kernels_output(kernel_ref, path=dl_dir)
-            print("✅ Artifact download complete! Files downloaded:")
-            break
-        except Exception as e:
-            print(f"⚠️ Download attempt {attempt} failed: {e}")
-            if attempt < max_retries:
-                wait_s = attempt * 5
-                print(f"Retrying in {wait_s}s...")
-                time.sleep(wait_s)
-            else:
-                raise
-    for f in os.listdir(dl_dir):
+            print(f"  ⬇️ [Attempt 1/1] Chunked streaming {fn} (4 MB chunks, timeout=(20, 45))...", flush=True)
+            total = 0
+            with requests.get(item.url, stream=True, timeout=(20, 45)) as dl_resp:
+                dl_resp.raise_for_status()
+                with open(part_file, "wb") as out:
+                    for chunk in dl_resp.iter_content(chunk_size=4 * 1024 * 1024):
+                        if chunk:
+                            out.write(chunk)
+                            total += len(chunk)
+            if fn.startswith("checkpoints_") and fn.endswith(".zip") and os.path.exists(manifest_path):
+                if not _verify_ckpt_zip_against_manifest(part_file, manifest_path):
+                    raise RuntimeError(f"Downloaded zip {fn} failed CRC/SHA-256 verification against manifest")
+            os.replace(part_file, outfile)
+            print(f"  ✅ Downloaded {fn} ({total:,} bytes)", flush=True)
+        except Exception as exc:
+            if os.path.exists(part_file):
+                try:
+                    os.remove(part_file)
+                except Exception:
+                    pass
+            print(f"❌ Single API download attempt failed for {fn}: {exc}", flush=True)
+            print(f"BROWSER_FALLBACK_REQUIRED: {kernel_url}", flush=True)
+            raise RuntimeError("BROWSER_FALLBACK_REQUIRED") from exc
+
+    # Unpack verified checkpoint defense zip -> extracted_checkpoints/ and remove redundant output/
+    ckpt_zips = [f for f in os.listdir(dl_dir) if f.startswith("checkpoints_") and f.endswith(".zip")]
+    if not ckpt_zips:
+        print(f"❌ Missing checkpoints_*.zip for {kernel_ref}", flush=True)
+        print(f"BROWSER_FALLBACK_REQUIRED: {kernel_url}", flush=True)
+        raise RuntimeError("BROWSER_FALLBACK_REQUIRED")
+
+    czip = os.path.join(dl_dir, ckpt_zips[0])
+    if os.path.exists(manifest_path) and not _verify_ckpt_zip_against_manifest(czip, manifest_path):
+        print(f"❌ Archive {czip} failed manifest SHA-256 verification", flush=True)
+        print(f"BROWSER_FALLBACK_REQUIRED: {kernel_url}", flush=True)
+        raise RuntimeError("BROWSER_FALLBACK_REQUIRED")
+
+    extracted_ckpt_dir = os.path.join(dl_dir, "extracted_checkpoints")
+    os.makedirs(extracted_ckpt_dir, exist_ok=True)
+    print(f"Unpacking verified archive {czip} -> {extracted_ckpt_dir}...", flush=True)
+    with zipfile.ZipFile(czip, "r") as z:
+        z.extractall(extracted_ckpt_dir)
+
+    # Verify extracted .pdparams on disk against manifest
+    if os.path.exists(manifest_path):
+        manifest = json.load(open(manifest_path, "r", encoding="utf-8"))
+        for member, exp_sha in manifest.items():
+            ext_p = os.path.join(extracted_ckpt_dir, member)
+            assert os.path.exists(ext_p), f"Missing extracted file: {ext_p}"
+            act_sha = hashlib.sha256(open(ext_p, "rb").read()).hexdigest().lower()
+            assert act_sha == str(exp_sha).lower(), f"Extracted SHA-256 mismatch for {member}"
+        print(f"✅ Verified {len(manifest)}/{len(manifest)} extracted checkpoint SHA-256 hashes!", flush=True)
+
+    # Clean up partial redundant uncompressed output/ directory if created by earlier downloads
+    redundant_out = os.path.join(dl_dir, "output")
+    if os.path.isdir(redundant_out):
+        shutil.rmtree(redundant_out, ignore_errors=True)
+        print(f"🧹 Removed redundant uncompressed directory: {redundant_out}", flush=True)
+
+    for f in sorted(os.listdir(dl_dir)):
         fp = os.path.join(dl_dir, f)
         if os.path.isfile(fp):
-            print(f"  • {f} ({os.path.getsize(fp):,} bytes)")
+            print(f"  • {f} ({os.path.getsize(fp):,} bytes)", flush=True)
         elif os.path.isdir(fp):
-            print(f"  📁 {f}/")
+            print(f"  📁 {f}/", flush=True)
+    return dl_dir
 
-    # Unpack checkpoint defense zip if present
-    ckpt_zips = [f for f in os.listdir(dl_dir) if f.startswith("checkpoints_") and f.endswith(".zip")]
-    if ckpt_zips:
-        czip = os.path.join(dl_dir, ckpt_zips[0])
-        extracted_ckpt_dir = os.path.join(dl_dir, "extracted_checkpoints")
-        os.makedirs(extracted_ckpt_dir, exist_ok=True)
-        print(f"Unpacking checkpoint archive {czip} -> {extracted_ckpt_dir}...")
-        with zipfile.ZipFile(czip) as z:
-            z.extractall(extracted_ckpt_dir)
-        print("✅ Checkpoint defense archive extracted successfully!")
+
+def ingest_browser_download(b_key: str, browser_zip: str, browser_log: str = None):
+    """Ingest Kaggle browser-downloaded `results.zip` + `download.txt` into dl_dir and verify SHA-256."""
+    spec = BRANCH_SPECS[b_key]
+    slug = spec["slug"]
+    dl_dir = os.path.join(PROJECT_ROOT, "ocr-training", "output", f"r2_1_4c_{b_key}_kaggle_output")
+    os.makedirs(dl_dir, exist_ok=True)
+    extracted_ckpt_dir = os.path.join(dl_dir, "extracted_checkpoints")
+    os.makedirs(extracted_ckpt_dir, exist_ok=True)
+
+    assert os.path.exists(browser_zip) and zipfile.is_zipfile(browser_zip), f"Invalid browser zip: {browser_zip}"
+    manifest_name = f"checkpoint_manifest_{slug}.json"
+    ckpt_zip_name = f"checkpoints_{slug}.zip"
+    manifest_dst = os.path.join(dl_dir, manifest_name)
+    ckpt_zip_dst = os.path.join(dl_dir, ckpt_zip_name)
+
+    with zipfile.ZipFile(browser_zip, "r") as bz:
+        names = [n.replace("\\", "/") for n in bz.namelist()]
+        for n in names:
+            bn = os.path.basename(n)
+            if bn == manifest_name:
+                with open(manifest_dst, "wb") as mf:
+                    mf.write(bz.read(n))
+            elif bn == ckpt_zip_name:
+                with open(ckpt_zip_dst, "wb") as cf:
+                    cf.write(bz.read(n))
+
+        if os.path.exists(ckpt_zip_dst):
+            if os.path.exists(manifest_dst):
+                assert _verify_ckpt_zip_against_manifest(ckpt_zip_dst, manifest_dst), f"Browser inner zip failed manifest check: {ckpt_zip_dst}"
+            with zipfile.ZipFile(ckpt_zip_dst, "r") as cz:
+                cz.extractall(extracted_ckpt_dir)
+        else:
+            # Extract flat/nested checkpoint dir files (iter_epoch_*, latest.*, train.log, config.yml)
+            sub_prefix = f"output/{spec['output_subpath']}/"
+            for n in names:
+                if n.endswith("/"):
+                    continue
+                if n.startswith(sub_prefix):
+                    rel = n[len(sub_prefix):]
+                elif "/" not in n and (n.endswith((".pdparams", ".pdopt", ".states", ".yml")) or n == "train.log"):
+                    rel = n
+                else:
+                    continue
+                out_p = os.path.join(extracted_ckpt_dir, rel)
+                os.makedirs(os.path.dirname(out_p), exist_ok=True)
+                with open(out_p, "wb") as of:
+                    of.write(bz.read(n))
+
+    if os.path.exists(manifest_dst):
+        manifest = json.load(open(manifest_dst, "r", encoding="utf-8"))
+        for member, exp_sha in manifest.items():
+            ext_p = os.path.join(extracted_ckpt_dir, member)
+            assert os.path.exists(ext_p), f"Missing extracted file from browser zip: {ext_p}"
+            act_sha = hashlib.sha256(open(ext_p, "rb").read()).hexdigest().lower()
+            assert act_sha == str(exp_sha).lower(), f"Browser extracted SHA-256 mismatch for {member}"
+        print(f"✅ Browser download verified {len(manifest)}/{len(manifest)} checkpoint SHA-256 hashes!", flush=True)
+
+    if browser_log and os.path.exists(browser_log) and os.path.getsize(browser_log) > 0:
+        log_dst = os.path.join(dl_dir, f"{slug}.log")
+        raw_bytes = open(browser_log, "rb").read().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+        with open(log_dst, "wb") as lf:
+            lf.write(raw_bytes)
+        print(f"✅ Saved browser kernel log -> {log_dst} ({os.path.getsize(log_dst):,} bytes)", flush=True)
     return dl_dir
 
 
@@ -1104,6 +1523,9 @@ def main():
     parser.add_argument("--push-kernel", choices=list(BRANCH_SPECS.keys()), help="Push kernel to Kaggle")
     parser.add_argument("--monitor", choices=list(BRANCH_SPECS.keys()), help="Monitor running kernel on Kaggle")
     parser.add_argument("--download", choices=list(BRANCH_SPECS.keys()), help="Download artifacts from Kaggle")
+    parser.add_argument("--ingest-browser-download", choices=list(BRANCH_SPECS.keys()), help="Verify & unpack browser results.zip for branch")
+    parser.add_argument("--browser-zip", help="Path to Kaggle browser-downloaded results.zip")
+    parser.add_argument("--browser-log", help="Optional path to Kaggle browser-downloaded download.txt kernel log")
     parser.add_argument("--run-branch-a", action="store_true", help="Run Branch A (CONTROL-CONTINUE) end-to-end")
     parser.add_argument("--run-branch-b", action="store_true", help="Run Branch B (COMBMARK-REPLAY) end-to-end")
     parser.add_argument("--run-branch-d", action="store_true", help="Run Branch D (PHONOTACTIC-COMBMARK) end-to-end")
@@ -1116,6 +1538,8 @@ def main():
     parser.add_argument("--run-r4", action="store_true", help="Run Stage R4 (WIDE-CANVAS W=480) end-to-end")
     parser.add_argument("--run-r4-1", action="store_true", help="Run Stage R4.1 (GATE-POLISH W=480) end-to-end")
     parser.add_argument("--run-r4-2", action="store_true", help="Run Stage R4.2 (INKTIGHT-CLOSURE W=480) end-to-end")
+    parser.add_argument("--run-v26-masked", action="store_true", help="Run V26 masked-SVTR fine-tune end-to-end")
+    parser.add_argument("--run-v26-control", action="store_true", help="Run V26 unmasked control fine-tune end-to-end")
     args = parser.parse_args()
 
     if args.upload_assets:
@@ -1131,6 +1555,10 @@ def main():
         monitor_kernel(args.monitor)
     elif args.download:
         download_artifacts(args.download)
+    elif args.ingest_browser_download:
+        if not args.browser_zip:
+            parser.error("--browser-zip is required with --ingest-browser-download")
+        ingest_browser_download(args.ingest_browser_download, args.browser_zip, args.browser_log)
     elif args.run_branch_a:
         print("\n🚀 EXECUTING BRANCH A (R2.1.4C-CONTROL-CONTINUE) END-TO-END...")
         push_and_run_kernel("control_continue")
@@ -1191,6 +1619,16 @@ def main():
         push_and_run_kernel("stage_r4_2_inktight")
         monitor_kernel("stage_r4_2_inktight")
         download_artifacts("stage_r4_2_inktight")
+    elif args.run_v26_masked:
+        print("\n🚀 EXECUTING V26 MASKED-SVTR FINE-TUNE (W=480) END-TO-END...")
+        push_and_run_kernel("v26_masked_ft")
+        monitor_kernel("v26_masked_ft")
+        download_artifacts("v26_masked_ft")
+    elif args.run_v26_control:
+        print("\n🚀 EXECUTING V26 UNMASKED CONTROL FINE-TUNE (W=480) END-TO-END...")
+        push_and_run_kernel("v26_control_ft")
+        monitor_kernel("v26_control_ft")
+        download_artifacts("v26_control_ft")
     else:
         parser.print_help()
 

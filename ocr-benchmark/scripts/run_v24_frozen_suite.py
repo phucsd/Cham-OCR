@@ -626,7 +626,7 @@ def apply_stress_condition(img, name, param):
 
     return img
 
-def compute_polygon_iou(poly1_pts, poly2_pts):
+def _raw_polygon_iou(poly1_pts, poly2_pts):
     """Computes exact Intersection-over-Union between two 2D polygons using Shapely with bbox fallback."""
     try:
         from shapely.geometry import Polygon
@@ -654,6 +654,15 @@ def compute_polygon_iou(poly1_pts, poly2_pts):
         area2 = (x2_max - x2_min) * (y2_max - y2_min)
         union = area1 + area2 - inter
         return float(inter / max(union, 1e-6))
+
+def compute_polygon_iou(poly1_pts, poly2_pts):
+    """Computes IoU; when a 4-vertex AABB/quad GT is matched against a curved >4-vertex polygon,
+    also takes the IoU of the detected polygon's minAreaRect so wavy GT quads still align cleanly."""
+    raw_iou = _raw_polygon_iou(poly1_pts, poly2_pts)
+    if len(poly1_pts) == 4 and len(poly2_pts) > 4:
+        rect_pts = cv2.boxPoints(cv2.minAreaRect(np.asarray(poly2_pts, dtype=np.float32))).tolist()
+        return max(raw_iou, _raw_polygon_iou(poly1_pts, rect_pts))
+    return raw_iou
 
 def match_polygons_bipartite(gt_polys, det_polys, iou_threshold=0.40):
     """

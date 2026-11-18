@@ -20,6 +20,7 @@ from ppocr.modeling.transforms import build_transform
 from ppocr.modeling.backbones import build_backbone
 from ppocr.modeling.necks import build_neck
 from ppocr.modeling.heads import build_head
+from ppocr.modeling.necks.rnn import compute_valid_columns, valid_columns_to_tokens
 
 __all__ = ['BaseModel']
 
@@ -52,6 +53,9 @@ class BaseModel(nn.Layer):
         else:
             self.use_backbone = True
             config["Backbone"]['in_channels'] = in_channels
+            if config.get("use_valid_mask", False) and config["Backbone"].get("name") == "PPLCNetV3":
+                # Cham-OCR V26: padding-aware SE pooling in the rec backbone
+                config["Backbone"]["use_valid_mask"] = True
             self.backbone = build_backbone(config["Backbone"], model_type)
             in_channels = self.backbone.out_channels
 
@@ -76,10 +80,17 @@ class BaseModel(nn.Layer):
             self.head = build_head(config["Head"])
 
         self.return_all_feats = config.get("return_all_feats", False)
+        # Cham-OCR V26 (opt-in, default off): key-padding mask for SVTR global attention.
+        # Zero-padded image columns (RecResizeImg / predict_rec pad with exact 0.0 after
+        # normalisation, which no real uint8 pixel can produce) are excluded as attention keys.
+        self.use_valid_mask = bool(config.get("use_valid_mask", False))
 
     def forward(self, x, data=None):
 
         y = dict()
+        valid_cols = None
+        if self.use_valid_mask:
+            valid_cols = compute_valid_columns(x)
         if self.use_transform:
             x = self.transform(x)
         if self.use_backbone:
@@ -97,7 +108,10 @@ class BaseModel(nn.Layer):
                 y["neck_out"] = x
             final_name = "neck_out"
         if self.use_head:
-            x = self.head(x, targets=data)
+            if valid_cols is not None:
+                x = self.head(x, targets=data, valid_mask=valid_columns_to_tokens(valid_cols, x))
+            else:
+                x = self.head(x, targets=data)
             # for multi head, save ctc neck out for udml
             if isinstance(x, dict) and 'ctc_neck' in x.keys():
                 y["neck_out"] = x["ctc_neck"]

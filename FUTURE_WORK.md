@@ -100,26 +100,25 @@ To preserve scientific reproducibility and execution determinism, the entire V25
 
 ---
 
-## 4. Completed Architectural Milestones (V24.1 Pure-Cham Lineage & Cham-DBNet Audits, Nov 2026)
+## 4. Completed Architectural Milestones (V24.1, Cham-DBNet Poly & V26 Milestones, Nov 2026)
 
-Following the 40-epoch V25 training milestone (`90.96%` Sequence Accuracy, `0.72%` CER on `cham_v25_val_freeze.zip`), a parallel vocabulary-isolated pure-Cham production track (**`V24.1`: `R2.1.6 -> R3 -> R3.1 (W=320) -> R4 / R4.1 WiSE-FT (W=480, T=60)`**, `114` tokens paired with `AutoRoutingOCRWrapper` for Vietnamese code-switching) was executed and deployed to `https://ocr.cham.asia`:
+Following the 40-epoch V25 training milestone (`90.96%` Sequence Accuracy, `0.72%` CER on `cham_v25_val_freeze.zip`), a parallel vocabulary-isolated pure-Cham production track (**`V24.1`: `R2.1.6 -> R3 -> R3.1 (W=320) -> R4 / R4.1 WiSE-FT (W=480, T=60)`**, `114` tokens paired with `AutoRoutingOCRWrapper` for Vietnamese code-switching) and next-generation detector/recognizer upgrades were executed:
 
 1. **HarfBuzz OpenType Shaping Parity (`uharfbuzz` + `freetype`)**: Eliminated PIL `ImageDraw.text` pre-vowel / subjoined medial positioning discrepancies (`U+AA2F/AA30`, `U+AA33..AA36`) and verified OpenType contextual glyph substitutions (`hyphen.cham` `gid=10` vs `hyphen` `gid=118`).
 2. **`PPLCNetV3` Dynamic Width Pooling Fix (`rec_lcnetv3.py`)**: Replaced hardcoded `F.adaptive_avg_pool2d(x, [1, 40])` with `F.adaptive_avg_pool2d(x, [1, int(x.shape[3]) // 2])`, restoring exact train-eval temporal stride parity ($T = W / 8 = 60$ at $W = 480$) and cutting real camera line CER on `harum_palei_01` by `-44.8%` (`4.62% -> 2.55%`).
 3. **`DBNet` `MakeShrinkMap` `seed=1024` Bug Fix & Detached Diacritic Fragment Suppression**: Resolved the silent zero-GT bug where `build_dataloader(..., seed=1024)` overwrote `kwargs['epoch'] = 1024 > total_epoch`, and added geometric micro-diacritic speck suppression in `merge_line_boxes` (`100.0%` line recall across both `harum_palei_01` `25/25` and `RealScan-Gold v2` `180/180` OOD archival lines).
 4. **Post-Hoc Logit Temperature Scaling ($T^*$) & Active Learning Pipeline**: Calibrated `confidence_temperature` on held-out `Probe-100` (`calibrated_confidence` in `/ocr`), hardened `/save_correction` (`normalize_unicode` + lossless PNG crops + JSONL ledger), and shipped `export_active_learning_r4.py` and `scripts/ingest_studio_to_realscan_gold.py`.
 5. **`RealScan-Gold v1 & v2` (`212` Uncontaminated Lines)**: Established SHA-256-locked cross-domain benchmarks spanning authentic camera poetry (`harum_palei_01`), public-domain Wikimedia specimens, and 12 OOD archival pages rendered exclusively with unseen EFEO and held-out typefaces (`efeo_palm_leaf_agal`, `efeo_regional_folio`, `heldout_camera_book`).
+6. **`Cham-DBNet` Polygon Extraction & Centerline Ribbon Rectification (`v1_poly_u1.8`, Deployed Live on `https://ocr.cham.asia`)**: Replaced `box_type='quad'` with native `DBPostProcess(box_type='poly')` (`unclip=1.8`), `merge_line_polygons`, and `rectify_polygon_line` (`vpad=0.15`, neighboring-polygon masking), raising `FullPage-Frozen 50` recall from `95.40% -> 99.58%` (**Level-5 recall `77.27% -> 100.00%`**) and halving E2E CER (`14.43% -> 7.99%`), verified live (`audit_18`: `10.16%` Doc CER, `harum_palei_01`: `3.43%` Doc CER, Commit `e46e8328`).
+7. **`V26` Padding-Masked SVTR (`use_valid_mask=True`, Phase A Causal Ablation & Phase B 30-Epoch `V26-Full`)**: Implemented zero-parameter key-padding masks inside `SVTRNet` + valid-width `SELayer` pooling, confirmed causal Stress-82/Harum gain in a 6-epoch controlled ablation, and trained `V26-Full` (`64,000` train / `6,400` val) for 30 unfrozen epochs (`26,514.0s` Train Loop across 3 Kaggle Dual T4x2 stages). All 9 checkpoints + Stage-3 soups passed **`6/6` Frozen-838 Release Gates** (`100.0%` symbols, `97.14%–100.0%` hyphens, `S3 E25` `1.42%` Char CER, `E26` `2.41%` Stress-82 / `1.46%` Harum CER, `24.96%` OOD-12 E2E Doc CER); held in staging (`promoted=False`) under strict zero-relaxation gate integrity because `efeo_regional_folio` crop CER shifted (`43.0% -> 47.77%`), while an in-basin WiSE-FT sweep back toward 6-epoch `V26-Masked` revealed a `4/6` inter-basin barrier across 30k unfrozen steps.
 
 ---
 
-## 5. Next-Generation Open Research Roadmap (V26 & Cham-DBNet v3)
+## 5. Next-Generation Open Research Roadmap (`Cham-DBNet v3` & `V26.1`)
 
-1. **Polygonal Bezier/TPS Curved Baseline Rectification (`Cham-DBNet v3`, `box_type='poly'`)**:
-   - Head-to-head experiments with `Cham-DBNet v2.1` (`100.00%` H-Mean on `Val-120`, `99.77%` H-Mean / `100.0%` Precision on 16-vertex curved `Val-160`) demonstrated that `DBPostProcess` with rigid 4-point `cv2.minAreaRect` (`box_type='quad'`) inflates bounding-box height (`tallest box/glyph > 5.0`) when sinusoidal wave amplitude exceeds interline gap ($\text{Amplitude} > \text{Gap}$ on `Level-5`). Switching inference from `quad` to `poly` contour extraction followed by Thin-Plate Spline (TPS) de-warping before SVTR recognition is the principled geometric solution.
-2. **Padding-Masked SVTR Self-Attention for Variable-Aspect Crops**:
-   - Wide-canvas `W = 480` (`T = 60`) eliminates horizontal compression on full manuscript lines (`> 320px`) but leaves `65%–80%` zero-padded frames on ultra-short crops (`< 160px`). Introducing an explicit `valid_ratio` attention mask inside `SVTR` global mixer blocks will unify short-crop punctuation sharpness and full-line stanza capacity within a single `W = 480` network.
-3. **Field Manuscript Active-Learning Expansion (`RealScan-Gold v3`)**:
-   - Partner with Cham scholars and community custodians to ingest verified palm-leaf (*agal*) and bark-paper (*kertas*) folios exported from `https://ocr.cham.asia` via `scripts/ingest_studio_to_realscan_gold.py`, closing the `~42%` paleographic domain gap observed on unseen historical regional hands (`efeo_regional_folio`).
+1. **Jointly Fine-Tuned Curved Polygon Detector (`Cham-DBNet v3`)**: Fine-tune DBNet head representations directly for 16-vertex curved ribbon boundaries to further lower `audit_18` (`10.14%`) beyond inference-time `v1_poly_u1.8`.
+2. **OOD Regional Paleographic Regularization (`V26.1` Masked-SVTR)**: Combine `V26-Full`'s `6/6`-Gate padding-masked `W=480` architecture with regional calligraphic variation and early-backbone regularization so `OOD-180` Crop CER drops below `26.35%` without sacrificing `1.42%` Char / `2.41%` Stress / `1.46%` Harum performance.
+3. **Field Manuscript Active-Learning Expansion (`RealScan-Gold v3`)**: Partner with Cham scholars and community custodians to ingest verified palm-leaf (*agal*) and bark-paper (*kertas*) folios exported from `https://ocr.cham.asia` via `scripts/ingest_studio_to_realscan_gold.py`, closing the ~43%–44% paleographic domain gap observed on unseen historical regional hands (`efeo_regional_folio`).
 
 ---
 

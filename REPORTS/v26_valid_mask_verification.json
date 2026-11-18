@@ -1,0 +1,436 @@
+{
+  "title": "Cham-OCR V26 SVTR key-padding mask verification",
+  "verified_at": "2026-11-18T01:35:32.792801+00:00",
+  "paddle_version": "2.6.2",
+  "checkpoint": "ocr-training/output/r4_1_wise83_ckpt/best.pdparams",
+  "max_masked_padding_sensitivity": 1.0132789611816406e-06,
+  "max_unmasked_padding_sensitivity": 0.6002035140991211,
+  "max_mask_vs_nomask_delta_w480": 0.9068438410758972,
+  "max_static_dygraph_abs_diff": 1.2218952178955078e-06,
+  "checks": {
+    "weights_load_no_missing_keys": true,
+    "masked_padding_invariance": true,
+    "unmasked_is_padding_sensitive": true,
+    "static_export_ok": true,
+    "static_dygraph_parity": true
+  },
+  "all_passed": true,
+  "per_crop": [
+    {
+      "crop": "ocr-benchmark/data/frozen_suite/crops/hyphen_lines/hyphen_020.png",
+      "resized_w": 58,
+      "valid_tokens": 8,
+      "canvases": [
+        480,
+        960
+      ],
+      "masked_padding_sensitivity": 0.0,
+      "unmasked_padding_sensitivity": 0.20681,
+      "mask_vs_nomask_delta_w480": 0.692936
+    },
+    {
+      "crop": "ocr-benchmark/data/frozen_suite/crops/hyphen_lines/hyphen_025.png",
+      "resized_w": 58,
+      "valid_tokens": 8,
+      "canvases": [
+        480,
+        960
+      ],
+      "masked_padding_sensitivity": 0.0,
+      "unmasked_padding_sensitivity": 0.518544,
+      "mask_vs_nomask_delta_w480": 0.847596
+    },
+    {
+      "crop": "ocr-benchmark/data/frozen_suite/crops/hyphen_lines/hyphen_028.png",
+      "resized_w": 58,
+      "valid_tokens": 8,
+      "canvases": [
+        480,
+        960
+      ],
+      "masked_padding_sensitivity": 0.0,
+      "unmasked_padding_sensitivity": 0.3328,
+      "mask_vs_nomask_delta_w480": 0.862898
+    },
+    {
+      "crop": "ocr-benchmark/data/frozen_suite/crops/character_lines/char_098.png",
+      "resized_w": 68,
+      "valid_tokens": 9,
+      "canvases": [
+        480,
+        960
+      ],
+      "masked_padding_sensitivity": 0.0,
+      "unmasked_padding_sensitivity": 0.376295,
+      "mask_vs_nomask_delta_w480": 0.432159
+    },
+    {
+      "crop": "ocr-benchmark/data/frozen_suite/crops/character_lines/char_111.png",
+      "resized_w": 69,
+      "valid_tokens": 9,
+      "canvases": [
+        480,
+        960
+      ],
+      "masked_padding_sensitivity": 1e-06,
+      "unmasked_padding_sensitivity": 0.152197,
+      "mask_vs_nomask_delta_w480": 0.834387
+    },
+    {
+      "crop": "ocr-benchmark/data/frozen_suite/crops/hyphen_lines/hyphen_022.png",
+      "resized_w": 69,
+      "valid_tokens": 9,
+      "canvases": [
+        480,
+        960
+      ],
+      "masked_padding_sensitivity": 0.0,
+      "unmasked_padding_sensitivity": 0.165805,
+      "mask_vs_nomask_delta_w480": 0.8099
+    },
+    {
+      "crop": "ocr-benchmark/data/frozen_suite/crops/clean_lines/clean_146.png",
+      "resized_w": 480,
+      "valid_tokens": 60,
+      "canvases": [
+        960,
+        1440
+      ],
+      "masked_padding_sensitivity": 1e-06,
+      "unmasked_padding_sensitivity": 0.497329,
+      "mask_vs_nomask_delta_w480": 0.906844
+    },
+    {
+      "crop": "ocr-benchmark/data/frozen_suite/crops/clean_lines/clean_042.png",
+      "resized_w": 480,
+      "valid_tokens": 60,
+      "canvases": [
+        960,
+        1440
+      ],
+      "masked_padding_sensitivity": 0.0,
+      "unmasked_padding_sensitivity": 0.586996,
+      "mask_vs_nomask_delta_w480": 0.613499
+    },
+    {
+      "crop": "ocr-benchmark/data/frozen_suite/crops/clean_lines/clean_131.png",
+      "resized_w": 480,
+      "valid_tokens": 60,
+      "canvases": [
+        960,
+        1440
+      ],
+      "masked_padding_sensitivity": 0.0,
+      "unmasked_padding_sensitivity": 0.600204,
+      "mask_vs_nomask_delta_w480": 0.615188
+    },
+    {
+      "crop": "ocr-benchmark/data/frozen_suite/crops/clean_lines/clean_124.png",
+      "resized_w": 480,
+      "valid_tokens": 60,
+      "canvases": [
+        960,
+        1440
+      ],
+      "masked_padding_sensitivity": 0.0,
+      "unmasked_padding_sensitivity": 0.431683,
+      "mask_vs_nomask_delta_w480": 0.849597
+    },
+    {
+      "crop": "ocr-benchmark/data/frozen_suite/crops/clean_lines/clean_125.png",
+      "resized_w": 480,
+      "valid_tokens": 60,
+      "canvases": [
+        960,
+        1440
+      ],
+      "masked_padding_sensitivity": 0.0,
+      "unmasked_padding_sensitivity": 0.204786,
+      "mask_vs_nomask_delta_w480": 0.751207
+    },
+    {
+      "crop": "ocr-benchmark/data/frozen_suite/crops/clean_lines/clean_129.png",
+      "resized_w": 480,
+      "valid_tokens": 60,
+      "canvases": [
+        960,
+        1440
+      ],
+      "masked_padding_sensitivity": 0.0,
+      "unmasked_padding_sensitivity": 0.324612,
+      "mask_vs_nomask_delta_w480": 0.65902
+    }
+  ],
+  "static_runs": [
+    {
+      "crop": "hyphen_020.png",
+      "canvas_w": 480,
+      "static_shape": [
+        1,
+        60,
+        116
+      ],
+      "dygraph_shape": [
+        1,
+        60,
+        116
+      ],
+      "max_abs_diff": 2.384185791015625e-07
+    },
+    {
+      "crop": "hyphen_020.png",
+      "canvas_w": 487,
+      "static_shape": [
+        1,
+        61,
+        116
+      ],
+      "dygraph_shape": [
+        1,
+        61,
+        116
+      ],
+      "max_abs_diff": 2.384185791015625e-07
+    },
+    {
+      "crop": "hyphen_020.png",
+      "canvas_w": 960,
+      "static_shape": [
+        1,
+        120,
+        116
+      ],
+      "dygraph_shape": [
+        1,
+        120,
+        116
+      ],
+      "max_abs_diff": 8.642673492431641e-07
+    },
+    {
+      "crop": "hyphen_025.png",
+      "canvas_w": 480,
+      "static_shape": [
+        1,
+        60,
+        116
+      ],
+      "dygraph_shape": [
+        1,
+        60,
+        116
+      ],
+      "max_abs_diff": 1.0132789611816406e-06
+    },
+    {
+      "crop": "hyphen_025.png",
+      "canvas_w": 487,
+      "static_shape": [
+        1,
+        61,
+        116
+      ],
+      "dygraph_shape": [
+        1,
+        61,
+        116
+      ],
+      "max_abs_diff": 1.0132789611816406e-06
+    },
+    {
+      "crop": "hyphen_025.png",
+      "canvas_w": 960,
+      "static_shape": [
+        1,
+        120,
+        116
+      ],
+      "dygraph_shape": [
+        1,
+        120,
+        116
+      ],
+      "max_abs_diff": 6.034970283508301e-07
+    },
+    {
+      "crop": "hyphen_028.png",
+      "canvas_w": 480,
+      "static_shape": [
+        1,
+        60,
+        116
+      ],
+      "dygraph_shape": [
+        1,
+        60,
+        116
+      ],
+      "max_abs_diff": 2.980232238769531e-07
+    },
+    {
+      "crop": "hyphen_028.png",
+      "canvas_w": 487,
+      "static_shape": [
+        1,
+        61,
+        116
+      ],
+      "dygraph_shape": [
+        1,
+        61,
+        116
+      ],
+      "max_abs_diff": 2.980232238769531e-07
+    },
+    {
+      "crop": "hyphen_028.png",
+      "canvas_w": 960,
+      "static_shape": [
+        1,
+        120,
+        116
+      ],
+      "dygraph_shape": [
+        1,
+        120,
+        116
+      ],
+      "max_abs_diff": 3.2782554626464844e-07
+    },
+    {
+      "crop": "char_098.png",
+      "canvas_w": 480,
+      "static_shape": [
+        1,
+        60,
+        116
+      ],
+      "dygraph_shape": [
+        1,
+        60,
+        116
+      ],
+      "max_abs_diff": 5.662441253662109e-07
+    },
+    {
+      "crop": "char_098.png",
+      "canvas_w": 487,
+      "static_shape": [
+        1,
+        61,
+        116
+      ],
+      "dygraph_shape": [
+        1,
+        61,
+        116
+      ],
+      "max_abs_diff": 5.662441253662109e-07
+    },
+    {
+      "crop": "char_098.png",
+      "canvas_w": 960,
+      "static_shape": [
+        1,
+        120,
+        116
+      ],
+      "dygraph_shape": [
+        1,
+        120,
+        116
+      ],
+      "max_abs_diff": 5.513429641723633e-07
+    },
+    {
+      "crop": "char_111.png",
+      "canvas_w": 480,
+      "static_shape": [
+        1,
+        60,
+        116
+      ],
+      "dygraph_shape": [
+        1,
+        60,
+        116
+      ],
+      "max_abs_diff": 8.046627044677734e-07
+    },
+    {
+      "crop": "char_111.png",
+      "canvas_w": 487,
+      "static_shape": [
+        1,
+        61,
+        116
+      ],
+      "dygraph_shape": [
+        1,
+        61,
+        116
+      ],
+      "max_abs_diff": 8.046627044677734e-07
+    },
+    {
+      "crop": "char_111.png",
+      "canvas_w": 960,
+      "static_shape": [
+        1,
+        120,
+        116
+      ],
+      "dygraph_shape": [
+        1,
+        120,
+        116
+      ],
+      "max_abs_diff": 7.748603820800781e-07
+    },
+    {
+      "crop": "hyphen_022.png",
+      "canvas_w": 480,
+      "static_shape": [
+        1,
+        60,
+        116
+      ],
+      "dygraph_shape": [
+        1,
+        60,
+        116
+      ],
+      "max_abs_diff": 7.748603820800781e-07
+    },
+    {
+      "crop": "hyphen_022.png",
+      "canvas_w": 487,
+      "static_shape": [
+        1,
+        61,
+        116
+      ],
+      "dygraph_shape": [
+        1,
+        61,
+        116
+      ],
+      "max_abs_diff": 7.748603820800781e-07
+    },
+    {
+      "crop": "hyphen_022.png",
+      "canvas_w": 960,
+      "static_shape": [
+        1,
+        120,
+        116
+      ],
+      "dygraph_shape": [
+        1,
+        120,
+        116
+      ],
+      "max_abs_diff": 1.2218952178955078e-06
+    }
+  ]
+}

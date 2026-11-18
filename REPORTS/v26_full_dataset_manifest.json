@@ -1,0 +1,34 @@
+{
+  "title": "Cham-OCR V26-Full W=480 Dataset (V26 FT 43.52k + Fresh Hard-Mining/Stanza/Gates 20.48k)",
+  "generated_at": "2026-11-18T05:58:23.051129+00:00",
+  "duration_sec": 165.75,
+  "out_dir": "ocr-training/data/cham_synthetic_v26_full",
+  "train_samples": 64000,
+  "val_samples": 6400,
+  "step_each_epoch_dual_t4_bs32": 1000,
+  "unique_image_sha256_count": 70400,
+  "fresh_train_by_stream": {
+    "stream_a_stanza_danda": 6144,
+    "stream_b_minimal_multitier": 6144,
+    "stream_c_gate_closure": 5120,
+    "stream_d_optical_blank": 3072
+  },
+  "fresh_val_by_stream": {
+    "stream_a_stanza_danda": 614,
+    "stream_b_minimal_multitier": 614,
+    "stream_c_gate_closure": 512,
+    "stream_d_optical_blank": 308
+  },
+  "hard_example_counts": {
+    "train_double_danda": 2318,
+    "train_multitier_aa33_i_bindu": 1592,
+    "train_au_vs_o_pairs": 6357,
+    "train_single_asterisk": 1347
+  },
+  "distinct_stanza_numerals_1_to_999_covered": 999,
+  "fresh_train_val_text_overlap": 0,
+  "benchmark_exact_contamination": 0,
+  "dict_token_coverage": "114/114",
+  "train_label_sha256": "1b297db516b4fd8110d07ad587fab0dc4b8a765aba37144aff2b33f9a5921d24",
+  "val_label_sha256": "b352cec048f91dd06ee6d9959a0de46a8138f13925ee883dce26f322c10ad5c6"
+}

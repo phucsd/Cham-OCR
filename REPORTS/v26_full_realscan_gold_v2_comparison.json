@@ -1,0 +1,149 @@
+{
+  "title": "Cham-OCR RealScan-Gold v2 & OOD-Archival-Gold v2 Evaluation",
+  "evaluated_at": "2026-11-18T18:15:50.364205+00:00",
+  "manifest_summary": {
+    "real_camera_pages": 1,
+    "real_camera_lines": 25,
+    "wikimedia_external_specimens": 7,
+    "ood_archival_pages": 12,
+    "ood_archival_lines": 180,
+    "total_evaluated_lines": 212
+  },
+  "models": {
+    "prod_active": {
+      "harum_palei_01_crops": {
+        "n_lines": 25,
+        "norm_cer_pct": 2.55,
+        "wer_pct": 8.56,
+        "exact_lines": "12/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 35.24,
+        "wer_pct": 51.85,
+        "exact_lines": "2/7"
+      },
+      "ood_archival_overall": {
+        "n_lines": 180,
+        "norm_cer_pct": 26.35,
+        "wer_pct": 57.1,
+        "exact_lines": "17/180",
+        "e2e_lines": "180/180",
+        "e2e_doc_cer_pct": 25.58
+      },
+      "ood_by_domain": {
+        "efeo_palm_leaf_agal": {
+          "crop_cer_pct": 30.04,
+          "crop_wer_pct": 64.36,
+          "exact_lines": "1/58",
+          "e2e_lines": "58/58",
+          "e2e_doc_cer_pct": 28.86
+        },
+        "efeo_regional_folio": {
+          "crop_cer_pct": 43.0,
+          "crop_wer_pct": 84.49,
+          "exact_lines": "0/62",
+          "e2e_lines": "62/62",
+          "e2e_doc_cer_pct": 43.77
+        },
+        "heldout_camera_book": {
+          "crop_cer_pct": 9.37,
+          "crop_wer_pct": 26.42,
+          "exact_lines": "16/60",
+          "e2e_lines": "60/60",
+          "e2e_doc_cer_pct": 7.57
+        }
+      }
+    },
+    "v26_full_best": {
+      "harum_palei_01_crops": {
+        "n_lines": 25,
+        "norm_cer_pct": 1.58,
+        "wer_pct": 5.88,
+        "exact_lines": "17/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 36.19,
+        "wer_pct": 68.52,
+        "exact_lines": "2/7"
+      },
+      "ood_archival_overall": {
+        "n_lines": 180,
+        "norm_cer_pct": 27.92,
+        "wer_pct": 56.44,
+        "exact_lines": "20/180",
+        "e2e_lines": "180/180",
+        "e2e_doc_cer_pct": 24.96
+      },
+      "ood_by_domain": {
+        "efeo_palm_leaf_agal": {
+          "crop_cer_pct": 31.96,
+          "crop_wer_pct": 64.36,
+          "exact_lines": "0/58",
+          "e2e_lines": "58/58",
+          "e2e_doc_cer_pct": 26.2
+        },
+        "efeo_regional_folio": {
+          "crop_cer_pct": 47.77,
+          "crop_wer_pct": 85.76,
+          "exact_lines": "0/62",
+          "e2e_lines": "62/62",
+          "e2e_doc_cer_pct": 44.47
+        },
+        "heldout_camera_book": {
+          "crop_cer_pct": 7.98,
+          "crop_wer_pct": 23.45,
+          "exact_lines": "20/60",
+          "e2e_lines": "60/60",
+          "e2e_doc_cer_pct": 7.76
+        }
+      }
+    },
+    "v26_full_soup": {
+      "harum_palei_01_crops": {
+        "n_lines": 25,
+        "norm_cer_pct": 1.58,
+        "wer_pct": 5.88,
+        "exact_lines": "17/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 36.19,
+        "wer_pct": 70.37,
+        "exact_lines": "2/7"
+      },
+      "ood_archival_overall": {
+        "n_lines": 180,
+        "norm_cer_pct": 27.89,
+        "wer_pct": 56.26,
+        "exact_lines": "20/180",
+        "e2e_lines": "180/180",
+        "e2e_doc_cer_pct": 24.98
+      },
+      "ood_by_domain": {
+        "efeo_palm_leaf_agal": {
+          "crop_cer_pct": 31.39,
+          "crop_wer_pct": 63.56,
+          "exact_lines": "0/58",
+          "e2e_lines": "58/58",
+          "e2e_doc_cer_pct": 26.4
+        },
+        "efeo_regional_folio": {
+          "crop_cer_pct": 48.26,
+          "crop_wer_pct": 86.08,
+          "exact_lines": "0/62",
+          "e2e_lines": "62/62",
+          "e2e_doc_cer_pct": 44.47
+        },
+        "heldout_camera_book": {
+          "crop_cer_pct": 8.05,
+          "crop_wer_pct": 23.45,
+          "exact_lines": "20/60",
+          "e2e_lines": "60/60",
+          "e2e_doc_cer_pct": 7.63
+        }
+      }
+    }
+  }
+}

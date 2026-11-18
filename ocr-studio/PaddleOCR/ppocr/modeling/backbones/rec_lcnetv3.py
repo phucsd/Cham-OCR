@@ -291,9 +291,19 @@ class SELayer(nn.Layer):
             bias_attr=ParamAttr(learning_rate=lr_mult))
         self.hardsigmoid = Hardsigmoid()
 
-    def forward(self, x):
+    def forward(self, x, valid_cols=None):
         identity = x
-        x = self.avg_pool(x)
+        if valid_cols is not None:
+            # Cham-OCR V26: padding-aware squeeze -- average only over real (non-padded) columns so
+            # the channel gates of a short crop do not depend on how much zero-padding the canvas
+            # (or the inference batch's widest crop) adds. valid_cols: [B, 1, 1, W_img] pixel mask.
+            m = F.max_pool2d(valid_cols, kernel_size=[1, 4], stride=[1, 4], ceil_mode=True)
+            m = F.interpolate(m, size=paddle.shape(x)[2:4], mode='nearest')
+            m = m.astype(x.dtype)
+            x = paddle.sum(x * m, axis=[2, 3], keepdim=True) / paddle.clip(
+                paddle.sum(m, axis=[2, 3], keepdim=True), min=1.0)
+        else:
+            x = self.avg_pool(x)
         x = self.conv1(x)
         x = self.relu(x)
         x = self.conv2(x)
@@ -334,10 +344,13 @@ class LCNetV3Block(nn.Layer):
             lr_mult=lr_mult,
             lab_lr=lab_lr)
 
-    def forward(self, x):
+    def forward(self, x, valid_cols=None):
         x = self.dw_conv(x)
         if self.use_se:
-            x = self.se(x)
+            if valid_cols is not None:
+                x = self.se(x, valid_cols)
+            else:
+                x = self.se(x)
         x = self.pw_conv(x)
         return x
 
@@ -354,6 +367,9 @@ class PPLCNetV3(nn.Layer):
         self.scale = scale
         self.lr_mult_list = lr_mult_list
         self.det = det
+        # Cham-OCR V26 (opt-in, set by BaseModel when Architecture.use_valid_mask is true):
+        # padding-aware SE pooling in the recognition backbone.
+        self.use_valid_mask = bool(kwargs.get("use_valid_mask", False)) and not det
 
         self.net_config = NET_CONFIG_det if self.det else NET_CONFIG_rec
 
@@ -465,6 +481,10 @@ class PPLCNetV3(nn.Layer):
 
     def forward(self, x):
         out_list = []
+        valid_cols = None
+        if self.use_valid_mask:
+            # exact-zero columns are right-padding (no uint8 pixel normalises to 0.0)
+            valid_cols = (paddle.abs(x).sum(axis=[1, 2], keepdim=True) > 0).astype('float32')
         x = self.conv1(x)
 
         x = self.blocks2(x)
@@ -474,7 +494,11 @@ class PPLCNetV3(nn.Layer):
         out_list.append(x)
         x = self.blocks5(x)
         out_list.append(x)
-        x = self.blocks6(x)
+        if valid_cols is not None:
+            for blk in self.blocks6:
+                x = blk(x, valid_cols)
+        else:
+            x = self.blocks6(x)
         out_list.append(x)
 
         if self.det:

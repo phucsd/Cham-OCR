@@ -108,10 +108,14 @@ class MultiHead(nn.Layer):
                 raise NotImplementedError(
                     '{} is not supported in MultiHead yet'.format(name))
 
-    def forward(self, x, targets=None):
+    def forward(self, x, targets=None, valid_mask=None):
         if self.use_pool:
             x = self.pool(x.reshape([0, 3, -1, self.in_channels]).transpose([0, 3, 1, 2]))
-        ctc_encoder = self.ctc_encoder(x)
+        if valid_mask is not None:
+            # Cham-OCR V26: key-padding mask only for the CTC SVTR neck (NRTR is train-only)
+            ctc_encoder = self.ctc_encoder(x, valid_mask)
+        else:
+            ctc_encoder = self.ctc_encoder(x)
         ctc_out = self.ctc_head(ctc_encoder, targets)
         head_out = dict()
         head_out['ctc'] = ctc_out

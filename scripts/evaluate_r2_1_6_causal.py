@@ -88,7 +88,7 @@ def parse_train_log(log_path: str) -> dict:
     }
 
 
-def evaluate_probe_100(cp_path: str, target_w: int = 320) -> dict:
+def evaluate_probe_100(cp_path: str, target_w: int = 320, use_valid_mask: bool = False) -> dict:
     import paddle
     import paddle.nn.functional as F
     from ppocr.modeling.architectures import build_model
@@ -115,6 +115,9 @@ def evaluate_probe_100(cp_path: str, target_w: int = 320) -> dict:
         "CTCLabelDecode": len(postprocess_op.character),
         "NRTRLabelDecode": len(postprocess_op.character) + 3
     }
+    if use_valid_mask:
+        # V26: SVTR key-padding mask + padding-aware SE (no new parameters)
+        cfg["Architecture"]["use_valid_mask"] = True
 
     tensors_w = [preprocess_aspect_preserve_cap(img, target_w=target_w, target_h=48)[0] for img in images]
 

@@ -18,9 +18,31 @@ from __future__ import print_function
 
 import paddle
 from paddle import nn
+import paddle.nn.functional as F
 
 from ppocr.modeling.heads.rec_ctc_head import get_para_bias_attr
 from ppocr.modeling.backbones.rec_svtrnet import Block, ConvBNLayer, trunc_normal_, zeros_, ones_
+
+
+def compute_valid_columns(img):
+    """Cham-OCR V26: [B, C, H, W] normalised image -> [B, 1, 1, W] float mask (1 = real pixels).
+
+    RecResizeImg (training) and predict_rec (inference) right-pad crops with exact 0.0 after
+    normalising uint8 pixels to (x / 255 - 0.5) / 0.5, a value no real pixel can take, so a column
+    whose absolute sum over channels and rows is zero is padding.
+    """
+    return (paddle.abs(img).sum(axis=[1, 2], keepdim=True) > 0).astype('float32')
+
+
+def valid_columns_to_tokens(valid_cols, feat):
+    """Cham-OCR V26: pixel-column mask [B, 1, 1, W] -> token mask [B, 1, H', W'] aligned to `feat`.
+
+    A token (horizontal stride 8 for PPLCNetV3 rec) is valid if any of its 8 source columns is
+    real; nearest resize to the feature map's own (possibly dynamic) H' x W' keeps export shapes
+    symbolic.
+    """
+    v = F.max_pool2d(valid_cols, kernel_size=[1, 8], stride=[1, 8], ceil_mode=True)
+    return F.interpolate(v, size=paddle.shape(feat)[2:4], mode='nearest')
 
 
 class Im2Seq(nn.Layer):
@@ -195,7 +217,7 @@ class EncoderWithSVTR(nn.Layer):
             zeros_(m.bias)
             ones_(m.weight)
 
-    def forward(self, x):
+    def forward(self, x, valid_mask=None):
         # for use guide
         if self.use_guide:
             z = x.clone()
@@ -210,8 +232,14 @@ class EncoderWithSVTR(nn.Layer):
         # SVTR global block
         B, C, H, W = z.shape
         z = z.flatten(2).transpose([0, 2, 1])
-        for blk in self.svtr_block:
-            z = blk(z)
+        if valid_mask is not None:
+            # Cham-OCR V26: [B, 1, H, W] token validity -> additive key-padding bias [B, 1, 1, H*W]
+            attn_bias = ((1.0 - valid_mask.flatten(1)) * -10000.0).unsqueeze([1, 2])
+            for blk in self.svtr_block:
+                z = blk(z, attn_bias)
+        else:
+            for blk in self.svtr_block:
+                z = blk(z)
         z = self.norm(z)
         # last stage
         z = z.reshape([0, H, W, C]).transpose([0, 3, 1, 2])
@@ -251,13 +279,16 @@ class SequenceEncoder(nn.Layer):
             self.out_channels = self.encoder.out_channels
             self.only_reshape = False
 
-    def forward(self, x):
+    def forward(self, x, valid_mask=None):
         if self.encoder_type != 'svtr':
             x = self.encoder_reshape(x)
             if not self.only_reshape:
                 x = self.encoder(x)
             return x
         else:
-            x = self.encoder(x)
+            if valid_mask is not None:
+                x = self.encoder(x, valid_mask)
+            else:
+                x = self.encoder(x)
             x = self.encoder_reshape(x)
             return x

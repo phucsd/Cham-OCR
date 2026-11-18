@@ -729,6 +729,7 @@
                         <li><a href="#sec6-3" class="toc-sublink">6.3 Model Progression: V23 vs V24 vs V25 SOTA</a></li>
                         <li><a href="#sec6-4" class="toc-sublink">6.4 Multi-GPU Hardware Scaling</a></li>
                         <li><a href="#sec6-5" class="toc-sublink">6.5 V24.1 Pure-Cham &amp; RealScan-Gold v2</a></li>
+                        <li><a href="#sec6-6" class="toc-sublink">6.6 Cham-DBNet Poly &amp; V26 Masked-SVTR</a></li>
                     </ul>
                 </li>
                 <li class="toc-item">
@@ -741,7 +742,7 @@
                 <li class="toc-item">
                     <a href="#sec8" class="toc-link">8. Limitations & Open Challenges</a>
                     <ul class="toc-sublist">
-                        <li><a href="#sec8-5" class="toc-sublink">8.5 Planned Post-V25 Iterations</a></li>
+                        <li><a href="#sec8-5" class="toc-sublink">8.5 Completed V26 &amp; V26.1 Roadmap</a></li>
                     </ul>
                 </li>
                 <li class="toc-item"><a href="#sec9" class="toc-link">9. Citation & References</a></li>
@@ -1697,6 +1698,98 @@
                         </tbody>
                     </table>
                 </div>
+
+                <h3 id="sec6-6">6.6 Cham-DBNet Polygon Rectification, V26 Causal Ablation &amp; V26-Full 30-Epoch Evaluation</h3>
+                <p>
+                    <strong>1. Polygon Extraction &amp; Ribbon Rectification (<code>v1_poly_u1.8</code>, Live on <a href="https://ocr.cham.asia" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); font-weight: 600;">ocr.cham.asia</a>):</strong> Replacing 4-point <code>minAreaRect</code> (<code>box_type='quad'</code>) with native <code>DBPostProcess(box_type='poly')</code>, <code>unclip=1.8</code>, <code>merge_line_polygons</code>, and centerline <code>rectify_polygon_line</code> (<code>vpad=0.15</code>, neighboring-polygon masking) lifted <code>FullPage-Frozen 50</code> recall from 95.40% to <strong>99.58%</strong> (<strong>Level-5 recall 77.27% &rarr; 100.00%</strong>, Level-5 Matched CER 11.92% &rarr; 10.12%) and nearly halved overall E2E CER from <strong>14.43% &rarr; 7.99%</strong>. Curved stress slices improved from 16.40% &rarr; <strong>7.37%</strong> (<code>short:5</code>, 64/64 lines), 12.95% &rarr; <strong>6.96%</strong> (<code>a4:5</code>, 241/241 lines), and 11.25% &rarr; <strong>10.14%</strong> (<code>audit_18</code>, 134/134 lines), with live production commit <code>e46e8328</code> verified at <strong>3.43%</strong> E2E Doc CER on <code>harum_palei_01</code> (25/25) and <strong>10.16%</strong> Live Doc CER across <code>audit_18</code> (134/134).
+                </p>
+                <p>
+                    <strong>2. V26 Padding-Masked SVTR (Phase A Causal Ablation &amp; Phase B 30-Epoch <code>V26-Full</code>):</strong> Injecting zero-parameter <code>valid_ratio</code> key-padding masks inside <code>SVTRNet</code> global attention and valid-width-masked <code>SELayer</code> pooling in <code>PPLCNetV3</code> (<code>use_valid_mask=True</code>) yielded causal Stress-82/Harum improvements in a paired 6-epoch ablation (<code>V26 Masked</code>: Stress 4.64% E3 / 3.99% E4 / 4.28% soup vs <code>V26 Control</code>: 5.43% E2 / 4.64% E6; <code>Harum</code> 1.95% E4 / 2.31% soup). Scaling to 30 unfrozen epochs across 3 state-preserving Kaggle Dual T4x2 stages on 64,000 train / 6,400 val <code>W=480</code> lines (<strong>26,514.0s / 441.90m Train Loop</strong>, 2,677.16s Overhead, <strong>29,191.16s Wall-clock</strong>; offline val 81.72% &rarr; 84.92% &rarr; <strong>85.22%</strong> Acc, <strong>98.55%</strong> NED), every evaluated checkpoint and Stage-3 soup passed <strong>6/6 Frozen-838 Release Gates</strong>:
+                </p>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Model Candidate</th>
+                                <th class="num">Clean CER</th>
+                                <th class="num">Char CER</th>
+                                <th class="num">14 Symbols</th>
+                                <th class="num">Hyphen Acc</th>
+                                <th class="num">FullPage CER</th>
+                                <th class="num">Stress-82</th>
+                                <th class="num">Harum Crop</th>
+                                <th class="num">OOD-180 Crop (E2E)</th>
+                                <th class="num">Gates</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>V24.1-R4.1 (Prod 85525b0c)</strong></td>
+                                <td class="num">5.28%</td>
+                                <td class="num">2.64%</td>
+                                <td class="num">99.29%</td>
+                                <td class="num">95.71%</td>
+                                <td class="num">7.39%</td>
+                                <td class="num">6.93%</td>
+                                <td class="num">2.55%</td>
+                                <td class="num"><strong>26.35%</strong> (25.58%)</td>
+                                <td class="num">5/6</td>
+                            </tr>
+                            <tr>
+                                <td><strong>V26-Full S1 E10</strong></td>
+                                <td class="num"><strong>4.63%</strong></td>
+                                <td class="num">1.59%</td>
+                                <td class="num"><span class="metric-badge metric-good">100.0%</span></td>
+                                <td class="num"><span class="metric-badge metric-good">100.0%</span></td>
+                                <td class="num">6.24%</td>
+                                <td class="num">2.69%</td>
+                                <td class="num"><span class="metric-badge metric-good">1.46%</span></td>
+                                <td class="num">29.09% (25.40%)</td>
+                                <td class="num"><strong>6/6</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>V26-Full S3 E25 (Best)</strong></td>
+                                <td class="num">4.72%</td>
+                                <td class="num"><span class="metric-badge metric-good">1.42%</span></td>
+                                <td class="num"><span class="metric-badge metric-good">100.0%</span></td>
+                                <td class="num">97.14%</td>
+                                <td class="num">6.02%</td>
+                                <td class="num">2.49%</td>
+                                <td class="num">1.58%</td>
+                                <td class="num">27.92% (<strong>24.96%</strong>)</td>
+                                <td class="num"><strong>6/6</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>V26-Full S3 E26</strong></td>
+                                <td class="num">4.73%</td>
+                                <td class="num">1.57%</td>
+                                <td class="num"><span class="metric-badge metric-good">100.0%</span></td>
+                                <td class="num">97.14%</td>
+                                <td class="num"><strong>5.99%</strong></td>
+                                <td class="num"><span class="metric-badge metric-good">2.41%</span></td>
+                                <td class="num"><span class="metric-badge metric-good">1.46%</span></td>
+                                <td class="num">&mdash;</td>
+                                <td class="num"><strong>6/6</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>V26-Full soup_top2_e25_e27</strong></td>
+                                <td class="num">4.72%</td>
+                                <td class="num">1.44%</td>
+                                <td class="num"><span class="metric-badge metric-good">100.0%</span></td>
+                                <td class="num">97.14%</td>
+                                <td class="num">6.04%</td>
+                                <td class="num">2.43%</td>
+                                <td class="num">1.58%</td>
+                                <td class="num">27.89% (<strong>24.98%</strong>)</td>
+                                <td class="num"><strong>6/6</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="margin-top: 12px;">
+                    Although <code>V26-Full</code> cleared <strong>6/6 Frozen-838 Gates</strong> and outperformed production on <code>OOD-12 E2E Doc CER</code> (24.96% vs 25.58%, <code>heldout_camera_book</code> 7.98% vs 9.37%, <code>efeo_palm_leaf_agal</code> E2E 26.20% vs 28.86%), 30 unfrozen epochs shifted <code>efeo_regional_folio</code> crop CER from 43.0% &rarr; 47.77%, putting overall OOD-180 Crop CER at 27.89%&ndash;27.92% (&gt; 26.65% ceiling). A 5-point in-basin WiSE-FT sweep back toward 6-epoch <code>V26-Masked</code> encountered a linear interpolation barrier (4/6 gates), confirming 30k steps leave the shallow fine-tune basin. Strictly adhering to unrelaxed gate integrity, <code>v24_1_r4</code> (<code>85525b0ca091acaf</code>) remains production default while <code>V26-Full</code> serves as the verified staging benchmark for <code>V26.1</code>.
+                </p>
             </section>
 
             <!-- SECTION 7 -->
@@ -1749,14 +1842,14 @@ if not hasattr(np, 'typeDict'): np.typeDict = {}</code></pre>
                     <li><strong>Extreme Interlinear Overlap (Level 5)</strong>: When severe paper wrinkling causes interlinear wave amplitude to exceed line spacing (\(\text{Amplitude} > \text{Gap}\)), 1D projection and horizontal bounding boxes collapse, indicating the need for 2D polygonal baseline tracking models in future iterations.</li>
                 </ul>
 
-                <h3 id="sec8-5">8.5 Completed V24.1 Milestones &amp; Next-Generation V26 / Cham-DBNet v3 Roadmap</h3>
+                <h3 id="sec8-5">8.5 Completed V24.1 &amp; V26 Milestones + V26.1 / RealScan-Gold v3 Roadmap</h3>
                 <p>
-                    Following the validation of Model Version 25 (90.96% Sequence Accuracy) and the deployment of the vocabulary-isolated <strong>V24.1-R4.1 WiSE-FT</strong> wide-canvas model (2.55% real-camera CER, 5/6 Frozen-838 Release Gates), open research priorities tracked in <a href="https://github.com/phucsd/Cham-OCR/blob/main/FUTURE_WORK.md" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); font-weight: 600;">FUTURE_WORK.md</a> include:
+                    Following Model Version 25 (90.96% Sequence Accuracy, 0.72% CER on frozen 10K validation), the vocabulary-isolated <strong>V24.1-R4.1 WiSE-FT</strong> wide-canvas model (<code>85525b0ca091acaf</code>, 2.55% real-camera CER), live deployment of <strong><code>Cham-DBNet v1_poly_u1.8</code></strong> (<code>FullPage-Frozen 50</code> 14.43% &rarr; 7.99% E2E, 100.0% Level-5 recall), and 30-epoch <strong><code>V26-Full</code> Padding-Masked SVTR</strong> (6/6 Frozen-838 Gates, 1.42% Char CER, 2.41% Stress-82 CER, 1.46% Harum CER, 24.96% OOD-12 E2E), remaining priorities tracked in <a href="https://github.com/phucsd/Cham-OCR/blob/main/FUTURE_WORK.md" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); font-weight: 600;">FUTURE_WORK.md</a> are:
                 </p>
                 <ol style="margin-bottom: 1.5rem; line-height: 1.7; color: var(--text-secondary);">
-                    <li><strong>Polygonal Bezier/TPS Curved Baseline Rectification (<code>Cham-DBNet v3</code>, <code>box_type='poly'</code>)</strong>: Replacing 4-point <code>minAreaRect</code> (<code>box_type='quad'</code>) with 16-vertex polygonal contour extraction and Thin-Plate Spline (TPS) de-warping to resolve intersecting Level-5 sinusoidal waves (\(\text{Amplitude} > \text{Gap}\)).</li>
-                    <li><strong>Padding-Masked SVTR Self-Attention</strong>: Incorporating <code>valid_ratio</code> key-padding masks inside SVTR global attention blocks so ultra-short crops (&lt; 160px) and full-width stanzas (480px) share identical attention sharpness without zero-padding dilution.</li>
-                    <li><strong>Dual-Script Composite Rendering &amp; Field Manuscript Active Learning (<code>RealScan-Gold v3</code>)</strong>: Expanding verified palm-leaf (<em>agal</em>) and regional manuscript benchmarks via human-in-the-loop Studio exports (<code>scripts/ingest_studio_to_realscan_gold.py</code>) to close the ~43% paleographic gap on unseen historical regional hands.</li>
+                    <li><strong>Curved Baseline Poly Detector Fine-Tuning (<code>Cham-DBNet v3</code>)</strong>: Jointly fine-tuning DBNet regression heads under 16-vertex polygonal curvature targets beyond the deployed inference-time <code>v1_poly_u1.8</code> rectification.</li>
+                    <li><strong>OOD Regional Paleographic Regularization (<code>V26.1</code> Masked-SVTR)</strong>: Injecting synthetic regional calligraphic diversity and early-backbone regularization inside the 6/6-Gate <code>use_valid_mask=True</code> <code>W=480</code> architecture so OOD-180 Crop CER drops below 26.35% for automatic production promotion.</li>
+                    <li><strong>Dual-Script Composite Rendering &amp; Field Manuscript Active Learning (<code>RealScan-Gold v3</code>)</strong>: Expanding verified palm-leaf (<em>agal</em>) and regional manuscript benchmarks via human-in-the-loop Studio exports (<code>scripts/ingest_studio_to_realscan_gold.py</code>) to close the ~43%&ndash;44% paleographic gap on unseen historical regional hands.</li>
                 </ol>
             </section>
 

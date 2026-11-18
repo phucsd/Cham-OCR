@@ -1,0 +1,1443 @@
+{
+  "title": "Cham-OCR V26-Full (30 Epochs, 3 Stages Unfrozen W=480) Evaluation & Gated Promotion",
+  "evaluated_at": "2026-11-18T18:15:50.792711+00:00",
+  "detector_signature": "72d1bd072e4f5c2a",
+  "production_before": {
+    "sha256_16": "85525b0ca091acaf",
+    "metrics": {
+      "sha256": "300b3ef5aec4417985bf70c0ac3548216f8c27272207747c77f28a69d50402a3",
+      "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_prod_snapshot",
+      "infer_sha256": "85525b0ca091acaf81a4693fbdd93f53309b4203e68a467560fa5dcaead86417",
+      "clean_cer_pct": 5.28,
+      "char_cer_pct": 2.64,
+      "symbols_acc_pct": 99.29,
+      "symbols_passed": "278/280",
+      "failing_symbols": [
+        "_",
+        "/"
+      ],
+      "hyphen_acc_pct": 95.71,
+      "blank_passed": true,
+      "fullpage_cer_pct": 7.39,
+      "fullpage_recall_pct": 99.58,
+      "fullpage_l5_cer_pct": 10.12,
+      "stress_82_cer_pct": 6.93,
+      "probe_100_w480_cer_pct": 4.2,
+      "harum_crops_cer_pct": 2.55,
+      "harum_exact_lines": "12/25",
+      "gates_passed": 5,
+      "valid_for_release": false,
+      "gates": [
+        {
+          "gate": "Gate 1: Clean-Frozen Non-Regression",
+          "baseline": "11.7967%",
+          "tolerance": "+0.20%",
+          "threshold": "11.9967%",
+          "value": "5.2775%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+          "min_acc": "99.0%",
+          "value": "99.2857%",
+          "failing_symbols": [
+            "_",
+            "/"
+          ],
+          "failing_count": 2,
+          "status": "FAIL"
+        },
+        {
+          "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+          "min_acc": "95.0%",
+          "value": "95.7143%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+          "white_pred": "",
+          "gray_pred": "",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 5: Character-Frozen Non-Regression",
+          "baseline": "4.1830%",
+          "tolerance": "+0.21%",
+          "threshold": "4.3930%",
+          "value": "2.6375%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+          "threshold": "12.0000%",
+          "value": "7.3889%",
+          "status": "PASS"
+        }
+      ],
+      "composite_score": 0.6724
+    },
+    "realscan_v2": {
+      "harum_crop_cer_pct": 2.55,
+      "wikimedia_crop_cer_pct": 35.24,
+      "ood180_crop_cer_pct": 26.35,
+      "ood12_e2e_doc_cer_pct": 25.58,
+      "ood12_e2e_lines": "180/180"
+    }
+  },
+  "stage_accounting": {
+    "stage_1": {
+      "first_batch_timestamp": "2026-11-18 06:47:13",
+      "last_batch_timestamp": "2026-11-18 09:12:50",
+      "train_loop_duration_seconds": 8737.0,
+      "train_loop_duration_minutes": 145.62,
+      "pipeline_container_overhead_seconds": 969.65,
+      "pipeline_container_overhead_minutes": 16.16,
+      "total_kernel_wall_clock_seconds": 9706.65,
+      "total_kernel_wall_clock_minutes": 161.78,
+      "epoch_1_final_loss": 5.940587,
+      "epoch_2_final_loss": 5.27698,
+      "epoch_3_final_loss": 4.556444,
+      "epoch_4_final_loss": 4.950597,
+      "epoch_5_final_loss": 4.662329,
+      "epoch_6_final_loss": 4.571588,
+      "epoch_7_final_loss": 4.554447,
+      "epoch_8_final_loss": 5.063086,
+      "epoch_9_final_loss": 2.682344,
+      "epoch_10_final_loss": 4.0703
+    },
+    "stage_2": {
+      "first_batch_timestamp": "2026-11-18 10:04:46",
+      "last_batch_timestamp": "2026-11-18 12:33:35",
+      "train_loop_duration_seconds": 8929.0,
+      "train_loop_duration_minutes": 148.82,
+      "pipeline_container_overhead_seconds": 638.42,
+      "pipeline_container_overhead_minutes": 10.64,
+      "total_kernel_wall_clock_seconds": 9567.42,
+      "total_kernel_wall_clock_minutes": 159.46,
+      "epoch_11_final_loss": 3.60228,
+      "epoch_12_final_loss": 3.285323,
+      "epoch_13_final_loss": 3.011986,
+      "epoch_14_final_loss": 3.493952,
+      "epoch_15_final_loss": 3.599243,
+      "epoch_16_final_loss": 3.50168,
+      "epoch_17_final_loss": 3.572159,
+      "epoch_18_final_loss": 3.965417,
+      "epoch_19_final_loss": 2.129075,
+      "epoch_20_final_loss": 3.284128
+    },
+    "stage_3": {
+      "first_batch_timestamp": "2026-11-18 13:35:36",
+      "last_batch_timestamp": "2026-11-18 16:03:04",
+      "train_loop_duration_seconds": 8848.0,
+      "train_loop_duration_minutes": 147.47,
+      "pipeline_container_overhead_seconds": 1069.09,
+      "pipeline_container_overhead_minutes": 17.82,
+      "total_kernel_wall_clock_seconds": 9917.09,
+      "total_kernel_wall_clock_minutes": 165.28,
+      "epoch_21_final_loss": 2.871165,
+      "epoch_22_final_loss": 2.611414,
+      "epoch_23_final_loss": 2.761911,
+      "epoch_24_final_loss": 3.090958,
+      "epoch_25_final_loss": 3.215632,
+      "epoch_26_final_loss": 3.169533,
+      "epoch_27_final_loss": 3.275766,
+      "epoch_28_final_loss": 3.633538,
+      "epoch_29_final_loss": 2.096823,
+      "epoch_30_final_loss": 3.120471
+    }
+  },
+  "cumulative_accounting": {
+    "train_loop_duration_seconds": 26514.0,
+    "train_loop_duration_minutes": 441.9,
+    "pipeline_container_overhead_seconds": 2677.16,
+    "pipeline_container_overhead_minutes": 44.62,
+    "total_kernel_wall_clock_seconds": 29191.16,
+    "total_kernel_wall_clock_minutes": 486.52
+  },
+  "epochs": {
+    "epoch_10": {
+      "sha256": "9c5fe1238a4020b74797ac1d80d2341dc4d941e35985f1ab56732c507051197b",
+      "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_infer_e10",
+      "infer_sha256": "90578ad383b33b69fffea9580fe19af4a9876a35d34d5764a3ce60b6c3b85dc7",
+      "clean_cer_pct": 4.63,
+      "char_cer_pct": 1.59,
+      "symbols_acc_pct": 100.0,
+      "symbols_passed": "280/280",
+      "failing_symbols": [],
+      "hyphen_acc_pct": 100.0,
+      "blank_passed": true,
+      "fullpage_cer_pct": 6.24,
+      "fullpage_recall_pct": 99.58,
+      "fullpage_l5_cer_pct": 8.92,
+      "stress_82_cer_pct": 2.69,
+      "probe_100_w480_cer_pct": 2.41,
+      "harum_crops_cer_pct": 1.46,
+      "harum_exact_lines": "18/25",
+      "gates_passed": 6,
+      "valid_for_release": true,
+      "gates": [
+        {
+          "gate": "Gate 1: Clean-Frozen Non-Regression",
+          "baseline": "11.7967%",
+          "tolerance": "+0.20%",
+          "threshold": "11.9967%",
+          "value": "4.6307%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+          "min_acc": "99.0%",
+          "value": "100.0000%",
+          "failing_symbols": [],
+          "failing_count": 0,
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+          "min_acc": "95.0%",
+          "value": "100.0000%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+          "white_pred": "",
+          "gray_pred": "",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 5: Character-Frozen Non-Regression",
+          "baseline": "4.1830%",
+          "tolerance": "+0.21%",
+          "threshold": "4.3930%",
+          "value": "1.5866%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+          "threshold": "12.0000%",
+          "value": "6.2443%",
+          "status": "PASS"
+        }
+      ],
+      "composite_score": 0.6907,
+      "stage": 1
+    },
+    "epoch_20": {
+      "sha256": "34b2be5f979a172ee297f7c82de6994c4fc089d5ea3b6a47ce0d60f622a0046a",
+      "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_infer_e20",
+      "infer_sha256": "5f8e72f6bd522aec39e9abc45c1c0e25eb36ef9a8fe105a93abebc456f67abf6",
+      "clean_cer_pct": 4.73,
+      "char_cer_pct": 1.52,
+      "symbols_acc_pct": 100.0,
+      "symbols_passed": "280/280",
+      "failing_symbols": [],
+      "hyphen_acc_pct": 97.14,
+      "blank_passed": true,
+      "fullpage_cer_pct": 5.99,
+      "fullpage_recall_pct": 99.58,
+      "fullpage_l5_cer_pct": 8.47,
+      "stress_82_cer_pct": 2.46,
+      "probe_100_w480_cer_pct": 2.41,
+      "harum_crops_cer_pct": 1.46,
+      "harum_exact_lines": "18/25",
+      "gates_passed": 6,
+      "valid_for_release": true,
+      "gates": [
+        {
+          "gate": "Gate 1: Clean-Frozen Non-Regression",
+          "baseline": "11.7967%",
+          "tolerance": "+0.20%",
+          "threshold": "11.9967%",
+          "value": "4.7342%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+          "min_acc": "99.0%",
+          "value": "100.0000%",
+          "failing_symbols": [],
+          "failing_count": 0,
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+          "min_acc": "95.0%",
+          "value": "97.1429%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+          "white_pred": "",
+          "gray_pred": "",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 5: Character-Frozen Non-Regression",
+          "baseline": "4.1830%",
+          "tolerance": "+0.21%",
+          "threshold": "4.3930%",
+          "value": "1.5248%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+          "threshold": "12.0000%",
+          "value": "5.9888%",
+          "status": "PASS"
+        }
+      ],
+      "composite_score": 0.682,
+      "stage": 2
+    },
+    "epoch_24": {
+      "sha256": "53e3cf40ec489019d6f64ff7827a287125bf64d3df954cda11f2bc353f1b4f60",
+      "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_infer_e24",
+      "infer_sha256": "35dbd1acec08bdaae5054b4a348baa8c31546fd952989c0bd4552ecaecac6445",
+      "clean_cer_pct": 4.88,
+      "char_cer_pct": 1.69,
+      "symbols_acc_pct": 100.0,
+      "symbols_passed": "280/280",
+      "failing_symbols": [],
+      "hyphen_acc_pct": 97.14,
+      "blank_passed": true,
+      "fullpage_cer_pct": 6.11,
+      "fullpage_recall_pct": 99.58,
+      "fullpage_l5_cer_pct": 8.65,
+      "stress_82_cer_pct": 2.84,
+      "probe_100_w480_cer_pct": 2.1,
+      "harum_crops_cer_pct": 1.58,
+      "harum_exact_lines": "17/25",
+      "gates_passed": 6,
+      "valid_for_release": true,
+      "gates": [
+        {
+          "gate": "Gate 1: Clean-Frozen Non-Regression",
+          "baseline": "11.7967%",
+          "tolerance": "+0.20%",
+          "threshold": "11.9967%",
+          "value": "4.8765%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+          "min_acc": "99.0%",
+          "value": "100.0000%",
+          "failing_symbols": [],
+          "failing_count": 0,
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+          "min_acc": "95.0%",
+          "value": "97.1429%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+          "white_pred": "",
+          "gray_pred": "",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 5: Character-Frozen Non-Regression",
+          "baseline": "4.1830%",
+          "tolerance": "+0.21%",
+          "threshold": "4.3930%",
+          "value": "1.6897%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+          "threshold": "12.0000%",
+          "value": "6.1114%",
+          "status": "PASS"
+        }
+      ],
+      "composite_score": 0.6816,
+      "stage": 3
+    },
+    "epoch_25": {
+      "sha256": "c447409d032f7badc223e90338936003a1ed18907539b29e34f13f1b26b299c9",
+      "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_infer_e25",
+      "infer_sha256": "14abe86c7b976c137cbc0817e1018577c4895748b7af6244ee8f4b168ce0ca89",
+      "clean_cer_pct": 4.72,
+      "char_cer_pct": 1.42,
+      "symbols_acc_pct": 100.0,
+      "symbols_passed": "280/280",
+      "failing_symbols": [],
+      "hyphen_acc_pct": 97.14,
+      "blank_passed": true,
+      "fullpage_cer_pct": 6.02,
+      "fullpage_recall_pct": 99.58,
+      "fullpage_l5_cer_pct": 8.52,
+      "stress_82_cer_pct": 2.49,
+      "probe_100_w480_cer_pct": 2.1,
+      "harum_crops_cer_pct": 1.58,
+      "harum_exact_lines": "17/25",
+      "gates_passed": 6,
+      "valid_for_release": true,
+      "gates": [
+        {
+          "gate": "Gate 1: Clean-Frozen Non-Regression",
+          "baseline": "11.7967%",
+          "tolerance": "+0.20%",
+          "threshold": "11.9967%",
+          "value": "4.7213%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+          "min_acc": "99.0%",
+          "value": "100.0000%",
+          "failing_symbols": [],
+          "failing_count": 0,
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+          "min_acc": "95.0%",
+          "value": "97.1429%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+          "white_pred": "",
+          "gray_pred": "",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 5: Character-Frozen Non-Regression",
+          "baseline": "4.1830%",
+          "tolerance": "+0.21%",
+          "threshold": "4.3930%",
+          "value": "1.4218%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+          "threshold": "12.0000%",
+          "value": "6.0194%",
+          "status": "PASS"
+        }
+      ],
+      "composite_score": 0.6822,
+      "stage": 3
+    },
+    "epoch_26": {
+      "sha256": "9dc7dbd0cd80f6c391f02330d2f8d35a7f976d98aeaa1abf0c372bf45a298f16",
+      "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_infer_e26",
+      "infer_sha256": "c27d7c73adc710f171bdfe27270d2a19e6e9642ea400cef4846458ff7882fc48",
+      "clean_cer_pct": 4.73,
+      "char_cer_pct": 1.57,
+      "symbols_acc_pct": 100.0,
+      "symbols_passed": "280/280",
+      "failing_symbols": [],
+      "hyphen_acc_pct": 97.14,
+      "blank_passed": true,
+      "fullpage_cer_pct": 5.99,
+      "fullpage_recall_pct": 99.58,
+      "fullpage_l5_cer_pct": 8.52,
+      "stress_82_cer_pct": 2.41,
+      "probe_100_w480_cer_pct": 2.05,
+      "harum_crops_cer_pct": 1.46,
+      "harum_exact_lines": "18/25",
+      "gates_passed": 6,
+      "valid_for_release": true,
+      "gates": [
+        {
+          "gate": "Gate 1: Clean-Frozen Non-Regression",
+          "baseline": "11.7967%",
+          "tolerance": "+0.20%",
+          "threshold": "11.9967%",
+          "value": "4.7342%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+          "min_acc": "99.0%",
+          "value": "100.0000%",
+          "failing_symbols": [],
+          "failing_count": 0,
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+          "min_acc": "95.0%",
+          "value": "97.1429%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+          "white_pred": "",
+          "gray_pred": "",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 5: Character-Frozen Non-Regression",
+          "baseline": "4.1830%",
+          "tolerance": "+0.21%",
+          "threshold": "4.3930%",
+          "value": "1.5660%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+          "threshold": "12.0000%",
+          "value": "5.9888%",
+          "status": "PASS"
+        }
+      ],
+      "composite_score": 0.682,
+      "stage": 3
+    },
+    "epoch_27": {
+      "sha256": "5281e75d8e5e113fd98238f4d53effd2e89c6a34a8575e0c88381524a7819057",
+      "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_infer_e27",
+      "infer_sha256": "7c058d46ee43a78d827325d11be9c909658ef2eb9f4960ac1a9cf1c5df292627",
+      "clean_cer_pct": 4.73,
+      "char_cer_pct": 1.44,
+      "symbols_acc_pct": 100.0,
+      "symbols_passed": "280/280",
+      "failing_symbols": [],
+      "hyphen_acc_pct": 97.14,
+      "blank_passed": true,
+      "fullpage_cer_pct": 6.12,
+      "fullpage_recall_pct": 99.58,
+      "fullpage_l5_cer_pct": 8.7,
+      "stress_82_cer_pct": 2.42,
+      "probe_100_w480_cer_pct": 2.1,
+      "harum_crops_cer_pct": 1.58,
+      "harum_exact_lines": "17/25",
+      "gates_passed": 6,
+      "valid_for_release": true,
+      "gates": [
+        {
+          "gate": "Gate 1: Clean-Frozen Non-Regression",
+          "baseline": "11.7967%",
+          "tolerance": "+0.20%",
+          "threshold": "11.9967%",
+          "value": "4.7342%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+          "min_acc": "99.0%",
+          "value": "100.0000%",
+          "failing_symbols": [],
+          "failing_count": 0,
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+          "min_acc": "95.0%",
+          "value": "97.1429%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+          "white_pred": "",
+          "gray_pred": "",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 5: Character-Frozen Non-Regression",
+          "baseline": "4.1830%",
+          "tolerance": "+0.21%",
+          "threshold": "4.3930%",
+          "value": "1.4424%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+          "threshold": "12.0000%",
+          "value": "6.1216%",
+          "status": "PASS"
+        }
+      ],
+      "composite_score": 0.6822,
+      "stage": 3
+    },
+    "epoch_28": {
+      "sha256": "2fbf937c09b0a29e9b6bdb27b2cccc5df9048d35d38c3d86cf89732bfb1b8a95",
+      "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_infer_e28",
+      "infer_sha256": "089a1a374f7605d02b3745bdcb0dd75f25a888fc35be6adba899fbb424bd9c40",
+      "clean_cer_pct": 4.85,
+      "char_cer_pct": 1.44,
+      "symbols_acc_pct": 100.0,
+      "symbols_passed": "280/280",
+      "failing_symbols": [],
+      "hyphen_acc_pct": 97.14,
+      "blank_passed": true,
+      "fullpage_cer_pct": 6.12,
+      "fullpage_recall_pct": 99.58,
+      "fullpage_l5_cer_pct": 8.79,
+      "stress_82_cer_pct": 2.7,
+      "probe_100_w480_cer_pct": 2.1,
+      "harum_crops_cer_pct": 1.58,
+      "harum_exact_lines": "17/25",
+      "gates_passed": 6,
+      "valid_for_release": true,
+      "gates": [
+        {
+          "gate": "Gate 1: Clean-Frozen Non-Regression",
+          "baseline": "11.7967%",
+          "tolerance": "+0.20%",
+          "threshold": "11.9967%",
+          "value": "4.8506%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+          "min_acc": "99.0%",
+          "value": "100.0000%",
+          "failing_symbols": [],
+          "failing_count": 0,
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+          "min_acc": "95.0%",
+          "value": "97.1429%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+          "white_pred": "",
+          "gray_pred": "",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 5: Character-Frozen Non-Regression",
+          "baseline": "4.1830%",
+          "tolerance": "+0.21%",
+          "threshold": "4.3930%",
+          "value": "1.4424%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+          "threshold": "12.0000%",
+          "value": "6.1216%",
+          "status": "PASS"
+        }
+      ],
+      "composite_score": 0.682,
+      "stage": 3
+    },
+    "epoch_29": {
+      "sha256": "5ad25564e95f35720fb2a2fbd6cf8f1c78ec46e30e8c7083a82108337ff7185d",
+      "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_infer_e29",
+      "infer_sha256": "63e94b728a69089ce4961fb1d21b889dedd94a71e489101a81ddd85a3667c5f3",
+      "clean_cer_pct": 4.88,
+      "char_cer_pct": 1.65,
+      "symbols_acc_pct": 100.0,
+      "symbols_passed": "280/280",
+      "failing_symbols": [],
+      "hyphen_acc_pct": 97.14,
+      "blank_passed": true,
+      "fullpage_cer_pct": 6.01,
+      "fullpage_recall_pct": 99.58,
+      "fullpage_l5_cer_pct": 8.43,
+      "stress_82_cer_pct": 2.63,
+      "probe_100_w480_cer_pct": 2.25,
+      "harum_crops_cer_pct": 1.58,
+      "harum_exact_lines": "17/25",
+      "gates_passed": 6,
+      "valid_for_release": true,
+      "gates": [
+        {
+          "gate": "Gate 1: Clean-Frozen Non-Regression",
+          "baseline": "11.7967%",
+          "tolerance": "+0.20%",
+          "threshold": "11.9967%",
+          "value": "4.8765%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+          "min_acc": "99.0%",
+          "value": "100.0000%",
+          "failing_symbols": [],
+          "failing_count": 0,
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+          "min_acc": "95.0%",
+          "value": "97.1429%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+          "white_pred": "",
+          "gray_pred": "",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 5: Character-Frozen Non-Regression",
+          "baseline": "4.1830%",
+          "tolerance": "+0.21%",
+          "threshold": "4.3930%",
+          "value": "1.6485%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+          "threshold": "12.0000%",
+          "value": "6.0092%",
+          "status": "PASS"
+        }
+      ],
+      "composite_score": 0.6816,
+      "stage": 3
+    },
+    "epoch_30": {
+      "sha256": "a0bb48f585b783116c8c963885a7abfc5ab47f66be056f1809439e1134801b61",
+      "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_infer_e30",
+      "infer_sha256": "a1b43e7a4750ab345f99c71bc535d4d0d0633360d162b2ffeaae60157684ed89",
+      "clean_cer_pct": 4.77,
+      "char_cer_pct": 1.5,
+      "symbols_acc_pct": 100.0,
+      "symbols_passed": "280/280",
+      "failing_symbols": [],
+      "hyphen_acc_pct": 97.14,
+      "blank_passed": true,
+      "fullpage_cer_pct": 6.07,
+      "fullpage_recall_pct": 99.58,
+      "fullpage_l5_cer_pct": 8.65,
+      "stress_82_cer_pct": 2.59,
+      "probe_100_w480_cer_pct": 2.2,
+      "harum_crops_cer_pct": 1.46,
+      "harum_exact_lines": "18/25",
+      "gates_passed": 6,
+      "valid_for_release": true,
+      "gates": [
+        {
+          "gate": "Gate 1: Clean-Frozen Non-Regression",
+          "baseline": "11.7967%",
+          "tolerance": "+0.20%",
+          "threshold": "11.9967%",
+          "value": "4.7730%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+          "min_acc": "99.0%",
+          "value": "100.0000%",
+          "failing_symbols": [],
+          "failing_count": 0,
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+          "min_acc": "95.0%",
+          "value": "97.1429%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+          "white_pred": "",
+          "gray_pred": "",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 5: Character-Frozen Non-Regression",
+          "baseline": "4.1830%",
+          "tolerance": "+0.21%",
+          "threshold": "4.3930%",
+          "value": "1.5042%",
+          "status": "PASS"
+        },
+        {
+          "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+          "threshold": "12.0000%",
+          "value": "6.0705%",
+          "status": "PASS"
+        }
+      ],
+      "composite_score": 0.682,
+      "stage": 3
+    }
+  },
+  "best_epoch": 25,
+  "soup_sweep": {
+    "candidates": {
+      "soup_top2_e25_e27": {
+        "sha256": "0077f18eddc9083e430882247b18d621b5d39c3af7627180d23ccb6db36c1e8b",
+        "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_soup_top2_e25_e27_infer",
+        "infer_sha256": "53650d1ad6bda0b8fb29931efbe964caa40ac3289bab06b880e05be5e3c14e33",
+        "clean_cer_pct": 4.72,
+        "char_cer_pct": 1.44,
+        "symbols_acc_pct": 100.0,
+        "symbols_passed": "280/280",
+        "failing_symbols": [],
+        "hyphen_acc_pct": 97.14,
+        "blank_passed": true,
+        "fullpage_cer_pct": 6.04,
+        "fullpage_recall_pct": 99.58,
+        "fullpage_l5_cer_pct": 8.61,
+        "stress_82_cer_pct": 2.43,
+        "probe_100_w480_cer_pct": 2.1,
+        "harum_crops_cer_pct": 1.58,
+        "harum_exact_lines": "17/25",
+        "gates_passed": 6,
+        "valid_for_release": true,
+        "gates": [
+          {
+            "gate": "Gate 1: Clean-Frozen Non-Regression",
+            "baseline": "11.7967%",
+            "tolerance": "+0.20%",
+            "threshold": "11.9967%",
+            "value": "4.7213%",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+            "min_acc": "99.0%",
+            "value": "100.0000%",
+            "failing_symbols": [],
+            "failing_count": 0,
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+            "min_acc": "95.0%",
+            "value": "97.1429%",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+            "white_pred": "",
+            "gray_pred": "",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 5: Character-Frozen Non-Regression",
+            "baseline": "4.1830%",
+            "tolerance": "+0.21%",
+            "threshold": "4.3930%",
+            "value": "1.4424%",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+            "threshold": "12.0000%",
+            "value": "6.0399%",
+            "status": "PASS"
+          }
+        ],
+        "composite_score": 0.6822,
+        "weights": {
+          "epoch_25": 0.5,
+          "epoch_27": 0.5
+        },
+        "ckpt_path": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_soup_top2_e25_e27_ckpt\\best.pdparams"
+      },
+      "soup_top3_e25_e27_e30": {
+        "sha256": "8eac1e78e5f2af381b88ce210d46e436dfc74434803ada0b84080845d63287a3",
+        "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_soup_top3_e25_e27_e30_infer",
+        "infer_sha256": "7f60e6c9af575ac5c2a5c1f1a2dea4221e42b595a36b5ffd15da0c6f80d7252a",
+        "clean_cer_pct": 4.75,
+        "char_cer_pct": 1.44,
+        "symbols_acc_pct": 100.0,
+        "symbols_passed": "280/280",
+        "failing_symbols": [],
+        "hyphen_acc_pct": 97.14,
+        "blank_passed": true,
+        "fullpage_cer_pct": 6.05,
+        "fullpage_recall_pct": 99.58,
+        "fullpage_l5_cer_pct": 8.65,
+        "stress_82_cer_pct": 2.51,
+        "probe_100_w480_cer_pct": 2.1,
+        "harum_crops_cer_pct": 1.46,
+        "harum_exact_lines": "18/25",
+        "gates_passed": 6,
+        "valid_for_release": true,
+        "gates": [
+          {
+            "gate": "Gate 1: Clean-Frozen Non-Regression",
+            "baseline": "11.7967%",
+            "tolerance": "+0.20%",
+            "threshold": "11.9967%",
+            "value": "4.7471%",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+            "min_acc": "99.0%",
+            "value": "100.0000%",
+            "failing_symbols": [],
+            "failing_count": 0,
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+            "min_acc": "95.0%",
+            "value": "97.1429%",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+            "white_pred": "",
+            "gray_pred": "",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 5: Character-Frozen Non-Regression",
+            "baseline": "4.1830%",
+            "tolerance": "+0.21%",
+            "threshold": "4.3930%",
+            "value": "1.4424%",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+            "threshold": "12.0000%",
+            "value": "6.0501%",
+            "status": "PASS"
+          }
+        ],
+        "composite_score": 0.6821,
+        "weights": {
+          "epoch_25": 0.4,
+          "epoch_27": 0.35,
+          "epoch_30": 0.25
+        },
+        "ckpt_path": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_soup_top3_e25_e27_e30_ckpt\\best.pdparams"
+      },
+      "soup_last3_e28_e29_e30": {
+        "sha256": "aa3af43df69fe5e42a6b4526ef48024696131b9e07afc7f4cc798cbc7de8fff6",
+        "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_soup_last3_e28_e29_e30_infer",
+        "infer_sha256": "ac0eb402a58b0d8263dad2656af947375318932f5dcf347c1e8bddbebb596c0e",
+        "clean_cer_pct": 4.82,
+        "char_cer_pct": 1.46,
+        "symbols_acc_pct": 100.0,
+        "symbols_passed": "280/280",
+        "failing_symbols": [],
+        "hyphen_acc_pct": 97.14,
+        "blank_passed": true,
+        "fullpage_cer_pct": 6.07,
+        "fullpage_recall_pct": 99.58,
+        "fullpage_l5_cer_pct": 8.7,
+        "stress_82_cer_pct": 2.67,
+        "probe_100_w480_cer_pct": 2.25,
+        "harum_crops_cer_pct": 1.46,
+        "harum_exact_lines": "18/25",
+        "gates_passed": 6,
+        "valid_for_release": true,
+        "gates": [
+          {
+            "gate": "Gate 1: Clean-Frozen Non-Regression",
+            "baseline": "11.7967%",
+            "tolerance": "+0.20%",
+            "threshold": "11.9967%",
+            "value": "4.8247%",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+            "min_acc": "99.0%",
+            "value": "100.0000%",
+            "failing_symbols": [],
+            "failing_count": 0,
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+            "min_acc": "95.0%",
+            "value": "97.1429%",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+            "white_pred": "",
+            "gray_pred": "",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 5: Character-Frozen Non-Regression",
+            "baseline": "4.1830%",
+            "tolerance": "+0.21%",
+            "threshold": "4.3930%",
+            "value": "1.4630%",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+            "threshold": "12.0000%",
+            "value": "6.0705%",
+            "status": "PASS"
+          }
+        ],
+        "composite_score": 0.682,
+        "weights": {
+          "epoch_28": 0.3,
+          "epoch_29": 0.35,
+          "epoch_30": 0.35
+        },
+        "ckpt_path": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_soup_last3_e28_e29_e30_ckpt\\best.pdparams"
+      }
+    },
+    "best_key": "soup_top2_e25_e27"
+  },
+  "inbasin_wise_sweep": {
+    "candidates": {
+      "inbasin_wise_a25": {
+        "sha256": "2343c1dca329dd3d04009a7bd1e3ad469573636d78a9fc78bc54303b1ef726a3",
+        "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_inbasin_wise_a25_infer",
+        "infer_sha256": "89418cfa938fbf1d184ee6d1dcde34b50784bd5a14cf42c9c923c09f3024beda",
+        "clean_cer_pct": 5.24,
+        "char_cer_pct": 2.62,
+        "symbols_acc_pct": 98.57,
+        "symbols_passed": "276/280",
+        "failing_symbols": [
+          "!",
+          "<",
+          "_",
+          "]"
+        ],
+        "hyphen_acc_pct": 91.43,
+        "blank_passed": true,
+        "fullpage_cer_pct": 6.51,
+        "fullpage_recall_pct": 99.58,
+        "fullpage_l5_cer_pct": 9.01,
+        "stress_82_cer_pct": 4.71,
+        "probe_100_w480_cer_pct": 3.79,
+        "harum_crops_cer_pct": 1.7,
+        "harum_exact_lines": "16/25",
+        "gates_passed": 4,
+        "valid_for_release": false,
+        "gates": [
+          {
+            "gate": "Gate 1: Clean-Frozen Non-Regression",
+            "baseline": "11.7967%",
+            "tolerance": "+0.20%",
+            "threshold": "11.9967%",
+            "value": "5.2386%",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+            "min_acc": "99.0%",
+            "value": "98.5714%",
+            "failing_symbols": [
+              "!",
+              "<",
+              "_",
+              "]"
+            ],
+            "failing_count": 4,
+            "status": "FAIL"
+          },
+          {
+            "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+            "min_acc": "95.0%",
+            "value": "91.4286%",
+            "status": "FAIL"
+          },
+          {
+            "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+            "white_pred": "",
+            "gray_pred": "",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 5: Character-Frozen Non-Regression",
+            "baseline": "4.1830%",
+            "tolerance": "+0.21%",
+            "threshold": "4.3930%",
+            "value": "2.6169%",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+            "threshold": "12.0000%",
+            "value": "6.5100%",
+            "status": "PASS"
+          }
+        ],
+        "composite_score": 0.6568,
+        "alpha_early": 0.25,
+        "alpha_rest": 0.25,
+        "ckpt_path": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_inbasin_wise_a25_ckpt\\best.pdparams"
+      },
+      "inbasin_wise_a35": {
+        "sha256": "341399a3b082e6d62be8f8a59c795127f0e1193c4cb1747b71bf6d23e23e9d3a",
+        "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_inbasin_wise_a35_infer",
+        "infer_sha256": "f736b5b392d7559f0ec1bcfe620242be6e0582157f33ddc09c5d9ad0b9fb0382",
+        "clean_cer_pct": 5.41,
+        "char_cer_pct": 2.72,
+        "symbols_acc_pct": 97.5,
+        "symbols_passed": "273/280",
+        "failing_symbols": [
+          "!",
+          "<",
+          "_",
+          "[",
+          "]"
+        ],
+        "hyphen_acc_pct": 91.43,
+        "blank_passed": true,
+        "fullpage_cer_pct": 6.55,
+        "fullpage_recall_pct": 99.58,
+        "fullpage_l5_cer_pct": 9.1,
+        "stress_82_cer_pct": 4.67,
+        "probe_100_w480_cer_pct": 4.0,
+        "harum_crops_cer_pct": 1.58,
+        "harum_exact_lines": "17/25",
+        "gates_passed": 4,
+        "valid_for_release": false,
+        "gates": [
+          {
+            "gate": "Gate 1: Clean-Frozen Non-Regression",
+            "baseline": "11.7967%",
+            "tolerance": "+0.20%",
+            "threshold": "11.9967%",
+            "value": "5.4068%",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+            "min_acc": "99.0%",
+            "value": "97.5000%",
+            "failing_symbols": [
+              "!",
+              "<",
+              "_",
+              "[",
+              "]"
+            ],
+            "failing_count": 5,
+            "status": "FAIL"
+          },
+          {
+            "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+            "min_acc": "95.0%",
+            "value": "91.4286%",
+            "status": "FAIL"
+          },
+          {
+            "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+            "white_pred": "",
+            "gray_pred": "",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 5: Character-Frozen Non-Regression",
+            "baseline": "4.1830%",
+            "tolerance": "+0.21%",
+            "threshold": "4.3930%",
+            "value": "2.7200%",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+            "threshold": "12.0000%",
+            "value": "6.5508%",
+            "status": "PASS"
+          }
+        ],
+        "composite_score": 0.6521,
+        "alpha_early": 0.35,
+        "alpha_rest": 0.35,
+        "ckpt_path": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_inbasin_wise_a35_ckpt\\best.pdparams"
+      },
+      "inbasin_wise_a45": {
+        "sha256": "1d210e1c3c74e56b53124f25e4258c50b337235e67aa22029f13d39eea61ee5d",
+        "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_inbasin_wise_a45_infer",
+        "infer_sha256": "d9cd47aad887225dcc480f82e5f94e3f6c66882ab9c5c4e5c00c93ff1b6e40f7",
+        "clean_cer_pct": 5.5,
+        "char_cer_pct": 2.66,
+        "symbols_acc_pct": 96.79,
+        "symbols_passed": "271/280",
+        "failing_symbols": [
+          "<",
+          "_",
+          "[",
+          "]"
+        ],
+        "hyphen_acc_pct": 88.57,
+        "blank_passed": true,
+        "fullpage_cer_pct": 6.65,
+        "fullpage_recall_pct": 99.58,
+        "fullpage_l5_cer_pct": 9.5,
+        "stress_82_cer_pct": 4.8,
+        "probe_100_w480_cer_pct": 4.0,
+        "harum_crops_cer_pct": 1.7,
+        "harum_exact_lines": "16/25",
+        "gates_passed": 4,
+        "valid_for_release": false,
+        "gates": [
+          {
+            "gate": "Gate 1: Clean-Frozen Non-Regression",
+            "baseline": "11.7967%",
+            "tolerance": "+0.20%",
+            "threshold": "11.9967%",
+            "value": "5.4973%",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+            "min_acc": "99.0%",
+            "value": "96.7857%",
+            "failing_symbols": [
+              "<",
+              "_",
+              "[",
+              "]"
+            ],
+            "failing_count": 4,
+            "status": "FAIL"
+          },
+          {
+            "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+            "min_acc": "95.0%",
+            "value": "88.5714%",
+            "status": "FAIL"
+          },
+          {
+            "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+            "white_pred": "",
+            "gray_pred": "",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 5: Character-Frozen Non-Regression",
+            "baseline": "4.1830%",
+            "tolerance": "+0.21%",
+            "threshold": "4.3930%",
+            "value": "2.6581%",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+            "threshold": "12.0000%",
+            "value": "6.6530%",
+            "status": "PASS"
+          }
+        ],
+        "composite_score": 0.6406,
+        "alpha_early": 0.45,
+        "alpha_rest": 0.45,
+        "ckpt_path": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_inbasin_wise_a45_ckpt\\best.pdparams"
+      },
+      "inbasin_wise_lw_15_45": {
+        "sha256": "9a6dd2ca9ac41d6bb2116a0d77f8b49b9fc832996dc0912252cab1a5e9904d29",
+        "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_inbasin_wise_lw_15_45_infer",
+        "infer_sha256": "dfce923a5cfc3d67dd247ea6830f0a82355731cce9fd25b31385d8a42fb24a1e",
+        "clean_cer_pct": 5.25,
+        "char_cer_pct": 2.8,
+        "symbols_acc_pct": 97.5,
+        "symbols_passed": "273/280",
+        "failing_symbols": [
+          "<",
+          "_",
+          "[",
+          "]",
+          "/"
+        ],
+        "hyphen_acc_pct": 90.0,
+        "blank_passed": true,
+        "fullpage_cer_pct": 6.59,
+        "fullpage_recall_pct": 99.58,
+        "fullpage_l5_cer_pct": 9.41,
+        "stress_82_cer_pct": 5.04,
+        "probe_100_w480_cer_pct": 3.84,
+        "harum_crops_cer_pct": 1.58,
+        "harum_exact_lines": "17/25",
+        "gates_passed": 4,
+        "valid_for_release": false,
+        "gates": [
+          {
+            "gate": "Gate 1: Clean-Frozen Non-Regression",
+            "baseline": "11.7967%",
+            "tolerance": "+0.20%",
+            "threshold": "11.9967%",
+            "value": "5.2516%",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+            "min_acc": "99.0%",
+            "value": "97.5000%",
+            "failing_symbols": [
+              "<",
+              "_",
+              "[",
+              "]",
+              "/"
+            ],
+            "failing_count": 5,
+            "status": "FAIL"
+          },
+          {
+            "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+            "min_acc": "95.0%",
+            "value": "90.0000%",
+            "status": "FAIL"
+          },
+          {
+            "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+            "white_pred": "",
+            "gray_pred": "",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 5: Character-Frozen Non-Regression",
+            "baseline": "4.1830%",
+            "tolerance": "+0.21%",
+            "threshold": "4.3930%",
+            "value": "2.8024%",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+            "threshold": "12.0000%",
+            "value": "6.5917%",
+            "status": "PASS"
+          }
+        ],
+        "composite_score": 0.6479,
+        "alpha_early": 0.15,
+        "alpha_rest": 0.45,
+        "ckpt_path": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_inbasin_wise_lw_15_45_ckpt\\best.pdparams"
+      },
+      "inbasin_wise_lw_20_55": {
+        "sha256": "bce81af90ecbfb8ba0cec332c753dd97c14a5188e147e39eb7e2ef269518e842",
+        "infer_dir": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_inbasin_wise_lw_20_55_infer",
+        "infer_sha256": "533fea73e9a68d797ff7cf15f090105e9063168bd8c2875c6442efff336f1a30",
+        "clean_cer_pct": 5.25,
+        "char_cer_pct": 2.86,
+        "symbols_acc_pct": 96.07,
+        "symbols_passed": "269/280",
+        "failing_symbols": [
+          "<",
+          "{",
+          "_",
+          "[",
+          "]",
+          "/"
+        ],
+        "hyphen_acc_pct": 87.14,
+        "blank_passed": true,
+        "fullpage_cer_pct": 6.55,
+        "fullpage_recall_pct": 99.58,
+        "fullpage_l5_cer_pct": 9.32,
+        "stress_82_cer_pct": 5.28,
+        "probe_100_w480_cer_pct": 3.79,
+        "harum_crops_cer_pct": 1.58,
+        "harum_exact_lines": "17/25",
+        "gates_passed": 4,
+        "valid_for_release": false,
+        "gates": [
+          {
+            "gate": "Gate 1: Clean-Frozen Non-Regression",
+            "baseline": "11.7967%",
+            "tolerance": "+0.20%",
+            "threshold": "11.9967%",
+            "value": "5.2516%",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 2: 14 Mandatory Symbols Accuracy (>=99.0% each)",
+            "min_acc": "99.0%",
+            "value": "96.0714%",
+            "failing_symbols": [
+              "<",
+              "{",
+              "_",
+              "[",
+              "]",
+              "/"
+            ],
+            "failing_count": 6,
+            "status": "FAIL"
+          },
+          {
+            "gate": "Gate 3: Hyphen Multi-Context Accuracy (>=95.0%)",
+            "min_acc": "95.0%",
+            "value": "87.1429%",
+            "status": "FAIL"
+          },
+          {
+            "gate": "Gate 4: Zero Blank Hallucination (White & Gray)",
+            "white_pred": "",
+            "gray_pred": "",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 5: Character-Frozen Non-Regression",
+            "baseline": "4.1830%",
+            "tolerance": "+0.21%",
+            "threshold": "4.3930%",
+            "value": "2.8642%",
+            "status": "PASS"
+          },
+          {
+            "gate": "Gate 6: FullPage-Frozen Matched Line CER (<=12.0%)",
+            "threshold": "12.0000%",
+            "value": "6.5508%",
+            "status": "PASS"
+          }
+        ],
+        "composite_score": 0.6335,
+        "alpha_early": 0.2,
+        "alpha_rest": 0.55,
+        "ckpt_path": "E:\\Phuc's Data\\Github\\Cham-OCR\\ocr-training\\output\\v26_full_inbasin_wise_lw_20_55_ckpt\\best.pdparams"
+      }
+    }
+  },
+  "promotion_decisions": {
+    "epoch_best": {
+      "best_epoch": 25,
+      "realscan_v2": {
+        "harum_crop_cer_pct": 1.58,
+        "wikimedia_crop_cer_pct": 36.19,
+        "ood180_crop_cer_pct": 27.92,
+        "ood12_e2e_doc_cer_pct": 24.96,
+        "ood12_e2e_lines": "180/180"
+      },
+      "checks": {
+        "valid_for_release_6_of_6": true,
+        "clean_non_regression": true,
+        "char_non_regression": true,
+        "blank_guard": true,
+        "harum_crop_non_regression": true,
+        "ood180_crop_non_regression": false,
+        "ood12_e2e_non_regression": true,
+        "wikimedia_non_regression": true,
+        "beats_or_ties_active_prod": true
+      },
+      "qualifies": false
+    },
+    "soup": {
+      "best_key": "soup_top2_e25_e27",
+      "weights": {
+        "epoch_25": 0.5,
+        "epoch_27": 0.5
+      },
+      "realscan_v2": {
+        "harum_crop_cer_pct": 1.58,
+        "wikimedia_crop_cer_pct": 36.19,
+        "ood180_crop_cer_pct": 27.89,
+        "ood12_e2e_doc_cer_pct": 24.98,
+        "ood12_e2e_lines": "180/180"
+      },
+      "checks": {
+        "valid_for_release_6_of_6": true,
+        "clean_non_regression": true,
+        "char_non_regression": true,
+        "blank_guard": true,
+        "harum_crop_non_regression": true,
+        "ood180_crop_non_regression": false,
+        "ood12_e2e_non_regression": true,
+        "wikimedia_non_regression": true,
+        "beats_or_ties_active_prod": true
+      },
+      "qualifies": false
+    }
+  },
+  "winner": null,
+  "promoted": false,
+  "production_after_sha256_16": "85525b0ca091acaf"
+}

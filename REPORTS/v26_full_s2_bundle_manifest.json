@@ -1,0 +1,21 @@
+{
+  "stage": 2,
+  "base_ckpt_sha256": "9c5fe1238a4020b74797ac1d80d2341dc4d941e35985f1ab56732c507051197b",
+  "staged_checkpoint_files": [
+    "iter_epoch_10.pdparams",
+    "iter_epoch_10.pdopt",
+    "iter_epoch_10.states"
+  ],
+  "extra_patches": {
+    "ppocr/modeling/architectures/base_model.py": "900f0ec2042eb9656e76c7fb0457c2629daed3eaf4fd520bbcde2944113f92b5",
+    "ppocr/modeling/heads/rec_multi_head.py": "ff8f5957269b4d07c92cf8a2e3180f50507db71d2a2f25a20b4ec77b7c6a9977",
+    "ppocr/modeling/necks/rnn.py": "cefca1d0ebe7bd798f155901ef7b979ccab3f4dfcf17fb9be8da9f25463bf720",
+    "ppocr/modeling/backbones/rec_svtrnet.py": "a7c3cc0f4ccfa0067356cfa0af065bfc6f6b9c4a9e277e3e8ef45d4b0c45edb6",
+    "ppocr/modeling/backbones/rec_lcnetv3.py": "b0fc558e3e97c4fa5658b5a888aa6ce3a4d24667b72243fef019713a2502416d",
+    "tools/program.py": "d4bb5f33dea038e50e532d15728a54f52070237a150abaa05b4402c97135ccf2"
+  },
+  "dataset_zip": "v26_full_dataset.zip",
+  "dataset_zip_bytes": 425769594,
+  "dataset_files": null,
+  "base_and_configs_sha256": "f058d21862721cb4b28de6a7a535355c3c81d99359c9add7a6377a882bab0520"
+}

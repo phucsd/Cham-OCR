@@ -373,6 +373,126 @@ def test_ingest_studio_to_realscan_gold_cli():
 import unittest  # noqa: E402
 
 
+# ------------------------------------------------------------------------------------------------
+# Cham-DBNet box_type='poly' + curved-line (ribbon) rectification
+# ------------------------------------------------------------------------------------------------
+def _wave_y(x, y0, amp=14.0, period=420.0, phase=0.0):
+    return y0 + amp * np.sin(2.0 * np.pi * x / period + phase)
+
+
+def _wave_page(colors=((20, 20, 20), (20, 20, 200)), y0s=(80.0, 116.0), w=900, h=200):
+    """Two stacked sinusoidal 'text lines' (glyph blocks + small diacritic dots) on paper."""
+    page = np.full((h, w, 3), 236, np.uint8)
+    rs = np.random.RandomState(3)
+    for y0, col in zip(y0s, colors):
+        for x in range(60, w - 60, 15):
+            yc = _wave_y(x + 4, y0)
+            gh = int(rs.randint(9, 14))
+            cv2.rectangle(page, (x, int(round(yc - gh / 2))), (x + 8, int(round(yc + gh / 2))), col, -1)
+            if x % 45 == 0:
+                cv2.circle(page, (x + 4, int(round(yc - gh / 2 - 4))), 2, col, -1)
+    return page
+
+
+def _wave_poly(y0, x1=55.0, x2=845.0, half=11.0, n=24):
+    xs = np.linspace(x1, x2, n)
+    top = [[x, _wave_y(x, y0) - half] for x in xs]
+    bot = [[x, _wave_y(x, y0) + half] for x in xs[::-1]]
+    return np.array(top + bot, np.float32)
+
+
+def test_merge_line_polygons_keeps_stacked_wavy_lines_and_curvature():
+    a1, a2 = _wave_poly(80.0, 55.0, 430.0), _wave_poly(80.0, 455.0, 845.0)  # line A in 2 fragments
+    b = _wave_poly(116.0)
+    quads = [np.array([[p[:, 0].min(), p[:, 1].min()], [p[:, 0].max(), p[:, 1].min()],
+                       [p[:, 0].max(), p[:, 1].max()], [p[:, 0].min(), p[:, 1].max()]], np.float32) for p in (_wave_poly(80.0), b)]
+    # AABBs of the two wavy lines overlap (28% of their height), their ribbons do not overlap at all
+    assert app.max_stacked_overlap(quads) > 0.25
+    assert app.max_stacked_overlap([_wave_poly(80.0), b]) < 0.05
+    merged = app.merge_line_polygons([b, a2, a1], 900, 200)
+    assert len(merged) == 2, len(merged)
+    top_line = merged[0]
+    assert len(top_line) > 4  # still a curved polygon, not an AABB rectangle
+    x0, t, bt = app.poly_ribbon(top_line)
+    for x in (120, 300, 500, 700):
+        c = (t[x - x0] + bt[x - x0]) / 2.0
+        assert abs(c - _wave_y(x, 80.0)) < 4.0, (x, c, _wave_y(x, 80.0))
+    assert abs(app.poly_thickness(top_line) - 22.0) < 4.0
+    # Reading-order rects use the centerline band (non-overlapping), not the tall AABBs
+    ra, rb = app._reading_rect(merged[0]), app._reading_rect(merged[1])
+    assert ra[3] <= rb[1] + 1.0, (ra, rb)
+
+
+def test_rectify_polygon_line_straightens_and_masks_neighbour():
+    page = _wave_page()
+    pa, pb = _wave_poly(80.0), _wave_poly(116.0)
+    # Generous padding (1.0 x line thickness) so the padded strip reaches the neighbour line's ink
+    strip, info = app.rectify_polygon_line(page, pa, [pb], median_h=22.0, vpad=1.0, mask_outside=True)
+    assert info['masked'] and info['angle_deg'] == 0.0
+    assert strip.shape[0] < 75 and strip.shape[1] > 780, strip.shape
+    red = (strip[:, :, 2] > 120) & (strip[:, :, 0] < 90) & (strip[:, :, 1] < 90)
+    dark = strip.max(axis=2) < 90
+    assert red.sum() == 0, red.sum()          # neighbour line ink never intrudes
+    # straight: per-column ink centroid of the own line stays on one row (unrectified: std ~ amp/sqrt2 = 10px)
+    cols = [np.nonzero(dark[:, x])[0].mean() for x in range(strip.shape[1]) if dark[:, x].sum() >= 4]
+    assert len(cols) > 200 and float(np.std(cols)) < 3.0, float(np.std(cols))
+    # diacritic dots above the glyph blocks are preserved (ink above the glyph band)
+    band = np.nonzero(dark.sum(axis=1) > 0.2 * dark.sum(axis=1).max())[0]
+    assert dark[:band.min()].sum() > 0
+    # without masking the padded strip would contain neighbour ink (the mask is what removes it)
+    strip_nm, _ = app.rectify_polygon_line(page, pa, [pb], median_h=22.0, vpad=1.0, mask_outside=False)
+    red_nm = (strip_nm[:, :, 2] > 120) & (strip_nm[:, :, 0] < 90) & (strip_nm[:, :, 1] < 90)
+    assert red_nm.sum() > 0
+    # The perspective quad crop of the same line's AABB (what box_type='quad' produced) swallows the neighbour
+    x1, y1, x2, y2 = app._aabb(pa)
+    aabb = page[int(y1):int(y2), int(x1):int(x2)]
+    assert ((aabb[:, :, 2] > 120) & (aabb[:, :, 0] < 90)).sum() > 100
+
+
+class _FakeDetector:
+    def __init__(self, boxes, box_type):
+        self.boxes = boxes
+        self.args = type('A', (), {'det_box_type': box_type})()
+
+    def __call__(self, img):
+        return self.boxes, 0.0
+
+
+def test_segment_lines_dbnet_poly_and_quad_paths():
+    try:
+        import tools.infer.utility as utility
+    except Exception:  # PaddleOCR not importable in this environment
+        return
+    page = _wave_page(colors=((20, 20, 20), (20, 20, 20)))
+    polys = [_wave_poly(80.0, 55.0, 430.0), _wave_poly(80.0, 455.0, 845.0), _wave_poly(116.0)]
+    crops, metas = app.segment_lines_dbnet(page, _FakeDetector(polys, 'poly'), ink=None)
+    assert len(crops) == 2, len(crops)
+    assert all(m['crop_mode'] == 'ribbon_rectified' and len(m['polygon']) > 4 for m in metas)
+    assert all(c.shape[0] < 50 for c in crops)
+    # Quad path stays the legacy perspective crop, byte for byte
+    quads = [np.array([[60, 40], [840, 40], [840, 70], [60, 70]], np.float32),
+             np.array([[60, 120], [840, 124], [840, 150], [60, 146]], np.float32)]
+    crops_q, metas_q = app.segment_lines_dbnet(page, _FakeDetector(quads, 'quad'), ink=None)
+    assert len(crops_q) == 2
+    for c, q in zip(crops_q, quads):
+        ref = utility.get_rotate_crop_image(page, q.copy())
+        assert c.shape == ref.shape and np.array_equal(c, ref)
+    assert all('crop_mode' not in m and len(m['polygon']) == 4 for m in metas_q)
+
+
+def test_poly_clip_and_line_height_helpers():
+    ragged = [[[1, 2], [50, 2], [60, 9], [50, 20], [-5, 20]], [[0, 0], [10, 0], [10, 10]]]
+    out = app._clip_poly_det_res(ragged, (15, 55, 3))
+    assert isinstance(out, list) and [len(p) for p in out] == [5, 3]
+    assert out[0][:, 0].min() >= 0 and out[0][:, 0].max() <= 54 and out[0][:, 1].max() <= 14
+    quad = np.array([[0, 10], [100, 30], [100, 52], [0, 32]], np.float32)
+    assert app._line_height(quad) == float(np.ptp(quad[:, 1]))  # legacy AABB height for quads
+    assert abs(app._line_height(_wave_poly(80.0)) - 22.0) < 3.0   # ribbon thickness for curved polygons
+    assert app._is_poly_detector(_FakeDetector([], 'poly')) and not app._is_poly_detector(_FakeDetector([], 'quad'))
+    assert app.CHAM_DET_BOX_TYPE == os.getenv('CHAM_DET_BOX_TYPE', 'poly').strip().lower()
+    assert abs(app.CHAM_DET_UNCLIP - float(os.getenv('CHAM_DET_UNCLIP', '1.8'))) < 1e-6
+
+
 class TestQualityGates(unittest.TestCase):
     pass
 
