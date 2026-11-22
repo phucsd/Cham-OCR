@@ -1,0 +1,75 @@
+{
+  "created_utc": "2026-11-22T09:35:47Z",
+  "fixtures": [
+    {
+      "filename": "clean_2col_12lines.png",
+      "relpath": "ocr-benchmark/data/priority_b_2026_11_22/images/clean_2col_12lines.png",
+      "width": 1280,
+      "height": 620,
+      "sha256": "558c30dd1e358c59365dc070ab74ab5169ec99e8b2fce10dc5a2d3f5c7ca36e3"
+    },
+    {
+      "filename": "clean_titled_2col_11lines.png",
+      "relpath": "ocr-benchmark/data/priority_b_2026_11_22/images/clean_titled_2col_11lines.png",
+      "width": 1280,
+      "height": 650,
+      "sha256": "553e52c81fc1424ee4fae59a2396e5961dbcee3ceccf4009d2aca7e3b4c9b73a"
+    },
+    {
+      "filename": "intra_01_cham_heavy_paren_vi.png",
+      "relpath": "ocr-benchmark/data/priority_b_2026_11_22/images/intra_01_cham_heavy_paren_vi.png",
+      "width": 560,
+      "height": 73,
+      "sha256": "2249114abb9669dfdca194e7c9350973ca390dcd10493405f03e0752e87402bc"
+    },
+    {
+      "filename": "intra_02_balanced_cham_vi.png",
+      "relpath": "ocr-benchmark/data/priority_b_2026_11_22/images/intra_02_balanced_cham_vi.png",
+      "width": 566,
+      "height": 63,
+      "sha256": "bb96eec1dc17d64772db8330f5eb9c7b6e5ed09b8c004dd9348e9693f8e5fee8"
+    },
+    {
+      "filename": "intra_03_vi_head_cham_quote.png",
+      "relpath": "ocr-benchmark/data/priority_b_2026_11_22/images/intra_03_vi_head_cham_quote.png",
+      "width": 646,
+      "height": 72,
+      "sha256": "7bac9fffe820102838983da914cad4535dc77453ee5d5f00af770b19fa99b357"
+    },
+    {
+      "filename": "intra_04_cham_head_vi_def.png",
+      "relpath": "ocr-benchmark/data/priority_b_2026_11_22/images/intra_04_cham_head_vi_def.png",
+      "width": 822,
+      "height": 68,
+      "sha256": "f141b54aa345592e839769426fd2f99880f5cd539ba289aba0119dff16adebee"
+    },
+    {
+      "filename": "intra_05_cham_stanza_vi_year.png",
+      "relpath": "ocr-benchmark/data/priority_b_2026_11_22/images/intra_05_cham_stanza_vi_year.png",
+      "width": 757,
+      "height": 70,
+      "sha256": "9505de262e30f7a6e46b8925dac12caee1d35c6facf460aea268cf7062e7155a"
+    },
+    {
+      "filename": "intra_06_vi_citation_cham_tail.png",
+      "relpath": "ocr-benchmark/data/priority_b_2026_11_22/images/intra_06_vi_citation_cham_tail.png",
+      "width": 724,
+      "height": 72,
+      "sha256": "45d6588fc18779687599228350c0a73d036442b0ac5b520d5073ac9e898a12ca"
+    },
+    {
+      "filename": "intra_07_french_efeo_cham.png",
+      "relpath": "ocr-benchmark/data/priority_b_2026_11_22/images/intra_07_french_efeo_cham.png",
+      "width": 613,
+      "height": 72,
+      "sha256": "35c29574d80229f3c59d4558436cd7045e34730f922d84986214bff8888b563c"
+    },
+    {
+      "filename": "intra_08_alternating_spans.png",
+      "relpath": "ocr-benchmark/data/priority_b_2026_11_22/images/intra_08_alternating_spans.png",
+      "width": 646,
+      "height": 64,
+      "sha256": "b24790fbe5487610bc981ec95e88ee030648013356bfcbb6834f0d07dd7a0d9a"
+    }
+  ]
+}

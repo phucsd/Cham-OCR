@@ -1,0 +1,1937 @@
+{
+  "created_utc": "2026-11-22T09:35:47Z",
+  "target_url": "https://ocr.cham.asia",
+  "elapsed_sec": 361.65,
+  "total_live_http_calls": 132,
+  "module_1_and_2_detector_vs_recognizer_and_editorial": {
+    "frozen_30_line_detection": {
+      "pages": 30,
+      "gt_lines": 147,
+      "pred_lines": 146,
+      "matched_lines": 146,
+      "missed_gt_lines": 1,
+      "spurious_pred_lines": 0,
+      "line_recall_pct": 99.32,
+      "line_precision_pct": 100.0
+    },
+    "cer_decoupling_frozen_30": {
+      "strict_full_page_cer_pct": 6.71,
+      "philological_normalized_full_page_cer_pct": 6.06,
+      "strict_matched_line_cer_pct": 5.8,
+      "philological_normalized_matched_line_cer_pct": 5.13,
+      "strict_page_edits": 401,
+      "philological_page_edits": 362,
+      "strict_matched_edits": 336,
+      "philological_matched_edits": 297
+    },
+    "edit_taxonomy_frozen_30": {
+      "counts": {
+        "philological_space_before_danda": 26,
+        "true_error_other_ascii_punct": 172,
+        "true_error_colon_semicolon_sub": 23,
+        "true_error_cham_danda_drop_or_sub": 8,
+        "true_error_cham_letter_or_diacritic": 69,
+        "philological_endash_hyphen_sub": 11,
+        "true_error_dash_deletion": 8,
+        "arbitrary_space_deletion": 10,
+        "true_error_cham_digit": 7,
+        "arbitrary_space_insertion": 2,
+        "detector_missed_line_chars": 65
+      },
+      "total_aligned_ops": 401,
+      "strict_philological_equivalences_count": 37,
+      "strict_philological_equivalences_share_pct": 9.23,
+      "detector_missed_line_share_pct": 16.21
+    },
+    "synthetic_142_deep_dive": {
+      "gt_line_count": 8,
+      "pred_line_count": 7,
+      "missed_gt_line_indices": [
+        1
+      ],
+      "missed_gt_line_text": "ꨕꨤꩌ ꨨꨣꨬ ꨆꨓꨯꨮꨩ꩝ ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ ꨚꩀ ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝",
+      "missed_gt_line_char_len": 64,
+      "total_page_edits": 87,
+      "total_page_strict_cer_pct": 23.84,
+      "matched_7_lines_edits": 22,
+      "matched_7_lines_chars": 294,
+      "matched_7_lines_strict_cer_pct": 7.48,
+      "missed_line_edit_contribution": 65,
+      "missed_line_share_of_page_error_pct": 74.71,
+      "matched_lines_share_of_page_error_pct": 25.29,
+      "live_document_status": {
+        "status": "ocr_done",
+        "needs_review": false,
+        "reasons": [],
+        "line_count": 7,
+        "ink_ratio": 0.09617,
+        "layout": {
+          "reading_order": "rows",
+          "columns": 1
+        },
+        "uncovered_ink_ratio": 0.0
+      },
+      "live_profiler": {
+        "method": "dbnet",
+        "base_segmentation_sec": 1.7417,
+        "legacy_fast_pass_count": 0,
+        "pass2_rescue_count": 0,
+        "det_lines": 7,
+        "detector": "generic_ppocrv4_dbnet",
+        "detector_switched": false,
+        "uncovered_ink_ratio_primary": 0.0,
+        "dropped_empty_or_noise_lines": 0,
+        "rec_inference_sec": 1.4908,
+        "num_lines": 7,
+        "total_segmentation_sec": 1.7417,
+        "ocr_model_calls": 1,
+        "backend_total_sec": 4.3968
+      },
+      "possible_missed_lines_triggered": false,
+      "direct_ocr_crop_on_missed_gt1": {
+        "bbox": [
+          40,
+          65,
+          864,
+          116
+        ],
+        "gt": "ꨕꨤꩌ ꨨꨣꨬ ꨆꨓꨯꨮꨩ꩝ ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ ꨚꩀ ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝",
+        "pred": "ꨕꨤꩌ ꨨꨣꨬ ꨆꨓꨩ ꨂꨣꩃ ꨌꨩ ꨝꨥꨴꨟꨪꩆ ꨕꨮꩃ ꨋꨭꩇ ꨈꨴꨮꨭꩀ ꨃꨥ ꨢꨮ ꨚꩀ ꨕꨯꨮ ꨝꨪꨟꨯꩂ ꨟꨆꩊ ꩝",
+        "cer_pct": 17.19,
+        "confidence": 0.8541
+      },
+      "valley_fallback_comparison": {
+        "pred_lines": 3,
+        "page_cer_pct": 66.85
+      }
+    },
+    "outlier_pages": [
+      {
+        "id": "synthetic_089",
+        "gt_lines": 2,
+        "pred_lines": 2,
+        "missed_lines": 0,
+        "strict_page_cer_pct": 10.11,
+        "matched_line_strict_cer_pct": 10.23
+      },
+      {
+        "id": "synthetic_134",
+        "gt_lines": 3,
+        "pred_lines": 3,
+        "missed_lines": 0,
+        "strict_page_cer_pct": 10.37,
+        "matched_line_strict_cer_pct": 10.53
+      },
+      {
+        "id": "synthetic_142",
+        "gt_lines": 8,
+        "pred_lines": 7,
+        "missed_lines": 1,
+        "strict_page_cer_pct": 23.84,
+        "matched_line_strict_cer_pct": 7.48
+      }
+    ]
+  },
+  "module_3_two_col_and_intraline_bilingual": {
+    "two_column_reading_order": [
+      {
+        "doc_id": "ood_folio_06_wijaya_2col",
+        "domain": "archival_efeo_2col",
+        "rows": {
+          "pred_lines": 16,
+          "gt_lines": 16,
+          "iou_matched_lines": 16,
+          "kendall_tau_reading_order": 0.4833,
+          "exact_line_order": false,
+          "strict_page_cer_pct": 78.34,
+          "layout_detected": {
+            "reading_order": "rows",
+            "columns": 1
+          }
+        },
+        "auto": {
+          "pred_lines": 16,
+          "gt_lines": 16,
+          "iou_matched_lines": 16,
+          "kendall_tau_reading_order": 1.0,
+          "exact_line_order": true,
+          "strict_page_cer_pct": 49.46,
+          "layout_detected": {
+            "reading_order": "columns",
+            "columns": 2
+          }
+        },
+        "cer_delta_auto_minus_rows_pct": -28.88,
+        "tau_gain_auto_minus_rows": 0.5167
+      },
+      {
+        "doc_id": "ood_folio_08_udong_2col",
+        "domain": "archival_efeo_2col",
+        "rows": {
+          "pred_lines": 16,
+          "gt_lines": 16,
+          "iou_matched_lines": 16,
+          "kendall_tau_reading_order": 0.4167,
+          "exact_line_order": false,
+          "strict_page_cer_pct": 70.48,
+          "layout_detected": {
+            "reading_order": "rows",
+            "columns": 1
+          }
+        },
+        "auto": {
+          "pred_lines": 16,
+          "gt_lines": 16,
+          "iou_matched_lines": 16,
+          "kendall_tau_reading_order": 1.0,
+          "exact_line_order": true,
+          "strict_page_cer_pct": 43.17,
+          "layout_detected": {
+            "reading_order": "columns",
+            "columns": 2
+          }
+        },
+        "cer_delta_auto_minus_rows_pct": -27.31,
+        "tau_gain_auto_minus_rows": 0.5833
+      },
+      {
+        "doc_id": "ood_v3_14_kraong_2col",
+        "domain": "archival_efeo_2col",
+        "rows": {
+          "pred_lines": 16,
+          "gt_lines": 16,
+          "iou_matched_lines": 16,
+          "kendall_tau_reading_order": 0.4667,
+          "exact_line_order": false,
+          "strict_page_cer_pct": 74.44,
+          "layout_detected": {
+            "reading_order": "rows",
+            "columns": 1
+          }
+        },
+        "auto": {
+          "pred_lines": 16,
+          "gt_lines": 16,
+          "iou_matched_lines": 16,
+          "kendall_tau_reading_order": 1.0,
+          "exact_line_order": true,
+          "strict_page_cer_pct": 18.8,
+          "layout_detected": {
+            "reading_order": "columns",
+            "columns": 2
+          }
+        },
+        "cer_delta_auto_minus_rows_pct": -55.64,
+        "tau_gain_auto_minus_rows": 0.5333
+      },
+      {
+        "doc_id": "clean_2col_12lines",
+        "domain": "clean_harfbuzz_2col",
+        "rows": {
+          "pred_lines": 12,
+          "gt_lines": 12,
+          "iou_matched_lines": 12,
+          "kendall_tau_reading_order": 0.4545,
+          "exact_line_order": false,
+          "strict_page_cer_pct": 69.96,
+          "layout_detected": {
+            "reading_order": "rows",
+            "columns": 1
+          }
+        },
+        "auto": {
+          "pred_lines": 12,
+          "gt_lines": 12,
+          "iou_matched_lines": 12,
+          "kendall_tau_reading_order": 1.0,
+          "exact_line_order": true,
+          "strict_page_cer_pct": 3.7,
+          "layout_detected": {
+            "reading_order": "columns",
+            "columns": 2
+          }
+        },
+        "cer_delta_auto_minus_rows_pct": -66.26,
+        "tau_gain_auto_minus_rows": 0.5455
+      },
+      {
+        "doc_id": "clean_titled_2col_11lines",
+        "domain": "clean_harfbuzz_titled_2col",
+        "rows": {
+          "pred_lines": 11,
+          "gt_lines": 11,
+          "iou_matched_lines": 11,
+          "kendall_tau_reading_order": 0.5273,
+          "exact_line_order": false,
+          "strict_page_cer_pct": 51.92,
+          "layout_detected": {
+            "reading_order": "rows",
+            "columns": 1
+          }
+        },
+        "auto": {
+          "pred_lines": 11,
+          "gt_lines": 11,
+          "iou_matched_lines": 11,
+          "kendall_tau_reading_order": 1.0,
+          "exact_line_order": true,
+          "strict_page_cer_pct": 3.08,
+          "layout_detected": {
+            "reading_order": "columns",
+            "columns": 2
+          }
+        },
+        "cer_delta_auto_minus_rows_pct": -48.84,
+        "tau_gain_auto_minus_rows": 0.4727
+      }
+    ],
+    "intra_line_bilingual": {
+      "summary_by_model": {
+        "auto": {
+          "overall_strict_cer_pct": 33.33,
+          "cham_subspan_cer_pct": 60.56,
+          "latin_subspan_cer_pct": 54.4,
+          "selected_recognizers": {
+            "v24_1_r4": 3,
+            "vi": 5
+          }
+        },
+        "v24_1_r4": {
+          "overall_strict_cer_pct": 53.73,
+          "cham_subspan_cer_pct": 43.66,
+          "latin_subspan_cer_pct": 89.6,
+          "selected_recognizers": {
+            "v24_1_r4": 8
+          }
+        },
+        "vi": {
+          "overall_strict_cer_pct": 36.47,
+          "cham_subspan_cer_pct": 100.0,
+          "latin_subspan_cer_pct": 63.2,
+          "selected_recognizers": {
+            "vi": 8
+          }
+        }
+      },
+      "cases": [
+        {
+          "id": "intra_01_cham_heavy_paren_vi",
+          "gt": "ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ (Người Chăm)",
+          "size": [
+            560,
+            73
+          ],
+          "models": {
+            "auto": {
+              "pred": "ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ {꩐ 61ꨯꨮꩀ ꩞",
+              "strict_cer_pct": 46.15,
+              "cham_subspan_cer_pct": 45.45,
+              "latin_subspan_cer_pct": 100.0,
+              "selected_recognizer": "v24_1_r4",
+              "confidence": 0.8041
+            },
+            "v24_1_r4": {
+              "pred": "ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ {꩐ 61ꨯꨮꩀ ꩞",
+              "strict_cer_pct": 46.15,
+              "cham_subspan_cer_pct": 45.45,
+              "latin_subspan_cer_pct": 100.0,
+              "selected_recognizer": "v24_1_r4",
+              "confidence": 0.8041
+            },
+            "vi": {
+              "pred": "2ó gi T297ad (Người Chăm)",
+              "strict_cer_pct": 42.31,
+              "cham_subspan_cer_pct": 100.0,
+              "latin_subspan_cer_pct": 111.11,
+              "selected_recognizer": "vi",
+              "confidence": 0.8461
+            }
+          }
+        },
+        {
+          "id": "intra_02_balanced_cham_vi",
+          "gt": "ꨀꨕꩅ ꨌꩌ - Phong tục Chăm cổ",
+          "size": [
+            566,
+            63
+          ],
+          "models": {
+            "auto": {
+              "pred": "g873986) gi - Phong tục Chăm cổ",
+              "strict_cer_pct": 38.46,
+              "cham_subspan_cer_pct": 100.0,
+              "latin_subspan_cer_pct": 64.29,
+              "selected_recognizer": "vi",
+              "confidence": 0.8679
+            },
+            "v24_1_r4": {
+              "pred": "ꨀꨕꩅ ꨌꩌ-719 { 6 6)ꨇꨮ꩒)ꩀ ꨂꨯꩌ",
+              "strict_cer_pct": 73.08,
+              "cham_subspan_cer_pct": 140.0,
+              "latin_subspan_cer_pct": 100.0,
+              "selected_recognizer": "v24_1_r4",
+              "confidence": 0.6091
+            },
+            "vi": {
+              "pred": "g873986) gi - Phong tục Chăm cổ",
+              "strict_cer_pct": 38.46,
+              "cham_subspan_cer_pct": 100.0,
+              "latin_subspan_cer_pct": 64.29,
+              "selected_recognizer": "vi",
+              "confidence": 0.8679
+            }
+          }
+        },
+        {
+          "id": "intra_03_vi_head_cham_quote",
+          "gt": "Thuật ngữ Chăm: ꨚꨣꨤꨯꨩ ꨧꨆꨥꨪ ꨌꩌ",
+          "size": [
+            646,
+            72
+          ],
+          "models": {
+            "auto": {
+              "pred": "Thuật ngữ Chăm: M8667 M ng gi",
+              "strict_cer_pct": 37.93,
+              "cham_subspan_cer_pct": 100.0,
+              "latin_subspan_cer_pct": 83.33,
+              "selected_recognizer": "vi",
+              "confidence": 0.8394
+            },
+            "v24_1_r4": {
+              "pred": "704 10296 675꩒/7 ꨚꨣꨤꨯꨩ ꨧꨆꨥꨪ ꨌꩌ",
+              "strict_cer_pct": 51.72,
+              "cham_subspan_cer_pct": 9.09,
+              "latin_subspan_cer_pct": 108.33,
+              "selected_recognizer": "v24_1_r4",
+              "confidence": 0.6741
+            },
+            "vi": {
+              "pred": "Thuật ngữ Chăm: M8667 M ng gi",
+              "strict_cer_pct": 37.93,
+              "cham_subspan_cer_pct": 100.0,
+              "latin_subspan_cer_pct": 83.33,
+              "selected_recognizer": "vi",
+              "confidence": 0.8394
+            }
+          }
+        },
+        {
+          "id": "intra_04_cham_head_vi_def",
+          "gt": "ꨡꨶꨮꩆ: làng xóm truyền thống vùng Panduranga",
+          "size": [
+            822,
+            68
+          ],
+          "models": {
+            "auto": {
+              "pred": "a): làng xóm truyền thống vùng Panduranga",
+              "strict_cer_pct": 9.3,
+              "cham_subspan_cer_pct": 100.0,
+              "latin_subspan_cer_pct": 3.12,
+              "selected_recognizer": "vi",
+              "confidence": 0.9836
+            },
+            "v24_1_r4": {
+              "pred": "ꨡꨶꨮꩆ- ꨇ/19 /6꩐ꩀ 8 ) ꩀ \\0꩐]9] 6꩐9 98꩐610209",
+              "strict_cer_pct": 81.4,
+              "cham_subspan_cer_pct": 175.0,
+              "latin_subspan_cer_pct": 100.0,
+              "selected_recognizer": "v24_1_r4",
+              "confidence": 0.461
+            },
+            "vi": {
+              "pred": "a): làng xóm truyền thống vùng Panduranga",
+              "strict_cer_pct": 9.3,
+              "cham_subspan_cer_pct": 100.0,
+              "latin_subspan_cer_pct": 3.12,
+              "selected_recognizer": "vi",
+              "confidence": 0.9836
+            }
+          }
+        },
+        {
+          "id": "intra_05_cham_stanza_vi_year",
+          "gt": "꩑꩒꩞ ꨙꩌ ꨀꨕꩅ (Bản dịch năm 1990-2000)",
+          "size": [
+            757,
+            70
+          ],
+          "models": {
+            "auto": {
+              "pred": "9Gii gởi g8n386) (Bản dịch năm 1990-2000)",
+              "strict_cer_pct": 40.0,
+              "cham_subspan_cer_pct": 100.0,
+              "latin_subspan_cer_pct": 65.0,
+              "selected_recognizer": "vi",
+              "confidence": 0.8682
+            },
+            "v24_1_r4": {
+              "pred": "꩑꩒꩞ ꨙꩌ ꨀꨕꩅ {88ꩀ ꨶꩀ0ꨇꨮꩀ 1990-2000꩝",
+              "strict_cer_pct": 37.14,
+              "cham_subspan_cer_pct": 87.5,
+              "latin_subspan_cer_pct": 50.0,
+              "selected_recognizer": "v24_1_r4",
+              "confidence": 0.7536
+            },
+            "vi": {
+              "pred": "9Gii gởi g8n386) (Bản dịch năm 1990-2000)",
+              "strict_cer_pct": 40.0,
+              "cham_subspan_cer_pct": 100.0,
+              "latin_subspan_cer_pct": 65.0,
+              "selected_recognizer": "vi",
+              "confidence": 0.8682
+            }
+          }
+        },
+        {
+          "id": "intra_06_vi_citation_cham_tail",
+          "gt": "Xem tư liệu tr. 45: ꨓꨟꨳꨩ ꨀꨕꨯꨱꩍ ꨕꨘꩇ꩝",
+          "size": [
+            724,
+            72
+          ],
+          "models": {
+            "auto": {
+              "pred": "ꨜꩀ / 160 5_46} ꨓꨟꨳꨩ ꨀꨕꨯꨱꩍ ꨕꨘꩇ ꩝",
+              "strict_cer_pct": 45.71,
+              "cham_subspan_cer_pct": 15.38,
+              "latin_subspan_cer_pct": 92.31,
+              "selected_recognizer": "v24_1_r4",
+              "confidence": 0.7598
+            },
+            "v24_1_r4": {
+              "pred": "ꨜꩀ / 160 5_46} ꨓꨟꨳꨩ ꨀꨕꨯꨱꩍ ꨕꨘꩇ ꩝",
+              "strict_cer_pct": 45.71,
+              "cham_subspan_cer_pct": 15.38,
+              "latin_subspan_cer_pct": 92.31,
+              "selected_recognizer": "v24_1_r4",
+              "confidence": 0.7598
+            },
+            "vi": {
+              "pred": "Xem tư liệu tr. 45: 61m gnog ng 388 071",
+              "strict_cer_pct": 51.43,
+              "cham_subspan_cer_pct": 100.0,
+              "latin_subspan_cer_pct": 115.38,
+              "selected_recognizer": "vi",
+              "confidence": 0.7145
+            }
+          }
+        },
+        {
+          "id": "intra_07_french_efeo_cham",
+          "gt": "Ms. CAM 142 - ꨇꨪꩀ ꨠꩊ ꨌꨪꩍ ꨆꨵꩀ",
+          "size": [
+            613,
+            72
+          ],
+          "models": {
+            "auto": {
+              "pred": "(/68 6-0142 - ꨇꨪꩀ ꨠꩊ ꨌꨪꩍ ꨆꨵꩀ",
+              "strict_cer_pct": 28.57,
+              "cham_subspan_cer_pct": 0.0,
+              "latin_subspan_cer_pct": 62.5,
+              "selected_recognizer": "v24_1_r4",
+              "confidence": 0.7933
+            },
+            "v24_1_r4": {
+              "pred": "(/68 6-0142 - ꨇꨪꩀ ꨠꩊ ꨌꨪꩍ ꨆꨵꩀ",
+              "strict_cer_pct": 28.57,
+              "cham_subspan_cer_pct": 0.0,
+              "latin_subspan_cer_pct": 62.5,
+              "selected_recognizer": "v24_1_r4",
+              "confidence": 0.7933
+            },
+            "vi": {
+              "pred": "Ms. CAM 142- 5757 86) đg 5257",
+              "strict_cer_pct": 53.57,
+              "cham_subspan_cer_pct": 100.0,
+              "latin_subspan_cer_pct": 150.0,
+              "selected_recognizer": "vi",
+              "confidence": 0.7045
+            }
+          }
+        },
+        {
+          "id": "intra_08_alternating_spans",
+          "gt": "Từ ꨀꨕꩅ nghĩa là lễ tục của ꨂꨣꩃ ꨌꩌ",
+          "size": [
+            646,
+            64
+          ],
+          "models": {
+            "auto": {
+              "pred": "Từ g3P6) nghĩa là lễ tục của 2áp gi",
+              "strict_cer_pct": 30.3,
+              "cham_subspan_cer_pct": 100.0,
+              "latin_subspan_cer_pct": 52.94,
+              "selected_recognizer": "vi",
+              "confidence": 0.9025
+            },
+            "v24_1_r4": {
+              "pred": "1ꩌ) ꨀꨕꩅ 29718 8 8ꩃ { 6668 ꨂꨣꩃ ꨌꩌ",
+              "strict_cer_pct": 57.58,
+              "cham_subspan_cer_pct": 25.0,
+              "latin_subspan_cer_pct": 100.0,
+              "selected_recognizer": "v24_1_r4",
+              "confidence": 0.6656
+            },
+            "vi": {
+              "pred": "Từ g3P6) nghĩa là lễ tục của 2áp gi",
+              "strict_cer_pct": 30.3,
+              "cham_subspan_cer_pct": 100.0,
+              "latin_subspan_cer_pct": 52.94,
+              "selected_recognizer": "vi",
+              "confidence": 0.9025
+            }
+          }
+        }
+      ]
+    }
+  },
+  "module_4_positional_hyphen_and_digits": {
+    "positional_hyphen_alignment": {
+      "auto": {
+        "n_crops": 21,
+        "gt_hyphens": 24,
+        "count_only_accuracy_pct": 100.0,
+        "positional_tp": 24,
+        "positional_fp": 0,
+        "positional_fn": 0,
+        "positional_precision_pct": 100.0,
+        "positional_recall_pct": 100.0,
+        "positional_f1_pct": 100.0,
+        "hyphen_with_exact_neighbors_pct": 95.83,
+        "full_line_exact_pct": 85.71
+      },
+      "v24_1_r2_1_6": {
+        "n_crops": 1,
+        "gt_hyphens": 2,
+        "count_only_accuracy_pct": 100.0,
+        "positional_tp": 2,
+        "positional_fp": 0,
+        "positional_fn": 0,
+        "positional_precision_pct": 100.0,
+        "positional_recall_pct": 100.0,
+        "positional_f1_pct": 100.0,
+        "hyphen_with_exact_neighbors_pct": 100.0,
+        "full_line_exact_pct": 100.0
+      },
+      "v24_1_r3_1": {
+        "n_crops": 21,
+        "gt_hyphens": 24,
+        "count_only_accuracy_pct": 90.48,
+        "positional_tp": 23,
+        "positional_fp": 1,
+        "positional_fn": 1,
+        "positional_precision_pct": 95.83,
+        "positional_recall_pct": 95.83,
+        "positional_f1_pct": 95.83,
+        "hyphen_with_exact_neighbors_pct": 87.5,
+        "full_line_exact_pct": 76.19
+      },
+      "v24_1_r4": {
+        "n_crops": 21,
+        "gt_hyphens": 24,
+        "count_only_accuracy_pct": 100.0,
+        "positional_tp": 24,
+        "positional_fp": 0,
+        "positional_fn": 0,
+        "positional_precision_pct": 100.0,
+        "positional_recall_pct": 100.0,
+        "positional_f1_pct": 100.0,
+        "hyphen_with_exact_neighbors_pct": 95.83,
+        "full_line_exact_pct": 85.71
+      },
+      "v25": {
+        "n_crops": 21,
+        "gt_hyphens": 24,
+        "count_only_accuracy_pct": 0.0,
+        "positional_tp": 0,
+        "positional_fp": 0,
+        "positional_fn": 24,
+        "positional_precision_pct": 0.0,
+        "positional_recall_pct": 0.0,
+        "positional_f1_pct": 0.0,
+        "hyphen_with_exact_neighbors_pct": 0.0,
+        "full_line_exact_pct": 0.0
+      }
+    },
+    "cham_semibold_spacing_ablation_r4": {
+      "tracking_0px": {
+        "cer_pct": 8.0,
+        "exact_pct": 50.0,
+        "cases": [
+          {
+            "gt": "꩐꩑꩒꩓꩔꩕꩖꩗꩘꩙",
+            "pred": "꩐꩑꩒꩓꩔꩕꩖꩗꩘꩙",
+            "edits": 0,
+            "w": 402,
+            "h": 75
+          },
+          {
+            "gt": "꩐ ꩑ ꩒ ꩓ ꩔ ꩕ ꩖ ꩗ ꩘ ꩙",
+            "pred": "꩐꩑ ꩒ ꩓ ꩔꩕꩖ ꩗ ꩘ ꩙",
+            "edits": 3,
+            "w": 524,
+            "h": 75
+          },
+          {
+            "gt": "꩒꩐꩒꩖ ꩐꩙ ꩑꩘",
+            "pred": "꩒꩐꩒꩖ ꩖꩙ ꩑꩘",
+            "edits": 1,
+            "w": 353,
+            "h": 75
+          },
+          {
+            "gt": "꩙꩘꩗꩖꩕ ꩔꩓꩒꩑꩐",
+            "pred": "꩙꩘꩗꩖꩕ ꩔꩓꩒꩑꩐",
+            "edits": 0,
+            "w": 414,
+            "h": 75
+          }
+        ]
+      },
+      "tracking_4px": {
+        "cer_pct": 6.0,
+        "exact_pct": 75.0,
+        "cases": [
+          {
+            "gt": "꩐꩑꩒꩓꩔꩕꩖꩗꩘꩙",
+            "pred": "꩐꩑꩒꩓꩔꩕꩖꩗꩘꩙",
+            "edits": 0,
+            "w": 438,
+            "h": 75
+          },
+          {
+            "gt": "꩐ ꩑ ꩒ ꩓ ꩔ ꩕ ꩖ ꩗ ꩘ ꩙",
+            "pred": "꩐꩑ ꩒ ꩓ ꩔ꩌ ꩕꩖ ꩗ ꩘ ꩙",
+            "edits": 3,
+            "w": 560,
+            "h": 75
+          },
+          {
+            "gt": "꩒꩐꩒꩖ ꩐꩙ ꩑꩘",
+            "pred": "꩒꩐꩒꩖ ꩐꩙ ꩑꩘",
+            "edits": 0,
+            "w": 381,
+            "h": 75
+          },
+          {
+            "gt": "꩙꩘꩗꩖꩕ ꩔꩓꩒꩑꩐",
+            "pred": "꩙꩘꩗꩖꩕ ꩔꩓꩒꩑꩐",
+            "edits": 0,
+            "w": 450,
+            "h": 75
+          }
+        ]
+      },
+      "tracking_8px": {
+        "cer_pct": 34.0,
+        "exact_pct": 0.0,
+        "cases": [
+          {
+            "gt": "꩐꩑꩒꩓꩔꩕꩖꩗꩘꩙",
+            "pred": "꩐ꩍ ꩒ ꩓꩔ ꩕꩖꩗ ꩘꩙",
+            "edits": 5,
+            "w": 474,
+            "h": 75
+          },
+          {
+            "gt": "꩐ ꩑ ꩒ ꩓ ꩔ ꩕ ꩖ ꩗ ꩘ ꩙",
+            "pred": "꩑ꩍ ꩒꩓꩔꩕꩖ ꩗꩘ ꩙",
+            "edits": 8,
+            "w": 596,
+            "h": 75
+          },
+          {
+            "gt": "꩒꩐꩒꩖ ꩐꩙ ꩑꩘",
+            "pred": "꩒꩐꩒꩖ ꩖꩙꩑ ꩘",
+            "edits": 3,
+            "w": 409,
+            "h": 75
+          },
+          {
+            "gt": "꩙꩘꩗꩖꩕ ꩔꩓꩒꩑꩐",
+            "pred": "꩙꩘꩗꩖꩕ ꩔꩓꩒ ꩑꩐",
+            "edits": 1,
+            "w": 486,
+            "h": 75
+          }
+        ]
+      }
+    },
+    "ascii_repeated_digits_grid": {
+      "px22_track0": {
+        "v24_1_r4": {
+          "cer_pct": 27.5,
+          "exact_pct": 0.0,
+          "repeated_zero_nine_preserved_pct": 0.0,
+          "samples": [
+            {
+              "gt": "1990-2000",
+              "pred": "199-200",
+              "selected_recognizer": "v24_1_r4"
+            },
+            {
+              "gt": "2000-2025",
+              "pred": "20-202",
+              "selected_recognizer": "v24_1_r4"
+            },
+            {
+              "gt": "1999-2000",
+              "pred": "1999-200",
+              "selected_recognizer": "v24_1_r4"
+            },
+            {
+              "gt": "Năm 2000-2025",
+              "pred": "꩒1 200-2026",
+              "selected_recognizer": "v24_1_r4"
+            }
+          ]
+        },
+        "vi": {
+          "cer_pct": 0.0,
+          "exact_pct": 100.0,
+          "repeated_zero_nine_preserved_pct": 100.0,
+          "samples": [
+            {
+              "gt": "1990-2000",
+              "pred": "1990-2000",
+              "selected_recognizer": "vi"
+            },
+            {
+              "gt": "2000-2025",
+              "pred": "2000-2025",
+              "selected_recognizer": "vi"
+            },
+            {
+              "gt": "1999-2000",
+              "pred": "1999-2000",
+              "selected_recognizer": "vi"
+            },
+            {
+              "gt": "Năm 2000-2025",
+              "pred": "Năm 2000-2025",
+              "selected_recognizer": "vi"
+            }
+          ]
+        },
+        "auto": {
+          "cer_pct": 22.5,
+          "exact_pct": 0.0,
+          "repeated_zero_nine_preserved_pct": 25.0,
+          "samples": [
+            {
+              "gt": "1990-2000",
+              "pred": "1990-200",
+              "selected_recognizer": "v24_1_r3_1"
+            },
+            {
+              "gt": "2000-2025",
+              "pred": "20-202",
+              "selected_recognizer": "v24_1_r4"
+            },
+            {
+              "gt": "1999-2000",
+              "pred": "1999-200",
+              "selected_recognizer": "v24_1_r4"
+            },
+            {
+              "gt": "Năm 2000-2025",
+              "pred": "꩒7 2000-2026",
+              "selected_recognizer": "v24_1_r3_1"
+            }
+          ]
+        }
+      },
+      "px22_track5": {
+        "v24_1_r4": {
+          "cer_pct": 20.0,
+          "exact_pct": 0.0,
+          "repeated_zero_nine_preserved_pct": 50.0,
+          "samples": [
+            {
+              "gt": "1990-2000",
+              "pred": "19090-2000",
+              "selected_recognizer": "v24_1_r4"
+            },
+            {
+              "gt": "2000-2025",
+              "pred": "2000-2026",
+              "selected_recognizer": "v24_1_r4"
+            },
+            {
+              "gt": "1999-2000",
+              "pred": "19099-2000",
+              "selected_recognizer": "v24_1_r4"
+            },
+            {
+              "gt": "Năm 2000-2025",
+              "pred": "ꨆꨳꨮ 82000-2026",
+              "selected_recognizer": "v24_1_r4"
+            }
+          ]
+        },
+        "vi": {
+          "cer_pct": 25.0,
+          "exact_pct": 0.0,
+          "repeated_zero_nine_preserved_pct": 25.0,
+          "samples": [
+            {
+              "gt": "1990-2000",
+              "pred": "1990 -200",
+              "selected_recognizer": "vi"
+            },
+            {
+              "gt": "2000-2025",
+              "pred": "200 0 - 202 5",
+              "selected_recognizer": "vi"
+            },
+            {
+              "gt": "1999-2000",
+              "pred": "199 -200",
+              "selected_recognizer": "vi"
+            },
+            {
+              "gt": "Năm 2000-2025",
+              "pred": "Năm 2000 - 2025",
+              "selected_recognizer": "vi"
+            }
+          ]
+        },
+        "auto": {
+          "cer_pct": 17.5,
+          "exact_pct": 0.0,
+          "repeated_zero_nine_preserved_pct": 25.0,
+          "samples": [
+            {
+              "gt": "1990-2000",
+              "pred": "19090-2000",
+              "selected_recognizer": "v24_1_r4"
+            },
+            {
+              "gt": "2000-2025",
+              "pred": "200 0-202 6",
+              "selected_recognizer": "v24_1_r3_1"
+            },
+            {
+              "gt": "1999-2000",
+              "pred": "19099-2000",
+              "selected_recognizer": "v24_1_r4"
+            },
+            {
+              "gt": "Năm 2000-2025",
+              "pred": "Năm 2000 - 2025",
+              "selected_recognizer": "vi"
+            }
+          ]
+        }
+      },
+      "px44_track0": {
+        "v24_1_r4": {
+          "cer_pct": 35.0,
+          "exact_pct": 0.0,
+          "repeated_zero_nine_preserved_pct": 0.0,
+          "samples": [
+            {
+              "gt": "1990-2000",
+              "pred": "1꩐0-200",
+              "selected_recognizer": "v24_1_r4"
+            },
+            {
+              "gt": "2000-2025",
+              "pred": "20꩐0-202",
+              "selected_recognizer": "v24_1_r4"
+            },
+            {
+              "gt": "1999-2000",
+              "pred": "1꩐0-200",
+              "selected_recognizer": "v24_1_r4"
+            },
+            {
+              "gt": "Năm 2000-2025",
+              "pred": "꩒) 200-2026",
+              "selected_recognizer": "v24_1_r4"
+            }
+          ]
+        },
+        "vi": {
+          "cer_pct": 0.0,
+          "exact_pct": 100.0,
+          "repeated_zero_nine_preserved_pct": 100.0,
+          "samples": [
+            {
+              "gt": "1990-2000",
+              "pred": "1990-2000",
+              "selected_recognizer": "vi"
+            },
+            {
+              "gt": "2000-2025",
+              "pred": "2000-2025",
+              "selected_recognizer": "vi"
+            },
+            {
+              "gt": "1999-2000",
+              "pred": "1999-2000",
+              "selected_recognizer": "vi"
+            },
+            {
+              "gt": "Năm 2000-2025",
+              "pred": "Năm 2000-2025",
+              "selected_recognizer": "vi"
+            }
+          ]
+        },
+        "auto": {
+          "cer_pct": 35.0,
+          "exact_pct": 0.0,
+          "repeated_zero_nine_preserved_pct": 0.0,
+          "samples": [
+            {
+              "gt": "1990-2000",
+              "pred": "1꩐0-200",
+              "selected_recognizer": "v24_1_r4"
+            },
+            {
+              "gt": "2000-2025",
+              "pred": "20꩐0-202",
+              "selected_recognizer": "v24_1_r4"
+            },
+            {
+              "gt": "1999-2000",
+              "pred": "1꩐0-200",
+              "selected_recognizer": "v24_1_r4"
+            },
+            {
+              "gt": "Năm 2000-2025",
+              "pred": "꩒) 200-2026",
+              "selected_recognizer": "v24_1_r4"
+            }
+          ]
+        }
+      },
+      "px44_track5": {
+        "v24_1_r4": {
+          "cer_pct": 40.0,
+          "exact_pct": 0.0,
+          "repeated_zero_nine_preserved_pct": 0.0,
+          "samples": [
+            {
+              "gt": "1990-2000",
+              "pred": "190-20",
+              "selected_recognizer": "v24_1_r4"
+            },
+            {
+              "gt": "2000-2025",
+              "pred": "200-2026",
+              "selected_recognizer": "v24_1_r4"
+            },
+            {
+              "gt": "1999-2000",
+              "pred": "190-20",
+              "selected_recognizer": "v24_1_r4"
+            },
+            {
+              "gt": "Năm 2000-2025",
+              "pred": "ꨮ 1) 20-202",
+              "selected_recognizer": "v24_1_r4"
+            }
+          ]
+        },
+        "vi": {
+          "cer_pct": 10.0,
+          "exact_pct": 50.0,
+          "repeated_zero_nine_preserved_pct": 100.0,
+          "samples": [
+            {
+              "gt": "1990-2000",
+              "pred": "19990 - 2000",
+              "selected_recognizer": "vi"
+            },
+            {
+              "gt": "2000-2025",
+              "pred": "2000-2025",
+              "selected_recognizer": "vi"
+            },
+            {
+              "gt": "1999-2000",
+              "pred": "1999- 2000",
+              "selected_recognizer": "vi"
+            },
+            {
+              "gt": "Năm 2000-2025",
+              "pred": "Năm 2000-2025",
+              "selected_recognizer": "vi"
+            }
+          ]
+        },
+        "auto": {
+          "cer_pct": 40.0,
+          "exact_pct": 25.0,
+          "repeated_zero_nine_preserved_pct": 25.0,
+          "samples": [
+            {
+              "gt": "1990-2000",
+              "pred": "1 00 - 2",
+              "selected_recognizer": "v24_1_r3_1"
+            },
+            {
+              "gt": "2000-2025",
+              "pred": "200-2026",
+              "selected_recognizer": "v24_1_r4"
+            },
+            {
+              "gt": "1999-2000",
+              "pred": "100- 2",
+              "selected_recognizer": "v24_1_r3_1"
+            },
+            {
+              "gt": "Năm 2000-2025",
+              "pred": "Năm 2000-2025",
+              "selected_recognizer": "vi"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "module_5_v25_isolation_and_deskew_sweep": {
+    "v25_width_padding_isolation": {
+      "narrow_high_padding_ar170_205": {
+        "v24_1_r4": {
+          "cer_pct": 3.85,
+          "latin_leaked_chars": 0,
+          "samples": [
+            {
+              "crop_file": "crops/clean_lines/clean_040.png",
+              "ar48": 171.9,
+              "gt": "ꨏꨶꨮꩊ ꨈꨰ꩝",
+              "pred": "ꨏꨶꨮꩊ ꨈꨰ꩝",
+              "cer_pct": 0.0,
+              "latin_leaked_chars": 0,
+              "confidence": 0.9583
+            },
+            {
+              "crop_file": "crops/clean_lines/clean_176.png",
+              "ar48": 197.5,
+              "gt": "ꨞꨩ ꨙꩌ ꨟꨁꩆ",
+              "pred": "ꨞꨩ ꨙꩌ ꨟꨄꩆ",
+              "cer_pct": 11.11,
+              "latin_leaked_chars": 0,
+              "confidence": 0.9767
+            },
+            {
+              "crop_file": "crops/clean_lines/clean_041.png",
+              "ar48": 205.3,
+              "gt": "ꨆꨢꨩ ꨋꩇ ꨢꩃ",
+              "pred": "ꨆꨢꨩ ꨋꩇ ꨢꩃ",
+              "cer_pct": 0.0,
+              "latin_leaked_chars": 0,
+              "confidence": 0.943
+            }
+          ]
+        },
+        "v25": {
+          "cer_pct": 38.46,
+          "latin_leaked_chars": 0,
+          "samples": [
+            {
+              "crop_file": "crops/clean_lines/clean_040.png",
+              "ar48": 171.9,
+              "gt": "ꨏꨶꨮꩊ ꨈꨰ꩝",
+              "pred": "ꨣꨗꨶꨮꩅꩊ ꨈꨰ꩝",
+              "cer_pct": 37.5,
+              "latin_leaked_chars": 0,
+              "confidence": 0.8475
+            },
+            {
+              "crop_file": "crops/clean_lines/clean_176.png",
+              "ar48": 197.5,
+              "gt": "ꨞꨩ ꨙꩌ ꨟꨁꩆ",
+              "pred": "ꨢꨩ ꨙꩃ ꨟꨠꨘꩆ",
+              "cer_pct": 44.44,
+              "latin_leaked_chars": 0,
+              "confidence": 0.8439
+            },
+            {
+              "crop_file": "crops/clean_lines/clean_041.png",
+              "ar48": 205.3,
+              "gt": "ꨆꨢꨩ ꨋꩇ ꨢꩃ",
+              "pred": "ꨆꨢꨩ ꨙꨮꩇ ꨢꨮꩃ",
+              "cer_pct": 33.33,
+              "latin_leaked_chars": 0,
+              "confidence": 0.8756
+            }
+          ]
+        }
+      },
+      "matched_zero_padding_ar450_480": {
+        "v24_1_r4": {
+          "cer_pct": 4.17,
+          "latin_leaked_chars": 0,
+          "samples": [
+            {
+              "crop_file": "crops/clean_lines/clean_011.png",
+              "ar48": 477.7,
+              "gt": "ꨋꩇ ꨡꨯꩍ ꨁꨦꨗꩃ ꨚꨈꨭꩊ ꨚꨓꨯꨱꩌ꩝",
+              "pred": "ꨋꩇ ꨡꨯꩍ ꨁꨦꨗꩃ ꨚꨈꨭꩊ ꨚꨓꨯꨱꩌ ꩝",
+              "cer_pct": 4.35,
+              "latin_leaked_chars": 0,
+              "confidence": 0.9253
+            },
+            {
+              "crop_file": "crops/clean_lines/clean_170.png",
+              "ar48": 451.7,
+              "gt": "꩒꩞ ꨓꨭꩀ ꨥꩀ ꨧꨯꨱꩃ ꨤꨪꨝꨪꩀ ꨣꨕꩀ",
+              "pred": "꩒꩞ ꨓꨭꩀ ꨥꩀ ꨧꨯꨱꩃ ꨤꨪꨝꨪꩀ ꨣꨕꩀ",
+              "cer_pct": 0.0,
+              "latin_leaked_chars": 0,
+              "confidence": 0.957
+            },
+            {
+              "crop_file": "crops/clean_lines/clean_150.png",
+              "ar48": 480.0,
+              "gt": "ꨚꨈꨮꩌ ꨓꨳꩆ ꨀꨗꨪꩅ ꨧꨯꨱꩃ ꨟꨋꨥꨯꩌ꩝",
+              "pred": "ꨚꨈꨮ ꨓꨳꩆ ꨀꨗꨪꩅ ꨧꨯꨱꩃ ꨟꨋꨥꨯꩌ ꩝",
+              "cer_pct": 8.0,
+              "latin_leaked_chars": 0,
+              "confidence": 0.9422
+            }
+          ]
+        },
+        "v25": {
+          "cer_pct": 41.67,
+          "latin_leaked_chars": 0,
+          "samples": [
+            {
+              "crop_file": "crops/clean_lines/clean_011.png",
+              "ar48": 477.7,
+              "gt": "ꨋꩇ ꨡꨯꩍ ꨁꨦꨗꩃ ꨚꨈꨭꩊ ꨚꨓꨯꨱꩌ꩝",
+              "pred": "ꨥꨭꩇ ꨥꨘꨵꩍ ꨐꨗꨭꩃ ꨚꨭꩅ ꨚꨓꨬꨱ꩝",
+              "cer_pct": 52.17,
+              "latin_leaked_chars": 0,
+              "confidence": 0.8067
+            },
+            {
+              "crop_file": "crops/clean_lines/clean_170.png",
+              "ar48": 451.7,
+              "gt": "꩒꩞ ꨓꨭꩀ ꨥꩀ ꨧꨯꨱꩃ ꨤꨪꨝꨪꩀ ꨣꨕꩀ",
+              "pred": "꩒꩞ ꨓꨶꨭꩀ ꨥꩀ ꨧꨤꨬ ꨤꨪꩀ ꨚꨕꨳꩀ",
+              "cer_pct": 33.33,
+              "latin_leaked_chars": 0,
+              "confidence": 0.9428
+            },
+            {
+              "crop_file": "crops/clean_lines/clean_150.png",
+              "ar48": 480.0,
+              "gt": "ꨚꨈꨮꩌ ꨓꨳꩆ ꨀꨗꨪꩅ ꨧꨯꨱꩃ ꨟꨋꨥꨯꩌ꩝",
+              "pred": "ꨚꨤꨭꨮ ꨓꨳꩆ ꨀꨗꨪꩅ ꨧꨤꨬꨱ ꨟꨎꨙꨥ꩝",
+              "cer_pct": 40.0,
+              "latin_leaked_chars": 0,
+              "confidence": 0.864
+            }
+          ]
+        }
+      },
+      "ultrawide_compressed_ar1260": {
+        "v24_1_r4": {
+          "cer_pct": 4.74,
+          "latin_leaked_chars": 0,
+          "samples": [
+            {
+              "crop_file": "crops/clean_lines/clean_124.png",
+              "ar48": 1262.7,
+              "gt": "ꨨꨈꨴꨮꩌ ꨀꨕꩅ ꨃꨥ ꨢꩃ꩝ ꨣꨯꨱꩀ ꨀꨥ ꨇꩆ ꨛꨯꨮ꩝ ꨓꨟꨳꨩ ꨀꨕꨯꨱꩍ ꨕꨘꩇ ꨧꨯꨱꩃ ꨕꨯꩌ ꨤꨡꨰꩂ ꨝꨶꨮꩊ",
+              "pred": "ꨨꨈꨴ ꨀꨕꩅ ꨃꨥ ꨢꩃ ꨣꨯꨱꩀ ꨀꨥ ꨇꩆ ꨛꨯꨮ ꨓꨟꨳꨩ ꨀꨕꨯꨱꩍ ꨕꨘꩇ ꨧꨯꨱꩃ ꨕꨯꩌ ꨤꨡꨰꩂ ꨝꨶꨮꩊ",
+              "cer_pct": 6.06,
+              "latin_leaked_chars": 0,
+              "confidence": 0.9526
+            },
+            {
+              "crop_file": "crops/clean_lines/clean_125.png",
+              "ar48": 1269.3,
+              "gt": "ꨙꩌ ꨀꨕꩅ ꨓꨘꨓꩇ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩝ ꨕꨯꩌ ꨢꩃ ꨤꨝꩃ ꨧꨯꨱꩃ ꨝꨪꨎꩀ ꨍꨰꨘꨩ ꨚꨣꩆ; ꨌꨯꨱꩃ ꨤꨪꨆꨮꨭ",
+              "pred": "ꨙꩌ ꨀꨕꩅ ꨓꨘꨓꩇ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ ꨕꨯꩌ ꨢꩃ ꨤꨝꩃ ꨧꨯꨱꩃ ꨝꨪꨎꩀ ꨍꨘꨰꨩ ꨚꨣꩆ; ꨌꨯꨱꩃ ꨤꨪꨆꨮꨭ",
+              "cer_pct": 4.29,
+              "latin_leaked_chars": 0,
+              "confidence": 0.9514
+            },
+            {
+              "crop_file": "crops/clean_lines/clean_129.png",
+              "ar48": 1269.3,
+              "gt": "ꨕꨤꩌ ꨨꨣꨬ ꨆꨓꨯꨮꨩ꩝ ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ ꨚꩀ ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝ ꨌꨯꨱꩃ ꨤꨪꨆꨮꨭ",
+              "pred": "ꨕꨤꩌ ꨨꨣꨬ ꨆꨓꨯꨩꩃ ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ ꨚꩀ ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ ꨌꨯꨱꩃ ꨤꨪꨆꨮꨭ",
+              "cer_pct": 4.0,
+              "latin_leaked_chars": 0,
+              "confidence": 0.9272
+            }
+          ]
+        },
+        "v25": {
+          "cer_pct": 33.65,
+          "latin_leaked_chars": 1,
+          "samples": [
+            {
+              "crop_file": "crops/clean_lines/clean_124.png",
+              "ar48": 1262.7,
+              "gt": "ꨨꨈꨴꨮꩌ ꨀꨕꩅ ꨃꨥ ꨢꩃ꩝ ꨣꨯꨱꩀ ꨀꨥ ꨇꩆ ꨛꨯꨮ꩝ ꨓꨟꨳꨩ ꨀꨕꨯꨱꩍ ꨕꨘꩇ ꨧꨯꨱꩃ ꨕꨯꩌ ꨤꨡꨰꩂ ꨝꨶꨮꩊ",
+              "pred": "ꨨꨈ ꨴꨩ ꨀꨕꨘꩅ ꨃꨥ ꨢꨮ꩝ ꨣꨆꨤꨯꨱꩀ ꨀꨥ ꨇꩆ ꨕꨵꨮ ꨓꨟꨳꨩ ꨀꨕꨳꨱꩍ ꨕꨘꩇ ꨧꨚꨤꨓꨱ ꨕꨤꨮ ꨤꨈꨥꨎꨥꨰꩍ ꨝꨵꨮꩊ",
+              "cer_pct": 34.85,
+              "latin_leaked_chars": 0,
+              "confidence": 0.8325
+            },
+            {
+              "crop_file": "crops/clean_lines/clean_125.png",
+              "ar48": 1269.3,
+              "gt": "ꨙꩌ ꨀꨕꩅ ꨓꨘꨓꩇ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩝ ꨕꨯꩌ ꨢꩃ ꨤꨝꩃ ꨧꨯꨱꩃ ꨝꨪꨎꩀ ꨍꨰꨘꨩ ꨚꨣꩆ; ꨌꨯꨱꩃ ꨤꨪꨆꨮꨭ",
+              "pred": "ꨙꩃ ꨀꨕắꩅ ꨓꨙꨘꩇ ꨙꨕꨐꨤꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨢꨮ ꨕꨤꩌ ꨢꨮ ꨤꨝꨭꩃ ꨧꨚꨓꨱꩃ ꨝꨪꨎꨰꩀ ꨌꨟꨯꨱꨩ ꨚꨣꩆ ꨌꨢꨪꨱ ꨤꨪꨆꨮ",
+              "cer_pct": 35.71,
+              "latin_leaked_chars": 1,
+              "confidence": 0.8081
+            },
+            {
+              "crop_file": "crops/clean_lines/clean_129.png",
+              "ar48": 1269.3,
+              "gt": "ꨕꨤꩌ ꨨꨣꨬ ꨆꨓꨯꨮꨩ꩝ ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ ꨚꩀ ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝ ꨌꨯꨱꩃ ꨤꨪꨆꨮꨭ",
+              "pred": "ꨕꨤꩌ ꨨꨕꨬ ꨆꨓꨩ꩝ ꨙꩃ ꨌꩌ ꨝ ꨆꨴꨩ ꨟꨪꩆ ꨕꨮ ꨕꨨꩇ ꨈꨴꨶꨮꩀ ꨃꨥ ꨢꨮ ꨚꩀ ꨕꨤꩌ ꨝꨪꨔꨎꨯꨰꩍ ꨟꨆ꩝ ꨌꨤꨱ ꨤꨪꨆꨮꨭ",
+              "cer_pct": 30.67,
+              "latin_leaked_chars": 0,
+              "confidence": 0.8362
+            }
+          ]
+        }
+      }
+    },
+    "synthetic_167_minus11_polygon_forensics": {
+      "profiler": {
+        "method": "dbnet",
+        "base_segmentation_sec": 2.0355,
+        "legacy_fast_pass_count": 0,
+        "pass2_rescue_count": 0,
+        "det_lines": 2,
+        "detector": "cham_dbnet",
+        "detector_switched": true,
+        "uncovered_ink_ratio_primary": 0.1376,
+        "dropped_empty_or_noise_lines": 0,
+        "rec_inference_sec": 0.3564,
+        "num_lines": 2,
+        "total_segmentation_sec": 2.0355,
+        "ocr_model_calls": 1,
+        "backend_total_sec": 2.425
+      },
+      "document": {
+        "status": "needs_review",
+        "needs_review": true,
+        "reasons": [],
+        "line_count": 2,
+        "ink_ratio": 0.02358,
+        "layout": {
+          "reading_order": "rows",
+          "columns": 1
+        },
+        "uncovered_ink_ratio": 0.0084
+      },
+      "lines": [
+        {
+          "index": 1,
+          "text": "꩒꩞ ꨓꨭꩀ ꨥꩀ ꨧꨯꨱꩃ ꨤꨪꨝꨪꩀ ꨣꨕꩀ",
+          "confidence": 0.9759,
+          "polygon": [
+            [
+              132.0,
+              69.0
+            ],
+            [
+              145.0,
+              72.0
+            ],
+            [
+              179.0,
+              76.0
+            ],
+            [
+              240.0,
+              89.0
+            ],
+            [
+              263.0,
+              92.0
+            ],
+            [
+              265.0,
+              92.0
+            ],
+            [
+              278.0,
+              97.0
+            ],
+            [
+              284.0,
+              97.0
+            ],
+            [
+              320.0,
+              107.0
+            ],
+            [
+              321.0,
+              108.0
+            ],
+            [
+              332.0,
+              113.0
+            ],
+            [
+              346.0,
+              114.0
+            ],
+            [
+              348.0,
+              114.0
+            ],
+            [
+              371.0,
+              120.0
+            ],
+            [
+              376.0,
+              120.0
+            ],
+            [
+              380.0,
+              121.0
+            ],
+            [
+              385.0,
+              124.0
+            ],
+            [
+              387.0,
+              127.0
+            ],
+            [
+              388.0,
+              131.0
+            ],
+            [
+              387.0,
+              138.0
+            ],
+            [
+              386.0,
+              141.0
+            ],
+            [
+              383.0,
+              144.0
+            ],
+            [
+              373.0,
+              144.0
+            ],
+            [
+              355.0,
+              139.0
+            ],
+            [
+              335.0,
+              137.0
+            ],
+            [
+              333.0,
+              137.0
+            ],
+            [
+              317.0,
+              130.0
+            ],
+            [
+              271.0,
+              120.0
+            ],
+            [
+              267.0,
+              118.0
+            ],
+            [
+              267.0,
+              117.0
+            ],
+            [
+              177.0,
+              98.0
+            ],
+            [
+              136.0,
+              93.0
+            ],
+            [
+              116.0,
+              87.0
+            ],
+            [
+              112.0,
+              85.0
+            ],
+            [
+              110.0,
+              81.0
+            ],
+            [
+              109.0,
+              76.0
+            ],
+            [
+              109.0,
+              73.0
+            ],
+            [
+              110.0,
+              69.0
+            ],
+            [
+              112.0,
+              66.0
+            ],
+            [
+              115.0,
+              64.0
+            ],
+            [
+              120.0,
+              64.0
+            ]
+          ],
+          "bbox": [
+            109,
+            64,
+            388,
+            144
+          ],
+          "is_axis_aligned_merged_aabb": false
+        },
+        {
+          "index": 2,
+          "text": "ꩍ ꨆ ꨓ ꨪꩆ ꨩꨣꨎꩀ ꨕꨳꨪꩆ ꨤꨮ",
+          "confidence": 0.2093,
+          "polygon": [
+            [
+              100.0,
+              100.0
+            ],
+            [
+              101.0,
+              110.0
+            ],
+            [
+              104.0,
+              116.0
+            ],
+            [
+              108.0,
+              118.0
+            ],
+            [
+              143.0,
+              121.0
+            ],
+            [
+              260.0,
+              141.0
+            ],
+            [
+              329.0,
+              159.0
+            ],
+            [
+              354.0,
+              170.0
+            ],
+            [
+              445.0,
+              186.0
+            ],
+            [
+              511.0,
+              204.0
+            ],
+            [
+              553.0,
+              207.0
+            ],
+            [
+              564.0,
+              212.0
+            ],
+            [
+              573.0,
+              211.0
+            ],
+            [
+              586.0,
+              212.0
+            ],
+            [
+              590.0,
+              214.0
+            ],
+            [
+              603.0,
+              214.0
+            ],
+            [
+              607.0,
+              216.0
+            ],
+            [
+              616.0,
+              216.0
+            ],
+            [
+              629.0,
+              220.0
+            ],
+            [
+              647.0,
+              220.0
+            ],
+            [
+              652.0,
+              223.0
+            ],
+            [
+              683.0,
+              230.0
+            ],
+            [
+              689.0,
+              233.0
+            ],
+            [
+              698.0,
+              233.0
+            ],
+            [
+              710.0,
+              237.0
+            ],
+            [
+              725.0,
+              236.0
+            ],
+            [
+              745.0,
+              239.0
+            ],
+            [
+              760.0,
+              238.0
+            ],
+            [
+              767.0,
+              241.0
+            ],
+            [
+              784.0,
+              241.0
+            ],
+            [
+              798.0,
+              238.0
+            ],
+            [
+              805.0,
+              234.0
+            ],
+            [
+              815.0,
+              224.0
+            ],
+            [
+              819.0,
+              216.0
+            ],
+            [
+              819.0,
+              200.0
+            ],
+            [
+              814.0,
+              190.0
+            ],
+            [
+              807.0,
+              184.0
+            ],
+            [
+              800.0,
+              182.0
+            ],
+            [
+              789.0,
+              173.0
+            ],
+            [
+              781.0,
+              170.0
+            ],
+            [
+              775.0,
+              170.0
+            ],
+            [
+              761.0,
+              164.0
+            ],
+            [
+              737.0,
+              161.0
+            ],
+            [
+              727.0,
+              156.0
+            ],
+            [
+              708.0,
+              151.0
+            ],
+            [
+              636.0,
+              151.0
+            ],
+            [
+              620.0,
+              153.0
+            ],
+            [
+              599.0,
+              149.0
+            ],
+            [
+              589.0,
+              149.0
+            ],
+            [
+              580.0,
+              151.0
+            ],
+            [
+              572.0,
+              155.0
+            ],
+            [
+              568.0,
+              159.0
+            ],
+            [
+              560.0,
+              162.0
+            ],
+            [
+              552.0,
+              169.0
+            ],
+            [
+              548.0,
+              175.0
+            ],
+            [
+              510.0,
+              174.0
+            ],
+            [
+              461.0,
+              166.0
+            ],
+            [
+              417.0,
+              153.0
+            ],
+            [
+              360.0,
+              142.0
+            ],
+            [
+              321.0,
+              129.0
+            ],
+            [
+              301.0,
+              128.0
+            ],
+            [
+              214.0,
+              107.0
+            ],
+            [
+              115.0,
+              92.0
+            ],
+            [
+              104.0,
+              94.0
+            ]
+          ],
+          "bbox": [
+            100,
+            92,
+            819,
+            241
+          ],
+          "is_axis_aligned_merged_aabb": false
+        }
+      ]
+    },
+    "skew_vs_safe_deskew_angle_sweep": {
+      "synthetic_167": {
+        "-5deg": {
+          "applied_rotation_deg": -5,
+          "estimated_counter_rotation_deg": 6.8,
+          "deskew_applied": true,
+          "raw": {
+            "pred_lines": 2,
+            "gt_lines": 2,
+            "strict_cer_pct": 4.62,
+            "detector": "cham_dbnet"
+          },
+          "safe_deskew": {
+            "pred_lines": 2,
+            "gt_lines": 2,
+            "strict_cer_pct": 3.08,
+            "detector": "generic_ppocrv4_dbnet"
+          },
+          "cer_delta_deskew_minus_raw_pct": -1.54
+        },
+        "-8deg": {
+          "applied_rotation_deg": -8,
+          "estimated_counter_rotation_deg": 9.5,
+          "deskew_applied": true,
+          "raw": {
+            "pred_lines": 2,
+            "gt_lines": 2,
+            "strict_cer_pct": 4.62,
+            "detector": "cham_dbnet"
+          },
+          "safe_deskew": {
+            "pred_lines": 2,
+            "gt_lines": 2,
+            "strict_cer_pct": 6.15,
+            "detector": "generic_ppocrv4_dbnet"
+          },
+          "cer_delta_deskew_minus_raw_pct": 1.54
+        },
+        "-11deg": {
+          "applied_rotation_deg": -11,
+          "estimated_counter_rotation_deg": 12.8,
+          "deskew_applied": true,
+          "raw": {
+            "pred_lines": 2,
+            "gt_lines": 2,
+            "strict_cer_pct": 40.0,
+            "detector": "cham_dbnet"
+          },
+          "safe_deskew": {
+            "pred_lines": 2,
+            "gt_lines": 2,
+            "strict_cer_pct": 4.62,
+            "detector": "generic_ppocrv4_dbnet"
+          },
+          "cer_delta_deskew_minus_raw_pct": -35.38
+        },
+        "-14deg": {
+          "applied_rotation_deg": -14,
+          "estimated_counter_rotation_deg": 15.6,
+          "deskew_applied": true,
+          "raw": {
+            "pred_lines": 2,
+            "gt_lines": 2,
+            "strict_cer_pct": 35.38,
+            "detector": "cham_dbnet"
+          },
+          "safe_deskew": {
+            "pred_lines": 2,
+            "gt_lines": 2,
+            "strict_cer_pct": 4.62,
+            "detector": "generic_ppocrv4_dbnet"
+          },
+          "cer_delta_deskew_minus_raw_pct": -30.77
+        }
+      },
+      "real_harum_palei_01": {
+        "-5deg": {
+          "applied_rotation_deg": -5,
+          "estimated_counter_rotation_deg": 5.0,
+          "deskew_applied": true,
+          "raw": {
+            "pred_lines": 25,
+            "gt_lines": 25,
+            "strict_cer_pct": 6.5,
+            "detector": "generic_ppocrv4_dbnet"
+          },
+          "safe_deskew": {
+            "pred_lines": 25,
+            "gt_lines": 25,
+            "strict_cer_pct": 2.84,
+            "detector": "cham_dbnet"
+          },
+          "cer_delta_deskew_minus_raw_pct": -3.66
+        },
+        "-8deg": {
+          "applied_rotation_deg": -8,
+          "estimated_counter_rotation_deg": 8.0,
+          "deskew_applied": true,
+          "raw": {
+            "pred_lines": 25,
+            "gt_lines": 25,
+            "strict_cer_pct": 3.07,
+            "detector": "cham_dbnet"
+          },
+          "safe_deskew": {
+            "pred_lines": 25,
+            "gt_lines": 25,
+            "strict_cer_pct": 2.84,
+            "detector": "generic_ppocrv4_dbnet"
+          },
+          "cer_delta_deskew_minus_raw_pct": -0.24
+        },
+        "-11deg": {
+          "applied_rotation_deg": -11,
+          "estimated_counter_rotation_deg": 11.0,
+          "deskew_applied": true,
+          "raw": {
+            "pred_lines": 25,
+            "gt_lines": 25,
+            "strict_cer_pct": 3.31,
+            "detector": "cham_dbnet"
+          },
+          "safe_deskew": {
+            "pred_lines": 25,
+            "gt_lines": 25,
+            "strict_cer_pct": 2.01,
+            "detector": "generic_ppocrv4_dbnet"
+          },
+          "cer_delta_deskew_minus_raw_pct": -1.3
+        },
+        "-14deg": {
+          "applied_rotation_deg": -14,
+          "estimated_counter_rotation_deg": 14.0,
+          "deskew_applied": true,
+          "raw": {
+            "pred_lines": 25,
+            "gt_lines": 25,
+            "strict_cer_pct": 8.27,
+            "detector": "cham_dbnet"
+          },
+          "safe_deskew": {
+            "pred_lines": 25,
+            "gt_lines": 25,
+            "strict_cer_pct": 2.36,
+            "detector": "generic_ppocrv4_dbnet"
+          },
+          "cer_delta_deskew_minus_raw_pct": -5.91
+        }
+      }
+    }
+  }
+}
