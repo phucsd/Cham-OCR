@@ -419,6 +419,89 @@ BRANCH_SPECS = {
         "extra_patches": "AUTO_V26",
         "expect_valid_mask": True,
         "dataset_slug": "gustavnguyen/cham-ocr-v24-1-r2-1-4d-training-assets"
+    },
+    # V26.1 Masked-SVTR (Early-Backbone Frozen + BN-Locked + Paleographic Calligraphic/Elastic Augmentation, 16 Epochs in 2 Stages)
+    "v26_1_s1": {
+        "slug": "paddleocr-cham-v26-1-stage1",
+        "title": "PaddleOCR Cham V26 1 Stage1",
+        "folder": "cham_synthetic_v26_1",
+        "dataset_zip": "v26_1_dataset.zip",
+        "config_file": "rec_cham_v26_1_s1.yml",
+        "train_samples": "AUTO_V26_1",
+        "val_samples": "AUTO_V26_1",
+        "epochs": 16,
+        "stage_epochs": 8,
+        "stage_end_epoch": 8,
+        "warmup_epoch": 0.5,
+        "step_each_epoch": "AUTO_V26_1",
+        "warmup_steps": "AUTO_V26_1",
+        "lr": 0.000012,
+        "eta_min": 1.0e-6,
+        "output_subpath": "rec_cham_v26_1_s1",
+        "base_ckpt_subdir": "v26_1_s1_base",
+        "base_ckpt_filename": "best.pdparams",
+        "base_ckpt_local_path": "ocr-training/output/v26_1_base/best.pdparams",
+        "base_sha": "AUTO_V26_FULL",
+        "require_resume_state": False,
+        "extra_patches": "AUTO_V26",
+        "expect_valid_mask": True,
+        "dataset_slug": "gustavnguyen/cham-ocr-v24-1-r2-1-4d-training-assets"
+    },
+    "v26_1_s1_pkg": {
+        "slug": "paddleocr-cham-v26-1-s1-pkg",
+        "title": "PaddleOCR Cham V26 1 S1 Pkg",
+        "folder": "cham_synthetic_v26_1",
+        "dataset_zip": "v26_1_dataset.zip",
+        "config_file": "rec_cham_v26_1_s1.yml",
+        "train_samples": "AUTO_V26_1",
+        "val_samples": "AUTO_V26_1",
+        "epochs": 16,
+        "stage_epochs": 8,
+        "stage_end_epoch": 8,
+        "warmup_epoch": 0.5,
+        "step_each_epoch": "AUTO_V26_1",
+        "warmup_steps": "AUTO_V26_1",
+        "lr": 0.000012,
+        "eta_min": 1.0e-6,
+        "output_subpath": "rec_cham_v26_1_s1",
+        "base_ckpt_subdir": "v26_1_s1_base",
+        "base_ckpt_filename": "best.pdparams",
+        "base_ckpt_local_path": "ocr-training/output/v26_1_base/best.pdparams",
+        "base_sha": "AUTO_V26_FULL",
+        "require_resume_state": False,
+        "extra_patches": "AUTO_V26",
+        "expect_valid_mask": True,
+        "dataset_slug": "gustavnguyen/cham-ocr-v26-1-pkg-assets"
+    },
+    "v26_1_s2": {
+        "slug": "paddleocr-cham-v26-1-stage2",
+        "title": "PaddleOCR Cham V26 1 Stage2",
+        "folder": "cham_synthetic_v26_1",
+        "dataset_zip": "v26_1_dataset.zip",
+        "config_file": "rec_cham_v26_1_s2.yml",
+        "train_samples": "AUTO_V26_1",
+        "val_samples": "AUTO_V26_1",
+        "epochs": 16,
+        "stage_epochs": 8,
+        "stage_end_epoch": 16,
+        "warmup_epoch": 0.5,
+        "step_each_epoch": "AUTO_V26_1",
+        "warmup_steps": "AUTO_V26_1",
+        "lr": 0.000012,
+        "eta_min": 1.0e-6,
+        "output_subpath": "rec_cham_v26_1_s2",
+        "base_ckpt_subdir": "v26_1_s1_e8",
+        "base_ckpt_filename": "iter_epoch_8.pdparams",
+        "base_ckpt_local_path": "ocr-training/output/r2_1_4c_v26_1_s1_kaggle_output/extracted_checkpoints/iter_epoch_8.pdparams",
+        "base_sha": "AUTO_V26_FULL",
+        "require_resume_state": True,
+        "extra_patches": "AUTO_V26",
+        "expect_valid_mask": True,
+        "dataset_slug": "gustavnguyen/cham-ocr-v26-1-pkg-assets",
+        "dataset_sources": [
+            "gustavnguyen/cham-ocr-v26-1-pkg-assets",
+            "gustavnguyen/cham-ocr-v26-1-s1-ckpt"
+        ]
     }
 }
 
@@ -441,10 +524,15 @@ def _remote_slug(spec: dict) -> str:
 
 
 def _resolve_v26_spec(spec: dict) -> dict:
-    """Fills AUTO_V26 / AUTO_V26_FULL fields from the dataset manifest and local patched PaddleOCR files."""
+    """Fills AUTO_V26 / AUTO_V26_FULL / AUTO_V26_1 fields from the dataset manifest and local patched PaddleOCR files."""
     spec = dict(spec)
-    if spec.get("train_samples") in ("AUTO_V26", "AUTO_V26_FULL"):
-        man_name = "v26_full_dataset_manifest.json" if spec.get("train_samples") == "AUTO_V26_FULL" else "v26_ft_dataset_manifest.json"
+    if spec.get("train_samples") in ("AUTO_V26", "AUTO_V26_FULL", "AUTO_V26_1"):
+        man_map = {
+            "AUTO_V26": "v26_ft_dataset_manifest.json",
+            "AUTO_V26_FULL": "v26_full_dataset_manifest.json",
+            "AUTO_V26_1": "v26_1_dataset_manifest.json",
+        }
+        man_name = man_map[spec["train_samples"]]
         man = json.load(open(os.path.join(PROJECT_ROOT, "REPORTS", man_name), "r", encoding="utf-8"))
         spec["train_samples"] = int(man["train_samples"])
         spec["val_samples"] = int(man["val_samples"])
@@ -545,22 +633,24 @@ def build_notebook_cells(b_key: str) -> list:
                 "\n",
                 "# 0. FAIL-FAST: verify the branch dataset is mounted BEFORE any source unpack / pip install,\n",
                 "#    so a stale dataset version (still processing at push time) costs seconds, not minutes of GPU quota.\n",
-                "_ff_zip = glob.glob(f'/kaggle/input/**/{DATASET_ZIP_NAME}', recursive=True)\n",
+                "_pkg_name = DATASET_ZIP_NAME.replace('.zip', '.pkg')\n",
+                "_ff_zip = glob.glob(f'/kaggle/input/**/{DATASET_ZIP_NAME}', recursive=True) + glob.glob(f'/kaggle/input/**/{_pkg_name}', recursive=True)\n",
                 "_ff_dir = [p for p in glob.glob(f'/kaggle/input/**/{BRANCH_FOLDER}', recursive=True) if os.path.isdir(p)]\n",
                 "if not _ff_zip and not _ff_dir:\n",
                 "    _tops = sorted(set('/'.join(p.split('/')[:6]) for p in glob.glob('/kaggle/input/**/*', recursive=True)))[:40]\n",
                 "    raise FileNotFoundError(f'FAIL-FAST: dataset for {BRANCH_FOLDER} not mounted (stale dataset version?). /kaggle/input tops: {_tops}')\n",
-                "_ff_bzips = glob.glob('/kaggle/input/**/r2_1_4c_base_and_configs.zip', recursive=True)\n",
-                "if _ff_bzips:\n",
+                "_ff_ck = [p for p in (glob.glob(f'/kaggle/input/**/{BASE_CKPT_SUBDIR}/{BASE_CKPT_FILENAME}', recursive=True) + glob.glob(f'/kaggle/input/**/{BASE_CKPT_FILENAME}', recursive=True)) if os.path.isfile(p) and sha(p) == BASE_SHA]\n",
+                "_ff_bzips = glob.glob('/kaggle/input/**/r2_1_4c_base_and_configs.zip', recursive=True) + glob.glob('/kaggle/input/**/r2_1_4c_base_and_configs.pkg', recursive=True)\n",
+                "if _ff_ck:\n",
+                "    pass\n",
+                "elif _ff_bzips:\n",
                 "    with zipfile.ZipFile(_ff_bzips[0]) as _zf:\n",
                 "        _bn = set(_zf.namelist())\n",
                 "    _need = f'{BASE_CKPT_SUBDIR}/{BASE_CKPT_FILENAME}'\n",
                 "    if _need not in _bn:\n",
                 "        raise FileNotFoundError(f'FAIL-FAST: {_need} missing inside {_ff_bzips[0]} (stale dataset mount?)')\n",
                 "else:\n",
-                "    _ff_ck = glob.glob(f'/kaggle/input/**/{BASE_CKPT_SUBDIR}/{BASE_CKPT_FILENAME}', recursive=True)\n",
-                "    if not _ff_ck:\n",
-                "        raise FileNotFoundError(f'FAIL-FAST: {BASE_CKPT_SUBDIR}/{BASE_CKPT_FILENAME} not found in /kaggle/input (stale dataset mount?)')\n",
+                "    raise FileNotFoundError(f'FAIL-FAST: {BASE_CKPT_SUBDIR}/{BASE_CKPT_FILENAME} not found in /kaggle/input (stale dataset mount?)')\n",
                 "print(f'✅ FAIL-FAST check passed: dataset & {BASE_CKPT_SUBDIR}/{BASE_CKPT_FILENAME} mounted ({(_ff_zip or _ff_dir)[0]})')\n",
                 "\n",
                 "paddle_dir = os.path.join(work, 'PaddleOCR')\n",
@@ -568,7 +658,7 @@ def build_notebook_cells(b_key: str) -> list:
                 "    shutil.rmtree(paddle_dir, ignore_errors=True)\n",
                 "\n",
                 "# 1. Unpack clean PaddleOCR source\n",
-                "source_zips = glob.glob('/kaggle/input/**/paddleocr_source.zip', recursive=True)\n",
+                "source_zips = glob.glob('/kaggle/input/**/paddleocr_source.zip', recursive=True) + glob.glob('/kaggle/input/**/paddleocr_source.pkg', recursive=True)\n",
                 "source_dirs = [p for p in glob.glob('/kaggle/input/**/paddleocr_source', recursive=True) if os.path.isdir(p)]\n",
                 "if source_zips:\n",
                 "    szip = source_zips[0]\n",
@@ -586,7 +676,7 @@ def build_notebook_cells(b_key: str) -> list:
                 "print('✅ PaddleOCR source initialized in', paddle_dir)\n",
                 "\n",
                 "# 2. Locate Base and Configs\n",
-                "base_zips = glob.glob('/kaggle/input/**/r2_1_4c_base_and_configs.zip', recursive=True)\n",
+                "base_zips = glob.glob('/kaggle/input/**/r2_1_4c_base_and_configs.zip', recursive=True) + glob.glob('/kaggle/input/**/r2_1_4c_base_and_configs.pkg', recursive=True)\n",
                 "base_dirs = [p for p in glob.glob('/kaggle/input/**/r2_1_4c_base_and_configs', recursive=True) if os.path.isdir(p)]\n",
                 "assets_base = os.path.join(work, 'assets_base')\n",
                 "if base_zips:\n",
@@ -641,9 +731,9 @@ def build_notebook_cells(b_key: str) -> list:
                 "    print(f'✅ {len(EXTRA_PATCHES)} extra overlays applied and provenance-verified.')\n",
                 "\n",
                 "# 4. Locate & Setup Branch Dataset\n",
-                "ds_zips = glob.glob(f'/kaggle/input/**/{DATASET_ZIP_NAME}', recursive=True)\n",
+                "ds_zips = glob.glob(f'/kaggle/input/**/{DATASET_ZIP_NAME}', recursive=True) + glob.glob(f'/kaggle/input/**/{_pkg_name}', recursive=True)\n",
                 "if not ds_zips:\n",
-                "    ds_zips = [p for p in glob.glob('/kaggle/input/**/*.zip', recursive=True) if DATASET_ZIP_NAME.replace('.zip', '') in os.path.basename(p)]\n",
+                "    ds_zips = [p for p in glob.glob('/kaggle/input/**/*.zip', recursive=True) + glob.glob('/kaggle/input/**/*.pkg', recursive=True) if DATASET_ZIP_NAME.replace('.zip', '') in os.path.basename(p)]\n",
                 "ds_dirs = [p for p in glob.glob(f'/kaggle/input/**/{BRANCH_FOLDER}', recursive=True) if os.path.isdir(p)]\n",
                 "branch_data_dir = os.path.join('/kaggle/working/data', BRANCH_FOLDER)\n",
                 "os.makedirs('/kaggle/working/data', exist_ok=True)\n",
@@ -678,12 +768,13 @@ def build_notebook_cells(b_key: str) -> list:
                 "dict_cands = glob.glob(f'{assets_base}/**/cham_dict_v24_1.txt', recursive=True) or glob.glob('/kaggle/input/**/cham_dict_v24_1.txt', recursive=True)\n",
                 "assert dict_cands, 'Could not find cham_dict_v24_1.txt in /kaggle/input'\n",
                 "shutil.copy2(dict_cands[0], '/kaggle/working/data/cham_dict_v24_1.txt')\n",
-                "ckpt_cands = (\n",
+                "_all_ckpt_cands = (\n",
                 "    glob.glob(f'{assets_base}/**/{BASE_CKPT_SUBDIR}/{BASE_CKPT_FILENAME}', recursive=True)\n",
-                "    or glob.glob(f'/kaggle/input/**/{BASE_CKPT_SUBDIR}/{BASE_CKPT_FILENAME}', recursive=True)\n",
-                "    or glob.glob(f'{assets_base}/**/{BASE_CKPT_FILENAME}', recursive=True)\n",
-                "    or glob.glob(f'/kaggle/input/**/{BASE_CKPT_FILENAME}', recursive=True)\n",
+                "    + glob.glob(f'/kaggle/input/**/{BASE_CKPT_SUBDIR}/{BASE_CKPT_FILENAME}', recursive=True)\n",
+                "    + glob.glob(f'{assets_base}/**/{BASE_CKPT_FILENAME}', recursive=True)\n",
+                "    + glob.glob(f'/kaggle/input/**/{BASE_CKPT_FILENAME}', recursive=True)\n",
                 ")\n",
+                "ckpt_cands = [p for p in _all_ckpt_cands if os.path.isfile(p) and sha(p) == BASE_SHA] or _all_ckpt_cands\n",
                 "assert ckpt_cands, f'Could not find base checkpoint {BASE_CKPT_SUBDIR}/{BASE_CKPT_FILENAME} in /kaggle/input'\n",
                 "os.makedirs(f'/kaggle/working/data/{BASE_CKPT_SUBDIR}', exist_ok=True)\n",
                 "dst_base_ckpt = f'/kaggle/working/data/{BASE_CKPT_SUBDIR}/{BASE_CKPT_FILENAME}'\n",
@@ -1044,7 +1135,7 @@ def generate_kernel_files(b_key: str, output_dir: str):
         "enable_gpu": True,
         "enable_internet": True,
         "accelerator": "NvidiaTeslaT4",
-        "dataset_sources": [spec.get("dataset_slug", DATASET_SLUG)],
+        "dataset_sources": list(spec.get("dataset_sources") or [spec.get("dataset_slug", DATASET_SLUG)]),
         "kernel_sources": []
     }
     meta_path = os.path.join(output_dir, "kernel-metadata.json")
@@ -1171,6 +1262,7 @@ def monitor_kernel(b_key: str, poll_interval: int = 30, max_stall_seconds: int =
     print("=" * 80, flush=True)
 
     start_time = time.time()
+    running_start_time = None
     last_status = None
     last_log_line_count = 0
     last_heartbeat = 0
@@ -1182,8 +1274,9 @@ def monitor_kernel(b_key: str, poll_interval: int = 30, max_stall_seconds: int =
     while True:
         now = time.time()
         elapsed = now - start_time
-        if elapsed >= max_stall_seconds:
-            raise TimeoutError(f"CRITICAL: Kernel {kernel_ref} exceeded maximum allowable runtime ({elapsed:.0f}s > {max_stall_seconds}s). Aborting!")
+        run_elapsed = (now - running_start_time) if running_start_time is not None else 0.0
+        if run_elapsed >= max_stall_seconds or elapsed >= 43200:
+            raise TimeoutError(f"CRITICAL: Kernel {kernel_ref} exceeded maximum allowable runtime (run={run_elapsed:.0f}s, total={elapsed:.0f}s). Aborting!")
 
         status_obj = None
         last_err = None
@@ -1214,6 +1307,8 @@ def monitor_kernel(b_key: str, poll_interval: int = 30, max_stall_seconds: int =
         if status != last_status:
             print(f"[{elapsed:.0f}s] Status change: {last_status} -> {raw_status}", flush=True)
             last_status = status
+        if status == "running" and running_start_time is None:
+            running_start_time = now
 
         if status in ("complete", "completed"):
             print(f"\n🎉 Kernel {kernel_ref} COMPLETED SUCCESSFULLY in {elapsed/60:.1f} mins!", flush=True)

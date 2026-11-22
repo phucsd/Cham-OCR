@@ -1,12 +1,12 @@
 {
   "model_id": "v24_1_r4",
-  "display_name": "Cham-OCR v24.1 Stage R4.1 WiSE-FT (W=480 5/6 Gates Wide-Canvas SOTA)",
-  "stage": "R4_1_WISE_FT_W480",
-  "epoch": 1,
-  "packaged_at": "2026-11-17T11:13:25.650250+00:00",
-  "source_kernel": "gustavnguyen/paddleocr-cham-v24-1-r4-1-gate-polish-w480",
-  "source_checkpoint": "ocr-training/output/r4_1_wise83_ckpt/best.pdparams",
-  "source_checkpoint_sha256": "300b3ef5aec4417985bf70c0ac3548216f8c27272207747c77f28a69d50402a3",
+  "display_name": "Cham-OCR V26.1 Masked-SVTR (wise_s2_a65, W=480, 6/6 Gates)",
+  "stage": "V26_1_16EP_WISE_S2_A65_W480",
+  "epoch": 16,
+  "packaged_at": "2026-11-22T01:14:00.286220+00:00",
+  "source_kernel": "gustavnguyen/paddleocr-cham-v26-1-stage2",
+  "source_checkpoint": "ocr-training/output/v26_1_wise_s2_a65_ckpt/best.pdparams",
+  "source_checkpoint_sha256": "be74da82501fa742783bc46ad1240592d844fcb333d09ef0f8f87afedc3f8513",
   "dictionary_path": "ocr-studio/data/cham_dict_v24_1_r4.txt",
   "dictionary_sha256": "ec1e1f08254dbde6f71604c6581d712a59e724bdb410d98d5d85d3b3446a7643",
   "dictionary_tokens": 114,
@@ -19,20 +19,20 @@
       "sha256": "ec1e1f08254dbde6f71604c6581d712a59e724bdb410d98d5d85d3b3446a7643"
     },
     "inference.json": {
-      "size_bytes": 217712,
-      "sha256": "207f52bcdab782cf5c94d0f23f81a785844a96f6dfaf8965893661629763bdcb"
+      "size_bytes": 239933,
+      "sha256": "f3c35ad1a0187b7cb7da06f8888f1458447bdde62c668712cda503ad432bb8c5"
     },
     "inference.pdiparams": {
       "size_bytes": 7616465,
-      "sha256": "85525b0ca091acaf81a4693fbdd93f53309b4203e68a467560fa5dcaead86417"
+      "sha256": "1deee5f5ff351070b31832401bbf9a0788c6be358a912445d323ef6da04b5e9f"
     },
     "inference.pdiparams.info": {
       "size_bytes": 102540,
-      "sha256": "fc4a4c6ef66a028e0f9a801ac94b46dfbf66f36a61b0ace76ee6a09bc34f62c3"
+      "sha256": "93a19145dd44246d3a21e654a13de7179a644d4b11940de62adb7db25676f064"
     },
     "inference.pdmodel": {
-      "size_bytes": 137964,
-      "sha256": "6ba5572c81eee4250a7c83cc53a4688078ef8606e737ff4f67a7bf5f23a2361c"
+      "size_bytes": 252993,
+      "sha256": "7b478d084992fd92fd23fa58935776a3e01808d9c36c5ef14a3148538c314818"
     },
     "inference.yml": {
       "size_bytes": 1614,
@@ -40,32 +40,37 @@
     }
   },
   "benchmark_metrics": {
-    "clean_cer_pct": 5.28,
-    "char_cer_pct": 2.64,
-    "symbols_acc_pct": 99.29,
-    "symbols_passed": "278/280",
-    "failing_symbols": [
-      "_",
-      "/"
-    ],
-    "hyphen_acc_pct": 95.71,
-    "fullpage_cer_pct": 7.51,
-    "stress_82_cer_pct": 6.93,
-    "probe_100_w480_cer_pct": 4.2,
-    "harum_crops_cer_pct": 2.55,
-    "gates_passed": "5/6",
-    "valid_for_release": false
+    "clean_cer_pct": 5.1,
+    "char_cer_pct": 1.92,
+    "symbols_acc_pct": 100.0,
+    "symbols_passed": "280/280",
+    "failing_symbols": [],
+    "hyphen_acc_pct": 98.57,
+    "fullpage_cer_pct": 6.32,
+    "stress_82_cer_pct": 2.73,
+    "probe_100_w480_cer_pct": 3.28,
+    "harum_crops_cer_pct": 2.07,
+    "gates_passed": "6/6",
+    "valid_for_release": true,
+    "use_valid_mask": true,
+    "realscan_v2": {
+      "harum_crop_cer_pct": 2.07,
+      "wikimedia_crop_cer_pct": 34.29,
+      "ood180_crop_cer_pct": 25.2,
+      "ood12_e2e_doc_cer_pct": 22.65,
+      "ood12_e2e_lines": "180/180"
+    }
   },
-  "confidence_temperature": 0.946667,
+  "confidence_temperature": 0.883077,
   "confidence_calibration": {
     "fit_split": "held_out_diagnostic_probe_100",
     "eval_split": "realscan_gold_v1/harum_palei_01",
     "policy": "raw_probe_100_mle",
-    "ece_before": 0.022792,
-    "ece_after": 0.016179,
-    "brier_before": 0.001003,
-    "brier_after": 0.000711,
-    "nll_before": 0.117358,
-    "nll_after": 0.114144
+    "ece_before": 0.016453,
+    "ece_after": 0.003915,
+    "brier_before": 0.001404,
+    "brier_after": 0.001065,
+    "nll_before": 0.112369,
+    "nll_after": 0.108841
   }
 }

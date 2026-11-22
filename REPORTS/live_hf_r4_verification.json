@@ -1,8 +1,8 @@
 {
-  "verified_at": "2026-11-18T05:46:48.675196+00:00",
+  "verified_at": "2026-11-22T02:09:12.409522+00:00",
   "space_id": "phucsd/cham-ocr-studio",
   "live_url": "https://ocr.cham.asia",
-  "commit_sha": "e46e8328f4618347ac165b841847f5393f5fbcec",
+  "commit_sha": "61da56423a0d6e281d70bac488d5cf1fb6a64173",
   "files_uploaded": [
     "Dockerfile",
     "DESIGN.md",
@@ -12,18 +12,26 @@
     "FUTURE_WORK.md",
     "ocr-studio/app.py",
     "ocr-studio/index.html",
+    "ocr-studio/help.html",
     "ocr-studio/research.html",
+    "ocr-studio/paragraph_flow.py",
+    "ocr-studio/README_STUDIO.md",
+    "ocr-studio/README_STUDIO_VI.md",
     "ocr-studio/tests/test_quality_gates.py",
     "ocr-studio/PaddleOCR/ppocr/modeling/architectures/base_model.py",
     "ocr-studio/PaddleOCR/ppocr/modeling/heads/rec_multi_head.py",
     "ocr-studio/PaddleOCR/ppocr/modeling/necks/rnn.py",
     "ocr-studio/PaddleOCR/ppocr/modeling/backbones/rec_svtrnet.py",
     "ocr-studio/PaddleOCR/ppocr/modeling/backbones/rec_lcnetv3.py",
+    "ocr-studio/PaddleOCR/tools/program.py",
+    "ocr-studio/PaddleOCR/tools/infer/utility.py",
+    "ocr-studio/PaddleOCR/tools/infer/predict_rec.py",
     "ocr-studio/data/cham_dict_v24_1_r3_1.txt",
     "ocr-studio/data/cham_dict_v24_1_r4.txt",
     "ocr-studio/data/output/rec_cham_inference_v24_1_r2_1_6/model_manifest.json",
     "ocr-studio/data/output/rec_cham_inference_v24_1_r3/model_manifest.json",
     "ocr-training/scripts/export_active_learning_r4.py",
+    "ocr-benchmark/data/realscan_gold_v3/manifest.json",
     "scripts/ingest_studio_to_realscan_gold.py",
     "ocr-studio/data/output/rec_cham_inference_v24_1_r3_1/cham_dict_v24_1.txt",
     "ocr-studio/data/output/rec_cham_inference_v24_1_r3_1/inference.json",
@@ -40,7 +48,21 @@
     "ocr-studio/data/output/rec_cham_inference_v24_1_r4/inference.yml",
     "ocr-studio/data/output/rec_cham_inference_v24_1_r4/model_manifest.json",
     "ocr-studio/data/output/ch_PP-OCRv4_det_cham_infer/inference.json",
-    "ocr-studio/data/output/ch_PP-OCRv4_det_cham_infer/inference.pdiparams"
+    "ocr-studio/data/output/ch_PP-OCRv4_det_cham_infer/inference.pdiparams",
+    "ocr-studio/static/css/help.css",
+    "ocr-studio/static/css/research.css",
+    "ocr-studio/static/css/studio.css",
+    "ocr-studio/static/js/cham-keyboard.js",
+    "ocr-studio/static/js/help.js",
+    "ocr-studio/static/js/research.js",
+    "ocr-studio/static/js/studio.js",
+    "ocr-studio/static/js/transliteration.js",
+    "ocr-studio/static/samples/ood_agal_01_panduranga.png",
+    "ocr-studio/static/samples/ood_book_10_semibold.png",
+    "ocr-studio/static/samples/ood_folio_06_wijaya_2col.png",
+    "ocr-studio/static/samples/ood_v3_16_curved_panduranga.png",
+    "ocr-studio/static/samples/ood_v3_21_bilingual_campa_vi.png",
+    "ocr-studio/static/samples/test_006_lvl1.png"
   ],
   "rollout": {
     "rollout_seconds": 45,
@@ -53,11 +75,11 @@
         {
           "version": "v24_1_r4",
           "model_dir": "data/output/rec_cham_inference_v24_1_r4",
-          "weights_sha256_16": "85525b0ca091acaf",
+          "weights_sha256_16": "1deee5f5ff351070",
           "dict": "cham_dict_v24_1_r4.txt",
           "dict_sha256_16": "ec1e1f08254dbde6",
           "rec_image_shape": "3, 48, 480",
-          "confidence_temperature": 0.946667
+          "confidence_temperature": 0.883077
         }
       ],
       "detector": {
@@ -86,8 +108,8 @@
   },
   "live_harum_palei_01": {
     "default_v24_1_r4": {
-      "wall_sec": 9.568,
-      "backend_sec": 6.9857,
+      "wall_sec": 11.353,
+      "backend_sec": 8.5876,
       "has_calibrated_confidence": true,
       "model_info": {
         "model": "v24_1_r4",
@@ -96,11 +118,11 @@
           {
             "version": "v24_1_r4",
             "model_dir": "data/output/rec_cham_inference_v24_1_r4",
-            "weights_sha256_16": "85525b0ca091acaf",
+            "weights_sha256_16": "1deee5f5ff351070",
             "dict": "cham_dict_v24_1_r4.txt",
             "dict_sha256_16": "ec1e1f08254dbde6",
             "rec_image_shape": "3, 48, 480",
-            "confidence_temperature": 0.946667
+            "confidence_temperature": 0.883077
           }
         ],
         "detector": {
@@ -118,14 +140,14 @@
       "pred_lines": 25,
       "matched_lines": 25,
       "line_recall_pct": 100.0,
-      "matched_line_cer_pct": 3.53,
-      "e2e_doc_cer_pct": 3.43,
+      "matched_line_cer_pct": 3.04,
+      "e2e_doc_cer_pct": 2.96,
       "unmatched_gt_chars": 0,
       "unmatched_pred_chars": 0
     },
     "v24_1_r3_1": {
-      "wall_sec": 9.678,
-      "backend_sec": 7.0285,
+      "wall_sec": 10.234,
+      "backend_sec": 8.0177,
       "has_calibrated_confidence": true,
       "model_info": {
         "model": "v24_1_r3_1",
@@ -162,21 +184,30 @@
       "unmatched_pred_chars": 0
     },
     "auto": {
-      "wall_sec": 10.032,
-      "backend_sec": 7.2906,
+      "wall_sec": 10.242,
+      "backend_sec": 8.0239,
       "has_calibrated_confidence": true,
       "model_info": {
         "model": "auto",
-        "normalizer": null,
+        "normalizer": "generate_data.normalize_unicode/parse_unicode_clusters",
         "recognizers": [
           {
             "version": "v24_1_r4",
             "model_dir": "data/output/rec_cham_inference_v24_1_r4",
-            "weights_sha256_16": "85525b0ca091acaf",
+            "weights_sha256_16": "1deee5f5ff351070",
             "dict": "cham_dict_v24_1_r4.txt",
             "dict_sha256_16": "ec1e1f08254dbde6",
             "rec_image_shape": "3, 48, 480",
-            "confidence_temperature": 0.946667
+            "confidence_temperature": 0.883077
+          },
+          {
+            "version": "v24_1_r3_1",
+            "model_dir": "data/output/rec_cham_inference_v24_1_r3_1",
+            "weights_sha256_16": "5fb0d8e4d512b4c0",
+            "dict": "cham_dict_v24_1_r3_1.txt",
+            "dict_sha256_16": "ec1e1f08254dbde6",
+            "rec_image_shape": "3, 48, 320",
+            "confidence_temperature": 0.914851
           },
           {
             "version": "vi",
@@ -203,8 +234,8 @@
       "pred_lines": 25,
       "matched_lines": 25,
       "line_recall_pct": 100.0,
-      "matched_line_cer_pct": 3.53,
-      "e2e_doc_cer_pct": 3.43,
+      "matched_line_cer_pct": 3.04,
+      "e2e_doc_cer_pct": 2.96,
       "unmatched_gt_chars": 0,
       "unmatched_pred_chars": 0
     }
@@ -214,7 +245,7 @@
     "lines": "134/134",
     "abs_line_err": 0,
     "blank_page_zero_lines": true,
-    "doc_cer_pct": 10.16,
-    "matched_cer_pct": 10.53
+    "doc_cer_pct": 9.4,
+    "matched_cer_pct": 9.6
   }
 }

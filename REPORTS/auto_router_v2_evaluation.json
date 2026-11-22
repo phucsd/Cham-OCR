@@ -1,0 +1,532 @@
+{
+  "title": "Cham-OCR Priority 3 — Tri-Specialist Auto Router v2 (`W=480` + `W=320` + `Vi`) Evaluation",
+  "evaluated_at": "2026-11-22T01:58:17.684996+00:00",
+  "frozen_suite": {
+    "v24_1_r4": {
+      "clean_cer_pct": 5.1,
+      "char_cer_pct": 1.92,
+      "symbols_acc_pct": 100.0,
+      "failing_symbols": [],
+      "hyphen_acc_pct": 98.57,
+      "fullpage_cer_pct": 6.32,
+      "blank_passed": true,
+      "stress_82_cer_pct": 2.73,
+      "gates_passed": 6,
+      "valid_for_release": true,
+      "_raw_fp_cer": 0.06315789473684211,
+      "seconds": 325.73
+    },
+    "v24_1_r3_1": {
+      "clean_cer_pct": 4.98,
+      "char_cer_pct": 3.67,
+      "symbols_acc_pct": 97.14,
+      "failing_symbols": [
+        "/",
+        "?",
+        "]",
+        "_",
+        "}"
+      ],
+      "hyphen_acc_pct": 92.86,
+      "fullpage_cer_pct": 6.32,
+      "blank_passed": true,
+      "stress_82_cer_pct": 6.46,
+      "gates_passed": 4,
+      "valid_for_release": false,
+      "_raw_fp_cer": 0.06315789473684211,
+      "seconds": 182.17
+    },
+    "auto_v1_legacy": {
+      "clean_cer_pct": 5.1,
+      "char_cer_pct": 1.92,
+      "symbols_acc_pct": 100.0,
+      "failing_symbols": [],
+      "hyphen_acc_pct": 98.57,
+      "fullpage_cer_pct": 6.32,
+      "blank_passed": true,
+      "stress_82_cer_pct": 2.73,
+      "gates_passed": 6,
+      "valid_for_release": true,
+      "_raw_fp_cer": 0.06315789473684211,
+      "seconds": 250.01
+    },
+    "auto": {
+      "clean_cer_pct": 5.1,
+      "char_cer_pct": 1.94,
+      "symbols_acc_pct": 100.0,
+      "failing_symbols": [],
+      "hyphen_acc_pct": 98.57,
+      "fullpage_cer_pct": 6.35,
+      "blank_passed": true,
+      "stress_82_cer_pct": 2.77,
+      "gates_passed": 6,
+      "valid_for_release": true,
+      "_raw_fp_cer": 0.06346448645886561,
+      "seconds": 338.46
+    }
+  },
+  "legacy_auto_v1_ablation": {
+    "ood_v2_12pages": {
+      "n_lines": 180,
+      "norm_cer_pct": 25.44,
+      "wer_pct": 53.81,
+      "exact_lines": "24/180",
+      "pages": 12,
+      "e2e_lines": "180/180",
+      "line_recall_pct": 100.0,
+      "e2e_doc_cer_pct": 22.42
+    },
+    "bilingual_2pages": {
+      "n_lines": 28,
+      "norm_cer_pct": 7.26,
+      "wer_pct": 16.48,
+      "exact_lines": "17/28",
+      "pages": 2,
+      "e2e_lines": "28/28",
+      "line_recall_pct": 100.0,
+      "e2e_doc_cer_pct": 6.41
+    }
+  },
+  "realscan_gold_v3": {
+    "v24": {
+      "harum_palei_01": {
+        "n_lines": 25,
+        "norm_cer_pct": 6.33,
+        "wer_pct": 20.86,
+        "exact_lines": "4/25",
+        "e2e_doc_cer_pct": 6.15,
+        "e2e_lines": "25/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 36.19,
+        "wer_pct": 57.41,
+        "exact_lines": "2/7"
+      },
+      "handoff_multiscript_01": {
+        "cham_script": {
+          "count": 27,
+          "mean_conf": 0.892,
+          "pct_has_cham": 100.0,
+          "pct_has_latin_viet": 0.0
+        },
+        "vietnamese_english": {
+          "count": 24,
+          "mean_conf": 0.4815,
+          "pct_has_cham": 100.0,
+          "pct_has_latin_viet": 0.0
+        },
+        "latin": {
+          "count": 25,
+          "mean_conf": 0.4528,
+          "pct_has_cham": 100.0,
+          "pct_has_latin_viet": 0.0
+        }
+      },
+      "ood_v2_12pages": {
+        "n_lines": 180,
+        "norm_cer_pct": 32.6,
+        "wer_pct": 70.56,
+        "exact_lines": "7/180",
+        "pages": 12,
+        "e2e_lines": "180/180",
+        "line_recall_pct": 100.0,
+        "e2e_doc_cer_pct": 32.08
+      },
+      "ood_v3_new_8pages": {
+        "n_lines": 118,
+        "norm_cer_pct": 36.14,
+        "wer_pct": 67.44,
+        "exact_lines": "3/118",
+        "pages": 8,
+        "e2e_lines": "118/118",
+        "line_recall_pct": 100.0,
+        "e2e_doc_cer_pct": 33.11
+      },
+      "ood_all_20pages_pure_cham": {
+        "pages": 20,
+        "n_lines": 298,
+        "crop_cer_pct": 34.06,
+        "crop_wer_pct": 69.28,
+        "e2e_doc_cer_pct": 32.49
+      },
+      "v3_by_domain": {
+        "efeo_unseen_regional_v3": {
+          "n_lines": 46,
+          "norm_cer_pct": 41.57,
+          "wer_pct": 73.18,
+          "exact_lines": "1/46",
+          "pages": 3,
+          "e2e_lines": "46/46",
+          "line_recall_pct": 100.0,
+          "e2e_doc_cer_pct": 38.38
+        },
+        "efeo_curved_agal_v3": {
+          "n_lines": 42,
+          "norm_cer_pct": 50.84,
+          "wer_pct": 83.64,
+          "exact_lines": "0/42",
+          "pages": 3,
+          "e2e_lines": "42/42",
+          "line_recall_pct": 100.0,
+          "e2e_doc_cer_pct": 46.1
+        },
+        "heldout_ultralight_book_v3": {
+          "n_lines": 30,
+          "norm_cer_pct": 10.21,
+          "wer_pct": 37.37,
+          "exact_lines": "2/30",
+          "pages": 2,
+          "e2e_lines": "30/30",
+          "line_recall_pct": 100.0,
+          "e2e_doc_cer_pct": 9.52
+        }
+      },
+      "bilingual_commentary_2pages": {
+        "n_lines": 28,
+        "norm_cer_pct": 66.61,
+        "wer_pct": 87.74,
+        "exact_lines": "1/28",
+        "pages": 2,
+        "e2e_lines": "28/28",
+        "line_recall_pct": 100.0,
+        "e2e_doc_cer_pct": 64.79
+      },
+      "cpu_page_latency_sec": {
+        "mean_sec": 2.96,
+        "max_sec": 6.939,
+        "within_15s_budget": true
+      }
+    },
+    "v24_1_r3_1": {
+      "harum_palei_01": {
+        "n_lines": 25,
+        "norm_cer_pct": 4.74,
+        "wer_pct": 17.65,
+        "exact_lines": "7/25",
+        "e2e_doc_cer_pct": 5.08,
+        "e2e_lines": "25/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 28.57,
+        "wer_pct": 50.0,
+        "exact_lines": "2/7"
+      },
+      "handoff_multiscript_01": {
+        "cham_script": {
+          "count": 27,
+          "mean_conf": 0.9134,
+          "pct_has_cham": 100.0,
+          "pct_has_latin_viet": 0.0
+        },
+        "vietnamese_english": {
+          "count": 24,
+          "mean_conf": 0.2931,
+          "pct_has_cham": 100.0,
+          "pct_has_latin_viet": 0.0
+        },
+        "latin": {
+          "count": 25,
+          "mean_conf": 0.3685,
+          "pct_has_cham": 100.0,
+          "pct_has_latin_viet": 0.0
+        }
+      },
+      "ood_v2_12pages": {
+        "n_lines": 180,
+        "norm_cer_pct": 25.15,
+        "wer_pct": 55.79,
+        "exact_lines": "18/180",
+        "pages": 12,
+        "e2e_lines": "180/180",
+        "line_recall_pct": 100.0,
+        "e2e_doc_cer_pct": 24.24
+      },
+      "ood_v3_new_8pages": {
+        "n_lines": 118,
+        "norm_cer_pct": 27.95,
+        "wer_pct": 56.4,
+        "exact_lines": "14/118",
+        "pages": 8,
+        "e2e_lines": "118/118",
+        "line_recall_pct": 100.0,
+        "e2e_doc_cer_pct": 26.11
+      },
+      "ood_all_20pages_pure_cham": {
+        "pages": 20,
+        "n_lines": 298,
+        "crop_cer_pct": 26.31,
+        "crop_wer_pct": 56.04,
+        "e2e_doc_cer_pct": 24.98
+      },
+      "v3_by_domain": {
+        "efeo_unseen_regional_v3": {
+          "n_lines": 46,
+          "norm_cer_pct": 32.45,
+          "wer_pct": 65.52,
+          "exact_lines": "2/46",
+          "pages": 3,
+          "e2e_lines": "46/46",
+          "line_recall_pct": 100.0,
+          "e2e_doc_cer_pct": 32.27
+        },
+        "efeo_curved_agal_v3": {
+          "n_lines": 42,
+          "norm_cer_pct": 41.64,
+          "wer_pct": 77.45,
+          "exact_lines": "0/42",
+          "pages": 3,
+          "e2e_lines": "42/42",
+          "line_recall_pct": 100.0,
+          "e2e_doc_cer_pct": 36.95
+        },
+        "heldout_ultralight_book_v3": {
+          "n_lines": 30,
+          "norm_cer_pct": 4.5,
+          "wer_pct": 15.15,
+          "exact_lines": "12/30",
+          "pages": 2,
+          "e2e_lines": "30/30",
+          "line_recall_pct": 100.0,
+          "e2e_doc_cer_pct": 4.23
+        }
+      },
+      "bilingual_commentary_2pages": {
+        "n_lines": 28,
+        "norm_cer_pct": 63.29,
+        "wer_pct": 105.36,
+        "exact_lines": "3/28",
+        "pages": 2,
+        "e2e_lines": "28/28",
+        "line_recall_pct": 100.0,
+        "e2e_doc_cer_pct": 71.71
+      },
+      "cpu_page_latency_sec": {
+        "mean_sec": 2.916,
+        "max_sec": 5.848,
+        "within_15s_budget": true
+      }
+    },
+    "v24_1_r4": {
+      "harum_palei_01": {
+        "n_lines": 25,
+        "norm_cer_pct": 2.19,
+        "wer_pct": 7.49,
+        "exact_lines": "15/25",
+        "e2e_doc_cer_pct": 2.96,
+        "e2e_lines": "25/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 36.19,
+        "wer_pct": 64.81,
+        "exact_lines": "2/7"
+      },
+      "handoff_multiscript_01": {
+        "cham_script": {
+          "count": 27,
+          "mean_conf": 0.9052,
+          "pct_has_cham": 100.0,
+          "pct_has_latin_viet": 0.0
+        },
+        "vietnamese_english": {
+          "count": 24,
+          "mean_conf": 0.3297,
+          "pct_has_cham": 95.8,
+          "pct_has_latin_viet": 0.0
+        },
+        "latin": {
+          "count": 25,
+          "mean_conf": 0.3909,
+          "pct_has_cham": 84.0,
+          "pct_has_latin_viet": 0.0
+        }
+      },
+      "ood_v2_12pages": {
+        "n_lines": 180,
+        "norm_cer_pct": 25.25,
+        "wer_pct": 53.81,
+        "exact_lines": "24/180",
+        "pages": 12,
+        "e2e_lines": "180/180",
+        "line_recall_pct": 100.0,
+        "e2e_doc_cer_pct": 22.42
+      },
+      "ood_v3_new_8pages": {
+        "n_lines": 118,
+        "norm_cer_pct": 30.8,
+        "wer_pct": 54.36,
+        "exact_lines": "18/118",
+        "pages": 8,
+        "e2e_lines": "118/118",
+        "line_recall_pct": 100.0,
+        "e2e_doc_cer_pct": 26.18
+      },
+      "ood_all_20pages_pure_cham": {
+        "pages": 20,
+        "n_lines": 298,
+        "crop_cer_pct": 27.54,
+        "crop_wer_pct": 54.03,
+        "e2e_doc_cer_pct": 23.91
+      },
+      "v3_by_domain": {
+        "efeo_unseen_regional_v3": {
+          "n_lines": 46,
+          "norm_cer_pct": 35.1,
+          "wer_pct": 62.84,
+          "exact_lines": "2/46",
+          "pages": 3,
+          "e2e_lines": "46/46",
+          "line_recall_pct": 100.0,
+          "e2e_doc_cer_pct": 33.58
+        },
+        "efeo_curved_agal_v3": {
+          "n_lines": 42,
+          "norm_cer_pct": 47.58,
+          "wer_pct": 76.73,
+          "exact_lines": "0/42",
+          "pages": 3,
+          "e2e_lines": "42/42",
+          "line_recall_pct": 100.0,
+          "e2e_doc_cer_pct": 36.68
+        },
+        "heldout_ultralight_book_v3": {
+          "n_lines": 30,
+          "norm_cer_pct": 3.52,
+          "wer_pct": 12.12,
+          "exact_lines": "16/30",
+          "pages": 2,
+          "e2e_lines": "30/30",
+          "line_recall_pct": 100.0,
+          "e2e_doc_cer_pct": 3.17
+        }
+      },
+      "bilingual_commentary_2pages": {
+        "n_lines": 28,
+        "norm_cer_pct": 66.17,
+        "wer_pct": 85.06,
+        "exact_lines": "4/28",
+        "pages": 2,
+        "e2e_lines": "28/28",
+        "line_recall_pct": 100.0,
+        "e2e_doc_cer_pct": 64.53
+      },
+      "cpu_page_latency_sec": {
+        "mean_sec": 3.323,
+        "max_sec": 6.066,
+        "within_15s_budget": true
+      }
+    },
+    "auto": {
+      "harum_palei_01": {
+        "n_lines": 25,
+        "norm_cer_pct": 2.19,
+        "wer_pct": 7.49,
+        "exact_lines": "15/25",
+        "e2e_doc_cer_pct": 2.96,
+        "e2e_lines": "25/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 36.19,
+        "wer_pct": 64.81,
+        "exact_lines": "2/7"
+      },
+      "handoff_multiscript_01": {
+        "cham_script": {
+          "count": 27,
+          "mean_conf": 0.9052,
+          "pct_has_cham": 100.0,
+          "pct_has_latin_viet": 0.0
+        },
+        "vietnamese_english": {
+          "count": 24,
+          "mean_conf": 0.591,
+          "pct_has_cham": 0.0,
+          "pct_has_latin_viet": 100.0
+        },
+        "latin": {
+          "count": 25,
+          "mean_conf": 0.5042,
+          "pct_has_cham": 36.0,
+          "pct_has_latin_viet": 64.0
+        }
+      },
+      "ood_v2_12pages": {
+        "n_lines": 180,
+        "norm_cer_pct": 24.55,
+        "wer_pct": 53.34,
+        "exact_lines": "23/180",
+        "pages": 12,
+        "e2e_lines": "180/180",
+        "line_recall_pct": 100.0,
+        "e2e_doc_cer_pct": 22.46
+      },
+      "ood_v3_new_8pages": {
+        "n_lines": 118,
+        "norm_cer_pct": 31.55,
+        "wer_pct": 55.04,
+        "exact_lines": "19/118",
+        "pages": 8,
+        "e2e_lines": "118/118",
+        "line_recall_pct": 100.0,
+        "e2e_doc_cer_pct": 27.76
+      },
+      "ood_all_20pages_pure_cham": {
+        "pages": 20,
+        "n_lines": 298,
+        "crop_cer_pct": 27.44,
+        "crop_wer_pct": 54.03,
+        "e2e_doc_cer_pct": 24.56
+      },
+      "v3_by_domain": {
+        "efeo_unseen_regional_v3": {
+          "n_lines": 46,
+          "norm_cer_pct": 36.86,
+          "wer_pct": 64.37,
+          "exact_lines": "3/46",
+          "pages": 3,
+          "e2e_lines": "46/46",
+          "line_recall_pct": 100.0,
+          "e2e_doc_cer_pct": 35.75
+        },
+        "efeo_curved_agal_v3": {
+          "n_lines": 42,
+          "norm_cer_pct": 47.96,
+          "wer_pct": 77.09,
+          "exact_lines": "0/42",
+          "pages": 3,
+          "e2e_lines": "42/42",
+          "line_recall_pct": 100.0,
+          "e2e_doc_cer_pct": 38.92
+        },
+        "heldout_ultralight_book_v3": {
+          "n_lines": 30,
+          "norm_cer_pct": 3.52,
+          "wer_pct": 12.12,
+          "exact_lines": "16/30",
+          "pages": 2,
+          "e2e_lines": "30/30",
+          "line_recall_pct": 100.0,
+          "e2e_doc_cer_pct": 3.17
+        }
+      },
+      "bilingual_commentary_2pages": {
+        "n_lines": 28,
+        "norm_cer_pct": 6.64,
+        "wer_pct": 15.33,
+        "exact_lines": "17/28",
+        "pages": 2,
+        "e2e_lines": "28/28",
+        "line_recall_pct": 100.0,
+        "e2e_doc_cer_pct": 6.58
+      },
+      "cpu_page_latency_sec": {
+        "mean_sec": 5.556,
+        "max_sec": 15.1,
+        "within_15s_budget": false
+      }
+    }
+  }
+}

@@ -29,6 +29,7 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, "ocr-training", "scripts"))
 from generate_data import normalize_unicode
 
 MANIFEST_V2 = os.path.join(PROJECT_ROOT, "ocr-benchmark", "data", "realscan_gold_v2", "manifest.json")
+MANIFEST_V3 = os.path.join(PROJECT_ROOT, "ocr-benchmark", "data", "realscan_gold_v3", "manifest.json")
 
 
 def sha256_file(path: str) -> str:
@@ -116,32 +117,37 @@ def ingest_page_json(
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Ingest human-verified Studio exports into RealScan-Gold v2")
+    ap = argparse.ArgumentParser(description="Ingest human-verified Studio exports into RealScan-Gold v2/v3")
     ap.add_argument("--image", help="Path to original manuscript page image")
     ap.add_argument("--studio-json", help="Path to exported Studio JSON (cham_ocr_transcription.json or training_pairs_manifest.json)")
     ap.add_argument("--doc-id", help="Unique document identifier (e.g. panduranga_folio_02)")
     ap.add_argument("--domain", default="user_verified_manuscript", help="Archival domain tag")
-    ap.add_argument("--verify-manifest", action="store_true", help="Verify SHA-256 integrity of all RealScan-Gold v2 assets")
+    ap.add_argument("--version", choices=["v2", "v3"], default="v3", help="Target RealScan-Gold version (default: v3)")
+    ap.add_argument("--verify-manifest", action="store_true", help="Verify SHA-256 integrity of all RealScan-Gold assets")
     args = ap.parse_args()
 
+    target_manifest = MANIFEST_V3 if args.version == "v3" else MANIFEST_V2
     if args.verify_manifest:
-        m = json.load(open(MANIFEST_V2, "r", encoding="utf-8"))
+        m = json.load(open(target_manifest, "r", encoding="utf-8"))
         checked = 0
         for d in m["documents"]:
             if d.get("page_relpath"):
                 p = os.path.join(PROJECT_ROOT, d["page_relpath"].replace("/", os.sep))
                 assert sha256_file(p) == d["page_sha256"], f"Page SHA mismatch: {p}"
                 checked += 1
-            for ln in d.get("lines", []):
+            items = list(d.get("lines", []))
+            for grp in (d.get("groups") or {}).values():
+                items.extend(grp)
+            for ln in items:
                 cp = os.path.join(PROJECT_ROOT, ln["crop_relpath"].replace("/", os.sep))
                 assert sha256_file(cp) == ln["crop_sha256"], f"Crop SHA mismatch: {cp}"
                 checked += 1
-        print(f"✅ RealScan-Gold v2 integrity verified: {checked} files match SHA-256 100%.")
+        print(f"✅ RealScan-Gold {args.version} integrity verified: {checked} files match SHA-256 100%.")
         return
 
     if not (args.image and args.studio_json and args.doc_id):
         ap.error("Provide --image, --studio-json, and --doc-id (or --verify-manifest)")
-    ingest_page_json(args.image, args.studio_json, args.doc_id, domain=args.domain)
+    ingest_page_json(args.image, args.studio_json, args.doc_id, domain=args.domain, manifest_path=target_manifest)
 
 
 if __name__ == "__main__":

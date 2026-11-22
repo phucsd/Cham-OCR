@@ -308,7 +308,7 @@ def test_v24_1_r4_and_r3_1_manifest_and_shapes():
     info_r4 = app.get_model_info('v24_1_r4')
     info_r31 = app.get_model_info('v24_1_r3_1')
     assert info_r4['recognizers'][0]['rec_image_shape'] == '3, 48, 480', info_r4
-    assert info_r4['recognizers'][0]['weights_sha256_16'] == '85525b0ca091acaf', info_r4
+    assert info_r4['recognizers'][0]['weights_sha256_16'] == '1deee5f5ff351070', info_r4
     assert '\\' not in info_r4['recognizers'][0]['model_dir'], info_r4
     assert info_r31['recognizers'][0]['rec_image_shape'] == '3, 48, 320', info_r31
     assert info_r31['recognizers'][0]['weights_sha256_16'] == '5fb0d8e4d512b4c0', info_r31
@@ -491,6 +491,157 @@ def test_poly_clip_and_line_height_helpers():
     assert app._is_poly_detector(_FakeDetector([], 'poly')) and not app._is_poly_detector(_FakeDetector([], 'quad'))
     assert app.CHAM_DET_BOX_TYPE == os.getenv('CHAM_DET_BOX_TYPE', 'poly').strip().lower()
     assert abs(app.CHAM_DET_UNCLIP - float(os.getenv('CHAM_DET_UNCLIP', '1.8'))) < 1e-6
+
+
+def test_auto_routing_v2_tri_specialist_adjudication():
+    calls = {'w480': 0, 'w320': 0, 'vi': 0}
+
+    def fake_w480(imgs):
+        calls['w480'] += len(imgs)
+        # [0]: high-conf clean Cham (fast-exit, skips w320 & vi)
+        # [1]: medium-width unseen EFEO Cham folio (lower w480 conf, out-of-order cluster -> rescued by w320)
+        # [2]: editorial double-hyphen '--' line where w480 preserves '--' and w320 collapses to '-'
+        # [3]: degraded historical Cham folio (conf=0.58 -> w320=0.62, pure Cham -> skips vi completely!)
+        # [4]: severe degraded Cham folio (conf=0.28 -> w320=0.33, pure Cham -> queries vi but rejects fake Vi 0.74!)
+        # [5]: genuine Vietnamese gloss (ASCII soup in Cham CTC -> routes cleanly to Vi!)
+        return [
+            ('ꨀꨇꩉ ꨌꩌ', 0.985),
+            ('ꨙꨯꨳꨮ ꨚꨤꨬ', 0.84),
+            ('ꨌꩌ--ꨚꨤꨬ', 0.86),
+            ('ꨨꨣꨭꩌ ꨚꨤꨬ ꨣꩌ', 0.58),
+            ('ꨚꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꨰ', 0.28),
+            ('56꩝ {0] 2026꩞', 0.47),
+        ], 0.0
+
+    def fake_w320(imgs):
+        calls['w320'] += len(imgs)
+        # Called on [1], [2], [3], [4], [5] (NOT [0] because c480 >= 0.905!)
+        return [
+            ('ꨙꨳꨯꨮ ꨚꨤꨬ ꨣꩌ', 0.94),
+            ('ꨌꩌ-ꨚꨤꨬ', 0.92),
+            ('ꨨꨣꨭꩌ ꨚꨤꨬ ꨣꩌ', 0.62),
+            ('ꨚꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꨰ', 0.33),
+            ('5꩒꩞ 06] 2026', 0.48),
+        ], 0.0
+
+    def fake_vi(imgs):
+        calls['vi'] += len(imgs)
+        # Called ONLY on [4] (c_conf=0.32 < 0.34) and [5] (_cham_script_ratio < 0.62) — NOT [3]!
+        return [
+            ('38158"o) gi', 0.74),
+            ('Bản dịch cổ thư Chăm năm 2026', 0.97),
+        ], 0.0
+
+    med_img = np.zeros((48, 280, 3), dtype=np.uint8)
+    router = app.AutoRoutingOCRWrapper(
+        fake_w480, fake_vi, cham_w320_model=fake_w320, primary_ver='v24_1_r4', w320_ver='v24_1_r3_1'
+    )
+    out, _ = router([med_img] * 6)
+    assert calls == {'w480': 6, 'w320': 5, 'vi': 2}, calls
+    assert out[0][0] == 'ꨀꨇꩉ ꨌꩌ' and router.last_selected_versions[0] == 'v24_1_r4'
+    assert out[1][0] == 'ꨙꨳꨯꨮ ꨚꨤꨬ ꨣꩌ' and router.last_selected_versions[1] == 'v24_1_r3_1'
+    assert '--' in out[2][0] and router.last_selected_versions[2] == 'v24_1_r4'
+    assert out[3][0] == 'ꨨꨣꨭꩌ ꨚꨤꨬ ꨣꩌ' and router.last_selected_versions[3] == 'v24_1_r3_1'
+    assert out[4][0] == 'ꨚꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꨰ' and router.last_selected_versions[4] == 'v24_1_r3_1'
+    assert out[5][0] == 'Bản dịch cổ thư Chăm năm 2026' and router.last_selected_versions[5] == 'vi'
+    info_auto = app.get_model_info('auto')
+    assert info_auto['normalizer'] == app.NORMALIZER_VERSION
+
+
+def test_realscan_gold_v3_manifest_integrity():
+    import json
+    repo_root = os.path.dirname(app.PROJECT_ROOT)
+    m_path = os.path.join(repo_root, 'ocr-benchmark', 'data', 'realscan_gold_v3', 'manifest.json')
+    assert os.path.exists(m_path), m_path
+    m = json.load(open(m_path, 'r', encoding='utf-8'))
+    assert m['schema_version'] == '3.0.0'
+    assert m['summary']['efeo_fonts_covered'] == '12/12'
+    assert m['summary']['heldout_weights_covered'] == '6/6'
+    assert m['summary']['total_evaluated_items'] >= 430
+
+
+def test_workbench_samples_models_and_corpus_zip_export():
+    import base64
+    import io
+    import json
+    import zipfile
+
+    catalog = app.list_available_models()
+    assert catalog['default_model'] == 'v24_1_r4'
+    ids = {m['id']: m for m in catalog['models']}
+    assert 'v24_1_r4' in ids and ids['v24_1_r4']['installed'] is True
+    assert 'v25' in ids and ids['v25']['installed'] is True
+    assert 'auto' in ids and ids['auto']['installed'] is True
+
+    samples = app.list_curated_samples()
+    assert len(samples) >= 4, samples
+    s0 = app.load_curated_sample(samples[0]['id'])
+    assert s0 is not None and s0['width'] > 50 and len(s0['image']) > 100
+
+    # Verify corpus ZIP export normalizes Cham Logical Order (ꨙꨯꨳꨮ -> ꨙꨳꨯꨮ) and packs crops
+    dummy_crop = np.full((32, 100, 3), 240, dtype=np.uint8)
+    ok, buf = cv2.imencode('.png', dummy_crop)
+    assert ok
+    crop_b64 = base64.b64encode(buf.tobytes()).decode('ascii')
+
+    zip_bytes = app.build_corpus_export_zip({
+        'documents': [
+            {
+                'name': 'agal_folio_01.png',
+                'status': 'Verified',
+                'model': 'v24_1_r4',
+                'lines': [
+                    {'index': 1, 'text': 'ꨙꨯꨳꨮ ꨨꨣꨭꩌ', 'confidence': 1.0, 'bbox': [10, 10, 110, 42], 'image': crop_b64, 'human_verified': True}
+                ]
+            }
+        ]
+    })
+    with zipfile.ZipFile(io.BytesIO(zip_bytes), 'r') as zf:
+        names = set(zf.namelist())
+        assert 'train_list.txt' in names
+        assert 'corpus_manifest.json' in names
+        assert 'transcriptions/combined_corpus.md' in names
+        train_line = zf.read('train_list.txt').decode('utf-8').strip()
+        assert train_line.endswith('\tꨙꨳꨯꨮ ꨨꨣꨭꩌ'), train_line
+        crop_rel = train_line.split('\t', 1)[0]
+        assert crop_rel in names
+
+
+def test_static_asset_separation_and_http_routes():
+    import urllib.request
+    import threading
+    from http.server import HTTPServer
+
+    static_dir = os.path.join(app.PROJECT_ROOT, 'static')
+    for rel in ('css/studio.css', 'css/research.css', 'css/help.css', 'js/studio.js', 'js/cham-keyboard.js', 'js/transliteration.js', 'js/research.js', 'js/help.js'):
+        assert os.path.isfile(os.path.join(static_dir, *rel.split('/'))), rel
+
+    httpd = HTTPServer(('127.0.0.1', 0), app.ChamOCRRequestHandler)
+    port = httpd.server_address[1]
+    t = threading.Thread(target=httpd.serve_forever, daemon=True)
+    t.start()
+    try:
+        with urllib.request.urlopen(f'http://127.0.0.1:{port}/') as r:
+            html = r.read().decode('utf-8')
+            assert '/static/css/studio.css' in html and '/static/js/studio.js' in html and 'href="/help"' in html
+        with urllib.request.urlopen(f'http://127.0.0.1:{port}/help') as r:
+            h_html = r.read().decode('utf-8')
+            assert '/static/css/help.css' in h_html and '/static/js/help.js' in h_html and 'shortcuts-table' in h_html
+        with urllib.request.urlopen(f'http://127.0.0.1:{port}/research') as r:
+            r_html = r.read().decode('utf-8')
+            assert '/static/css/research.css' in r_html and 'sec7-3' in r_html and 'href="/help"' in r_html
+        with urllib.request.urlopen(f'http://127.0.0.1:{port}/static/css/studio.css') as r:
+            css = r.read().decode('utf-8')
+            assert '#FAF7F2' in css and '#C96442' in css
+        # Ensure directory traversal outside /static/ is strictly blocked with HTTP 404
+        try:
+            urllib.request.urlopen(f'http://127.0.0.1:{port}/static/../app.py')
+            assert False, 'Expected 404 on path traversal'
+        except urllib.error.HTTPError as he:
+            assert he.code == 404
+    finally:
+        httpd.shutdown()
+        httpd.server_close()
 
 
 class TestQualityGates(unittest.TestCase):

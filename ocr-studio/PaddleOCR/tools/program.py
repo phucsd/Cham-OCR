@@ -231,6 +231,26 @@ def train(config,
     model_average = False
     model.train()
 
+    def _enforce_frozen_bn_eval():
+        if not config['Global'].get('freeze_bn_in_frozen_prefixes', False):
+            return 0
+        f_prefs = config['Global'].get('freeze_prefixes') or []
+        if isinstance(f_prefs, str):
+            f_prefs = [f_prefs]
+        frozen_bn_cnt = 0
+        for s_name, s_layer in model.named_sublayers():
+            c_name = s_name[len('_layers.'):] if s_name.startswith('_layers.') else s_name
+            if any(c_name == p or c_name.startswith(p + '.') for p in f_prefs):
+                if isinstance(s_layer, paddle.nn.BatchNorm2D):
+                    s_layer.eval()
+                    frozen_bn_cnt += 1
+        return frozen_bn_cnt
+
+    _locked_bns = _enforce_frozen_bn_eval()
+    if _locked_bns > 0 and dist.get_rank() == 0:
+        logger.info("Locked {} BatchNorm2D layers in eval() mode under freeze_prefixes={}".format(
+            _locked_bns, config['Global'].get('freeze_prefixes')))
+
     use_srn = config['Architecture']['algorithm'] == "SRN"
     extra_input_models = [
         "SRN", "NRTR", "SAR", "SEED", "SVTR", "SVTR_LCNet", "SPIN", "VisionLAN",
@@ -263,6 +283,7 @@ def train(config,
     ) == "Windows" else len(train_dataloader)
 
     for epoch in range(start_epoch, epoch_num + 1):
+        _enforce_frozen_bn_eval()
         if train_dataloader.dataset.need_reset:
             train_dataloader = build_dataloader(
                 config, 'Train', device, logger, seed=epoch)

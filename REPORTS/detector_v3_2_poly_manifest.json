@@ -1,0 +1,12 @@
+{
+  "stage": "CHAM_DBNET_V3_POLY",
+  "generated_at": "2026-11-21T09:41:05.603878+00:00",
+  "duration_sec": 144.51,
+  "train_pages": 1400,
+  "train_zero_text_hard_neg_pages": 0,
+  "val_pages": 160,
+  "train_line_polygons": 17529,
+  "val_line_polygons": 1962,
+  "train_label_sha256": "b55d6efecdc858d2074e72593bcad63454ebb531d15f52f274a1d4004fd44fe9",
+  "val_label_sha256": "8841e55fc494417e2bd3cc94d04391aef307808d58a641648627f1fdd78907dd"
+}

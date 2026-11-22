@@ -1,0 +1,5057 @@
+{
+  "schema_version": "3.0.0",
+  "dataset_id": "realscan_gold_v3",
+  "created_at": "2026-11-21T09:49:12.769851+00:00",
+  "split_policy": "100% held-out cross-domain & bilingual benchmark: real camera + Wikimedia + multiscript handoff + ALL 12/12 EFEO regional fonts + ALL 6/6 Held-Out NotoSansCham weights + curved palm-leaf agal + bilingual Cham-Vietnamese commentary; ZERO synthetic train/val overlap.",
+  "summary": {
+    "real_camera_pages": 1,
+    "real_camera_lines": 25,
+    "wikimedia_external_specimens": 7,
+    "handoff_multiscript_crops": 76,
+    "ood_v2_frozen_pages": 12,
+    "ood_v2_frozen_lines": 180,
+    "ood_v3_new_pure_cham_pages": 8,
+    "ood_v3_new_pure_cham_lines": 118,
+    "ood_all_pure_cham_pages": 20,
+    "ood_all_pure_cham_lines": 298,
+    "bilingual_commentary_pages": 2,
+    "bilingual_commentary_lines": 28,
+    "efeo_fonts_covered": "12/12",
+    "heldout_weights_covered": "6/6",
+    "total_evaluated_items": 434
+  },
+  "documents": [
+    {
+      "doc_id": "harum_palei_01",
+      "source_type": "authentic_cham_poem_page",
+      "page_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/original_image.png",
+      "page_sha256": "9566588bd7479ae97251136599cbba18b243dcc5d68531ccbde290d1c0182957",
+      "line_count": 25,
+      "lines": [
+        {
+          "line": 1,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_01.png",
+          "crop_sha256": "de64668419b591d4d6ce300ed01fe2d92e8782c8806e4658f5bf5d118b3730c8",
+          "gt": "ꨨꨣꨭꩌ ꨚꨤꨬ ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ"
+        },
+        {
+          "line": 2,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_02.png",
+          "crop_sha256": "b0a4aa2112a4c63671f54ac049bb19b0dae197cb8022bebe38d6bd2c1c4945d1",
+          "gt": "ꨝꨳꨮꩉ ꨨꨣꨬ ꨁ-ꨗꨫ ꨚꨙꨳꩀ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨬ ꨡꨭꩊ ꨆꨴꩌ"
+        },
+        {
+          "line": 3,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_03.png",
+          "crop_sha256": "68f1691847709d9a53481759685852cbe7395278d7a6410b775533ec135d334d",
+          "gt": "ꨀꨊꨯꨱꩀ ꨤꨊꨪꩀ ꨨꨎꨥ ꨆꨚꨶꨮꩊ ꨌꨳꨪꩌ ꨈꨪꨤꩄ ꨟꨣꨰ"
+        },
+        {
+          "line": 4,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_04.png",
+          "crop_sha256": "4908ea04244772487b800947f09e787808456557b340abd5e2081a8896da986b",
+          "gt": "ꨦꩇ ꨆꨤꩀ ꨈꨵꨮꩃ ꨆꨝꨥ ꨀꨕꨯꨱꩍ ꨀꨊꨯꨱꩀ ꨝꨗꨮꩀ"
+        },
+        {
+          "line": 5,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_05.png",
+          "crop_sha256": "8173ebdee4239ff9a2b833e1d341a2b093f61cdc0394f6af514ba7214687f295",
+          "gt": "ꨆꨤꩀ ꨚꨕꨴꨭꩅ ꨚꨕꨴꨶꨰ ꨆꨣꩌ ꨈꨕꨮꩃ ꨟꨝꨭꩀ ꨟꨝꩉ"
+        },
+        {
+          "line": 6,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_06.png",
+          "crop_sha256": "4cfa1cb60a464e9a46f2efe07bda45c26437619303f911ef0e6d3a25f6fc3bd9",
+          "gt": "ꨀꨓꩍ ꨀꨓꩍ ꨀꨓꩍ ꨆꨥꨯꩌ ꨝꨶꨮꩊ ꨤꨪ-ꨂꨀꨩ ꨈꨤꨮꩌ ꨎꨤꨮꩃ"
+        },
+        {
+          "line": 7,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_07.png",
+          "crop_sha256": "a24cfa7474905211e546dad27bf85fb8a4b8b9fc49166d1a29f8efd1e581561d",
+          "gt": "ꨧꨯꨱꩃ ꨆꨚꨶꨮꩊ ꨆꨝꨥ ꨗꨯꨱ ꨀꨊꨯꨱꩀ ꨎꨤꩆ ꨟꨣꨰ ꨨꨚꩀ"
+        },
+        {
+          "line": 8,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_08.png",
+          "crop_sha256": "d163eadd9f606f4f81764865be0413dfd2fb9606838443c0167024b7fd77bc2e",
+          "gt": "ꨓꨚꨮꩆ ꨕꨮꩍ ꨆꨴꨯꨱꩃ ꨚꨝꨭꩃ ꨀꨈꩀ ꨗꩌ ꨓꨚꨮꩆ ꨓꨓꨶꨩ"
+        },
+        {
+          "line": 9,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_09.png",
+          "crop_sha256": "f4fe14684dd7e9f7eb65d8e6fec7d65b7d5c4ec89a4175da308b04c88ed752a1",
+          "gt": "ꨧꨬ ꨚꨎꨮꩍ ꨟꨯꨱꩃ ꨟꨯꨱꩃ ꨀꨆꨯꨱꩀ ꨌꩃ ꨟꨯꨱꩃ"
+        },
+        {
+          "line": 10,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_10.png",
+          "crop_sha256": "320ec67b5df772af060b8e8ce11b146908cf9df8038ea94db4fc246ac44cb667",
+          "gt": "ꨓꨳꩇ ꨓꨶꨬ ꨀꨊꨪꩆ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨯꩌ ꨦꩇ ꨆꨤꩀ"
+        },
+        {
+          "line": 11,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_11.png",
+          "crop_sha256": "edfb82704292dea986a791f596cd1cfd8266357eebf5abbe40ed84632299bf34",
+          "gt": "ꨣꨤꨮꩃ ꨈꨭꨨꨩ ꨕꨗꩈ ꨆꨣꩌ ꨈꨕꨮꩃ ꨕꨤꩌ ꨡꨵꩃ ꨝꨳꨮꩉ ꨨꨣꨬ"
+        },
+        {
+          "line": 12,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_12.png",
+          "crop_sha256": "fbe03d02a371bc67db7b8def216675fa6296d3f83bfc2038cc492971fbffac17",
+          "gt": "ꨀꨦꩀ ꨓꨡꩀ ꨓꨚꨮꩆ ꨡꨶꨮꩆ ꨤꨨꨶꨰ ꨤꨨꨩ ꨚꨚꩉ"
+        },
+        {
+          "line": 13,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_13.png",
+          "crop_sha256": "6302d8d158151964a20480b8317fdff72bc7f05199f7b8c0d87e13c8ed86a7c5",
+          "gt": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨆꨣꩌ ꨈꨕꨮꩃ ꨚꨗꨪꩀ ꨤꨚꨬ ꨟꨝꨭꩀ"
+        },
+        {
+          "line": 14,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_14.png",
+          "crop_sha256": "99622e351f4e127fd9d069ff04b78999fc14c9d0c8fc1efdb709964fe9568977",
+          "gt": "ꨓꨗꨴꩀ ꨟꨐꩀ ꨕꨯꨱꩀ ꨦꨭꩇ ꨨꨕꩍ ꨚꨍꩃ"
+        },
+        {
+          "line": 15,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_15.png",
+          "crop_sha256": "407ef9e41a937c51cc71cef4a3c7a29fe324af74dfae0c454b3d21a7632c5500",
+          "gt": "ꨕꨯꨱꩀ ꨢꨮꨭ ꨎꨶꨩ ꨤꨊꨶꨬ ꨝꩉ ꨕꨯꨱꩀ ꨟꨝꨭꩀ ꨤꨚꨬ"
+        },
+        {
+          "line": 16,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_16.png",
+          "crop_sha256": "df55745506c5a4cddb21e6185271ef6ed274403d8c2e5378c9047e7fa72fd584",
+          "gt": "ꨧꨯꨱꩃ ꨤꨆꨭꩀ ꨈꨗꨭꨩ ꨥꩊ ꨟꨢꨭꩅ ꨧꨬ ꨎꩌꨎꨫ ꨖꨪꩅ"
+        },
+        {
+          "line": 17,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_17.png",
+          "crop_sha256": "ae98456a5a136b77077cac189c7f858ffc79433a0a71edde7ce982f1b80a098c",
+          "gt": "ꨕꨯꨱꩀ ꨝꩀ ꨚꨕꨮꩃ ꨀꨣꨰ ꨦꨡꨰ ꨨꨕꨳꨮꩇ ꨨꨕꨯꩌ ꨀꨝꨯꨱꩍ ꨧꩃ"
+        },
+        {
+          "line": 18,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_18.png",
+          "crop_sha256": "ca1e72291581299d8f32a4408763d75cdcff92d3722f9cf82e2678f484606a02",
+          "gt": "ꨝꨊꨭꩀ ꨟꨤꩌ ꨓꨡꩀ ꨎꨰꩀ ꨚꨎꨮꨩ ꨚꨣꨤꨯꨱ ꨈꨕꨮꩃ ꨕꨤꩌ ꨆꨤꨪꨟꨭꨩ ꨆꨆꨶꨮꩉ"
+        },
+        {
+          "line": 19,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_19.png",
+          "crop_sha256": "b6f1bb3a4444b9047cbeb55ff389047a27319868292f61c83933f4b593c094f1",
+          "gt": "ꨦꩇ ꨌꨳꨪꩌ ꨓꨤꩍ ꨆꨚꨶꨮꩊ ꨕꨯꨱꩀ ꨎꨶꨩ ꨧꨩ ꨕꨴꨬ ꨗꨯꨱ ꨕꨶꩍ ꨀꨕꨪꩍ"
+        },
+        {
+          "line": 20,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_20.png",
+          "crop_sha256": "bbaf1f30f0599a01db2f058a608180eae65d90df8cd888faec245ec72ec47d33",
+          "gt": "ꨌꨳꨪꩌ ꨤꨮꩈ ꨣꩆ ꨌꩃ ꨝꨵꨯꨱꩍ ꨚꨈꨭꩍ ꨨꨕꩍ ꨚꨍꩃ"
+        },
+        {
+          "line": 21,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_21.png",
+          "crop_sha256": "12c090b76d9eea5bab03ed2c6d4eb380988f90f05ca8a5fa128e65854fb14fb0",
+          "gt": "ꨚꨯꨱꩀ ꨞꨯꩂ ꨟꨣꨰ ꨣꨝꨮꨭ ꨓꨗꨴꩀ ꨚꨙꨳꩀ ꨀꨧꩅ ꨦꨮꩍ ꨟꨤꨮꩃ ..."
+        },
+        {
+          "line": 22,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_22.png",
+          "crop_sha256": "a9cc3048da665f593aeff69af7da3baae483bbc46e428b7eb2947a1cffdcfcde",
+          "gt": "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/꩒꩐꩒꩖"
+        },
+        {
+          "line": 23,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_23.png",
+          "crop_sha256": "a25927b7865d8a5c09f2b1245f0974d245a4a7e4c324179dca6a52628e30dd5c",
+          "gt": "ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ"
+        },
+        {
+          "line": 24,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_24.png",
+          "crop_sha256": "1998a0769aef4fbd746e2528a57cdeadcf781dee38bd774c16112c746541224d",
+          "gt": "ꨦꨮꩍ ꨟꨤꨮꩃ : ꨨꨭꩈ ꨨꨯꨀꩃ"
+        },
+        {
+          "line": 25,
+          "crop_relpath": "ocr-benchmark/results/harum_palei_v24_vs_v25/line_crops/line_25.png",
+          "crop_sha256": "49aa070f0c9e84b2c00246defaaeffe336dc2cd838d2f3269c20cccdf973da77",
+          "gt": "ꨈꨗꨭꨩ ꨥꩊ : ꨝꨭꩄ ꨟꩆꨨꨩ"
+        }
+      ]
+    },
+    {
+      "doc_id": "wikimedia_public_specimens_01",
+      "source_type": "external_wikimedia_public_specimens",
+      "specimen_count": 7,
+      "lines": [
+        {
+          "line": 1,
+          "id": "wiki_01_akhara_cham",
+          "source_title": "File:Akhara Cham.png",
+          "license": "CC BY-SA 4.0",
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/wikimedia_specimens/wiki_01_akhara_cham.png",
+          "crop_sha256": "2f60efba13c6ff95d714d5684aadfbf156706f430e7f0661bce3ee4d7624aca4",
+          "gt": "ꨀꨇꩉ ꨌꩌ"
+        },
+        {
+          "line": 2,
+          "id": "wiki_02_cham",
+          "source_title": "File:Cham.png",
+          "license": "CC BY-SA 4.0",
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/wikimedia_specimens/wiki_02_cham.png",
+          "crop_sha256": "71bc4b3ff2c4405fadf335f148973d0ad97a6525e11cd6bbe8495fa2fa3c122c",
+          "gt": "ꨌꩌ"
+        },
+        {
+          "line": 3,
+          "id": "wiki_03_consonants_r1",
+          "source_title": "File:Chamscript.png",
+          "license": "Public domain",
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/wikimedia_specimens/wiki_03_consonants_r1.png",
+          "crop_sha256": "0413ff80b80e5a6c01b8a9d5beb0a38e600e22f3e17f7c23515a762ecf3c2774",
+          "gt": "ꨆ ꨇ ꨈ ꨉ ꨊ ꨋ ꨌ ꨍ ꨎ ꨏ ꨐ ꨑ ꨒ"
+        },
+        {
+          "line": 4,
+          "id": "wiki_04_consonants_r2",
+          "source_title": "File:Chamscript.png",
+          "license": "Public domain",
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/wikimedia_specimens/wiki_04_consonants_r2.png",
+          "crop_sha256": "540b32710b82e887a499f42c7245b585f65b9a939b22155e9919cf0290bf9d71",
+          "gt": "ꨓ ꨔ ꨕ ꨖ ꨗ ꨘ ꨙ ꨚ ꨛ ꨜ ꨝ ꨞ ꨟ ꨠ"
+        },
+        {
+          "line": 5,
+          "id": "wiki_05_consonants_r3",
+          "source_title": "File:Chamscript.png",
+          "license": "Public domain",
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/wikimedia_specimens/wiki_05_consonants_r3.png",
+          "crop_sha256": "111cde6bdb0f0e5eedc8043ff6b22f0c39ad6bdcec6dcde958139e35dc9e5c12",
+          "gt": "ꨡ ꨢ ꨣ ꨤ ꨥ ꨦ ꨧ ꨨ"
+        },
+        {
+          "line": 6,
+          "id": "wiki_06_vowels",
+          "source_title": "File:Chamscript.png",
+          "license": "Public domain",
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/wikimedia_specimens/wiki_06_vowels.png",
+          "crop_sha256": "7da86d0ed84f39e239b9c37707a8776e6a577c6343f2086b01051e8b209064da",
+          "gt": "ꨀ ꨁ ꨂ ꨃ ꨄ ꨅ"
+        },
+        {
+          "line": 7,
+          "id": "wiki_07_digits",
+          "source_title": "File:Chamscript.png",
+          "license": "Public domain",
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/wikimedia_specimens/wiki_07_digits.png",
+          "crop_sha256": "c0cd010bfa14782d722f060136b62ef9ec9c35585a48be74777da95b307a8dcc",
+          "gt": "꩐ ꩑ ꩒ ꩓ ꩔ ꩕ ꩖ ꩗ ꩘ ꩙"
+        }
+      ]
+    },
+    {
+      "doc_id": "handoff_multiscript_01",
+      "source_type": "script_routing_and_script_purity_crops",
+      "counts": {
+        "cham_script": 27,
+        "vietnamese_english": 24,
+        "latin": 25
+      },
+      "groups": {
+        "cham_script": [
+          {
+            "crop_id": 0,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0000.png",
+            "source_page": "page_0000.png",
+            "crop_sha256": "9c264e53bac3974c66c97d1a611dd5c389b199a6b6d113ef999eefc3c097acc9"
+          },
+          {
+            "crop_id": 1,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0001.png",
+            "source_page": "page_0000.png",
+            "crop_sha256": "6a55816be343d31805b9e7e7a8c8fa1714db377abd4423f29494a4c775354bac"
+          },
+          {
+            "crop_id": 2,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0002.png",
+            "source_page": "page_0000.png",
+            "crop_sha256": "7b271a0c72ae5e242ff0b016cd1306b3eefef9a1c9303c103ffc9cc2582fbd41"
+          },
+          {
+            "crop_id": 3,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0003.png",
+            "source_page": "page_0000.png",
+            "crop_sha256": "5621d8f41af968aede2b849736f35d76616e9aab66fc1f9638f1e1a555bc88ce"
+          },
+          {
+            "crop_id": 4,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0004.png",
+            "source_page": "page_0000.png",
+            "crop_sha256": "98cdc2f2ffe00f7e084c024527c419981ce20fe563efdad8ce01ff1b30d2cbb0"
+          },
+          {
+            "crop_id": 5,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0005.png",
+            "source_page": "page_0000.png",
+            "crop_sha256": "bd0a59f9e231653e351dd545d03a0d0a2aa6b9192f8016440840b466320f53b1"
+          },
+          {
+            "crop_id": 6,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0006.png",
+            "source_page": "page_0000.png",
+            "crop_sha256": "9d9fda6cb59957455f07c641d334c287c336e46317fa86df968edaca31cb1fc3"
+          },
+          {
+            "crop_id": 7,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0007.png",
+            "source_page": "page_0000.png",
+            "crop_sha256": "20f9296de850390edc56192e3250e6be3dcaceb363fa2f9182ce2fb8893d6b6b"
+          },
+          {
+            "crop_id": 8,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0008.png",
+            "source_page": "page_0001.png",
+            "crop_sha256": "edc9a53fe97f923b8897db99c4ce6766cd065b42f536b7a3b4fee833362958ab"
+          },
+          {
+            "crop_id": 9,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0009.png",
+            "source_page": "page_0001.png",
+            "crop_sha256": "7af87ca9ea7e52cff272529fe33da483d40f54e2e67614d0c375570b0a83152f"
+          },
+          {
+            "crop_id": 10,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0010.png",
+            "source_page": "page_0001.png",
+            "crop_sha256": "84be50a62a2439e160dee830b60f3922ea05634e22cedd6652a46b6234ea97ea"
+          },
+          {
+            "crop_id": 11,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0011.png",
+            "source_page": "page_0001.png",
+            "crop_sha256": "8f75e74153e35664addf1974fbf46a7a88c5977c2b5cc28cb8342a7ecbb9a4aa"
+          },
+          {
+            "crop_id": 12,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0012.png",
+            "source_page": "page_0001.png",
+            "crop_sha256": "ea501f0f17f100cfcfef6fd6077d22225b8bd7497df2cbfa028c87ef51f6e436"
+          },
+          {
+            "crop_id": 13,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0013.png",
+            "source_page": "page_0001.png",
+            "crop_sha256": "2817f17968ba59f13093c5abdded29918ebe8975aee87ecd4328ad369496c22c"
+          },
+          {
+            "crop_id": 14,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0014.png",
+            "source_page": "page_0001.png",
+            "crop_sha256": "303ff724f052dc8fa8addedcb21e15c02d6c1f59cfc5cf294978235dfdd16b4f"
+          },
+          {
+            "crop_id": 15,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0015.png",
+            "source_page": "page_0001.png",
+            "crop_sha256": "0608f0f0a9de9c44c25f74cea002d4cb394656b7c448ea04ea218e236d4dd2ba"
+          },
+          {
+            "crop_id": 16,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0016.png",
+            "source_page": "page_0001.png",
+            "crop_sha256": "76a9926e180968880d6b38038fae27274cc805a9e9d6b3fd4562e4e108668fbe"
+          },
+          {
+            "crop_id": 17,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0017.png",
+            "source_page": "page_0002.png",
+            "crop_sha256": "6aa7fb784e50629d560a436ef06f18928eb3af3b897476747ba6107eba53a9a7"
+          },
+          {
+            "crop_id": 18,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0018.png",
+            "source_page": "page_0002.png",
+            "crop_sha256": "a22da16cfa4b5d3403721719c0e1f1ddd5edb563381f85dbace1199b29bf70ed"
+          },
+          {
+            "crop_id": 19,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0019.png",
+            "source_page": "page_0002.png",
+            "crop_sha256": "22877fb186a5d8a2737c6bb38c544c4a4700153a3e992088754a9db0a161a3fe"
+          },
+          {
+            "crop_id": 20,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0020.png",
+            "source_page": "page_0002.png",
+            "crop_sha256": "da309517f4e420fccf8f869d87c36dc3641015750ab46f69c2ed640e3bda2550"
+          },
+          {
+            "crop_id": 21,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0021.png",
+            "source_page": "page_0002.png",
+            "crop_sha256": "226900e294afebaf22184ab68206ce73dafb0a716850c903e56279df94192509"
+          },
+          {
+            "crop_id": 22,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0022.png",
+            "source_page": "page_0002.png",
+            "crop_sha256": "02288b5c1c61b6af9b6da6c5e876b69ca2bd2628d22de66517aad0e140f55999"
+          },
+          {
+            "crop_id": 23,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0023.png",
+            "source_page": "page_0002.png",
+            "crop_sha256": "436c48649e033132b95b306c8aa2dc46eab1bfdb69d5c47ad87fe3a43328bda1"
+          },
+          {
+            "crop_id": 24,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0024.png",
+            "source_page": "page_0002.png",
+            "crop_sha256": "cc55088d8f26e7a0faaebf502879c5465458397cf8b0b2f3bd1c851d5369f696"
+          },
+          {
+            "crop_id": 25,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0025.png",
+            "source_page": "page_0002.png",
+            "crop_sha256": "31c857cbc746c0c0dc7da6c684bc1a84ebed2a20ed1ec32734ad11e95a470097"
+          },
+          {
+            "crop_id": 26,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/cham_script/crop_0026.png",
+            "source_page": "page_0002.png",
+            "crop_sha256": "c733702ef470089115ab93d31dd4de388ff7bab0fe98f6d1d18714e71d297fb1"
+          }
+        ],
+        "vietnamese_english": [
+          {
+            "crop_id": 52,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0052.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "9219860836975a0dc816790d91a642ae800f2ed4593a0d43c84776e2e0f8b95f"
+          },
+          {
+            "crop_id": 53,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0053.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "7837258a6dc00434f3309d52e0c7e3e27e660a6dcd80d94ab7bc544210d482a9"
+          },
+          {
+            "crop_id": 54,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0054.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "ffd5d7e045599eb0fcb523ba597bed5fc569eff2d6f726a5e46d6761380ce3da"
+          },
+          {
+            "crop_id": 55,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0055.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "9219860836975a0dc816790d91a642ae800f2ed4593a0d43c84776e2e0f8b95f"
+          },
+          {
+            "crop_id": 56,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0056.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "0ad2ac5cd4020e8397793e42984e950d9aacfb2e013a03a1fac9c972e01cfb3b"
+          },
+          {
+            "crop_id": 57,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0057.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "a619de19d73ef9ec71594ee5eca902ca6bf337ddb2ebe04cfec10de6baca0d92"
+          },
+          {
+            "crop_id": 58,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0058.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "9219860836975a0dc816790d91a642ae800f2ed4593a0d43c84776e2e0f8b95f"
+          },
+          {
+            "crop_id": 59,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0059.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "a619de19d73ef9ec71594ee5eca902ca6bf337ddb2ebe04cfec10de6baca0d92"
+          },
+          {
+            "crop_id": 60,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0060.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "0082fa362804858357e63d251e9fa4d7af47320c638e65a1d2bff0fbd0eb8c45"
+          },
+          {
+            "crop_id": 61,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0061.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "9219860836975a0dc816790d91a642ae800f2ed4593a0d43c84776e2e0f8b95f"
+          },
+          {
+            "crop_id": 62,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0062.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "a978be7e40323757c3a40db680490abc462e38ad673e98c4da8d813f7df0aafc"
+          },
+          {
+            "crop_id": 63,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0063.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "0ad2ac5cd4020e8397793e42984e950d9aacfb2e013a03a1fac9c972e01cfb3b"
+          },
+          {
+            "crop_id": 64,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0064.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "7837258a6dc00434f3309d52e0c7e3e27e660a6dcd80d94ab7bc544210d482a9"
+          },
+          {
+            "crop_id": 65,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0065.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "7837258a6dc00434f3309d52e0c7e3e27e660a6dcd80d94ab7bc544210d482a9"
+          },
+          {
+            "crop_id": 66,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0066.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "9219860836975a0dc816790d91a642ae800f2ed4593a0d43c84776e2e0f8b95f"
+          },
+          {
+            "crop_id": 67,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0067.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "a619de19d73ef9ec71594ee5eca902ca6bf337ddb2ebe04cfec10de6baca0d92"
+          },
+          {
+            "crop_id": 68,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0068.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "0ad2ac5cd4020e8397793e42984e950d9aacfb2e013a03a1fac9c972e01cfb3b"
+          },
+          {
+            "crop_id": 69,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0069.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "0ad2ac5cd4020e8397793e42984e950d9aacfb2e013a03a1fac9c972e01cfb3b"
+          },
+          {
+            "crop_id": 70,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0070.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "0ad2ac5cd4020e8397793e42984e950d9aacfb2e013a03a1fac9c972e01cfb3b"
+          },
+          {
+            "crop_id": 71,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0071.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "a978be7e40323757c3a40db680490abc462e38ad673e98c4da8d813f7df0aafc"
+          },
+          {
+            "crop_id": 72,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0072.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "a619de19d73ef9ec71594ee5eca902ca6bf337ddb2ebe04cfec10de6baca0d92"
+          },
+          {
+            "crop_id": 73,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0073.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "a44061aa05227e45eb7cb9ee509dc0c057245e875e8e558f3c1e165a8b27422b"
+          },
+          {
+            "crop_id": 74,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0074.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "a978be7e40323757c3a40db680490abc462e38ad673e98c4da8d813f7df0aafc"
+          },
+          {
+            "crop_id": 75,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/vietnamese_english/crop_0075.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "b5f553ebd2a772428daf72cd0924cf4cb840930df709820ab62ce7147cf1ba58"
+          }
+        ],
+        "latin": [
+          {
+            "crop_id": 27,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0027.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "cdc19422c532dfe76f9087154002d76fb1d92700622dff20d3d90ed5affc242c"
+          },
+          {
+            "crop_id": 28,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0028.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "847c043ec9b1884e4606d5fc962cc074a9a5074b6e8a4c052974edcb86ef30f5"
+          },
+          {
+            "crop_id": 29,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0029.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "57139d1022a5dcd47ea32708b6e4db3da768ece3f2c02560ef03c3581738f623"
+          },
+          {
+            "crop_id": 30,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0030.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "f7440fb36232d47198df329c209b320c49ff2b66383426ddf519a437ac51eab8"
+          },
+          {
+            "crop_id": 31,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0031.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "9dba9ddca5e56a71995503967c544dc8d5b51804704a5d1c55db848994339e7b"
+          },
+          {
+            "crop_id": 32,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0032.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "7f5c35329b3f9aa500e88131b8e7d5af2f129a181d26c213d626c8f13fa79f05"
+          },
+          {
+            "crop_id": 33,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0033.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "e6adad8ce8e386955bc109f04501d81ac15a798e2b1664b915865c1a6b928bee"
+          },
+          {
+            "crop_id": 34,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0034.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "7f5c35329b3f9aa500e88131b8e7d5af2f129a181d26c213d626c8f13fa79f05"
+          },
+          {
+            "crop_id": 35,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0035.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "95bc050cdc29eea609bfd899fb2732bb55807d7bec68a0a9db17946f20f0bab5"
+          },
+          {
+            "crop_id": 36,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0036.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "95bc050cdc29eea609bfd899fb2732bb55807d7bec68a0a9db17946f20f0bab5"
+          },
+          {
+            "crop_id": 37,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0037.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "7f5c35329b3f9aa500e88131b8e7d5af2f129a181d26c213d626c8f13fa79f05"
+          },
+          {
+            "crop_id": 38,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0038.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "9dba9ddca5e56a71995503967c544dc8d5b51804704a5d1c55db848994339e7b"
+          },
+          {
+            "crop_id": 39,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0039.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "280c678df113f6253a444f8943ed374839ec8adde48790ad5bf29fe3cdf594af"
+          },
+          {
+            "crop_id": 40,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0040.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "7f5c35329b3f9aa500e88131b8e7d5af2f129a181d26c213d626c8f13fa79f05"
+          },
+          {
+            "crop_id": 41,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0041.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "7f5c35329b3f9aa500e88131b8e7d5af2f129a181d26c213d626c8f13fa79f05"
+          },
+          {
+            "crop_id": 42,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0042.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "95bc050cdc29eea609bfd899fb2732bb55807d7bec68a0a9db17946f20f0bab5"
+          },
+          {
+            "crop_id": 43,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0043.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "280c678df113f6253a444f8943ed374839ec8adde48790ad5bf29fe3cdf594af"
+          },
+          {
+            "crop_id": 44,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0044.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "9dba9ddca5e56a71995503967c544dc8d5b51804704a5d1c55db848994339e7b"
+          },
+          {
+            "crop_id": 45,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0045.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "7f5c35329b3f9aa500e88131b8e7d5af2f129a181d26c213d626c8f13fa79f05"
+          },
+          {
+            "crop_id": 46,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0046.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "f7440fb36232d47198df329c209b320c49ff2b66383426ddf519a437ac51eab8"
+          },
+          {
+            "crop_id": 47,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0047.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "95bc050cdc29eea609bfd899fb2732bb55807d7bec68a0a9db17946f20f0bab5"
+          },
+          {
+            "crop_id": 48,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0048.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "57139d1022a5dcd47ea32708b6e4db3da768ece3f2c02560ef03c3581738f623"
+          },
+          {
+            "crop_id": 49,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0049.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "7f5c35329b3f9aa500e88131b8e7d5af2f129a181d26c213d626c8f13fa79f05"
+          },
+          {
+            "crop_id": 50,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0050.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "95bc050cdc29eea609bfd899fb2732bb55807d7bec68a0a9db17946f20f0bab5"
+          },
+          {
+            "crop_id": 51,
+            "crop_relpath": "archive/handoffs/cham_ocr_handoff_bundle/crops/latin/crop_0051.png",
+            "source_page": "synthetic_generator",
+            "crop_sha256": "e6adad8ce8e386955bc109f04501d81ac15a798e2b1664b915865c1a6b928bee"
+          }
+        ]
+      }
+    },
+    {
+      "doc_id": "ood_agal_01_panduranga",
+      "source_type": "ood_archival_gold_v2",
+      "archival_domain": "efeo_palm_leaf_agal",
+      "font_name": "EFEO Cam Panduranga.otf",
+      "columns": 1,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v2/pages/ood_agal_01_panduranga.png",
+      "page_sha256": "51854c9d5a6d27cf7798b5d1eaf0b01f4a3d9139871c133723bbec57e8f9d2ed",
+      "line_count": 14,
+      "lines": [
+        {
+          "line": 1,
+          "bbox": [
+            53,
+            45,
+            308,
+            89
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_01.png",
+          "crop_sha256": "4cbeb36322a389aacdeb87d51923c8652931c0cb4bc09cbc60400d842422d322",
+          "gt": "꩑꩞ ꨗꨫ ꨟꨕꨩ ꨓꩀ ꨕꨫ ꨆꩊ ꨘꩆ"
+        },
+        {
+          "line": 2,
+          "bbox": [
+            47,
+            102,
+            262,
+            146
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_02.png",
+          "crop_sha256": "57a3f4d7bfce69623406e3ca228d1e6aa3ab21527807916a590a1f0dcfa1e137",
+          "gt": "ꨘꩆ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨧꨯꨱꩃ"
+        },
+        {
+          "line": 3,
+          "bbox": [
+            49,
+            160,
+            366,
+            204
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_03.png",
+          "crop_sha256": "0846f95b0b0ec99e78811758faedb11b619c6be0e29e4577a0feba3666c492aa",
+          "gt": "ꨛꨯꨮ ꨚꩆ ꨆꩀ ꨨꨤꨩ꩝ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꩞"
+        },
+        {
+          "line": 4,
+          "bbox": [
+            56,
+            222,
+            247,
+            266
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_04.png",
+          "crop_sha256": "ea45ad79a55e5fcbe6ead9d2c69fc933899993315bacd0cd8dba924cc9658ddf",
+          "gt": "ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨟꨐꨪꩌ ꨕꨶꨩ ꩞"
+        },
+        {
+          "line": 5,
+          "bbox": [
+            44,
+            284,
+            260,
+            326
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_05.png",
+          "crop_sha256": "41199ebe2d531ee9470cc39f2c96ad0f1a75aaab37cae77962c50451f07cb783",
+          "gt": "ꨝꨰ ꨙꨮ ꨎꨤꨭꩀ ꨟꨐꨭꩌ ꨀꨳꨩ"
+        },
+        {
+          "line": 6,
+          "bbox": [
+            54,
+            337,
+            268,
+            381
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_06.png",
+          "crop_sha256": "67d0d9077f76827652a15f71805266dc3a17646db652c773aa0d6f13fcc1be4d",
+          "gt": "ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨧꨯꨱꩃ"
+        },
+        {
+          "line": 7,
+          "bbox": [
+            50,
+            393,
+            208,
+            434
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_07.png",
+          "crop_sha256": "5637f54fcdcfbf0bb53aa7303282a3efb5aa5ec4516719f2b84ec20ed3ff7b54",
+          "gt": "ꨛꨯꨮ ꨚꩆ ꨝꨩ ꨧꨩ ꩝꩝"
+        },
+        {
+          "line": 8,
+          "bbox": [
+            58,
+            450,
+            326,
+            493
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_08.png",
+          "crop_sha256": "dadf1dd09f5c5a349710424342ee06a2f1e6de7d65e69df38cc777790cc476c8",
+          "gt": "ꨀꨇꩆ ꨗꨯꨱ ꨆꩀ ꨨꨤꨩ꩝ ꨝꨣꨭꨥ ꩝"
+        },
+        {
+          "line": 9,
+          "bbox": [
+            43,
+            505,
+            338,
+            549
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_09.png",
+          "crop_sha256": "173346381bd3b6df224e1e0983033e076495d21d825670e9871901020e31b224",
+          "gt": "ꨟꩃ ꨗꨯꨱ ꨓꨮꩊ ꨊꨯꨱꩀ ꨣꨈꨵꨰ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ"
+        },
+        {
+          "line": 10,
+          "bbox": [
+            54,
+            566,
+            472,
+            610
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_10.png",
+          "crop_sha256": "e86ffd47c190129e1774f2a5a7ebbb282f758d3f42d0799823e4084416a79fbb",
+          "gt": "꩒꩞ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨚꨢꨯꨱꩌ ꨀꨇꩆ ꨘꩆ ꨤꩄ ꨀꨇꩆ ꩞"
+        },
+        {
+          "line": 11,
+          "bbox": [
+            41,
+            622,
+            248,
+            661
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_11.png",
+          "crop_sha256": "cc0d3b66d474803823577813b8f992240135639969e004cd2565f4d72b283025",
+          "gt": "ꨤꩄ ꨀꨇꩆ ꨘꩆ ꨛꨯꨮ ꩝"
+        },
+        {
+          "line": 12,
+          "bbox": [
+            46,
+            676,
+            265,
+            720
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_12.png",
+          "crop_sha256": "ea1f23214f119df69f73e8800bda498d0d0b626a13c8ef5ea4e987aad7b95f46",
+          "gt": "ꨧꨤꨪꩍ ꨨꨤꨩ-ꨕꨨꨵꩀ ꨨꨕꨯꩌ꩝"
+        },
+        {
+          "line": 13,
+          "bbox": [
+            52,
+            733,
+            300,
+            777
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_13.png",
+          "crop_sha256": "ee5dc6aad73a4bf98dc1bea15357a3668ef320b234ce297ff59e078573c98744",
+          "gt": "ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨤꩄ ꨀꨣꩀ ꩞"
+        },
+        {
+          "line": 14,
+          "bbox": [
+            53,
+            793,
+            395,
+            837
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_14.png",
+          "crop_sha256": "72ed6c091ede7090adaef2bf5a26a627eda79774176c6358255f72821bf938c2",
+          "gt": "ꨗꨫ ꨢꨭꩅ ꨚꨰꩀ ꨨꨤꨩ ꨝꨪ ꩒꩔/꩓/꩒꩐꩒꩑ ꩞"
+        }
+      ]
+    },
+    {
+      "doc_id": "ood_agal_02_panrang",
+      "source_type": "ood_archival_gold_v2",
+      "archival_domain": "efeo_palm_leaf_agal",
+      "font_name": "EFEO Cam Panrang.otf",
+      "columns": 1,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v2/pages/ood_agal_02_panrang.png",
+      "page_sha256": "c95276ff3dba0e8090d12dea770afcd975c3535952356fed6c7c7970fe88233a",
+      "line_count": 14,
+      "lines": [
+        {
+          "line": 1,
+          "bbox": [
+            53,
+            45,
+            292,
+            86
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_02_panrang_line_01.png",
+          "crop_sha256": "54962c7561a203b0a55cd073ba819fc93ad9a1dfe9fee374eccd8000436692c1",
+          "gt": "ꨝꩀ ꨕꨶꨩ ꨝꨯꨱꩍ ꨝꨰ ꨆꨮꨭ ꨘꩆ ꩞"
+        },
+        {
+          "line": 2,
+          "bbox": [
+            54,
+            101,
+            312,
+            142
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_02_panrang_line_02.png",
+          "crop_sha256": "9c9c4c02d57a5193adddf323b4af50479c5089d25337954435e980678460ce2f",
+          "gt": "ꨘꩆ ꨝꨵꨯꨱꩍ ꨆꨮꨭ ꨝꨴꨬ ꨀꨇꩆ ꨗꨫ ꩝꩝"
+        },
+        {
+          "line": 3,
+          "bbox": [
+            42,
+            158,
+            183,
+            196
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_02_panrang_line_03.png",
+          "crop_sha256": "6a8d57a58a5bcd4898d6f650866e179132d652b03e273ca0033fe3f2032ed50b",
+          "gt": "ꨗꨫ ꨆꨩ ꨨꨲꨩ꩝ ꨝꨣꨭꨥ"
+        },
+        {
+          "line": 4,
+          "bbox": [
+            51,
+            209,
+            391,
+            250
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_02_panrang_line_04.png",
+          "crop_sha256": "d04ff2ec56bf50dc3437c3767533a89d9c8a77342d3cab9b658e1ec195e87573",
+          "gt": "ꨣꨈꨵꨰ ꨘꩆ ꨡꨯꩍ ꨝꨰ ꨘꩆ ꨀꨦꨪꩅ ꨝꨵꨯꨱꩍ ꩝꩝"
+        },
+        {
+          "line": 5,
+          "bbox": [
+            51,
+            258,
+            337,
+            299
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_02_panrang_line_05.png",
+          "crop_sha256": "a132584d4ca9c0ee8cb902b20317f9c92ee1066319fe4098889d5504f50c0211",
+          "gt": "꩓꩞ ꨀꨦꨪꩅ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꨟꩀ ꩞"
+        },
+        {
+          "line": 6,
+          "bbox": [
+            58,
+            314,
+            402,
+            355
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_02_panrang_line_06.png",
+          "crop_sha256": "929b507ea3d7074f796619ae6f006b45abb14e6f9731d29b1d9a4e845fa49cae",
+          "gt": "ꨀꨇꩆ ꨘꩆ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꨗꨯꨱ ꨚꨰꩀ ꩝"
+        },
+        {
+          "line": 7,
+          "bbox": [
+            57,
+            365,
+            255,
+            403
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_02_panrang_line_07.png",
+          "crop_sha256": "cdae93eeec6f7827a75c0fd1120de8114c7d6033bd361106335f366d66eadd14",
+          "gt": "ꨗꨯꨱ ꨚꨰꩀ ꨨꨤꨩ ꨝꨩ ꨟꨰ ꩝"
+        },
+        {
+          "line": 8,
+          "bbox": [
+            53,
+            419,
+            260,
+            460
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_02_panrang_line_08.png",
+          "crop_sha256": "4007dd4f2daefc7050f0efaf136166e13f62da66e20b74364bd08aba97c5c985",
+          "gt": "ꨝꨭꩍ ꨕꨫ ꨕꨤꩌ ꨝꨰ ꨘꩆ ꩞"
+        },
+        {
+          "line": 9,
+          "bbox": [
+            57,
+            476,
+            300,
+            517
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_02_panrang_line_09.png",
+          "crop_sha256": "05428ecbcab2f64503560cfae2d7b214625f965d2c5a80a7c37ceedefcd9c20b",
+          "gt": "ꨝꨵꨯꨱꩍ ꨕꨫ-ꨝꩀ ꨝꨰ ꨘꩆ ꨅꨩ꩝ ꩝꩝"
+        },
+        {
+          "line": 10,
+          "bbox": [
+            49,
+            525,
+            195,
+            566
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_02_panrang_line_10.png",
+          "crop_sha256": "e00d78f36c29aaf1f1990555cb1b8e5083a25078d646816d0d95d248926f36e1",
+          "gt": "ꨅꨩ꩝ ꨣꨈꨵꨰ ꨘꩆ ꨝꨩ"
+        },
+        {
+          "line": 11,
+          "bbox": [
+            45,
+            574,
+            278,
+            614
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_02_panrang_line_11.png",
+          "crop_sha256": "25aff9190368b5794f77a79da2e1192add9a18b0b1538e456b542cdf6da2282a",
+          "gt": "ꨝꨩ ꨀꨗꩀ ꨝꨩ ꨓꨌꨯꨱꨥ ꨗꨯꨱ ꩝"
+        },
+        {
+          "line": 12,
+          "bbox": [
+            41,
+            627,
+            283,
+            668
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_02_panrang_line_12.png",
+          "crop_sha256": "040a79e44d73d545cc57c23cceed5ca401c2c26f2d7fab2a7644f4041a3f678e",
+          "gt": "ꨚꨰꩀ ꨨꨤꨩ ꨙꩃ ꨆꨳꨮꩃ ꨀꨝꨪꩍ ꨧꨩ ꩞"
+        },
+        {
+          "line": 13,
+          "bbox": [
+            44,
+            679,
+            394,
+            721
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_02_panrang_line_13.png",
+          "crop_sha256": "f755ded6896e0f1abc14d405ead35e79a816a89ed1bf437b5be3abe1f7e80374",
+          "gt": "ꨧꨩ ꨤꨝꨭꩀ ꨨꨤꨩ ꨝꨵꨯꨱꩍ ꨝꨩ ꨟꨰ ꩒꩕/꩑꩐/꩒꩐꩒꩑ ꩝"
+        },
+        {
+          "line": 14,
+          "bbox": [
+            41,
+            739,
+            259,
+            780
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_02_panrang_line_14.png",
+          "crop_sha256": "453454c674036a651dcb12bfbc6ca06e7adb5a8cc793b6ae1a921bf5f98e5329",
+          "gt": "꩔꩞ ꨟꨰ ꨝꨭꩍ ꨕꨫ ꨝꩀ ꨝꨰ ꩝"
+        }
+      ]
+    },
+    {
+      "doc_id": "ood_agal_03_parik",
+      "source_type": "ood_archival_gold_v2",
+      "archival_domain": "efeo_palm_leaf_agal",
+      "font_name": "EFEO Cam Parik.otf",
+      "columns": 1,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v2/pages/ood_agal_03_parik.png",
+      "page_sha256": "c3dfb12035605dbd37d97d616f640036dd72e166d87e51a7cd4647e74d3d5fd0",
+      "line_count": 15,
+      "lines": [
+        {
+          "line": 1,
+          "bbox": [
+            48,
+            45,
+            219,
+            85
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_01.png",
+          "crop_sha256": "e8ab4317c9fabd612ada98306380dc2f7e08f2285a16935ec1dca334e2f856c5",
+          "gt": "ꨘꩆ ꨅꨩ꩝ ꨝꨣꨭꨥ ꨟꩃ ꩝"
+        },
+        {
+          "line": 2,
+          "bbox": [
+            42,
+            94,
+            325,
+            134
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_02.png",
+          "crop_sha256": "30d1b3c5da05a2c53c89ce0b062a67a75240b3e87a7f5573e882752b28c8de88",
+          "gt": "ꨘꩆ ꨝꨩ ꨀꨇꩆ ꨟꨰ ꨎꨥ ꨆꨩ ꨛꨯꨮ"
+        },
+        {
+          "line": 3,
+          "bbox": [
+            55,
+            149,
+            312,
+            189
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_03.png",
+          "crop_sha256": "faa5e059ea56b7489ee0f0c930ed0af00b526bf361a0490e6bcb5cc937fcef57",
+          "gt": "ꨆꨩ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꨰ ꨥꨮꩀ ꨢꨮ ꨐꨭꨩ ꩝꩝"
+        },
+        {
+          "line": 4,
+          "bbox": [
+            54,
+            199,
+            318,
+            236
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_04.png",
+          "crop_sha256": "9747cee6fce429d83baafa336e84ab185a88b6c35fd6e9e2924cfdd03cb9f2eb",
+          "gt": "ꨢꨮ ꨐꨭꨩ ꨚꨰꩀ ꨨꨤꨩ ꨕꨫ ꨝꩀ ꨝꨰ"
+        },
+        {
+          "line": 5,
+          "bbox": [
+            53,
+            250,
+            272,
+            290
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_05.png",
+          "crop_sha256": "44541d2f94eee81b6e7a59cb32dd2a126169d3829fb9afc30b7119e4b8dd9716",
+          "gt": "ꨝꩀ ꨝꨰ ꨘꩆ ꨓꨴꨩ ꨅꨩ ꨘꩆ"
+        },
+        {
+          "line": 6,
+          "bbox": [
+            46,
+            304,
+            323,
+            344
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_06.png",
+          "crop_sha256": "af28a9c5c89d6c5974362decafa814acf77c10f6852d8eeddd108f1d36f6b01f",
+          "gt": "ꨘꩆ ꨣꨈꨵꨰ-ꨚꨤꨬ ꨂꩀ꩝ ꨝꨣꨭꨥ ꨟꩃ ꩝"
+        },
+        {
+          "line": 7,
+          "bbox": [
+            53,
+            357,
+            226,
+            397
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_07.png",
+          "crop_sha256": "8f45cbb5c2e5362c019612813e9056d5ac5b90fd63199458ce3882871b3061b2",
+          "gt": "ꨟꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꩝꩝"
+        },
+        {
+          "line": 8,
+          "bbox": [
+            52,
+            410,
+            323,
+            450
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_08.png",
+          "crop_sha256": "ed88e4c71e8ccfe44498f53891306f5753b881d247c2cd2101656bf75ed0b3f6",
+          "gt": "ꨛꨯꨮ ꨚꩆ ꨀꨗꨯꨱꩃ ꨨꨤꨩ ꨘꩆ ꨟꩃ ꩝꩝"
+        },
+        {
+          "line": 9,
+          "bbox": [
+            44,
+            467,
+            277,
+            507
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_09.png",
+          "crop_sha256": "df9d79621b574789c8df62e4c6462c134293a500174c32c37a2d4c41860de108",
+          "gt": "꩕꩞ ꨟꩃ ꨣꨈꨵꨰ ꨚꨤꨬ ꨂꩀ ꨘꩆ ꩝"
+        },
+        {
+          "line": 10,
+          "bbox": [
+            54,
+            518,
+            335,
+            558
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_10.png",
+          "crop_sha256": "6cdaf2a25426b28cf292f3e30dceac8cec0bdd8aabe29eee7cd26e199814775f",
+          "gt": "ꨟꨰ ꨟꩀ ꨣꨈꨵꨰ ꨧꨝꨭꩃ꩝ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꩝꩝"
+        },
+        {
+          "line": 11,
+          "bbox": [
+            58,
+            573,
+            333,
+            613
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_11.png",
+          "crop_sha256": "0ce6434697b3462dd059b26b781892dcd48c22cc536caffeb0edfcfaa40834f8",
+          "gt": "ꨣꨈꨵꨰ ꨧꨝꨭꩃ ꨝꨩ ꨈꨮꩇ ꨟꨰ ꨚꨢꨯꨱꩌ ꩝"
+        },
+        {
+          "line": 12,
+          "bbox": [
+            56,
+            621,
+            386,
+            661
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_12.png",
+          "crop_sha256": "3e0a06ac24ca601811a6899560ca97cbaa875cf421928e2e2c64c6ca415ebdfd",
+          "gt": "ꨚꨢꨯꨱꩌ ꨀꨇꩆ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩒꩐/꩑꩒/꩑꩙꩙꩘"
+        },
+        {
+          "line": 13,
+          "bbox": [
+            55,
+            669,
+            376,
+            709
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_13.png",
+          "crop_sha256": "7a3f533fef1f465451a625fa961a419e45f053e67d4f862e083c16a6b1803e7a",
+          "gt": "ꨤꩄ ꨀꨇꩆ ꨛꨯꨮ ꨧꨤꨪꩍ ꨨꨤꨩ ꨕꨨꨵꩀ ꩞"
+        },
+        {
+          "line": 14,
+          "bbox": [
+            55,
+            725,
+            304,
+            765
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_14.png",
+          "crop_sha256": "28b12f20415a2704273e830471795772cdc1b3ab7414b38e22cf459fd35b1e6b",
+          "gt": "ꨕꨨꨵꩀ ꨨꨕꨯꩌ꩝ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩝꩝"
+        },
+        {
+          "line": 15,
+          "bbox": [
+            43,
+            773,
+            293,
+            809
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_15.png",
+          "crop_sha256": "fa9947c46958ef261fe232e1755ce2fc46a07a5efd55a56412cebf6ccf4ed47e",
+          "gt": "ꨈꨣꩈ ꨤꩄ ꨀꨣꩀ ꨗꨫ ꨆꨮꨭ ꨕꨫ ꩞"
+        }
+      ]
+    },
+    {
+      "doc_id": "ood_agal_04_thrah",
+      "source_type": "ood_archival_gold_v2",
+      "archival_domain": "efeo_palm_leaf_agal",
+      "font_name": "EFEO Cam Thrah.otf",
+      "columns": 1,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v2/pages/ood_agal_04_thrah.png",
+      "page_sha256": "f9a29abd85c925c4002c00087c73f2c504d7067ebbbfab5f3a5b48c7c363eb7a",
+      "line_count": 15,
+      "lines": [
+        {
+          "line": 1,
+          "bbox": [
+            45,
+            45,
+            323,
+            86
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_04_thrah_line_01.png",
+          "crop_sha256": "b67a2d1885fe4b5e255b09ff6a888ecbca9110f74dfb035ab71577a39e1a5b87",
+          "gt": "ꨕꨫ ꨧꨤꨪꩍ ꨅꨩ꩝ ꨢꨭꩅ ꨚꨰꩀ ꨨꨤꨩ ꩝꩝"
+        },
+        {
+          "line": 2,
+          "bbox": [
+            45,
+            103,
+            281,
+            144
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_04_thrah_line_02.png",
+          "crop_sha256": "040b922a17e6245ba9ea944ea15606a7a9bb3e93b0cccc006a7b51fc0e1c2e42",
+          "gt": "ꨨꨤꨩ ꨝꨩ-ꨟꨰ ꨝꨭꩍ ꨝꨪ ꨝꩀ ꩝꩝"
+        },
+        {
+          "line": 3,
+          "bbox": [
+            50,
+            160,
+            325,
+            201
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_04_thrah_line_03.png",
+          "crop_sha256": "490025bdc43d5e58d4517afbce4f35fae7c2c8447f24ee886683ef87177e1de0",
+          "gt": "꩖꩞ ꨝꩀ ꨕꨶꨩ ꨝꨯꨱꩍ ꨝꨰ ꨆꨮꨭ ꨘꩆ ꩝꩝"
+        },
+        {
+          "line": 4,
+          "bbox": [
+            54,
+            211,
+            342,
+            252
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_04_thrah_line_04.png",
+          "crop_sha256": "c90530bf27a9cc17bdca1f05b2b5e1fd823627ea66485ae855c5982a466330e9",
+          "gt": "ꨘꩆ ꨆꨮꨭ ꨝꨴꨬ ꨀꨇꩆ ꨗꨫ ꨆꨩ ꨝꨵꨯꨱꩍ ꩞"
+        },
+        {
+          "line": 5,
+          "bbox": [
+            47,
+            270,
+            357,
+            311
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_04_thrah_line_05.png",
+          "crop_sha256": "551a58cd38cf6147880ed40e63ffd2f9eb0a2b55bf4d16987f120d5dceeac23e",
+          "gt": "ꨆꨩ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꨤꩄ꩝ ꨤꩄ ꨝꨰ ꩞"
+        },
+        {
+          "line": 6,
+          "bbox": [
+            43,
+            323,
+            270,
+            363
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_04_thrah_line_06.png",
+          "crop_sha256": "8671096ec02ff23df3d6ab9f6e12c397d1dd5f89e3391d228a3f9d8f801560b2",
+          "gt": "ꨤꩄ ꨝꨰ ꨛꨯꨮ ꨙꨮ ꨀꨧꨪꩅ ꩞"
+        },
+        {
+          "line": 7,
+          "bbox": [
+            50,
+            375,
+            336,
+            416
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_04_thrah_line_07.png",
+          "crop_sha256": "9ecb513fafbb9461d4f8e4d001bb1f37aed17f6b6372fe72259488abf3409730",
+          "gt": "ꨢꨮꨭ ꨕꨨꨵꩀ ꨝꨭꩍ ꨕꨶꨩ ꨕꨘꩀ ꨨꨤꨩ ꩝"
+        },
+        {
+          "line": 8,
+          "bbox": [
+            41,
+            427,
+            368,
+            467
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_04_thrah_line_08.png",
+          "crop_sha256": "2ef52c2b092492aa1e085ea194bfb377ee5d422024da47b0a980197307fc5c7e",
+          "gt": "ꨨꨤꨩ ꨕꨨꨵꩀ ꨝꩀ ꨎꨮ ꨛꨯꨮ꩝ ꨛꨯꨮ ꨚꨶꨮꩄ ꩝"
+        },
+        {
+          "line": 9,
+          "bbox": [
+            52,
+            484,
+            318,
+            525
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_04_thrah_line_09.png",
+          "crop_sha256": "02a0e219b14f31e031e012725f2e3d952be237a849e1fad50d8b67206ca80938",
+          "gt": "ꨛꨯꨮ ꨚꨶꨮꩄ ꨚꨆꨴꨲꨩ ꨟꨪꩆ ꨙꨩ ꨛꨯꨮ꩝ ꩝"
+        },
+        {
+          "line": 10,
+          "bbox": [
+            49,
+            543,
+            470,
+            584
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_04_thrah_line_10.png",
+          "crop_sha256": "af985a83cb8c4c1ec71417979ed3c175d9bd8e40ed43f7d429a11ef4a14bbab7",
+          "gt": "ꨛꨯꨮ꩝ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨤꩄ ꨅꨩ ꩒꩐/꩑/꩒꩐꩑꩔ ꩞"
+        },
+        {
+          "line": 11,
+          "bbox": [
+            49,
+            599,
+            203,
+            637
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_04_thrah_line_11.png",
+          "crop_sha256": "4842a735860d8570bd5126cd56591104224df245859779684dee580c35b9d287",
+          "gt": "ꨤꩄ ꨅꨩ ꨆꨮꨭ ꨚꨶꨮꩄ ꩞"
+        },
+        {
+          "line": 12,
+          "bbox": [
+            48,
+            649,
+            293,
+            690
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_04_thrah_line_12.png",
+          "crop_sha256": "6ecb64596879a6010ab7e317d94e87f02123cecac7ac2b962fd921f6a577e7e4",
+          "gt": "꩗꩞ ꨟꨪꩆ꩝ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꩝"
+        },
+        {
+          "line": 13,
+          "bbox": [
+            43,
+            701,
+            312,
+            741
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_04_thrah_line_13.png",
+          "crop_sha256": "9fdbf9e51ae6a8df2a164528f96e8d1dbbf269b8b30e9d9bdf10c656f83d6ba8",
+          "gt": "ꨚꨗꨶꨮꩄ ꨘꩆ-ꨕꨨꨵꩀ ꨕꨫ ꨔꨮꨭ ꨅꨩ ꩝"
+        },
+        {
+          "line": 14,
+          "bbox": [
+            40,
+            752,
+            253,
+            790
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_04_thrah_line_14.png",
+          "crop_sha256": "c5f59690785f0e2fbe2da99ccb729768ae1583539c87a9963b6f14f789946b32",
+          "gt": "ꨅꨩ ꨕꨯꨱꩀ ꨕꨫ ꨓꨳꩆ ꨛꨯꨮ ꩝꩝"
+        },
+        {
+          "line": 15,
+          "bbox": [
+            56,
+            800,
+            400,
+            837
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_04_thrah_line_15.png",
+          "crop_sha256": "50fa4e0db76618c608b0c51f1c17a41a4512e922325cc4b971e925abbb901d65",
+          "gt": "ꨢꨮ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨣꨈꨵꨰ ꨘꩆ ꨀꨶꨮꩆ ꨓꨝꨶꨮꩆ ꩝"
+        }
+      ]
+    },
+    {
+      "doc_id": "ood_folio_05_kauthara",
+      "source_type": "ood_archival_gold_v2",
+      "archival_domain": "efeo_regional_folio",
+      "font_name": "EFEO Cam Kauthara.otf",
+      "columns": 1,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v2/pages/ood_folio_05_kauthara.png",
+      "page_sha256": "a7e579b9f707ae6ca2c35bdd7a4b95012971ebc37b12055523e7f97309afe374",
+      "line_count": 15,
+      "lines": [
+        {
+          "line": 1,
+          "bbox": [
+            41,
+            45,
+            262,
+            81
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_01.png",
+          "crop_sha256": "7c1b8d0e24bc61a2565104a5e929f78dc4db2e263b7c5a71a8e521f79e1385a0",
+          "gt": "ꨀꨶꨮꩆ ꨓꨝꨶꨮꩆ ꨚꨎꨳꩀ ꨈꨮꩇ ꩞"
+        },
+        {
+          "line": 2,
+          "bbox": [
+            42,
+            93,
+            274,
+            133
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_02.png",
+          "crop_sha256": "017599f6bb931a9f8eef59932dc408337d1173087b4d9e1456f6b60ec80bbad4",
+          "gt": "ꨚꨰꩀ ꨨꨤꨩ ꨝꨩ ꨟꨰ ꨝꨭꩍ ꨕꨤꩌ ꩝꩝"
+        },
+        {
+          "line": 3,
+          "bbox": [
+            57,
+            144,
+            286,
+            183
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_03.png",
+          "crop_sha256": "bcee9599bf7ba66d4de5ac3772ad2feb6260072b8ac0b5c4ac6bc1a36145fbe7",
+          "gt": "ꨕꨤꩌ ꨝꨰ ꨘꩆ ꨝꨵꨯꨱꩍ ꨕꨫ ꨝꩀ ꩝꩝"
+        },
+        {
+          "line": 4,
+          "bbox": [
+            47,
+            201,
+            284,
+            241
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_04.png",
+          "crop_sha256": "87e4da9e4c8a1437aee7d61d57f9156802c2cced990616cbe5ba31503cf6114b",
+          "gt": "ꨝꩀ ꨅꨩ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨣꨈꨵꨰ ꨘꩆ ꩝꩝"
+        },
+        {
+          "line": 5,
+          "bbox": [
+            51,
+            257,
+            336,
+            296
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_05.png",
+          "crop_sha256": "e7f7111fc1cbbdf878306f87de6ce25863d1d782176aa38b30cd197038525be5",
+          "gt": "ꨘꩆ ꨚꨰꩀ ꨙꩃ ꨆꨳꨮꩃ ꨀꨝꨪꩍ ꨆꨵꨮꨭ ꨤꨝꨭꩀ ꩞"
+        },
+        {
+          "line": 6,
+          "bbox": [
+            51,
+            314,
+            260,
+            355
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_06.png",
+          "crop_sha256": "6844a0056156dd5d36fe80f8f7d5d498818a353c69414907ed3af6a959b8c4d3",
+          "gt": "꩘꩞ ꨆꨵꨮꨭ ꨤꨝꨭꩀ ꨨꨤꨩ ꨝꨵꨯꨱꩍ ꩞"
+        },
+        {
+          "line": 7,
+          "bbox": [
+            58,
+            367,
+            233,
+            404
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_07.png",
+          "crop_sha256": "36ec59f92eaa8668acc8f9845177035db954c33fe832ba2d9fcfa649d45a8482",
+          "gt": "ꨕꨫ ꨝꩀ ꨝꨰ ꨘꩆ ꨅꨩ꩝ ꩞"
+        },
+        {
+          "line": 8,
+          "bbox": [
+            53,
+            413,
+            448,
+            454
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_08.png",
+          "crop_sha256": "b30bf5b8669e1f8e13cb36f8db23585d60226bf46a8bfc263c3663b5ac0fdfcc",
+          "gt": "ꨝꨣꨭꨥ ꨟꩃ ꨣꨈꨵꨰ ꨘꩆ ꨝꨩ ꨀꨇꩆ ꨟꨰ ꩑/꩔/꩑꩙꩙꩘ ꩝"
+        },
+        {
+          "line": 9,
+          "bbox": [
+            45,
+            472,
+            293,
+            512
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_09.png",
+          "crop_sha256": "48b8015b88e016812c13ad782b994390eeb6c692a1e6188f237d84036ab73d2b",
+          "gt": "ꨀꨇꩆ ꨟꨰ-ꨎꨥ ꨆꨩ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩝꩝"
+        },
+        {
+          "line": 10,
+          "bbox": [
+            52,
+            526,
+            272,
+            565
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_10.png",
+          "crop_sha256": "b5ddb5035f70fe02f06c0f801196a9cb5dfab0f3f3ae3115c91389e8f49f34fd",
+          "gt": "ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨥꨮꩀ ꨢꨮ꩝ ꨝꨵꨯꨱꩍ ꩝꩝"
+        },
+        {
+          "line": 11,
+          "bbox": [
+            58,
+            575,
+            298,
+            612
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_11.png",
+          "crop_sha256": "90b3d32735ba084c5cc6fb1a92d3f6fed44aafef012c630ebd213b498490d22d",
+          "gt": "ꨣꨈꨵꨰ ꨘꩆ ꨤꩄ ꨀꨮꩈ ꨧꨝꩀ ꩝"
+        },
+        {
+          "line": 12,
+          "bbox": [
+            55,
+            620,
+            339,
+            657
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_12.png",
+          "crop_sha256": "ec045da479e66893c43748ee2d31f25ffa76d238edd6d1c1f0a0adbf7649431a",
+          "gt": "ꨎꨮ ꨛꨯꨮ ꨝꨰ ꨛꨯꨮ ꨈꨗꨴꨮꩍ ꨕꨨꨵꩀ ꨝꨭꩍ ꩝꩝"
+        },
+        {
+          "line": 13,
+          "bbox": [
+            44,
+            672,
+            235,
+            712
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_13.png",
+          "crop_sha256": "1308f92f4459a18de2a54146af85e8eef2aa543f9df9126e493c30b3e1825239",
+          "gt": "ꨕꨨꨵꩀ ꨝꨭꩍ ꨨꨤꨩ ꨕꨫ ꨝꩀ"
+        },
+        {
+          "line": 14,
+          "bbox": [
+            43,
+            720,
+            218,
+            759
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_14.png",
+          "crop_sha256": "f155a323c27550d7834999c6bc40fcda19af46a8c83de93e8be311babf360b2e",
+          "gt": "ꨓꨴꨩ ꨅꨩ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨛꨯꨮ ꩞"
+        },
+        {
+          "line": 15,
+          "bbox": [
+            57,
+            775,
+            305,
+            814
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_15.png",
+          "crop_sha256": "f4a43900675b9b10620b0a21a8874ee5c17fe0be31d80abb170e0c9a44a7eafb",
+          "gt": "꩙꩞ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨧꨯꨱꩃ ꨛꨯꨮ ꨚꩆ ꩞"
+        }
+      ]
+    },
+    {
+      "doc_id": "ood_folio_06_wijaya_2col",
+      "source_type": "ood_archival_gold_v2",
+      "archival_domain": "efeo_regional_folio",
+      "font_name": "EFEO Cam Wijaya.otf",
+      "columns": 2,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v2/pages/ood_folio_06_wijaya_2col.png",
+      "page_sha256": "18b11ba1d0a962fdb35ac5dcb02313fd3ccdd5d60ca897b16fac1505be162c7f",
+      "line_count": 16,
+      "lines": [
+        {
+          "line": 1,
+          "bbox": [
+            41,
+            51,
+            155,
+            85
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_06_wijaya_2col_line_01.png",
+          "crop_sha256": "db39204ffc5cdd27d86ffd26124d8fc43d09af710af516be03bc70e8eb590dc1",
+          "gt": "ꨝꨩ ꨈꨮꩇ ꨟꨰ ꨚꩀ"
+        },
+        {
+          "line": 2,
+          "bbox": [
+            44,
+            100,
+            182,
+            136
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_06_wijaya_2col_line_02.png",
+          "crop_sha256": "dacc1f297480aff34a2775c99c81a43df02fa1d0562936eda487a3cbffc6315d",
+          "gt": "ꨨꨚꨭꩍ ꨤꨪꨎꩃ ꨣꨈꨵꨰ ꨝꨵꨬ"
+        },
+        {
+          "line": 3,
+          "bbox": [
+            45,
+            146,
+            198,
+            181
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_06_wijaya_2col_line_03.png",
+          "crop_sha256": "58e21935a5d5c744ac1dcf7a7de79d34fee2dd67ac5856b33306b11e149dd0ce",
+          "gt": "ꨘꩆ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨚꨰꩀ"
+        },
+        {
+          "line": 4,
+          "bbox": [
+            39,
+            190,
+            146,
+            224
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_06_wijaya_2col_line_04.png",
+          "crop_sha256": "7e5ce62ce92a763944773a3f0dd4a98cf9ae9af6c21352a5047ae00f8885464e",
+          "gt": "ꨝꨭꩍ ꨕꨫ ꨝꩀ ꨝꨰ"
+        },
+        {
+          "line": 5,
+          "bbox": [
+            45,
+            239,
+            173,
+            273
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_06_wijaya_2col_line_05.png",
+          "crop_sha256": "c4fa725679ce5aa79d5a69ab928aa2c0eb77ccb45bae03851dd9e314e87b7d5d",
+          "gt": "ꨅꨩ ꨣꨬ꩝-ꨕꨫ ꨈꨴꨮꩇ ꨚꨤꨬ"
+        },
+        {
+          "line": 6,
+          "bbox": [
+            39,
+            285,
+            171,
+            321
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_06_wijaya_2col_line_06.png",
+          "crop_sha256": "4b4ef2d7c6d4c676bffcab3ec83e2c867ffd9bc1d1d483a124d4ede5029f293c",
+          "gt": "ꨣꨈꨵꨰ ꨤꨪꨎꩃ ꨢꨮꨭ ꨘꩆ"
+        },
+        {
+          "line": 7,
+          "bbox": [
+            39,
+            332,
+            161,
+            367
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_06_wijaya_2col_line_07.png",
+          "crop_sha256": "a6438072bd59762ea07db4be1d20c40e20fcc3e110a5042729355127f41d6e7e",
+          "gt": "ꨝꨣꨭꨥ ꨟꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ"
+        },
+        {
+          "line": 8,
+          "bbox": [
+            39,
+            377,
+            178,
+            410
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_06_wijaya_2col_line_08.png",
+          "crop_sha256": "15898fa00914880320cd1f259da48fc36103e1771ce7fbf1d4d069b9faa7ee54",
+          "gt": "ꨧꨯꨱꩃ ꨛꨯꨮ ꨚꩆ ꨀꨗꨯꨱꩃ"
+        },
+        {
+          "line": 9,
+          "bbox": [
+            590,
+            51,
+            716,
+            83
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_06_wijaya_2col_line_09.png",
+          "crop_sha256": "6d443395fe9323d20ce55615d9636a23891d518ed84c743615364c090106b767",
+          "gt": "꩑꩐꩞ ꨘꩆ ꨟꨰ ꨧꩃ꩝"
+        },
+        {
+          "line": 10,
+          "bbox": [
+            584,
+            92,
+            702,
+            127
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_06_wijaya_2col_line_10.png",
+          "crop_sha256": "f9ebf4ab1009dc28f57792a1f45e9a0930048cf1b908717d767a1edb86989bf7",
+          "gt": "ꨆꨳꨮꩃ ꨓꨮꩊ ꨧꩃ ꨝꨵꨯꨱꩍ"
+        },
+        {
+          "line": 11,
+          "bbox": [
+            585,
+            144,
+            716,
+            180
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_06_wijaya_2col_line_11.png",
+          "crop_sha256": "83e24c8a86f1789469d13ae5ae05ba432d311c6a485b74ca17cccb56e3506df9",
+          "gt": "ꨤꨯꨩ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ"
+        },
+        {
+          "line": 12,
+          "bbox": [
+            582,
+            195,
+            706,
+            228
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_06_wijaya_2col_line_12.png",
+          "crop_sha256": "7919e8b685a6246f4f885e77e94112aae8da384c63712860027e4667e34b4227",
+          "gt": "ꨧꨯꨱꩃ ꨛꨯꨮ ꨚꩆ ꨤꨮꩍ"
+        },
+        {
+          "line": 13,
+          "bbox": [
+            582,
+            245,
+            732,
+            281
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_06_wijaya_2col_line_13.png",
+          "crop_sha256": "07cb63382b414ddbd585b2d6099a42c3d0eb538908fc340c74a6d447aca4bc7a",
+          "gt": "ꨝꨵꨯꨱꩍ ꨕꨯꨱꩀ ꨚꨕꨬ ꨈꨵꨰꩍ"
+        },
+        {
+          "line": 14,
+          "bbox": [
+            588,
+            298,
+            724,
+            334
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_06_wijaya_2col_line_14.png",
+          "crop_sha256": "d87b991d0df51c1de3c94f05c6465cd9e59de2a6f4835fe8b28d994f7aa3eecf",
+          "gt": "ꨀꨤꨩ ꨨꨤꨶꨬ ꨆꨭꨢꨮꨭ ꨘꩆ꩝"
+        },
+        {
+          "line": 15,
+          "bbox": [
+            590,
+            343,
+            707,
+            376
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_06_wijaya_2col_line_15.png",
+          "crop_sha256": "5f01cc42392766af552d2d4587ddc1c2b02062c93f3af92aa08c22545ed6d43f",
+          "gt": "ꨟꩃ ꨛꨯꨮ ꨚꩆ ꨗꨯꨱ"
+        },
+        {
+          "line": 16,
+          "bbox": [
+            587,
+            387,
+            741,
+            423
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_06_wijaya_2col_line_16.png",
+          "crop_sha256": "96a3323a6528f7dafec63acbefadd4fa90c39fd9116163488f516f0cf5e897d9",
+          "gt": "ꨟꩀ ꨤꨪꨔꨬ-ꨨꨤꨬ ꨛꨯꨮ ꨆꨵꨯꨱꩃ"
+        }
+      ]
+    },
+    {
+      "doc_id": "ood_folio_07_campa",
+      "source_type": "ood_archival_gold_v2",
+      "archival_domain": "efeo_regional_folio",
+      "font_name": "EFEO Cam Campa.otf",
+      "columns": 1,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v2/pages/ood_folio_07_campa.png",
+      "page_sha256": "78be44d96961b3222009e0c3304d7f5a76c419b1086180967795dd034dd1748b",
+      "line_count": 15,
+      "lines": [
+        {
+          "line": 1,
+          "bbox": [
+            54,
+            45,
+            357,
+            87
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_01.png",
+          "crop_sha256": "6586739eba56889f1c951c1af73f961de1da6e57992fe84bb67a33352bbed523",
+          "gt": "ꨈꨣꩈ ꨕꨯꨱꩀ ꨇꨪꩀ ꨨꨤꨩ꩝ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꩞"
+        },
+        {
+          "line": 2,
+          "bbox": [
+            54,
+            100,
+            312,
+            138
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_02.png",
+          "crop_sha256": "203b49eeaf565ba7db715634e79cab8639f1b159e4121ca23a9662d2af39b148",
+          "gt": "꩑꩑꩞ ꨛꨯꨮ ꨚꩆ ꨗꨯꨱ ꨟꩀ ꨤꨪꨔꨬ ꩝"
+        },
+        {
+          "line": 3,
+          "bbox": [
+            40,
+            150,
+            374,
+            192
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_03.png",
+          "crop_sha256": "060d50c8042e2699e5c9488c79e7dd61cd619ecc01fb40c9cab33e06e74c0d04",
+          "gt": "ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨚꩆ ꨝꨩ ꨤꨪꨔꨬ ꩑꩘/꩒/꩒꩐꩒꩑"
+        },
+        {
+          "line": 4,
+          "bbox": [
+            46,
+            205,
+            302,
+            247
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_04.png",
+          "crop_sha256": "e6472789851afcfe1b63899ad9d061f029de8931ca3409d8b4360e4058bc9a50",
+          "gt": "ꨟꨰ ꨚꩀ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨝꨵꨯꨱꩍ"
+        },
+        {
+          "line": 5,
+          "bbox": [
+            44,
+            265,
+            274,
+            307
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_05.png",
+          "crop_sha256": "49fb66ac3c3de6e55205682340e79dbf212ac516d019efc694f965ed8e7b3a8f",
+          "gt": "ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨚꩆ ꨡꨯꩍ ꨛꨯꨮ ꩝"
+        },
+        {
+          "line": 6,
+          "bbox": [
+            49,
+            322,
+            227,
+            364
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_06.png",
+          "crop_sha256": "1828286c4d65efb1de49012a3925740fc5a17082b17abf7b51ff49f9c05a3a57",
+          "gt": "ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨙꨪꩍ ꨥꩉ"
+        },
+        {
+          "line": 7,
+          "bbox": [
+            50,
+            373,
+            206,
+            417
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_07.png",
+          "crop_sha256": "fcd9ddfb78ec9290a73ec368bdaa6c84195cde4404bb00b0faaad2a51f7528e3",
+          "gt": "ꨡꨯꩍ ꨕꨶꨩ ꨕꨴꨬ ꨁꨗꨩ"
+        },
+        {
+          "line": 8,
+          "bbox": [
+            47,
+            435,
+            266,
+            477
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_08.png",
+          "crop_sha256": "fec9cce8775168ab8a34061dc6cc0bb966cdeb3124fe8b618a519e4f601731de",
+          "gt": "ꨕꨯꨱꩀ ꨤꨳꩍ ꨣꨭꩇ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩝"
+        },
+        {
+          "line": 9,
+          "bbox": [
+            40,
+            487,
+            295,
+            531
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_09.png",
+          "crop_sha256": "eb7786b9979fb339ac6f4677305645cbccc472bee42e2c8c5b78cee21d269db1",
+          "gt": "ꨈꨣꩈ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨕꨶꨩ ꨕꨴꨬ ꨁꨗꨩ"
+        },
+        {
+          "line": 10,
+          "bbox": [
+            52,
+            546,
+            351,
+            590
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_10.png",
+          "crop_sha256": "e670cff4f1f9dd0d7f67c65873e80724b8b5bb0626cc27d5a55de83b838ef2f1",
+          "gt": "ꨁꨗꨩ ꨈꨭꨣꩈ ꨘꩆ ꨡꨯꩍ ꨛꨯꨮ ꨚꩆ ꩝꩝"
+        },
+        {
+          "line": 11,
+          "bbox": [
+            52,
+            601,
+            393,
+            645
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_11.png",
+          "crop_sha256": "c4eed1c0c35fe9b21f227fe90ec42781b1ccc8be4e12040900762f84c58f78f0",
+          "gt": "꩑꩒꩞ ꨚꩆ ꨝꨵꨯꨱꩍ ꨁꨗꨩ ꨈꨭꨣꩈ ꨘꩆ ꨤꨶꩀ ꩞"
+        },
+        {
+          "line": 12,
+          "bbox": [
+            46,
+            661,
+            240,
+            703
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_12.png",
+          "crop_sha256": "14ba1b1d1af6f8486699a20422059b12ffc2f4c626fcc4f0e28b7acb5f02c360",
+          "gt": "ꨤꨶꩀ ꨓꨟꨩ ꨓꨗꩍ ꨣꨪꨢꨩ ꩞"
+        },
+        {
+          "line": 13,
+          "bbox": [
+            54,
+            716,
+            247,
+            756
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_13.png",
+          "crop_sha256": "73e94bf1be35e6a0ab3093bce56301b8b5e14ec87d2e30b308a728d9d483a41a",
+          "gt": "ꨖꨪꩅ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨛꨯꨮ ꩝꩝"
+        },
+        {
+          "line": 14,
+          "bbox": [
+            47,
+            764,
+            244,
+            804
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_14.png",
+          "crop_sha256": "b479be7245948f10aae8cdc44b9d3f3056c5fb69f46d086852dcb21f0a163504",
+          "gt": "ꨔꨮꨭ ꨆꨩ ꨛꨯꨮ ꨆꨤꨯꨱꩃ ꨈꨣꩈ"
+        },
+        {
+          "line": 15,
+          "bbox": [
+            47,
+            822,
+            349,
+            863
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_15.png",
+          "crop_sha256": "c34cba6a36d59d69d3fcaabdf68f86692e85f00cab57126665a52295bb268223",
+          "gt": "ꨝꨳꩀ ꨀꨧꩉ ꨚꨓꨯꨱ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨛꨯꨮ ꩝"
+        }
+      ]
+    },
+    {
+      "doc_id": "ood_folio_08_udong_2col",
+      "source_type": "ood_archival_gold_v2",
+      "archival_domain": "efeo_regional_folio",
+      "font_name": "EFEO Cam Udong.otf",
+      "columns": 2,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v2/pages/ood_folio_08_udong_2col.png",
+      "page_sha256": "835c1884318b215c17ade0dbbf84cfd31abfc2acd284023af9ca5a4bac64faba",
+      "line_count": 16,
+      "lines": [
+        {
+          "line": 1,
+          "bbox": [
+            44,
+            51,
+            194,
+            90
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_08_udong_2col_line_01.png",
+          "crop_sha256": "6191050aba3951febb964033caff70613f4b8da15c83c57bb0eb746d5994cafa",
+          "gt": "ꨛꨯꨮ ꨚꩆ ꨝꨩ ꨤꨪꨔꨬ"
+        },
+        {
+          "line": 2,
+          "bbox": [
+            46,
+            107,
+            195,
+            146
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_08_udong_2col_line_02.png",
+          "crop_sha256": "167800fd531983df56fa8106a52bfa033f0decf88f403cc75c1b0c7d7f3e5f98",
+          "gt": "ꨆꨩ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ"
+        },
+        {
+          "line": 3,
+          "bbox": [
+            41,
+            163,
+            193,
+            203
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_08_udong_2col_line_03.png",
+          "crop_sha256": "c6e2ea3328f4fc92ca0e4eba8f8fd22c3d018d2e771d57a33b3b294ba5f8831f",
+          "gt": "ꨛꨯꨮ ꨚꩆ ꨕꨫ ꨇꨪꩆ"
+        },
+        {
+          "line": 4,
+          "bbox": [
+            41,
+            215,
+            199,
+            254
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_08_udong_2col_line_04.png",
+          "crop_sha256": "362dbedb42855a6a2cb9fd37ae01bfebc3095aa368bf097f0fa0349a03ea108a",
+          "gt": "ꨧꨯꨱꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ"
+        },
+        {
+          "line": 5,
+          "bbox": [
+            45,
+            269,
+            185,
+            308
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_08_udong_2col_line_05.png",
+          "crop_sha256": "61b0193aad0cb406f042b76a65fe94c4ff951af137ed61f4530dab3717bfb68e",
+          "gt": "꩑꩓꩞ ꨅꨩ꩝ ꨛꨯꨮ ꨚꩆ"
+        },
+        {
+          "line": 6,
+          "bbox": [
+            39,
+            322,
+            211,
+            361
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_08_udong_2col_line_06.png",
+          "crop_sha256": "63028028fb7a852eed3bf3efdf8572e2aa1064b9f3e76c90a6749fcc5e768a1b",
+          "gt": "ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨃꨥ ꨛꨯꨮ"
+        },
+        {
+          "line": 7,
+          "bbox": [
+            46,
+            375,
+            221,
+            414
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_08_udong_2col_line_07.png",
+          "crop_sha256": "0212373d3fb2ba60281158400f8d377bbee049bc480aaed9e7fea461eb69085b",
+          "gt": "ꨗꨯꨱ ꨎꨮ꩝-ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ"
+        },
+        {
+          "line": 8,
+          "bbox": [
+            39,
+            427,
+            229,
+            466
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_08_udong_2col_line_08.png",
+          "crop_sha256": "ad1f8ecc0816a6152244fc085259428de216bc2cf9bdb71e210dca76141b56a0",
+          "gt": "ꨈꨣꩈ ꨚꨙꩉ ꨛꨯꨮ ꨚꩆ"
+        },
+        {
+          "line": 9,
+          "bbox": [
+            585,
+            51,
+            743,
+            90
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_08_udong_2col_line_09.png",
+          "crop_sha256": "42a2fcad788d6b6dbccb7a6e834587b7e5001b50225129b890a3ef9943932e37",
+          "gt": "ꨧꨯꨱꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ"
+        },
+        {
+          "line": 10,
+          "bbox": [
+            586,
+            101,
+            744,
+            140
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_08_udong_2col_line_10.png",
+          "crop_sha256": "bce6f3eb4bf4815d58ca3e5d4eb71a5032a73ce3ebccffa92489c66f86e023df",
+          "gt": "ꨧꨯꨱꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ"
+        },
+        {
+          "line": 11,
+          "bbox": [
+            587,
+            156,
+            738,
+            195
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_08_udong_2col_line_11.png",
+          "crop_sha256": "59ddd951a5f600f631e332e8ea6d15c3c056c8c65aee19e84d34b4ff6cc9fe61",
+          "gt": "ꨝꨣꨭꨥ ꨟꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ"
+        },
+        {
+          "line": 12,
+          "bbox": [
+            584,
+            207,
+            728,
+            245
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_08_udong_2col_line_12.png",
+          "crop_sha256": "64fba0cb005bbdab3cb321c5a8a5c273ad9bd553185c770d3523ba3e05fda53f",
+          "gt": "ꨤꩄ ꨢꩍ ꨄꨰ ꨅꨩ"
+        },
+        {
+          "line": 13,
+          "bbox": [
+            587,
+            258,
+            756,
+            297
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_08_udong_2col_line_13.png",
+          "crop_sha256": "eab425e7773b7b0152642e2abdfbba18b3ad3fb81bef22fbc353a333a72238de",
+          "gt": "꩑꩔꩞ ꨨꨶꩀ ꨧꨯꨱꩃ ꨕꨨꨵꩀ"
+        },
+        {
+          "line": 14,
+          "bbox": [
+            585,
+            314,
+            740,
+            353
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_08_udong_2col_line_14.png",
+          "crop_sha256": "454d973303f9f028fb29dd5cfc6054b0592833db91d1e8ba98def1fe0f8d5de0",
+          "gt": "ꨝꨵꨯꨱꩍ ꨄꨰ ꨗꨯꨱ ꨆꨯꨱꩍ"
+        },
+        {
+          "line": 15,
+          "bbox": [
+            583,
+            365,
+            744,
+            404
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_08_udong_2col_line_15.png",
+          "crop_sha256": "09b3665d649b1ec61fa390cf12c12ae3259f337dd60ec8b1f8d70c6692dcc19e",
+          "gt": "ꨚꨓꨬ ꨟꨰ ꨆꨩ ꨕꨨꨵꩀ"
+        },
+        {
+          "line": 16,
+          "bbox": [
+            583,
+            417,
+            749,
+            456
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_08_udong_2col_line_16.png",
+          "crop_sha256": "a3c942fd5aa48e05b0c4e09beebea63b1ebf90e79985bcc72f87ae47209d7b32",
+          "gt": "ꨨꨤꨩ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨛꨯꨮ"
+        }
+      ]
+    },
+    {
+      "doc_id": "ood_book_09_aiaru",
+      "source_type": "ood_archival_gold_v2",
+      "archival_domain": "heldout_camera_book",
+      "font_name": "EFEO Cam AiaRu.otf",
+      "columns": 1,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v2/pages/ood_book_09_aiaru.png",
+      "page_sha256": "9a644461188c09aed34018f8f1a5f5285d01b731b458bb3c328c686dd15e63dd",
+      "line_count": 15,
+      "lines": [
+        {
+          "line": 1,
+          "bbox": [
+            49,
+            45,
+            263,
+            84
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_01.png",
+          "crop_sha256": "181e80d7a4b408cf338315894ba690664527d234a3d5a48f5394ae3c5f667a68",
+          "gt": "ꨗꨯꨱ ꨆꨯꨱꩍ-ꨨꨤꨩ ꨚꨓꨬ ꨝꨩ"
+        },
+        {
+          "line": 2,
+          "bbox": [
+            50,
+            95,
+            240,
+            136
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_02.png",
+          "crop_sha256": "0d378b4425b1f6806e22870cc6840b88de829b3537bf2f5b6c0fe522d63cdf78",
+          "gt": "ꨟꨰ ꨝꨴꨬ ꨆꨩ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩝꩝"
+        },
+        {
+          "line": 3,
+          "bbox": [
+            58,
+            148,
+            361,
+            189
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_03.png",
+          "crop_sha256": "222d724000da0a3c2d9c5503e061b247ee874a4866effb75706d3280da473076",
+          "gt": "ꨈꨣꩈ ꨝꨣꨭꨥ ꨟꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ"
+        },
+        {
+          "line": 4,
+          "bbox": [
+            57,
+            198,
+            374,
+            237
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_04.png",
+          "crop_sha256": "f4cf53e5032e6dd091753828d6b84a5537b51472a88972bf5bed38b249283258",
+          "gt": "ꨈꨣꩈ ꨓꨭꩍ ꨤꨪꨔꨬ ꨓꨝꨳꩀ ꨕꨫ ꨨꨤꨩ ꩝꩝"
+        },
+        {
+          "line": 5,
+          "bbox": [
+            42,
+            250,
+            257,
+            291
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_05.png",
+          "crop_sha256": "6768882ffe2c0f83fe7a4f0b9cfe74d9314b236d77ebe8af46b401f5417d7b67",
+          "gt": "ꨨꨤꨩ ꨚꨓꨬ ꨘꩆ ꨝꨵꨯꨱꩍ ꩞"
+        },
+        {
+          "line": 6,
+          "bbox": [
+            53,
+            299,
+            295,
+            340
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_06.png",
+          "crop_sha256": "730b75c69a6945347af286fe66853ca111c85950d4da30ea5f3f6fe080543db8",
+          "gt": "꩑꩕꩞ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨟꩀ ꨓꨌꨬ"
+        },
+        {
+          "line": 7,
+          "bbox": [
+            57,
+            350,
+            268,
+            389
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_07.png",
+          "crop_sha256": "0bce82f58bd1716347e8beba47a85a69931f28c635b5214a27208a59b89be8e9",
+          "gt": "ꨈꩆ ꨆꨴꨲꩍ ꨓꨟꨯꨱꩃ ꨚꨓꨬ ꩝"
+        },
+        {
+          "line": 8,
+          "bbox": [
+            40,
+            403,
+            209,
+            444
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_08.png",
+          "crop_sha256": "b3e896ac44c5120d757bafcf21ae7b6280c74bed38c60ca5729e1fee871e2c60",
+          "gt": "ꨝꨵꨯꨱꩍ ꨨꨭꨩ ꨗꩌ ꨓꨮꩊ ꩝"
+        },
+        {
+          "line": 9,
+          "bbox": [
+            47,
+            460,
+            224,
+            499
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_09.png",
+          "crop_sha256": "5922b4c1c7600af8fd234acf817875d9aa1663ab404bf3da38f26b00fd30ec6d",
+          "gt": "ꨗꨫ ꨟꨰ꩝ ꨌꨪꩍ ꨈꩆ ꩝"
+        },
+        {
+          "line": 10,
+          "bbox": [
+            57,
+            508,
+            532,
+            548
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_10.png",
+          "crop_sha256": "4234b89102b5286b167b2e9ae68ed5ff2a4f6cc2ce9494809e64b1c10834a98f",
+          "gt": "ꨓꨟꨯꨱꩃ ꨚꨓꨬ ꨘꩆ ꨆꨩ ꨛꨯꨮ ꨚꩆ ꨨꨶꩀ ꩒꩓/꩗/꩑꩙꩙꩘ ꩝꩝"
+        },
+        {
+          "line": 11,
+          "bbox": [
+            46,
+            564,
+            294,
+            605
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_11.png",
+          "crop_sha256": "7dd19c28ea591dbc66aa0906fc4d0c0aa05c225726b0be8c5b5c3c482a14aaf5",
+          "gt": "ꨚꩆ ꨨꨶꩀ ꨧꨩ ꨈꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ"
+        },
+        {
+          "line": 12,
+          "bbox": [
+            53,
+            617,
+            331,
+            658
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_12.png",
+          "crop_sha256": "e806dc0162f8e130bfd477ab654884e65597010d5955133977b24a07ed882dad",
+          "gt": "ꨆꨵꨯꨱꩃ ꨈꨣꩈ-ꨨꨶꩀ ꨧꨩ ꨈꩍ ꨘꩆ"
+        },
+        {
+          "line": 13,
+          "bbox": [
+            43,
+            671,
+            336,
+            709
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_13.png",
+          "crop_sha256": "e4256a9f74985f295e3ea1f3c93218683f7061ab2632533ffe6b1f9808ecae07",
+          "gt": "ꨘꩆ ꨟꩃ ꨛꨯꨮ ꨚꩆ ꨇꨪꩆ ꨨꨶꩀ꩝ ꩞"
+        },
+        {
+          "line": 14,
+          "bbox": [
+            54,
+            724,
+            344,
+            765
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_14.png",
+          "crop_sha256": "b0e70870ab9745b213d6d68a2d8c7db42e6fc6ae7d4efe89f801d5e00b4eb0f6",
+          "gt": "ꨨꨶꩀ꩝ ꨓꨮꩊ ꨨꨶꩀ ꨝꨵꨯꨱꩍ꩝ ꨘꩆ ꨟꩃ ꩝"
+        },
+        {
+          "line": 15,
+          "bbox": [
+            55,
+            773,
+            366,
+            813
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_15.png",
+          "crop_sha256": "f326c10e771d86f54f619dd4f5796dbedd78ccc0ffebd8963a80190f71190bfd",
+          "gt": "꩑꩖꩞ ꨟꩃ ꨛꨯꨮ ꨚꩆ ꨕꨫ ꨇꨪꩆ ꨟꨐꨭꩌ ꩞"
+        }
+      ]
+    },
+    {
+      "doc_id": "ood_book_10_semibold",
+      "source_type": "ood_archival_gold_v2",
+      "archival_domain": "heldout_camera_book",
+      "font_name": "NotoSansCham-SemiBold.ttf",
+      "columns": 1,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v2/pages/ood_book_10_semibold.png",
+      "page_sha256": "bc6bca99b3bc5f93b91ade91a5174c480f5e1351773c5827dd53eaf8a13e5f2a",
+      "line_count": 15,
+      "lines": [
+        {
+          "line": 1,
+          "bbox": [
+            57,
+            45,
+            409,
+            98
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_01.png",
+          "crop_sha256": "e0e5e614106856551c51195e7694bf40b00b539f6992c9f1cd8abbad4e44293b",
+          "gt": "ꨟꨐꨭꩌ ꨀꨳꨩ ꨧꨩ ꨝꨯꨱꩍ ꨆꨕꨯꨱꩍ ꨧꨯꨱꩃ ꩝"
+        },
+        {
+          "line": 2,
+          "bbox": [
+            43,
+            108,
+            387,
+            161
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_02.png",
+          "crop_sha256": "7581df5c615342b1cb5aa4c5d45e5290cdd316d81c3f6f3fe7d9af641a252890",
+          "gt": "ꨧꨯꨱꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨅꨩ꩝ ꨝꨣꨭꨥ ꩞"
+        },
+        {
+          "line": 3,
+          "bbox": [
+            42,
+            176,
+            446,
+            229
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_03.png",
+          "crop_sha256": "bf23a0efcb736a4b502dcc8a42d51e593cc76419a25b9d6b4adaf89be8ebfbab",
+          "gt": "ꨝꨣꨭꨥ ꨟꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨟꨐꨭꩌ ꨀꨳꨩ ꩝"
+        },
+        {
+          "line": 4,
+          "bbox": [
+            42,
+            242,
+            413,
+            290
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_04.png",
+          "crop_sha256": "e6c6810c7d44476fa616191642e4d78a5bd593000413a6d3dd9bb79564225273",
+          "gt": "ꨟꨐꨭꩌ ꨀꨳꨩ ꨕꨫ ꨆꨕꨯꨱꩍ ꨘꩆ ꨕꨨꨵꨮꨭ ꩝꩝"
+        },
+        {
+          "line": 5,
+          "bbox": [
+            51,
+            306,
+            452,
+            360
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_05.png",
+          "crop_sha256": "e74c8e56273e06c6abee4fd939423d021e5917a92f5eedd3854292c02320f0e0",
+          "gt": "ꨕꨨꨵꨮꨭ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨌꨙꨳꩀ ꩝꩝"
+        },
+        {
+          "line": 6,
+          "bbox": [
+            43,
+            368,
+            463,
+            416
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_06.png",
+          "crop_sha256": "bd76bb301581b8064f5165eceb115e6676f9a23669b1879490056b315998dc61",
+          "gt": "ꨌꨙꨳꩀ ꨓꨆꨶꨯꩈ ꨆꨕꨯꨱꩍ ꨘꩆ ꨨꨭꨩ ꨗꩌ ꩝꩝"
+        },
+        {
+          "line": 7,
+          "bbox": [
+            40,
+            431,
+            252,
+            474
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_07.png",
+          "crop_sha256": "5e728c6a0c1ae0c868cc1a994d7b5f27d8a213a962dbda1c6aa3a44775cd2b1b",
+          "gt": "ꨗꩌ ꨓꨮꩊ ꨀꨣꩀ ꨗꨫ ꩝"
+        },
+        {
+          "line": 8,
+          "bbox": [
+            45,
+            492,
+            411,
+            540
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_08.png",
+          "crop_sha256": "b4dfe1739ae630709aa41341f31252cfca7dde38e12326f5251f27a6c227449b",
+          "gt": "ꨆꨩ ꨛꨯꨮ ꨚꩆ ꨟꨐꨭꩌ ꩙/꩖/꩒꩐꩐꩕ ꩞"
+        },
+        {
+          "line": 9,
+          "bbox": [
+            43,
+            554,
+            468,
+            608
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_09.png",
+          "crop_sha256": "6325a6427e961aff489ba5e0d64ba98b32f0f78ed36b97660cc2289a8348c386",
+          "gt": "꩑꩗꩞ ꨀꨥꨰꩅ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨟꨐꨭꩌ ꨧꨩ"
+        },
+        {
+          "line": 10,
+          "bbox": [
+            54,
+            624,
+            453,
+            673
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_10.png",
+          "crop_sha256": "39dd84971ef27dd0d93d98d1190863c376a329db9c88dd8fdd01b4008fa839de",
+          "gt": "ꨧꨩ ꨀꨥꨰꩅ꩞ ꨗꨆꨓꨯꨮꨩ ꨘꩆ ꨧꨩ ꨕꨤꩌ ꩝"
+        },
+        {
+          "line": 11,
+          "bbox": [
+            49,
+            687,
+            413,
+            741
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_11.png",
+          "crop_sha256": "60eab649aebece1757b2fde5b7881d795a3aebd41381c784809c2fca229085ba",
+          "gt": "ꨕꨤꩌ ꨨꨕꨯꩌ ꨙꩌ ꨀꨕꩅ ꨚꨴꨯꨱꩃ ꨧꨯꨱꩃ ꩝"
+        },
+        {
+          "line": 12,
+          "bbox": [
+            52,
+            751,
+            323,
+            804
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_12.png",
+          "crop_sha256": "b25c9cd458e4499d0d3e0705a9e4ec80f4e8e894b62128ba669d7c0c34415788",
+          "gt": "ꨧꨯꨱꩃ ꨆꨣꨬ ꨌꨪꩍ ꨀꨝꨪꩍ ꨝꨶꨮꩊ"
+        },
+        {
+          "line": 13,
+          "bbox": [
+            45,
+            815,
+            359,
+            863
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_13.png",
+          "crop_sha256": "af1aea5177e3fb4e3b508fdb8c9d71578874aaedadd8dafa9fc05a7a52bce7a5",
+          "gt": "ꨞꩇ ꨌꩌ ꨓꨭꨝꩅ ꨝꨴꩍꨟꨪꩆ꩞ ꩝"
+        },
+        {
+          "line": 14,
+          "bbox": [
+            52,
+            871,
+            353,
+            920
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_14.png",
+          "crop_sha256": "026def1ea8987355e5060d5b97f22ea865e93a26af66e55472c4b2919b2fa55f",
+          "gt": "ꨣꨕꩀ ꨣꨪꩌ ꨔꨭꩆ ꨧꨯꨱꩃ ꨣꨤꨯꨩ ꩝꩝"
+        },
+        {
+          "line": 15,
+          "bbox": [
+            56,
+            929,
+            496,
+            983
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_15.png",
+          "crop_sha256": "8893fd83bd6ab5caa36294868468709b827872c8fd1c5c3305b541e46593e82b",
+          "gt": "ꨀꨕꩅ ꨚꨴꨯꨱꩃ ꨝꨪꨗꨴꨪꩀ ꨧꨯꨱꩃ ꨕꨯꩌ ꨀꨋꩇ ꩝꩝"
+        }
+      ]
+    },
+    {
+      "doc_id": "ood_book_11_light",
+      "source_type": "ood_archival_gold_v2",
+      "archival_domain": "heldout_camera_book",
+      "font_name": "NotoSansCham-Light.ttf",
+      "columns": 1,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v2/pages/ood_book_11_light.png",
+      "page_sha256": "cd81e73564fc965bc76d9209aed658a58ccc6149b2d549e0db033b15e25d4a84",
+      "line_count": 15,
+      "lines": [
+        {
+          "line": 1,
+          "bbox": [
+            41,
+            45,
+            373,
+            90
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_01.png",
+          "crop_sha256": "fe229046b16e12619bb9c757c5ba2c2477a4e7e515bb2437c60a9f65868a764b",
+          "gt": "ꨀꨋꩇ ꨍꨮꩍ ꨍꨰ꩝ ꨙꩌ ꨀꨕꩅ"
+        },
+        {
+          "line": 2,
+          "bbox": [
+            44,
+            101,
+            273,
+            145
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_02.png",
+          "crop_sha256": "002ea6c12ad3f52c2c9e5f9a78ff02fc1231a46a8bf3072483b65491851dd293",
+          "gt": "ꨋꩇ ꨡꨯꩍ ꨕꨤꩌ ꨚꩌ ꩝"
+        },
+        {
+          "line": 3,
+          "bbox": [
+            40,
+            154,
+            542,
+            207
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_03.png",
+          "crop_sha256": "5a789666b47099f19060e5389c7b74bdbc7dc4d32fa3e8eefd996590452c5429",
+          "gt": "꩑꩘꩞ ꨨꨕꨳꨯꨮꩇ ꨁꨤꨪꨟꨯꨩ꩝ ꨀꨕꩅ ꨧꨯꨱꩃ ꨁꨦꨗꩃ ꩝"
+        },
+        {
+          "line": 4,
+          "bbox": [
+            54,
+            223,
+            347,
+            273
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_04.png",
+          "crop_sha256": "3f0a53b15bd05e7b2396013aa608260f472beeedb864af7f16ac639ecd3183a9",
+          "gt": "ꨚꨈꨭꩊ ꨚꨓꨯꨱꩌ-ꨝꨶꨮꩊ ꨞꩇ ꩝"
+        },
+        {
+          "line": 5,
+          "bbox": [
+            55,
+            284,
+            387,
+            337
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_05.png",
+          "crop_sha256": "3f049f49c5bea0d50dbb662587942cd6815285fbe321b811909e7c6d2cd1eca8",
+          "gt": "ꨌꩌ꩞ ꩑꩞ ꨀꨉꨩ ꨧꨯꨱꩃ ꨧꩀꨆꨣꩈ"
+        },
+        {
+          "line": 6,
+          "bbox": [
+            54,
+            351,
+            444,
+            399
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_06.png",
+          "crop_sha256": "652ef0c830106f291e520d3583df8f191e3b56e9c36318c8d7b6456d4dac9843",
+          "gt": "ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨀꨉꨩ ꨟꩃ ꩑꩒/꩑/꩑꩙꩙꩘"
+        },
+        {
+          "line": 7,
+          "bbox": [
+            44,
+            410,
+            399,
+            460
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_07.png",
+          "crop_sha256": "4b81cfb32efb4b4b1538f918593e58eca905638e586f88a7f96b538aa8fbbbd0",
+          "gt": "ꨝꨴꩍꨟꨪꩆ ꨂꨣꩃ ꨌꩌ꩝ ꨎꨳꨮꩃ ꨓꨝꨳꩀ ꩞"
+        },
+        {
+          "line": 8,
+          "bbox": [
+            54,
+            478,
+            445,
+            531
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_08.png",
+          "crop_sha256": "81b8b5127c970b72258fa1cf6c52169431c111c5f9b81747fc4313730153511e",
+          "gt": "ꨟꩃ ꨣꨪꨓꨭꩍ ꨔꨭꩆ ꨕꨨꨵꨮꨭ꩝ ꨚꨈꨮꩌ ꨓꨟꨩ ꨧꨯꨱꩃ"
+        },
+        {
+          "line": 9,
+          "bbox": [
+            44,
+            545,
+            319,
+            598
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_09.png",
+          "crop_sha256": "fc675b0b2fc0c834a600fc22793ecac59c739edd25e5a4a4875f89832365e27a",
+          "gt": "ꨓꨟꨩ ꨧꨯꨱꩃ ꨕꨘꩇ ꨝꨗꨳꨩ ꩝"
+        },
+        {
+          "line": 10,
+          "bbox": [
+            45,
+            611,
+            424,
+            660
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_10.png",
+          "crop_sha256": "405b6fc3b958b8f87f6e8267fe38b3a1a59b1428ac1659d66b4a8ffb83aceaaa",
+          "gt": "ꨢꩃ ꨧꨯꨱꩃ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩞ ꨣꨪꩌ ꩝꩝"
+        },
+        {
+          "line": 11,
+          "bbox": [
+            43,
+            676,
+            354,
+            722
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_11.png",
+          "crop_sha256": "7759b8610f6badf4d3111f9c8668d870cd8efbb82e1026c8666808285d94bfb1",
+          "gt": "ꨣꨪꩌ ꨔꨭꩆ꩝ ꨓꨟꨩ ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꩝"
+        },
+        {
+          "line": 12,
+          "bbox": [
+            48,
+            738,
+            543,
+            786
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_12.png",
+          "crop_sha256": "cbc4cc1d5ab45f4a96939bc4c2992f6cddac5a18a5615c3abf95e79a7dba1bb6",
+          "gt": "꩑꩙꩞ ꨓꨎꨭꩍ ꨓꨶꨬ ꨧꨆꨥꨪ ꨌꩌ (ꨒꨮꩇ ꨝꨪꨤꩆ ꩑꩐ ꩝꩝"
+        },
+        {
+          "line": 13,
+          "bbox": [
+            54,
+            802,
+            309,
+            850
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_13.png",
+          "crop_sha256": "d2770b5940ff121edf73546598a40c249c2298c3f7623feeb2242398e592db95",
+          "gt": "ꨝꨪꨤꩆ ꩑꩐ ꨧꨆꨥꨪ ꨀꨳꨩ"
+        },
+        {
+          "line": 14,
+          "bbox": [
+            56,
+            858,
+            364,
+            906
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_14.png",
+          "crop_sha256": "baacfa2e11de0d15d44fcd22360f52b237e878ef6556976df4b7f19bce0c10ea",
+          "gt": "ꨝꨶꨮꩊ ꨞꩇ ꨌꩌ ꨕꨫ ꨗꨪꩂ ꨔꨶꨮꩆ"
+        },
+        {
+          "line": 15,
+          "bbox": [
+            54,
+            921,
+            427,
+            966
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_15.png",
+          "crop_sha256": "7c56d200815879dac63cbfba140d53faff963f1b607d3285c2869eaa13678698",
+          "gt": "ꨔꨶꨮꩆ ꨥꨮꩀ-ꨧꨟꩃ ꨍꨮꩍ ꨣꨕꩀ ꨙꩌ ꩝꩝"
+        }
+      ]
+    },
+    {
+      "doc_id": "ood_book_12_extrabold",
+      "source_type": "ood_archival_gold_v2",
+      "archival_domain": "heldout_camera_book",
+      "font_name": "NotoSansCham-ExtraBold.ttf",
+      "columns": 1,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v2/pages/ood_book_12_extrabold.png",
+      "page_sha256": "20006459df7c1da1b8c55bfb2914d0d933a243b1f54398d5f3599dc1ab0100d6",
+      "line_count": 15,
+      "lines": [
+        {
+          "line": 1,
+          "bbox": [
+            47,
+            45,
+            355,
+            95
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_01.png",
+          "crop_sha256": "11d590bd970e281c12a3c63c4c1d8b43beb406c3e984fb37c7577b068a7baa39",
+          "gt": "ꨙꩌ ꨀꨕꩅ ꨗꨫ꩞ ꨕꨤꩌ ꨨꨣꨬ ꩞"
+        },
+        {
+          "line": 2,
+          "bbox": [
+            43,
+            111,
+            493,
+            164
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_02.png",
+          "crop_sha256": "9c1bb2ff0b82689dc743367f334f1f023b53f247f2de235adb0050975291124c",
+          "gt": "ꨆꨓꨯꨮꨩ꩝ ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꩝꩝"
+        },
+        {
+          "line": 3,
+          "bbox": [
+            54,
+            178,
+            285,
+            226
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_03.png",
+          "crop_sha256": "dd0161a5d5c2be3f8faf981c5c0da4c4b1a83997c03548b52509487aa4ea7bf1",
+          "gt": "ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ"
+        },
+        {
+          "line": 4,
+          "bbox": [
+            56,
+            235,
+            762,
+            290
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_04.png",
+          "crop_sha256": "fcaaafd1c9276b51aacd0bbc2cb9f3c6d3dff1b6221676dfa1399376af49e3f4",
+          "gt": "ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝ ꨌꨯꨱꩃ ꨤꨪꨆꨮꨭ ꨨꨎꩆ ꨀꨊꨪꩆ ꩒꩒/꩘/꩒꩐꩒꩑"
+        },
+        {
+          "line": 5,
+          "bbox": [
+            48,
+            300,
+            460,
+            351
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_05.png",
+          "crop_sha256": "ff4f8fdba2f1565626e2a2c7c88b3c69244b8dfbfff837f9b744c14d366684fb",
+          "gt": "ꨨꨎꩆ ꨀꨊꨪꩆ ꨈꨮꩇ ꨧꨳꩌ ꨧꨯꨱꩃ ꨨꨭꨩ ꩝꩝"
+        },
+        {
+          "line": 6,
+          "bbox": [
+            57,
+            364,
+            445,
+            414
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_06.png",
+          "crop_sha256": "c6add7cbf2a052674a6e1b7678df977ccbd04c91d965749b0035fa67d3e10c34",
+          "gt": "꩒꩐꩞ ꨨꨭꨩ ꨨꨤꨪꩌ꩞ ꨙꩌ ꨀꨕꩅ ꨕꨯꨱꩀ ꩞"
+        },
+        {
+          "line": 7,
+          "bbox": [
+            41,
+            430,
+            426,
+            482
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_07.png",
+          "crop_sha256": "a66561339092965beac7325f870d2d3e6967ae94ddca043140d6f53a3e852f23",
+          "gt": "ꨨꨭꨩ ꨃꨥ ꨘꩆ ꨓꨯꨮꩅ ꨆꨓꨯꨮꨩ ꨨꨰ ꨡꨮꩃ ꩝"
+        },
+        {
+          "line": 8,
+          "bbox": [
+            46,
+            492,
+            344,
+            547
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_08.png",
+          "crop_sha256": "a4b3d61d7363be59e3317ec3f2502cb29fa1d52ecc1e8491a8aecfdf81dd8dfe",
+          "gt": "ꨨꨰ ꨡꨮꩃ ꨆꨓꨯꨮꨩ꩝ ꨧꨯꨱꩃ ꨨꨭꨩ ꨈꨵꨮꩃ ꩝꩝"
+        },
+        {
+          "line": 9,
+          "bbox": [
+            51,
+            558,
+            372,
+            612
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_09.png",
+          "crop_sha256": "50a4c343191dcae95fc534633ffe933ad5232c32f543d8143aa95e1fda017008",
+          "gt": "ꨈꨵꨮꩃ ꨢꨮꨭ ꨨꨣꨬ ꨚꨓꨯꨱꩌ꩝ ꨟꨁꩆ꩝ ꩝"
+        },
+        {
+          "line": 10,
+          "bbox": [
+            47,
+            623,
+            357,
+            678
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_10.png",
+          "crop_sha256": "f85cc17710dbddb53f5cd9566775c737f0372fd910c1c81eaecc061b41e78e98",
+          "gt": "ꨧꨯꨱꩃ ꨋꩇ ꨡꨯꩍ ꨟꨗꨭꩍ ꨝꩉ"
+        },
+        {
+          "line": 11,
+          "bbox": [
+            43,
+            686,
+            469,
+            736
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_11.png",
+          "crop_sha256": "25ac39ba686a2bfa38edc768f678703aafc31f5b2f6acc9295ca2117a9e825fa",
+          "gt": "ꨁꨤꨪꨟꨯꨩ ꨚꨣꩆ-ꨂꨣꩃ ꨌꩌ꩞ ꩒꩞ ꨓꨭꩀ ꨥꩀ"
+        },
+        {
+          "line": 12,
+          "bbox": [
+            51,
+            749,
+            288,
+            804
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_12.png",
+          "crop_sha256": "86033362ccc12f71a099dffbc9eb243626f898c95cf13cbe69e44596b91304bb",
+          "gt": "ꨓꨭꩀ ꨥꩀ ꨧꨯꨱꩃ ꨤꨪꨝꨪꩀ"
+        },
+        {
+          "line": 13,
+          "bbox": [
+            51,
+            819,
+            410,
+            865
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_13.png",
+          "crop_sha256": "fa3df8db31b2f2489c30fd9c618269860683a6f6c05a14f4620e7177e11021d3",
+          "gt": "ꨗꨆꨓꨯꨮꨩ ꨚꨣꨤꨯꨩ ꨣꨪꩌ ꨔꨭꩆ ꨓꨟꨩ ꩝꩝"
+        },
+        {
+          "line": 14,
+          "bbox": [
+            55,
+            875,
+            404,
+            925
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_14.png",
+          "crop_sha256": "1566bd0fcd762a65f1e69a1d431b71ff35a1e1909e54bb75aecb9efbf02cc375",
+          "gt": "ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨥꨪ ꨌꩌ (ꨗꨶꨮꩄ"
+        },
+        {
+          "line": 15,
+          "bbox": [
+            42,
+            936,
+            563,
+            986
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_15.png",
+          "crop_sha256": "10accae091ed80872a894e4f70da0ceeb4e3357e09b7f69a1d3b3835dfb9daaf",
+          "gt": "꩒꩑꩞ ꨝꨪꨤꩆ ꩑꩐ ꨧꨆꨥꨪ ꨀꨳꨩ ꨨꨣꨬ)꩞ ꨗꨫ ꨘꩆ ꩝꩝"
+        }
+      ]
+    },
+    {
+      "doc_id": "ood_v3_13_aiatrang",
+      "source_type": "ood_archival_gold_v3",
+      "archival_domain": "efeo_unseen_regional_v3",
+      "font_name": "EFEO Cam AiaTrang.otf",
+      "columns": 1,
+      "wave_amp_px": 0.0,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v3/pages/ood_v3_13_aiatrang.png",
+      "page_sha256": "424a03a24e408b2cd4f037e51f6fd1295bebf790bc5ae099f5bb12d21e89ceef",
+      "line_count": 15,
+      "lines": [
+        {
+          "line": 1,
+          "script": "cham",
+          "bbox": [
+            55,
+            51,
+            368,
+            92
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_13_aiatrang_line_01.png",
+          "crop_sha256": "f57dbcbf4cc6f9e89ac4d9e901c0bc091cd3427569f5a04e984ea66406b3ed40",
+          "gt": "꩑꩐꩕꩞ ꨚꩆ ꨝꨵꩍ ꨆꩀ ꨟꩃ ꨊꨯꨱꩀ ꨣꨈꨵꨰ ꨘꩆ"
+        },
+        {
+          "line": 2,
+          "script": "cham",
+          "bbox": [
+            59,
+            106,
+            306,
+            147
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_13_aiatrang_line_02.png",
+          "crop_sha256": "b8ae8eb29095722c84044c76f194011d2d4d3c690e38d44cd75131b8067f6076",
+          "gt": "ꨨꨤꨩ꩝ ꨗꨯꨱ ꨣꨈꨵꨰ ꨚꨢꨯꨱꩌ ꨤꩄ ꨛꨯꨮ"
+        },
+        {
+          "line": 3,
+          "script": "cham",
+          "bbox": [
+            48,
+            162,
+            271,
+            203
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_13_aiatrang_line_03.png",
+          "crop_sha256": "6e6cf455f16294d829dd234320eeb4c4e4958dc466a4e2f51e84c785aa804b1d",
+          "gt": "ꨝꨵꨯꨱꩍ ꨀꨇꩆ ꨀꨇꩆ ꨆꨳꨮꩃ ꩞"
+        },
+        {
+          "line": 4,
+          "script": "cham",
+          "bbox": [
+            44,
+            218,
+            362,
+            259
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_13_aiatrang_line_04.png",
+          "crop_sha256": "103d749818a416052336be99a04daf22ed530f951fa013ef26fe0fd24ae41354",
+          "gt": "ꨘꩆ ꨧꨤꨪꩍ ꨨꨕꨯꩌ꩝ ꨆꨵꨯꨱꩃ ꨀꨣꩀ ꨚꨰꩀ ꨝꩀ ꩝"
+        },
+        {
+          "line": 5,
+          "script": "cham",
+          "bbox": [
+            53,
+            269,
+            224,
+            310
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_13_aiatrang_line_05.png",
+          "crop_sha256": "13a47f7606403eb7636168192cca3adc98024daefa9ff51b52212648b7e19877",
+          "gt": "ꨝꨵꨯꨱꩍ ꨈꨣꩈ ꨗꨫ ꨨꨤꨩ ꩝"
+        },
+        {
+          "line": 6,
+          "script": "cham",
+          "bbox": [
+            56,
+            324,
+            251,
+            365
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_13_aiatrang_line_06.png",
+          "crop_sha256": "a3f17455c43e650916125792d88a9d81bb8bba4f2f52d3f76afedf3d8cf29b22",
+          "gt": "ꨢꨭꩅ ꨝꨪ ꨝꨯꨱꩍ ꨘꩆ ꨝꨴꨬ ꩝"
+        },
+        {
+          "line": 7,
+          "script": "cham",
+          "bbox": [
+            51,
+            373,
+            305,
+            414
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_13_aiatrang_line_07.png",
+          "crop_sha256": "deb8e1b9b5b1e49431851d1dcc2bbd86d3071c4aeb0929d7a60c1a4d60a18173",
+          "gt": "ꨝꨰ ꨝꨵꨯꨱꩍ ꨀꨇꩆ ꨨꨲꨩ꩝ ꨣꨈꨵꨰ ꨝꨰ"
+        },
+        {
+          "line": 8,
+          "script": "cham",
+          "bbox": [
+            44,
+            426,
+            209,
+            464
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_13_aiatrang_line_08.png",
+          "crop_sha256": "c191dd1b7dd35061445b98e7662f5316b02a8e4b92af441cad454626edbc0487",
+          "gt": "ꨗꨫ ꨝꨣꨭꨥ ꨘꩆ ꨘꩆ ꩝꩝"
+        },
+        {
+          "line": 9,
+          "script": "cham",
+          "bbox": [
+            47,
+            475,
+            411,
+            513
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_13_aiatrang_line_09.png",
+          "crop_sha256": "6084b7b96e11e950ca07c7d9f642224ee1422855fed7dce67cf3ade31b44ffed",
+          "gt": "꩑꩑꩒꩞ ꨡꨯꩍ ꨀꨦꨪꩅ ꨘꩆ ꨘꩆ ꨘꩆ ꨨꨤꨩ ꨝꨭꩍ ꩝꩝"
+        },
+        {
+          "line": 10,
+          "script": "cham",
+          "bbox": [
+            48,
+            526,
+            231,
+            567
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_13_aiatrang_line_10.png",
+          "crop_sha256": "eb4b6375ff845d5c8d43f8917e0eefc5700161dd484fc08b51122ab390242648",
+          "gt": "ꨟꩀ ꨝꨵꨯꨱꩍ-ꨗꨯꨱ ꨝꨩ ꨕꨫ ꩝꩝"
+        },
+        {
+          "line": 11,
+          "script": "cham",
+          "bbox": [
+            43,
+            579,
+            215,
+            620
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_13_aiatrang_line_11.png",
+          "crop_sha256": "db76d2c9a645f445ba8e710226fd0efa07439f8b342c399b8ee586f22dcb8d7f",
+          "gt": "ꨚꨰꩀ ꨟꨰ ꨕꨤꩌ ꨝꨵꨯꨱꩍ"
+        },
+        {
+          "line": 12,
+          "script": "cham",
+          "bbox": [
+            49,
+            632,
+            361,
+            670
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_13_aiatrang_line_12.png",
+          "crop_sha256": "f0bd8e5d13f536d45f920ca9b03c10bded3b08266c56ebf940fee01dd9a32e45",
+          "gt": "ꨝꨰ ꨕꨫ ꨘꩆ ꨘꩆ ꨝꨩ ꩑꩑/꩑꩑/꩒꩐꩐꩓ ꩝꩝"
+        },
+        {
+          "line": 13,
+          "script": "cham",
+          "bbox": [
+            45,
+            679,
+            283,
+            720
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_13_aiatrang_line_13.png",
+          "crop_sha256": "e357d52b6b877643ee643539abf4bb74723e0df5567a34cac7a7066bbcd6c852",
+          "gt": "ꨅꨩ꩝ ꨝꨩ ꨀꨗꩀ ꨗꨯꨱ ꨙꩃ ꨧꨩ ꨝꨵꨯꨱꩍ ꩝"
+        },
+        {
+          "line": 14,
+          "script": "cham",
+          "bbox": [
+            46,
+            731,
+            234,
+            769
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_13_aiatrang_line_14.png",
+          "crop_sha256": "fc0db85861b4b25d6450760e41e68465fe63a0507be2c7abc0663c9bf53ce582",
+          "gt": "ꨝꨩ ꨚꨰꩀ ꨆꨳꨮꩃ ꨤꨝꨭꩀ ꨝꨩ ꩝꩝"
+        },
+        {
+          "line": 15,
+          "script": "cham",
+          "bbox": [
+            49,
+            786,
+            290,
+            826
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_13_aiatrang_line_15.png",
+          "crop_sha256": "d4dc64a63a6017e4f330e2b2e1db90bf31730a8f32bc584086bd80a19da61baf",
+          "gt": "ꨀꨝꨪꩍ ꨨꨤꨩ ꨟꨰ ꨝꩀ ꨅꨩ꩝ ꨣꨈꨵꨰ ꩞"
+        }
+      ]
+    },
+    {
+      "doc_id": "ood_v3_14_kraong_2col",
+      "source_type": "ood_archival_gold_v3",
+      "archival_domain": "efeo_unseen_regional_v3",
+      "font_name": "EFEO Cam Kraong.otf",
+      "columns": 2,
+      "wave_amp_px": 0.0,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v3/pages/ood_v3_14_kraong_2col.png",
+      "page_sha256": "dcf50e3578de8482cd4ce7f66d9a4c5a6f27759a0e81b7e7b72f5d871be70ed6",
+      "line_count": 16,
+      "lines": [
+        {
+          "line": 1,
+          "script": "cham",
+          "bbox": [
+            44,
+            51,
+            230,
+            83
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_14_kraong_2col_line_01.png",
+          "crop_sha256": "2db31718a7e9ff2d7e99f54c3c2619c63a4a35800acc209540b932a24e55123a",
+          "gt": "ꨝꨭꩍ ꨝꨰ ꨝꨣꨭꨥ ꨘꩆ"
+        },
+        {
+          "line": 2,
+          "script": "cham",
+          "bbox": [
+            45,
+            99,
+            209,
+            137
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_14_kraong_2col_line_02.png",
+          "crop_sha256": "0b07153ea82aa96af656f8859afd92e85b80de9e8b9a48525dc5c6a93fb195b6",
+          "gt": "꩑꩑꩙꩞ ꨟꩃ ꨝꨩ ꨎꨥ"
+        },
+        {
+          "line": 3,
+          "script": "cham",
+          "bbox": [
+            38,
+            153,
+            183,
+            189
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_14_kraong_2col_line_03.png",
+          "crop_sha256": "ebdf1bfdff9d8ca09909bb45d3c8f425c7a4a08cabbdbfae417b8f0e09779d18",
+          "gt": "ꨆꨩ ꨈꨣꨰ ꨐꨭꨩ ꨕꨫ"
+        },
+        {
+          "line": 4,
+          "script": "cham",
+          "bbox": [
+            44,
+            204,
+            246,
+            244
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_14_kraong_2col_line_04.png",
+          "crop_sha256": "dc47c65b9543a6b3586476cca1e746d3675fb13ca0ce64ce8d295db59aa475ba",
+          "gt": "ꨚꨰꩀ ꨝꩀ-ꨓꨴꨩ ꨣꨈꨵꨰ ꩝꩝"
+        },
+        {
+          "line": 5,
+          "script": "cham",
+          "bbox": [
+            40,
+            260,
+            203,
+            295
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_14_kraong_2col_line_05.png",
+          "crop_sha256": "53818efa015578bd8c8c341e6fa400c54d4b28ac6e2f343d33a064d91b72a7b6",
+          "gt": "ꨅꨩ ꨚꨤꨬ ꨟꩃ ꨈꨣꩈ"
+        },
+        {
+          "line": 6,
+          "script": "cham",
+          "bbox": [
+            41,
+            308,
+            206,
+            343
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_14_kraong_2col_line_06.png",
+          "crop_sha256": "d375d247bdf1bd6526e70d856dc06aea6441c14b9fbeae9486bc71aed452e19d",
+          "gt": "ꨛꨯꨮ ꨧꨯꨱꩃ ꨀꨗꨯꨱꩃ ꨟꩃ"
+        },
+        {
+          "line": 7,
+          "script": "cham",
+          "bbox": [
+            43,
+            359,
+            240,
+            398
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_14_kraong_2col_line_07.png",
+          "crop_sha256": "dbecf9b3f4f44fe969344bb4ba590ed44ce970ea9cb6c402de1d14fd1568f12d",
+          "gt": "ꨨꨤꨩ ꨣꨈꨵꨰ ꨘꩆ ꨣꨈꨵꨰ"
+        },
+        {
+          "line": 8,
+          "script": "cham",
+          "bbox": [
+            43,
+            414,
+            219,
+            449
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_14_kraong_2col_line_08.png",
+          "crop_sha256": "e47e9a5f0ea59583dd57cce15793e51d8386d3433360b722fad6ed2fda6e2b03",
+          "gt": "ꨟꨰ ꨧꨝꨭꩃ꩝ ꨧꨝꨭꩃ ꨟꨰ"
+        },
+        {
+          "line": 9,
+          "script": "cham",
+          "bbox": [
+            584,
+            51,
+            788,
+            90
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_14_kraong_2col_line_09.png",
+          "crop_sha256": "c46b6dacb6d66df80ad0bdab96acc564635997a9c128874f57661f1aef4e93e4",
+          "gt": "ꨝꨩ ꨚꨢꨯꨱꩌ ꨆꨵꨯꨱꩃ ꨀꨇꩆ"
+        },
+        {
+          "line": 10,
+          "script": "cham",
+          "bbox": [
+            589,
+            106,
+            818,
+            144
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_14_kraong_2col_line_10.png",
+          "crop_sha256": "29a8c38f3f65e396351de557d1ac3f188053aa9f2116a7d8ac83100a5332867c",
+          "gt": "꩑꩒꩖꩞ ꨈꨣꩈ ꨛꨯꨮ ꨕꨨꨵꩀ"
+        },
+        {
+          "line": 11,
+          "script": "cham",
+          "bbox": [
+            585,
+            156,
+            773,
+            195
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_14_kraong_2col_line_11.png",
+          "crop_sha256": "c05bdb190813f36f561a9c65c803f56a068e19a752488e288b59e43305d21b29",
+          "gt": "ꨨꨕꨯꩌ꩝ ꨆꨵꨯꨱꩃ ꨀꨣꩀ ꨕꨫ"
+        },
+        {
+          "line": 12,
+          "script": "cham",
+          "bbox": [
+            588,
+            208,
+            766,
+            245
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_14_kraong_2col_line_12.png",
+          "crop_sha256": "850ad732bfd2407a1fcc3dac090206e1e2e6429ebea09daeb6a0bf23cba01f14",
+          "gt": "ꨗꨫ ꨧꨤꨪꩍ ꨚꨰꩀ ꨟꨰ"
+        },
+        {
+          "line": 13,
+          "script": "cham",
+          "bbox": [
+            589,
+            256,
+            774,
+            296
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_14_kraong_2col_line_13.png",
+          "crop_sha256": "7fec326857ed1c9b93f8958eece8ae2960e7aaeb25b4bfde5071e3ed2237e3db",
+          "gt": "ꨨꨤꨩ ꨝꨭꩍ-ꨕꨶꨩ ꨆꨮꨭ ꨝꨴꨬ"
+        },
+        {
+          "line": 14,
+          "script": "cham",
+          "bbox": [
+            588,
+            305,
+            804,
+            344
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_14_kraong_2col_line_14.png",
+          "crop_sha256": "62c305cd78ded37faef087eaa6a524168de784bbabb91c562ecd31b447d87786",
+          "gt": "ꨝꨯꨱꩍ ꨘꩆ ꨀꨇꩆ ꨝꨵꨯꨱꩍ"
+        },
+        {
+          "line": 15,
+          "script": "cham",
+          "bbox": [
+            586,
+            356,
+            737,
+            395
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_14_kraong_2col_line_15.png",
+          "crop_sha256": "aa7972f530c8e5aa03f1c5ba502f9991ed43c4e78ab86692adb34ac4568d97ec",
+          "gt": "ꨗꨫ ꨣꨈꨵꨰ ꨤꩄ ꨙꨮ"
+        },
+        {
+          "line": 16,
+          "script": "cham",
+          "bbox": [
+            582,
+            411,
+            773,
+            448
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_14_kraong_2col_line_16.png",
+          "crop_sha256": "26a6f174da089e9460d85a9ec89f3ffd712c82a7864f90aa50af0863252ba40e",
+          "gt": "ꨝꨰ ꨀꨧꨪꩅ ꨝꨭꩍ ꨨꨤꨩ"
+        }
+      ]
+    },
+    {
+      "doc_id": "ood_v3_15_pajai",
+      "source_type": "ood_archival_gold_v3",
+      "archival_domain": "efeo_unseen_regional_v3",
+      "font_name": "EFEO Cam Pajai.otf",
+      "columns": 1,
+      "wave_amp_px": 0.0,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v3/pages/ood_v3_15_pajai.png",
+      "page_sha256": "9fb895e00840f1c070add1dffef8ab23945bd33bb15d13943b32d249337b355a",
+      "line_count": 15,
+      "lines": [
+        {
+          "line": 1,
+          "script": "cham",
+          "bbox": [
+            48,
+            51,
+            311,
+            92
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_15_pajai_line_01.png",
+          "crop_sha256": "22abc2415104e8a2055ef530ae75a65e56c684ee456add515947c5c2bbe56d93",
+          "gt": "ꨕꨶꨩ ꨕꨨꨵꩀ ꨛꨯꨮ꩝ ꨚꨆꨴꨲꨩ ꨛꨯꨮ꩝ ꨆꨵꨯꨱꩃ ꩝"
+        },
+        {
+          "line": 2,
+          "script": "cham",
+          "bbox": [
+            54,
+            100,
+            444,
+            141
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_15_pajai_line_02.png",
+          "crop_sha256": "2e85e58e054935fd02fc5bd3c04e6bb502df5167e8ae55d580b956e71192f05a",
+          "gt": "꩑꩓꩓꩞ ꨛꨯꨮ ꨟꨪꩆ ꨝꨵꨯꨱꩍ ꨈꨣꩈ ꨆꨮꨭ ꨟꨪꩆ꩝ ꨘꩆ ꩝꩝"
+        },
+        {
+          "line": 3,
+          "script": "cham",
+          "bbox": [
+            59,
+            149,
+            431,
+            189
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_15_pajai_line_03.png",
+          "crop_sha256": "862d612c4df41ed186e2245c1adc988f298bcd67042c887c0183aed40391822d",
+          "gt": "ꨛꨯꨮ ꨤꩄ ꨚꨶꨮꩄ ꨝꨵꨯꨱꩍ ꨤꩄ ꩒꩔/꩑꩐/꩒꩐꩐꩓ ꩝꩝"
+        },
+        {
+          "line": 4,
+          "script": "cham",
+          "bbox": [
+            62,
+            198,
+            385,
+            239
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_15_pajai_line_04.png",
+          "crop_sha256": "6ed883c580390d581bc11ebf075ec4945bc2ce217a239005ac6a2f5a035a3931",
+          "gt": "ꨝꨳꩀ ꨣꨈꨵꨰ ꨚꨗꨶꨮꩄ ꨕꨫ ꨕꨯꨱꩀ ꨛꨯꨮ ꨟꩃ ꩝꩝"
+        },
+        {
+          "line": 5,
+          "script": "cham",
+          "bbox": [
+            53,
+            254,
+            196,
+            293
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_15_pajai_line_05.png",
+          "crop_sha256": "6a9b8cb8e89258996e8a48cf23d87882132c014a8d83c32fb6232fc4b0a8aac0",
+          "gt": "ꨘꩆ ꨔꨮꨭ ꨕꨫ ꨢꨮ꩝"
+        },
+        {
+          "line": 6,
+          "script": "cham",
+          "bbox": [
+            47,
+            304,
+            301,
+            334
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_15_pajai_line_06.png",
+          "crop_sha256": "cdec4bbac4d7f014106d84d2b34de6fb781e13901728e1fb22d9c95d8863968e",
+          "gt": "ꨓꨳꩆ ꨝꨣꨭꨥ-ꨘꩆ ꨚꨎꨳꩀ ꩝"
+        },
+        {
+          "line": 7,
+          "script": "cham",
+          "bbox": [
+            46,
+            344,
+            275,
+            385
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_15_pajai_line_07.png",
+          "crop_sha256": "a57ce7cedce2d87b541e2f18cc5f1a86b848476b0d79f7a3f239386c88817351",
+          "gt": "ꨀꨶꨮꩆ ꨈꨮꩇ ꨨꨤꨩ ꨝꨭꩍ ꨘꩆ ꩝"
+        },
+        {
+          "line": 8,
+          "script": "cham",
+          "bbox": [
+            59,
+            394,
+            300,
+            435
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_15_pajai_line_08.png",
+          "crop_sha256": "7b22feaa27a3e4151ada5dd5a24776dcbb2eea409883e1e50946c2eeb7cfa420",
+          "gt": "ꨝꨩ ꨕꨤꩌ ꨝꨵꨯꨱꩍ ꨅꨩ꩝ ꨣꨈꨵꨰ ꨙꩃ ꨆꨵꨮꨭ"
+        },
+        {
+          "line": 9,
+          "script": "cham",
+          "bbox": [
+            58,
+            447,
+            355,
+            488
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_15_pajai_line_09.png",
+          "crop_sha256": "4da3fc89fc683f984856f395d1941c7e98fab8739d926874b2d42485499bfa17",
+          "gt": "ꨕꨫ ꨝꨣꨭꨥ ꨘꩆ ꨆꨳꨮꩃ ꨤꨝꨭꩀ ꨝꨭꩍ ꨝꨰ"
+        },
+        {
+          "line": 10,
+          "script": "cham",
+          "bbox": [
+            53,
+            505,
+            374,
+            546
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_15_pajai_line_10.png",
+          "crop_sha256": "d769e9736a1bdf2e4cfbd4019eb2758b96e3533b271be99d73e28fd4fe819332",
+          "gt": "꩑꩔꩐꩞ ꨚꨰꩀ ꨀꨝꨪꩍ ꨨꨤꨩ ꨕꨫ ꨘꩆ ꨟꩃ ꩝"
+        },
+        {
+          "line": 11,
+          "script": "cham",
+          "bbox": [
+            48,
+            562,
+            317,
+            603
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_15_pajai_line_11.png",
+          "crop_sha256": "8db1fc6d0f74f2e5d5c26f261cf385514f5d5cfd3cc93e4cc587b6d71a5a5e72",
+          "gt": "ꨝꨵꨯꨱꩍ ꨝꩀ ꨅꨩ꩝ ꨣꨈꨵꨰ ꨀꨇꩆ ꨆꨩ ꩝꩝"
+        },
+        {
+          "line": 12,
+          "script": "cham",
+          "bbox": [
+            42,
+            617,
+            286,
+            653
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_15_pajai_line_12.png",
+          "crop_sha256": "57928be112e8274d59e6e8f0c0955f7269fe2a9205bbf9500dd13b637542dab3",
+          "gt": "ꨝꨣꨭꨥ ꨘꩆ ꨟꨰ ꨛꨯꨮ ꨥꨮꩀ ꩝꩝"
+        },
+        {
+          "line": 13,
+          "script": "cham",
+          "bbox": [
+            42,
+            667,
+            378,
+            707
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_15_pajai_line_13.png",
+          "crop_sha256": "03b4f0e35d747fd6271e8063203594d9f95763d1b3916ea9991d8bf41bb8683b",
+          "gt": "ꨎꨥ ꨆꨵꨯꨱꩃ ꨢꨮ꩝ ꨘꩆ ꨧꨝꩀ ꨝꨰ ꨕꨨꨵꩀ ꩝"
+        },
+        {
+          "line": 14,
+          "script": "cham",
+          "bbox": [
+            59,
+            719,
+            389,
+            759
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_15_pajai_line_14.png",
+          "crop_sha256": "9174c719777ceab99dd8bf72165b5df896f08b154496900db3bd9847e99a896d",
+          "gt": "ꨝꨵꨯꨱꩍ ꨤꩄ ꨎꨮ ꨛꨯꨮ ꨝꨭꩍ ꩘/꩗/꩒꩐꩐꩓ ꩝꩝"
+        },
+        {
+          "line": 15,
+          "script": "cham",
+          "bbox": [
+            49,
+            774,
+            362,
+            815
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_15_pajai_line_15.png",
+          "crop_sha256": "09a65b9496f435973a05fc6d071fbda3557b93640b0ae88489c02ad68a5623a5",
+          "gt": "ꨛꨯꨮ ꨈꨗꨴꨮꩍ-ꨨꨤꨩ ꨓꨴꨩ ꨟꩃ ꨈꨣꩈ ꨚꩆ ꩝꩝"
+        }
+      ]
+    },
+    {
+      "doc_id": "ood_v3_16_curved_panduranga",
+      "source_type": "ood_archival_gold_v3",
+      "archival_domain": "efeo_curved_agal_v3",
+      "font_name": "EFEO Cam Panduranga.otf",
+      "columns": 1,
+      "wave_amp_px": 5.2,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v3/pages/ood_v3_16_curved_panduranga.png",
+      "page_sha256": "4cd329c2988408e0de52a974fec70ebabc728f4f299862928cb7aed528e6b6a9",
+      "line_count": 14,
+      "lines": [
+        {
+          "line": 1,
+          "script": "cham",
+          "bbox": [
+            62,
+            48,
+            257,
+            94
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_16_curved_panduranga_line_01.png",
+          "crop_sha256": "d6d2896a17ca00e887f3507210365d1ca251d3c54fdab22e80f514510bac5120",
+          "gt": "ꨕꨫ ꨅꨩ꩝ ꨛꨯꨮ ꨧꨯꨱꩃ ꨝꨩ ꨚꩀ ꩞"
+        },
+        {
+          "line": 2,
+          "script": "cham",
+          "bbox": [
+            48,
+            87,
+            219,
+            136
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_16_curved_panduranga_line_02.png",
+          "crop_sha256": "f1e6c73ae057b96f17ecddec20a833d49785a887fd098c4a686cad3aa9632012",
+          "gt": "ꨆꨵꨯꨱꩃ ꨛꨯꨮ ꨈꨮꩇ ꨣꨈꨵꨰ ꩝꩝"
+        },
+        {
+          "line": 3,
+          "script": "cham",
+          "bbox": [
+            58,
+            135,
+            277,
+            185
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_16_curved_panduranga_line_03.png",
+          "crop_sha256": "e770e005eb4230b8ed32347c750aac5aa38939e04fba7305b0313744c30435f4",
+          "gt": "꩑꩔꩗꩞ ꨟꨰ ꨨꨚꨭꩍ ꨝꨵꨬ ꨝꨵꨯꨱꩍ ꩞"
+        },
+        {
+          "line": 4,
+          "script": "cham",
+          "bbox": [
+            48,
+            180,
+            304,
+            231
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_16_curved_panduranga_line_04.png",
+          "crop_sha256": "5af122750e284405bdc13d26c9f1e328cba54723f65ebcfe50a115e37a826b3c",
+          "gt": "ꨀꨇꩆ ꨣꨈꨵꨰ ꨝꨭꩍ ꨝꨰ ꨣꨬ꩝ ꨚꨤꨬ ꩞"
+        },
+        {
+          "line": 5,
+          "script": "cham",
+          "bbox": [
+            53,
+            225,
+            249,
+            275
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_16_curved_panduranga_line_05.png",
+          "crop_sha256": "7f1322067274c84bba7ac33786b3eb77510472b3a55e4cca38cee105a3d322bb",
+          "gt": "ꨕꨫ ꨘꩆ ꨕꨫ ꨣꨈꨵꨰ ꨘꩆ ꩝꩝"
+        },
+        {
+          "line": 6,
+          "script": "cham",
+          "bbox": [
+            45,
+            272,
+            244,
+            320
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_16_curved_panduranga_line_06.png",
+          "crop_sha256": "5a40c23d571dd0ec34e2af6d1ce41e37c97982af75ba2cd99b9268a776ddf779",
+          "gt": "ꨈꨴꨮꩇ ꨤꨪꨎꩃ ꨣꨬ꩝ ꨛꨯꨮ ꨧꨯꨱꩃ ꩞"
+        },
+        {
+          "line": 7,
+          "script": "cham",
+          "bbox": [
+            51,
+            314,
+            330,
+            365
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_16_curved_panduranga_line_07.png",
+          "crop_sha256": "59d7073c3fe57066b6e87325613642ebd71375162dd41f41f701423e4c127f2f",
+          "gt": "ꨝꨣꨭꨥ ꨆꨵꨯꨱꩃ ꨛꨯꨮ ꨨꨤꨩ ꨧꩃ꩝ ꨆꨳꨮꩃ ꨝꨵꨯꨱꩍ ꩞"
+        },
+        {
+          "line": 8,
+          "script": "cham",
+          "bbox": [
+            49,
+            361,
+            282,
+            406
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_16_curved_panduranga_line_08.png",
+          "crop_sha256": "1933e0d989e18fc3413ab4e402a2de26ea0f9cd2cad71618fb538bd8ac26e7eb",
+          "gt": "ꨚꩆ ꨘꩆ ꨟꨰ ꨓꨮꩊ ꨚꨙꨳꩀ ꩝"
+        },
+        {
+          "line": 9,
+          "script": "cham",
+          "bbox": [
+            53,
+            399,
+            233,
+            448
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_16_curved_panduranga_line_09.png",
+          "crop_sha256": "ad4899faabd3f2115db8cb502e068561f2d2648be521f32a6dffa95731d8041a",
+          "gt": "ꨠꨎꨰꩀ ꨧꩃ-ꨤꨯꨩ ꨆꨵꨯꨱꩃ ꩞"
+        },
+        {
+          "line": 10,
+          "script": "cham",
+          "bbox": [
+            45,
+            444,
+            376,
+            496
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_16_curved_panduranga_line_10.png",
+          "crop_sha256": "aadbaa0f4065db26264b7d073405acdb6ab61f5a4d1e95723fd04f34cc7a53c0",
+          "gt": "ꨝꨵꨯꨱꩍ ꨈꨣꨰ ꨚꩆ ꨝꨵꨯꨱꩍ ꨈꨵꨰꩍ ꩓/꩓/꩒꩐꩑꩒ ꩝꩝"
+        },
+        {
+          "line": 11,
+          "script": "cham",
+          "bbox": [
+            42,
+            490,
+            294,
+            540
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_16_curved_panduranga_line_11.png",
+          "crop_sha256": "60b36669709a24b4438100dd2082f7050529a59be516e7f03bc56aaba8488ee8",
+          "gt": "꩑꩕꩔꩞ ꨤꨮꩍ ꨕꨯꨱꩀ ꨚꩀ ꨆꨭꨢꨮꨭ ꨟꩃ ꩝"
+        },
+        {
+          "line": 12,
+          "script": "cham",
+          "bbox": [
+            46,
+            534,
+            344,
+            583
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_16_curved_panduranga_line_12.png",
+          "crop_sha256": "2340e690822e6c694991001cbec4c8259a1eb750597ddc7c9013c8be504a20d0",
+          "gt": "ꨀꨤꨩ ꨘꩆ꩝ ꨛꨯꨮ ꨧꩃ ꨨꨤꨬ ꨈꨣꩈ ꨨꨤꨩ꩝ ꩝"
+        },
+        {
+          "line": 13,
+          "script": "cham",
+          "bbox": [
+            46,
+            575,
+            320,
+            626
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_16_curved_panduranga_line_13.png",
+          "crop_sha256": "5c094ae41b3ef7010c73b11c9bf69ee31eb30cc9d02b6d89213337ee73e6be9c",
+          "gt": "ꨚꩆ ꨟꩀ ꨛꨯꨮ ꨕꨯꨱꩀ ꨝꨵꨯꨱꩍ ꨗꨯꨱ ꨝꨵꨯꨱꩍ"
+        },
+        {
+          "line": 14,
+          "script": "cham",
+          "bbox": [
+            54,
+            618,
+            310,
+            669
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_16_curved_panduranga_line_14.png",
+          "crop_sha256": "1084fee303fcc03f88b0bfa4c9709650140f537268185b2d536c217d768e2a7e",
+          "gt": "ꨆꨵꨯꨱꩃ ꨇꨪꩀ ꨛꨯꨮ ꨟꩀ ꨛꨯꨮ ꨤꨪꨔꨬ ꨛꨯꨮ"
+        }
+      ]
+    },
+    {
+      "doc_id": "ood_v3_17_curved_aiatrang",
+      "source_type": "ood_archival_gold_v3",
+      "archival_domain": "efeo_curved_agal_v3",
+      "font_name": "EFEO Cam AiaTrang.otf",
+      "columns": 1,
+      "wave_amp_px": 6.2,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v3/pages/ood_v3_17_curved_aiatrang.png",
+      "page_sha256": "3c75c050181a4a036314185ef6a7bc24daedd85b3a2d1be818f8478f0a6baf16",
+      "line_count": 14,
+      "lines": [
+        {
+          "line": 1,
+          "script": "cham",
+          "bbox": [
+            62,
+            50,
+            311,
+            101
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_17_curved_aiatrang_line_01.png",
+          "crop_sha256": "8ec1f4d0191cd7d561b352f5dc68cce9bb105c58e7a4d4374aecdfd38c7b12db",
+          "gt": "ꨚꩆ ꨤꨪꨔꨬ ꨚꩆ ꨟꨰ ꨆꨵꨯꨱꩃ ꨛꨯꨮ ꩝"
+        },
+        {
+          "line": 2,
+          "script": "cham",
+          "bbox": [
+            51,
+            96,
+            321,
+            148
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_17_curved_aiatrang_line_02.png",
+          "crop_sha256": "87a07790e256c3c47cd52240ecea8253427cd0fbffb78291d84a5883cd0048e0",
+          "gt": "ꨝꨩ ꨚꩀ ꨈꨣꩈ ꨚꩆ ꨆꨵꨯꨱꩃ ꨥꩉ ꨕꨶꨩ ꩝꩝"
+        },
+        {
+          "line": 3,
+          "script": "cham",
+          "bbox": [
+            58,
+            144,
+            316,
+            195
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_17_curved_aiatrang_line_03.png",
+          "crop_sha256": "b976da1b4b77309e694d3ab21c7f5add272d5a7ab34ea8b02540784c2e7704f5",
+          "gt": "ꨝꨵꨯꨱꩍ ꨡꨯꩍ ꨈꨣꩈ ꨝꨵꨯꨱꩍ ꨕꨴꨬ ꩞"
+        },
+        {
+          "line": 4,
+          "script": "cham",
+          "bbox": [
+            46,
+            190,
+            278,
+            241
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_17_curved_aiatrang_line_04.png",
+          "crop_sha256": "b46e75a1f5ff9c5b2fd041411d929b71463b203224c47f6b89cf68cfd44a0670",
+          "gt": "ꨙꨪꩍ ꨡꨯꩍ-ꨁꨗꨩ ꨤꨳꩍ ꨆꨵꨯꨱꩃ ꩝꩝"
+        },
+        {
+          "line": 5,
+          "script": "cham",
+          "bbox": [
+            42,
+            237,
+            326,
+            288
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_17_curved_aiatrang_line_05.png",
+          "crop_sha256": "5c83c8ffb4e619250ea57e9873b588addcd3046973e37cedbc57eae033870b2d",
+          "gt": "꩑꩖꩑꩞ ꨈꨭꨣꩈ ꨣꨭꩇ ꨈꨣꩈ꩝ ꨕꨶꨩ ꨈꨭꨣꩈ ꩞"
+        },
+        {
+          "line": 6,
+          "script": "cham",
+          "bbox": [
+            59,
+            285,
+            363,
+            335
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_17_curved_aiatrang_line_06.png",
+          "crop_sha256": "94b108512b896a7a1f4a8cc2da5fe0e90228713b8075307a034746282652eb99",
+          "gt": "ꨝꨣꨭꨥ ꨕꨴꨬ ꨘꩆ ꨚꩆ ꨈꨭꨣꩈ ꨓꨟꨩ ꨥꨮꩀ ꩞"
+        },
+        {
+          "line": 7,
+          "script": "cham",
+          "bbox": [
+            60,
+            329,
+            490,
+            380
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_17_curved_aiatrang_line_07.png",
+          "crop_sha256": "5cb49769746196ef2b384ce008eefb66c38439e84160a610bdb6f0a1eaa9d15a",
+          "gt": "ꨡꨯꩍ ꨝꨵꨯꨱꩍ ꨘꩆ ꨓꨗꩍ ꨖꨪꩅ꩝ ꨛꨯꨮ ꩒꩓/꩓/꩑꩙꩙꩖ ꩞"
+        },
+        {
+          "line": 8,
+          "script": "cham",
+          "bbox": [
+            59,
+            375,
+            278,
+            424
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_17_curved_aiatrang_line_08.png",
+          "crop_sha256": "aaa3975f563f178f863db08ca939baeb3ae29a6a55be96f29786d31a6390f1a6",
+          "gt": "ꨤꨶꩀ ꨣꨪꨢꨩ ꨝꨣꨭꨥ ꨚꩆ ꨛꨯꨮ ꩞"
+        },
+        {
+          "line": 9,
+          "script": "cham",
+          "bbox": [
+            48,
+            420,
+            242,
+            469
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_17_curved_aiatrang_line_09.png",
+          "crop_sha256": "edc85e38838bfe522b770d2ef7afeb65f8126945fdb03a80fe7e0b2362fd9c0c",
+          "gt": "ꨟꩃ ꨔꨮꨭ ꨆꨤꨯꨱꩃ ꨀꨧꩉ ꨟꩃ ꩝"
+        },
+        {
+          "line": 10,
+          "script": "cham",
+          "bbox": [
+            59,
+            463,
+            336,
+            514
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_17_curved_aiatrang_line_10.png",
+          "crop_sha256": "59cd7a3e063233351418d5b242b05f1e5dbf6d5c2ddc7c60e7fcb30405ac4255",
+          "gt": "ꨈꨣꩈ ꨚꨓꨯꨱ꩝ ꨛꨯꨮ ꨤꨪꨔꨬ ꨛꨯꨮ ꨝꨵꨯꨱꩍ"
+        },
+        {
+          "line": 11,
+          "script": "cham",
+          "bbox": [
+            61,
+            509,
+            284,
+            560
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_17_curved_aiatrang_line_11.png",
+          "crop_sha256": "f349858edc98b58dc8467969326815ac5c0e44847cd93492f8d2cb16fef04260",
+          "gt": "ꨚꩆ ꨗꨯꨱ ꨆꨵꨯꨱꩃ ꨛꨯꨮ ꨇꨪꩆ ꩞"
+        },
+        {
+          "line": 12,
+          "script": "cham",
+          "bbox": [
+            47,
+            555,
+            286,
+            607
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_17_curved_aiatrang_line_12.png",
+          "crop_sha256": "af54c6c8e3719f72efeabeeb7e479ffab96f7e6d309a5135cdc1fd6cc3366b66",
+          "gt": "ꨈꨣꩈ ꨚꩆ ꨨꨶꩀ ꨆꨵꨯꨱꩃ ꨅꨩ꩝ ꨃꨥ"
+        },
+        {
+          "line": 13,
+          "script": "cham",
+          "bbox": [
+            55,
+            601,
+            401,
+            649
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_17_curved_aiatrang_line_13.png",
+          "crop_sha256": "2e3511a4ab37051d3fc265607845c953290cbc5fa29c0b4c1e0b17db3f0d5bff",
+          "gt": "꩑꩖꩘꩞ ꨧꨯꨱꩃ ꨈꨣꩈ ꨛꨯꨮ ꨛꨯꨮ ꨃꨥ ꨗꨯꨱ ꨛꨯꨮ ꩝"
+        },
+        {
+          "line": 14,
+          "script": "cham",
+          "bbox": [
+            42,
+            642,
+            214,
+            692
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_17_curved_aiatrang_line_14.png",
+          "crop_sha256": "c535bcf1d20c78287ee09a63215c0c0a5e3cd385d23bf8635a35cb6342b5e0b3",
+          "gt": "ꨚꩆ ꨆꨵꨯꨱꩃ ꨛꨯꨮ ꨎꨮ꩝ ꩞"
+        }
+      ]
+    },
+    {
+      "doc_id": "ood_v3_18_curved_pajai",
+      "source_type": "ood_archival_gold_v3",
+      "archival_domain": "efeo_curved_agal_v3",
+      "font_name": "EFEO Cam Pajai.otf",
+      "columns": 1,
+      "wave_amp_px": 4.6,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v3/pages/ood_v3_18_curved_pajai.png",
+      "page_sha256": "1a7831136301f8a7fb1a7a7cfc9d1a4846dfdb94a0bb8777541644f790103417",
+      "line_count": 14,
+      "lines": [
+        {
+          "line": 1,
+          "script": "cham",
+          "bbox": [
+            59,
+            52,
+            351,
+            95
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_18_curved_pajai_line_01.png",
+          "crop_sha256": "a0c4a38f3f06960396120b9635501c0de44e816aa893d60098e8be9530fbdfb1",
+          "gt": "ꨧꨣꨥꨩ ꨝꨵꨯꨱꩍ ꨈꨣꩈ ꨚꩆ ꨛꨯꨮ ꨝꨵꨯꨱꩍ ꩞"
+        },
+        {
+          "line": 2,
+          "script": "cham",
+          "bbox": [
+            49,
+            97,
+            308,
+            140
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_18_curved_pajai_line_02.png",
+          "crop_sha256": "a30a45873599b277365324b2826467921deee48c7824c78935af410a076af4bd",
+          "gt": "ꨚꨙꩉ ꨨꨶꩀ ꨆꨵꨯꨱꩃ ꨛꨯꨮ ꨇꨪꩆ ꨛꨯꨮ ꩝꩝"
+        },
+        {
+          "line": 3,
+          "script": "cham",
+          "bbox": [
+            48,
+            139,
+            274,
+            182
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_18_curved_pajai_line_03.png",
+          "crop_sha256": "35bdb6a626a489f809bf11fa55d594ce2e78c0408a77371adbb5d78d785821ec",
+          "gt": "ꨈꨣꩈ ꨚꩆ ꨨꨶꩀ ꨆꨵꨯꨱꩃ ꨝꨣꨭꨥ"
+        },
+        {
+          "line": 4,
+          "script": "cham",
+          "bbox": [
+            55,
+            180,
+            361,
+            223
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_18_curved_pajai_line_04.png",
+          "crop_sha256": "0066c08c0f952e9753f295bb383f64d605f6833066711ab48bd79a82cd93cb5e",
+          "gt": "ꨧꨯꨱꩃ ꨈꨣꩈ ꨟꩃ ꨈꨣꩈ ꩑꩘/꩙/꩑꩙꩙꩖"
+        },
+        {
+          "line": 5,
+          "script": "cham",
+          "bbox": [
+            47,
+            221,
+            291,
+            262
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_18_curved_pajai_line_05.png",
+          "crop_sha256": "c06f8f85dc1c4e4df5e365564b28dba5c0eb7562205e11efb60835a4a08b2477",
+          "gt": "ꨛꨯꨮ ꨤꩄ ꨅꨩ ꨧꨯꨱꩃ ꨢꨮ ꨗꨯꨱ ꨚꨓꨬ ꩝꩝"
+        },
+        {
+          "line": 6,
+          "script": "cham",
+          "bbox": [
+            56,
+            260,
+            293,
+            303
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_18_curved_pajai_line_06.png",
+          "crop_sha256": "536c3d36462c74e3e36116d2f0a0f36e07446d4f70bde390a20fbc550dbfd6e1",
+          "gt": "ꨇꨪꩆ ꨕꨨꨵꩀ ꨝꨵꨯꨱꩍ ꨆꨯꨱꩍ ꨟꨰ ꩝"
+        },
+        {
+          "line": 7,
+          "script": "cham",
+          "bbox": [
+            55,
+            305,
+            291,
+            348
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_18_curved_pajai_line_07.png",
+          "crop_sha256": "e61ff1a48f276c19ac1b2d80fa6a081402d9ef679db6b32a4ae3f3345d875253",
+          "gt": "꩑꩗꩕꩞ ꨄꨰ ꨨꨤꨩ ꨆꨩ ꨨꨤꨩ꩝ ꨛꨯꨮ ꩞"
+        },
+        {
+          "line": 8,
+          "script": "cham",
+          "bbox": [
+            54,
+            348,
+            332,
+            391
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_18_curved_pajai_line_08.png",
+          "crop_sha256": "3b7e2fe7d08a5d61dc73a657c2c4470db177724833519c71c4d5b137d0bf16e5",
+          "gt": "ꨕꨨꨵꩀ ꨝꨣꨭꨥ-ꨚꩆ ꨨꨤꨩ ꨟꨰ ꨛꨯꨮ ꩞"
+        },
+        {
+          "line": 9,
+          "script": "cham",
+          "bbox": [
+            59,
+            391,
+            200,
+            434
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_18_curved_pajai_line_09.png",
+          "crop_sha256": "bf9ac1085bc35ed48d37d552a8ee04f40c72b7a74f853cc5ecb3d6d5c505faa6",
+          "gt": "ꨗꨯꨱ ꨚꨓꨬ ꨝꨴꨬ ꨆꨵꨯꨱꩃ"
+        },
+        {
+          "line": 10,
+          "script": "cham",
+          "bbox": [
+            52,
+            432,
+            278,
+            475
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_18_curved_pajai_line_10.png",
+          "crop_sha256": "a8e8ff97603f632129ee771fe1c0bda733707dcde4f292eb0241362668805d5b",
+          "gt": "ꨆꨩ ꨈꨣꩈ ꨛꨯꨮ ꨓꨭꩍ ꨕꨫ ꨘꩆ ꩝"
+        },
+        {
+          "line": 11,
+          "script": "cham",
+          "bbox": [
+            44,
+            477,
+            302,
+            520
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_18_curved_pajai_line_11.png",
+          "crop_sha256": "9739aaed26ce12968860a813f7b1d9a8f388b1419e8d44d40a9268af8d58e9e7",
+          "gt": "ꨆꨵꨯꨱꩃ ꨤꨪꨔꨬ ꨨꨤꨩ ꨝꨵꨯꨱꩍ ꨈꨣꩈ ꨌꨪꩍ ꩝꩝"
+        },
+        {
+          "line": 12,
+          "script": "cham",
+          "bbox": [
+            46,
+            517,
+            328,
+            558
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_18_curved_pajai_line_12.png",
+          "crop_sha256": "10756a0fc8125b8a6154358da365882be0d3a6b7db05822603f133f4dacaaafe",
+          "gt": "ꨚꨓꨬ ꨛꨯꨮ ꨟꩀ ꨈꩆ ꨚꨓꨬ ꨨꨭꨩ ꨀꨣꩀ ꩝꩝"
+        },
+        {
+          "line": 13,
+          "script": "cham",
+          "bbox": [
+            52,
+            558,
+            262,
+            601
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_18_curved_pajai_line_13.png",
+          "crop_sha256": "e65d86eb3a1c50313ee1b666cf347294254bb9f88fd5ce21294c98f6694a4b3f",
+          "gt": "ꨓꨌꨬ ꨆꨴꨲꩍ ꨘꩆ ꨗꩌ ꨗꨫ ꨈꩆ"
+        },
+        {
+          "line": 14,
+          "script": "cham",
+          "bbox": [
+            52,
+            598,
+            334,
+            641
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_18_curved_pajai_line_14.png",
+          "crop_sha256": "c31b0348954b92983bff0789a5c8a3e8bea55bee2723580a311e317aa769171f",
+          "gt": "ꨝꨵꨯꨱꩍ ꨓꨮꩊ ꨟꨰ꩝ ꨆꨴꨲꩍ ꨘꩆ ꨚꩆ ꨈꩍ ꩞"
+        }
+      ]
+    },
+    {
+      "doc_id": "ood_v3_19_thin_camera",
+      "source_type": "ood_archival_gold_v3",
+      "archival_domain": "heldout_ultralight_book_v3",
+      "font_name": "NotoSansCham-Thin.ttf",
+      "columns": 1,
+      "wave_amp_px": 0.0,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v3/pages/ood_v3_19_thin_camera.png",
+      "page_sha256": "3f6e882b60ada71ed7e9d84f6911346d13694fca4db3e026a105b2ac89cfd9b3",
+      "line_count": 15,
+      "lines": [
+        {
+          "line": 1,
+          "script": "cham",
+          "bbox": [
+            49,
+            51,
+            497,
+            104
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_19_thin_camera_line_01.png",
+          "crop_sha256": "6e7aa4734a7bebf3cb38d9ba87753b51f41284f41e27458e8641af7060dfa0bb",
+          "gt": "꩑꩘꩒꩞ ꨌꨪꩍ ꨓꨟꨯꨱꩃ ꨆꨩ ꨨꨶꩀ ꨛꨯꨮ ꨨꨶꩀ ꨘꩆ ꩞"
+        },
+        {
+          "line": 2,
+          "script": "cham",
+          "bbox": [
+            62,
+            119,
+            234,
+            170
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_19_thin_camera_line_02.png",
+          "crop_sha256": "21dfe436181a389c850e4f7072420e5437309ec3d03f98b5193e67f19508e5d1",
+          "gt": "ꨛꨯꨮ ꨧꨩ ꨆꨵꨯꨱꩃ ꨧꨩ ꩝"
+        },
+        {
+          "line": 3,
+          "script": "cham",
+          "bbox": [
+            45,
+            180,
+            292,
+            225
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_19_thin_camera_line_03.png",
+          "crop_sha256": "49746638863436e2cf489b466853a5d6249aac2d7205101bb7137b41b4fd0316",
+          "gt": "ꨈꨣꩈ ꨈꩍ-ꨛꨯꨮ ꨨꨶꩀ꩝ ꩝"
+        },
+        {
+          "line": 4,
+          "script": "cham",
+          "bbox": [
+            52,
+            238,
+            464,
+            286
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_19_thin_camera_line_04.png",
+          "crop_sha256": "76aa46fec1a68e8b414682a3bec458274e5a0a21089248fb2c5e4c4ee7fc01cd",
+          "gt": "ꨚꩆ ꨓꨮꩊ ꨘꩆ ꨚꩆ ꨟꨐꨭꩌ ꨝꨯꨱꩍ ꨛꨯꨮ ꩞"
+        },
+        {
+          "line": 5,
+          "script": "cham",
+          "bbox": [
+            61,
+            296,
+            407,
+            349
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_19_thin_camera_line_05.png",
+          "crop_sha256": "d15ac28effb6f04d4f3b7a3dd9ccbdbd89dda21b9c6c2bd675d76318052720dc",
+          "gt": "ꨟꩃ ꨕꨫ ꨀꨳꨩ ꨆꨕꨯꨱꩍ ꨆꨵꨯꨱꩃ ꨝꨣꨭꨥ ꨆꨵꨯꨱꩃ ꩝"
+        },
+        {
+          "line": 6,
+          "script": "cham",
+          "bbox": [
+            53,
+            365,
+            349,
+            414
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_19_thin_camera_line_06.png",
+          "crop_sha256": "31c632bcb97307c0980c5cc621424602c944f71198bf96b9d801d1a77fec3229",
+          "gt": "ꨧꨩ ꨧꨯꨱꩃ ꨈꨣꩈ ꨟꩃ ꨈꨣꩈ ꩝꩝"
+        },
+        {
+          "line": 7,
+          "script": "cham",
+          "bbox": [
+            51,
+            422,
+            486,
+            470
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_19_thin_camera_line_07.png",
+          "crop_sha256": "78559ac3c72322952ddcd2b4a0bb839825961a585749d61bb2b463f1b0d0b0a1",
+          "gt": "ꨅꨩ꩝ ꨛꨯꨮ ꨟꨐꨭꩌ ꨆꨕꨯꨱꩍ ꨝꨵꨯꨱꩍ ꨈꨣꩈ ꨆꨕꨯꨱꩍ ꩝"
+        },
+        {
+          "line": 8,
+          "script": "cham",
+          "bbox": [
+            47,
+            481,
+            341,
+            527
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_19_thin_camera_line_08.png",
+          "crop_sha256": "5d50525f54a81f31c9449fc6e115a678e928f2eb237efb7ca6b3224e7c2ac769",
+          "gt": "ꨀꨳꨩ ꨘꩆ ꨛꨯꨮ ꨌꨙꨳꩀ ꨘꩆ"
+        },
+        {
+          "line": 9,
+          "script": "cham",
+          "bbox": [
+            49,
+            541,
+            520,
+            594
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_19_thin_camera_line_09.png",
+          "crop_sha256": "508acc6c1d49b8477e892dc7854ded6593ec492a3a7540218429e9f44ccdb0d7",
+          "gt": "꩑꩘꩙꩞ ꨆꨵꨯꨱꩃ ꨓꨆꨶꨯꩈ ꨨꨭꨩ ꨀꨣꩀ ꨆꨩ ꨟꨐꨭꩌ ꨛꨯꨮ ꩞"
+        },
+        {
+          "line": 10,
+          "script": "cham",
+          "bbox": [
+            57,
+            608,
+            249,
+            659
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_19_thin_camera_line_10.png",
+          "crop_sha256": "113ec4e807c4458b7e26be94219e65ac1c32dc070cbab177b95c22c5eaf26572",
+          "gt": "ꨗꩌ ꨗꨫ ꨛꨯꨮ ꨧꨩ ꨆꨵꨯꨱꩃ"
+        },
+        {
+          "line": 11,
+          "script": "cham",
+          "bbox": [
+            46,
+            667,
+            450,
+            713
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_19_thin_camera_line_11.png",
+          "crop_sha256": "e8b385b02ef8737d90972a7fa9957e06ba68aca3419a8ca7e6f52a4bfc98c8ca",
+          "gt": "ꨚꩆ ꨀꨥꨰꩅ ꨈꨣꩈ ꨀꨥꨰꩅ꩞ ꨧꨩ ꨙꩌ"
+        },
+        {
+          "line": 12,
+          "script": "cham",
+          "bbox": [
+            46,
+            727,
+            583,
+            774
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_19_thin_camera_line_12.png",
+          "crop_sha256": "e0c811407782253e949337b20a3dfdfa94e37ba47d1a823f1bf899c8da9df9b2",
+          "gt": "ꨟꨐꨭꩌ ꨗꨆꨓꨯꨮꨩ ꨕꨤꩌ ꨀꨕꩅ ꨆꨣꨬ ꨝꨶꨮꩊ ꩘/꩑꩐/꩒꩐꩐꩓ ꩝"
+        },
+        {
+          "line": 13,
+          "script": "cham",
+          "bbox": [
+            58,
+            782,
+            426,
+            836
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_19_thin_camera_line_13.png",
+          "crop_sha256": "422551f7fb9cff3281bb75cc6884b85a839b3ee92cde929a4bf33e442240d477",
+          "gt": "ꨨꨕꨯꩌ ꨚꨴꨯꨱꩃ ꨌꨪꩍ ꨞꩇ ꨝꨴꩍꨟꨪꩆ꩞ ꩝"
+        },
+        {
+          "line": 14,
+          "script": "cham",
+          "bbox": [
+            49,
+            848,
+            260,
+            895
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_19_thin_camera_line_14.png",
+          "crop_sha256": "e9ffe20a1685f32eb804b5c7e9f6b15d42f16d9b97451c5f1c2535dcec2aa5f4",
+          "gt": "ꨀꨝꨪꩍ ꨌꩌ ꨨꨭꨩ ꨔꨭꩆ ꩝"
+        },
+        {
+          "line": 15,
+          "script": "cham",
+          "bbox": [
+            61,
+            909,
+            306,
+            963
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_19_thin_camera_line_15.png",
+          "crop_sha256": "6659f26caada6d3d7ceb529c0723f686263340fe1ec0e5b2bbc123e69d1e0a9a",
+          "gt": "ꨣꨕꩀ ꨧꨯꨱꩃ ꨚꨴꨯꨱꩃ ꨕꨯꩌ ꩝꩝"
+        }
+      ]
+    },
+    {
+      "doc_id": "ood_v3_20_extralight_medium_camera",
+      "source_type": "ood_archival_gold_v3",
+      "archival_domain": "heldout_ultralight_book_v3",
+      "font_name": "NotoSansCham-ExtraLight.ttf+NotoSansCham-Medium.ttf",
+      "columns": 1,
+      "wave_amp_px": 0.0,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v3/pages/ood_v3_20_extralight_medium_camera.png",
+      "page_sha256": "1bd8078e62a5ce47b4f1306ae4fb3c9e6e34c0c1062b28dc05524397be5b8e44",
+      "line_count": 15,
+      "lines": [
+        {
+          "line": 1,
+          "script": "cham",
+          "bbox": [
+            47,
+            51,
+            446,
+            97
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_20_extralight_medium_camera_line_01.png",
+          "crop_sha256": "ea6734de3ecd22a0b9d4974b7da8d08fdfe83380ced7db8a22e1acfec47f9433",
+          "gt": "ꨝꨪꨗꨴꨪꩀ ꨀꨋꩇ ꨙꩌ ꨡꨯꩍ ꨀꨣꨰ ꨀꨕꩅ ꩝꩝"
+        },
+        {
+          "line": 2,
+          "script": "cham",
+          "bbox": [
+            54,
+            108,
+            500,
+            161
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_20_extralight_medium_camera_line_02.png",
+          "crop_sha256": "2a134f717c4331b6f310f2160b8c8c14a2173eac0e13dc9fcd350d1e7eb7c07b",
+          "gt": "꩑꩙꩖꩞ ꨀꨕꩅ ꨕꨤꩌ ꨨꨕꨳꨯꨮꩇ ꨧꨯꨱꩃ ꨚꨓꨯꨱꩌ"
+        },
+        {
+          "line": 3,
+          "script": "cham",
+          "bbox": [
+            46,
+            171,
+            403,
+            220
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_20_extralight_medium_camera_line_03.png",
+          "crop_sha256": "a8bc4b0e5f0d6d8a54a059d96b3b8ad372816dbbaa042fb0c3710b01073b27e3",
+          "gt": "ꨁꨤꨪꨟꨯꨩ꩝ ꨁꨦꨗꩃ ꨝꨶꨮꩊ ꨌꩌ꩞ ꨧꨯꨱꩃ ꨨꨭꨩ ꩝꩝"
+        },
+        {
+          "line": 4,
+          "script": "cham",
+          "bbox": [
+            62,
+            233,
+            481,
+            281
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_20_extralight_medium_camera_line_04.png",
+          "crop_sha256": "19fdb8e02da2361cb10ac94f7fcce502d7fb9513ceea2724e94eee561aedf239",
+          "gt": "ꨞꩇ ꩑꩞ ꨧꩀꨆꨣꩈ ꨀꨉꨩ ꨝꨴꩍꨟꨪꩆ ꩞"
+        },
+        {
+          "line": 5,
+          "script": "cham",
+          "bbox": [
+            49,
+            289,
+            460,
+            331
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_20_extralight_medium_camera_line_05.png",
+          "crop_sha256": "4fbd07541008e08dc4424833880cd5efd05c257f44cc18c344dea9d4a76f2615",
+          "gt": "ꨗꨆꨓꨯꨮꨩ ꨟꩃ ꨂꨣꩃ ꨓꨝꨳꩀ ꨔꨭꩆ ꨓꨟꨩ ꨝꨗꨳꨩ ꩞"
+        },
+        {
+          "line": 6,
+          "script": "cham",
+          "bbox": [
+            60,
+            348,
+            410,
+            399
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_20_extralight_medium_camera_line_06.png",
+          "crop_sha256": "45913ed1f68f2901bb746ed2c3e3bd5f5d1ff6e6fc922a725d0add5b7757a02a",
+          "gt": "ꨌꩌ꩝ ꨟꩃ-ꨕꨨꨵꨮꨭ꩝ ꨧꨯꨱꩃ ꨕꨯꩌ ꨛꨯꨩꩀ ꨣꨪꩌ ꩝꩝"
+        },
+        {
+          "line": 7,
+          "script": "cham",
+          "bbox": [
+            62,
+            409,
+            533,
+            453
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_20_extralight_medium_camera_line_07.png",
+          "crop_sha256": "508e4c54aa55b7dc428b0810fad67a42fd3dcb9b82155cb836e4db1fa923e788",
+          "gt": "ꨚꨈꨮꩌ ꨕꨘꩇ ꨢꩃ ꨨꨕꨮꩉ ꨔꨭꩆ꩝ ꨝꨪꨤꩆ ꨧꨆꨥꨪ ꩝꩝"
+        },
+        {
+          "line": 8,
+          "script": "cham",
+          "bbox": [
+            57,
+            470,
+            562,
+            523
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_20_extralight_medium_camera_line_08.png",
+          "crop_sha256": "10b69fff8f5fd3b68329c840b7d7783170cc2303f2ca72e24d062bdd44959f22",
+          "gt": "ꨧꨯꨱꩃ ꨟꨭꩀꨆꨬ꩞ ꨓꨟꨩ ꨓꨎꨭꩍ ꨌꩌ ꩑꩐ ꩔/꩑꩒/꩑꩙꩙꩖ ꩝"
+        },
+        {
+          "line": 9,
+          "script": "cham",
+          "bbox": [
+            43,
+            533,
+            336,
+            577
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_20_extralight_medium_camera_line_09.png",
+          "crop_sha256": "0bb037a0514c51afe5244815a4c2970b65f4b13aa76c0e70cda11bd27a2ce89f",
+          "gt": "ꨗꨶꨮꩄ ꨓꨶꨬ (ꨒꨮꩇ ꨧꨆꨥꨪ ꨝꨶꨮꩊ ꩞"
+        },
+        {
+          "line": 10,
+          "script": "cham",
+          "bbox": [
+            46,
+            587,
+            470,
+            634
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_20_extralight_medium_camera_line_10.png",
+          "crop_sha256": "7754f92d7983ed8fa05d6203ba9c5ad0a7323ec977377ddd98f66125e7ef57d8",
+          "gt": "꩒꩐꩓꩞ ꨝꨪꨤꩆ ꨀꨳꨩ ꨞꩇ ꨗꨪꩂ ꨧꨟꩃ ꨙꩌ"
+        },
+        {
+          "line": 11,
+          "script": "cham",
+          "bbox": [
+            45,
+            649,
+            353,
+            693
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_20_extralight_medium_camera_line_11.png",
+          "crop_sha256": "041327119712630ee544ee3e64f7ace8fc6e739c819ea0e85cfe199fedae7c35",
+          "gt": "ꨌꩌ ꨔꨶꨮꩆ ꨍꨮꩍ ꨀꨕꩅ ꨨꨣꨬ ꨌꩌ ꩞"
+        },
+        {
+          "line": 12,
+          "script": "cham",
+          "bbox": [
+            58,
+            708,
+            565,
+            756
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_20_extralight_medium_camera_line_12.png",
+          "crop_sha256": "f6ae322fa5466b5f62e7db032353be128a1fafa4f1d4ef3de1b42001b188feca",
+          "gt": "ꨣꨕꩀ ꨗꨫ꩞ ꨆꨓꨯꨮꨩ꩝ ꨝꨴꩍꨟꨪꩆ ꨈꨴꨭꩀ ꨚꩀ ꨟꨆꩊ꩝ ꩝"
+        },
+        {
+          "line": 13,
+          "script": "cham",
+          "bbox": [
+            57,
+            772,
+            280,
+            821
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_20_extralight_medium_camera_line_13.png",
+          "crop_sha256": "9cfda41144b90af3b0192e3346e9a0bcc961f6901e1887a14dda47fd72786582",
+          "gt": "ꨂꨣꩃ ꨕꨮꩃ ꨃꨥ ꨕꨯꩌ ꨌꨯꨱꩃ ꩝꩝"
+        },
+        {
+          "line": 14,
+          "script": "cham",
+          "bbox": [
+            50,
+            830,
+            416,
+            877
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_20_extralight_medium_camera_line_14.png",
+          "crop_sha256": "bd89be9c0034174a9e2269fc511ea2c43cd780c541604fb2b13ec40346bd34dd",
+          "gt": "ꨢꩃ ꨝꨪꨟꨯꩂ ꨤꨪꨆꨮꨭ ꨈꨮꩇ ꨨꨭꨩ ꨀꨕꩅ ꩝"
+        },
+        {
+          "line": 15,
+          "script": "cham",
+          "bbox": [
+            43,
+            891,
+            306,
+            933
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_20_extralight_medium_camera_line_15.png",
+          "crop_sha256": "a92ae75c9550d1c70e21ba7ce19ec12955fb548ee0f3c820be9e397fb3051061",
+          "gt": "ꨨꨎꩆ ꨧꨳꩌ-ꨨꨤꨪꩌ꩞ ꨕꨯꨱꩀ"
+        }
+      ]
+    },
+    {
+      "doc_id": "ood_v3_21_bilingual_campa_vi",
+      "source_type": "bilingual_archival_gold_v3",
+      "archival_domain": "bilingual_cham_viet_commentary_v3",
+      "font_name": "EFEO Cam Campa.otf+NotoSans-Regular.ttf",
+      "columns": 1,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v3/pages/ood_v3_21_bilingual_campa_vi.png",
+      "page_sha256": "8d4904b07e85f9c51b7ee97263c9754250b00bfcb1820c31c9af7f4c9c62a9e2",
+      "line_count": 14,
+      "lines": [
+        {
+          "line": 1,
+          "script": "cham",
+          "bbox": [
+            48,
+            49,
+            193,
+            89
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_21_bilingual_campa_vi_line_01.png",
+          "crop_sha256": "18a9bf7dcb8d30d6c0504a855782e153078b725a82a41460c82194d93c7aa835",
+          "gt": "ꨙꩌ ꨨꨭꨩ ꨓꨯꨮꩅ ꨡꨮꩃ ꩝꩝"
+        },
+        {
+          "line": 2,
+          "script": "vietnamese",
+          "bbox": [
+            64,
+            97,
+            630,
+            137
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_21_bilingual_campa_vi_line_02.png",
+          "crop_sha256": "429e95d6c5ac2007300702d86f29deea1242a27273d532fa24b6d72ae6f572ca",
+          "gt": "Bản dịch khổ thơ cổ thư Chăm vùng Panduranga thế kỷ 18"
+        },
+        {
+          "line": 3,
+          "script": "cham",
+          "bbox": [
+            48,
+            153,
+            236,
+            195
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_21_bilingual_campa_vi_line_03.png",
+          "crop_sha256": "c19f14467dd175debc6f44607bf07c3f4f1b61cb964e4e416cb72cca514ff78d",
+          "gt": "ꨆꨓꨯꨮꨩ ꨆꨓꨯꨮꨩ꩝ ꨈꨵꨮꩃ ꨚꨓꨯꨱꩌ꩝ ꩝"
+        },
+        {
+          "line": 4,
+          "script": "vietnamese",
+          "bbox": [
+            64,
+            203,
+            649,
+            242
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_21_bilingual_campa_vi_line_04.png",
+          "crop_sha256": "1a4bc95ebaf3cc451bf811e649dff9b444676685c9c5dfd1f7647cdca5efa040",
+          "gt": "Vua Po Klaong Garai cho đắp đập dẫn nước tưới ruộng đồng"
+        },
+        {
+          "line": 5,
+          "script": "cham",
+          "bbox": [
+            48,
+            258,
+            363,
+            302
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_21_bilingual_campa_vi_line_05.png",
+          "crop_sha256": "466f13653a6b976e761108118f9545b80262009b31fbf304178576a7907937e9",
+          "gt": "꩒꩑꩐꩞ ꨢꨮꨭ ꨟꨁꩆ꩝ ꨡꨯꩍ ꨁꨤꨪꨟꨯꨩ ꨌꩌ꩞ ꩝꩝"
+        },
+        {
+          "line": 6,
+          "script": "vietnamese",
+          "bbox": [
+            64,
+            310,
+            635,
+            350
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_21_bilingual_campa_vi_line_06.png",
+          "crop_sha256": "13a77b9898b9215cbd905deb99b4e97ca825d027255c42600247ce4c8fb0d242",
+          "gt": "Lễ hội Katê đầu tháng bảy lịch Chăm tại tháp cổ Phan Rang"
+        },
+        {
+          "line": 7,
+          "script": "cham",
+          "bbox": [
+            48,
+            366,
+            372,
+            406
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_21_bilingual_campa_vi_line_07.png",
+          "crop_sha256": "971712f64aba69263a6cefb145b421d775266890b12c9d9984fc4399a6edd04f",
+          "gt": "ꨟꨗꨭꩍ ꨚꨣꩆ ꩒꩞ ꨧꨯꨱꩃ ꩘/꩗/꩒꩐꩒꩖ ꩝꩝"
+        },
+        {
+          "line": 8,
+          "script": "vietnamese",
+          "bbox": [
+            64,
+            414,
+            652,
+            453
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_21_bilingual_campa_vi_line_08.png",
+          "crop_sha256": "fe79fa876d843f8b340414e926a8123de8169b5a196f412c4f34d64ee6af9373",
+          "gt": "Chữ Akhara Thrah khắc trên lá buông và chép trong giấy bản"
+        },
+        {
+          "line": 9,
+          "script": "cham",
+          "bbox": [
+            48,
+            469,
+            315,
+            509
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_21_bilingual_campa_vi_line_09.png",
+          "crop_sha256": "93db26bd7498ec3225cc395e2f5c728e5ab5a91d1858758a4b1c883ad2b2a7e0",
+          "gt": "ꨓꨭꩀ ꨤꨪꨝꨪꩀ ꨚꨣꨤꨯꨩ ꨓꨟꨩ ꨧꨆꨥꨪ ꩞"
+        },
+        {
+          "line": 10,
+          "script": "vietnamese",
+          "bbox": [
+            64,
+            517,
+            633,
+            556
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_21_bilingual_campa_vi_line_10.png",
+          "crop_sha256": "b84e89dad08784681db7d11faafb29fa3db6d96073f6906dc9d57f2b578aa5f5",
+          "gt": "Khảo dị văn bản ký hiệu 12-18 và niên đại ngày 15/08/2025"
+        },
+        {
+          "line": 11,
+          "script": "cham",
+          "bbox": [
+            48,
+            572,
+            254,
+            612
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_21_bilingual_campa_vi_line_11.png",
+          "crop_sha256": "29b1b126d65388b44a5a3ac19fa575d4b54761d175ccf33e4ea93772db9e359f",
+          "gt": "ꨣꨪꩌ ꨝꨪꨤꩆ ꨌꩌ ꩑꩐ ꨨꨣꨬ)꩞ ꩝"
+        },
+        {
+          "line": 12,
+          "script": "vietnamese",
+          "bbox": [
+            64,
+            620,
+            637,
+            660
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_21_bilingual_campa_vi_line_12.png",
+          "crop_sha256": "23783171589b06bc62c1dd6c849937d3773cdd3ccab659957e0e4f85efc575bd",
+          "gt": "Lời khuyên răn con cháu giữ gìn phong tục tổ tiên ngàn đời"
+        },
+        {
+          "line": 13,
+          "script": "cham",
+          "bbox": [
+            48,
+            676,
+            326,
+            717
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_21_bilingual_campa_vi_line_13.png",
+          "crop_sha256": "95c4f11a9bbef376f78cf6460f483e3b22992765a84775fb8e0b0b1335c94e96",
+          "gt": "(ꨗꨶꨮꩄ ꨧꨆꨥꨪ ꨗꨫ ꨀꨕꩅ ꨕꨤꩌ ꨌꩌ꩝ ꩝"
+        },
+        {
+          "line": 14,
+          "script": "vietnamese",
+          "bbox": [
+            64,
+            725,
+            629,
+            765
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_21_bilingual_campa_vi_line_14.png",
+          "crop_sha256": "5b25b2a7b1c170ca86ba04a7b9835ee2784d0518c9e7e796e763a649aaf100a7",
+          "gt": "Ghi chú ngữ âm và từ vựng tiếng Chăm cổ miền duyên hải"
+        }
+      ]
+    },
+    {
+      "doc_id": "ood_v3_22_bilingual_medium_vi",
+      "source_type": "bilingual_archival_gold_v3",
+      "archival_domain": "bilingual_cham_viet_commentary_v3",
+      "font_name": "NotoSansCham-Medium.ttf+NotoSans-Regular.ttf",
+      "columns": 1,
+      "page_relpath": "ocr-benchmark/data/realscan_gold_v3/pages/ood_v3_22_bilingual_medium_vi.png",
+      "page_sha256": "bfaf5290826abc20903a10d7897cabe70d1573b9a2e70ed4cdb60fc4cfde7eaf",
+      "line_count": 14,
+      "lines": [
+        {
+          "line": 1,
+          "script": "cham",
+          "bbox": [
+            48,
+            49,
+            331,
+            104
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_22_bilingual_medium_vi_line_01.png",
+          "crop_sha256": "fb1a9ba4484ec87543ef458dac9b3977ad037381121a17ba1e17e82dc2bcc00f",
+          "gt": "ꨘꩆ ꨚꨴꨯꨱꩃ ꨔꨭꩆ ꨨꨭꨩ ꨍꨰ"
+        },
+        {
+          "line": 2,
+          "script": "vietnamese",
+          "bbox": [
+            64,
+            112,
+            614,
+            152
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_22_bilingual_medium_vi_line_02.png",
+          "crop_sha256": "671d084f12df26535b102df747572be58cc021f4222ccdcc9867d1f71e7bc291",
+          "gt": "Đối chiếu tư liệu viện Viễn Đông Bác Cổ ký hiệu CAM-204"
+        },
+        {
+          "line": 3,
+          "script": "cham",
+          "bbox": [
+            48,
+            168,
+            439,
+            217
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_22_bilingual_medium_vi_line_03.png",
+          "crop_sha256": "8c43b3f151f62a8a5bfd4c215d14d69930d0b53aaae9d04943c838fbd58c2275",
+          "gt": "ꨂꨣꩃ ꨣꨕꩀ-ꨚꩀ ꨧꨭꨗꨪꩅ ꨝꨪꨟꨯꩂ ꩝꩝"
+        },
+        {
+          "line": 4,
+          "script": "vietnamese",
+          "bbox": [
+            64,
+            225,
+            612,
+            264
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_22_bilingual_medium_vi_line_04.png",
+          "crop_sha256": "4824af929bee6f8d7f323bd80f5b018cdf6bdde2bc95696491f22f017fe731ff",
+          "gt": "Bài ca lịch sử ghi chép nghi lễ mở cửa tháp đầu năm mới"
+        },
+        {
+          "line": 5,
+          "script": "cham",
+          "bbox": [
+            48,
+            280,
+            331,
+            330
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_22_bilingual_medium_vi_line_05.png",
+          "crop_sha256": "06eb66ebdde44fdc7208fb2e7de4221a5b9430edcbd4de15669241b0fb83bbbd",
+          "gt": "ꨣꨤꨯꨩ ꨈꨪꨗꨴꨮꩍ ꨛꨯꨮ (ꨚꨤꨬ ꩞"
+        },
+        {
+          "line": 6,
+          "script": "vietnamese",
+          "bbox": [
+            64,
+            338,
+            668,
+            378
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_22_bilingual_medium_vi_line_06.png",
+          "crop_sha256": "f466da02915cc564c9a3a1e3c6b5b7b624c2e96bfa5e7a0d5b4f3c56aff333bc",
+          "gt": "Tư liệu điền dã làng nghề dệt thổ cẩm và gốm cổ truyền thống"
+        },
+        {
+          "line": 7,
+          "script": "cham",
+          "bbox": [
+            48,
+            394,
+            423,
+            449
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_22_bilingual_medium_vi_line_07.png",
+          "crop_sha256": "14f36ef1d82660088e9f0adf489f86f7b3bb54dc97998f0afd2a6f28048a2bab",
+          "gt": "꩒꩑꩗꩞ ꨆꨵꨯꨱꩃ ꨙꨯꨩ ꨗꨴꩃ ꨝꨪꨟꨯꩂ ꨧꨯꨱꩃ ꩝"
+        },
+        {
+          "line": 8,
+          "script": "vietnamese",
+          "bbox": [
+            64,
+            457,
+            699,
+            495
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_22_bilingual_medium_vi_line_08.png",
+          "crop_sha256": "45996d2f49bb27a578c0df34530be8d1438d5b9e4a963355efc1f8a1cfc0c97d",
+          "gt": "Phiên âm đối chiếu phương ngữ Chăm Ninh Thuận và Bình Thuận"
+        },
+        {
+          "line": 9,
+          "script": "cham",
+          "bbox": [
+            48,
+            511,
+            561,
+            560
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_22_bilingual_medium_vi_line_09.png",
+          "crop_sha256": "8e3cb6c0ef4270282cd1d768e679bfdf7821671b9bd1f6d8c18b56b755ae8aef",
+          "gt": "ꨝꨪꨟꨯꩂ ꨛꨯꨮ ꨟꨖꨪꩉ ꨗꨈꩉ ꨨꨭꨩ꩝ ꨗꨪꩂ ꨀꨕꩅ ꩞"
+        },
+        {
+          "line": 10,
+          "script": "vietnamese",
+          "bbox": [
+            64,
+            568,
+            638,
+            608
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_22_bilingual_medium_vi_line_10.png",
+          "crop_sha256": "8dd49a90f64df48241cfccb80bcd54b883f87a3a6d20ec90cd0bec3d4eb762ac",
+          "gt": "Mục lục các truyền thuyết dân gian và gia phả hoàng tộc cổ"
+        },
+        {
+          "line": 11,
+          "script": "cham",
+          "bbox": [
+            48,
+            624,
+            294,
+            669
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_22_bilingual_medium_vi_line_11.png",
+          "crop_sha256": "79c0e52180d0809296eda7a34db1dab8b228804c678e435c998c58eebe6cee00",
+          "gt": "ꨛꨯꨮ (ꨞꨭꩌ ꨞꨭꩌ ꨜꨲꩄ)꩞ ꩝"
+        },
+        {
+          "line": 12,
+          "script": "vietnamese",
+          "bbox": [
+            64,
+            677,
+            677,
+            716
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_22_bilingual_medium_vi_line_12.png",
+          "crop_sha256": "58db64af7264600dc0ae60033f32150ad43ac1ad56c906aa54595762dfd78610",
+          "gt": "Chú giải cách đọc dấu nguyên âm ghép và phụ âm cuối câu thơ"
+        },
+        {
+          "line": 13,
+          "script": "cham",
+          "bbox": [
+            48,
+            732,
+            268,
+            787
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_22_bilingual_medium_vi_line_13.png",
+          "crop_sha256": "20c7ca0cdaeb356d82e4e08737a39a11e9e77582ef577e8c5276d03297c11bc2",
+          "gt": "ꨚꨴꨯꨱꩃ ꨙꩌ ꨛꨯꨩꩀ ꨢꩃ ꩝"
+        },
+        {
+          "line": 14,
+          "script": "vietnamese",
+          "bbox": [
+            64,
+            795,
+            632,
+            834
+          ],
+          "crop_relpath": "ocr-benchmark/data/realscan_gold_v3/crops/ood_v3_22_bilingual_medium_vi_line_14.png",
+          "crop_sha256": "7d0dc508bdc6d3de017702d4353b62d3ed7eec7cabb733fe330f946ffd332e91",
+          "gt": "Bản sao chụp trang thủ bút lưu trữ tại thư viện nghiên cứu"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "stage": "CHAM_DBNET_V3_POLY",
+  "timestamp": "2026-11-21T09:43:07.006924+00:00",
+  "status": "PASS",
+  "base_ckpt_sha256": "5a2cb125ed99edfb4fd5066add607c77e61ec5b0af54a12a796b8f70ced5f52d",
+  "loaded_tensors": 905,
+  "eight_batch_shrink_pos_pixels": 1405222,
+  "sample_losses": {
+    "loss": 0.81418,
+    "loss_shrink_maps": 0.46589,
+    "loss_threshold_maps": 0.25556,
+    "loss_binary_maps": 0.09273,
+    "loss_cbn": 0.0
+  },
+  "finite_grad_tensors": 597,
+  "det_metric_16vertex_self_hmean": 1.0
+}

@@ -1,0 +1,969 @@
+{
+  "title": "Cham-OCR Cham-DBNet v3 Full-Cell Curved Polygon Detector Evaluation",
+  "evaluated_at": "2026-11-21T17:29:30.523547+00:00",
+  "training_accounting": {
+    "first_batch_timestamp": "2026-11-21 11:09:16",
+    "last_batch_timestamp": "2026-11-21 12:08:13",
+    "train_loop_duration_seconds": 3537.0,
+    "train_loop_duration_minutes": 58.95,
+    "pipeline_container_overhead_seconds": 378.5,
+    "pipeline_container_overhead_minutes": 6.31,
+    "total_kernel_wall_clock_seconds": 3915.5,
+    "total_kernel_wall_clock_minutes": 65.26,
+    "epoch_1_final_loss": 0.641436,
+    "epoch_2_final_loss": 0.639289,
+    "epoch_3_final_loss": 0.633227,
+    "epoch_4_final_loss": 0.629884,
+    "epoch_5_final_loss": 0.620938,
+    "epoch_6_final_loss": 0.614901,
+    "epoch_7_final_loss": 0.581564,
+    "epoch_8_final_loss": 0.614374,
+    "epoch_9_final_loss": 0.603118,
+    "epoch_10_final_loss": 0.600364,
+    "epoch_11_final_loss": 0.60368,
+    "epoch_12_final_loss": 0.600587,
+    "epoch_13_final_loss": 0.594983,
+    "epoch_14_final_loss": 0.555625,
+    "epoch_15_final_loss": 0.572447,
+    "epoch_16_final_loss": 0.584565,
+    "epoch_17_final_loss": 0.568013,
+    "epoch_18_final_loss": 0.557825,
+    "epoch_19_final_loss": 0.574536,
+    "epoch_20_final_loss": 0.583947
+  },
+  "results": {
+    "v1_quad": {
+      "config": "v1_quad",
+      "params": {
+        "box_type": "quad",
+        "unclip": 1.6,
+        "vpad": 0.0
+      },
+      "val_120_poly_iou": {
+        "pages": 120,
+        "gt_lines": 1473,
+        "dt_lines": 1560,
+        "recall_pct": 97.08,
+        "precision_pct": 91.67,
+        "hmean_pct": 94.3,
+        "mean_iou": 0.7705
+      },
+      "val_160_poly_iou": {
+        "pages": 160,
+        "gt_lines": 1949,
+        "dt_lines": 2029,
+        "recall_pct": 98.61,
+        "precision_pct": 94.73,
+        "hmean_pct": 96.63,
+        "mean_iou": 0.7704
+      },
+      "val_v3_160_poly_iou": {
+        "pages": 160,
+        "gt_lines": 1962,
+        "dt_lines": 2221,
+        "recall_pct": 97.2,
+        "precision_pct": 85.86,
+        "hmean_pct": 91.18,
+        "mean_iou": 0.7497
+      },
+      "harum_palei_01": {
+        "gt_lines": 25,
+        "pred_lines": 25,
+        "matched_lines": 25,
+        "line_recall_pct": 100.0,
+        "matched_line_cer_pct": 3.53,
+        "e2e_doc_cer_pct": 3.43,
+        "unmatched_gt_chars": 0,
+        "unmatched_pred_chars": 0
+      },
+      "level5_and_audit": {
+        "short:5": {
+          "n": 16,
+          "lines": "62/64",
+          "pred_lines": 62,
+          "gt_lines": 64,
+          "doc_cer_pct": 16.4,
+          "matched_cer_pct": 16.82
+        },
+        "a4:5": {
+          "n": 16,
+          "lines": "240/241",
+          "pred_lines": 240,
+          "gt_lines": 241,
+          "doc_cer_pct": 12.95,
+          "matched_cer_pct": 13.15
+        },
+        "audit_18": {
+          "n": 18,
+          "lines": "134/134",
+          "pred_lines": 134,
+          "gt_lines": 134,
+          "doc_cer_pct": 11.25,
+          "matched_cer_pct": 11.65
+        }
+      },
+      "ood_12": {
+        "pages": 12,
+        "e2e_lines": "180/180",
+        "pred_lines": 180,
+        "gt_lines": 180,
+        "line_recall_pct": 100.0,
+        "e2e_doc_cer_pct": 25.58
+      },
+      "lower_levels": {
+        "short:1-4": {
+          "lines": "349/352",
+          "pred_lines": 349,
+          "gt_lines": 352,
+          "doc_cer_pct": 7.62,
+          "matched_cer_pct": 7.8
+        },
+        "a4:1-4": {
+          "lines": "1153/1153",
+          "pred_lines": 1153,
+          "gt_lines": 1153,
+          "doc_cer_pct": 6.45,
+          "matched_cer_pct": 6.56
+        }
+      },
+      "fullpage_frozen_50": {
+        "overall_recall_pct": 95.4,
+        "overall_precision_pct": 100.0,
+        "l14_recall_pct": 99.49,
+        "l5_recall_pct": 77.27,
+        "e2e_cer_pct": 14.21,
+        "lines": "228/239"
+      },
+      "seconds": 1239.1
+    },
+    "v1_poly_u1.8": {
+      "config": "v1_poly_u1.8",
+      "params": {
+        "box_type": "poly",
+        "unclip": 1.8,
+        "vpad": 0.15
+      },
+      "val_120_poly_iou": {
+        "pages": 120,
+        "gt_lines": 1473,
+        "dt_lines": 1621,
+        "recall_pct": 95.72,
+        "precision_pct": 86.98,
+        "hmean_pct": 91.14,
+        "mean_iou": 0.6945
+      },
+      "val_160_poly_iou": {
+        "pages": 160,
+        "gt_lines": 1949,
+        "dt_lines": 2055,
+        "recall_pct": 97.69,
+        "precision_pct": 92.65,
+        "hmean_pct": 95.1,
+        "mean_iou": 0.6936
+      },
+      "val_v3_160_poly_iou": {
+        "pages": 160,
+        "gt_lines": 1962,
+        "dt_lines": 2252,
+        "recall_pct": 95.26,
+        "precision_pct": 82.99,
+        "hmean_pct": 88.7,
+        "mean_iou": 0.6765
+      },
+      "harum_palei_01": {
+        "gt_lines": 25,
+        "pred_lines": 25,
+        "matched_lines": 25,
+        "line_recall_pct": 100.0,
+        "matched_line_cer_pct": 3.53,
+        "e2e_doc_cer_pct": 3.43,
+        "unmatched_gt_chars": 0,
+        "unmatched_pred_chars": 0
+      },
+      "level5_and_audit": {
+        "short:5": {
+          "n": 16,
+          "lines": "64/64",
+          "pred_lines": 64,
+          "gt_lines": 64,
+          "doc_cer_pct": 7.37,
+          "matched_cer_pct": 7.49
+        },
+        "a4:5": {
+          "n": 16,
+          "lines": "241/241",
+          "pred_lines": 241,
+          "gt_lines": 241,
+          "doc_cer_pct": 6.96,
+          "matched_cer_pct": 7.08
+        },
+        "audit_18": {
+          "n": 18,
+          "lines": "134/134",
+          "pred_lines": 134,
+          "gt_lines": 134,
+          "doc_cer_pct": 10.14,
+          "matched_cer_pct": 10.51
+        }
+      },
+      "ood_12": {
+        "pages": 12,
+        "e2e_lines": "180/180",
+        "pred_lines": 180,
+        "gt_lines": 180,
+        "line_recall_pct": 100.0,
+        "e2e_doc_cer_pct": 25.58
+      },
+      "lower_levels": {
+        "short:1-4": {
+          "lines": "349/352",
+          "pred_lines": 349,
+          "gt_lines": 352,
+          "doc_cer_pct": 7.42,
+          "matched_cer_pct": 7.59
+        },
+        "a4:1-4": {
+          "lines": "1153/1153",
+          "pred_lines": 1153,
+          "gt_lines": 1153,
+          "doc_cer_pct": 6.31,
+          "matched_cer_pct": 6.42
+        }
+      },
+      "fullpage_frozen_50": {
+        "overall_recall_pct": 99.58,
+        "overall_precision_pct": 100.0,
+        "l14_recall_pct": 99.49,
+        "l5_recall_pct": 100.0,
+        "e2e_cer_pct": 7.82,
+        "lines": "238/239"
+      },
+      "seconds": 1405.1
+    },
+    "v3_e16_poly_u3.0_vpad0.15": {
+      "config": "v3_e16_poly_u3.0_vpad0.15",
+      "params": {
+        "box_type": "poly",
+        "unclip": 3.0,
+        "vpad": 0.15
+      },
+      "val_120_poly_iou": {
+        "pages": 120,
+        "gt_lines": 1473,
+        "dt_lines": 1475,
+        "recall_pct": 99.52,
+        "precision_pct": 99.39,
+        "hmean_pct": 99.46,
+        "mean_iou": 0.8451
+      },
+      "val_160_poly_iou": {
+        "pages": 160,
+        "gt_lines": 1949,
+        "dt_lines": 1949,
+        "recall_pct": 100.0,
+        "precision_pct": 100.0,
+        "hmean_pct": 100.0,
+        "mean_iou": 0.866
+      },
+      "val_v3_160_poly_iou": {
+        "pages": 160,
+        "gt_lines": 1962,
+        "dt_lines": 1962,
+        "recall_pct": 100.0,
+        "precision_pct": 100.0,
+        "hmean_pct": 100.0,
+        "mean_iou": 0.8688
+      },
+      "harum_palei_01": {
+        "gt_lines": 25,
+        "pred_lines": 25,
+        "matched_lines": 25,
+        "line_recall_pct": 100.0,
+        "matched_line_cer_pct": 3.53,
+        "e2e_doc_cer_pct": 3.43,
+        "unmatched_gt_chars": 0,
+        "unmatched_pred_chars": 0
+      },
+      "level5_and_audit": {
+        "short:5": {
+          "n": 16,
+          "lines": "64/64",
+          "pred_lines": 64,
+          "gt_lines": 64,
+          "doc_cer_pct": 7.06,
+          "matched_cer_pct": 7.28
+        },
+        "a4:5": {
+          "n": 16,
+          "lines": "254/241",
+          "pred_lines": 254,
+          "gt_lines": 241,
+          "doc_cer_pct": 8.73,
+          "matched_cer_pct": 10.57
+        },
+        "audit_18": {
+          "n": 18,
+          "lines": "134/134",
+          "pred_lines": 134,
+          "gt_lines": 134,
+          "doc_cer_pct": 9.91,
+          "matched_cer_pct": 10.29
+        }
+      },
+      "ood_12": {
+        "pages": 12,
+        "e2e_lines": "180/180",
+        "pred_lines": 180,
+        "gt_lines": 180,
+        "line_recall_pct": 100.0,
+        "e2e_doc_cer_pct": 25.58
+      },
+      "lower_levels": {
+        "short:1-4": {
+          "lines": "349/352",
+          "pred_lines": 349,
+          "gt_lines": 352,
+          "doc_cer_pct": 7.37,
+          "matched_cer_pct": 7.54
+        },
+        "a4:1-4": {
+          "lines": "1153/1153",
+          "pred_lines": 1153,
+          "gt_lines": 1153,
+          "doc_cer_pct": 6.2,
+          "matched_cer_pct": 6.31
+        }
+      },
+      "fullpage_frozen_50": {
+        "overall_recall_pct": 99.58,
+        "overall_precision_pct": 100.0,
+        "l14_recall_pct": 99.49,
+        "l5_recall_pct": 100.0,
+        "e2e_cer_pct": 7.59,
+        "lines": "238/239"
+      },
+      "seconds": 1159.4
+    },
+    "v3_e16_poly_u3.2_vpad0.15": {
+      "config": "v3_e16_poly_u3.2_vpad0.15",
+      "params": {
+        "box_type": "poly",
+        "unclip": 3.2,
+        "vpad": 0.15
+      },
+      "val_120_poly_iou": {
+        "pages": 120,
+        "gt_lines": 1473,
+        "dt_lines": 1475,
+        "recall_pct": 99.32,
+        "precision_pct": 99.19,
+        "hmean_pct": 99.25,
+        "mean_iou": 0.8398
+      },
+      "val_160_poly_iou": {
+        "pages": 160,
+        "gt_lines": 1949,
+        "dt_lines": 1949,
+        "recall_pct": 100.0,
+        "precision_pct": 100.0,
+        "hmean_pct": 100.0,
+        "mean_iou": 0.8641
+      },
+      "val_v3_160_poly_iou": {
+        "pages": 160,
+        "gt_lines": 1962,
+        "dt_lines": 1962,
+        "recall_pct": 100.0,
+        "precision_pct": 100.0,
+        "hmean_pct": 100.0,
+        "mean_iou": 0.8712
+      },
+      "harum_palei_01": {
+        "gt_lines": 25,
+        "pred_lines": 25,
+        "matched_lines": 25,
+        "line_recall_pct": 100.0,
+        "matched_line_cer_pct": 3.53,
+        "e2e_doc_cer_pct": 3.43,
+        "unmatched_gt_chars": 0,
+        "unmatched_pred_chars": 0
+      },
+      "level5_and_audit": {
+        "short:5": {
+          "n": 16,
+          "lines": "64/64",
+          "pred_lines": 64,
+          "gt_lines": 64,
+          "doc_cer_pct": 6.75,
+          "matched_cer_pct": 6.97
+        },
+        "a4:5": {
+          "n": 16,
+          "lines": "252/241",
+          "pred_lines": 252,
+          "gt_lines": 241,
+          "doc_cer_pct": 8.38,
+          "matched_cer_pct": 9.79
+        },
+        "audit_18": {
+          "n": 18,
+          "lines": "134/134",
+          "pred_lines": 134,
+          "gt_lines": 134,
+          "doc_cer_pct": 9.91,
+          "matched_cer_pct": 10.29
+        }
+      },
+      "ood_12": {
+        "pages": 12,
+        "e2e_lines": "180/180",
+        "pred_lines": 180,
+        "gt_lines": 180,
+        "line_recall_pct": 100.0,
+        "e2e_doc_cer_pct": 25.58
+      },
+      "lower_levels": {
+        "short:1-4": {
+          "lines": "349/352",
+          "pred_lines": 349,
+          "gt_lines": 352,
+          "doc_cer_pct": 7.33,
+          "matched_cer_pct": 7.5
+        },
+        "a4:1-4": {
+          "lines": "1153/1153",
+          "pred_lines": 1153,
+          "gt_lines": 1153,
+          "doc_cer_pct": 6.15,
+          "matched_cer_pct": 6.25
+        }
+      },
+      "fullpage_frozen_50": {
+        "overall_recall_pct": 99.58,
+        "overall_precision_pct": 100.0,
+        "l14_recall_pct": 99.49,
+        "l5_recall_pct": 100.0,
+        "e2e_cer_pct": 7.39,
+        "lines": "238/239"
+      },
+      "seconds": 1151.9
+    },
+    "v3_e20_poly_u3.0_vpad0.15": {
+      "config": "v3_e20_poly_u3.0_vpad0.15",
+      "params": {
+        "box_type": "poly",
+        "unclip": 3.0,
+        "vpad": 0.15
+      },
+      "val_120_poly_iou": {
+        "pages": 120,
+        "gt_lines": 1473,
+        "dt_lines": 1474,
+        "recall_pct": 99.59,
+        "precision_pct": 99.53,
+        "hmean_pct": 99.56,
+        "mean_iou": 0.8441
+      },
+      "val_160_poly_iou": {
+        "pages": 160,
+        "gt_lines": 1949,
+        "dt_lines": 1949,
+        "recall_pct": 100.0,
+        "precision_pct": 100.0,
+        "hmean_pct": 100.0,
+        "mean_iou": 0.8649
+      },
+      "val_v3_160_poly_iou": {
+        "pages": 160,
+        "gt_lines": 1962,
+        "dt_lines": 1964,
+        "recall_pct": 100.0,
+        "precision_pct": 99.9,
+        "hmean_pct": 99.95,
+        "mean_iou": 0.8674
+      },
+      "harum_palei_01": {
+        "gt_lines": 25,
+        "pred_lines": 25,
+        "matched_lines": 25,
+        "line_recall_pct": 100.0,
+        "matched_line_cer_pct": 3.53,
+        "e2e_doc_cer_pct": 3.43,
+        "unmatched_gt_chars": 0,
+        "unmatched_pred_chars": 0
+      },
+      "level5_and_audit": {
+        "short:5": {
+          "n": 16,
+          "lines": "64/64",
+          "pred_lines": 64,
+          "gt_lines": 64,
+          "doc_cer_pct": 6.89,
+          "matched_cer_pct": 7.07
+        },
+        "a4:5": {
+          "n": 16,
+          "lines": "249/241",
+          "pred_lines": 249,
+          "gt_lines": 241,
+          "doc_cer_pct": 7.51,
+          "matched_cer_pct": 8.68
+        },
+        "audit_18": {
+          "n": 18,
+          "lines": "134/134",
+          "pred_lines": 134,
+          "gt_lines": 134,
+          "doc_cer_pct": 9.86,
+          "matched_cer_pct": 10.23
+        }
+      },
+      "ood_12": {
+        "pages": 12,
+        "e2e_lines": "180/180",
+        "pred_lines": 180,
+        "gt_lines": 180,
+        "line_recall_pct": 100.0,
+        "e2e_doc_cer_pct": 25.58
+      },
+      "lower_levels": {
+        "short:1-4": {
+          "lines": "349/352",
+          "pred_lines": 349,
+          "gt_lines": 352,
+          "doc_cer_pct": 7.38,
+          "matched_cer_pct": 7.55
+        },
+        "a4:1-4": {
+          "lines": "1153/1153",
+          "pred_lines": 1153,
+          "gt_lines": 1153,
+          "doc_cer_pct": 6.17,
+          "matched_cer_pct": 6.27
+        }
+      },
+      "fullpage_frozen_50": {
+        "overall_recall_pct": 99.58,
+        "overall_precision_pct": 100.0,
+        "l14_recall_pct": 99.49,
+        "l5_recall_pct": 100.0,
+        "e2e_cer_pct": 7.7,
+        "lines": "238/239"
+      },
+      "seconds": 1134.1
+    },
+    "v3_e20_poly_u3.2_vpad0.15": {
+      "config": "v3_e20_poly_u3.2_vpad0.15",
+      "params": {
+        "box_type": "poly",
+        "unclip": 3.2,
+        "vpad": 0.15
+      },
+      "val_120_poly_iou": {
+        "pages": 120,
+        "gt_lines": 1473,
+        "dt_lines": 1474,
+        "recall_pct": 99.32,
+        "precision_pct": 99.25,
+        "hmean_pct": 99.29,
+        "mean_iou": 0.8382
+      },
+      "val_160_poly_iou": {
+        "pages": 160,
+        "gt_lines": 1949,
+        "dt_lines": 1949,
+        "recall_pct": 100.0,
+        "precision_pct": 100.0,
+        "hmean_pct": 100.0,
+        "mean_iou": 0.8618
+      },
+      "val_v3_160_poly_iou": {
+        "pages": 160,
+        "gt_lines": 1962,
+        "dt_lines": 1964,
+        "recall_pct": 99.95,
+        "precision_pct": 99.85,
+        "hmean_pct": 99.9,
+        "mean_iou": 0.8687
+      },
+      "harum_palei_01": {
+        "gt_lines": 25,
+        "pred_lines": 25,
+        "matched_lines": 25,
+        "line_recall_pct": 100.0,
+        "matched_line_cer_pct": 3.53,
+        "e2e_doc_cer_pct": 3.43,
+        "unmatched_gt_chars": 0,
+        "unmatched_pred_chars": 0
+      },
+      "level5_and_audit": {
+        "short:5": {
+          "n": 16,
+          "lines": "64/64",
+          "pred_lines": 64,
+          "gt_lines": 64,
+          "doc_cer_pct": 6.68,
+          "matched_cer_pct": 6.9
+        },
+        "a4:5": {
+          "n": 16,
+          "lines": "248/241",
+          "pred_lines": 248,
+          "gt_lines": 241,
+          "doc_cer_pct": 7.54,
+          "matched_cer_pct": 8.33
+        },
+        "audit_18": {
+          "n": 18,
+          "lines": "134/134",
+          "pred_lines": 134,
+          "gt_lines": 134,
+          "doc_cer_pct": 9.75,
+          "matched_cer_pct": 10.12
+        }
+      },
+      "ood_12": {
+        "pages": 12,
+        "e2e_lines": "180/180",
+        "pred_lines": 180,
+        "gt_lines": 180,
+        "line_recall_pct": 100.0,
+        "e2e_doc_cer_pct": 25.58
+      },
+      "lower_levels": {
+        "short:1-4": {
+          "lines": "349/352",
+          "pred_lines": 349,
+          "gt_lines": 352,
+          "doc_cer_pct": 7.35,
+          "matched_cer_pct": 7.53
+        },
+        "a4:1-4": {
+          "lines": "1153/1153",
+          "pred_lines": 1153,
+          "gt_lines": 1153,
+          "doc_cer_pct": 6.13,
+          "matched_cer_pct": 6.23
+        }
+      },
+      "fullpage_frozen_50": {
+        "overall_recall_pct": 99.58,
+        "overall_precision_pct": 100.0,
+        "l14_recall_pct": 99.49,
+        "l5_recall_pct": 100.0,
+        "e2e_cer_pct": 7.59,
+        "lines": "238/239"
+      },
+      "seconds": 1188.6
+    },
+    "v3_soup_16_18_20_poly_u3.0_vpad0.15": {
+      "config": "v3_soup_16_18_20_poly_u3.0_vpad0.15",
+      "params": {
+        "box_type": "poly",
+        "unclip": 3.0,
+        "vpad": 0.15
+      },
+      "val_120_poly_iou": {
+        "pages": 120,
+        "gt_lines": 1473,
+        "dt_lines": 1477,
+        "recall_pct": 99.59,
+        "precision_pct": 99.32,
+        "hmean_pct": 99.46,
+        "mean_iou": 0.8442
+      },
+      "val_160_poly_iou": {
+        "pages": 160,
+        "gt_lines": 1949,
+        "dt_lines": 1949,
+        "recall_pct": 100.0,
+        "precision_pct": 100.0,
+        "hmean_pct": 100.0,
+        "mean_iou": 0.8656
+      },
+      "val_v3_160_poly_iou": {
+        "pages": 160,
+        "gt_lines": 1962,
+        "dt_lines": 1963,
+        "recall_pct": 100.0,
+        "precision_pct": 99.95,
+        "hmean_pct": 99.97,
+        "mean_iou": 0.8683
+      },
+      "harum_palei_01": {
+        "gt_lines": 25,
+        "pred_lines": 25,
+        "matched_lines": 25,
+        "line_recall_pct": 100.0,
+        "matched_line_cer_pct": 3.53,
+        "e2e_doc_cer_pct": 3.43,
+        "unmatched_gt_chars": 0,
+        "unmatched_pred_chars": 0
+      },
+      "level5_and_audit": {
+        "short:5": {
+          "n": 16,
+          "lines": "64/64",
+          "pred_lines": 64,
+          "gt_lines": 64,
+          "doc_cer_pct": 6.96,
+          "matched_cer_pct": 7.18
+        },
+        "a4:5": {
+          "n": 16,
+          "lines": "252/241",
+          "pred_lines": 252,
+          "gt_lines": 241,
+          "doc_cer_pct": 8.3,
+          "matched_cer_pct": 9.85
+        },
+        "audit_18": {
+          "n": 18,
+          "lines": "134/134",
+          "pred_lines": 134,
+          "gt_lines": 134,
+          "doc_cer_pct": 9.99,
+          "matched_cer_pct": 10.36
+        }
+      },
+      "ood_12": {
+        "pages": 12,
+        "e2e_lines": "180/180",
+        "pred_lines": 180,
+        "gt_lines": 180,
+        "line_recall_pct": 100.0,
+        "e2e_doc_cer_pct": 25.58
+      },
+      "lower_levels": {
+        "short:1-4": {
+          "lines": "349/352",
+          "pred_lines": 349,
+          "gt_lines": 352,
+          "doc_cer_pct": 7.35,
+          "matched_cer_pct": 7.53
+        },
+        "a4:1-4": {
+          "lines": "1153/1153",
+          "pred_lines": 1153,
+          "gt_lines": 1153,
+          "doc_cer_pct": 6.22,
+          "matched_cer_pct": 6.32
+        }
+      },
+      "fullpage_frozen_50": {
+        "overall_recall_pct": 99.58,
+        "overall_precision_pct": 100.0,
+        "l14_recall_pct": 99.49,
+        "l5_recall_pct": 100.0,
+        "e2e_cer_pct": 7.63,
+        "lines": "238/239"
+      },
+      "seconds": 1184.7
+    },
+    "v3_soup_16_18_20_poly_u3.2_vpad0.15": {
+      "config": "v3_soup_16_18_20_poly_u3.2_vpad0.15",
+      "params": {
+        "box_type": "poly",
+        "unclip": 3.2,
+        "vpad": 0.15
+      },
+      "val_120_poly_iou": {
+        "pages": 120,
+        "gt_lines": 1473,
+        "dt_lines": 1477,
+        "recall_pct": 99.32,
+        "precision_pct": 99.05,
+        "hmean_pct": 99.19,
+        "mean_iou": 0.8395
+      },
+      "val_160_poly_iou": {
+        "pages": 160,
+        "gt_lines": 1949,
+        "dt_lines": 1949,
+        "recall_pct": 100.0,
+        "precision_pct": 100.0,
+        "hmean_pct": 100.0,
+        "mean_iou": 0.8632
+      },
+      "val_v3_160_poly_iou": {
+        "pages": 160,
+        "gt_lines": 1962,
+        "dt_lines": 1963,
+        "recall_pct": 100.0,
+        "precision_pct": 99.95,
+        "hmean_pct": 99.97,
+        "mean_iou": 0.8702
+      },
+      "harum_palei_01": {
+        "gt_lines": 25,
+        "pred_lines": 25,
+        "matched_lines": 25,
+        "line_recall_pct": 100.0,
+        "matched_line_cer_pct": 3.53,
+        "e2e_doc_cer_pct": 3.43,
+        "unmatched_gt_chars": 0,
+        "unmatched_pred_chars": 0
+      },
+      "level5_and_audit": {
+        "short:5": {
+          "n": 16,
+          "lines": "64/64",
+          "pred_lines": 64,
+          "gt_lines": 64,
+          "doc_cer_pct": 7.27,
+          "matched_cer_pct": 7.53
+        },
+        "a4:5": {
+          "n": 16,
+          "lines": "251/241",
+          "pred_lines": 251,
+          "gt_lines": 241,
+          "doc_cer_pct": 8.04,
+          "matched_cer_pct": 9.23
+        },
+        "audit_18": {
+          "n": 18,
+          "lines": "134/134",
+          "pred_lines": 134,
+          "gt_lines": 134,
+          "doc_cer_pct": 10.06,
+          "matched_cer_pct": 10.44
+        }
+      },
+      "ood_12": {
+        "pages": 12,
+        "e2e_lines": "180/180",
+        "pred_lines": 180,
+        "gt_lines": 180,
+        "line_recall_pct": 100.0,
+        "e2e_doc_cer_pct": 25.58
+      },
+      "lower_levels": {
+        "short:1-4": {
+          "lines": "349/352",
+          "pred_lines": 349,
+          "gt_lines": 352,
+          "doc_cer_pct": 7.37,
+          "matched_cer_pct": 7.54
+        },
+        "a4:1-4": {
+          "lines": "1153/1153",
+          "pred_lines": 1153,
+          "gt_lines": 1153,
+          "doc_cer_pct": 6.14,
+          "matched_cer_pct": 6.24
+        }
+      },
+      "fullpage_frozen_50": {
+        "overall_recall_pct": 99.58,
+        "overall_precision_pct": 100.0,
+        "l14_recall_pct": 99.49,
+        "l5_recall_pct": 100.0,
+        "e2e_cer_pct": 7.42,
+        "lines": "238/239"
+      },
+      "seconds": 1164.2
+    }
+  },
+  "decisions": {
+    "v3_e16_poly_u3.0_vpad0.15": {
+      "guards": {
+        "passes_7_quad_gates": true,
+        "short5_exact_64_lines": true,
+        "a4_5_exact_241_lines": false,
+        "a4_1_4_exact_1153_lines": true,
+        "a4_1_4_non_regression": true,
+        "short_1_4_non_regression": true,
+        "fp50_recall_ge_99_5": true,
+        "fp50_e2e_beats_or_ties_v1_poly": true,
+        "beats_v1_poly_on_l5_audit_sum": false
+      },
+      "l5_audit_sum": 25.7,
+      "v1_poly_sum": 24.47,
+      "qualifies": false
+    },
+    "v3_e16_poly_u3.2_vpad0.15": {
+      "guards": {
+        "passes_7_quad_gates": true,
+        "short5_exact_64_lines": true,
+        "a4_5_exact_241_lines": false,
+        "a4_1_4_exact_1153_lines": true,
+        "a4_1_4_non_regression": true,
+        "short_1_4_non_regression": true,
+        "fp50_recall_ge_99_5": true,
+        "fp50_e2e_beats_or_ties_v1_poly": true,
+        "beats_v1_poly_on_l5_audit_sum": false
+      },
+      "l5_audit_sum": 25.04,
+      "v1_poly_sum": 24.47,
+      "qualifies": false
+    },
+    "v3_e20_poly_u3.0_vpad0.15": {
+      "guards": {
+        "passes_7_quad_gates": true,
+        "short5_exact_64_lines": true,
+        "a4_5_exact_241_lines": false,
+        "a4_1_4_exact_1153_lines": true,
+        "a4_1_4_non_regression": true,
+        "short_1_4_non_regression": true,
+        "fp50_recall_ge_99_5": true,
+        "fp50_e2e_beats_or_ties_v1_poly": true,
+        "beats_v1_poly_on_l5_audit_sum": true
+      },
+      "l5_audit_sum": 24.26,
+      "v1_poly_sum": 24.47,
+      "qualifies": false
+    },
+    "v3_e20_poly_u3.2_vpad0.15": {
+      "guards": {
+        "passes_7_quad_gates": true,
+        "short5_exact_64_lines": true,
+        "a4_5_exact_241_lines": false,
+        "a4_1_4_exact_1153_lines": true,
+        "a4_1_4_non_regression": true,
+        "short_1_4_non_regression": true,
+        "fp50_recall_ge_99_5": true,
+        "fp50_e2e_beats_or_ties_v1_poly": true,
+        "beats_v1_poly_on_l5_audit_sum": true
+      },
+      "l5_audit_sum": 23.97,
+      "v1_poly_sum": 24.47,
+      "qualifies": false
+    },
+    "v3_soup_16_18_20_poly_u3.0_vpad0.15": {
+      "guards": {
+        "passes_7_quad_gates": true,
+        "short5_exact_64_lines": true,
+        "a4_5_exact_241_lines": false,
+        "a4_1_4_exact_1153_lines": true,
+        "a4_1_4_non_regression": true,
+        "short_1_4_non_regression": true,
+        "fp50_recall_ge_99_5": true,
+        "fp50_e2e_beats_or_ties_v1_poly": true,
+        "beats_v1_poly_on_l5_audit_sum": false
+      },
+      "l5_audit_sum": 25.25,
+      "v1_poly_sum": 24.47,
+      "qualifies": false
+    },
+    "v3_soup_16_18_20_poly_u3.2_vpad0.15": {
+      "guards": {
+        "passes_7_quad_gates": true,
+        "short5_exact_64_lines": true,
+        "a4_5_exact_241_lines": false,
+        "a4_1_4_exact_1153_lines": true,
+        "a4_1_4_non_regression": true,
+        "short_1_4_non_regression": true,
+        "fp50_recall_ge_99_5": true,
+        "fp50_e2e_beats_or_ties_v1_poly": true,
+        "beats_v1_poly_on_l5_audit_sum": false
+      },
+      "l5_audit_sum": 25.37,
+      "v1_poly_sum": 24.47,
+      "qualifies": false
+    }
+  },
+  "winner": null,
+  "promoted": false,
+  "active_studio_det_sha256_16": "cfc65a686ecaa5fd"
+}

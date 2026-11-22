@@ -1,0 +1,35 @@
+{
+  "title": "Cham-OCR V26.1 Masked-SVTR W=480 Dataset (Early-Backbone Frozen + Paleographic Calligraphic/Elastic Augmentation)",
+  "generated_at": "2026-11-21T09:37:08.486637+00:00",
+  "duration_sec": 519.02,
+  "out_dir": "ocr-training/data/cham_synthetic_v26_1",
+  "train_samples": 64000,
+  "val_samples": 6400,
+  "step_each_epoch_dual_t4_bs32": 1000,
+  "unique_image_sha256_count": 70400,
+  "fresh_train_by_stream": {
+    "stream_a_stanza_danda": 6144,
+    "stream_b_minimal_multitier": 6144,
+    "stream_c_gate_closure": 5120,
+    "stream_d_paleographic_optical_blank": 3072
+  },
+  "fresh_val_by_stream": {
+    "stream_a_stanza_danda": 614,
+    "stream_b_minimal_multitier": 614,
+    "stream_c_gate_closure": 512,
+    "stream_d_paleographic_optical_blank": 308
+  },
+  "hard_example_counts": {
+    "train_paleographic_calligraphic_folio": 5801,
+    "train_double_danda": 2290,
+    "train_au_vs_o_pairs": 6356,
+    "train_multitier_aa33_i_bindu": 1579,
+    "train_single_asterisk": 1347
+  },
+  "distinct_stanza_numerals_1_to_999_covered": 999,
+  "fresh_train_val_text_overlap": 0,
+  "benchmark_exact_contamination": 0,
+  "dict_token_coverage": "114/114",
+  "train_label_sha256": "190186d95528118fa2b679b1a5e74ed29be4f6f13ba8983911c5f1f07cbae787",
+  "val_label_sha256": "e5d15d772e7a67305a79fb542f35b57109b942fb9798b93961e037aadb04bdd9"
+}

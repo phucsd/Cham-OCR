@@ -15,657 +15,44 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
 
-    <style>
-        :root {
-            --bg-page: #FBF8F3;
-            --bg-surface: #FFFFFF;
-            --bg-surface-elevated: #F5EFE6;
-            --bg-subtle: #F2EBE0;
-            --border-color: #E8DFD1;
-            --border-strong: #D5C8B4;
-            --text-primary: #2D2926;
-            --text-secondary: #6B6257;
-            --text-muted: #8F8577;
-            --accent-primary: #C96442;
-            --accent-hover: #B25232;
-            --accent-subtle: #F7EAE3;
-            --accent-green: #2E7D32;
-            --accent-green-bg: #E8F5E9;
-            --accent-blue: #1565C0;
-            --accent-blue-bg: #E3F2FD;
-            --font-sans: 'Google Sans Flex', 'Google Sans', system-ui, -apple-system, sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
-            --font-cham: 'Noto Sans Cham', 'Google Sans Flex', sans-serif;
-            --shadow-sm: 0 1px 3px rgba(45, 41, 38, 0.05);
-            --shadow-md: 0 4px 12px rgba(45, 41, 38, 0.08);
-            --radius-sm: 6px;
-            --radius-md: 10px;
-            --radius-lg: 14px;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 85px;
-        }
-
-        section[id], h2[id], h3[id], [id] {
-            scroll-margin-top: 85px;
-        }
-
-        body {
-            font-family: var(--font-sans);
-            background-color: var(--bg-page);
-            color: var(--text-primary);
-            line-height: 1.72;
-            font-size: 15.5px;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Top Header Navigation Bar */
-        .top-navbar {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(251, 248, 243, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
-            padding: 12px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: var(--text-primary);
-            font-weight: 700;
-            font-size: 16px;
-        }
-
-        .nav-brand svg {
-            color: var(--accent-primary);
-        }
-
-        .nav-actions {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .nav-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
-            font-size: 13.5px;
-            font-weight: 600;
-            border-radius: var(--radius-sm);
-            text-decoration: none;
-            transition: all 0.15s ease;
-            cursor: pointer;
-            border: 1px solid var(--border-color);
-            background: var(--bg-surface);
-            color: var(--text-primary);
-        }
-
-        .nav-btn:hover {
-            background: var(--bg-subtle);
-            border-color: var(--border-strong);
-            color: var(--accent-primary);
-        }
-
-        .nav-btn-primary {
-            background: var(--accent-primary);
-            border-color: var(--accent-primary);
-            color: #FFFFFF;
-        }
-
-        .nav-btn-primary:hover {
-            background: var(--accent-hover);
-            color: #FFFFFF;
-        }
-
-        /* Page Layout */
-        .page-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 40px 24px 80px;
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 48px;
-            align-items: start;
-        }
-
-        /* Sidebar Navigation */
-        .sidebar {
-            position: sticky;
-            top: 76px;
-            max-height: calc(100vh - 96px);
-            overflow-y: auto;
-            padding: 16px;
-            background: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .toc-title {
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .toc-list {
-            list-style: none;
-        }
-
-        .toc-item {
-            margin-bottom: 4px;
-        }
-
-        .toc-link {
-            display: block;
-            padding: 6px 10px;
-            font-size: 13px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            border-radius: var(--radius-sm);
-            transition: all 0.15s ease;
-            line-height: 1.4;
-        }
-
-        .toc-link:hover {
-            background: var(--bg-subtle);
-            color: var(--accent-primary);
-        }
-
-        .toc-link.active {
-            background: var(--accent-subtle);
-            color: var(--accent-primary);
-            font-weight: 600;
-        }
-
-        .toc-sublist {
-            list-style: none;
-            padding-left: 14px;
-            margin-top: 2px;
-        }
-
-        .toc-sublink {
-            display: block;
-            padding: 4px 8px;
-            font-size: 12px;
-            color: var(--text-muted);
-            text-decoration: none;
-            border-radius: var(--radius-sm);
-            transition: all 0.15s ease;
-        }
-
-        .toc-sublink:hover {
-            color: var(--accent-primary);
-        }
-
-        /* Article Main Content */
-        .article-main {
-            background: var(--bg-surface);
-            padding: 48px 56px;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-sm);
-            min-width: 0;
-        }
-
-        /* Header / Meta */
-        .paper-tag-strip {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-bottom: 16px;
-        }
-
-        .tag-pill {
-            font-size: 11.5px;
-            font-weight: 600;
-            padding: 3px 10px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .tag-pill-accent {
-            background: var(--accent-subtle);
-            color: var(--accent-primary);
-        }
-
-        .tag-pill-green {
-            background: var(--accent-green-bg);
-            color: var(--accent-green);
-        }
-
-        .tag-pill-blue {
-            background: var(--accent-blue-bg);
-            color: var(--accent-blue);
-        }
-
-        .paper-title {
-            font-size: 30px;
-            font-weight: 700;
-            line-height: 1.25;
-            color: var(--text-primary);
-            margin-bottom: 18px;
-            letter-spacing: -0.4px;
-        }
-
-        .author-box {
-            padding: 16px 20px;
-            background: var(--bg-page);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            margin-bottom: 28px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .author-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .author-name {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .author-affiliation {
-            font-size: 13.5px;
-            color: var(--text-secondary);
-        }
-
-        .author-meta {
-            display: flex;
-            gap: 16px;
-            font-size: 12.5px;
-            color: var(--text-muted);
-        }
-
-        /* Abstract Box */
-        .abstract-box {
-            padding: 22px 26px;
-            background: var(--bg-subtle);
-            border-left: 4px solid var(--accent-primary);
-            border-radius: 0 var(--radius-md) var(--radius-md) 0;
-            margin-bottom: 36px;
-        }
-
-        .abstract-title {
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: var(--accent-primary);
-            margin-bottom: 8px;
-        }
-
-        .abstract-text {
-            font-size: 14.5px;
-            color: var(--text-primary);
-            line-height: 1.68;
-            text-align: justify;
-        }
-
-        .keywords-strip {
-            margin-top: 12px;
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        .keywords-strip strong {
-            color: var(--text-primary);
-        }
-
-        /* Section Headings */
-        h2 {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin: 44px 0 16px;
-            padding-bottom: 8px;
-            border-bottom: 1.5px solid var(--border-color);
-            letter-spacing: -0.3px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        h3 {
-            font-size: 17px;
-            font-weight: 600;
-            color: var(--accent-primary);
-            margin: 28px 0 12px;
-        }
-
-        h4 {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin: 20px 0 8px;
-        }
-
-        p {
-            margin-bottom: 16px;
-            color: var(--text-primary);
-            text-align: justify;
-        }
-
-        ul, ol {
-            margin: 0 0 18px 24px;
-            color: var(--text-primary);
-        }
-
-        li {
-            margin-bottom: 6px;
-        }
-
-        /* Cham Font Inline / Blocks */
-        .cham-script {
-            font-family: var(--font-cham);
-            font-size: 1.15em;
-            color: var(--accent-primary);
-            background: var(--bg-page);
-            padding: 1px 6px;
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
-            display: inline-block;
-        }
-
-        /* Scientific Callouts & Alerts */
-        .academic-callout {
-            padding: 16px 20px;
-            margin: 20px 0;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-            background: var(--bg-page);
-        }
-
-        .callout-title {
-            font-weight: 700;
-            font-size: 13.5px;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .callout-info {
-            background: #F4F8FC;
-            border-color: #D2E3F7;
-            color: #0C4A6E;
-        }
-        .callout-info .callout-title { color: #0284C7; }
-
-        .callout-warning {
-            background: #FEF7EE;
-            border-color: #F8DFC0;
-            color: #7C2D12;
-        }
-        .callout-warning .callout-title { color: #EA580C; }
-
-        .callout-success {
-            background: #F0FDF4;
-            border-color: #BBF7D0;
-            color: #14532D;
-        }
-        .callout-success .callout-title { color: #16A34A; }
-
-        /* Tables */
-        .table-responsive {
-            overflow-x: auto;
-            margin: 22px 0;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-sm);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13.5px;
-            text-align: left;
-            background: var(--bg-surface);
-        }
-
-        th {
-            background: var(--bg-subtle);
-            color: var(--text-primary);
-            font-weight: 700;
-            padding: 10px 14px;
-            border-bottom: 2px solid var(--border-strong);
-            white-space: nowrap;
-        }
-
-        td {
-            padding: 10px 14px;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-primary);
-        }
-
-        tr:nth-child(even) td {
-            background: rgba(251, 248, 243, 0.4);
-        }
-
-        tr:hover td {
-            background: var(--bg-subtle);
-        }
-
-        .num {
-            font-family: var(--font-mono);
-            font-size: 13px;
-            text-align: right;
-        }
-
-        th.num {
-            text-align: right;
-        }
-
-        .metric-badge {
-            font-family: var(--font-mono);
-            font-weight: 600;
-            padding: 2px 7px;
-            border-radius: 4px;
-            font-size: 12px;
-        }
-
-        .metric-good {
-            background: var(--accent-green-bg);
-            color: var(--accent-green);
-        }
-
-        .metric-warn {
-            background: #FEF3C7;
-            color: #92400E;
-        }
-
-        .metric-bad {
-            background: #FEE2E2;
-            color: #991B1B;
-        }
-
-        /* Mathematical Display */
-        .math-block {
-            margin: 18px 0;
-            padding: 14px 20px;
-            background: var(--bg-page);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            overflow-x: auto;
-            text-align: center;
-        }
-
-        /* Code Blocks */
-        .code-box {
-            font-family: var(--font-mono);
-            font-size: 13px;
-            background: #23201D;
-            color: #E6E1DC;
-            padding: 16px 20px;
-            border-radius: var(--radius-md);
-            overflow-x: auto;
-            margin: 18px 0;
-            line-height: 1.6;
-            border: 1px solid #3A3530;
-            position: relative;
-        }
-
-        .code-box pre {
-            margin: 0;
-            font-family: inherit;
-        }
-
-        .code-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-            padding-bottom: 6px;
-            border-bottom: 1px solid #3A3530;
-            font-size: 11.5px;
-            color: #9C948B;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .copy-btn {
-            background: #3A3530;
-            color: #E6E1DC;
-            border: none;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-
-        .copy-btn:hover {
-            background: var(--accent-primary);
-            color: #FFFFFF;
-        }
-
-        /* References Section */
-        .ref-item {
-            margin-bottom: 12px;
-            padding-left: 28px;
-            text-indent: -28px;
-            font-size: 13.5px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .ref-item a {
-            color: var(--accent-primary);
-            text-decoration: none;
-            word-break: break-all;
-        }
-
-        .ref-item a:hover {
-            text-decoration: underline;
-        }
-
-        /* Footer */
-        .paper-footer {
-            margin-top: 60px;
-            padding-top: 24px;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        /* Responsive */
-        @media (max-width: 960px) {
-            .page-container {
-                grid-template-columns: 1fr;
-                gap: 24px;
-                padding: 20px 16px;
-            }
-            .sidebar {
-                display: none;
-            }
-            .article-main {
-                padding: 24px 20px;
-            }
-            .paper-title {
-                font-size: 24px;
-            }
-        }
-
-        @media print {
-            .top-navbar, .sidebar, .nav-actions, .copy-btn {
-                display: none !important;
-            }
-            .page-container {
-                grid-template-columns: 1fr;
-                padding: 0;
-            }
-            .article-main {
-                border: none;
-                box-shadow: none;
-                padding: 0;
-            }
-            body {
-                background: #FFF;
-                color: #000;
-                font-size: 12pt;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/static/css/research.css">
 </head>
 <body>
 
-    <!-- Top Sticky Header -->
+    <!-- Top Reading Progress Indicator -->
+    <div class="reading-progress-track" aria-hidden="true">
+        <div class="reading-progress-bar" id="reading-progress-bar"></div>
+    </div>
+
+    <!-- Unified Top Sticky Navigation Bar -->
     <header class="top-navbar">
-        <a href="/" class="nav-brand">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-                <line x1="16" y1="13" x2="8" y2="13"></line>
-                <line x1="16" y1="17" x2="8" y2="17"></line>
-                <polyline points="10 9 9 9 8 9"></polyline>
-            </svg>
-            <span>Cham OCR Technical Report</span>
+        <a href="/" class="nav-brand" title="Return to Cham OCR Studio Workbench">
+            <span class="nav-emblem" aria-hidden="true">ꨌ</span>
+            <span class="nav-brand-titles">
+                <span class="nav-brand-main">Cham-OCR Technical Report</span>
+                <span class="nav-brand-sub">Paleographic Deep-Learning Pipeline &amp; Workbench</span>
+            </span>
         </a>
         <div class="nav-actions">
+            <button type="button" class="nav-btn mobile-toc-btn" onclick="toggleMobileToc()">
+                <span>☰ Contents</span>
+            </button>
             <a href="/" class="nav-btn">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                <span>Back to OCR Studio</span>
+                <span>Launch OCR Workbench</span>
+            </a>
+            <a href="/help" class="nav-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <span>User Guide</span>
+            </a>
+            <a href="#sec9" class="nav-btn">
+                <span>Cite BibTeX</span>
             </a>
             <a href="https://github.com/phucsd/Cham-OCR" target="_blank" rel="noopener noreferrer" class="nav-btn">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                <span>GitHub Repo</span>
+                <span>GitHub</span>
             </a>
-            <button class="nav-btn nav-btn-primary" onclick="window.print()">
+            <button type="button" class="nav-btn nav-btn-primary" onclick="window.print()">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                 <span>Print / Save PDF</span>
             </button>
@@ -674,16 +61,19 @@
 
     <div class="page-container">
         
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-            <div class="toc-title">Table of Contents</div>
+        <!-- Searchable Sticky Sidebar Navigation -->
+        <aside class="sidebar" id="paper-sidebar" aria-label="Table of Contents">
+            <div class="toc-header-row">
+                <span class="toc-title">Table of Contents</span>
+            </div>
+            <input type="search" class="toc-filter-input" placeholder="Filter sections..." oninput="filterTocSections(this.value)">
             <ul class="toc-list">
                 <li class="toc-item"><a href="#abstract" class="toc-link active">Abstract</a></li>
                 <li class="toc-item">
-                    <a href="#sec1" class="toc-link">1. Introduction & Paleography</a>
+                    <a href="#sec1" class="toc-link">1. Introduction &amp; Paleography</a>
                     <ul class="toc-sublist">
                         <li><a href="#sec1-1" class="toc-sublink">1.1 Historical Script Typology</a></li>
-                        <li><a href="#sec1-2" class="toc-sublink">1.2 Abugida Orthography & Glyphs</a></li>
+                        <li><a href="#sec1-2" class="toc-sublink">1.2 Abugida Orthography &amp; Glyphs</a></li>
                         <li><a href="#sec1-3" class="toc-sublink">1.3 Logical vs Visual Unicode</a></li>
                     </ul>
                 </li>
@@ -691,13 +81,13 @@
                     <a href="#sec2" class="toc-link">2. Related Work</a>
                     <ul class="toc-sublist">
                         <li><a href="#sec2-1" class="toc-sublink">2.1 Epigraphic Glyph Recognition</a></li>
-                        <li><a href="#sec2-2" class="toc-sublink">2.2 Deep Learning & Transliteration</a></li>
+                        <li><a href="#sec2-2" class="toc-sublink">2.2 Deep Learning &amp; Transliteration</a></li>
                         <li><a href="#sec2-3" class="toc-sublink">2.3 Manuscript Preservation</a></li>
                         <li><a href="#sec2-4" class="toc-sublink">2.4 System Positioning</a></li>
                     </ul>
                 </li>
                 <li class="toc-item">
-                    <a href="#sec3" class="toc-link">3. Detection & Line Segmentation</a>
+                    <a href="#sec3" class="toc-link">3. Detection &amp; Line Segmentation</a>
                     <ul class="toc-sublist">
                         <li><a href="#sec3-1" class="toc-sublink">3.1 Diacritic Collision Problem</a></li>
                         <li><a href="#sec3-2" class="toc-sublink">3.2 Cham-DBNet Architecture</a></li>
@@ -708,7 +98,7 @@
                     <a href="#sec4" class="toc-link">4. Recognition Architecture</a>
                     <ul class="toc-sublist">
                         <li><a href="#sec4-1" class="toc-sublink">4.1 SVTR-LCNet Backbone</a></li>
-                        <li><a href="#sec4-2" class="toc-sublink">4.2 Joint CTC & Attention Loss</a></li>
+                        <li><a href="#sec4-2" class="toc-sublink">4.2 Joint CTC &amp; Attention Loss</a></li>
                         <li><a href="#sec4-3" class="toc-sublink">4.3 Canonical Normalization</a></li>
                     </ul>
                 </li>
@@ -716,7 +106,7 @@
                     <a href="#sec5" class="toc-link">5. Synthetic Generation Pipeline</a>
                     <ul class="toc-sublist">
                         <li><a href="#sec5-1" class="toc-sublink">5.1 Data Scarcity Bottleneck</a></li>
-                        <li><a href="#sec5-2" class="toc-sublink">5.2 Dataset Partitioning & Dual Generators</a></li>
+                        <li><a href="#sec5-2" class="toc-sublink">5.2 Dataset Partitioning &amp; Dual Generators</a></li>
                         <li><a href="#sec5-3" class="toc-sublink">5.3 cmap Glyph Tofu Safeguard</a></li>
                         <li><a href="#sec5-4" class="toc-sublink">5.4 In-RAM Augmentations</a></li>
                     </ul>
@@ -730,22 +120,24 @@
                         <li><a href="#sec6-4" class="toc-sublink">6.4 Multi-GPU Hardware Scaling</a></li>
                         <li><a href="#sec6-5" class="toc-sublink">6.5 V24.1 Pure-Cham &amp; RealScan-Gold v2</a></li>
                         <li><a href="#sec6-6" class="toc-sublink">6.6 Cham-DBNet Poly &amp; V26 Masked-SVTR</a></li>
+                        <li><a href="#sec6-7" class="toc-sublink">6.7 V26.1 Promoted, DBNet v3 &amp; RealScan-Gold v3</a></li>
                     </ul>
                 </li>
                 <li class="toc-item">
-                    <a href="#sec7" class="toc-link">7. Production Serving</a>
+                    <a href="#sec7" class="toc-link">7. Production Serving &amp; Workbench</a>
                     <ul class="toc-sublist">
                         <li><a href="#sec7-1" class="toc-sublink">7.1 Microservice Architecture</a></li>
-                        <li><a href="#sec7-2" class="toc-sublink">7.2 Concurrency & NumPy 2.x</a></li>
+                        <li><a href="#sec7-2" class="toc-sublink">7.2 Concurrency &amp; NumPy 2.x</a></li>
+                        <li><a href="#sec7-3" class="toc-sublink">7.3 Multi-Pane Paleographic Workbench</a></li>
                     </ul>
                 </li>
                 <li class="toc-item">
-                    <a href="#sec8" class="toc-link">8. Limitations & Open Challenges</a>
+                    <a href="#sec8" class="toc-link">8. Limitations &amp; Open Challenges</a>
                     <ul class="toc-sublist">
-                        <li><a href="#sec8-5" class="toc-sublink">8.5 Completed V26 &amp; V26.1 Roadmap</a></li>
+                        <li><a href="#sec8-5" class="toc-sublink">8.5 Completed V26.1 &amp; Open Roadmap</a></li>
                     </ul>
                 </li>
-                <li class="toc-item"><a href="#sec9" class="toc-link">9. Citation & References</a></li>
+                <li class="toc-item"><a href="#sec9" class="toc-link">9. Citation &amp; References</a></li>
             </ul>
         </aside>
 
@@ -768,10 +160,34 @@
                     <span class="author-affiliation">Independent Researcher and Software Developer, Vietnam — Cham-OCR Project</span>
                 </div>
                 <div class="author-meta">
-                    <span><strong>Published:</strong> September 2026</span>
-                    <span><strong>Code & Weights:</strong> <a href="https://github.com/phucsd/Cham-OCR" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); font-weight: 600;">GitHub phucsd/Cham-OCR</a></span>
-                    <span><strong>Live Service:</strong> <a href="https://ocr.cham.asia" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); font-weight: 600;">ocr.cham.asia</a></span>
+                    <span><strong>Updated:</strong> November 2026</span>
+                    <span><strong>Repository:</strong> <a href="https://github.com/phucsd/Cham-OCR" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); font-weight: 600;">github.com/phucsd/Cham-OCR</a></span>
+                    <span><strong>Production Workbench:</strong> <a href="https://ocr.cham.asia" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); font-weight: 600;">ocr.cham.asia</a></span>
                     <span><strong>Contact:</strong> <a href="mailto:phucsd@gmail.com" style="color: var(--accent-primary); font-weight: 600;">phucsd@gmail.com</a></span>
+                </div>
+            </div>
+
+            <!-- Empirical Highlights Strip -->
+            <div class="kpi-highlights-grid" aria-label="Empirical Benchmark Highlights">
+                <div class="kpi-card">
+                    <span class="kpi-value">0.72% CER</span>
+                    <span class="kpi-label">V25 Bilingual SOTA</span>
+                    <span class="kpi-sub">90.96% Seq Acc on 10K frozen val (40 epochs, Dual T4x2)</span>
+                </div>
+                <div class="kpi-card">
+                    <span class="kpi-value">2.55% CER</span>
+                    <span class="kpi-label">V24.1-R4.1 Pure-Cham</span>
+                    <span class="kpi-sub">Wide-canvas W=480 WiSE-FT real-camera evaluation</span>
+                </div>
+                <div class="kpi-card">
+                    <span class="kpi-value">100.0%</span>
+                    <span class="kpi-label">Cham-DBNet Poly Recall</span>
+                    <span class="kpi-sub">Curved ribbon rectification across Stress Tiers L1–L5</span>
+                </div>
+                <div class="kpi-card">
+                    <span class="kpi-value">6 / 6 Gates</span>
+                    <span class="kpi-label">V26 Masked-SVTR</span>
+                    <span class="kpi-sub">30-epoch padding-masked SVTR on Frozen-838 suite</span>
                 </div>
             </div>
 
@@ -1788,8 +1204,161 @@
                     </table>
                 </div>
                 <p style="margin-top: 12px;">
-                    Although <code>V26-Full</code> cleared <strong>6/6 Frozen-838 Gates</strong> and outperformed production on <code>OOD-12 E2E Doc CER</code> (24.96% vs 25.58%, <code>heldout_camera_book</code> 7.98% vs 9.37%, <code>efeo_palm_leaf_agal</code> E2E 26.20% vs 28.86%), 30 unfrozen epochs shifted <code>efeo_regional_folio</code> crop CER from 43.0% &rarr; 47.77%, putting overall OOD-180 Crop CER at 27.89%&ndash;27.92% (&gt; 26.65% ceiling). A 5-point in-basin WiSE-FT sweep back toward 6-epoch <code>V26-Masked</code> encountered a linear interpolation barrier (4/6 gates), confirming 30k steps leave the shallow fine-tune basin. Strictly adhering to unrelaxed gate integrity, <code>v24_1_r4</code> (<code>85525b0ca091acaf</code>) remains production default while <code>V26-Full</code> serves as the verified staging benchmark for <code>V26.1</code>.
+                    Although <code>V26-Full</code> cleared <strong>6/6 Frozen-838 Gates</strong> and outperformed production on <code>OOD-12 E2E Doc CER</code> (24.96% vs 25.58%, <code>heldout_camera_book</code> 7.98% vs 9.37%, <code>efeo_palm_leaf_agal</code> E2E 26.20% vs 28.86%), 30 unfrozen epochs shifted <code>efeo_regional_folio</code> crop CER from 43.0% &rarr; 47.77%, putting overall OOD-180 Crop CER at 27.89%&ndash;27.92% (&gt; 26.65% ceiling). A 5-point in-basin WiSE-FT sweep back toward 6-epoch <code>V26-Masked</code> encountered a linear interpolation barrier (4/6 gates), confirming 30k steps leave the shallow fine-tune basin. Strictly adhering to unrelaxed gate integrity, <code>v24_1_r4</code> (<code>85525b0ca091acaf</code>) remained production default until <code>V26.1</code> resolved this early-backbone connectivity barrier below.
                 </p>
+
+                <h3 id="sec6-7">6.7 V26.1 Frozen-Backbone Masked-SVTR (6/6 Gates, Promoted), Cham-DBNet v3, Auto Router v2.1 &amp; RealScan-Gold v3</h3>
+                <p>
+                    <strong>1. V26.1 Early-Backbone Frozen + BN-Locked Masked-SVTR (Promoted Live as <code>v24_1_r4</code> <code>1deee5f5ff351070</code>):</strong> Initializing from <code>v26_1_base</code> (<code>0.5*E3 + 0.5*E4</code> of <code>V26-Masked</code>), we froze <code>backbone.conv1..blocks3</code> and locked their <code>BatchNorm2D</code> running statistics in <code>eval()</code> mode (<code>Global.freeze_bn_in_frozen_prefixes: true</code>) across 16 epochs on Kaggle Dual T4x2 (Stage 1 E1&ndash;8: 6,194.0s Train Loop / 238.63s Overhead / 6,432.63s Wall-clock; Stage 2 E9&ndash;16: 6,256.0s / 251.81s / 6,507.81s; <strong>cumulative 12,450.0s / 207.50m Train Loop, 490.44s Overhead, 12,940.44s Wall-clock</strong>) over 64,000 train / 6,400 val bundled-<code>NotoSansCham</code> lines including 5,801 calligraphic shear, bamboo-pen anisotropy, and elastic baseline-jitter lines (0% benchmark overlap). Preserving 100% linear mode connectivity eliminated <code>V26-Full</code>&rsquo;s 4/6 barrier: <strong>all six</strong> in-basin <code>WiSE-FT</code> blends passed <strong>6/6 Frozen-838 Release Gates</strong> AND <strong>9/9 RealScan-Gold v2 Promotion Checks</strong>, with winner <code>wise_s2_a65</code> (<code>1deee5f5ff351070</code>, <code>T* = 0.8831</code>, OOS ECE 0.0165 &rarr; <strong>0.0039</strong>) beating both <code>V24.1-R4.1</code> and <code>V24.1-R3.1</code> across every unseen archival domain (<code>efeo_palm_leaf_agal</code> 23.67% E2E, <code>efeo_regional_folio</code> 40.14% E2E, <code>heldout_camera_book</code> 7.32% E2E):
+                </p>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Model Candidate</th>
+                                <th class="num">Clean CER</th>
+                                <th class="num">Char CER</th>
+                                <th class="num">14 Symbols</th>
+                                <th class="num">Hyphen Acc</th>
+                                <th class="num">FullPage CER</th>
+                                <th class="num">Stress-82</th>
+                                <th class="num">Harum Crop</th>
+                                <th class="num">OOD-180 Crop</th>
+                                <th class="num">OOD-12 E2E</th>
+                                <th class="num">Gates (Promo)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>V24.1-R4.1 (Prior 85525b0c)</strong></td>
+                                <td class="num">5.28%</td>
+                                <td class="num">2.64%</td>
+                                <td class="num">99.29%</td>
+                                <td class="num">95.71%</td>
+                                <td class="num">7.39%</td>
+                                <td class="num">6.93%</td>
+                                <td class="num">2.55%</td>
+                                <td class="num">26.35%</td>
+                                <td class="num">25.58% (180/180)</td>
+                                <td class="num">5/6</td>
+                            </tr>
+                            <tr>
+                                <td><strong>V26.1 S2 E15 (Masked)</strong></td>
+                                <td class="num"><strong>4.86%</strong></td>
+                                <td class="num"><strong>1.77%</strong></td>
+                                <td class="num"><span class="metric-badge metric-good">100.0%</span></td>
+                                <td class="num"><span class="metric-badge metric-good">98.57%</span></td>
+                                <td class="num">6.46%</td>
+                                <td class="num">2.71%</td>
+                                <td class="num">2.19%</td>
+                                <td class="num">28.30%</td>
+                                <td class="num">25.05% (180/180)</td>
+                                <td class="num"><strong>6/6</strong> (False)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>V26.1 wise_inbasin_a50 (S1)</strong></td>
+                                <td class="num">4.90%</td>
+                                <td class="num">2.08%</td>
+                                <td class="num"><span class="metric-badge metric-good">100.0%</span></td>
+                                <td class="num">97.14%</td>
+                                <td class="num">6.55%</td>
+                                <td class="num">3.36%</td>
+                                <td class="num">2.55%</td>
+                                <td class="num">25.80%</td>
+                                <td class="num">23.20% (180/180)</td>
+                                <td class="num"><strong>6/6</strong> (PASS 9/9)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>V26.1 wise_s2_a65 (Promoted 1deee5f5)</strong></td>
+                                <td class="num">5.10%</td>
+                                <td class="num">1.92%</td>
+                                <td class="num"><span class="metric-badge metric-good">100.0%</span></td>
+                                <td class="num"><span class="metric-badge metric-good">98.57%</span></td>
+                                <td class="num"><span class="metric-badge metric-good">6.32%</span></td>
+                                <td class="num">2.73%</td>
+                                <td class="num"><span class="metric-badge metric-good">2.07%</span></td>
+                                <td class="num"><span class="metric-badge metric-good">25.20%</span></td>
+                                <td class="num"><span class="metric-badge metric-good">22.65% (180/180)</span></td>
+                                <td class="num"><strong>6/6 (WINNER)</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>V26.1 wise_s2_a80 (S2)</strong></td>
+                                <td class="num">5.02%</td>
+                                <td class="num">1.85%</td>
+                                <td class="num"><span class="metric-badge metric-good">100.0%</span></td>
+                                <td class="num"><span class="metric-badge metric-good">98.57%</span></td>
+                                <td class="num"><span class="metric-badge metric-good">6.32%</span></td>
+                                <td class="num"><span class="metric-badge metric-good">2.63%</span></td>
+                                <td class="num">2.19%</td>
+                                <td class="num">25.92%</td>
+                                <td class="num">22.95% (180/180)</td>
+                                <td class="num"><strong>6/6</strong> (PASS 9/9)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p style="margin-top: 12px;">
+                    <strong>2. Cham-DBNet v3 Curved-Polygon Fine-Tuning &amp; Inverse-Shrink Geometry:</strong> Fine-tuning 20 epochs on Kaggle Dual T4x2 (<strong>3,537.0s Train Loop</strong>, 378.5s Overhead, <strong>3,915.5s Wall-clock</strong>) on 1,400 train / 160 val full-cell 16-vertex curved ribbon polygons revealed that <code>MakeShrinkMap(shrink_ratio=0.4)</code> contracts textlines of height \(H\) to kernel height \(h_k \approx 0.16 H\), requiring analytical inverse expansion <code>unclip=3.2</code> rather than 1.8. At <code>unclip=3.2</code>, <code>Cham-DBNet v3</code> cleared <strong>8/9 strict detector guards</strong> (<code>Val-160</code> poly-IoU 95.1% &rarr; <strong>100.0%</strong>, <code>short:5</code> 7.37% &rarr; <strong>6.68%</strong>, <code>audit_18</code> 10.14% &rarr; <strong>9.75%</strong>, <code>a4:1-4</code> 6.31% &rarr; <strong>6.13%</strong>, <code>FullPage-50</code> 7.82% &rarr; <strong>7.59%</strong>), while strictly holding <code>promoted=False</code> (retaining <code>v1_poly_u1.8</code> <code>cfc65a686ecaa5fd</code> active) because <code>shrink_ratio=0.4</code> eroded an isolated 28px single-glyph line on <code>a4:5</code> (248/241 vs 241/241), establishing <code>shrink_ratio=0.6</code> for <code>v3.1</code>.
+                </p>
+                <p>
+                    <strong>3. Tri-Specialist <code>auto</code> Router v2.1 &amp; <code>RealScan-Gold v3</code> (434 SHA-256-Locked Items):</strong> Expanding our zero-contamination cross-domain benchmark to <strong>RealScan-Gold v3</strong> (<code>harum_palei_01</code> 25 lines + 7 Wikimedia specimens + 76 multiscript crops + 20 pure-Cham OOD pages / 298 lines covering <strong>12/12 EFEO fonts</strong>, <strong>6/6 Held-Out weights</strong>, and curved palm-leaf <em>agal</em> + 2 bilingual Cham&ndash;Vietnamese commentary pages / 28 lines), our upgraded <code>AutoRoutingOCRWrapper</code> v2.1 (<code>V26.1 W=480</code> + <code>V24.1-R3.1 W=320</code> adjudicator + MIT-compatible multi-threaded <code>PP-OCRv5-vi</code>) preserves <strong>6/6 Frozen-838 Gates</strong>, cuts Bilingual E2E CER from 64.53% &rarr; <strong>6.58%</strong>, and maintains <strong>5.56s/page</strong> mean CPU latency (&lt; 15s budget):
+                </p>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Model (RealScan-Gold v3)</th>
+                                <th class="num">Harum Crop / E2E</th>
+                                <th class="num">OOD-v2 (12pg) Crop / E2E</th>
+                                <th class="num">OOD-v3 New (8pg) Crop / E2E</th>
+                                <th class="num">All 20 OOD Pages Crop / E2E</th>
+                                <th class="num">Bilingual Cham&ndash;Viet Crop / E2E</th>
+                                <th class="num">CPU Mean / Max</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>v24 (Logical Baseline)</strong></td>
+                                <td class="num">6.33% / 6.15%</td>
+                                <td class="num">32.60% / 32.08%</td>
+                                <td class="num">36.14% / 33.11%</td>
+                                <td class="num">34.06% / 32.49%</td>
+                                <td class="num">66.61% / 64.79% (28/28)</td>
+                                <td class="num">2.96s / 6.94s</td>
+                            </tr>
+                            <tr>
+                                <td><strong>v24_1_r3_1 (W=320 Specialist)</strong></td>
+                                <td class="num">4.74% / 5.08%</td>
+                                <td class="num">25.15% / 24.24%</td>
+                                <td class="num"><span class="metric-badge metric-good">27.95% / 26.11%</span></td>
+                                <td class="num"><strong>26.31%</strong> / 24.98%</td>
+                                <td class="num">63.29% / 71.71% (28/28)</td>
+                                <td class="num"><strong>2.92s / 5.85s</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>v24_1_r4 (V26.1 Default 1deee5f5)</strong></td>
+                                <td class="num"><span class="metric-badge metric-good">2.19% / 2.96%</span></td>
+                                <td class="num">25.25% / <strong>22.42%</strong></td>
+                                <td class="num">30.80% / 26.18%</td>
+                                <td class="num">27.54% / <span class="metric-badge metric-good">23.91%</span></td>
+                                <td class="num">66.17% / 64.53% (28/28)</td>
+                                <td class="num">3.32s / 6.07s</td>
+                            </tr>
+                            <tr>
+                                <td><strong>auto (Tri-Specialist Router v2.1)</strong></td>
+                                <td class="num"><span class="metric-badge metric-good">2.19% / 2.96%</span></td>
+                                <td class="num"><span class="metric-badge metric-good">24.55%</span> / 22.46%</td>
+                                <td class="num">31.55% / 27.76%</td>
+                                <td class="num">27.44% / 24.56%</td>
+                                <td class="num"><span class="metric-badge metric-good">6.64% / 6.58% (28/28)</span></td>
+                                <td class="num">5.56s / 15.10s</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </section>
 
             <!-- SECTION 7 -->
@@ -1827,6 +1396,17 @@ if not hasattr(np, 'typeDict'): np.typeDict = {}</code></pre>
                         </div>
                     </li>
                 </ul>
+
+                <h3 id="sec7-3">7.3 Interactive Multi-Pane Paleographic Workbench (<code>ocr.cham.asia</code>)</h3>
+                <p>
+                    To bridge automated neural transcription with human-in-the-loop scholarly verification, <code>https://ocr.cham.asia</code> provides a modular, zero-dependency browser workbench engineered around a warm parchment visual system (<code>DESIGN.md</code>):
+                </p>
+                <ul>
+                    <li><strong>Adaptive 4-Mode Resizable Split Architecture</strong>: Scholars switch seamlessly between a <em>3-Pane Resizable Workbench</em>, <em>Side-by-Side 2-Pane Compare</em>, a <em>Stacked Horizontal–Vertical Layout</em> tailored for elongated palm-leaf (<em>agal</em>) manuscripts, and a distraction-free <em>Focus Reader</em>, driven by a keyboard-accessible Command Palette (<code>Ctrl+K</code>).</li>
+                    <li><strong>Multi-File, Multi-Page PDF &amp; Batch Queue Engine</strong>: Supports client-side high-DPI PDF folio rasterization, multi-image drag-and-drop, curated archival specimen loading, status filtering (<code>Needs review</code>, <code>OCR done</code>, <code>Verified</code>, <code>No text</code>), and sequential batch transcription with live progress telemetry.</li>
+                    <li><strong>Polygonal Canvas Inspection &amp; Linguistic Tooling</strong>: Renders curved <code>Cham-DBNet</code> SVG ribbons alongside core-band bounding boxes with interactive corner resizing, single-line re-OCR (<code>/ocr_crop</code>), optical contrast/inversion filters, a 2.6&times; paleographic magnifier loupe, stanza/paragraph flow reconstruction (<code>paragraph_flow.py</code>), live Romanized transliteration, and a Unicode <code>U+AA00</code>–<code>U+AA5F</code> cluster inspector.</li>
+                    <li><strong>Archival &amp; Active Learning Export Suite</strong>: Exports single folios or multi-page corpora to canonical Unicode plaintext, Markdown reports, PRImA <code>PAGE-XML</code> (Transkribus / eScriptorium compatible), <code>RealScan-Gold</code> JSON, and ready-to-train active-learning <code>.zip</code> archives bundling cropped PNG strips with tab-delimited labels.</li>
+                </ul>
             </section>
 
             <!-- SECTION 8 -->
@@ -1842,14 +1422,14 @@ if not hasattr(np, 'typeDict'): np.typeDict = {}</code></pre>
                     <li><strong>Extreme Interlinear Overlap (Level 5)</strong>: When severe paper wrinkling causes interlinear wave amplitude to exceed line spacing (\(\text{Amplitude} > \text{Gap}\)), 1D projection and horizontal bounding boxes collapse, indicating the need for 2D polygonal baseline tracking models in future iterations.</li>
                 </ul>
 
-                <h3 id="sec8-5">8.5 Completed V24.1 &amp; V26 Milestones + V26.1 / RealScan-Gold v3 Roadmap</h3>
+                <h3 id="sec8-5">8.5 Completed V26.1 Production Promotion, RealScan-Gold v3 &amp; Open Roadmap</h3>
                 <p>
-                    Following Model Version 25 (90.96% Sequence Accuracy, 0.72% CER on frozen 10K validation), the vocabulary-isolated <strong>V24.1-R4.1 WiSE-FT</strong> wide-canvas model (<code>85525b0ca091acaf</code>, 2.55% real-camera CER), live deployment of <strong><code>Cham-DBNet v1_poly_u1.8</code></strong> (<code>FullPage-Frozen 50</code> 14.43% &rarr; 7.99% E2E, 100.0% Level-5 recall), and 30-epoch <strong><code>V26-Full</code> Padding-Masked SVTR</strong> (6/6 Frozen-838 Gates, 1.42% Char CER, 2.41% Stress-82 CER, 1.46% Harum CER, 24.96% OOD-12 E2E), remaining priorities tracked in <a href="https://github.com/phucsd/Cham-OCR/blob/main/FUTURE_WORK.md" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); font-weight: 600;">FUTURE_WORK.md</a> are:
+                    Following Model Version 25 (90.96% Sequence Accuracy, 0.72% CER on frozen 10K validation), live deployment of <strong><code>Cham-DBNet v1_poly_u1.8</code></strong> (<code>FullPage-Frozen 50</code> 14.43% &rarr; 7.99% E2E, 100.0% Level-5 recall), automatic promotion of 16-epoch <strong><code>V26.1</code> Frozen-Backbone Masked-SVTR</strong> (<code>wise_s2_a65</code> as <code>v24_1_r4</code> <code>1deee5f5ff351070</code>: <strong>6/6 Frozen-838 Gates + 9/9 RealScan-Gold v2 Checks</strong>, 100.0% 14 Symbols, 2.07% Harum Crop / 2.96% E2E, 25.20% OOD-180 Crop, <strong>22.65% OOD-12 E2E Doc CER</strong>, <code>T* = 0.8831</code>), <strong>Tri-Specialist <code>auto</code> Router v2.1</strong> (6/6 Gates, 6.58% Bilingual E2E, 5.56s mean CPU), and <strong><code>RealScan-Gold v3</code></strong> (434 SHA-256-locked items covering 12/12 EFEO + 6/6 Held-Out weights), remaining priorities tracked in <a href="https://github.com/phucsd/Cham-OCR/blob/main/FUTURE_WORK.md" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); font-weight: 600;">FUTURE_WORK.md</a> are:
                 </p>
                 <ol style="margin-bottom: 1.5rem; line-height: 1.7; color: var(--text-secondary);">
-                    <li><strong>Curved Baseline Poly Detector Fine-Tuning (<code>Cham-DBNet v3</code>)</strong>: Jointly fine-tuning DBNet regression heads under 16-vertex polygonal curvature targets beyond the deployed inference-time <code>v1_poly_u1.8</code> rectification.</li>
-                    <li><strong>OOD Regional Paleographic Regularization (<code>V26.1</code> Masked-SVTR)</strong>: Injecting synthetic regional calligraphic diversity and early-backbone regularization inside the 6/6-Gate <code>use_valid_mask=True</code> <code>W=480</code> architecture so OOD-180 Crop CER drops below 26.35% for automatic production promotion.</li>
-                    <li><strong>Dual-Script Composite Rendering &amp; Field Manuscript Active Learning (<code>RealScan-Gold v3</code>)</strong>: Expanding verified palm-leaf (<em>agal</em>) and regional manuscript benchmarks via human-in-the-loop Studio exports (<code>scripts/ingest_studio_to_realscan_gold.py</code>) to close the ~43%&ndash;44% paleographic gap on unseen historical regional hands.</li>
+                    <li><strong><code>Cham-DBNet v3.1</code> (<code>shrink_ratio = 0.6</code> Single-Glyph Preservation)</strong>: Raising <code>MakeShrinkMap(shrink_ratio)</code> from 0.4 to 0.6 (<code>unclip = 2.0..2.2</code>) so <code>Cham-DBNet v3</code>&rsquo;s 100.0% Val-160 poly-IoU and 9.75% <code>audit_18</code> gains also preserve 28px single-glyph lines on <code>a4:5</code> (9/9 strict guards).</li>
+                    <li><strong>Physical Palm-Leaf (<em>Agal</em>) &amp; Kertas Field Corpus Expansion</strong>: Collaborative ingestion of expert-verified manuscript photographs via <code>scripts/ingest_studio_to_realscan_gold.py --version v3</code> to narrow the remaining paleographic gap on regional scribal hands.</li>
+                    <li><strong>Western Cham (<em>Cam Srak</em>) &amp; Stone Rubbing Epigraphy</strong>: Extending character dictionaries, sequence language priors, and topological degradations beyond Unicode Eastern Cham (<em>Akhar Thrah</em>).</li>
                 </ol>
             </section>
 
@@ -1864,7 +1444,7 @@ if not hasattr(np, 'typeDict'): np.typeDict = {}</code></pre>
                 <div class="code-box">
                     <div class="code-header">
                         <span>BibTeX Citation</span>
-                        <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('bibtex-code').innerText)">Copy BibTeX</button>
+                        <button type="button" class="copy-btn" onclick="copyBibtexCitation()">Copy BibTeX</button>
                     </div>
 <pre id="bibtex-code"><code>@software{cham_ocr_pipeline,
   author = {Nguyen, Phuc H.},
@@ -1925,64 +1505,7 @@ if not hasattr(np, 'typeDict'): np.typeDict = {}</code></pre>
 
     </div>
 
-    <!-- Active Table of Contents ScrollSpy & Anchor Offset Script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const links = document.querySelectorAll('.toc-link, .toc-sublink');
-            const sections = [];
-            const NAV_OFFSET = 85; // 58px navbar + 27px breathing margin
-            
-            links.forEach(link => {
-                const href = link.getAttribute('href');
-                if (href && href.startsWith('#')) {
-                    const target = document.querySelector(href);
-                    if (target) {
-                        sections.push({ link, target });
-
-                        link.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            const targetTop = target.getBoundingClientRect().top + window.pageYOffset - NAV_OFFSET;
-                            window.scrollTo({
-                                top: targetTop,
-                                behavior: 'smooth'
-                            });
-                            history.pushState(null, null, href);
-                        });
-                    }
-                }
-            });
-
-            // Handle direct page load with hash in URL
-            if (window.location.hash) {
-                setTimeout(() => {
-                    const target = document.querySelector(window.location.hash);
-                    if (target) {
-                        const targetTop = target.getBoundingClientRect().top + window.pageYOffset - NAV_OFFSET;
-                        window.scrollTo({
-                            top: targetTop,
-                            behavior: 'smooth'
-                        });
-                    }
-                }, 150);
-            }
-
-            // ScrollSpy
-            function onScroll() {
-                const scrollPos = window.scrollY + 120;
-                for (let i = sections.length - 1; i >= 0; i--) {
-                    const sec = sections[i];
-                    const elementTop = sec.target.getBoundingClientRect().top + window.pageYOffset;
-                    if (elementTop <= scrollPos) {
-                        links.forEach(l => l.classList.remove('active'));
-                        sec.link.classList.add('active');
-                        break;
-                    }
-                }
-            }
-
-            window.addEventListener('scroll', onScroll, { passive: true });
-            onScroll();
-        });
-    </script>
+    <!-- Synchronized Research Navigation & Reading Progress Script -->
+    <script src="/static/js/research.js"></script>
 </body>
 </html>

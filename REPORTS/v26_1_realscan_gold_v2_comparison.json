@@ -1,0 +1,734 @@
+{
+  "title": "Cham-OCR RealScan-Gold v2 & OOD-Archival-Gold v2 Evaluation",
+  "evaluated_at": "2026-11-22T01:13:41.343516+00:00",
+  "manifest_summary": {
+    "real_camera_pages": 1,
+    "real_camera_lines": 25,
+    "wikimedia_external_specimens": 7,
+    "ood_archival_pages": 12,
+    "ood_archival_lines": 180,
+    "total_evaluated_lines": 212
+  },
+  "models": {
+    "prod_active": {
+      "harum_palei_01_crops": {
+        "n_lines": 25,
+        "norm_cer_pct": 2.55,
+        "wer_pct": 8.56,
+        "exact_lines": "12/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 35.24,
+        "wer_pct": 51.85,
+        "exact_lines": "2/7"
+      },
+      "ood_archival_overall": {
+        "n_lines": 180,
+        "norm_cer_pct": 26.35,
+        "wer_pct": 57.1,
+        "exact_lines": "17/180",
+        "e2e_lines": "180/180",
+        "e2e_doc_cer_pct": 25.58
+      },
+      "ood_by_domain": {
+        "efeo_palm_leaf_agal": {
+          "crop_cer_pct": 30.04,
+          "crop_wer_pct": 64.36,
+          "exact_lines": "1/58",
+          "e2e_lines": "58/58",
+          "e2e_doc_cer_pct": 28.86
+        },
+        "efeo_regional_folio": {
+          "crop_cer_pct": 43.0,
+          "crop_wer_pct": 84.49,
+          "exact_lines": "0/62",
+          "e2e_lines": "62/62",
+          "e2e_doc_cer_pct": 43.77
+        },
+        "heldout_camera_book": {
+          "crop_cer_pct": 9.37,
+          "crop_wer_pct": 26.42,
+          "exact_lines": "16/60",
+          "e2e_lines": "60/60",
+          "e2e_doc_cer_pct": 7.57
+        }
+      }
+    },
+    "epoch_4": {
+      "harum_palei_01_crops": {
+        "n_lines": 25,
+        "norm_cer_pct": 2.31,
+        "wer_pct": 6.95,
+        "exact_lines": "16/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 34.29,
+        "wer_pct": 70.37,
+        "exact_lines": "2/7"
+      },
+      "ood_archival_overall": {
+        "n_lines": 180,
+        "norm_cer_pct": 27.7,
+        "wer_pct": 59.17,
+        "exact_lines": "18/180",
+        "e2e_lines": "180/180",
+        "e2e_doc_cer_pct": 25.33
+      },
+      "ood_by_domain": {
+        "efeo_palm_leaf_agal": {
+          "crop_cer_pct": 32.17,
+          "crop_wer_pct": 67.29,
+          "exact_lines": "0/58",
+          "e2e_lines": "58/58",
+          "e2e_doc_cer_pct": 27.43
+        },
+        "efeo_regional_folio": {
+          "crop_cer_pct": 45.02,
+          "crop_wer_pct": 85.13,
+          "exact_lines": "0/62",
+          "e2e_lines": "62/62",
+          "e2e_doc_cer_pct": 44.47
+        },
+        "heldout_camera_book": {
+          "crop_cer_pct": 9.43,
+          "crop_wer_pct": 28.84,
+          "exact_lines": "18/60",
+          "e2e_lines": "60/60",
+          "e2e_doc_cer_pct": 7.63
+        }
+      }
+    },
+    "epoch_6": {
+      "harum_palei_01_crops": {
+        "n_lines": 25,
+        "norm_cer_pct": 2.31,
+        "wer_pct": 8.02,
+        "exact_lines": "16/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 40.0,
+        "wer_pct": 75.93,
+        "exact_lines": "2/7"
+      },
+      "ood_archival_overall": {
+        "n_lines": 180,
+        "norm_cer_pct": 28.06,
+        "wer_pct": 58.04,
+        "exact_lines": "17/180",
+        "e2e_lines": "180/180",
+        "e2e_doc_cer_pct": 25.08
+      },
+      "ood_by_domain": {
+        "efeo_palm_leaf_agal": {
+          "crop_cer_pct": 31.46,
+          "crop_wer_pct": 62.5,
+          "exact_lines": "0/58",
+          "e2e_lines": "58/58",
+          "e2e_doc_cer_pct": 26.88
+        },
+        "efeo_regional_folio": {
+          "crop_cer_pct": 46.56,
+          "crop_wer_pct": 87.97,
+          "exact_lines": "0/62",
+          "e2e_lines": "62/62",
+          "e2e_doc_cer_pct": 44.16
+        },
+        "heldout_camera_book": {
+          "crop_cer_pct": 9.83,
+          "crop_wer_pct": 28.03,
+          "exact_lines": "17/60",
+          "e2e_lines": "60/60",
+          "e2e_doc_cer_pct": 7.7
+        }
+      }
+    },
+    "epoch_8": {
+      "harum_palei_01_crops": {
+        "n_lines": 25,
+        "norm_cer_pct": 2.55,
+        "wer_pct": 8.56,
+        "exact_lines": "15/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 37.14,
+        "wer_pct": 72.22,
+        "exact_lines": "2/7"
+      },
+      "ood_archival_overall": {
+        "n_lines": 180,
+        "norm_cer_pct": 28.4,
+        "wer_pct": 57.48,
+        "exact_lines": "20/180",
+        "e2e_lines": "180/180",
+        "e2e_doc_cer_pct": 25.01
+      },
+      "ood_by_domain": {
+        "efeo_palm_leaf_agal": {
+          "crop_cer_pct": 31.96,
+          "crop_wer_pct": 62.77,
+          "exact_lines": "1/58",
+          "e2e_lines": "58/58",
+          "e2e_doc_cer_pct": 26.54
+        },
+        "efeo_regional_folio": {
+          "crop_cer_pct": 48.26,
+          "crop_wer_pct": 88.61,
+          "exact_lines": "0/62",
+          "e2e_lines": "62/62",
+          "e2e_doc_cer_pct": 44.86
+        },
+        "heldout_camera_book": {
+          "crop_cer_pct": 8.91,
+          "crop_wer_pct": 25.61,
+          "exact_lines": "19/60",
+          "e2e_lines": "60/60",
+          "e2e_doc_cer_pct": 7.25
+        }
+      }
+    },
+    "epoch_12": {
+      "harum_palei_01_crops": {
+        "n_lines": 25,
+        "norm_cer_pct": 2.31,
+        "wer_pct": 8.02,
+        "exact_lines": "15/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 37.14,
+        "wer_pct": 70.37,
+        "exact_lines": "2/7"
+      },
+      "ood_archival_overall": {
+        "n_lines": 180,
+        "norm_cer_pct": 28.13,
+        "wer_pct": 57.2,
+        "exact_lines": "20/180",
+        "e2e_lines": "180/180",
+        "e2e_doc_cer_pct": 25.08
+      },
+      "ood_by_domain": {
+        "efeo_palm_leaf_agal": {
+          "crop_cer_pct": 31.82,
+          "crop_wer_pct": 62.77,
+          "exact_lines": "1/58",
+          "e2e_lines": "58/58",
+          "e2e_doc_cer_pct": 26.27
+        },
+        "efeo_regional_folio": {
+          "crop_cer_pct": 47.85,
+          "crop_wer_pct": 87.66,
+          "exact_lines": "0/62",
+          "e2e_lines": "62/62",
+          "e2e_doc_cer_pct": 45.01
+        },
+        "heldout_camera_book": {
+          "crop_cer_pct": 8.64,
+          "crop_wer_pct": 25.61,
+          "exact_lines": "19/60",
+          "e2e_lines": "60/60",
+          "e2e_doc_cer_pct": 7.57
+        }
+      }
+    },
+    "epoch_14": {
+      "harum_palei_01_crops": {
+        "n_lines": 25,
+        "norm_cer_pct": 2.19,
+        "wer_pct": 7.49,
+        "exact_lines": "16/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 37.14,
+        "wer_pct": 70.37,
+        "exact_lines": "2/7"
+      },
+      "ood_archival_overall": {
+        "n_lines": 180,
+        "norm_cer_pct": 28.4,
+        "wer_pct": 57.48,
+        "exact_lines": "19/180",
+        "e2e_lines": "180/180",
+        "e2e_doc_cer_pct": 25.44
+      },
+      "ood_by_domain": {
+        "efeo_palm_leaf_agal": {
+          "crop_cer_pct": 31.25,
+          "crop_wer_pct": 62.5,
+          "exact_lines": "1/58",
+          "e2e_lines": "58/58",
+          "e2e_doc_cer_pct": 26.95
+        },
+        "efeo_regional_folio": {
+          "crop_cer_pct": 49.23,
+          "crop_wer_pct": 88.61,
+          "exact_lines": "0/62",
+          "e2e_lines": "62/62",
+          "e2e_doc_cer_pct": 45.86
+        },
+        "heldout_camera_book": {
+          "crop_cer_pct": 8.77,
+          "crop_wer_pct": 25.88,
+          "exact_lines": "18/60",
+          "e2e_lines": "60/60",
+          "e2e_doc_cer_pct": 7.25
+        }
+      }
+    },
+    "epoch_15": {
+      "harum_palei_01_crops": {
+        "n_lines": 25,
+        "norm_cer_pct": 2.19,
+        "wer_pct": 7.49,
+        "exact_lines": "16/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 37.14,
+        "wer_pct": 72.22,
+        "exact_lines": "2/7"
+      },
+      "ood_archival_overall": {
+        "n_lines": 180,
+        "norm_cer_pct": 28.3,
+        "wer_pct": 57.57,
+        "exact_lines": "18/180",
+        "e2e_lines": "180/180",
+        "e2e_doc_cer_pct": 25.05
+      },
+      "ood_by_domain": {
+        "efeo_palm_leaf_agal": {
+          "crop_cer_pct": 31.32,
+          "crop_wer_pct": 62.77,
+          "exact_lines": "1/58",
+          "e2e_lines": "58/58",
+          "e2e_doc_cer_pct": 26.33
+        },
+        "efeo_regional_folio": {
+          "crop_cer_pct": 48.83,
+          "crop_wer_pct": 88.61,
+          "exact_lines": "0/62",
+          "e2e_lines": "62/62",
+          "e2e_doc_cer_pct": 45.24
+        },
+        "heldout_camera_book": {
+          "crop_cer_pct": 8.77,
+          "crop_wer_pct": 25.88,
+          "exact_lines": "17/60",
+          "e2e_lines": "60/60",
+          "e2e_doc_cer_pct": 7.25
+        }
+      }
+    },
+    "soup_top2_e14_e15": {
+      "harum_palei_01_crops": {
+        "n_lines": 25,
+        "norm_cer_pct": 2.19,
+        "wer_pct": 7.49,
+        "exact_lines": "16/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 37.14,
+        "wer_pct": 70.37,
+        "exact_lines": "2/7"
+      },
+      "ood_archival_overall": {
+        "n_lines": 180,
+        "norm_cer_pct": 28.32,
+        "wer_pct": 57.57,
+        "exact_lines": "18/180",
+        "e2e_lines": "180/180",
+        "e2e_doc_cer_pct": 25.19
+      },
+      "ood_by_domain": {
+        "efeo_palm_leaf_agal": {
+          "crop_cer_pct": 31.25,
+          "crop_wer_pct": 62.5,
+          "exact_lines": "1/58",
+          "e2e_lines": "58/58",
+          "e2e_doc_cer_pct": 26.47
+        },
+        "efeo_regional_folio": {
+          "crop_cer_pct": 49.07,
+          "crop_wer_pct": 88.61,
+          "exact_lines": "0/62",
+          "e2e_lines": "62/62",
+          "e2e_doc_cer_pct": 45.63
+        },
+        "heldout_camera_book": {
+          "crop_cer_pct": 8.71,
+          "crop_wer_pct": 26.15,
+          "exact_lines": "17/60",
+          "e2e_lines": "60/60",
+          "e2e_doc_cer_pct": 7.19
+        }
+      }
+    },
+    "soup_top3_e14_e15_e12": {
+      "harum_palei_01_crops": {
+        "n_lines": 25,
+        "norm_cer_pct": 2.31,
+        "wer_pct": 8.02,
+        "exact_lines": "15/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 37.14,
+        "wer_pct": 70.37,
+        "exact_lines": "2/7"
+      },
+      "ood_archival_overall": {
+        "n_lines": 180,
+        "norm_cer_pct": 28.16,
+        "wer_pct": 57.57,
+        "exact_lines": "18/180",
+        "e2e_lines": "180/180",
+        "e2e_doc_cer_pct": 25.12
+      },
+      "ood_by_domain": {
+        "efeo_palm_leaf_agal": {
+          "crop_cer_pct": 31.11,
+          "crop_wer_pct": 62.5,
+          "exact_lines": "1/58",
+          "e2e_lines": "58/58",
+          "e2e_doc_cer_pct": 26.47
+        },
+        "efeo_regional_folio": {
+          "crop_cer_pct": 48.66,
+          "crop_wer_pct": 88.61,
+          "exact_lines": "0/62",
+          "e2e_lines": "62/62",
+          "e2e_doc_cer_pct": 45.55
+        },
+        "heldout_camera_book": {
+          "crop_cer_pct": 8.71,
+          "crop_wer_pct": 26.15,
+          "exact_lines": "17/60",
+          "e2e_lines": "60/60",
+          "e2e_doc_cer_pct": 7.06
+        }
+      }
+    },
+    "soup_last3_e14_e15_e16": {
+      "harum_palei_01_crops": {
+        "n_lines": 25,
+        "norm_cer_pct": 2.31,
+        "wer_pct": 8.02,
+        "exact_lines": "15/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 37.14,
+        "wer_pct": 72.22,
+        "exact_lines": "2/7"
+      },
+      "ood_archival_overall": {
+        "n_lines": 180,
+        "norm_cer_pct": 28.35,
+        "wer_pct": 57.76,
+        "exact_lines": "18/180",
+        "e2e_lines": "180/180",
+        "e2e_doc_cer_pct": 25.14
+      },
+      "ood_by_domain": {
+        "efeo_palm_leaf_agal": {
+          "crop_cer_pct": 31.46,
+          "crop_wer_pct": 63.03,
+          "exact_lines": "1/58",
+          "e2e_lines": "58/58",
+          "e2e_doc_cer_pct": 26.47
+        },
+        "efeo_regional_folio": {
+          "crop_cer_pct": 48.91,
+          "crop_wer_pct": 88.92,
+          "exact_lines": "0/62",
+          "e2e_lines": "62/62",
+          "e2e_doc_cer_pct": 45.4
+        },
+        "heldout_camera_book": {
+          "crop_cer_pct": 8.71,
+          "crop_wer_pct": 25.88,
+          "exact_lines": "17/60",
+          "e2e_lines": "60/60",
+          "e2e_doc_cer_pct": 7.25
+        }
+      }
+    },
+    "wise_inbasin_a35": {
+      "harum_palei_01_crops": {
+        "n_lines": 25,
+        "norm_cer_pct": 2.31,
+        "wer_pct": 8.02,
+        "exact_lines": "16/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 37.14,
+        "wer_pct": 57.41,
+        "exact_lines": "2/7"
+      },
+      "ood_archival_overall": {
+        "n_lines": 180,
+        "norm_cer_pct": 25.87,
+        "wer_pct": 57.01,
+        "exact_lines": "18/180",
+        "e2e_lines": "180/180",
+        "e2e_doc_cer_pct": 23.34
+      },
+      "ood_by_domain": {
+        "efeo_palm_leaf_agal": {
+          "crop_cer_pct": 29.19,
+          "crop_wer_pct": 61.97,
+          "exact_lines": "1/58",
+          "e2e_lines": "58/58",
+          "e2e_doc_cer_pct": 25.31
+        },
+        "efeo_regional_folio": {
+          "crop_cer_pct": 42.59,
+          "crop_wer_pct": 85.13,
+          "exact_lines": "0/62",
+          "e2e_lines": "62/62",
+          "e2e_doc_cer_pct": 40.68
+        },
+        "heldout_camera_book": {
+          "crop_cer_pct": 9.17,
+          "crop_wer_pct": 28.03,
+          "exact_lines": "17/60",
+          "e2e_lines": "60/60",
+          "e2e_doc_cer_pct": 7.25
+        }
+      }
+    },
+    "wise_inbasin_a50": {
+      "harum_palei_01_crops": {
+        "n_lines": 25,
+        "norm_cer_pct": 2.55,
+        "wer_pct": 9.09,
+        "exact_lines": "14/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 36.19,
+        "wer_pct": 61.11,
+        "exact_lines": "2/7"
+      },
+      "ood_archival_overall": {
+        "n_lines": 180,
+        "norm_cer_pct": 25.8,
+        "wer_pct": 56.63,
+        "exact_lines": "18/180",
+        "e2e_lines": "180/180",
+        "e2e_doc_cer_pct": 23.2
+      },
+      "ood_by_domain": {
+        "efeo_palm_leaf_agal": {
+          "crop_cer_pct": 29.12,
+          "crop_wer_pct": 61.44,
+          "exact_lines": "1/58",
+          "e2e_lines": "58/58",
+          "e2e_doc_cer_pct": 25.17
+        },
+        "efeo_regional_folio": {
+          "crop_cer_pct": 42.51,
+          "crop_wer_pct": 85.44,
+          "exact_lines": "0/62",
+          "e2e_lines": "62/62",
+          "e2e_doc_cer_pct": 40.53
+        },
+        "heldout_camera_book": {
+          "crop_cer_pct": 9.1,
+          "crop_wer_pct": 27.22,
+          "exact_lines": "17/60",
+          "e2e_lines": "60/60",
+          "e2e_doc_cer_pct": 7.12
+        }
+      }
+    },
+    "wise_s2_a35": {
+      "harum_palei_01_crops": {
+        "n_lines": 25,
+        "norm_cer_pct": 2.19,
+        "wer_pct": 7.49,
+        "exact_lines": "15/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 32.38,
+        "wer_pct": 53.7,
+        "exact_lines": "2/7"
+      },
+      "ood_archival_overall": {
+        "n_lines": 180,
+        "norm_cer_pct": 25.51,
+        "wer_pct": 55.97,
+        "exact_lines": "20/180",
+        "e2e_lines": "180/180",
+        "e2e_doc_cer_pct": 23.18
+      },
+      "ood_by_domain": {
+        "efeo_palm_leaf_agal": {
+          "crop_cer_pct": 28.41,
+          "crop_wer_pct": 60.37,
+          "exact_lines": "1/58",
+          "e2e_lines": "58/58",
+          "e2e_doc_cer_pct": 25.17
+        },
+        "efeo_regional_folio": {
+          "crop_cer_pct": 42.51,
+          "crop_wer_pct": 85.13,
+          "exact_lines": "0/62",
+          "e2e_lines": "62/62",
+          "e2e_doc_cer_pct": 40.45
+        },
+        "heldout_camera_book": {
+          "crop_cer_pct": 8.97,
+          "crop_wer_pct": 26.68,
+          "exact_lines": "19/60",
+          "e2e_lines": "60/60",
+          "e2e_doc_cer_pct": 7.12
+        }
+      }
+    },
+    "wise_s2_a50": {
+      "harum_palei_01_crops": {
+        "n_lines": 25,
+        "norm_cer_pct": 2.19,
+        "wer_pct": 8.02,
+        "exact_lines": "15/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 34.29,
+        "wer_pct": 59.26,
+        "exact_lines": "2/7"
+      },
+      "ood_archival_overall": {
+        "n_lines": 180,
+        "norm_cer_pct": 25.44,
+        "wer_pct": 54.94,
+        "exact_lines": "20/180",
+        "e2e_lines": "180/180",
+        "e2e_doc_cer_pct": 22.72
+      },
+      "ood_by_domain": {
+        "efeo_palm_leaf_agal": {
+          "crop_cer_pct": 28.48,
+          "crop_wer_pct": 59.57,
+          "exact_lines": "1/58",
+          "e2e_lines": "58/58",
+          "e2e_doc_cer_pct": 23.94
+        },
+        "efeo_regional_folio": {
+          "crop_cer_pct": 42.75,
+          "crop_wer_pct": 84.81,
+          "exact_lines": "0/62",
+          "e2e_lines": "62/62",
+          "e2e_doc_cer_pct": 40.06
+        },
+        "heldout_camera_book": {
+          "crop_cer_pct": 8.51,
+          "crop_wer_pct": 24.8,
+          "exact_lines": "19/60",
+          "e2e_lines": "60/60",
+          "e2e_doc_cer_pct": 7.32
+        }
+      }
+    },
+    "wise_s2_a65": {
+      "harum_palei_01_crops": {
+        "n_lines": 25,
+        "norm_cer_pct": 2.07,
+        "wer_pct": 7.49,
+        "exact_lines": "15/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 34.29,
+        "wer_pct": 61.11,
+        "exact_lines": "2/7"
+      },
+      "ood_archival_overall": {
+        "n_lines": 180,
+        "norm_cer_pct": 25.2,
+        "wer_pct": 54.0,
+        "exact_lines": "21/180",
+        "e2e_lines": "180/180",
+        "e2e_doc_cer_pct": 22.65
+      },
+      "ood_by_domain": {
+        "efeo_palm_leaf_agal": {
+          "crop_cer_pct": 27.98,
+          "crop_wer_pct": 58.24,
+          "exact_lines": "1/58",
+          "e2e_lines": "58/58",
+          "e2e_doc_cer_pct": 23.67
+        },
+        "efeo_regional_folio": {
+          "crop_cer_pct": 42.91,
+          "crop_wer_pct": 84.49,
+          "exact_lines": "0/62",
+          "e2e_lines": "62/62",
+          "e2e_doc_cer_pct": 40.14
+        },
+        "heldout_camera_book": {
+          "crop_cer_pct": 8.18,
+          "crop_wer_pct": 23.72,
+          "exact_lines": "20/60",
+          "e2e_lines": "60/60",
+          "e2e_doc_cer_pct": 7.32
+        }
+      }
+    },
+    "wise_s2_a80": {
+      "harum_palei_01_crops": {
+        "n_lines": 25,
+        "norm_cer_pct": 2.19,
+        "wer_pct": 8.02,
+        "exact_lines": "15/25"
+      },
+      "wikimedia_specimens": {
+        "n_lines": 7,
+        "norm_cer_pct": 35.24,
+        "wer_pct": 68.52,
+        "exact_lines": "2/7"
+      },
+      "ood_archival_overall": {
+        "n_lines": 180,
+        "norm_cer_pct": 25.92,
+        "wer_pct": 55.5,
+        "exact_lines": "19/180",
+        "e2e_lines": "180/180",
+        "e2e_doc_cer_pct": 22.95
+      },
+      "ood_by_domain": {
+        "efeo_palm_leaf_agal": {
+          "crop_cer_pct": 29.19,
+          "crop_wer_pct": 61.17,
+          "exact_lines": "1/58",
+          "e2e_lines": "58/58",
+          "e2e_doc_cer_pct": 23.53
+        },
+        "efeo_regional_folio": {
+          "crop_cer_pct": 43.56,
+          "crop_wer_pct": 84.81,
+          "exact_lines": "0/62",
+          "e2e_lines": "62/62",
+          "e2e_doc_cer_pct": 41.69
+        },
+        "heldout_camera_book": {
+          "crop_cer_pct": 8.51,
+          "crop_wer_pct": 24.8,
+          "exact_lines": "18/60",
+          "e2e_lines": "60/60",
+          "e2e_doc_cer_pct": 7.0
+        }
+      }
+    }
+  }
+}

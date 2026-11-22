@@ -91,18 +91,26 @@ def collect_operations() -> list:
         "FUTURE_WORK.md",
         "ocr-studio/app.py",
         "ocr-studio/index.html",
+        "ocr-studio/help.html",
         "ocr-studio/research.html",
+        "ocr-studio/paragraph_flow.py",
+        "ocr-studio/README_STUDIO.md",
+        "ocr-studio/README_STUDIO_VI.md",
         "ocr-studio/tests/test_quality_gates.py",
         "ocr-studio/PaddleOCR/ppocr/modeling/architectures/base_model.py",
         "ocr-studio/PaddleOCR/ppocr/modeling/heads/rec_multi_head.py",
         "ocr-studio/PaddleOCR/ppocr/modeling/necks/rnn.py",
         "ocr-studio/PaddleOCR/ppocr/modeling/backbones/rec_svtrnet.py",
         "ocr-studio/PaddleOCR/ppocr/modeling/backbones/rec_lcnetv3.py",
+        "ocr-studio/PaddleOCR/tools/program.py",
+        "ocr-studio/PaddleOCR/tools/infer/utility.py",
+        "ocr-studio/PaddleOCR/tools/infer/predict_rec.py",
         "ocr-studio/data/cham_dict_v24_1_r3_1.txt",
         "ocr-studio/data/cham_dict_v24_1_r4.txt",
         "ocr-studio/data/output/rec_cham_inference_v24_1_r2_1_6/model_manifest.json",
         "ocr-studio/data/output/rec_cham_inference_v24_1_r3/model_manifest.json",
         "ocr-training/scripts/export_active_learning_r4.py",
+        "ocr-benchmark/data/realscan_gold_v3/manifest.json",
         "scripts/ingest_studio_to_realscan_gold.py",
     ]
     dir_relpaths = [
@@ -125,6 +133,14 @@ def collect_operations() -> list:
             if os.path.isfile(fp):
                 repo_p = posixpath.join(d_rel, fn)
                 all_pairs.append((repo_p, fp))
+
+    static_root = os.path.join(PROJECT_ROOT, "ocr-studio", "static")
+    if os.path.isdir(static_root):
+        for root_dir, _, files in os.walk(static_root):
+            for fn in sorted(files):
+                fp = os.path.join(root_dir, fn)
+                rel_sub = os.path.relpath(fp, PROJECT_ROOT).replace("\\", "/")
+                all_pairs.append((rel_sub, fp))
 
     ops = []
     seen = set()
@@ -180,7 +196,14 @@ def wait_for_space_rollout(api: HfApi, commit_sha: str, max_wait_s: int = 900) -
         if stage.upper() == "RUNNING" and (saw_building or el >= 35 or max_wait_s <= 180):
             try:
                 hr = requests.get(f"{LIVE_BASE_URL}/health", timeout=15)
-                if hr.status_code == 200:
+                jsr = requests.get(f"{LIVE_BASE_URL}/static/js/studio.js", timeout=15)
+                helpr = requests.get(f"{LIVE_BASE_URL}/help", timeout=15)
+                ui_ok = (
+                    jsr.status_code == 200
+                    and "focusCropTimer" in jsr.text
+                    and helpr.status_code == 200
+                )
+                if hr.status_code == 200 and ui_ok:
                     # Probe default model_info via live /ocr on tiny image to confirm NEW container is live
                     resp = post_live_ocr(probe_img, model=None, timeout=60)
                     mi = resp.get("model_info") or {}
@@ -229,7 +252,7 @@ def main():
             repo_id=SPACE_ID,
             repo_type="space",
             operations=ops,
-            commit_message="Deploy Cham-OCR v24.1-R4.1 WiSE-FT (W=480 5/6 Gates, 2.55% RealScan CER) + Research Whitepaper & RealScan-Gold v2 sync",
+            commit_message="Deploy Cham-OCR V26.1 Masked-SVTR (6/6 Gates, 1deee5f5ff351070), Tri-Specialist Auto Router v2.1 & RealScan-Gold v3 Whitepaper",
         )
         commit_sha = str(getattr(commit_info, "oid", "") or getattr(commit_info, "commit_url", "").rstrip("/").split("/")[-1])
         print(f"🚀 Commit created on `{SPACE_ID}`: `{commit_sha}`")
@@ -237,8 +260,12 @@ def main():
 
     # 1. Blank-page guard & /research whitepaper verification
     res_page = requests.get(f"{LIVE_BASE_URL}/research", timeout=30)
-    assert res_page.status_code == 200 and "RealScan-Gold v2" in res_page.text, f"/research check failed: {res_page.status_code}"
-    print("✅ [Live Check 0/3] Live `/research` whitepaper PASSED (`200 OK`, includes `RealScan-Gold v2`).")
+    assert (
+        res_page.status_code == 200
+        and "RealScan-Gold v3" in res_page.text
+        and "V26.1" in res_page.text
+    ), f"/research check failed: {res_page.status_code}"
+    print("✅ [Live Check 0/3] Live `/research` whitepaper PASSED (`200 OK`, includes `V26.1` & `RealScan-Gold v3`).")
 
     blank_img = np.full((480, 1200, 3), 252, dtype=np.uint8)
     blank_resp = post_live_ocr(blank_img, model=None)

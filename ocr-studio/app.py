@@ -33,8 +33,18 @@ if not hasattr(np, 'float'):
 if not hasattr(np, 'typeDict'):
     np.typeDict = {}
 
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from http.server import BaseHTTPRequestHandler, HTTPServer, ThreadingHTTPServer
+import threading
 import urllib.parse
+
+_INFERENCE_LOCK = threading.RLock()
+_CORRECTION_LOCK = threading.Lock()
+
+
+class StudioHTTPServer(ThreadingHTTPServer):
+    request_queue_size = 128
+    daemon_threads = True
+    allow_reuse_address = True
 
 # Force UTF-8 stdout encoding on Windows
 if sys.stdout and sys.stdout.encoding != 'utf-8':
@@ -195,55 +205,140 @@ class OfficialPaddleOCRWrapper:
                     results.append(("", 0.0))
             return results, 0.0
 
+_ROUTER_ILLEGAL_MEDIAL_RE = re.compile(r'[\uAA33\uAA34]{2,}|[\uAA2F\uAA30]{2,}')
+_ROUTER_EDITORIAL_SYMS = set('-/_*[]{}<>=+%@#')
+
+
+def _cham_script_ratio(text):
+    non_space = [ch for ch in (text or '') if not ch.isspace()]
+    if not non_space:
+        return 0.0
+    cham_cnt = sum(1 for ch in non_space if '\uAA00' <= ch <= '\uAA5F')
+    return cham_cnt / float(len(non_space))
+
+
+def _latin_alpha_ratio(text):
+    non_space = [ch for ch in (text or '') if not ch.isspace()]
+    if not non_space:
+        return 0.0
+    lat_cnt = sum(1 for ch in non_space if ('a' <= ch.lower() <= 'z') or ('\u00C0' <= ch <= '\u1EF9'))
+    return lat_cnt / float(len(non_space))
+
+
 class AutoRoutingOCRWrapper:
-    def __init__(self, cham_model, viet_model):
+    """Tri-specialist adaptive router combining W=480 Cham primary, W=320 archival Cham adjudicator, and Vi/Latin OCR."""
+
+    def __init__(self, cham_model, viet_model, cham_w320_model=None, primary_ver=None, w320_ver='v24_1_r3_1'):
         self.cham_model = cham_model
         self.viet_model = viet_model
-        
+        self.cham_w320_model = cham_w320_model
+        self.primary_ver = primary_ver or DEFAULT_CHAM_MODEL
+        self.w320_ver = w320_ver
+        self.last_selected_versions = []
+
     def __call__(self, img_list):
         if not img_list:
+            self.last_selected_versions = []
             return [], 0.0
-            
-        # 1. Predict all images with Cham model in a single batch
-        print(f"DEBUG: [AutoRouting] Calling Cham model for {len(img_list)} images...")
+
+        try:
+            from scripts.generate_data import normalize_unicode as _norm_u
+        except Exception:
+            _norm_u = lambda x: x
+
+        # 1. Fast primary pass with W=480 Cham specialist
         cham_res, _ = self.cham_model(img_list)
-        print("DEBUG: [AutoRouting] Cham model prediction finished.")
-        
-        # 2. Identify indices requiring Vietnamese OCR
+
+        # 2. Selective W=320 Cham adjudication on medium-width lower-confidence textline crops
+        w320_indices = []
+        w320_imgs = []
+        if self.cham_w320_model is not None:
+            for i, (t480, c480) in enumerate(cham_res):
+                im = img_list[i]
+                h, w = im.shape[:2] if hasattr(im, 'shape') and len(im.shape) >= 2 else (48, 320)
+                ar48 = float(w) * 48.0 / max(1.0, float(h))
+                if float(c480) < 0.905 and 104.0 <= ar48 < 420.0:
+                    w320_indices.append(i)
+                    w320_imgs.append(im)
+
+        w320_map = {}
+        if w320_imgs:
+            w320_batch, _ = self.cham_w320_model(w320_imgs)
+            for idx_orig, res320 in zip(w320_indices, w320_batch):
+                w320_map[idx_orig] = res320
+
+        best_cham = []
+        best_cham_ver = []
+        for i, (raw_t480, c480) in enumerate(cham_res):
+            c480 = float(c480)
+            t480 = _norm_u(raw_t480) if any('\uAA00' <= ch <= '\uAA5F' for ch in (raw_t480 or '')) else (raw_t480 or '')
+            chosen_txt, chosen_conf, chosen_ver = t480, c480, self.primary_ver
+
+            if i in w320_map:
+                raw_t320, c320 = w320_map[i]
+                c320 = float(c320)
+                t320 = _norm_u(raw_t320) if any('\uAA00' <= ch <= '\uAA5F' for ch in (raw_t320 or '')) else (raw_t320 or '')
+                cal480 = calibrate_line_confidence(c480, self.primary_ver, t480)
+                cal320 = calibrate_line_confidence(c320, self.w320_ver, t320)
+                score480 = cal480 - (0.08 if _ROUTER_ILLEGAL_MEDIAL_RE.search(raw_t480 or '') else 0.0)
+                score320 = cal320 - (0.08 if _ROUTER_ILLEGAL_MEDIAL_RE.search(raw_t320 or '') else 0.0)
+                dropped_editorial = any(t480.count(s) > t320.count(s) for s in _ROUTER_EDITORIAL_SYMS) and c480 >= 0.70
+                if (not dropped_editorial) and (score320 > score480 + 0.020):
+                    chosen_txt, chosen_conf, chosen_ver = t320, c320, self.w320_ver
+
+            best_cham.append((chosen_txt, chosen_conf))
+            best_cham_ver.append(chosen_ver)
+
+        # 3. Selective Vietnamese / Latin multiscript handoff ONLY when Cham CTC emits non-Cham soup or severe uncertainty
         viet_indices = []
         viet_imgs = []
-        for i, (cham_text, cham_conf) in enumerate(cham_res):
-            if cham_conf < 0.65:
+        for i, (c_txt, c_conf) in enumerate(best_cham):
+            c_ratio = _cham_script_ratio(c_txt)
+            if (c_ratio < 0.62 and c_conf < 0.85) or c_conf < 0.34:
                 viet_indices.append(i)
                 viet_imgs.append(img_list[i])
-                
-        # 3. Predict those with Vietnamese model in a single batch
-        viet_res = []
+
+        viet_map = {}
         if viet_imgs:
-            print(f"DEBUG: [AutoRouting] Calling Viet model for {len(viet_imgs)} images...")
-            viet_batch_res, _ = self.viet_model(viet_imgs)
-            viet_res = viet_batch_res
-            print("DEBUG: [AutoRouting] Viet model prediction finished.")
-            
-        # 4. Merge results keeping router logic
+            viet_batch, _ = self.viet_model(viet_imgs)
+            for idx_orig, v_res in zip(viet_indices, viet_batch):
+                viet_map[idx_orig] = v_res
+
+        # 4. Script-aware adjudication preventing false Vietnamese takeover on historical Cham manuscripts
         final_results = [None] * len(img_list)
-        viet_ptr = 0
+        selected_vers = []
         for i in range(len(img_list)):
-            cham_text, cham_conf = cham_res[i]
-            if cham_conf >= 0.65:
-                final_results[i] = (cham_text, cham_conf)
+            c_txt, c_conf = best_cham[i]
+            c_ver = best_cham_ver[i]
+            if i not in viet_map:
+                final_results[i] = (c_txt, c_conf)
+                selected_vers.append(c_ver)
+                continue
+
+            v_txt, v_conf = viet_map[i]
+            v_conf = float(v_conf)
+            c_ratio = _cham_script_ratio(c_txt)
+            v_alpha = _latin_alpha_ratio(v_txt)
+
+            take_viet = False
+            if v_alpha >= 0.42:
+                if c_ratio < 0.60:
+                    # ASCII digit/symbol soup from feeding Latin/Vietnamese into Cham CTC -> route to Vi/Latin
+                    take_viet = (v_conf >= 0.52 and v_conf >= c_conf - 0.08)
+                else:
+                    # Coherent Cham script present -> protect historical Cham folios unless Vi is overwhelmingly confident
+                    take_viet = (c_conf < 0.50 and v_conf >= 0.88 and v_alpha >= 0.70)
+            elif c_conf < 0.25 and v_conf > c_conf + 0.25:
+                take_viet = True
+
+            if take_viet:
+                final_results[i] = (v_txt, v_conf)
+                selected_vers.append('vi')
             else:
-                if viet_ptr < len(viet_res):
-                    viet_text, viet_conf = viet_res[viet_ptr]
-                else:
-                    viet_text, viet_conf = ("", 0.0)
-                viet_ptr += 1
-                
-                if cham_conf >= 0.40 and cham_conf > viet_conf - 0.15:
-                    final_results[i] = (cham_text, cham_conf)
-                else:
-                    final_results[i] = (viet_text, viet_conf)
-                    
+                final_results[i] = (c_txt, c_conf)
+                selected_vers.append(c_ver)
+
+        self.last_selected_versions = selected_vers
         return final_results, 0.0
 
 def get_ocr_model(version):
@@ -259,8 +354,13 @@ def get_ocr_model(version):
         
     if version == 'auto':
         cham_model = get_ocr_model(DEFAULT_CHAM_MODEL)
+        w320_ver = 'v24_1_r3_1'
+        w320_dir = os.path.join(PROJECT_ROOT, "data", "output", f"rec_cham_inference_{w320_ver}")
+        cham_w320 = get_ocr_model(w320_ver) if (w320_ver != DEFAULT_CHAM_MODEL and os.path.exists(w320_dir)) else None
         viet_model = get_ocr_model('vi')
-        ocr_model = AutoRoutingOCRWrapper(cham_model, viet_model)
+        ocr_model = AutoRoutingOCRWrapper(
+            cham_model, viet_model, cham_w320_model=cham_w320, primary_ver=DEFAULT_CHAM_MODEL, w320_ver=w320_ver
+        )
         ocr_models[version] = ocr_model
         return ocr_model
         
@@ -300,12 +400,34 @@ def get_ocr_model(version):
             # Fallback to Golden Baseline v23 if version-specific folder is missing
             model_dir = os.path.join(PROJECT_ROOT, "data", "output", "rec_cham_inference_v23")
         if not os.path.exists(dict_path):
-            if str(version).startswith("v24_1"):
+            bundled_dict = os.path.join(model_dir, f"cham_dict_{version}.txt")
+            if os.path.exists(bundled_dict):
+                dict_path = bundled_dict
+            elif str(version).startswith("v24_1"):
                 dict_path = os.path.join(PROJECT_ROOT, "data", "cham_dict_v24_1.txt")
             elif str(version).startswith("v24"):
                 dict_path = os.path.join(PROJECT_ROOT, "data", "cham_dict_v24.txt")
             else:
                 dict_path = os.path.join(PROJECT_ROOT, "data", "cham_dict_v23.txt")
+
+    import paddle
+    has_rec_pdmodel = os.path.exists(os.path.join(model_dir, "inference.pdmodel"))
+    has_rec_json = os.path.exists(os.path.join(model_dir, "inference.json"))
+    if has_rec_json and not has_rec_pdmodel:
+        try:
+            paddle_major = int(str(getattr(paddle, "__version__", "0")).split(".")[0])
+        except Exception:
+            paddle_major = 0
+        if paddle_major < 3:
+            if version == 'vi':
+                print("⚠️  rec_vietnamese_infer is PIR (.json) on Paddle 2.x; falling back to OfficialPaddleOCRWrapper(lang='vi').")
+                ocr_model = OfficialPaddleOCRWrapper(lang='vi')
+                ocr_models[version] = ocr_model
+                return ocr_model
+            raise RuntimeError(
+                f"Model '{version}' is exported in Paddle 3 PIR format (inference.json) and requires Paddle >= 3.0 "
+                f"(current runtime: Paddle {getattr(paddle, '__version__', 'unknown')}). Please select V24.1-R4 or launch Studio with Python 3.13 / Paddle 3.x."
+            )
         
     sys_argv_backup = sys.argv
     sys.argv = [sys.argv[0]]
@@ -315,7 +437,6 @@ def get_ocr_model(version):
     args.rec_model_dir = model_dir
     args.rec_char_dict_path = dict_path
     
-    import paddle
     args.use_gpu = paddle.is_compiled_with_cuda()
     manifest_for_shape = {}
     if version != 'vi':
@@ -349,14 +470,17 @@ def get_ocr_model(version):
         args.enable_mkldnn = env_mkldnn
         args.mkldnn_cache_capacity = 32
         
-        env_threads = os.getenv("CPU_THREADS")
+        env_threads = os.getenv("VI_CPU_THREADS") if version == "vi" else os.getenv("CPU_THREADS")
         if env_threads:
             args.cpu_threads = int(env_threads)
+        elif version == "vi":
+            # Heavy PP-OCRv5_server_rec benefits ~3.2x from multi-thread math without MKLDNN
+            args.cpu_threads = min(8, max(1, os.cpu_count() or 2))
         else:
-            # Default to 1 thread to prevent OpenMP deadlocks on Windows socket servers
-            args.cpu_threads = 1
+            # Default to 1 thread for lightweight SVTR_LCNet to prevent OpenMP contention
+            args.cpu_threads = int(os.getenv("CPU_THREADS", "1"))
             
-        args.ir_optim = False # Disable on CPU to prevent OneDNN crash
+        args.ir_optim = (version == "vi") # Constant-fold PIR graph on heavy Vi model while MKLDNN stays disabled
         args.precision = "fp32"
         
     print(f"⚙️  Loading PaddleOCR Model {version} (GPU: {args.use_gpu}, MKLDNN: {args.enable_mkldnn}, Batch: {args.rec_batch_num}, Threads: {args.cpu_threads})...")
@@ -1072,7 +1196,7 @@ def calibrate_line_confidence(raw_conf, model_ver=None, text="", temperature=Non
 def get_model_info(model_ver):
     """Returns provenance info (model id, weight fingerprints, detector, normalizer) for the response."""
     info = {"model": model_ver, "normalizer": None}
-    rec_versions = [DEFAULT_CHAM_MODEL, 'vi'] if model_ver == 'auto' else [model_ver]
+    rec_versions = [DEFAULT_CHAM_MODEL, 'v24_1_r3_1', 'vi'] if model_ver == 'auto' else [model_ver]
     recs = []
     for v in rec_versions:
         p = ocr_model_paths.get(v)
@@ -1108,7 +1232,7 @@ def get_model_info(model_ver):
         info["paddle_version"] = _paddle.__version__
     except Exception:
         info["paddle_version"] = None
-    if model_ver in ['v24', 'v25', 'v26'] or str(model_ver).startswith('v24'):
+    if model_ver in ['auto', 'v24', 'v25', 'v26'] or str(model_ver).startswith('v24'):
         info["normalizer"] = NORMALIZER_VERSION
     return info
 
@@ -2498,9 +2622,12 @@ def run_ocr_pipeline(img, model_ver=None, method='dbnet', threshold=0.05, gap=12
                 rec_res, _ = ocr(rec_crops)
                 rec_sec = time.time() - t_rec
                 print(f"⏱️  DBNet batch recognition ({len(final_crops)} lines) took: {rec_sec:.4f}s")
+                sel_vers = getattr(ocr, 'last_selected_versions', None) or []
                 for idx, (pred_text, conf) in enumerate(rec_res):
                     lines_metadata[idx]['candidates']['dbnet']['prediction'] = pred_text
                     lines_metadata[idx]['candidates']['dbnet']['confidence'] = conf
+                    if idx < len(sel_vers):
+                        lines_metadata[idx]['routed_version'] = sel_vers[idx]
                 num_detected = len(lines_metadata)
                 dropped_text_lines = []
                 lines_metadata, final_crops = apply_line_quality_gates(lines_metadata, final_crops, dropped_text_lines)
@@ -2539,18 +2666,20 @@ def run_ocr_pipeline(img, model_ver=None, method='dbnet', threshold=0.05, gap=12
         pred_text = meta['candidates'][meta['selected_crop_type']]['prediction']
         confidence = meta['candidates'][meta['selected_crop_type']]['confidence']
 
-        if model_ver in ['v24', 'v25', 'v26'] or str(model_ver).startswith('v24'):
-            try:
-                from scripts.generate_data import normalize_unicode
-                pred_text = normalize_unicode(pred_text)
-            except Exception as e:
-                print(f"Warning: normalize_unicode failed: {e}")
+        if model_ver in ['auto', 'v24', 'v25', 'v26'] or str(model_ver).startswith('v24'):
+            if model_ver != 'auto' or any('\uAA00' <= ch <= '\uAA5F' for ch in (pred_text or '')):
+                try:
+                    from scripts.generate_data import normalize_unicode
+                    pred_text = normalize_unicode(pred_text)
+                except Exception as e:
+                    print(f"Warning: normalize_unicode failed: {e}")
 
         # Encode cropped line to base64 for frontend display
         _, buffer = cv2.imencode('.png', line_img)
         line_b64 = base64.b64encode(buffer).decode('utf-8')
 
-        cal_conf = calibrate_line_confidence(confidence, model_ver, pred_text)
+        cal_ver = meta.get('routed_version') or model_ver
+        cal_conf = calibrate_line_confidence(confidence, cal_ver, pred_text)
 
         # Backward-compatible format
         results.append({
@@ -2658,48 +2787,472 @@ def save_correction_entry(data, base_dir=None):
 
 
 # ==============================================================================
+# Studio Workbench Helpers (Samples, Model Catalog, Paragraph Flow, ZIP Export)
+# ==============================================================================
+
+_SAMPLE_SPECS = [
+    {
+        "id": "agal_panduranga",
+        "name": "Palm-Leaf Agal Folio — Panduranga",
+        "filename": "ood_agal_01_panduranga.png",
+        "relpath": "ocr-benchmark/data/realscan_gold_v2/pages/ood_agal_01_panduranga.png",
+        "category": "Palm-Leaf (Agal)",
+        "recommended_model": "v24_1_r4",
+        "description": "Traditional Panduranga calligraphic hand on elongated palm-leaf surface with tight interlinear spacing."
+    },
+    {
+        "id": "curved_panduranga",
+        "name": "Curved Baseline Folio — Ribbon Rectification",
+        "filename": "ood_v3_16_curved_panduranga.png",
+        "relpath": "ocr-benchmark/data/realscan_gold_v3/pages/ood_v3_16_curved_panduranga.png",
+        "category": "Curved Baseline",
+        "recommended_model": "v24_1_r4",
+        "description": "Undulating folio baseline demonstrating Cham-DBNet v1_poly_u1.8 polygon ribbon straightening."
+    },
+    {
+        "id": "two_col_wijaya",
+        "name": "Two-Column Manuscript Folio — Wijaya",
+        "filename": "ood_folio_06_wijaya_2col.png",
+        "relpath": "ocr-benchmark/data/realscan_gold_v2/pages/ood_folio_06_wijaya_2col.png",
+        "category": "Multi-Column",
+        "recommended_model": "v24_1_r4",
+        "description": "Dual-column historical layout showcasing automatic column-wise reading order reconstruction."
+    },
+    {
+        "id": "bilingual_campa_vi",
+        "name": "Bilingual Cham–Vietnamese Glossary Folio",
+        "filename": "ood_v3_21_bilingual_campa_vi.png",
+        "relpath": "ocr-benchmark/data/realscan_gold_v3/pages/ood_v3_21_bilingual_campa_vi.png",
+        "category": "Bilingual Multiscript",
+        "recommended_model": "auto",
+        "description": "Interleaved Akhar Thrah and Vietnamese glosses demonstrating the Tri-Specialist Auto-Router."
+    },
+    {
+        "id": "printed_book_semibold",
+        "name": "Printed Akhar Thrah Literary Page",
+        "filename": "ood_book_10_semibold.png",
+        "relpath": "ocr-benchmark/data/realscan_gold_v2/pages/ood_book_10_semibold.png",
+        "category": "Printed Book",
+        "recommended_model": "v24_1_r4",
+        "description": "Modern printed Eastern Cham verse and prose with Danda and Double Danda stanza markers."
+    },
+    {
+        "id": "classical_verse_clean",
+        "name": "Classical Verse Stanza Folio (Clean)",
+        "filename": "test_006_lvl1.png",
+        "relpath": "ocr-benchmark/data/images/test_006_lvl1.png",
+        "category": "Classical Verse",
+        "recommended_model": "v24_1_r4",
+        "description": "Clean baseline folio featuring Cham stanza numerals and multi-directional vowel clusters."
+    }
+]
+_sample_thumb_cache = {}
+
+
+def _resolve_sample_path(spec):
+    bundled_p = os.path.join(PROJECT_ROOT, "static", "samples", spec["filename"])
+    if os.path.isfile(bundled_p):
+        return bundled_p
+    repo_root = os.path.dirname(PROJECT_ROOT)
+    fallback_p = os.path.join(repo_root, *spec["relpath"].split("/"))
+    if os.path.isfile(fallback_p):
+        return fallback_p
+    return None
+
+
+def list_curated_samples():
+    available = []
+    for spec in _SAMPLE_SPECS:
+        abs_p = _resolve_sample_path(spec)
+        if not abs_p:
+            continue
+        thumb_b64 = _sample_thumb_cache.get(spec["id"])
+        dims = _sample_thumb_cache.get(spec["id"] + ":dims")
+        if thumb_b64 is None:
+            try:
+                im = cv2.imread(abs_p, cv2.IMREAD_COLOR)
+                if im is not None and im.size > 0:
+                    ih, iw = im.shape[:2]
+                    dims = [int(iw), int(ih)]
+                    scale = min(220.0 / max(1, iw), 150.0 / max(1, ih), 1.0)
+                    tw, th = max(1, int(round(iw * scale))), max(1, int(round(ih * scale)))
+                    resized = cv2.resize(im, (tw, th), interpolation=cv2.INTER_AREA)
+                    ok, buf = cv2.imencode(".jpg", resized, [int(cv2.IMWRITE_JPEG_QUALITY), 72])
+                    if ok:
+                        thumb_b64 = base64.b64encode(buf.tobytes()).decode("ascii")
+                        _sample_thumb_cache[spec["id"]] = thumb_b64
+                        _sample_thumb_cache[spec["id"] + ":dims"] = dims
+            except Exception:
+                thumb_b64 = ""
+        available.append({
+            "id": spec["id"],
+            "name": spec["name"],
+            "filename": spec["filename"],
+            "category": spec["category"],
+            "recommended_model": spec["recommended_model"],
+            "description": spec["description"],
+            "dimensions": dims or [0, 0],
+            "thumb": thumb_b64 or ""
+        })
+    return available
+
+
+def load_curated_sample(sample_id):
+    spec = next((s for s in _SAMPLE_SPECS if s["id"] == sample_id), None)
+    if not spec:
+        return None
+    abs_p = _resolve_sample_path(spec)
+    if not abs_p:
+        return None
+    with open(abs_p, "rb") as f:
+        raw_bytes = f.read()
+    im = cv2.imdecode(np.frombuffer(raw_bytes, np.uint8), cv2.IMREAD_COLOR)
+    ih, iw = im.shape[:2] if im is not None else (0, 0)
+    return {
+        "id": spec["id"],
+        "name": spec["name"],
+        "filename": spec["filename"],
+        "category": spec["category"],
+        "recommended_model": spec["recommended_model"],
+        "description": spec["description"],
+        "width": int(iw),
+        "height": int(ih),
+        "image": base64.b64encode(raw_bytes).decode("ascii")
+    }
+
+
+def list_available_models():
+    catalog = [
+        {
+            "id": "v24_1_r4",
+            "label": "Cham V26.1 Masked-SVTR (Production SOTA — W=480, 6/6 Gates)",
+            "short_label": "V26.1 SOTA",
+            "group": "Paleographic Cham Specialists",
+            "shape": "3, 48, 480",
+            "summary": "Padding-masked wide-canvas pure-Cham recognizer with frozen early-backbone WiSE-FT (6/6 Gates, 2.07% real-camera CER, 22.65% OOD-12 E2E).",
+            "folder": "rec_cham_inference_v24_1_r4"
+        },
+        {
+            "id": "v25",
+            "label": "Cham V25 (40-Epoch Dual-T4x2 Bilingual SOTA)",
+            "short_label": "V25 SOTA",
+            "group": "Paleographic Cham Specialists",
+            "shape": "3, 48, 480",
+            "summary": "Official 40-epoch Kaggle Dual-T4x2 SOTA (90.96% Seq Acc, 0.72% Val CER on 10K frozen validation).",
+            "folder": "rec_cham_inference_v25"
+        },
+        {
+            "id": "auto",
+            "label": "Auto Tri-Specialist Router (Cham W480 + W320 + Vietnamese)",
+            "short_label": "Auto Router",
+            "group": "Multiscript & Bilingual",
+            "shape": "Adaptive",
+            "summary": "Combines W=480 Cham primary, W=320 archival adjudicator, and Vietnamese PP-OCRv5 handoff.",
+            "folder": None
+        },
+        {
+            "id": "v24_1_r3_1",
+            "label": "Cham V24.1-R3.1 (W=320 Level-5 Degradation Specialist)",
+            "short_label": "V24.1-R3.1",
+            "group": "Paleographic Cham Specialists",
+            "shape": "3, 48, 320",
+            "summary": "Compact W=320 specialist tuned for narrow/medium degraded archival crops and gate closure.",
+            "folder": "rec_cham_inference_v24_1_r3_1"
+        },
+        {
+            "id": "v24_1_r2_1_6",
+            "label": "Cham V24.1-R2.1.6 (Clean HarfBuzz & 14-Symbol Polish)",
+            "short_label": "V24.1-R2.1.6",
+            "group": "Paleographic Cham Specialists",
+            "shape": "3, 48, 320",
+            "summary": "100% accuracy across all 14 editorial symbols and multi-context hyphens.",
+            "folder": "rec_cham_inference_v24_1_r2_1_6"
+        },
+        {
+            "id": "v24",
+            "label": "Cham V24 (Logical Order Baseline)",
+            "short_label": "V24 Baseline",
+            "group": "Historical Baselines",
+            "shape": "3, 48, 320",
+            "summary": "Foundational Logical Order recognizer with Cham numerals (꩐–꩙) and Danda punctuation.",
+            "folder": "rec_cham_inference_v24"
+        },
+        {
+            "id": "v23",
+            "label": "Cham V23 (Legacy Baseline)",
+            "short_label": "V23 Legacy",
+            "group": "Historical Baselines",
+            "shape": "3, 48, 320",
+            "summary": "Early 93-token baseline preserved for longitudinal benchmark comparison.",
+            "folder": "rec_cham_inference_v23"
+        },
+        {
+            "id": "vi",
+            "label": "Vietnamese (Fine-Tuned PP-OCRv5)",
+            "short_label": "Vietnamese",
+            "group": "Multiscript & Bilingual",
+            "shape": "Dynamic",
+            "summary": "High-accuracy Vietnamese & Latin recognizer for modern glosses, headers, and translations.",
+            "folder": "rec_vietnamese_infer"
+        }
+    ]
+    out_root = os.path.join(PROJECT_ROOT, "data", "output")
+    try:
+        import paddle as _pdl
+        paddle_major = int(str(getattr(_pdl, "__version__", "0")).split(".")[0])
+    except Exception:
+        paddle_major = 0
+    enriched = []
+    for item in catalog:
+        folder = item["folder"]
+        if folder is None:
+            installed = True
+        else:
+            mdir = os.path.join(out_root, folder)
+            installed = os.path.isdir(mdir)
+            if installed and item["id"] != "vi":
+                has_pdm = os.path.exists(os.path.join(mdir, "inference.pdmodel"))
+                has_jsn = os.path.exists(os.path.join(mdir, "inference.json"))
+                if has_jsn and not has_pdm and paddle_major < 3:
+                    installed = False
+        entry = dict(item)
+        entry["installed"] = installed
+        entry["is_default"] = (item["id"] == DEFAULT_CHAM_MODEL)
+        enriched.append(entry)
+    return {"default_model": DEFAULT_CHAM_MODEL, "det_mode": DET_MODE, "models": enriched}
+
+
+def build_corpus_export_zip(payload):
+    import io
+    import zipfile
+
+    docs = payload.get("documents") or []
+    try:
+        from scripts.generate_data import normalize_unicode as _norm_u
+    except Exception:
+        _norm_u = lambda s: s
+
+    mem_zip = io.BytesIO()
+    train_pairs = []
+    jsonl_records = []
+    md_sections = [
+        "# Cham OCR Studio — Paleographic Corpus Export",
+        f"- **Generated (UTC)**: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}",
+        f"- **Total Folios**: {len(docs)}",
+        "- **Service**: https://ocr.cham.asia",
+        ""
+    ]
+
+    with zipfile.ZipFile(mem_zip, mode="w", compression=zipfile.ZIP_DEFLATED) as zf:
+        for d_idx, doc in enumerate(docs, start=1):
+            raw_name = str(doc.get("name") or f"folio_{d_idx:03d}.png")
+            stem = re.sub(r"[^A-Za-z0-9._-]+", "_", os.path.splitext(raw_name)[0]).strip("_") or f"folio_{d_idx:03d}"
+            lines = doc.get("lines") or []
+            model_used = str(doc.get("model") or DEFAULT_CHAM_MODEL)
+            status = str(doc.get("status") or "OCR done")
+
+            plain_lines = []
+            md_sections.append(f"## {d_idx}. {raw_name}")
+            md_sections.append(f"- **Status**: {status} | **Model**: `{model_used}` | **Lines**: {len(lines)}")
+            md_sections.append("")
+
+            for l_idx, ln in enumerate(lines, start=1):
+                txt = (ln.get("text") or "").strip()
+                if any("\uAA00" <= ch <= "\uAA5F" for ch in txt):
+                    try:
+                        txt = _norm_u(txt)
+                    except Exception:
+                        pass
+                plain_lines.append(txt)
+                conf = float(ln.get("confidence") or 0.0)
+                verified = bool(ln.get("human_verified"))
+                md_sections.append(f"{l_idx}. `{conf * 100:.0f}%`{' [Verified]' if verified else ''} {txt}")
+
+                crop_b64 = ln.get("image") or ""
+                crop_rel = None
+                if isinstance(crop_b64, str) and crop_b64.strip() and txt:
+                    if "," in crop_b64:
+                        crop_b64 = crop_b64.split(",", 1)[1]
+                    pad = len(crop_b64) % 4
+                    if pad:
+                        crop_b64 += "=" * (4 - pad)
+                    try:
+                        crop_bytes = base64.b64decode(crop_b64)
+                        crop_rel = f"crops/{stem}_L{l_idx:03d}.png"
+                        zf.writestr(crop_rel, crop_bytes)
+                        train_pairs.append(f"{crop_rel}\t{txt}")
+                    except Exception:
+                        crop_rel = None
+
+                jsonl_records.append(json.dumps({
+                    "image_name": raw_name,
+                    "line_idx": l_idx,
+                    "text": txt,
+                    "confidence": conf,
+                    "human_verified": verified,
+                    "model": model_used,
+                    "bbox": ln.get("bbox"),
+                    "crop_relpath": crop_rel
+                }, ensure_ascii=False))
+
+            md_sections.append("")
+            zf.writestr(f"transcriptions/{stem}.txt", "\n".join(plain_lines) + "\n")
+
+        zf.writestr("transcriptions/combined_corpus.md", "\n".join(md_sections) + "\n")
+        zf.writestr("train_list.txt", "\n".join(train_pairs) + ("\n" if train_pairs else ""))
+        zf.writestr("corrections.jsonl", "\n".join(jsonl_records) + ("\n" if jsonl_records else ""))
+        zf.writestr("corpus_manifest.json", json.dumps({
+            "exported_at_utc": datetime.now(timezone.utc).isoformat(),
+            "service": "https://ocr.cham.asia",
+            "total_documents": len(docs),
+            "total_training_crops": len(train_pairs),
+            "documents": [
+                {
+                    "image_name": d.get("name"),
+                    "status": d.get("status"),
+                    "model": d.get("model"),
+                    "lines": [
+                        {
+                            "index": ln.get("index", i + 1),
+                            "text": ln.get("text", ""),
+                            "confidence": ln.get("confidence", 0.0),
+                            "bbox": ln.get("bbox"),
+                            "coords": ln.get("coords"),
+                            "human_verified": bool(ln.get("human_verified"))
+                        }
+                        for i, ln in enumerate(d.get("lines") or [])
+                    ]
+                }
+                for d in docs
+            ]
+        }, ensure_ascii=False, indent=2))
+        zf.writestr("README.txt", (
+            "Cham OCR Studio — Archival & Active Learning Package\n"
+            "====================================================\n"
+            "Generated by https://ocr.cham.asia\n\n"
+            "Contents:\n"
+            "- transcriptions/<folio>.txt     : Canonical Unicode Logical Order plaintext per folio\n"
+            "- transcriptions/combined_corpus.md : Consolidated scholarly markdown report\n"
+            "- corpus_manifest.json           : Structured bounding-box & line metadata\n"
+            "- corrections.jsonl              : Active-learning JSONL records\n"
+            "- train_list.txt + crops/*.png   : Ready-to-train PaddleOCR tab-delimited pairs\n"
+        ))
+
+    return mem_zip.getvalue()
+
+
+# ==============================================================================
 # Web Server Request Handler
 # ==============================================================================
 
+_STATIC_MIME_TYPES = {
+    ".css": "text/css; charset=utf-8",
+    ".js": "application/javascript; charset=utf-8",
+    ".mjs": "application/javascript; charset=utf-8",
+    ".json": "application/json; charset=utf-8",
+    ".svg": "image/svg+xml",
+    ".png": "image/png",
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".webp": "image/webp",
+    ".ico": "image/x-icon",
+    ".woff2": "font/woff2",
+    ".ttf": "font/ttf",
+}
+
+
 class ChamOCRRequestHandler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        parsed_path = urllib.parse.urlparse(self.path).path
-        if parsed_path in ('/', '/index.html'):
-            self.send_response(200)
-            self.send_header('Content-type', 'text/html; charset=utf-8')
+    def _send_html_file(self, filename, no_store=False, head_only=False):
+        dir_path = os.path.dirname(os.path.abspath(__file__))
+        file_path = os.path.join(dir_path, filename)
+        if os.path.exists(file_path):
+            with open(file_path, 'rb') as f:
+                payload = f.read()
+        else:
+            payload = f"<h1>Error: {filename} not found!</h1>".encode('utf-8')
+        self.send_response(200)
+        self.send_header('Content-type', 'text/html; charset=utf-8')
+        self.send_header('Content-Length', str(len(payload)))
+        if no_store:
             self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
             self.send_header('Pragma', 'no-cache')
             self.send_header('Expires', '0')
-            self.end_headers()
-            
-            dir_path = os.path.dirname(os.path.abspath(__file__))
-            html_path = os.path.join(dir_path, 'index.html')
-            if os.path.exists(html_path):
-                with open(html_path, 'r', encoding='utf-8') as f:
-                    html_content = f.read()
-            else:
-                html_content = "<h1>Error: index.html not found!</h1>"
-                
-            self.wfile.write(html_content.encode('utf-8'))
-        elif parsed_path in ('/research', '/research.html', '/methodology', '/paper'):
+        else:
+            self.send_header('Cache-Control', 'no-cache')
+        self.end_headers()
+        if not head_only:
+            self.wfile.write(payload)
+
+    def do_HEAD(self):
+        self._handle_get_or_head(head_only=True)
+
+    def do_GET(self):
+        self._handle_get_or_head(head_only=False)
+
+    def _handle_get_or_head(self, head_only=False):
+        parsed_path = urllib.parse.urlparse(self.path).path
+        if parsed_path in ('/', '/index.html'):
+            self._send_html_file('index.html', no_store=True, head_only=head_only)
+        elif parsed_path in ('/favicon.ico', '/favicon.svg'):
+            svg_icon = (
+                '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">'
+                '<rect width="64" height="64" rx="14" fill="#C96442"/>'
+                '<text x="32" y="45" font-size="36" text-anchor="middle" fill="#FFFCF7" font-family="sans-serif">ꨌ</text>'
+                '</svg>'
+            ).encode('utf-8')
             self.send_response(200)
-            self.send_header('Content-type', 'text/html; charset=utf-8')
-            self.send_header('Cache-Control', 'public, max-age=1800')
+            self.send_header('Content-type', 'image/svg+xml')
+            self.send_header('Content-Length', str(len(svg_icon)))
+            self.send_header('Cache-Control', 'public, max-age=86400')
             self.end_headers()
-            
+            if not head_only:
+                self.wfile.write(svg_icon)
+        elif parsed_path.startswith('/static/'):
             dir_path = os.path.dirname(os.path.abspath(__file__))
-            research_path = os.path.join(dir_path, 'research.html')
-            if os.path.exists(research_path):
-                with open(research_path, 'r', encoding='utf-8') as f:
-                    content = f.read()
+            static_root = os.path.realpath(os.path.join(dir_path, 'static'))
+            rel_sub = parsed_path[len('/static/'):].lstrip('/\\')
+            candidate = os.path.realpath(os.path.join(static_root, rel_sub))
+            try:
+                common = os.path.commonpath([static_root, candidate])
+            except ValueError:
+                common = ""
+            if common != static_root or not os.path.isfile(candidate):
+                self.send_error(404, 'Static Asset Not Found')
+                return
+            ext = os.path.splitext(candidate)[1].lower()
+            mime = _STATIC_MIME_TYPES.get(ext, 'application/octet-stream')
+            with open(candidate, 'rb') as sf:
+                payload = sf.read()
+            self.send_response(200)
+            self.send_header('Content-type', mime)
+            self.send_header('Cache-Control', 'no-cache')
+            self.send_header('Content-Length', str(len(payload)))
+            self.end_headers()
+            if not head_only:
+                self.wfile.write(payload)
+        elif parsed_path == '/api/samples':
+            self.send_json_response({'samples': list_curated_samples()}, head_only=head_only)
+        elif parsed_path.startswith('/api/sample/'):
+            sample_id = urllib.parse.unquote(parsed_path[len('/api/sample/'):]).strip('/')
+            sample_data = load_curated_sample(sample_id)
+            if sample_data is None:
+                self.send_json_response({'error': f'Sample not found: {sample_id}'}, 404, head_only=head_only)
             else:
-                content = "<h1>Error: research.html not found!</h1>"
-            self.wfile.write(content.encode('utf-8'))
+                self.send_json_response(sample_data, head_only=head_only)
+        elif parsed_path == '/api/models':
+            self.send_json_response(list_available_models(), head_only=head_only)
+        elif parsed_path in ('/help', '/help.html', '/guide', '/manual', '/docs'):
+            self._send_html_file('help.html', no_store=False, head_only=head_only)
+        elif parsed_path in ('/research', '/research.html', '/methodology', '/paper'):
+            self._send_html_file('research.html', no_store=False, head_only=head_only)
         elif parsed_path in ('/health', '/api/health'):
+            body = b"OK"
             self.send_response(200)
             self.send_header('Content-type', 'text/plain; charset=utf-8')
+            self.send_header('Content-Length', str(len(body)))
             self.end_headers()
-            self.wfile.write(b"OK")
+            if not head_only:
+                self.wfile.write(body)
         else:
             self.send_error(404, 'File Not Found')
             
@@ -2761,25 +3314,26 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                 self.send_json_response({'error': 'Unable to read image (corrupted base64 payload)'}, 400)
                 return
                 
-            # Load model (errors are reported to the client as before)
-            t_model = time.time()
-            try:
-                get_ocr_model(model_ver)
-            except Exception as e:
-                import traceback
-                print(f"❌ Error loading OCR model '{model_ver}': {traceback.format_exc()}")
-                self.send_json_response({'error': f'Model loading failure ({model_ver}): {e}'}, 200)
-                return
-            print(f"⏱️  Loaded model in: {time.time() - t_model:.4f}s")
+            # Serialize Paddle C++ model loading & inference safely while keeping HTTP GET/health non-blocking
+            with _INFERENCE_LOCK:
+                t_model = time.time()
+                try:
+                    get_ocr_model(model_ver)
+                except Exception as e:
+                    import traceback
+                    print(f"❌ Error loading OCR model '{model_ver}': {traceback.format_exc()}")
+                    self.send_json_response({'error': f'Model loading failure ({model_ver}): {e}'}, 200)
+                    return
+                print(f"⏱️  Loaded model in: {time.time() - t_model:.4f}s")
 
-            try:
-                response = run_ocr_pipeline(img, model_ver=model_ver, method=method, threshold=threshold,
-                                            gap=gap, win=win, reading_order=reading_order, t_start=t_start)
-            except Exception as e:
-                import traceback
-                print(f"❌ Error during OCR pipeline: {traceback.format_exc()}")
-                self.send_json_response({'error': f'OCR transcription engine error: {e}'}, 200)
-                return
+                try:
+                    response = run_ocr_pipeline(img, model_ver=model_ver, method=method, threshold=threshold,
+                                                gap=gap, win=win, reading_order=reading_order, t_start=t_start)
+                except Exception as e:
+                    import traceback
+                    print(f"❌ Error during OCR pipeline: {traceback.format_exc()}")
+                    self.send_json_response({'error': f'OCR transcription engine error: {e}'}, 200)
+                    return
 
             t_send = time.time()
             self.send_json_response(response)
@@ -2790,7 +3344,8 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             content_length = int(self.headers['Content-Length'])
             post_data = self.rfile.read(content_length)
             data = json.loads(post_data.decode('utf-8'))
-            result = save_correction_entry(data)
+            with _CORRECTION_LOCK:
+                result = save_correction_entry(data)
             self.send_json_response(result)
         elif self.path == '/ocr_crop':
             content_length = int(self.headers['Content-Length'])
@@ -2831,19 +3386,21 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                 return
                 
             try:
-                ocr = get_ocr_model(model_ver)
-                res, _ = ocr([crop_img])
+                with _INFERENCE_LOCK:
+                    ocr = get_ocr_model(model_ver)
+                    res, _ = ocr([crop_img])
                 pred_text, conf = res[0] if res else ("", 0.0)
             except Exception as e:
                 self.send_json_response({'error': f'Cropped OCR transcription error ({model_ver}): {e}'}, 200)
                 return
                 
-            if model_ver in ['v24', 'v25', 'v26'] or str(model_ver).startswith('v24'):
-                try:
-                    from scripts.generate_data import normalize_unicode
-                    pred_text = normalize_unicode(pred_text)
-                except Exception as e:
-                    print(f"Warning: normalize_unicode failed: {e}")
+            if model_ver in ['auto', 'v24', 'v25', 'v26'] or str(model_ver).startswith('v24'):
+                if model_ver != 'auto' or any('\uAA00' <= ch <= '\uAA5F' for ch in (pred_text or '')):
+                    try:
+                        from scripts.generate_data import normalize_unicode
+                        pred_text = normalize_unicode(pred_text)
+                    except Exception as e:
+                        print(f"Warning: normalize_unicode failed: {e}")
                     
             _, buffer = cv2.imencode('.png', crop_img)
             crop_b64 = base64.b64encode(buffer).decode('utf-8')
@@ -2852,19 +3409,61 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                 'text': pred_text,
                 'confidence': float(conf),
                 'calibrated_confidence': calibrate_line_confidence(conf, model_ver, pred_text),
+                'image': crop_b64,
                 'crop_image': f"data:image/png;base64,{crop_b64}",
                 'bbox': [x1, y1, x2, y2]
             })
+        elif self.path == '/reconstruct_paragraphs':
+            content_length = int(self.headers.get('Content-Length') or 0)
+            post_data = self.rfile.read(content_length) if content_length > 0 else b'{}'
+            try:
+                data = json.loads(post_data.decode('utf-8'))
+                lines_in = data.get('lines') or []
+                from paragraph_flow import reconstruct_paragraph_flow
+                paragraphs, boundaries = reconstruct_paragraph_flow(lines_in)
+                self.send_json_response({'paragraphs': paragraphs, 'boundaries': boundaries})
+            except Exception as e:
+                self.send_json_response({'error': f'Paragraph reconstruction failed: {e}', 'paragraphs': [], 'boundaries': []}, 200)
+        elif self.path == '/normalize_text':
+            content_length = int(self.headers.get('Content-Length') or 0)
+            post_data = self.rfile.read(content_length) if content_length > 0 else b'{}'
+            try:
+                data = json.loads(post_data.decode('utf-8'))
+                raw_text = str(data.get('text') or '')
+                norm_text = raw_text
+                if any('\uAA00' <= ch <= '\uAA5F' for ch in raw_text):
+                    from scripts.generate_data import normalize_unicode
+                    norm_text = normalize_unicode(raw_text)
+                self.send_json_response({'normalized_text': norm_text, 'changed': (norm_text != raw_text)})
+            except Exception as e:
+                self.send_json_response({'error': str(e), 'normalized_text': data.get('text', ''), 'changed': False}, 200)
+        elif self.path == '/export_corpus_zip':
+            content_length = int(self.headers.get('Content-Length') or 0)
+            post_data = self.rfile.read(content_length) if content_length > 0 else b'{}'
+            try:
+                data = json.loads(post_data.decode('utf-8'))
+                zip_bytes = build_corpus_export_zip(data)
+                self.send_response(200)
+                self.send_header('Content-type', 'application/zip')
+                self.send_header('Content-Disposition', 'attachment; filename="cham_ocr_corpus_export.zip"')
+                self.send_header('Content-Length', str(len(zip_bytes)))
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                self.wfile.write(zip_bytes)
+            except Exception as e:
+                self.send_json_response({'error': f'Failed to build corpus ZIP: {e}'}, 500)
         else:
             self.send_error(404, 'Endpoint Not Found')
             
-    def send_json_response(self, data, status=200):
+    def send_json_response(self, data, status=200, head_only=False):
+        payload = json.dumps(data).encode('utf-8')
         self.send_response(status)
         self.send_header('Content-type', 'application/json; charset=utf-8')
-        # Allow Cross-Origin for flexibility
+        self.send_header('Content-Length', str(len(payload)))
         self.send_header('Access-Control-Allow-Origin', '*')
         self.end_headers()
-        self.wfile.write(json.dumps(data).encode('utf-8'))
+        if not head_only:
+            self.wfile.write(payload)
 
 # ==============================================================================
 # HTML Dashboard Frontend Template
@@ -2883,7 +3482,7 @@ def run_server():
     for port in preferred_ports:
         try:
             server_address = ('0.0.0.0', port)
-            httpd = HTTPServer(server_address, ChamOCRRequestHandler)
+            httpd = StudioHTTPServer(server_address, ChamOCRRequestHandler)
             actual_port = httpd.server_address[1]
             break
         except OSError:
@@ -2908,6 +3507,10 @@ def run_server():
         get_det_model()  # in DET_MODE='hybrid' this also pre-loads Cham-DBNet
     except Exception as e:
         print(f"⚠️  Could not pre-load the DBNet detector: {e}. It will load when requested.")
+    try:
+        list_curated_samples()  # Pre-warm specimen thumbnails at startup
+    except Exception:
+        pass
         
     try:
         httpd.serve_forever()

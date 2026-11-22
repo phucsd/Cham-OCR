@@ -19,8 +19,8 @@ WORKDIR /app
 COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Force cache bust for updated app code & Cham-DBNet v1 poly + ribbon rectification + V24.1-R4.1 WiSE-FT
-RUN echo "Cache bust 2026-11-18T05:45:00Z - Cham-DBNet v1 poly (unclip=1.8) + ribbon rectify_polygon_line + V24.1-R4.1 WiSE-FT + V26 mask-ready runtime"
+# Force cache bust for updated app code & V26.1 Masked-SVTR (6/6 Gates) + Auto Router v2.1 + RealScan-Gold v3
+RUN echo "Cache bust 2026-11-22T01:30:00Z - Cham-OCR Studio: V26.1 Masked-SVTR (6/6 Gates, 1deee5f5ff351070) + Auto Router v2.1 + RealScan-Gold v3"
 
 # Copy application files
 COPY . /app
