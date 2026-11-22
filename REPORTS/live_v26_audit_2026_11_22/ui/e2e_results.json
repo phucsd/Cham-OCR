@@ -1,0 +1,69 @@
+{
+  "cases": [
+    {
+      "name": "upload_image",
+      "enabled": true,
+      "visibleImages": 11,
+      "queuedText": "4 Baseline\nV23 Legacy\nTranscribe\n3-Pane\n▾\nCtrl+K\nExport\nHelp\n▾\nQueue\n1\ntest_006_lvl1.png\nUnprocessed\n1:1\n104%\nSpotlight\nLines\nStanza\n0 lines\nKB\nReady to Transcribe Folio\nRun automatic line detection & recognition, or delineate a specific region directly on the manuscript canvas.\n▶ Transcribe Folio\nCtrl+Enter\n✎ Draw Region\nD\nLoaded test_006_lvl1.png"
+    },
+    {
+      "name": "transcribe_from_UI",
+      "server_response": 200,
+      "statusText": "ꨌ\nCham OCR Studio\nPaleographic Workbench\nMODEL\nV26.1 SOTA\nV25 SOTA\nV24.1-R3.1\nV24.1-R2.1.6\nAuto Router\nVietnamese\nV24 Baseline\nV23 Legacy\nTranscribe\n3-Pane\n▾\nCtrl+K\nExport\nHelp\n▾\nQueue\n1\ntest_006_lvl1.png\nOCR done\n#1 · 94%\n#2 · 97%\n#3 · 96%\n#4 · 95%\n#5 · 91%\n#6 · 93%\n1:1\n104%\nSpotlight\nLines\nStanza\n6 lines\nKB\nCrop: Focus\nAa\nU+\n↶\n↷\nDetector: generic_ppocrv4_dbnet · Single-column flow · 4.0386s\n6 textlines\n1\nꨋꩇ ꨡꨯꩍ ꨁꨦꨗꩃ ꨚꨈꨭꩊ ꨚꨓꨯꨱ\n94%\nEdit\n✓\n↻\nSplit\nMerge ↓\nFlag\nU+\n🗑\n2\nꨙꩌ ꨀꨕꩅ ꨞꨳꩆ ꨚꨣꨤꨯꨩ ꨓꨟꨩ ꨀꨆꨯꨱꩀ ꨝꨪꨤꩆ ꨓꨎꨭꩍ\n97%\nEdit\n✓\n↻\n🗑\n3\n꩕꩞꩓꩞ ꨗꨆꨓꨯꨱꨩꩌ ꨨꨭꨩ ꨕꨯꩌ ꨀꨋꩇ ꨨꨤꨬ ꨡꨶꨮꩆ ꨡꨯꩍ\n96%\nEdit\n✓\n↻\n🗑\n4\nꨕꨤꩌ ꨨꨣꨬ ꨆꨓꨯꨩꩃ ꨂꨣꩃ ꨌꩌ ꨝꨴꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ\n95%\nEdit\n✓\n↻\n🗑\n5\n- ꨅꨩ ꨟꩀ ꨔꨰꩀ ꨓꨶꨬ ꨤꨪꨈꨰꩍ; ꨓꨯꩀ ꨓꨶꩀ ꨓꨭꩀ ꨃꩃ ꩝ ꨝꨳꩀ ꨆꨣꨬ\n91%\nEdit\n✓\n↻\n🗑\n6\nꨨꨈꨴꨮ ꨀꨕꩅ ꨃꨥ ꨢꩃ ꨣꨯꨱꩀ ꨀꨥ ꨇꩆ ꨛꨯꨮꩀ ꨓꨟꨳꨩ\n93%\nEdit\n✓\n↻\n🗑\nLine #1\n·\n0/6 verified\nClean\n‹ Flagged\nFlagged ›\n✓ Verify ≥75%\nExtracted 6 lines (4.0386s)",
+      "runEnabledAfter": true,
+      "visibleChars": 854
+    },
+    {
+      "name": "open_export",
+      "modal": [],
+      "buttons": [
+        "🗑",
+        "Edit",
+        "✓",
+        "↻",
+        "🗑",
+        "Edit",
+        "✓",
+        "↻",
+        "🗑",
+        "Edit",
+        "✓",
+        "↻",
+        "🗑",
+        "Edit",
+        "✓",
+        "↻",
+        "🗑",
+        "‹ Flagged",
+        "Flagged ›",
+        "✓ Verify ≥75%",
+        "✕",
+        "📋 Copy Plaintext to Clipboard\n                        Canonical Unicode Logical Order lines ready for immediate pasting.",
+        "📄 Unicode Plaintext (.txt)\n                        Clean UTF-8 diplomatic line transcription file.",
+        "📑 Scholarly Markdown Report (.md)\n                        Includes folio metadata, confidence scores, and Romanized transliteration.",
+        "🗂 Structured JSON (.json)\n                        Bounding boxes, polygons, confidences & RealScan-Gold ingest format.",
+        "🏛 Archival PAGE-XML (.xml)\n                        PRImA 2019 standard XML compatible with Transkribus & eScriptorium.",
+        "⚡ Active Learning Dataset (.zip)\n                        Complete archive bundling cropped PNG strips, train_list.txt, and corrections.jsonl.",
+        "Close"
+      ]
+    },
+    {
+      "name": "model_selector_v25",
+      "selected": "v25"
+    },
+    {
+      "name": "model_selector_auto",
+      "selected": "auto"
+    }
+  ],
+  "errors": [],
+  "net": [],
+  "responses": [
+    {
+      "url": "https://ocr.cham.asia/ocr",
+      "status": 200
+    }
+  ],
+  "downloads": [],
+  "utc": "2026-11-22T04:03:24.036Z"
+}

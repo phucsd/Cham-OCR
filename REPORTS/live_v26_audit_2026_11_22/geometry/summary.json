@@ -1,0 +1,266 @@
+{
+  "generated_utc": "2026-11-22T04:22:21.226020+00:00",
+  "method": "POST /ocr, dbnet, rows, all models same image+GT",
+  "models": {
+    "v24_1_r4": {
+      "n": 15,
+      "micro_cer_pct": 18.47,
+      "micro_wer_pct": 46.33,
+      "exact_pct": 0.0,
+      "count_match_pct": 93.33,
+      "med_backend_s": 16.762,
+      "med_wall_s": 19.546,
+      "gt_chars": 5295,
+      "edits": 978,
+      "calls": 15,
+      "errors": 0,
+      "model_weights": [
+        "1deee5f5ff351070"
+      ],
+      "blank_correct": 0,
+      "blanks_tested": 0
+    },
+    "v25": {
+      "n": 15,
+      "micro_cer_pct": 56.45,
+      "micro_wer_pct": 92.96,
+      "exact_pct": 0.0,
+      "count_match_pct": 80.0,
+      "med_backend_s": 15.773,
+      "med_wall_s": 18.25,
+      "gt_chars": 5295,
+      "edits": 2989,
+      "calls": 15,
+      "errors": 0,
+      "model_weights": [
+        "43cfb245523c1cbf"
+      ],
+      "blank_correct": 0,
+      "blanks_tested": 0
+    },
+    "auto": {
+      "n": 15,
+      "micro_cer_pct": 18.36,
+      "micro_wer_pct": 46.87,
+      "exact_pct": 0.0,
+      "count_match_pct": 93.33,
+      "med_backend_s": 15.364,
+      "med_wall_s": 17.813,
+      "gt_chars": 5295,
+      "edits": 972,
+      "calls": 15,
+      "errors": 0,
+      "model_weights": [
+        "1deee5f5ff351070"
+      ],
+      "blank_correct": 0,
+      "blanks_tested": 0
+    },
+    "v24_1_r3_1": {
+      "n": 14,
+      "micro_cer_pct": 21.62,
+      "micro_wer_pct": 54.12,
+      "exact_pct": 0.0,
+      "count_match_pct": 92.86,
+      "med_backend_s": 15.323,
+      "med_wall_s": 17.304,
+      "gt_chars": 4888,
+      "edits": 1057,
+      "calls": 14,
+      "errors": 0,
+      "model_weights": [
+        "5fb0d8e4d512b4c0"
+      ],
+      "blank_correct": 0,
+      "blanks_tested": 0
+    }
+  },
+  "by_tier": {
+    "v24_1_r4": {
+      "control": {
+        "n": 3,
+        "micro_cer_pct": 18.73,
+        "micro_wer_pct": 45.56,
+        "exact_pct": 0.0,
+        "count_match_pct": 100.0,
+        "med_backend_s": 9.118,
+        "med_wall_s": 11.0,
+        "gt_chars": 1116,
+        "edits": 209
+      },
+      "corner_curl": {
+        "n": 3,
+        "micro_cer_pct": 18.29,
+        "micro_wer_pct": 44.24,
+        "exact_pct": 0.0,
+        "count_match_pct": 100.0,
+        "med_backend_s": 12.959,
+        "med_wall_s": 16.39,
+        "gt_chars": 1121,
+        "edits": 205
+      },
+      "mixed_fonts": {
+        "n": 3,
+        "micro_cer_pct": 19.27,
+        "micro_wer_pct": 49.52,
+        "exact_pct": 0.0,
+        "count_match_pct": 100.0,
+        "med_backend_s": 16.829,
+        "med_wall_s": 19.546,
+        "gt_chars": 846,
+        "edits": 163
+      },
+      "rotation": {
+        "n": 6,
+        "micro_cer_pct": 18.13,
+        "micro_wer_pct": 46.55,
+        "exact_pct": 0.0,
+        "count_match_pct": 83.33,
+        "med_backend_s": 23.08,
+        "med_wall_s": 25.461,
+        "gt_chars": 2212,
+        "edits": 401
+      }
+    },
+    "v25": {
+      "control": {
+        "n": 3,
+        "micro_cer_pct": 62.54,
+        "micro_wer_pct": 91.48,
+        "exact_pct": 0.0,
+        "count_match_pct": 100.0,
+        "med_backend_s": 10.258,
+        "med_wall_s": 12.156,
+        "gt_chars": 1116,
+        "edits": 698
+      },
+      "corner_curl": {
+        "n": 3,
+        "micro_cer_pct": 59.14,
+        "micro_wer_pct": 92.81,
+        "exact_pct": 0.0,
+        "count_match_pct": 100.0,
+        "med_backend_s": 15.773,
+        "med_wall_s": 18.25,
+        "gt_chars": 1121,
+        "edits": 663
+      },
+      "mixed_fonts": {
+        "n": 3,
+        "micro_cer_pct": 31.32,
+        "micro_wer_pct": 63.46,
+        "exact_pct": 0.0,
+        "count_match_pct": 100.0,
+        "med_backend_s": 15.216,
+        "med_wall_s": 17.984,
+        "gt_chars": 846,
+        "edits": 265
+      },
+      "rotation": {
+        "n": 6,
+        "micro_cer_pct": 61.62,
+        "micro_wer_pct": 105.21,
+        "exact_pct": 0.0,
+        "count_match_pct": 50.0,
+        "med_backend_s": 18.341,
+        "med_wall_s": 21.968,
+        "gt_chars": 2212,
+        "edits": 1363
+      }
+    },
+    "auto": {
+      "control": {
+        "n": 3,
+        "micro_cer_pct": 19.27,
+        "micro_wer_pct": 48.89,
+        "exact_pct": 0.0,
+        "count_match_pct": 100.0,
+        "med_backend_s": 11.626,
+        "med_wall_s": 15.515,
+        "gt_chars": 1116,
+        "edits": 215
+      },
+      "corner_curl": {
+        "n": 3,
+        "micro_cer_pct": 18.29,
+        "micro_wer_pct": 44.96,
+        "exact_pct": 0.0,
+        "count_match_pct": 100.0,
+        "med_backend_s": 15.061,
+        "med_wall_s": 17.25,
+        "gt_chars": 1121,
+        "edits": 205
+      },
+      "mixed_fonts": {
+        "n": 3,
+        "micro_cer_pct": 19.62,
+        "micro_wer_pct": 48.08,
+        "exact_pct": 0.0,
+        "count_match_pct": 100.0,
+        "med_backend_s": 19.025,
+        "med_wall_s": 21.469,
+        "gt_chars": 846,
+        "edits": 166
+      },
+      "rotation": {
+        "n": 6,
+        "micro_cer_pct": 17.45,
+        "micro_wer_pct": 46.37,
+        "exact_pct": 0.0,
+        "count_match_pct": 83.33,
+        "med_backend_s": 20.017,
+        "med_wall_s": 22.406,
+        "gt_chars": 2212,
+        "edits": 386
+      }
+    },
+    "v24_1_r3_1": {
+      "control": {
+        "n": 3,
+        "micro_cer_pct": 23.39,
+        "micro_wer_pct": 56.3,
+        "exact_pct": 0.0,
+        "count_match_pct": 100.0,
+        "med_backend_s": 12.094,
+        "med_wall_s": 14.187,
+        "gt_chars": 1116,
+        "edits": 261
+      },
+      "corner_curl": {
+        "n": 3,
+        "micro_cer_pct": 21.94,
+        "micro_wer_pct": 53.24,
+        "exact_pct": 0.0,
+        "count_match_pct": 100.0,
+        "med_backend_s": 14.898,
+        "med_wall_s": 17.015,
+        "gt_chars": 1121,
+        "edits": 246
+      },
+      "mixed_fonts": {
+        "n": 3,
+        "micro_cer_pct": 20.69,
+        "micro_wer_pct": 49.04,
+        "exact_pct": 0.0,
+        "count_match_pct": 100.0,
+        "med_backend_s": 18.478,
+        "med_wall_s": 21.204,
+        "gt_chars": 846,
+        "edits": 175
+      },
+      "rotation": {
+        "n": 5,
+        "micro_cer_pct": 20.78,
+        "micro_wer_pct": 55.79,
+        "exact_pct": 0.0,
+        "count_match_pct": 80.0,
+        "med_backend_s": 19.657,
+        "med_wall_s": 22.437,
+        "gt_chars": 1805,
+        "edits": 375
+      }
+    }
+  },
+  "total_requests": 71,
+  "errors": []
+}

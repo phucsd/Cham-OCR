@@ -1,0 +1,85 @@
+{
+  "cases": [
+    "mix_02_fonts",
+    "real_harum_palei_01",
+    "synthetic_025"
+  ],
+  "models": {
+    "v24_1_r4": {
+      "cases": {
+        "mix_02_fonts": {
+          "dbnet_rows": 12.92,
+          "dbnet_auto": 12.92
+        },
+        "real_harum_palei_01": {
+          "dbnet_rows": 3.07,
+          "dbnet_auto": 3.07
+        },
+        "synthetic_025": {
+          "dbnet_rows": 3.67,
+          "dbnet_auto": 3.67
+        }
+      },
+      "matched": 3,
+      "mean_dbnet_rows_pct": 6.55,
+      "mean_dbnet_auto_pct": 6.55
+    },
+    "v25": {
+      "cases": {
+        "mix_02_fonts": {
+          "dbnet_rows": 25.36,
+          "dbnet_auto": 25.36
+        },
+        "real_harum_palei_01": {
+          "dbnet_rows": 26.12,
+          "dbnet_auto": 26.12
+        },
+        "synthetic_025": {
+          "dbnet_rows": 36.7,
+          "dbnet_auto": 36.7
+        }
+      },
+      "matched": 3,
+      "mean_dbnet_rows_pct": 29.39,
+      "mean_dbnet_auto_pct": 29.39
+    },
+    "auto": {
+      "cases": {
+        "mix_02_fonts": {
+          "dbnet_rows": 13.4,
+          "dbnet_auto": 13.4
+        },
+        "real_harum_palei_01": {
+          "dbnet_rows": 3.07,
+          "dbnet_auto": 3.07
+        },
+        "synthetic_025": {
+          "dbnet_rows": 3.67,
+          "dbnet_auto": 3.67
+        }
+      },
+      "matched": 3,
+      "mean_dbnet_rows_pct": 6.71,
+      "mean_dbnet_auto_pct": 6.71
+    },
+    "v24_1_r3_1": {
+      "cases": {
+        "mix_02_fonts": {
+          "dbnet_rows": 14.83,
+          "dbnet_auto": 14.83
+        },
+        "real_harum_palei_01": {
+          "dbnet_rows": 5.2,
+          "dbnet_auto": 5.2
+        },
+        "synthetic_025": {
+          "dbnet_rows": 4.59,
+          "dbnet_auto": 4.59
+        }
+      },
+      "matched": 3,
+      "mean_dbnet_rows_pct": 8.21,
+      "mean_dbnet_auto_pct": 8.21
+    }
+  }
+}

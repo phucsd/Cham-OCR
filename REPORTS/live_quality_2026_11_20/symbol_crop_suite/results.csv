@@ -1,0 +1,169 @@
+﻿id,kind,group,model,gt,pred,gt_chars,edits,cer,exact,symbol_correct,hyphen_count_correct,confidence,wall_sec,error,sha256
+symbol_35,symbol,!,v24_1_r4,ꨓꨝꨳꩀ ꨆꨭꨖꨩ !,ꨓꨝꨳꩀ ꨆꨭꨖꨩ !,11,0,0.0,True,True,,0.961047,18.562,,38934ff6cbf01b4985b06562a65244a429cc90262358e93570c56d69b16d5d24
+symbol_35,symbol,!,v24_1_r3_1,ꨓꨝꨳꩀ ꨆꨭꨖꨩ !,ꨓꨝꨳꩀ ꨆꨭꨖꨩ !,11,0,0.0,True,True,,0.9706,1.297,,38934ff6cbf01b4985b06562a65244a429cc90262358e93570c56d69b16d5d24
+symbol_35,symbol,!,v24_1_r3,ꨓꨝꨳꩀ ꨆꨭꨖꨩ !,ꨓꨝꨳꩀ ꨆꨭꨖꨩ !,11,0,0.0,True,True,,0.904797,0.953,,38934ff6cbf01b4985b06562a65244a429cc90262358e93570c56d69b16d5d24
+symbol_35,symbol,!,v24_1_r2_1_6,ꨓꨝꨳꩀ ꨆꨭꨖꨩ !,ꨓꨝꨳꩀ ꨆꨭꨖꨩ !,11,0,0.0,True,True,,0.952309,1.11,,38934ff6cbf01b4985b06562a65244a429cc90262358e93570c56d69b16d5d24
+symbol_39,symbol,!,v24_1_r4,ꨚꨗꩍ ꨆꨭꨖꨩ !,ꨚꨗꩍ ꨆꨭꨖꨩ !,10,0,0.0,True,True,,0.968251,1.406,,a47f31da9da89922ae37ab6e1b5506333cc8787e6d09164c6d25660289109614
+symbol_39,symbol,!,v24_1_r3_1,ꨚꨗꩍ ꨆꨭꨖꨩ !,ꨚꨗꩍ ꨆꨭꨖꨩ !,10,0,0.0,True,True,,0.931878,2.641,,a47f31da9da89922ae37ab6e1b5506333cc8787e6d09164c6d25660289109614
+symbol_39,symbol,!,v24_1_r3,ꨚꨗꩍ ꨆꨭꨖꨩ !,ꨚꨗꩍ ꨆꨭꨖꨩ ?,10,1,0.1,False,False,,0.90467,1.907,,a47f31da9da89922ae37ab6e1b5506333cc8787e6d09164c6d25660289109614
+symbol_39,symbol,!,v24_1_r2_1_6,ꨚꨗꩍ ꨆꨭꨖꨩ !,ꨚꨗꩍ ꨆꨭꨖꨩ !,10,0,0.0,True,True,,0.908052,1.047,,a47f31da9da89922ae37ab6e1b5506333cc8787e6d09164c6d25660289109614
+symbol_57,symbol,#,v24_1_r4,ꨆꨭꨖꨩ #952 ꨓꨶꨮꩉ,ꨆꨭꨖꨩ #952 ꨓꨶꨮꩉ,14,0,0.0,True,True,,0.985667,1.453,,b213747b8ca23e226675621f984dde6ed7b870ee633450d1f341768e791c8bf2
+symbol_57,symbol,#,v24_1_r3_1,ꨆꨭꨖꨩ #952 ꨓꨶꨮꩉ,ꨆꨭꨖꨩ #952 ꨓꨶꨮꩉ,14,0,0.0,True,True,,0.979521,3.984,,b213747b8ca23e226675621f984dde6ed7b870ee633450d1f341768e791c8bf2
+symbol_57,symbol,#,v24_1_r3,ꨆꨭꨖꨩ #952 ꨓꨶꨮꩉ,ꨆꨭꨖꨩ #952 ꨓꨶꨮꩉ,14,0,0.0,True,True,,0.987424,1.235,,b213747b8ca23e226675621f984dde6ed7b870ee633450d1f341768e791c8bf2
+symbol_57,symbol,#,v24_1_r2_1_6,ꨆꨭꨖꨩ #952 ꨓꨶꨮꩉ,ꨆꨭꨖꨩ #952 ꨓꨶꨮꩉ,14,0,0.0,True,True,,0.984952,0.985,,b213747b8ca23e226675621f984dde6ed7b870ee633450d1f341768e791c8bf2
+symbol_53,symbol,#,v24_1_r4,ꨓꨶꨮꩉ #88 ꨧꨪ,ꨓꨶꨮꩉ #88 ꨧꨪ,11,0,0.0,True,True,,0.982245,1.062,,b3f33e017be0fd12a94816e64b45cf4f2b4b420b540725efb1a5814d82287967
+symbol_53,symbol,#,v24_1_r3_1,ꨓꨶꨮꩉ #88 ꨧꨪ,ꨓꨶꨮꩉ #88 ꨧꨪ,11,0,0.0,True,True,,0.977184,1.016,,b3f33e017be0fd12a94816e64b45cf4f2b4b420b540725efb1a5814d82287967
+symbol_53,symbol,#,v24_1_r3,ꨓꨶꨮꩉ #88 ꨧꨪ,ꨓꨶꨮꩉ #88 ꨧꨪ,11,0,0.0,True,True,,0.989924,2.578,,b3f33e017be0fd12a94816e64b45cf4f2b4b420b540725efb1a5814d82287967
+symbol_53,symbol,#,v24_1_r2_1_6,ꨓꨶꨮꩉ #88 ꨧꨪ,ꨓꨶꨮꩉ #88 ꨧꨪ,11,0,0.0,True,True,,0.97805,1.016,,b3f33e017be0fd12a94816e64b45cf4f2b4b420b540725efb1a5814d82287967
+symbol_70,symbol,&,v24_1_r4,ꨧꨪ & ꨧꨪ,ꨧꨪ & ꨧꨪ,7,0,0.0,True,True,,0.987498,1.609,,1dd4bc11d3f0bfb481619b719d5cc5bc9dde6288cda9925e399e14882c622326
+symbol_70,symbol,&,v24_1_r3_1,ꨧꨪ & ꨧꨪ,ꨧꨪ & ꨧꨪ,7,0,0.0,True,True,,0.904856,0.985,,1dd4bc11d3f0bfb481619b719d5cc5bc9dde6288cda9925e399e14882c622326
+symbol_70,symbol,&,v24_1_r3,ꨧꨪ & ꨧꨪ,ꨧꨪ & ꨧꨪ,7,0,0.0,True,True,,0.936439,1.39,,1dd4bc11d3f0bfb481619b719d5cc5bc9dde6288cda9925e399e14882c622326
+symbol_70,symbol,&,v24_1_r2_1_6,ꨧꨪ & ꨧꨪ,ꨧꨪ & ꨧꨪ,7,0,0.0,True,True,,0.995995,1.016,,1dd4bc11d3f0bfb481619b719d5cc5bc9dde6288cda9925e399e14882c622326
+symbol_67,symbol,&,v24_1_r4,ꨔꩅ & ꨓꨶꨮꩉ,ꨔꩅ & ꨓꨶꨮꩉ,9,0,0.0,True,True,,0.981152,0.907,,2cf28cf90d537c49b417b3e4b3547c62ec3941d9a4accf7b798946ee6ec003e2
+symbol_67,symbol,&,v24_1_r3_1,ꨔꩅ & ꨓꨶꨮꩉ,ꨔꩅ & ꨓꨶꨮꩉ,9,0,0.0,True,True,,0.993969,1.718,,2cf28cf90d537c49b417b3e4b3547c62ec3941d9a4accf7b798946ee6ec003e2
+symbol_67,symbol,&,v24_1_r3,ꨔꩅ & ꨓꨶꨮꩉ,ꨔꩅ & ꨓꨶꨮꩉ,9,0,0.0,True,True,,0.991993,1.391,,2cf28cf90d537c49b417b3e4b3547c62ec3941d9a4accf7b798946ee6ec003e2
+symbol_67,symbol,&,v24_1_r2_1_6,ꨔꩅ & ꨓꨶꨮꩉ,ꨔꩅ & ꨓꨶꨮꩉ,9,0,0.0,True,True,,0.991244,0.844,,2cf28cf90d537c49b417b3e4b3547c62ec3941d9a4accf7b798946ee6ec003e2
+symbol_85,symbol,*,v24_1_r4,* ꨆꨭꨖꨩ ꨀꨆꨢꨯꨮꩅ *,* ꨆꨭꨖꨩ ꨀꨆꨢꨯꨮꩅ *,15,0,0.0,True,True,,0.902735,1.016,,409901d4986645582ea3b2e7b4856d23407f5430f74521ba8aacbd1ca2c6b3ca
+symbol_85,symbol,*,v24_1_r3_1,* ꨆꨭꨖꨩ ꨀꨆꨢꨯꨮꩅ *,* ꨆꨭꨖꨩ ꨀꨆꨢꨯꨮꩅ *,15,0,0.0,True,True,,0.921857,3.406,,409901d4986645582ea3b2e7b4856d23407f5430f74521ba8aacbd1ca2c6b3ca
+symbol_85,symbol,*,v24_1_r3,* ꨆꨭꨖꨩ ꨀꨆꨢꨯꨮꩅ *,* ꨆꨭꨖꨩ ꨀꨆꨢꨯꨮꩅ *,15,0,0.0,True,True,,0.932552,3.719,,409901d4986645582ea3b2e7b4856d23407f5430f74521ba8aacbd1ca2c6b3ca
+symbol_85,symbol,*,v24_1_r2_1_6,* ꨆꨭꨖꨩ ꨀꨆꨢꨯꨮꩅ *,* ꨆꨭꨖꨩ ꨀꨆꨢꨯꨮꩅ *,15,0,0.0,True,True,,0.926664,2.547,,409901d4986645582ea3b2e7b4856d23407f5430f74521ba8aacbd1ca2c6b3ca
+symbol_94,symbol,*,v24_1_r4,* ꨧꨪ ꨓꨶꨮꩉ *,* ꨧꨪ ꨓꨶꨮꩉ *,11,0,0.0,True,True,,0.893483,1.328,,7caad49684903723d2a9ca0dfa9308e357c806529c99b10bb967082273f5f9c2
+symbol_94,symbol,*,v24_1_r3_1,* ꨧꨪ ꨓꨶꨮꩉ *,* ꨧꨪ ꨓꨶꨮꩉ *,11,0,0.0,True,True,,0.927946,0.969,,7caad49684903723d2a9ca0dfa9308e357c806529c99b10bb967082273f5f9c2
+symbol_94,symbol,*,v24_1_r3,* ꨧꨪ ꨓꨶꨮꩉ *,* ꨧꨪ ꨓꨶꨮꩉ *,11,0,0.0,True,True,,0.926429,3.5,,7caad49684903723d2a9ca0dfa9308e357c806529c99b10bb967082273f5f9c2
+symbol_94,symbol,*,v24_1_r2_1_6,* ꨧꨪ ꨓꨶꨮꩉ *,* ꨧꨪ ꨓꨮꩉ *,11,1,0.09090909090909091,False,True,,0.875637,1.031,,7caad49684903723d2a9ca0dfa9308e357c806529c99b10bb967082273f5f9c2
+symbol_264,symbol,/,v24_1_r4,ꨆꨭꨖꨩ/ꨓꨶꨮꩉ,ꨆꨭꨖꨩ ꨓꨶꨮꩉ,9,1,0.1111111111111111,False,False,,0.935275,0.937,,1288030f5773bb7a5f42efd596e81f33a8a0e548360dad5548c7b2dfdf411b5a
+symbol_264,symbol,/,v24_1_r3_1,ꨆꨭꨖꨩ/ꨓꨶꨮꩉ,ꨆꨭꨖꨩ-ꨓꨶꨮꩉ,9,1,0.1111111111111111,False,False,,0.881525,0.844,,1288030f5773bb7a5f42efd596e81f33a8a0e548360dad5548c7b2dfdf411b5a
+symbol_264,symbol,/,v24_1_r3,ꨆꨭꨖꨩ/ꨓꨶꨮꩉ,ꨆꨭꨖꨩ ꨓꨶꨮꩉ,9,1,0.1111111111111111,False,False,,0.90584,1.0,,1288030f5773bb7a5f42efd596e81f33a8a0e548360dad5548c7b2dfdf411b5a
+symbol_264,symbol,/,v24_1_r2_1_6,ꨆꨭꨖꨩ/ꨓꨶꨮꩉ,ꨆꨭꨖꨩ ꨓꨶꨮꩉ,9,1,0.1111111111111111,False,False,,0.958631,0.953,,1288030f5773bb7a5f42efd596e81f33a8a0e548360dad5548c7b2dfdf411b5a
+symbol_274,symbol,/,v24_1_r4,ꨓꨶꨮꩉ/ꨓꨝꨳꩀ,ꨓꨶꨮꩉ/ꨓꨝꨳꩀ,9,0,0.0,True,True,,0.981271,1.14,,c8085d4f9dbfb644d41e2f5b048e42eacfa3cc80fba009dce152850f78a177a2
+symbol_274,symbol,/,v24_1_r3_1,ꨓꨶꨮꩉ/ꨓꨝꨳꩀ,ꨓꨶꨮꩉ/ꨓꨝꨳꩀ,9,0,0.0,True,True,,0.978971,1.094,,c8085d4f9dbfb644d41e2f5b048e42eacfa3cc80fba009dce152850f78a177a2
+symbol_274,symbol,/,v24_1_r3,ꨓꨶꨮꩉ/ꨓꨝꨳꩀ,ꨓꨶꨮꩉ/ꨓꨝꨳꩀ,9,0,0.0,True,True,,0.976307,4.641,,c8085d4f9dbfb644d41e2f5b048e42eacfa3cc80fba009dce152850f78a177a2
+symbol_274,symbol,/,v24_1_r2_1_6,ꨓꨶꨮꩉ/ꨓꨝꨳꩀ,ꨓꨶꨮꩉ/ꨓꨝꨳꩀ,9,0,0.0,True,True,,0.981609,0.828,,c8085d4f9dbfb644d41e2f5b048e42eacfa3cc80fba009dce152850f78a177a2
+symbol_105,symbol,<,v24_1_r4,ꨚꨗꩍ < ꨔꩅ,ꨚꨗꩍ < ꨔꩅ,8,0,0.0,True,True,,0.970728,0.922,,86766cfd7bb41b1ce744b2c3dd1974832bbbd0646989fdfdd34283c0316a8c8a
+symbol_105,symbol,<,v24_1_r3_1,ꨚꨗꩍ < ꨔꩅ,ꨚꨗꩍ < ꨔꩅ,8,0,0.0,True,True,,0.976142,1.343,,86766cfd7bb41b1ce744b2c3dd1974832bbbd0646989fdfdd34283c0316a8c8a
+symbol_105,symbol,<,v24_1_r3,ꨚꨗꩍ < ꨔꩅ,ꨚꨗꩍ < ꨔꩅ,8,0,0.0,True,True,,0.969313,1.079,,86766cfd7bb41b1ce744b2c3dd1974832bbbd0646989fdfdd34283c0316a8c8a
+symbol_105,symbol,<,v24_1_r2_1_6,ꨚꨗꩍ < ꨔꩅ,ꨚꨗꩍ < ꨔꩅ,8,0,0.0,True,True,,0.973759,0.953,,86766cfd7bb41b1ce744b2c3dd1974832bbbd0646989fdfdd34283c0316a8c8a
+symbol_120,symbol,<,v24_1_r4,ꨚꨗꨶꨮꩄ < ꨚꨗꩍ,ꨚꨗꨶꨮꩄ < ꨚꨗꩍ,11,0,0.0,True,True,,0.891408,1.282,,632eebec12340a3655256a142cabbd81845e70186d46b186788ae1a7a9807420
+symbol_120,symbol,<,v24_1_r3_1,ꨚꨗꨶꨮꩄ < ꨚꨗꩍ,ꨚꨗꨶꨮꩄ < ꨚꨗꩍ,11,0,0.0,True,True,,0.942729,0.969,,632eebec12340a3655256a142cabbd81845e70186d46b186788ae1a7a9807420
+symbol_120,symbol,<,v24_1_r3,ꨚꨗꨶꨮꩄ < ꨚꨗꩍ,ꨚꨗꨶꨮꩄ < ꨚꨗꩍ,11,0,0.0,True,True,,0.902149,0.875,,632eebec12340a3655256a142cabbd81845e70186d46b186788ae1a7a9807420
+symbol_120,symbol,<,v24_1_r2_1_6,ꨚꨗꨶꨮꩄ < ꨚꨗꩍ,ꨚꨗꨶꨮꩄ < ꨚꨗꩍ,11,0,0.0,True,True,,0.934526,1.297,,632eebec12340a3655256a142cabbd81845e70186d46b186788ae1a7a9807420
+symbol_130,symbol,>,v24_1_r4,ꨚꨗꩍ > ꨧꨪ,ꨚꨗꩍ > ꨧꨪ,8,0,0.0,True,True,,0.941485,0.969,,2a0e4674192791936a0ffd89338b7ce49574aeeb0932e1dd69dae0ca80ecb777
+symbol_130,symbol,>,v24_1_r3_1,ꨚꨗꩍ > ꨧꨪ,ꨚꨗꩍ > ꨧꨪ,8,0,0.0,True,True,,0.908952,0.985,,2a0e4674192791936a0ffd89338b7ce49574aeeb0932e1dd69dae0ca80ecb777
+symbol_130,symbol,>,v24_1_r3,ꨚꨗꩍ > ꨧꨪ,ꨚꨗꩍ > ꨧꨪ,8,0,0.0,True,True,,0.887941,1.625,,2a0e4674192791936a0ffd89338b7ce49574aeeb0932e1dd69dae0ca80ecb777
+symbol_130,symbol,>,v24_1_r2_1_6,ꨚꨗꩍ > ꨧꨪ,ꨚꨗꩍ > ꨧꨪ,8,0,0.0,True,True,,0.939116,0.859,,2a0e4674192791936a0ffd89338b7ce49574aeeb0932e1dd69dae0ca80ecb777
+symbol_127,symbol,>,v24_1_r4,ꨚꨗꩍ > ꨆꨭꨖꨩ,ꨚꨗꩍ > ꨆꨭꨖꨩ,10,0,0.0,True,True,,0.96992,0.953,,5f56456dc3f83c8ce0cfd20995341994884f2b61cdd0b6f220ac1ff9a6c2000c
+symbol_127,symbol,>,v24_1_r3_1,ꨚꨗꩍ > ꨆꨭꨖꨩ,ꨚꨗꩍ > ꨆꨭꨖꨩ,10,0,0.0,True,True,,0.970841,1.968,,5f56456dc3f83c8ce0cfd20995341994884f2b61cdd0b6f220ac1ff9a6c2000c
+symbol_127,symbol,>,v24_1_r3,ꨚꨗꩍ > ꨆꨭꨖꨩ,ꨚꨗꩍ > ꨆꨭꨖꨩ,10,0,0.0,True,True,,0.909035,3.094,,5f56456dc3f83c8ce0cfd20995341994884f2b61cdd0b6f220ac1ff9a6c2000c
+symbol_127,symbol,>,v24_1_r2_1_6,ꨚꨗꩍ > ꨆꨭꨖꨩ,ꨚꨗꩍ > ꨆꨭꨖꨩ,10,0,0.0,True,True,,0.972924,1.047,,5f56456dc3f83c8ce0cfd20995341994884f2b61cdd0b6f220ac1ff9a6c2000c
+symbol_15,symbol,?,v24_1_r4,ꨀꨆꨢꨯꨮꩅ ꨔꩅ ?,ꨀꨆꨢꨯꨮꩅ ꨔꩅ ?,11,0,0.0,True,True,,0.959316,1.015,,d0534fcdfd4beded1d7df0790db1f801de67fd1a4d3195c56412e4bca05ecdc1
+symbol_15,symbol,?,v24_1_r3_1,ꨀꨆꨢꨯꨮꩅ ꨔꩅ ?,ꨀꨆꨢꨯꨮꩅ ꨔꩅ ?,11,0,0.0,True,True,,0.928846,1.062,,d0534fcdfd4beded1d7df0790db1f801de67fd1a4d3195c56412e4bca05ecdc1
+symbol_15,symbol,?,v24_1_r3,ꨀꨆꨢꨯꨮꩅ ꨔꩅ ?,ꨀꨆꨢꨯꨮꩅ ꨔꩅ ?,11,0,0.0,True,True,,0.955749,2.11,,d0534fcdfd4beded1d7df0790db1f801de67fd1a4d3195c56412e4bca05ecdc1
+symbol_15,symbol,?,v24_1_r2_1_6,ꨀꨆꨢꨯꨮꩅ ꨔꩅ ?,ꨀꨆꨢꨯꨮꩅ ꨔꩅ ?,11,0,0.0,True,True,,0.945326,0.891,,d0534fcdfd4beded1d7df0790db1f801de67fd1a4d3195c56412e4bca05ecdc1
+symbol_12,symbol,?,v24_1_r4,ꨚꨗꨶꨮꩄ ꨧꨪ ?,ꨚꨗꨶꨮꩄ ꨧꨪ ?,10,0,0.0,True,True,,0.930079,4.266,,e2eb0ab6ff72ff33c89dbd607d076e57baf4c14fce0cc26f1c057e8f9144a034
+symbol_12,symbol,?,v24_1_r3_1,ꨚꨗꨶꨮꩄ ꨧꨪ ?,ꨚꨗꨶꨮꩄ ꨧꨪ ?,10,0,0.0,True,True,,0.955762,2.265,,e2eb0ab6ff72ff33c89dbd607d076e57baf4c14fce0cc26f1c057e8f9144a034
+symbol_12,symbol,?,v24_1_r3,ꨚꨗꨶꨮꩄ ꨧꨪ ?,ꨚꨗꨶꨮꩄ ꨧꨪ ?,10,0,0.0,True,True,,0.966366,1.266,,e2eb0ab6ff72ff33c89dbd607d076e57baf4c14fce0cc26f1c057e8f9144a034
+symbol_12,symbol,?,v24_1_r2_1_6,ꨚꨗꨶꨮꩄ ꨧꨪ ?,ꨚꨗꨶꨮꩄ ꨧꨪ ?,10,0,0.0,True,True,,0.94178,1.359,,e2eb0ab6ff72ff33c89dbd607d076e57baf4c14fce0cc26f1c057e8f9144a034
+symbol_231,symbol,[,v24_1_r4,ꨓꨶꨮꩉ [817] ꨚꨗꨶꨮꩄ,ꨓꨶꨮꩉ [817] ꨚꨗꨶꨮꩄ,16,0,0.0,True,True,,0.950402,2.344,,a5312a514255c946571d5705fb561a603b9645e6e2f1a52c7b4fee9839c3f273
+symbol_231,symbol,[,v24_1_r3_1,ꨓꨶꨮꩉ [817] ꨚꨗꨶꨮꩄ,ꨓꨶꨮꩉ [817] ꨚꨗꨶꨮꩄ,16,0,0.0,True,True,,0.942772,1.656,,a5312a514255c946571d5705fb561a603b9645e6e2f1a52c7b4fee9839c3f273
+symbol_231,symbol,[,v24_1_r3,ꨓꨶꨮꩉ [817] ꨚꨗꨶꨮꩄ,ꨓꨶꨮꩉ [817] ꨚꨗꨶꨮꩄ,16,0,0.0,True,True,,0.927464,1.094,,a5312a514255c946571d5705fb561a603b9645e6e2f1a52c7b4fee9839c3f273
+symbol_231,symbol,[,v24_1_r2_1_6,ꨓꨶꨮꩉ [817] ꨚꨗꨶꨮꩄ,ꨓꨶꨮꩉ [2817] ꨚꨗꨶꨮꩄ,16,1,0.0625,False,True,,0.951292,0.89,,a5312a514255c946571d5705fb561a603b9645e6e2f1a52c7b4fee9839c3f273
+symbol_226,symbol,[,v24_1_r4,ꨓꨶꨮꩉ [286] ꨧꨪ,ꨓꨶꨮꩉ [286] ꨧꨪ,13,0,0.0,True,True,,0.985639,2.047,,db2e38ff812bd21bfdea6dc5b1d13e175548cfdfcfabb7ecadd25e0b1ac93599
+symbol_226,symbol,[,v24_1_r3_1,ꨓꨶꨮꩉ [286] ꨧꨪ,ꨓꨶꨮꩉ [286] ꨧꨪ,13,0,0.0,True,True,,0.980051,1.031,,db2e38ff812bd21bfdea6dc5b1d13e175548cfdfcfabb7ecadd25e0b1ac93599
+symbol_226,symbol,[,v24_1_r3,ꨓꨶꨮꩉ [286] ꨧꨪ,ꨓꨶꨮꩉ [286] ꨧꨪ,13,0,0.0,True,True,,0.993695,1.0,,db2e38ff812bd21bfdea6dc5b1d13e175548cfdfcfabb7ecadd25e0b1ac93599
+symbol_226,symbol,[,v24_1_r2_1_6,ꨓꨶꨮꩉ [286] ꨧꨪ,ꨓꨶꨮꩉ [286] ꨧꨪ,13,0,0.0,True,True,,0.955729,17.547,,db2e38ff812bd21bfdea6dc5b1d13e175548cfdfcfabb7ecadd25e0b1ac93599
+symbol_199,symbol,\,v24_1_r4,ꨓꨶꨮꩉ \ ꨔꩅ,ꨓꨶꨮꩉ \ ꨔꩅ,9,0,0.0,True,True,,0.983455,4.422,,a64cda997951c0a1cc5603f8da440b2534cdb10ec832683325132f26a05f92fa
+symbol_199,symbol,\,v24_1_r3_1,ꨓꨶꨮꩉ \ ꨔꩅ,ꨓꨶꨮꩉ \ ꨔꩅ,9,0,0.0,True,True,,0.972332,1.078,,a64cda997951c0a1cc5603f8da440b2534cdb10ec832683325132f26a05f92fa
+symbol_199,symbol,\,v24_1_r3,ꨓꨶꨮꩉ \ ꨔꩅ,ꨓꨶꨮꩉ \ ꨔꩅ,9,0,0.0,True,True,,0.980825,0.984,,a64cda997951c0a1cc5603f8da440b2534cdb10ec832683325132f26a05f92fa
+symbol_199,symbol,\,v24_1_r2_1_6,ꨓꨶꨮꩉ \ ꨔꩅ,ꨓꨶꨮꩉ \ ꨔꩅ,9,0,0.0,True,True,,0.985732,3.031,,a64cda997951c0a1cc5603f8da440b2534cdb10ec832683325132f26a05f92fa
+symbol_198,symbol,\,v24_1_r4,ꨓꨝꨳꩀ \ ꨆꨭꨖꨩ,ꨓꨝꨳꩀ \ ꨆꨭꨖꨩ,11,0,0.0,True,True,,0.92444,1.047,,30bd07c1042375cd34100786acfd3adede014396878a3216f886360ab0da3fbd
+symbol_198,symbol,\,v24_1_r3_1,ꨓꨝꨳꩀ \ ꨆꨭꨖꨩ,ꨓꨝꨳꩀ \ ꨆꨭꨖꨩ,11,0,0.0,True,True,,0.949146,1.891,,30bd07c1042375cd34100786acfd3adede014396878a3216f886360ab0da3fbd
+symbol_198,symbol,\,v24_1_r3,ꨓꨝꨳꩀ \ ꨆꨭꨖꨩ,ꨓꨝꨳꩀ \ ꨆꨭꨖꨩ,11,0,0.0,True,True,,0.931738,1.265,,30bd07c1042375cd34100786acfd3adede014396878a3216f886360ab0da3fbd
+symbol_198,symbol,\,v24_1_r2_1_6,ꨓꨝꨳꩀ \ ꨆꨭꨖꨩ,ꨓꨝꨳꩀ \ ꨆꨭꨖꨩ,11,0,0.0,True,True,,0.978352,1.016,,30bd07c1042375cd34100786acfd3adede014396878a3216f886360ab0da3fbd
+symbol_250,symbol,],v24_1_r4,ꨓꨶꨮꩉ [233] ꨓꨝꨳꩀ,ꨓꨶꨮꩉ [23] ꨓꨝꨳꩀ,15,1,0.06666666666666667,False,True,,0.99578,1.094,,56fc36802e7466afe6e30b562a5f4d1148ac1b96755d422a32a800795be32405
+symbol_250,symbol,],v24_1_r3_1,ꨓꨶꨮꩉ [233] ꨓꨝꨳꩀ,ꨓꨶꨮꩉ [233] ꨓꨝꨳꩀ,15,0,0.0,True,True,,0.998909,1.218,,56fc36802e7466afe6e30b562a5f4d1148ac1b96755d422a32a800795be32405
+symbol_250,symbol,],v24_1_r3,ꨓꨶꨮꩉ [233] ꨓꨝꨳꩀ,ꨓꨶꨮꩉ [233] ꨓꨝꨳꩀ,15,0,0.0,True,True,,0.998213,1.282,,56fc36802e7466afe6e30b562a5f4d1148ac1b96755d422a32a800795be32405
+symbol_250,symbol,],v24_1_r2_1_6,ꨓꨶꨮꩉ [233] ꨓꨝꨳꩀ,ꨓꨶꨮꩉ [233] ꨓꨝꨳꩀ,15,0,0.0,True,True,,0.997739,1.078,,56fc36802e7466afe6e30b562a5f4d1148ac1b96755d422a32a800795be32405
+symbol_243,symbol,],v24_1_r4,ꨚꨗꨶꨮꩄ [720] ꨚꨗꨶꨮꩄ,ꨚꨗꨶꨮꩄ [720] ꨚꨗꨶꨮꩄ,17,0,0.0,True,True,,0.97287,1.516,,4d8ceb59f2fc233c064784d9bd8bcea738a15158650630c225f4b21976ba6897
+symbol_243,symbol,],v24_1_r3_1,ꨚꨗꨶꨮꩄ [720] ꨚꨗꨶꨮꩄ,ꨚꨗꨶꨮꩄ [720] ꨚꨗꨶꨮꩄ,17,0,0.0,True,True,,0.963481,1.032,,4d8ceb59f2fc233c064784d9bd8bcea738a15158650630c225f4b21976ba6897
+symbol_243,symbol,],v24_1_r3,ꨚꨗꨶꨮꩄ [720] ꨚꨗꨶꨮꩄ,ꨚꨗꨶꨮꩄ [720] ꨚꨗꨶꨮꩄ,17,0,0.0,True,True,,0.946275,0.906,,4d8ceb59f2fc233c064784d9bd8bcea738a15158650630c225f4b21976ba6897
+symbol_243,symbol,],v24_1_r2_1_6,ꨚꨗꨶꨮꩄ [720] ꨚꨗꨶꨮꩄ,ꨚꨗꨶꨮꩄ [720] ꨚꨗꨶꨮꩄ,17,0,0.0,True,True,,0.946158,1.093,,4d8ceb59f2fc233c064784d9bd8bcea738a15158650630c225f4b21976ba6897
+symbol_210,symbol,_,v24_1_r4,ꨧꨪ_ꨚꨗꩍ,ꨧꨪ_ꨚꨗꩍ,6,0,0.0,True,True,,0.93796,1.266,,a92911ae63d44e0cda0f6c3a1681fbea92e427a4bb995e7063021883d376f0aa
+symbol_210,symbol,_,v24_1_r3_1,ꨧꨪ_ꨚꨗꩍ,ꨧꨪ_ꨚꨗꩍ,6,0,0.0,True,True,,0.931435,0.968,,a92911ae63d44e0cda0f6c3a1681fbea92e427a4bb995e7063021883d376f0aa
+symbol_210,symbol,_,v24_1_r3,ꨧꨪ_ꨚꨗꩍ,ꨧꨪ_ꨚꨗꩍ,6,0,0.0,True,True,,0.916227,1.969,,a92911ae63d44e0cda0f6c3a1681fbea92e427a4bb995e7063021883d376f0aa
+symbol_210,symbol,_,v24_1_r2_1_6,ꨧꨪ_ꨚꨗꩍ,ꨧꨪ_ꨚꨗꩍ,6,0,0.0,True,True,,0.927778,0.984,,a92911ae63d44e0cda0f6c3a1681fbea92e427a4bb995e7063021883d376f0aa
+symbol_202,symbol,_,v24_1_r4,ꨧꨪ_ꨔꩅ,ꨧꨪꨔꩅ,5,1,0.2,False,False,,0.937205,1.969,,1cf4ab1d3facb4cceee2a5f6409d1394bdc9cdbf010fa431f4671b9e4885010a
+symbol_202,symbol,_,v24_1_r3_1,ꨧꨪ_ꨔꩅ,ꨧꨪꨔꩅ,5,1,0.2,False,False,,0.984686,1.063,,1cf4ab1d3facb4cceee2a5f6409d1394bdc9cdbf010fa431f4671b9e4885010a
+symbol_202,symbol,_,v24_1_r3,ꨧꨪ_ꨔꩅ,ꨧꨪꨔꨰꩅ,5,2,0.4,False,False,,0.919653,1.218,,1cf4ab1d3facb4cceee2a5f6409d1394bdc9cdbf010fa431f4671b9e4885010a
+symbol_202,symbol,_,v24_1_r2_1_6,ꨧꨪ_ꨔꩅ,ꨧꨪ_ꨔꩅ,5,0,0.0,True,True,,0.858905,0.875,,1cf4ab1d3facb4cceee2a5f6409d1394bdc9cdbf010fa431f4671b9e4885010a
+symbol_144,symbol,{,v24_1_r4,ꨓꨶꨮꩉ {46} ꨓꨝꨳꩀ,ꨓꨶꨮꩉ {46} ꨓꨝꨳꩀ,14,0,0.0,True,True,,0.95668,0.937,,d0894f3ba2858329ad5ee9d83172934d294e5e85524585ed7fd6599aa8bacfde
+symbol_144,symbol,{,v24_1_r3_1,ꨓꨶꨮꩉ {46} ꨓꨝꨳꩀ,ꨓꨶꨮꩉ {46} ꨓꨝꨳꩀ,14,0,0.0,True,True,,0.948616,0.922,,d0894f3ba2858329ad5ee9d83172934d294e5e85524585ed7fd6599aa8bacfde
+symbol_144,symbol,{,v24_1_r3,ꨓꨶꨮꩉ {46} ꨓꨝꨳꩀ,ꨓꨶꨮꩉ {46} ꨓꨝꨳꩀ,14,0,0.0,True,True,,0.953536,1.016,,d0894f3ba2858329ad5ee9d83172934d294e5e85524585ed7fd6599aa8bacfde
+symbol_144,symbol,{,v24_1_r2_1_6,ꨓꨶꨮꩉ {46} ꨓꨝꨳꩀ,ꨓꨶꨮꩉ {46} ꨓꨝꨳꩀ,14,0,0.0,True,True,,0.960505,1.047,,d0894f3ba2858329ad5ee9d83172934d294e5e85524585ed7fd6599aa8bacfde
+symbol_152,symbol,{,v24_1_r4,ꨆꨭꨖꨩ {694} ꨆꨭꨖꨩ,ꨆꨭꨖꨩ {694} ꨆꨭꨖꨩ,15,0,0.0,True,True,,0.958009,2.016,,a0b55653d01b852fc28c14bc49a9f70e330468821f4b08888b4c828fd8e7a8d8
+symbol_152,symbol,{,v24_1_r3_1,ꨆꨭꨖꨩ {694} ꨆꨭꨖꨩ,ꨆꨭꨖꨩ {69} ꨆꨭꨖꨩ,15,1,0.06666666666666667,False,True,,0.966753,1.359,,a0b55653d01b852fc28c14bc49a9f70e330468821f4b08888b4c828fd8e7a8d8
+symbol_152,symbol,{,v24_1_r3,ꨆꨭꨖꨩ {694} ꨆꨭꨖꨩ,ꨆꨭꨖꨩ {69} ꨆꨭꨖꨩ,15,1,0.06666666666666667,False,True,,0.959183,1.594,,a0b55653d01b852fc28c14bc49a9f70e330468821f4b08888b4c828fd8e7a8d8
+symbol_152,symbol,{,v24_1_r2_1_6,ꨆꨭꨖꨩ {694} ꨆꨭꨖꨩ,ꨆꨭꨖꨩ {69} ꨆꨭꨖꨩ,15,1,0.06666666666666667,False,True,,0.962014,1.328,,a0b55653d01b852fc28c14bc49a9f70e330468821f4b08888b4c828fd8e7a8d8
+symbol_179,symbol,},v24_1_r4,ꨓꨝꨳꩀ {328} ꨚꨗꨶꨮꩄ,ꨓꨝꨳꩀ {328} ꨚꨗꨶꨮꩄ,16,0,0.0,True,True,,0.965395,1.0,,c9dec2f24bed3df48b65a17ed854ff5dd0157a4831ff6ecae43337b00dc06451
+symbol_179,symbol,},v24_1_r3_1,ꨓꨝꨳꩀ {328} ꨚꨗꨶꨮꩄ,ꨓꨝꨳꩀ {328} ꨚꨗꨶꨮꩄ,16,0,0.0,True,True,,0.967134,0.954,,c9dec2f24bed3df48b65a17ed854ff5dd0157a4831ff6ecae43337b00dc06451
+symbol_179,symbol,},v24_1_r3,ꨓꨝꨳꩀ {328} ꨚꨗꨶꨮꩄ,ꨓꨝꨳꩀ {328} ꨚꨗꨶꨮꩄ,16,0,0.0,True,True,,0.974267,0.984,,c9dec2f24bed3df48b65a17ed854ff5dd0157a4831ff6ecae43337b00dc06451
+symbol_179,symbol,},v24_1_r2_1_6,ꨓꨝꨳꩀ {328} ꨚꨗꨶꨮꩄ,ꨓꨝꨳꩀ {328} ꨚꨗꨶꨮꩄ,16,0,0.0,True,True,,0.955229,1.297,,c9dec2f24bed3df48b65a17ed854ff5dd0157a4831ff6ecae43337b00dc06451
+symbol_173,symbol,},v24_1_r4,ꨆꨭꨖꨩ {919} ꨔꩅ,ꨆꨭꨖꨩ {919} ꨔꩅ,13,0,0.0,True,True,,0.946181,2.188,,f19f487c40b80a730787a53b193a409855fc7606518be4a0974c554ced46a507
+symbol_173,symbol,},v24_1_r3_1,ꨆꨭꨖꨩ {919} ꨔꩅ,ꨆꨭꨖꨩ {919} ꨔꩅ,13,0,0.0,True,True,,0.924101,1.391,,f19f487c40b80a730787a53b193a409855fc7606518be4a0974c554ced46a507
+symbol_173,symbol,},v24_1_r3,ꨆꨭꨖꨩ {919} ꨔꩅ,ꨆꨭꨖꨩ (919 ꨔꩅ,13,2,0.15384615384615385,False,False,,0.953667,0.906,,f19f487c40b80a730787a53b193a409855fc7606518be4a0974c554ced46a507
+symbol_173,symbol,},v24_1_r2_1_6,ꨆꨭꨖꨩ {919} ꨔꩅ,ꨆꨭꨖꨩ {919} ꨔꩅ,13,0,0.0,True,True,,0.938658,0.86,,f19f487c40b80a730787a53b193a409855fc7606518be4a0974c554ced46a507
+hyphen_66,hyphen,double hyphen,v24_1_r4,ꨝꨩ--ꨤꨪꨠꩍ,ꨝꨩ--ꨤꨪꨠꩍ,8,0,0.0,True,,True,0.966786,2.047,,89622bff163d136cbc82680237f99f8b67408a111309751c2d77bce066c434ff
+hyphen_66,hyphen,double hyphen,v24_1_r3_1,ꨝꨩ--ꨤꨪꨠꩍ,ꨝꨩ--ꨤꨪꨠꩍ,8,0,0.0,True,,True,0.965731,1.047,,89622bff163d136cbc82680237f99f8b67408a111309751c2d77bce066c434ff
+hyphen_66,hyphen,double hyphen,v24_1_r3,ꨝꨩ--ꨤꨪꨠꩍ,ꨝꨩ--ꨤꨪꨠꩍ,8,0,0.0,True,,True,0.942092,2.329,,89622bff163d136cbc82680237f99f8b67408a111309751c2d77bce066c434ff
+hyphen_66,hyphen,double hyphen,v24_1_r2_1_6,ꨝꨩ--ꨤꨪꨠꩍ,ꨝꨩ--ꨤꨪꨠꩍ,8,0,0.0,True,,True,0.955253,2.0,,89622bff163d136cbc82680237f99f8b67408a111309751c2d77bce066c434ff
+hyphen_70,hyphen,double hyphen,v24_1_r4,ꨆꨔꨯꨱꩅ--ꨣꨪꨡꩍ,ꨆꨔꨯꨱꩅ--ꨣꨪꨡꩍ,11,0,0.0,True,,True,0.963693,5.313,,5899524ab56840ccdf773e0053d6b8cf4fefca05d61842afb239945c2f292494
+hyphen_70,hyphen,double hyphen,v24_1_r3_1,ꨆꨔꨯꨱꩅ--ꨣꨪꨡꩍ,ꨆꨔꨯꨱꩅ--ꨣꨪꨡꩍ,11,0,0.0,True,,True,0.900611,0.969,,5899524ab56840ccdf773e0053d6b8cf4fefca05d61842afb239945c2f292494
+hyphen_70,hyphen,double hyphen,v24_1_r3,ꨆꨔꨯꨱꩅ--ꨣꨪꨡꩍ,ꨆꨔꨯꨱꩅ--ꨣꨪꨡꩍ,11,0,0.0,True,,True,0.965432,0.953,,5899524ab56840ccdf773e0053d6b8cf4fefca05d61842afb239945c2f292494
+hyphen_70,hyphen,double hyphen,v24_1_r2_1_6,ꨆꨔꨯꨱꩅ--ꨣꨪꨡꩍ,ꨆꨔꨯꨱꩅ--ꨣꨪꨡꩍ,11,0,0.0,True,,True,0.945583,1.625,,5899524ab56840ccdf773e0053d6b8cf4fefca05d61842afb239945c2f292494
+hyphen_57,hyphen,line beginning,v24_1_r4,-ꨦꩀꨆꨣꨰ ꨝꨪꨗꨴꨪꩀ,-ꨦꩀꨆꨣꨰ ꨝꨪꨗꨴꨪꩀ,13,0,0.0,True,,True,0.944607,1.5,,30db24adad6bdc5b2f6e703ba94d6cae82c912262f69cc42b30ab2e8dc2dc07e
+hyphen_57,hyphen,line beginning,v24_1_r3_1,-ꨦꩀꨆꨣꨰ ꨝꨪꨗꨴꨪꩀ,-ꨦꩀꨆꨣꨰ ꨝꨪꨗꨴꨪꩀ,13,0,0.0,True,,True,0.975632,1.218,,30db24adad6bdc5b2f6e703ba94d6cae82c912262f69cc42b30ab2e8dc2dc07e
+hyphen_57,hyphen,line beginning,v24_1_r3,-ꨦꩀꨆꨣꨰ ꨝꨪꨗꨴꨪꩀ,-ꨦꩀꨆꨣꨰ ꨝꨪꨗꨴꨪꩀ,13,0,0.0,True,,True,0.869933,2.891,,30db24adad6bdc5b2f6e703ba94d6cae82c912262f69cc42b30ab2e8dc2dc07e
+hyphen_57,hyphen,line beginning,v24_1_r2_1_6,-ꨦꩀꨆꨣꨰ ꨝꨪꨗꨴꨪꩀ,-ꨦꩀꨆꨰ ꨝꨪꨗꨴꨪꩀ,13,1,0.07692307692307693,False,,True,0.923541,2.438,,30db24adad6bdc5b2f6e703ba94d6cae82c912262f69cc42b30ab2e8dc2dc07e
+hyphen_56,hyphen,line beginning,v24_1_r4,-ꨝꨩ ꨤꨪꨠꩍ,-ꨝꨩ ꨤꨪꨠꩍ,8,0,0.0,True,,True,0.992824,1.36,,1e3db7394c41f2b7f2295cb83cea1b0262f094e28a2fe2168972812fc8d75734
+hyphen_56,hyphen,line beginning,v24_1_r3_1,-ꨝꨩ ꨤꨪꨠꩍ,-ꨝꨩ ꨤꨪꨠꩍ,8,0,0.0,True,,True,0.990607,1.922,,1e3db7394c41f2b7f2295cb83cea1b0262f094e28a2fe2168972812fc8d75734
+hyphen_56,hyphen,line beginning,v24_1_r3,-ꨝꨩ ꨤꨪꨠꩍ,-ꨝꨩ ꨤꨪꨠꩍ,8,0,0.0,True,,True,0.987103,0.984,,1e3db7394c41f2b7f2295cb83cea1b0262f094e28a2fe2168972812fc8d75734
+hyphen_56,hyphen,line beginning,v24_1_r2_1_6,-ꨝꨩ ꨤꨪꨠꩍ,-ꨝꨩ ꨤꨪꨠꩍ,8,0,0.0,True,,True,0.98973,1.469,,1e3db7394c41f2b7f2295cb83cea1b0262f094e28a2fe2168972812fc8d75734
+hyphen_46,hyphen,line ending,v24_1_r4,ꨝꨩ ꨤꨪꨠꩍ-,ꨝꨩ ꨤꨪꨠꩍ-,8,0,0.0,True,,True,0.919051,2.359,,3dceda157336d0d5f84dcf6e55b2b8dbbbfc86db59a3ef7baaa67312cc94f6f0
+hyphen_46,hyphen,line ending,v24_1_r3_1,ꨝꨩ ꨤꨪꨠꩍ-,ꨝꨩ ꨤꨪꨠꩍ-,8,0,0.0,True,,True,0.909592,1.343,,3dceda157336d0d5f84dcf6e55b2b8dbbbfc86db59a3ef7baaa67312cc94f6f0
+hyphen_46,hyphen,line ending,v24_1_r3,ꨝꨩ ꨤꨪꨠꩍ-,ꨝꨩ ꨤꨪꨠꩍ-,8,0,0.0,True,,True,0.982968,1.031,,3dceda157336d0d5f84dcf6e55b2b8dbbbfc86db59a3ef7baaa67312cc94f6f0
+hyphen_46,hyphen,line ending,v24_1_r2_1_6,ꨝꨩ ꨤꨪꨠꩍ-,ꨝꨩ ꨤꨪꨠꩍ-,8,0,0.0,True,,True,0.899627,0.922,,3dceda157336d0d5f84dcf6e55b2b8dbbbfc86db59a3ef7baaa67312cc94f6f0
+hyphen_41,hyphen,line ending,v24_1_r4,ꨀꨆꨢꨯꨮꩅ ꨧꨪ-,ꨀꨆꨢꨯꨮꩅ ꨧꨪ-,10,0,0.0,True,,True,0.970351,1.422,,ce171d748856064960ac9fad6d4fa020a9d6aef34ed1a82db2e241fc5edc287d
+hyphen_41,hyphen,line ending,v24_1_r3_1,ꨀꨆꨢꨯꨮꩅ ꨧꨪ-,ꨀꨆꨢꨯꨮꩅ ꨧꨪ-,10,0,0.0,True,,True,0.944264,0.922,,ce171d748856064960ac9fad6d4fa020a9d6aef34ed1a82db2e241fc5edc287d
+hyphen_41,hyphen,line ending,v24_1_r3,ꨀꨆꨢꨯꨮꩅ ꨧꨪ-,ꨀꨆꨢꨯꨮꩅ ꨧꨪ-,10,0,0.0,True,,True,0.980092,0.922,,ce171d748856064960ac9fad6d4fa020a9d6aef34ed1a82db2e241fc5edc287d
+hyphen_41,hyphen,line ending,v24_1_r2_1_6,ꨀꨆꨢꨯꨮꩅ ꨧꨪ-,ꨀꨆꨢꨯꨮꩅ ꨧꨪ-,10,0,0.0,True,,True,0.980248,1.625,,ce171d748856064960ac9fad6d4fa020a9d6aef34ed1a82db2e241fc5edc287d
+hyphen_29,hyphen,number-number,v24_1_r4,3-4,3-4,3,0,0.0,True,,True,0.898894,0.984,,a4e1e077993ac43302bb3cbb4988ff854be0e532ccba56176da7822be93c1f29
+hyphen_29,hyphen,number-number,v24_1_r3_1,3-4,3-4,3,0,0.0,True,,True,0.962366,1.359,,a4e1e077993ac43302bb3cbb4988ff854be0e532ccba56176da7822be93c1f29
+hyphen_29,hyphen,number-number,v24_1_r3,3-4,34,3,1,0.3333333333333333,False,,False,0.807848,2.297,,a4e1e077993ac43302bb3cbb4988ff854be0e532ccba56176da7822be93c1f29
+hyphen_29,hyphen,number-number,v24_1_r2_1_6,3-4,34,3,1,0.3333333333333333,False,,False,0.799353,0.891,,a4e1e077993ac43302bb3cbb4988ff854be0e532ccba56176da7822be93c1f29
+hyphen_24,hyphen,number-number,v24_1_r4,20-30,20-30,5,0,0.0,True,,True,0.919653,1.047,,ab031d67e0044e7a01e394a545ca3163c2f725067cf04318b98ff51c70615f03
+hyphen_24,hyphen,number-number,v24_1_r3_1,20-30,20-30,5,0,0.0,True,,True,0.952977,1.687,,ab031d67e0044e7a01e394a545ca3163c2f725067cf04318b98ff51c70615f03
+hyphen_24,hyphen,number-number,v24_1_r3,20-30,20-30,5,0,0.0,True,,True,0.955115,0.907,,ab031d67e0044e7a01e394a545ca3163c2f725067cf04318b98ff51c70615f03
+hyphen_24,hyphen,number-number,v24_1_r2_1_6,20-30,20-130,5,1,0.2,False,,True,0.885862,1.297,,ab031d67e0044e7a01e394a545ca3163c2f725067cf04318b98ff51c70615f03
+hyphen_16,hyphen,word - word,v24_1_r4,ꨝꨩ - ꨤꨪꨠꩍ,ꨝꨩ - ꨤꨪꨠꩍ,9,0,0.0,True,,True,0.997367,1.344,,d504ac83f092946e3b6aee34de479ee77e2e1ed7900eb72246aacd68026f887e
+hyphen_16,hyphen,word - word,v24_1_r3_1,ꨝꨩ - ꨤꨪꨠꩍ,ꨝꨩ - ꨤꨪꨠꩍ,9,0,0.0,True,,True,0.988757,2.282,,d504ac83f092946e3b6aee34de479ee77e2e1ed7900eb72246aacd68026f887e
+hyphen_16,hyphen,word - word,v24_1_r3,ꨝꨩ - ꨤꨪꨠꩍ,ꨝꨩ - ꨤꨪꨠꩍ,9,0,0.0,True,,True,0.94909,0.938,,d504ac83f092946e3b6aee34de479ee77e2e1ed7900eb72246aacd68026f887e
+hyphen_16,hyphen,word - word,v24_1_r2_1_6,ꨝꨩ - ꨤꨪꨠꩍ,ꨝꨩ - ꨤꨪꨠꩍ,9,0,0.0,True,,True,0.931437,1.047,,d504ac83f092946e3b6aee34de479ee77e2e1ed7900eb72246aacd68026f887e
+hyphen_14,hyphen,word - word,v24_1_r4,ꨆꨭꨖꨩ - ꨔꩅ,ꨆꨭꨖꨩ - ꨔꩅ,9,0,0.0,True,,True,0.984916,1.844,,4e56a778d0577df6c7e23407fa00a6b215e7d627d0d35b0ece29709de316755d
+hyphen_14,hyphen,word - word,v24_1_r3_1,ꨆꨭꨖꨩ - ꨔꩅ,ꨆꨭꨖꨩ - ꨔꩅ,9,0,0.0,True,,True,0.991046,1.922,,4e56a778d0577df6c7e23407fa00a6b215e7d627d0d35b0ece29709de316755d
+hyphen_14,hyphen,word - word,v24_1_r3,ꨆꨭꨖꨩ - ꨔꩅ,ꨆꨭꨖꨩ - ꨔꩅ,9,0,0.0,True,,True,0.992328,0.953,,4e56a778d0577df6c7e23407fa00a6b215e7d627d0d35b0ece29709de316755d
+hyphen_14,hyphen,word - word,v24_1_r2_1_6,ꨆꨭꨖꨩ - ꨔꩅ,ꨆꨭꨖꨩ - ꨔꩅ,9,0,0.0,True,,True,0.991677,0.985,,4e56a778d0577df6c7e23407fa00a6b215e7d627d0d35b0ece29709de316755d
+hyphen_7,hyphen,word-word,v24_1_r4,ꨦꩀꨆꨣꨰ-ꨝꨪꨗꨴꨪꩀ,ꨦꩀꨆꨣꨰ-ꨝꨪꨗꨴꨪꩀ,12,0,0.0,True,,True,0.928181,3.422,,b000d32ea6f8b173d3515f715b41937cfcbb866579ea2e6a756086822d0bf80b
+hyphen_7,hyphen,word-word,v24_1_r3_1,ꨦꩀꨆꨣꨰ-ꨝꨪꨗꨴꨪꩀ,ꨦꩀꨆꨣꨰ-ꨝꨪꨗꨴꨪꩀ,12,0,0.0,True,,True,0.990087,1.187,,b000d32ea6f8b173d3515f715b41937cfcbb866579ea2e6a756086822d0bf80b
+hyphen_7,hyphen,word-word,v24_1_r3,ꨦꩀꨆꨣꨰ-ꨝꨪꨗꨴꨪꩀ,ꨦꩀꨆꨣꨰ-ꨝꨪꨗꨴꨪꩀ,12,0,0.0,True,,True,0.945841,0.984,,b000d32ea6f8b173d3515f715b41937cfcbb866579ea2e6a756086822d0bf80b
+hyphen_7,hyphen,word-word,v24_1_r2_1_6,ꨦꩀꨆꨣꨰ-ꨝꨪꨗꨴꨪꩀ,ꨦꩀꨆꨰꨣꨰ-ꨝꨪꨗꨴꨪꩀ,12,1,0.08333333333333333,False,,True,0.958484,0.969,,b000d32ea6f8b173d3515f715b41937cfcbb866579ea2e6a756086822d0bf80b
+hyphen_8,hyphen,word-word,v24_1_r4,ꨕꨨꨵꩀ-ꨥꩀ,ꨕꨨꨵꩀ-ꨥꩀ,7,0,0.0,True,,True,0.989609,1.0,,a3fdc19283339cd95f640754f1cccc60200037558cd08044c2933e2c223d7991
+hyphen_8,hyphen,word-word,v24_1_r3_1,ꨕꨨꨵꩀ-ꨥꩀ,ꨕꨨꨵꩀ-ꨥꩀ,7,0,0.0,True,,True,0.992521,1.047,,a3fdc19283339cd95f640754f1cccc60200037558cd08044c2933e2c223d7991
+hyphen_8,hyphen,word-word,v24_1_r3,ꨕꨨꨵꩀ-ꨥꩀ,ꨕꨨꨵꩀ-ꨥꩀ,7,0,0.0,True,,True,0.976041,0.906,,a3fdc19283339cd95f640754f1cccc60200037558cd08044c2933e2c223d7991
+hyphen_8,hyphen,word-word,v24_1_r2_1_6,ꨕꨨꨵꩀ-ꨥꩀ,ꨕꨨꨵꩀ-ꨥꩀ,7,0,0.0,True,,True,0.934641,1.641,,a3fdc19283339cd95f640754f1cccc60200037558cd08044c2933e2c223d7991
+hyphen_31,hyphen,year-year,v24_1_r4,1954-1975,1954-1975,9,0,0.0,True,,True,0.965691,0.75,,b0c4cf53c0eacf19d513e60ce4775fd043b2a8793d57d13074071e8431f49f1a
+hyphen_31,hyphen,year-year,v24_1_r3_1,1954-1975,1954-1975,9,0,0.0,True,,True,0.988046,1.75,,b0c4cf53c0eacf19d513e60ce4775fd043b2a8793d57d13074071e8431f49f1a
+hyphen_31,hyphen,year-year,v24_1_r3,1954-1975,1954-1975,9,0,0.0,True,,True,0.987875,4.11,,b0c4cf53c0eacf19d513e60ce4775fd043b2a8793d57d13074071e8431f49f1a
+hyphen_31,hyphen,year-year,v24_1_r2_1_6,1954-1975,1954-1975,9,0,0.0,True,,True,0.98012,1.375,,b0c4cf53c0eacf19d513e60ce4775fd043b2a8793d57d13074071e8431f49f1a
+hyphen_37,hyphen,year-year,v24_1_r4,1945-1954,1945-1954,9,0,0.0,True,,True,0.957991,0.984,,51b636e70385d3264e5997b50a1df3907773e4715c3681fc495bdb7a0043ed78
+hyphen_37,hyphen,year-year,v24_1_r3_1,1945-1954,1945-1954,9,0,0.0,True,,True,0.966857,1.11,,51b636e70385d3264e5997b50a1df3907773e4715c3681fc495bdb7a0043ed78
+hyphen_37,hyphen,year-year,v24_1_r3,1945-1954,1945-1954,9,0,0.0,True,,True,0.947666,1.0,,51b636e70385d3264e5997b50a1df3907773e4715c3681fc495bdb7a0043ed78
+hyphen_37,hyphen,year-year,v24_1_r2_1_6,1945-1954,1945-1954,9,0,0.0,True,,True,0.953115,1.0,,51b636e70385d3264e5997b50a1df3907773e4715c3681fc495bdb7a0043ed78

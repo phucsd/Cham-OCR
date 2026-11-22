@@ -1,0 +1,114 @@
+[
+  {
+    "case": "GET /health",
+    "endpoint": "/health",
+    "http": 200,
+    "latency_s": 0.58,
+    "response_excerpt": "OK"
+  },
+  {
+    "case": "GET /api/models",
+    "endpoint": "/api/models",
+    "http": 200,
+    "latency_s": 0.59,
+    "response_excerpt": "{\"default_model\": \"v24_1_r4\", \"det_mode\": \"hybrid\", \"models\": [{\"id\": \"v24_1_r4\", \"label\": \"Cham V26.1 Masked-SVTR (Production SOTA \\u2014 W=480, 6/6 Gates)\", \"short_label\": \"V26.1 SOTA\", \"group\": \"Paleographic Cham Specialists\", \"shape\": \"3, 48, 480\", \"summary\": \"Padding-masked wide-canvas pure-Cham recognizer with frozen early-backbone WiSE-FT (6"
+  },
+  {
+    "case": "GET /api/samples",
+    "endpoint": "/api/samples",
+    "http": 200,
+    "latency_s": 0.95,
+    "response_excerpt": "{\"samples\": [{\"id\": \"agal_panduranga\", \"name\": \"Palm-Leaf Agal Folio \\u2014 Panduranga\", \"filename\": \"ood_agal_01_panduranga.png\", \"category\": \"Palm-Leaf (Agal)\", \"recommended_model\": \"v24_1_r4\", \"description\": \"Traditional Panduranga calligraphic hand on elongated palm-leaf surface with tight interlinear spacing.\", \"dimensions\": [960, 1060], \"thum"
+  },
+  {
+    "case": "GET /static/js/studio.js",
+    "endpoint": "/static/js/studio.js",
+    "http": 200,
+    "latency_s": 1.11,
+    "response_excerpt": "/**\n * Cham OCR Studio — Paleographic Transcription & Diagnostic Workbench Engine\n * Pure Academic English | Preserves Claude Warm Light Design System (DESIGN.md)\n */\n(function (global) {\n    \"use strict\";\n\n    // Global client-side diagnostic error hooks\n    window.onerror = function (message, source, lineno, colno) {\n        const msg = `${mess"
+  },
+  {
+    "case": "format_PNG",
+    "endpoint": "/ocr",
+    "http": 200,
+    "latency_s": 4.67,
+    "response_excerpt": "{\"lines\": [{\"index\": 1, \"text\": \"\\uaa22\\uaa43 \\uaa24\\uaa1d\\uaa43 \\uaa27\\uaa2f\\uaa31\\uaa43 \\uaa1f\\uaa2d\\uaa40\\uaa06\\uaa2c \\uaa02\\uaa23\\uaa43 \\uaa0c\\uaa4c \\uaa5e\", \"confidence\": 0.9498482346534729, \"calibrated_confidence\": 0.965467, \"coords\": [49, 79], \"bbox\": [54, 49, 332, 79], \"polygon\": [[54.0, 49.0], [332.0, 49.0], [332.0, 79.0], [54.0, 79.0]], \""
+  },
+  {
+    "case": "format_JPEG",
+    "endpoint": "/ocr",
+    "http": 200,
+    "latency_s": 4.0,
+    "response_excerpt": "{\"lines\": [{\"index\": 1, \"text\": \"\\uaa22\\uaa43 \\uaa24\\uaa1d\\uaa43 \\uaa27\\uaa2f\\uaa31\\uaa43 \\uaa1f\\uaa2d\\uaa40\\uaa06\\uaa2c \\uaa02\\uaa23\\uaa43 \\uaa0c\\uaa4c \\uaa5e\", \"confidence\": 0.9334182143211365, \"calibrated_confidence\": 0.952121, \"coords\": [49, 79], \"bbox\": [54, 49, 332, 79], \"polygon\": [[54.0, 49.0], [332.0, 49.0], [332.0, 79.0], [54.0, 79.0]], \""
+  },
+  {
+    "case": "format_WEBP",
+    "endpoint": "/ocr",
+    "http": 200,
+    "latency_s": 3.31,
+    "response_excerpt": "{\"lines\": [{\"index\": 1, \"text\": \"\\uaa22\\uaa43 \\uaa24\\uaa1d\\uaa43 \\uaa27\\uaa2f\\uaa31\\uaa43 \\uaa1f\\uaa2d\\uaa40\\uaa06\\uaa2c \\uaa02\\uaa23\\uaa43 \\uaa0c\\uaa4c \\uaa5e\", \"confidence\": 0.9366985559463501, \"calibrated_confidence\": 0.954835, \"coords\": [49, 79], \"bbox\": [54, 49, 332, 79], \"polygon\": [[54.0, 49.0], [332.0, 49.0], [332.0, 79.0], [54.0, 79.0]], \""
+  },
+  {
+    "case": "format_GIF",
+    "endpoint": "/ocr",
+    "http": 400,
+    "latency_s": 0.78,
+    "response_excerpt": "{\"error\": \"Unable to read image (corrupted base64 payload)\"}"
+  },
+  {
+    "case": "missing_image",
+    "endpoint": "/ocr",
+    "http": 502,
+    "latency_s": 0.86,
+    "response_excerpt": "{\"type\":\"https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-502/\",\"title\":\"Error 502: Bad gateway\",\"status\":502,\"detail\":\"The origin web server returned an invalid or incomplete response to Cloudflare. This typically indicates the origin is overloaded or misconfigured.\",\"instance\":\"a5e5093e8a5d09"
+  },
+  {
+    "case": "corrupt_base64",
+    "endpoint": "/ocr",
+    "http": 400,
+    "latency_s": 0.94,
+    "response_excerpt": "{\"error\": \"Unable to decode image data: Invalid base64-encoded string: number of data characters (9) cannot be 1 more than a multiple of 4\"}"
+  },
+  {
+    "case": "invalid_model",
+    "endpoint": "/ocr",
+    "http": 400,
+    "latency_s": 0.53,
+    "response_excerpt": "{\"error\": \"Unable to read image (corrupted base64 payload)\"}"
+  },
+  {
+    "case": "empty_image",
+    "endpoint": "/ocr",
+    "http": 400,
+    "latency_s": 3.91,
+    "response_excerpt": "{\"error\": \"Unable to decode image data: OpenCV(4.10.0) /io/opencv/modules/imgcodecs/src/loadsave.cpp:813: error: (-215:Assertion failed) !buf.empty() in function 'imdecode_'\\n\"}"
+  },
+  {
+    "case": "invalid_segmentation",
+    "endpoint": "/ocr",
+    "http": 200,
+    "latency_s": 4.31,
+    "response_excerpt": "{\"lines\": [{\"index\": 1, \"text\": \"\\uaa22\\uaa43 \\uaa24\\uaa1d\\uaa43 \\uaa27\\uaa2f\\uaa31\\uaa43 \\uaa1f\\uaa2d\\uaa06\\uaa2c\\uaa02\\uaa23\\uaa43 \\uaa0c\\uaa4c \\uaa5e\", \"confidence\": 0.9247356057167053, \"calibrated_confidence\": 0.944833, \"coords\": [49, 76], \"bbox\": [55, 49, 316, 76], \"polygon\": null, \"image\": \"iVBORw0KGgoAAAANSUhEUgAAA1IAAAA3CAIAAACJlewkAAAgAElE"
+  },
+  {
+    "case": "invalid_reading_order",
+    "endpoint": "/ocr",
+    "http": 200,
+    "latency_s": 5.41,
+    "response_excerpt": "{\"lines\": [{\"index\": 1, \"text\": \"\\uaa22\\uaa43 \\uaa24\\uaa1d\\uaa43 \\uaa27\\uaa2f\\uaa31\\uaa43 \\uaa1f\\uaa2d\\uaa40\\uaa06\\uaa2c \\uaa02\\uaa23\\uaa43 \\uaa0c\\uaa4c \\uaa5e\", \"confidence\": 0.9498482346534729, \"calibrated_confidence\": 0.965467, \"coords\": [49, 79], \"bbox\": [54, 49, 332, 79], \"polygon\": [[54.0, 49.0], [332.0, 49.0], [332.0, 79.0], [54.0, 79.0]], \""
+  },
+  {
+    "case": "invalid_bbox_zero",
+    "endpoint": "/ocr_crop",
+    "http": 200,
+    "latency_s": 3.92,
+    "response_excerpt": "{\"text\": \"\", \"confidence\": 0.0, \"calibrated_confidence\": 0.0, \"image\": \"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQIHWP48+cPAAXsAvUQXkPOAAAAAElFTkSuQmCC\", \"crop_image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQIHWP48+cPAAXsAvUQXkPOAAAAAElFTkSuQmCC\", \"bbox\": [0, 0, 1, 1]}"
+  },
+  {
+    "case": "invalid_bbox_negative",
+    "endpoint": "/ocr_crop",
+    "http": 200,
+    "latency_s": 4.22,
+    "response_excerpt": "{\"text\": \"\", \"confidence\": 0.0, \"calibrated_confidence\": 0.0, \"image\": \"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQIHWP48+cPAAXsAvUQXkPOAAAAAElFTkSuQmCC\", \"crop_image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQIHWP48+cPAAXsAvUQXkPOAAAAAElFTkSuQmCC\", \"bbox\": [0, 0, 1, 1]}"
+  }
+]

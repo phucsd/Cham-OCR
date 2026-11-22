@@ -1,0 +1,225 @@
+{
+  "verified_utc": "2026-11-22T06:55:22Z",
+  "live_url": "https://ocr.cham.asia",
+  "space_commit": "9a4e559e61e980f4d5cb59a86dfcdf1985dfe239",
+  "api_contract_retest": {
+    "missing_image": {
+      "http": 400,
+      "error": "Missing or empty 'image' field (expected base64-encoded image)"
+    },
+    "invalid_model": {
+      "http": 400,
+      "error": "Unknown model 'nonexistent_model_2026'. Allowed models: v24_1_r4, auto, v24_1_r3_1, v24_1_r2_1_6, vi, v25, v24, v23"
+    },
+    "invalid_segmentation": {
+      "http": 400,
+      "error": "Invalid segmentation method 'not_a_method'. Allowed methods: dbnet, valley, adaptive"
+    },
+    "invalid_reading_order": {
+      "http": 400,
+      "error": "Invalid reading_order 'invalid'. Allowed values: auto, rows"
+    },
+    "invalid_bbox_zero": {
+      "http": 400,
+      "error": "Invalid 'bbox' [0, 0, 0, 0]: must satisfy x2 > x1 and y2 > y1"
+    },
+    "invalid_bbox_negative": {
+      "http": 400,
+      "error": "Invalid 'bbox' [-200, -200, -1, -1]: region lies outside image bounds (850x249)"
+    }
+  },
+  "auto_router_v2_2_retest": {
+    "vietnamese_00": {
+      "http": 200,
+      "cer_pct": 4.88,
+      "gt_lines": [
+        "Cộng hòa xã hội chủ nghĩa Việt Nam.",
+        "Đây là bản phiên âm tiếng Chăm và tiếng Việt.",
+        "Số trang: 0123456789, dấu ! ? : ; ( ) / -"
+      ],
+      "pred_lines": [
+        {
+          "index": 1,
+          "text": "Cộng hòa xã hội chủ nghĩa Việt Nam",
+          "selected_recognizer": "vi",
+          "calibrated_confidence": 0.906118
+        },
+        {
+          "index": 2,
+          "text": "Đây là bản phiên âm tiếng Chăm và tiếng Việt.",
+          "selected_recognizer": "vi",
+          "calibrated_confidence": 0.966291
+        },
+        {
+          "index": 3,
+          "text": "Số trang: 0123456789, dấu !?:; () /-",
+          "selected_recognizer": "vi",
+          "calibrated_confidence": 0.893997
+        }
+      ]
+    },
+    "mixed_vi_cham_00": {
+      "http": 200,
+      "cer_pct": 0.0,
+      "gt_lines": [
+        "Cộng hòa xã hội chủ nghĩa Việt Nam.",
+        "ꨓꨝꨳꩀ ꨔꩅ !"
+      ],
+      "pred_lines": [
+        {
+          "index": 1,
+          "text": "Cộng hòa xã hội chủ nghĩa Việt Nam.",
+          "selected_recognizer": "vi",
+          "calibrated_confidence": 0.918535
+        },
+        {
+          "index": 2,
+          "text": "ꨓꨝꨳꩀ ꨔꩅ !",
+          "selected_recognizer": "v24_1_r4",
+          "calibrated_confidence": 0.993301
+        }
+      ]
+    }
+  },
+  "cham_digits_tight_crop_retest": {
+    "n": 12,
+    "tight_crop_cer_pct": 6.0,
+    "exact_pct": 75.0,
+    "uncropped_1100x100_bug_cer_pct_before": 14.0,
+    "uncropped_1100x100_exact_pct_before": 33.33,
+    "rows": [
+      {
+        "id": "NotoSansCham-Light_0",
+        "w": 390,
+        "h": 72,
+        "gt": "꩐꩑꩒꩓꩔꩕꩖꩗꩘꩙",
+        "pred": "꩐꩑꩒꩓꩔꩕꩖꩗꩘꩙",
+        "edits": 0,
+        "gt_chars": 10,
+        "exact": true,
+        "selected_recognizer": "v24_1_r4"
+      },
+      {
+        "id": "NotoSansCham-Light_1",
+        "w": 498,
+        "h": 72,
+        "gt": "꩐ ꩑ ꩒ ꩓ ꩔ ꩕ ꩖ ꩗ ꩘ ꩙",
+        "pred": "꩐꩑ ꩒꩓ ꩔꩕꩖ ꩗ ꩘ ꩙",
+        "edits": 4,
+        "gt_chars": 19,
+        "exact": false,
+        "selected_recognizer": "v24_1_r4"
+      },
+      {
+        "id": "NotoSansCham-Light_2",
+        "w": 337,
+        "h": 72,
+        "gt": "꩒꩐꩒꩖ ꩐꩙ ꩑꩘",
+        "pred": "꩒꩐꩒꩖ ꩐꩙ ꩑꩘",
+        "edits": 0,
+        "gt_chars": 10,
+        "exact": true,
+        "selected_recognizer": "v24_1_r4"
+      },
+      {
+        "id": "NotoSansCham-Light_3",
+        "w": 402,
+        "h": 72,
+        "gt": "꩙꩘꩗꩖꩕ ꩔꩓꩒꩑꩐",
+        "pred": "꩙꩘꩗꩖꩕ ꩔꩓꩒꩑꩐",
+        "edits": 0,
+        "gt_chars": 11,
+        "exact": true,
+        "selected_recognizer": "v24_1_r4"
+      },
+      {
+        "id": "NotoSansCham-Medium_0",
+        "w": 415,
+        "h": 75,
+        "gt": "꩐꩑꩒꩓꩔꩕꩖꩗꩘꩙",
+        "pred": "꩐꩑꩒꩓꩔꩕꩖꩗꩘꩙",
+        "edits": 0,
+        "gt_chars": 10,
+        "exact": true,
+        "selected_recognizer": "v24_1_r4"
+      },
+      {
+        "id": "NotoSansCham-Medium_1",
+        "w": 523,
+        "h": 75,
+        "gt": "꩐ ꩑ ꩒ ꩓ ꩔ ꩕ ꩖ ꩗ ꩘ ꩙",
+        "pred": "꩐꩑ ꩒ ꩓ ꩔꩕꩖ ꩗ ꩘ ꩙",
+        "edits": 3,
+        "gt_chars": 19,
+        "exact": false,
+        "selected_recognizer": "v24_1_r4"
+      },
+      {
+        "id": "NotoSansCham-Medium_2",
+        "w": 358,
+        "h": 75,
+        "gt": "꩒꩐꩒꩖ ꩐꩙ ꩑꩘",
+        "pred": "꩒꩐꩒꩖ ꩐꩙ ꩑꩘",
+        "edits": 0,
+        "gt_chars": 10,
+        "exact": true,
+        "selected_recognizer": "v24_1_r4"
+      },
+      {
+        "id": "NotoSansCham-Medium_3",
+        "w": 426,
+        "h": 75,
+        "gt": "꩙꩘꩗꩖꩕ ꩔꩓꩒꩑꩐",
+        "pred": "꩙꩘꩗꩖꩕ ꩔꩓꩒꩑꩐",
+        "edits": 0,
+        "gt_chars": 11,
+        "exact": true,
+        "selected_recognizer": "v24_1_r4"
+      },
+      {
+        "id": "NotoSansCham-SemiBold_0",
+        "w": 425,
+        "h": 77,
+        "gt": "꩐꩑꩒꩓꩔꩕꩖꩗꩘꩙",
+        "pred": "꩐꩑꩒꩓꩔꩕꩖꩗꩘꩙",
+        "edits": 0,
+        "gt_chars": 10,
+        "exact": true,
+        "selected_recognizer": "v24_1_r4"
+      },
+      {
+        "id": "NotoSansCham-SemiBold_1",
+        "w": 533,
+        "h": 77,
+        "gt": "꩐ ꩑ ꩒ ꩓ ꩔ ꩕ ꩖ ꩗ ꩘ ꩙",
+        "pred": "꩐꩑ ꩒ ꩓ ꩔ ꩕꩖ ꩗ ꩘ ꩙",
+        "edits": 2,
+        "gt_chars": 19,
+        "exact": false,
+        "selected_recognizer": "v24_1_r4"
+      },
+      {
+        "id": "NotoSansCham-SemiBold_2",
+        "w": 366,
+        "h": 77,
+        "gt": "꩒꩐꩒꩖ ꩐꩙ ꩑꩘",
+        "pred": "꩒꩐꩒꩖ ꩐꩙ ꩑꩘",
+        "edits": 0,
+        "gt_chars": 10,
+        "exact": true,
+        "selected_recognizer": "v24_1_r4"
+      },
+      {
+        "id": "NotoSansCham-SemiBold_3",
+        "w": 435,
+        "h": 77,
+        "gt": "꩙꩘꩗꩖꩕ ꩔꩓꩒꩑꩐",
+        "pred": "꩙꩘꩗꩖꩕ ꩔꩓꩒꩑꩐",
+        "edits": 0,
+        "gt_chars": 11,
+        "exact": true,
+        "selected_recognizer": "v24_1_r4"
+      }
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "v24_1_r4": {
+    "n": 12,
+    "errors": 0,
+    "groups": {
+      "Cham 0-9": {
+        "n": 12,
+        "cer_pct": 14.0,
+        "exact_pct": 33.33
+      }
+    }
+  },
+  "v25": {
+    "n": 12,
+    "errors": 0,
+    "groups": {
+      "Cham 0-9": {
+        "n": 12,
+        "cer_pct": 91.33,
+        "exact_pct": 0.0
+      }
+    }
+  },
+  "auto": {
+    "n": 12,
+    "errors": 0,
+    "groups": {
+      "Cham 0-9": {
+        "n": 12,
+        "cer_pct": 14.0,
+        "exact_pct": 33.33
+      }
+    }
+  },
+  "v24_1_r3_1": {
+    "n": 12,
+    "errors": 0,
+    "groups": {
+      "Cham 0-9": {
+        "n": 12,
+        "cer_pct": 11.33,
+        "exact_pct": 33.33
+      }
+    }
+  }
+}

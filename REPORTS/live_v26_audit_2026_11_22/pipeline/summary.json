@@ -1,0 +1,80 @@
+{
+  "valley": {
+    "v24_1_r4": {
+      "n": 3,
+      "errors": 0,
+      "mean_cer_pct": 14.85,
+      "median_wall_s": 17.16
+    },
+    "v25": {
+      "n": 3,
+      "errors": 0,
+      "mean_cer_pct": 38.1,
+      "median_wall_s": 9.75
+    },
+    "auto": {
+      "n": 3,
+      "errors": 0,
+      "mean_cer_pct": 15.49,
+      "median_wall_s": 17.02
+    },
+    "v24_1_r3_1": {
+      "n": 3,
+      "errors": 0,
+      "mean_cer_pct": 15.01,
+      "median_wall_s": 17.73
+    }
+  },
+  "adaptive": {
+    "v24_1_r4": {
+      "n": 3,
+      "errors": 0,
+      "mean_cer_pct": 33.5,
+      "median_wall_s": 12.78
+    },
+    "v25": {
+      "n": 3,
+      "errors": 0,
+      "mean_cer_pct": 51.39,
+      "median_wall_s": 7.88
+    },
+    "auto": {
+      "n": 3,
+      "errors": 0,
+      "mean_cer_pct": 33.5,
+      "median_wall_s": 21.03
+    },
+    "v24_1_r3_1": {
+      "n": 3,
+      "errors": 0,
+      "mean_cer_pct": 32.81,
+      "median_wall_s": 11.89
+    }
+  },
+  "dbnet": {
+    "v24_1_r4": {
+      "n": 3,
+      "errors": 0,
+      "mean_cer_pct": 6.55,
+      "median_wall_s": 13.34
+    },
+    "v25": {
+      "n": 3,
+      "errors": 0,
+      "mean_cer_pct": 29.39,
+      "median_wall_s": 5.28
+    },
+    "auto": {
+      "n": 3,
+      "errors": 0,
+      "mean_cer_pct": 6.71,
+      "median_wall_s": 14.48
+    },
+    "v24_1_r3_1": {
+      "n": 3,
+      "errors": 0,
+      "mean_cer_pct": 8.21,
+      "median_wall_s": 5.73
+    }
+  }
+}

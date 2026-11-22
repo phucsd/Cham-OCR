@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Guide &amp; Feature Manual — Cham OCR Studio (ocr.cham.asia)</title>
+    <meta name="description" content="Complete user manual and paleographic feature reference for Cham OCR Studio (https://ocr.cham.asia) — layout modes, multi-page PDF &amp; batch OCR, polygon ribbons, stanza flow, Unicode cluster inspector, virtual keyboard, and corpus export.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@300..800&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+Cham:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/help.css">
+</head>
+<body>
+
+    <!-- Top Reading Progress Bar -->
+    <div class="help-progress-track" aria-hidden="true">
+        <div class="help-progress-bar" id="help-progress-bar"></div>
+    </div>
+
+    <!-- Unified Top Navigation Header -->
+    <header class="help-navbar">
+        <a href="/" class="help-brand" title="Return to Cham OCR Studio Workbench">
+            <span class="help-emblem" aria-hidden="true">ꨌ</span>
+            <span class="help-brand-titles">
+                <span class="help-brand-main">Cham OCR Studio — User Guide</span>
+                <span class="help-brand-sub">Complete Feature Manual &amp; Paleographic Workflow Reference</span>
+            </span>
+        </a>
+
+        <div class="help-nav-actions">
+            <button type="button" class="help-btn mobile-menu-btn" onclick="toggleHelpMobileToc()">
+                <span>☰ Guide Sections</span>
+            </button>
+            <a href="/" class="help-btn help-btn-primary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                <span>Open OCR Workbench</span>
+            </a>
+            <a href="/research" class="help-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                <span>Technical Report</span>
+            </a>
+            <button type="button" class="help-btn" onclick="window.print()" title="Print or Save User Guide as PDF">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                <span>Print Guide</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main 2-Column Documentation Container -->
+    <div class="help-layout">
+
+        <!-- Sticky Searchable Sidebar TOC -->
+        <aside class="help-sidebar" id="help-sidebar" aria-label="User Guide Navigation">
+            <div class="sidebar-label">Guide Contents</div>
+            <div class="help-search-box">
+                <input type="search" id="help-search-input" class="help-search-input" placeholder="Search features or shortcuts (/)" oninput="filterHelpGuide(this.value)">
+            </div>
+            <ul class="toc-nav-list">
+                <li class="toc-nav-item"><a href="#quickstart" class="toc-nav-link active">Quick-Start Workflow</a></li>
+                <li class="toc-nav-item">
+                    <a href="#sec-layouts" class="toc-nav-link">1. Workspace &amp; Layout Modes</a>
+                    <ul class="toc-sub-list">
+                        <li><a href="#sec-layouts-modes" class="toc-sub-link">1.1 Four View Modes</a></li>
+                        <li><a href="#sec-layouts-resizers" class="toc-sub-link">1.2 Split Resizers &amp; Command Palette</a></li>
+                    </ul>
+                </li>
+                <li class="toc-nav-item">
+                    <a href="#sec-intake" class="toc-nav-link">2. Upload, PDF &amp; Batch Queue</a>
+                    <ul class="toc-sub-list">
+                        <li><a href="#sec-intake-channels" class="toc-sub-link">2.1 Images, PDF &amp; Specimens</a></li>
+                        <li><a href="#sec-intake-batch" class="toc-sub-link">2.2 Automated Batch OCR</a></li>
+                        <li><a href="#sec-intake-badges" class="toc-sub-link">2.3 Queue Filters &amp; Status Badges</a></li>
+                    </ul>
+                </li>
+                <li class="toc-nav-item">
+                    <a href="#sec-models" class="toc-nav-link">3. Models &amp; Segmentation Engine</a>
+                    <ul class="toc-sub-list">
+                        <li><a href="#sec-models-catalog" class="toc-sub-link">3.1 Choosing a Recognition Model</a></li>
+                        <li><a href="#sec-models-seg" class="toc-sub-link">3.2 Detection &amp; Reading Order</a></li>
+                    </ul>
+                </li>
+                <li class="toc-nav-item">
+                    <a href="#sec-canvas" class="toc-nav-link">4. Manuscript Canvas &amp; HUD</a>
+                    <ul class="toc-sub-list">
+                        <li><a href="#sec-canvas-nav" class="toc-sub-link">4.1 Zoom, Pan &amp; 90° Rotation</a></li>
+                        <li><a href="#sec-canvas-boxes" class="toc-sub-link">4.2 BBoxes, Polygons &amp; Draw Mode</a></li>
+                        <li><a href="#sec-canvas-optics" class="toc-sub-link">4.3 Magnifier Loupe &amp; Optical Filters</a></li>
+                    </ul>
+                </li>
+                <li class="toc-nav-item">
+                    <a href="#sec-editor" class="toc-nav-link">5. Transcription Editor &amp; Linguistics</a>
+                    <ul class="toc-sub-list">
+                        <li><a href="#sec-editor-modes" class="toc-sub-link">5.1 Diplomatic Lines vs Stanza Flow</a></li>
+                        <li><a href="#sec-editor-ling" class="toc-sub-link">5.2 Romanization &amp; Cluster Inspector</a></li>
+                        <li><a href="#sec-editor-actions" class="toc-sub-link">5.3 Line Editing, Split, Merge &amp; Undo</a></li>
+                    </ul>
+                </li>
+                <li class="toc-nav-item"><a href="#sec-keyboard" class="toc-nav-link">6. Akhar Thrah Virtual Keyboard</a></li>
+                <li class="toc-nav-item"><a href="#sec-export" class="toc-nav-link">7. Multi-Format &amp; ZIP Corpus Export</a></li>
+                <li class="toc-nav-item"><a href="#sec-shortcuts" class="toc-nav-link">8. Master Keyboard Shortcuts</a></li>
+                <li class="toc-nav-item"><a href="#sec-faq" class="toc-nav-link">9. Paleographic Tips &amp; FAQ</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Documentation Article -->
+        <main class="help-content">
+
+            <!-- Hero & 4-Step Quick-Start -->
+            <section id="quickstart" class="help-hero">
+                <div class="hero-eyebrow">Official Documentation · https://ocr.cham.asia</div>
+                <h1>Cham OCR Studio — Complete User Guide</h1>
+                <p>
+                    Welcome to <strong>Cham OCR Studio</strong>, an open-source digital paleography and optical character recognition workbench purpose-built for historical and modern Eastern Cham (<em>Akhar Thrah</em>, <span class="cham-inline">ꨀꨇꩉ ꨔꨴꩍ</span>) manuscripts, bilingual glossaries, and multi-page archival corpora.
+                </p>
+
+                <div class="quickstart-grid">
+                    <div class="step-card">
+                        <span class="step-num">1</span>
+                        <div class="step-title">Load Manuscripts</div>
+                        <div class="step-desc">Upload multiple images, rasterize a multi-page PDF, paste via <kbd>Ctrl+V</kbd>, or click an <strong>Archival Specimen</strong>.</div>
+                    </div>
+                    <div class="step-card">
+                        <span class="step-num">2</span>
+                        <div class="step-title">Run Transcription</div>
+                        <div class="step-desc">Select a model (default <code>V24.1-R4 SOTA</code>) and click <strong>Transcribe</strong> (<kbd>Ctrl+Enter</kbd>) or <strong>Batch</strong> (<kbd>Ctrl+Shift+Enter</kbd>).</div>
+                    </div>
+                    <div class="step-card">
+                        <span class="step-num">3</span>
+                        <div class="step-title">Inspect &amp; Verify</div>
+                        <div class="step-desc">Inspect polygon ribbons, optical filters, Romanized transliteration, and Unicode clusters; verify lines with <kbd>A</kbd>.</div>
+                    </div>
+                    <div class="step-card">
+                        <span class="step-num">4</span>
+                        <div class="step-title">Export Corpus</div>
+                        <div class="step-desc">Export active folio or full multi-page queue to <code>.txt</code>, <code>.md</code>, <code>.json</code>, <code>PAGE-XML</code>, or Active Learning <code>.zip</code>.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 1: WORKSPACE & LAYOUT MODES -->
+            <section id="sec-layouts" class="guide-section">
+                <h2><span class="sec-badge">01</span> Workspace Architecture &amp; Layout Modes</h2>
+                <p>
+                    Different physical manuscript formats—from tall bark-paper codices (<em>kertas</em>) to wide horizontal palm-leaf strips (<em>agal</em>)—demand adaptable screen geometry. Use the <strong>Layout ▾</strong> dropdown in the right header cluster (or press <kbd>Alt+1..4</kbd>) to switch layouts instantaneously without losing your zoom, selection, or unsaved edits.
+                </p>
+
+                <h3 id="sec-layouts-modes">1.1 Four Specialized View Modes</h3>
+                <div class="feature-grid-2">
+                    <div class="feature-card">
+                        <div class="feature-card-head">
+                            <span class="feature-card-title">3-Pane Workbench (Default)</span>
+                            <kbd>Alt + 1</kbd>
+                        </div>
+                        <div class="feature-card-body">
+                            Displays the <strong>Corpus Queue</strong> on the left, the interactive <strong>Manuscript Canvas</strong> in the center, and the <strong>Transcription Editor</strong> on the right. Ideal for managing multi-page archival projects.
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-card-head">
+                            <span class="feature-card-title">Compare (2-Pane Side-by-Side)</span>
+                            <kbd>Alt + 2</kbd>
+                        </div>
+                        <div class="feature-card-body">
+                            Collapses the left Queue Sidebar to dedicate 100% of horizontal width to side-by-side diplomatic collation between the high-resolution folio scan and the extracted Cham textlines.
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-card-head">
+                            <span class="feature-card-title">Stacked (Horizontal–Vertical Split)</span>
+                            <kbd>Alt + 3</kbd>
+                        </div>
+                        <div class="feature-card-body">
+                            Places the Manuscript Canvas in a wide top viewport directly above a full-width Transcription Editor below. Purpose-built for elongated horizontal <strong>palm-leaf (<em>agal</em>) folios</strong> and wide epigraphic rubbings.
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-card-head">
+                            <span class="feature-card-title">Reader (Focus Scholarly Edition)</span>
+                            <kbd>Alt + 4</kbd>
+                        </div>
+                        <div class="feature-card-body">
+                            Hides surrounding chrome to present a centered, book-like reading column complete with inline cropped textline strips, stanza reconstruction, and Romanized subtitles.
+                        </div>
+                    </div>
+                </div>
+
+                <h3 id="sec-layouts-resizers">1.2 Smart Queue Drawer, Draggable Resizers &amp; Command Palette</h3>
+                <ul>
+                    <li><strong>Smart Auto-Collapsing Queue (<kbd>Alt + Q</kbd>)</strong>: On initial launch or single-folio proofreading, the left <em>Corpus Queue</em> collapses automatically to maximize reading width; importing a multi-page batch or PDF expands it automatically. Click the floating <strong>Queue</strong> pill at the top-left of the canvas (or press <kbd>Alt + Q</kbd>) anytime to toggle it manually.</li>
+                    <li><strong>Drag-to-Resize Dividers</strong>: Drag the vertical hairline dividers between panes (or the horizontal divider in <em>Stacked</em> mode) to customize column proportions. All dimensions persist automatically in browser storage; <strong>double-click any divider</strong> to snap back to its default width.</li>
+                    <li><strong>Command Palette (<kbd>Ctrl + K</kbd> / <kbd>⌘K</kbd>)</strong>: Click <strong>Ctrl+K</strong> in the top header to fuzzy-search and trigger any Studio operation—switching layouts, running batch OCR, toggling overlays, or exporting corpora—entirely from the keyboard.</li>
+                </ul>
+            </section>
+
+            <!-- SECTION 2: UPLOAD, PDF & BATCH QUEUE -->
+            <section id="sec-intake" class="guide-section">
+                <h2><span class="sec-badge">02</span> Corpus Intake, Multi-Page PDF Import &amp; Batch Queue</h2>
+
+                <h3 id="sec-intake-channels">2.1 Five Ways to Load Manuscript Folios</h3>
+                <ul>
+                    <li><strong>Add Images / PDF (<kbd>Ctrl + O</kbd>)</strong>: Select one or dozens of image files (<code>.png</code>, <code>.jpg</code>, <code>.webp</code>, <code>.bmp</code>) or a multi-page <code>.pdf</code> document simultaneously.</li>
+                    <li><strong>Drag &amp; Drop</strong>: Drag image files or PDFs from your file manager directly onto either the left <em>Corpus Queue</em> intake box or the central <em>Manuscript Canvas</em>.</li>
+                    <li><strong>Direct Clipboard Paste (<kbd>Ctrl + V</kbd>)</strong>: Copy any screenshot or cropped manuscript region to your system clipboard and press <kbd>Ctrl + V</kbd> anywhere in the Studio to enqueue it immediately.</li>
+                    <li><strong>Multi-Page PDF Importer</strong>: Dropping or selecting a <code>.pdf</code> opens the <em>Import Multi-Page PDF</em> dialog:
+                        <ul>
+                            <li>Specify a flexible <strong>Page Range</strong> such as <code>1-10</code>, <code>1,4,7-12</code>, or <code>all</code>.</li>
+                            <li>Choose a <strong>Rasterization Resolution</strong>: <em>150 DPI</em> (fast preview), <em>220 DPI</em> (recommended paleographic fidelity), or <em>300 DPI</em> (ultra-fine epigraphic detail).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Curated Archival Specimens</strong>: Click <strong>Specimens</strong> in the Corpus Queue (or click one of the <em>Instant Archival Specimens</em> cards on the empty stage) to load real benchmark folios—including Panduranga palm-leaf <em>agal</em>, curved baselines, two-column Wijaya layouts, and bilingual Cham–Vietnamese pages—or click <strong>Load 4-Folio Demo Batch</strong> to test batch processing immediately.</li>
+                </ul>
+
+                <h3 id="sec-intake-batch">2.2 Automated Batch OCR Queue</h3>
+                <ul>
+                    <li><strong>Batch Button (<kbd>Ctrl + Shift + Enter</kbd>)</strong>: Located directly in the <em>Corpus Queue</em> pane header, clicking <strong>Batch</strong> processes all <code>Pending / Unprocessed</code> folios in the queue sequentially. A live progress banner displays the current folio index, filename, progress bar, and a safe <strong>Stop</strong> button that halts cleanly after the active page finishes.</li>
+                    <li><strong>Auto-Transcribe on Upload</strong>: Enable the checkbox inside the Queue intake box to start OCR automatically whenever new images or PDF pages are imported.</li>
+                    <li><strong>Local IndexedDB Persistence</strong>: High-resolution manuscript images and extracted transcriptions are stored locally inside your browser's IndexedDB (<code>ChamOCRStudioDB</code>), preserving your queue across page refreshes without re-uploading.</li>
+                </ul>
+
+                <h3 id="sec-intake-badges">2.3 Document Status Badges &amp; Queue Controls</h3>
+                <p>Each queued folio displays a strict semantic status badge that distinguishes machine output from human scholarly verification:</p>
+                <div class="help-table-wrap">
+                    <table class="help-table">
+                        <thead>
+                            <tr>
+                                <th>Status Badge</th>
+                                <th>Meaning &amp; Trigger Condition</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="status-demo-pill pending">Unprocessed</span></td>
+                                <td>Folio has been loaded into the queue and is awaiting transcription.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="status-demo-pill ocr_done">OCR done</span></td>
+                                <td>Automatic neural transcription completed with no quality-gate warnings. <strong>Note:</strong> Automatic OCR never marks a document as human-verified.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="status-demo-pill needs_review">Needs review</span></td>
+                                <td>Server quality gates or user flagged the folio due to low line confidence (&lt; 60%), uncovered text-like ink (&ge; 12%), suspected merged line height, or manual <kbd>W</kbd> flagging.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="status-demo-pill no_text">No text</span></td>
+                                <td>Blank or non-text page detected by the ink-density gate, preventing blank-page hallucinations.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="status-demo-pill verified">Verified</span></td>
+                                <td>Awarded <strong>exclusively</strong> after a human scholar confirms every single line on the folio (via Verify <kbd>A</kbd>, inline edit, split, merge, or batch high-confidence verification).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+                    Use the <strong>Filter Pills</strong> (<code>All</code>, <code>Review</code>, <code>OCR Done</code>, <code>Verified</code>, <code>Pending</code>) and filename search box to isolate pages needing attention, <strong>drag and drop folio cards</strong> to reorder pagination, or hover any card to re-run OCR (<code>▶</code>) or remove it (<code>✕</code>).
+                </p>
+            </section>
+
+            <!-- SECTION 3: MODELS & SEGMENTATION -->
+            <section id="sec-models" class="guide-section">
+                <h2><span class="sec-badge">03</span> Neural Recognition Models &amp; Segmentation Engine</h2>
+
+                <h3 id="sec-models-catalog">3.1 Choosing the Right Recognition Model</h3>
+                <div class="help-table-wrap">
+                    <table class="help-table">
+                        <thead>
+                            <tr>
+                                <th>Model Selector</th>
+                                <th>Input Geometry</th>
+                                <th>Recommended Paleographic Use Case</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>V26.1 SOTA (<code>v24_1_r4</code>)</strong> <em>(Default)</em></td>
+                                <td><code>[3, 48, 480]</code></td>
+                                <td><strong>Primary pure-Cham production specialist.</strong> Padding-masked 114-token <em>Akhar Thrah</em> Masked-SVTR with WiSE-FT real-scan calibration (6/6 Gates, 2.07% real-camera crop CER / 3.07% live E2E); prevents stray Latin character hallucinations on aged manuscripts.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Auto Router (<code>auto</code>)</strong></td>
+                                <td>Adaptive Tri-Engine</td>
+                                <td><strong>Best for interleaved Cham + Vietnamese pages.</strong> Runs W=480 Cham primary, selectively adjudicates narrow/lower-confidence crops with W=320 archival specialist, and hands off Vietnamese lines (including digit/punctuation-heavy glosses) to PP-OCRv5 with per-line <code>selected_recognizer</code> provenance.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>V24.1-R3.1</strong></td>
+                                <td><code>[3, 48, 320]</code></td>
+                                <td>Compact W=320 specialist tuned for heavily degraded Level-5 archival crops and tight symbol gate closure.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>V24.1-R2.1.6</strong></td>
+                                <td><code>[3, 48, 320]</code></td>
+                                <td>Clean HarfBuzz &amp; editorial punctuation specialist (100% accuracy across 14 mandatory symbols and multi-context hyphens).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Vietnamese (<code>vi</code>)</strong></td>
+                                <td>Dynamic</td>
+                                <td>Fine-tuned PP-OCRv5 recognizer dedicated to modern Vietnamese translations, headers, and catalog cards.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>V25 Bilingual (Legacy) / V24 / V23</strong></td>
+                                <td><code>[3, 48, 480 / 320]</code></td>
+                                <td>Historical reference models retained for longitudinal academic benchmarking. Note: V25 (40-epoch 162-token unmasked bilingual experiment, 0.72% in-domain val CER) exhibits unmasked W=480 padding &amp; CTC Latin dispersion on raw E2E crops—always prefer <strong>Auto Router</strong> or <strong>V26.1 SOTA</strong> for production use.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 id="sec-models-seg">3.2 Segmentation Pipeline Parameters (<kbd>⚙</kbd> Popover)</h3>
+                <p>Click the gear icon (<kbd>⚙</kbd>) beside the Model dropdown to configure line detection and reading order:</p>
+                <ul>
+                    <li><strong>Hybrid Cham-DBNet (Polygon Ribbon)</strong> <em>(Recommended)</em>: Uses a Legacy-First quality gate paired with fine-tuned <code>Cham-DBNet v1_poly_u1.8</code> polygon contours that trace undulating baselines, rectify curved ribbons into straight horizontal strips, and mask out intruding ascenders/descenders from neighboring lines.</li>
+                    <li><strong>Indic Valley-Cut Projection / Adaptive Profile</strong>: Horizontal ink-projection fallbacks with Connected Component exclusion (<code>difference_update</code>) and a <code>0.40 × median_line_height</code> vertical diacritic cushion. Adjustable via the <strong>Minimum Interlinear Gap (px)</strong> slider.</li>
+                    <li><strong>Multi-Column Reading Order</strong>: <code>Automatic Column Detection</code> identifies dual-column folios (and full-width titles above columns) automatically; switch to <code>Strict Top-to-Bottom Rows</code> when transcribing single-column tables or fragmented scraps.</li>
+                </ul>
+            </section>
+
+            <!-- SECTION 4: MANUSCRIPT CANVAS & HUD -->
+            <section id="sec-canvas" class="guide-section">
+                <h2><span class="sec-badge">04</span> Paleographic Manuscript Canvas &amp; Optical HUD</h2>
+
+                <h3 id="sec-canvas-nav">4.1 Full-Bleed Canvas &amp; Floating Glass Pill HUD</h3>
+                <ul>
+                    <li><strong>Floating Glass Pill HUD</strong>: Instead of stacking a second top toolbar over the manuscript, viewport controls float inside a translucent warm-parchment capsule centered at the bottom of the canvas so historical scans extend edge-to-edge right beneath the main header.</li>
+                    <li><strong>Pan &amp; Cursor-Centered Zoom</strong>: Drag anywhere on the canvas to pan; scroll the mouse wheel to zoom smoothly toward the cursor position (<code>8%</code> to <code>1000%</code>).</li>
+                    <li><strong>Quick Zoom Presets</strong>: Use HUD buttons for <strong>Fit Folio in Viewport</strong>, <strong>Fit Folio Width</strong>, <strong>1:1 Actual Pixel Size</strong>, Zoom Out (<code>−</code>), and Zoom In (<code>+</code>).</li>
+                    <li><strong>Rotate 90° Clockwise (<code>↻</code>)</strong>: Permanently rotates sideways camera scans by 90° clockwise and updates the thumbnail so subsequent OCR runs on upright textlines.</li>
+                </ul>
+
+                <h3 id="sec-canvas-boxes">4.2 Spotlight Bounding Boxes, Polygons &amp; Manual Region Annotation</h3>
+                <ul>
+                    <li><strong>Spotlight Bounding Box Mode (<kbd>B</kbd>)</strong> <em>(Default)</em>: Eliminates visual "grid clutter" over delicate Cham vowel ascenders (<span class="cham-inline">◌ꨪ</span>, <span class="cham-inline">◌ꨫ</span>) and subjoined medials (<span class="cham-inline">◌ꨳ</span>, <span class="cham-inline">◌ꨶ</span>) by rendering subtle <code>1.5px</code> baseline rules on unselected lines (dashed amber for <code>Needs review</code>, sage for <code>Verified</code>) while illuminating full core-band boxes only on the hovered or active line. Press <kbd>B</kbd> (or click <strong>Spotlight</strong> in the HUD) to cycle <code>Spotlight &rarr; All Boxes &rarr; Hidden</code>.</li>
+                    <li><strong>Interactive Corner Resize Handles</strong>: Selecting any line reveals four corner handles (<code>NW</code>, <code>NE</code>, <code>SW</code>, <code>SE</code>) on its bounding box. Drag any corner to refine crop boundaries, then press <kbd>R</kbd> (<strong>Re-OCR</strong>) to re-transcribe the adjusted region.</li>
+                    <li><strong>Curved Polygon Ribbons (<kbd>P</kbd>)</strong>: Toggles the SVG polygonal contour layer generated by <code>Cham-DBNet</code> on wavy or warped folios.</li>
+                    <li><strong>Draw Manual Bounding Box (<kbd>D</kbd>)</strong>: Activates crosshair annotation mode—drag across any missed marginal note, stanza number, or interlinear gloss to crop, transcribe via <code>/ocr_crop</code>, and insert it at the exact vertical reading position.</li>
+                </ul>
+
+                <h3 id="sec-canvas-optics">4.3 Paleographic Magnifier Loupe &amp; Optical Filters</h3>
+                <div class="feature-grid-2">
+                    <div class="feature-card">
+                        <div class="feature-card-head">
+                            <span class="feature-card-title">2.6× Magnifier Loupe</span>
+                            <kbd>L</kbd>
+                        </div>
+                        <div class="feature-card-body">
+                            Opens a circular 2.6× optical lens tracking your cursor across the folio—ideal for inspecting eroded vowel strokes, distinguishing <span class="cham-inline">◌ꨲ</span> (Vowel UE) from <span class="cham-inline">◌ꨶ</span> (Medial WA), or checking double dandas (<span class="cham-inline">꩝꩝</span> vs <span class="cham-inline">꩞</span>).
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-card-head">
+                            <span class="feature-card-title">Non-Destructive Optical Filters</span>
+                            <span>◐ Icon</span>
+                        </div>
+                        <div class="feature-card-body">
+                            Adjust <strong>Contrast</strong> (<code>60%–240%</code>), <strong>Brightness</strong> (<code>50%–180%</code>), <strong>Monochrome Desaturation</strong>, or toggle <strong>Invert Dark/Rubbing Ink</strong> to read low-contrast palm leaves, faded ink, and white-on-black stone inscription rubbings without altering the underlying file.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 5: TRANSCRIPTION EDITOR & LINGUISTICS -->
+            <section id="sec-editor" class="guide-section">
+                <h2><span class="sec-badge">05</span> Scholarly Transcription Editor &amp; Linguistic Tools</h2>
+
+                <h3 id="sec-editor-modes">5.1 Diplomatic Lines vs. Continuous Stanza Flow</h3>
+                <ul>
+                    <li><strong>Lines (Diplomatic Edition)</strong>: Displays every detected textline in exact folio lineation with a color-coded confidence bar (Green <code>&ge; 75%</code>, Amber <code>45%–74%</code>, Red <code>&lt; 45%</code>). Clicking any line highlights its box on the canvas; clicking an individual Cham grapheme zooms the canvas to <code>175%</code> and highlights that specific character cluster proportionally.</li>
+                    <li><strong>Stanza Flow (<kbd>Alt + P</kbd>)</strong>: Invokes the linguistic &amp; geometric reconstruction engine (<code>paragraph_flow.py</code>) to distinguish soft line wraps from hard stanza/paragraph breaks (using Danda/Double Danda terminators <span class="cham-inline">꩝</span> / <span class="cham-inline">꩞</span>, stanza numerals <span class="cham-inline">꩑꩞</span>, indentation, and interlinear gap ratios). Click any sentence segment to highlight its source line on the folio, or double-click to edit.</li>
+                </ul>
+
+                <h3 id="sec-editor-ling">5.2 Line Crops, Romanized Transliteration &amp; Unicode Cluster Inspector</h3>
+                <div class="feature-grid-3">
+                    <div class="feature-card">
+                        <div class="feature-card-head">
+                            <span class="feature-card-title">Crop: Focus</span>
+                            <kbd>Alt + C</kbd>
+                        </div>
+                        <div class="feature-card-body">
+                            By default, unfolds the high-contrast manuscript cutout strip <strong>exclusively above the active line</strong> you are editing (eliminating left-right eye saccade fatigue without doubling list height). Cycle <code>Focus &rarr; All &rarr; Off</code> anytime.
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-card-head">
+                            <span class="feature-card-title">Aa Roman</span>
+                            <kbd>Alt + T</kbd>
+                        </div>
+                        <div class="feature-card-body">
+                            Generates live scholarly EFEO/Inrasara-style Latin transliteration beneath every Cham line and stanza (e.g., <span class="cham-inline">ꨌꩌ ꨚꨤꨬ</span> &rarr; <em>cam palei</em>) to accelerate cross-checking.
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-card-head">
+                            <span class="feature-card-title">U+ Cluster Inspector</span>
+                            <kbd>Alt + U</kbd>
+                        </div>
+                        <div class="feature-card-body">
+                            Opens the bottom paleographic inspector decomposing the selected grapheme into exact Unicode codepoints (<code>U+AA00</code>–<code>U+AA5F</code>), categories, canonical <em>Logical Order</em> status, and minimal-pair alerts.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="help-callout tip">
+                    <strong>Canonical Brahmic Logical Order Guarantee</strong>
+                    Whenever you edit or save a line, Cham OCR Studio automatically canonicalizes combining marks into strict Unicode Logical Order:
+                    <code>Base Consonant &rarr; Medials (Ra/La, Ya/Wa) &rarr; Pre-Vowels (O/Ai) &rarr; Dependent Vowels &rarr; Lengthener AA &rarr; Final Signs</code>, preventing visual-order encoding corruption.
+                </div>
+
+                <h3 id="sec-editor-actions">5.3 Typewriter Editing Flow, Inline Line Actions, Search &amp; History</h3>
+                <ul>
+                    <li><strong>Typewriter Inline Edit (<kbd>Enter</kbd> / <kbd>Shift+Enter</kbd> / <kbd>Ctrl+Enter</kbd>)</strong>: Double-click or press <kbd>Enter</kbd> on a selected line to open persistent Unicode Cham editing. While editing, press <kbd>Enter</kbd> to save and <strong>advance directly into editing the next line</strong> while gently centering the canvas (<kbd>Shift+Enter</kbd> steps up to the previous line; <kbd>Ctrl+Enter</kbd> or <strong>Save</strong> commits and exits edit mode).</li>
+                    <li><strong>Contextual Inline Action Bar</strong>: Selecting any line reveals <code>Edit</code>, <code>✓ Verify</code>, <code>↻ Re-OCR</code>, <code>Split</code>, <code>Merge ↓</code>, <code>Flag</code>, <code>U+</code>, and <code>🗑</code> directly inside that line card—eliminating eye travel to the bottom of the screen.</li>
+                    <li><strong>Verify (<kbd>A</kbd>) &amp; Batch Verify (&ge;75%)</strong>: Marks the selected line as 100% human-verified and advances automatically to the next line, or approves all high-confidence lines (&ge; 75%) in one click.</li>
+                    <li><strong>Split (<kbd>S</kbd>)</strong>: When inline edit mode is open, splits the line at your <strong>exact text cursor (caret) position</strong>; otherwise splits cleanly near the midpoint word/danda boundary while dividing the bounding box vertically.</li>
+                    <li><strong>Merge Down (<kbd>M</kbd>)</strong>: Concatenates the selected line with the line immediately below and unifies their bounding boxes.</li>
+                    <li><strong>Re-OCR (<kbd>R</kbd>), Flag (<kbd>W</kbd>), Delete (<kbd>Del</kbd>)</strong>: Re-runs recognition on the line's box, flags an ambiguous line for review, or removes false-positive noise detections.</li>
+                    <li><strong>Review Navigation (<kbd>[</kbd> and <kbd>]</kbd>)</strong>: Jumps directly to the previous or next unverified low-confidence / flagged line and centers the manuscript viewport on it.</li>
+                    <li><strong>Find &amp; Replace (<kbd>Ctrl + F</kbd>) &amp; Undo / Redo (<kbd>Ctrl + Z</kbd> / <kbd>Ctrl + Y</kbd>)</strong>: Full 40-step per-folio undo/redo stack covering edits, splits, merges, box adjustments, and batch replacements.</li>
+                </ul>
+            </section>
+
+            <!-- SECTION 6: VIRTUAL KEYBOARD -->
+            <section id="sec-keyboard" class="guide-section">
+                <h2><span class="sec-badge">06</span> Akhar Thrah Virtual Keyboard (<kbd>Alt + K</kbd>)</h2>
+                <p>
+                    Because standard operating systems rarely ship ergonomic Eastern Cham keymaps, Cham OCR Studio includes a floating, draggable paleographic keyboard covering the entire Unicode Cham block (<code>U+AA00</code>–<code>U+AA5F</code>), triggered via the <strong>KB</strong> button in the Transcription Editor toolbar or <kbd>Alt + K</kbd>:
+                </p>
+                <ul>
+                    <li><strong>Direct Non-Blur Typing</strong>: Open an inline line edit (<kbd>Enter</kbd>) and click keys on the Virtual Keyboard—characters insert directly at your cursor position without stealing input focus.</li>
+                    <li><strong>Three Ergonomic Grid Layouts</strong>: Choose <code>5-Row Compact</code> (17–19 keys/row), <code>6-Row Balanced</code> (14 keys/row), or <code>9-Row Canonical</code> (traditional articulatory varga grouping).</li>
+                    <li><strong>Phonetic Legends &amp; Glyph Scaling</strong>: Switch key sub-labels between <code>Traditional</code> Cham romanization, <code>Sanskrit</code> indological equivalents, or <code>Glyph Only</code>, and scale keycap glyphs from <code>16px</code> to <code>22px</code>.</li>
+                    <li><strong>Scratchpad &amp; Logical Order Normalizer</strong>: Compose text independently in the scratchpad bar, click <strong>Normalize</strong> to enforce canonical cluster order, <strong>Copy</strong> to clipboard, or click <strong>Insert ↵</strong> to append into the active transcription line. Drag the <code>⋮⋮</code> title bar anywhere on screen, or click <code>⟲</code> to re-dock to the bottom-right corner.</li>
+                </ul>
+            </section>
+
+            <!-- SECTION 7: EXPORT -->
+            <section id="sec-export" class="guide-section">
+                <h2><span class="sec-badge">07</span> Multi-Format Corpus &amp; Active Learning Export (<kbd>Ctrl + E</kbd>)</h2>
+                <p>
+                    Click <strong>Export</strong> in the top header to export either the <strong>Active Manuscript Folio Only</strong> or the <strong>Entire Transcribed Corpus Queue (Multi-Page)</strong>:
+                </p>
+                <div class="feature-grid-2">
+                    <div class="feature-card">
+                        <div class="feature-card-title">📋 Copy Plaintext &amp; 📄 Unicode TXT (<code>.txt</code>)</div>
+                        <div class="feature-card-body">Clean UTF-8 diplomatic line transcriptions normalized in canonical Brahmic Logical Order, separated by folio headers in multi-page mode.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-card-title">📑 Scholarly Markdown Report (<code>.md</code>)</div>
+                        <div class="feature-card-body">Publication-ready document bundling folio status, numbered Cham textlines, confidence percentages, and italic Romanized transliterations.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-card-title">🗂 Structured JSON (<code>.json</code>)</div>
+                        <div class="feature-card-body">Preserves exact bounding boxes, polygon vertices, confidences, and verification flags; 100% compatible with <code>scripts/ingest_studio_to_realscan_gold.py</code>.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-card-title">🏛 Archival PAGE-XML (<code>.xml</code>)</div>
+                        <div class="feature-card-body">PRImA 2019 XML schema encoding polygonal <code>&lt;Coords&gt;</code> and <code>&lt;Unicode&gt;</code> text equivalents for interoperability with Transkribus and eScriptorium.</div>
+                    </div>
+                </div>
+                <div class="help-callout">
+                    <strong>⚡ Active Learning Dataset Package (<code>.zip</code>)</strong>
+                    Select <strong>Active Learning Dataset (.zip)</strong> to generate a self-contained training archive on the server containing cropped line images (<code>crops/*.png</code>), tab-delimited PaddleOCR training pairs (<code>train_list.txt</code>), active-learning metadata (<code>corrections.jsonl</code>), <code>corpus_manifest.json</code>, and per-folio plaintext/Markdown transcriptions.
+                </div>
+            </section>
+
+            <!-- SECTION 8: MASTER SHORTCUTS -->
+            <section id="sec-shortcuts" class="guide-section">
+                <h2><span class="sec-badge">08</span> Master Keyboard Shortcuts Reference</h2>
+                <p>Type in the sidebar search box (<kbd>/</kbd>) to filter this shortcut table instantaneously:</p>
+                <div class="help-table-wrap">
+                    <table class="help-table" id="shortcuts-table">
+                        <thead>
+                            <tr>
+                                <th>Shortcut</th>
+                                <th>Scope</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><kbd>Ctrl + K</kbd> / <kbd>⌘K</kbd></td><td>Global</td><td>Open / close the fuzzy-search Command Palette</td></tr>
+                            <tr><td><kbd>Ctrl + O</kbd></td><td>Global</td><td>Open file picker to upload multiple images or a multi-page PDF</td></tr>
+                            <tr><td><kbd>Ctrl + V</kbd></td><td>Global</td><td>Paste manuscript image directly from system clipboard</td></tr>
+                            <tr><td><kbd>Ctrl + Enter</kbd></td><td>Global</td><td>Execute OCR transcription on the active manuscript folio</td></tr>
+                            <tr><td><kbd>Ctrl + Shift + Enter</kbd></td><td>Global</td><td>Start automated Batch OCR across all unprocessed folios in queue</td></tr>
+                            <tr><td><kbd>Ctrl + E</kbd></td><td>Global</td><td>Open the Multi-Format &amp; ZIP Corpus Export modal</td></tr>
+                            <tr><td><kbd>Alt + 1</kbd> .. <kbd>Alt + 4</kbd></td><td>Layout</td><td>Switch between 3-Pane, Compare, Stacked, and Reader modes</td></tr>
+                            <tr><td><kbd>Alt + Q</kbd></td><td>Layout</td><td>Toggle the collapsible Corpus Queue drawer</td></tr>
+                            <tr><td><kbd>Alt + C</kbd></td><td>Editor</td><td>Cycle synced line cutout mode (<code>Focus &rarr; All &rarr; Off</code>)</td></tr>
+                            <tr><td><kbd>Alt + K</kbd></td><td>Keyboard</td><td>Toggle the floating Akhar Thrah Virtual Keyboard</td></tr>
+                            <tr><td><kbd>Alt + P</kbd></td><td>Editor</td><td>Toggle Diplomatic Lines &harr; Continuous Stanza / Paragraph Flow</td></tr>
+                            <tr><td><kbd>Alt + T</kbd></td><td>Editor</td><td>Toggle live Romanized transliteration subtitles (<code>Aa Roman</code>)</td></tr>
+                            <tr><td><kbd>Alt + U</kbd></td><td>Editor</td><td>Toggle the Unicode Paleographic Cluster Inspector drawer (<code>U+ Cluster</code>)</td></tr>
+                            <tr><td><kbd>Ctrl + F</kbd></td><td>Editor</td><td>Open Find &amp; Replace across the active folio</td></tr>
+                            <tr><td><kbd>Ctrl + Z</kbd> / <kbd>Ctrl + Y</kbd></td><td>Editor</td><td>Undo / Redo editorial changes (40-step history stack)</td></tr>
+                            <tr><td><kbd>↑</kbd> / <kbd>↓</kbd></td><td>Editor</td><td>Select previous / next textline</td></tr>
+                            <tr><td><kbd>Enter</kbd></td><td>Editor</td><td>Open inline edit for selected line (or commit active edit)</td></tr>
+                            <tr><td><kbd>A</kbd></td><td>Review</td><td>Verify selected line (100% human-verified) and advance to next line</td></tr>
+                            <tr><td><kbd>W</kbd></td><td>Review</td><td>Flag selected line as <code>Needs review</code></td></tr>
+                            <tr><td><kbd>S</kbd></td><td>Review</td><td>Split selected line (at caret position when editing, or midpoint)</td></tr>
+                            <tr><td><kbd>M</kbd></td><td>Review</td><td>Merge selected line with the succeeding line below</td></tr>
+                            <tr><td><kbd>R</kbd></td><td>Review</td><td>Re-run neural OCR on the selected line's bounding box</td></tr>
+                            <tr><td><kbd>Delete</kbd> / <kbd>Backspace</kbd></td><td>Review</td><td>Delete selected textline (when not typing inside an input)</td></tr>
+                            <tr><td><kbd>[</kbd> / <kbd>]</kbd></td><td>Review</td><td>Jump to previous / next flagged or low-confidence textline</td></tr>
+                            <tr><td><kbd>B</kbd></td><td>Canvas</td><td>Cycle Bounding Box overlay (<code>Spotlight &rarr; All Boxes &rarr; Hidden</code>)</td></tr>
+                            <tr><td><kbd>D</kbd></td><td>Canvas</td><td>Toggle manual Draw Bounding Box mode</td></tr>
+                            <tr><td><kbd>P</kbd></td><td>Canvas</td><td>Toggle curved Cham-DBNet Polygon Ribbon overlay</td></tr>
+                            <tr><td><kbd>L</kbd></td><td>Canvas</td><td>Toggle 2.6× Paleographic Magnifier Loupe</td></tr>
+                            <tr><td><kbd>Esc</kbd></td><td>Global</td><td>Cancel inline edit, exit Draw/Loupe mode, or close open modal/keyboard</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SECTION 9: FAQ & TROUBLESHOOTING -->
+            <section id="sec-faq" class="guide-section">
+                <h2><span class="sec-badge">09</span> Paleographic Best Practices &amp; Troubleshooting FAQ</h2>
+
+                <div class="faq-list">
+                    <details class="faq-item" open>
+                        <summary>My palm-leaf or stone rubbing scan is sideways, dark, or white-ink-on-black. How should I prepare it?</summary>
+                        <div class="faq-answer">
+                            First, if the folio is rotated 90°/270°, click the <strong>Rotate 90° Clockwise</strong> button in the canvas toolbar until textlines run horizontally—rotation updates the actual image sent to the OCR engine. For visual proofreading of dark palm leaves or white-on-black stone rubbings, open <strong>Optical Filters (◐)</strong> and enable <em>Invert Dark/Rubbing Ink</em> or boost <em>Contrast</em> to <code>150%–190%</code>.
+                        </div>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary>When should I choose V26.1 SOTA vs. Auto Router vs. Historical Baselines (V25 / V24 / V23)?</summary>
+                        <div class="faq-answer">
+                            Use <strong>V26.1 SOTA (<code>v24_1_r4</code>)</strong> for pure Eastern Cham (<em>Akhar Thrah</em>) manuscripts and printed Cham poetry—its padding-masked W=480 canvas and isolated 114-token vocabulary prevent stray Latin characters on aged paper. Choose <strong>Auto Router</strong> whenever pages mix or alternate Cham stanzas with Vietnamese translations and headers. Keep <strong>V25 / V24 / V23</strong> strictly for historical comparative benchmarking rather than production transcription.
+                        </div>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary>A line was missed or its bounding box clipped a character at the margin. How do I fix it without re-running the whole page?</summary>
+                        <div class="faq-answer">
+                            If an existing line's box is slightly too narrow, click the line to reveal its 4 corner resize handles, drag the corner outward to cover the clipped glyph, and press <kbd>R</kbd> (<strong>Re-OCR</strong>). If a line was missed altogether, press <kbd>D</kbd> (<strong>Draw Manual Bounding Box</strong>) and drag a rectangle over the missed textline—the Studio crops, transcribes, and inserts it into the exact vertical reading position automatically.
+                        </div>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary>Why does my folio say "OCR done" instead of "Verified" even when all confidences are high?</summary>
+                        <div class="faq-answer">
+                            To uphold archival ground-truth integrity, automatic neural predictions are <strong>never</strong> marked <code>Verified</code> on their own. Once you review the folio—or click <strong>Verify &ge;75%</strong> and manually verify any remaining lines with <kbd>A</kbd>—the folio badge transitions to green <code>Verified</code>.
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="help-footer">
+                <div>Cham OCR Studio · Open-Source Digital Paleography (<a href="https://ocr.cham.asia" style="color:var(--accent);font-weight:600;text-decoration:none;">https://ocr.cham.asia</a>)</div>
+                <div>
+                    <a href="/" style="color:var(--accent);font-weight:600;text-decoration:none;">Workbench</a> ·
+                    <a href="/research" style="color:var(--accent);font-weight:600;text-decoration:none;">Technical Report</a> ·
+                    <a href="https://github.com/phucsd/Cham-OCR" target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-weight:600;text-decoration:none;">GitHub</a>
+                </div>
+            </footer>
+
+        </main>
+    </div>
+
+    <script src="/static/js/help.js"></script>
+</body>
+</html>

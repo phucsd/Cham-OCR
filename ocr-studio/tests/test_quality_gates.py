@@ -644,6 +644,97 @@ def test_static_asset_separation_and_http_routes():
         httpd.server_close()
 
 
+def test_v26_audit_api_contract_and_provenance_hardening():
+    import base64
+    import json
+    import urllib.request
+    import urllib.error
+    import threading
+    from http.server import HTTPServer
+
+    # 1. Model catalog reclassifies V25 as Legacy/Deprecated under Historical Baselines
+    catalog = app.list_available_models()
+    by_id = {m['id']: m for m in catalog['models']}
+    assert by_id['v25']['group'] == 'Historical Baselines', by_id['v25']
+    assert by_id['v25'].get('deprecated') is True, by_id['v25']
+    assert 'SOTA' not in by_id['v25']['short_label'], by_id['v25']
+
+    # 2. Strict model allowlist rejects unknown IDs (no silent fallback to V23)
+    for bad_id in ('nonexistent_model_2026', 'model_does_not_exist', '../v23', 12345):
+        try:
+            app.validate_requested_model(bad_id)
+            assert False, f"Expected UnknownModelError for {bad_id!r}"
+        except app.UnknownModelError:
+            pass
+    assert app.validate_requested_model(None) == app.DEFAULT_CHAM_MODEL
+    assert app.validate_requested_model('') == app.DEFAULT_CHAM_MODEL
+    assert app.validate_requested_model('v24_1_r4') == 'v24_1_r4'
+
+    # 3. Auto Router v2.2 handles digit/punctuation-heavy Vietnamese lines without breaking Cham safety
+    def fake_cham_w480(imgs):
+        return [
+            (' {889- 0128466780} ꨏ}51/', 0.7554),   # vietnamese_00 line 3: digit/symbol soup
+            ('ꨚꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꨰ', 0.31),               # degraded historical Cham line -> MUST stay Cham
+        ], 0.0
+
+    def fake_vi(imgs):
+        return [
+            ('Số trang: 0123456789, dấu ! ? : ; ( ) / -', 0.92),
+            ('38158"o) gi', 0.74),
+        ], 0.0
+
+    router = app.AutoRoutingOCRWrapper(fake_cham_w480, fake_vi, cham_w320_model=None, primary_ver='v24_1_r4')
+    dummy_crop = np.full((48, 320, 3), 245, dtype=np.uint8)
+    routed_out, _ = router([dummy_crop, dummy_crop])
+    assert routed_out[0][0].startswith('Số trang: 0123456789'), routed_out[0]
+    assert router.last_selected_versions[0] == 'vi'
+    assert routed_out[1][0] == 'ꨚꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꨰ', routed_out[1]
+    assert router.last_selected_versions[1] == 'v24_1_r4'
+
+    # 4. HTTP 400 validation across /ocr and /ocr_crop (no HTTP 502 on missing image, no HTTP 200 on invalid params)
+    valid_img = np.full((80, 240, 3), 250, dtype=np.uint8)
+    ok, buf = cv2.imencode('.png', valid_img)
+    assert ok
+    valid_b64 = base64.b64encode(buf.tobytes()).decode('ascii')
+
+    httpd = HTTPServer(('127.0.0.1', 0), app.ChamOCRRequestHandler)
+    port = httpd.server_address[1]
+    t = threading.Thread(target=httpd.serve_forever, daemon=True)
+    t.start()
+
+    def post_json(path, payload):
+        req = urllib.request.Request(
+            f'http://127.0.0.1:{port}{path}',
+            data=(json.dumps(payload).encode('utf-8') if isinstance(payload, (dict, list)) else payload),
+            headers={'Content-Type': 'application/json'},
+            method='POST',
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                return resp.status, json.loads(resp.read().decode('utf-8'))
+        except urllib.error.HTTPError as he:
+            return he.code, json.loads(he.read().decode('utf-8'))
+
+    try:
+        for path, bad_payload in [
+            ('/ocr', {'model': 'v24_1_r4'}),  # missing_image -> 400 JSON (was 502)
+            ('/ocr', {'image': valid_b64, 'model': 'nonexistent_model_2026'}),  # invalid_model -> 400 (was 200 V23)
+            ('/ocr', {'image': valid_b64, 'model': 'v24_1_r4', 'method': 'not_a_method'}),  # invalid_segmentation -> 400
+            ('/ocr', {'image': valid_b64, 'model': 'v24_1_r4', 'method': 'dbnet', 'reading_order': 'invalid'}),  # -> 400
+            ('/ocr', {'image': '', 'model': 'v24_1_r4'}),
+            ('/ocr', b'not-valid-json{{{'),
+            ('/ocr_crop', {'image': valid_b64, 'model': 'nonexistent_model_2026', 'bbox': [0, 0, 100, 40]}),
+            ('/ocr_crop', {'image': valid_b64, 'model': 'v24_1_r4', 'bbox': [0, 0, 0, 0]}),  # invalid_bbox_zero -> 400
+            ('/ocr_crop', {'image': valid_b64, 'model': 'v24_1_r4', 'bbox': [-200, -200, -1, -1]}),  # negative -> 400
+            ('/ocr_crop', {'image': valid_b64, 'model': 'v24_1_r4', 'bbox': [500, 500, 700, 700]}),  # outside image -> 400
+        ]:
+            code, body = post_json(path, bad_payload)
+            assert code == 400 and 'error' in body, (path, bad_payload, code, body)
+    finally:
+        httpd.shutdown()
+        httpd.server_close()
+
+
 class TestQualityGates(unittest.TestCase):
     pass
 

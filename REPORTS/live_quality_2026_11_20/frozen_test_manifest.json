@@ -1,0 +1,455 @@
+{
+  "schema_version": "1.0.0",
+  "frozen_at": "2026-11-20T04:46:47.688737+00:00",
+  "source": "2026-11-20 production live OCR results",
+  "ground_truth_json_sha256": "ad67e34dae2ebd73200e8bf51932ef6ceadb0ed8bb9d1390e51f4ec82da22910",
+  "n_cases": 30,
+  "cases": [
+    {
+      "id": "negative_blank",
+      "tier": 0,
+      "kind": "negative",
+      "font": null,
+      "path": null,
+      "gt_lines": [],
+      "image_sha256": "f8400d9c1fb74c28915825f3d7674ac02a75482cd21396de5ce8adbf2457d5b1"
+    },
+    {
+      "id": "synthetic_025",
+      "tier": 1,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Regular.ttf",
+      "path": "ocr-benchmark/data/images/test_025_lvl1.png",
+      "gt_lines": [
+        "ꨢꩃ ꨤꨝꩃ ꨧꨯꨱꩃ ꨟꨭꩀꨆꨬ ꨂꨣꩃ ꨌꩌ꩞",
+        "꩔꩞ ꨟꨗꩃ ꨀꨋꩅ ꨓꨭꩀ ꨨꨭꨩ ꨡꨯꨱꩀ ꨕꨫ ꨙꩌ ꨀꨕꩅ",
+        "ꨞꨩ ꨋꩇ ꨀꨕꩅ ꨚꨣꨤꨯꨩ ꨝꨆꩌ ꨧꨯꨱꩃ ꨣꨤꨯꨩ ꨀꨕꩅ ꨕꨘꩇ: ꨣꨯꨱꩀ ꨀꨥ ꨇꩆ"
+      ],
+      "image_sha256": "c222369a7e9f987b00b898f4fbc09a713e7b6a93a65c7454e910d59277a8cf18"
+    },
+    {
+      "id": "synthetic_029",
+      "tier": 1,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Bold.ttf",
+      "path": "ocr-benchmark/data/images/test_029_lvl1.png",
+      "gt_lines": [
+        "ꨨꨈꨴꨮꩌ ꨀꨕꩅ ꨃꨥ ꨢꩃ꩝ ꨣꨯꨱꩀ ꨀꨥ ꨇꩆ ꨛꨯꨮ꩝ ꨓꨟꨳꨩ ꨀꨕꨯꨱꩍ ꨕꨘꩇ ꨧꨯꨱꩃ ꨕꨯꩌ ꨤꨡꨰꩂ ꨝꨶꨮꩊ",
+        "ꨙꩌ ꨀꨕꩅ ꨓꨘꨓꩇ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩝ ꨕꨯꩌ ꨢꩃ ꨤꨝꩃ ꨧꨯꨱꩃ ꨝꨪꨎꩀ ꨍꨰꨘꨩ ꨚꨣꩆ; ꨌꨯꨱꩃ ꨤꨪꨆꨮꨭ",
+        "꩓꩞꩑꩞ ꨆꨢꨩ ꨋꩇ ꨢꩃ",
+        "– ꨇꨪꩀ ꨕꨴꨮꩇ ꨚꨴꩆ: ꨙꩌ ꨀꨕꩅ ꨌꨣꨥꩅ꩝",
+        "꩓꩞꩒꩞ ꨞꨩ ꨋꩇ ꨀꨕꩅ",
+        "ꨕꨤꩌ ꨨꨣꨬ ꨆꨓꨯꨮꨩ꩝ ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ ꨚꩀ ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝ ꨌꨯꨱꩃ ꨤꨪꨆꨮꨭ",
+        "꩕꩞꩒꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨣꨕꩀ ꨌꨰꩀ ꨨꨈꨰꩅ?",
+        "– ꨟꨈꨴꨭꨩ ꨕꨨꨵꨮꨭ ꨀꩉꨖꩉ ꨙꩌ ꨀꨕꩅ ꨌꨰꩀ ꨀꨓꩀꨆꩆ ꨎꨤꨮꩌ ꨥꨮꩀ ꨆꨩ ꨀꨕꩅ ꨧꨯꨱꩃ ꨁꨤꨪꨟꨯꨩ ꨌꩌ꩞",
+        "ꨀꨕꩅ ꨧꨯꨱꩃ ꨁꨦꨗꩃ ꨚꨈꨭꩊ ꨚꨓꨯꨱꩌ ꨝꨶꨮꩊ ꨞꩇ ꨂꨣꩃ ꨌꩌ꩞"
+      ],
+      "image_sha256": "ba6b96dd08ac5e3c710482076cfaa8c98a246bd309a1c428b222b5abb71c4e6e"
+    },
+    {
+      "id": "synthetic_034",
+      "tier": 1,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Bold.ttf",
+      "path": "ocr-benchmark/data/images/test_034_lvl1.png",
+      "gt_lines": [
+        "– ꨛꨯꨩꩀ ꨎꨩ ꨀꨕꩅ ꨌꩌ: ꨌꨭꩀ ꨕꨙꨮꩇ꩝ ꨣꨭꨚꩀ; ꨅꨩ ꨆꨵꨥ ꨙꨯꩌ ꨚꨴꨯꨱꩃ ꨚꩀ",
+        "– ꨅꨩ ꨟꩀ ꨔꨰꩀ ꨓꨶꨬ ꨤꨪꨈꨰꩍ: ꨓꨯꩀ ꨓꨶꩀ ꨓꨭꩀ ꨃꩃ꩝ ꨝꨳꩀ ꨆꨣꨬ ꨚꩀ",
+        "– ꨇꨪꩀ ꨠꩊ ꨌꨪꩍ: ꨅꨩ ꨆꨵꩀ ꨀꨟꨣꩀ꩝ ꨚꨓꨆꨪꩀ ꨀꨊꨶꨬ ꨆꨢꨩ ꨆꨓꩀ",
+        "– ꨇꨪꩀ ꨕꨴꨮꩇ ꨚꨴꩆ: ꨙꩌ ꨀꨕꩅ ꨌꨣꨥꩅ꩝ ꨡꨶꨮꩆ ꨤꨨꨪꩀ ꨆꨢꨩ ꨆꩉ꩞",
+        "– ꨚꨮꩃ ꨓꨶꨬ ꨨꨕꩇ ꨔꨴꨭꩍ ꨣꨕꩀ ꨌꨰꩀ ꨇꨪꩀ ꨆꨎꩇ ꨚꨧꩇ ꨧꨯꨱꩃ ꨅꨩ"
+      ],
+      "image_sha256": "202c0eca07b595252939567fe09afda1da5db6c283e376334b8cfb4b5fd2a1a5"
+    },
+    {
+      "id": "synthetic_038",
+      "tier": 1,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Regular.ttf",
+      "path": "ocr-benchmark/data/images/test_038_lvl1.png",
+      "gt_lines": [
+        "꩓꩞꩒꩞ ꨞꨩ ꨋꩇ ꨀꨕꩅ",
+        "– ꨛꨯꨩꩀ ꨎꨩ ꨀꨕꩅ ꨌꩌ: ꨌꨭꩀ ꨕꨙꨮꩇ꩝ ꨣꨭꨚꩀ; ꨅꨩ ꨆꨵꨥ ꨙꨯꩌ ꨚꨴꨯꨱꩃ ꨚꩀ",
+        "ꨚꨈꨮꩌ ꨓꨟꨩ ꨧꨯꨱꩃ ꨕꨘꩇ ꨝꨗꨳꨩ ꨕꨯꩌ ꨢꩃ ꨧꨯꨱꩃ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩞"
+      ],
+      "image_sha256": "e8e4b6190e858c32f4224bb6c7034f1b73564f0221734355cb86cb326139d8e7"
+    },
+    {
+      "id": "synthetic_049",
+      "tier": 2,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Regular.ttf",
+      "path": "ocr-benchmark/data/images/test_049_lvl2.png",
+      "gt_lines": [
+        "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟꨁꩆ",
+        "ꨞꨩ ꨙꩌ ꨟꨁꩆ ꨤꩃ ꨍꨮꩍ ꨍꨰ꩝ ꨓꨗꨴꨩ ꨝꨮꩉ ꨧꨯꨱꩃ ꨝꨩ ꨚꨴꨮꩇ ꨟꨗꨭꩍ ꨝꩉ"
+      ],
+      "image_sha256": "0d41cf4696a1565a95b6d3cf2c66b14f436c06e857c7e78a77809093dfc2502b"
+    },
+    {
+      "id": "synthetic_054",
+      "tier": 2,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Regular.ttf",
+      "path": "ocr-benchmark/data/images/test_054_lvl2.png",
+      "gt_lines": [
+        "꩓꩞꩒꩞ ꨞꨩ ꨋꩇ ꨀꨕꩅ",
+        "ꨞꨩ ꨋꩇ ꨀꨕꩅ ꨚꨣꨤꨯꨩ ꨝꨆꩌ ꨧꨯꨱꩃ ꨣꨤꨯꨩ ꨀꨕꩅ ꨕꨘꩇ: ꨣꨯꨱꩀ ꨀꨥ ꨇꩆ"
+      ],
+      "image_sha256": "51e575fb58bc96af8eb672653bf7e1d6e2123220d2689d640981ab4f21df9538"
+    },
+    {
+      "id": "synthetic_059",
+      "tier": 2,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Bold.ttf",
+      "path": "ocr-benchmark/data/images/test_059_lvl2.png",
+      "gt_lines": [
+        "ꨙꩌ ꨀꨕꩅ ꨓꨘꨓꩇ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨕꨯꩌ ꨢꩃ ꨤꨝꩃ꩝",
+        "ꨝꨶꨮꩊ ꨞꩇ ꨌꩌ ꨌꨈꨩ ꨆꨢꨩ ꨋꩇ ꨢꩃ ꨚꨢꩀ ꨟꨭꩀꨆꨬ꩝ ꨕꨯꩌ ꨛꨯꨮ ꨚꨓꨯꨱ",
+        "꩕꩞꩒꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨣꨕꩀ ꨌꨰꩀ ꨨꨈꨰꩅ?",
+        "ꨔꨭꩆ ꩒꩐꩑꩗꩝",
+        "꩕꩞꩑꩞ ꨗꨆꨓꨯꨮꨩ ꨗꨪꩂ ꨔꨶꨮꩆ ꨨꨭꨩ ꨣꨕꩀ ꨨꨝꨳꨯꨮꩆ ꨨꨤꨬ?"
+      ],
+      "image_sha256": "0e092249db2d844ef26fb6e5d821db8a5eaa624c5eeb9b1b8d27eb8fb51e08b1"
+    },
+    {
+      "id": "synthetic_065",
+      "tier": 2,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Bold.ttf",
+      "path": "ocr-benchmark/data/images/test_065_lvl2.png",
+      "gt_lines": [
+        "ꨣꨭꨚꩀ; ꨅꨩ ꨆꨵꨥ ꨙꨯꩌ ꨚꨴꨯꨱꩃ ꨚꩀ ꨤꨪꨝꨪꩀ ꨃꨥ ꨢꩃ꩞",
+        "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟꨁꩆ",
+        "ꨞꨩ ꨙꩌ ꨟꨁꩆ ꨤꩃ ꨍꨮꩍ ꨍꨰ꩝ ꨓꨗꨴꨩ ꨝꨮꩉ ꨧꨯꨱꩃ ꨝꨩ ꨚꨴꨮꩇ ꨟꨗꨭꩍ ꨝꩉ ꨁꨤꨪꨟꨯꨩ ꨌꩌ꩞ ꨚꩀ ꨕꨯꩌ",
+        "ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ ꨚꩀ ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝",
+        "ꨞꨩ ꨙꩌ ꨟꨁꩆ",
+        "꩕꩞꩑꩞ ꨗꨆꨓꨯꨮꨩ ꨗꨪꩂ ꨔꨶꨮꩆ ꨨꨭꨩ ꨣꨕꩀ ꨨꨝꨳꨯꨮꩆ ꨨꨤꨬ?"
+      ],
+      "image_sha256": "e39a5f8ac5d57d989109622f34b188d83f1d636c8eca5a9a6155340b699bce31"
+    },
+    {
+      "id": "synthetic_067",
+      "tier": 2,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Regular.ttf",
+      "path": "ocr-benchmark/data/images/test_067_lvl2.png",
+      "gt_lines": [
+        "ꨞꨩ ꨙꩌ ꨟꨁꩆ ꨤꩃ ꨍꨮꩍ ꨍꨰ꩝ ꨓꨗꨴꨩ ꨝꨮꩉ ꨧꨯꨱꩃ ꨝꨩ ꨚꨴꨮꩇ ꨟꨗꨭꩍ ꨝꩉ",
+        "– ꨇꨪꩀ ꨠꩊ ꨌꨪꩍ: ꨅꨩ ꨆꨵꩀ ꨀꨟꨣꩀ꩝ ꨚꨓꨆꨪꩀ ꨀꨊꨶꨬ ꨆꨢꨩ ꨆꨓꩀ ꨀꨊꨶꨬ ꨧꨩ",
+        "ꨞꨭꩌ ꨚꨴꨯꨱꩃ ꨗꨪꩂ ꨜꨲꩄ)꩞",
+        "– ꨅꨩ ꨟꩀ ꨔꨰꩀ ꨓꨶꨬ ꨤꨪꨈꨰꩍ: ꨓꨯꩀ ꨓꨶꩀ ꨓꨭꩀ ꨃꩃ꩝ ꨝꨳꩀ ꨆꨣꨬ ꨚꩀ ꨀꨗꨪꩍ",
+        "– ꨚꨮꩃ ꨓꨶꨬ ꨨꨕꩇ ꨔꨴꨭꩍ ꨣꨕꩀ ꨌꨰꩀ ꨇꨪꩀ ꨆꨎꩇ ꨚꨧꩇ ꨧꨯꨱꩃ ꨅꨩ ꨋꩇ"
+      ],
+      "image_sha256": "fe7520c029410f2a19ed2ae18bf5eaf2af5b1b8ba63c088454caa6e6b81c3245"
+    },
+    {
+      "id": "synthetic_074",
+      "tier": 2,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Bold.ttf",
+      "path": "ocr-benchmark/data/images/test_074_lvl2.png",
+      "gt_lines": [
+        "꩓꩞꩑꩞ ꨆꨢꨩ ꨋꩇ ꨢꩃ",
+        "ꨝꨶꨮꩊ ꨞꩇ ꨌꩌ ꨌꨈꨩ ꨆꨢꨩ ꨋꩇ ꨢꩃ ꨚꨢꩀ ꨟꨭꩀꨆꨬ꩝ ꨕꨯꩌ ꨛꨯꨮ"
+      ],
+      "image_sha256": "323a86496fe37480ef04e19cbf05ee1cdc8184788d39c9aefe0c8cf9ea567ce1"
+    },
+    {
+      "id": "synthetic_087",
+      "tier": 3,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Bold.ttf",
+      "path": "ocr-benchmark/data/images/test_087_lvl3.png",
+      "gt_lines": [
+        "꩕꩞꩓꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨕꨯꩌ ꨀꨋꩇ ꨨꨤꨬ ꨡꨶꨮꩆ ꨡꨯꩍ?",
+        "꩕꩞꩒꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨣꨕꩀ ꨌꨰꩀ ꨨꨈꨰꩅ?",
+        "꩓꩞꩑꩞ ꨆꨢꨩ ꨋꩇ ꨢꩃ"
+      ],
+      "image_sha256": "9d687607b6e9c5fd223da5cf823ff92970b16ddd0fedc726701cabe2a328ce92"
+    },
+    {
+      "id": "synthetic_089",
+      "tier": 3,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Bold.ttf",
+      "path": "ocr-benchmark/data/images/test_089_lvl3.png",
+      "gt_lines": [
+        "꩕꩞꩒꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨣꨕꩀ ꨌꨰꩀ ꨨꨈꨰꩅ?",
+        "ꨙꩌ ꨀꨕꩅ ꨓꨘꨓꩇ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩝ ꨕꨯꩌ ꨢꩃ ꨤꨝꩃ ꨧꨯꨱꩃ ꨝꨪꨎꩀ ꨍꨰꨘꨩ ꨚꨣꩆ;"
+      ],
+      "image_sha256": "72b9281dc9ca6addefc8907758264f2da29b473eab0feab9013a0f2eaccd7e19"
+    },
+    {
+      "id": "synthetic_094",
+      "tier": 3,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Regular.ttf",
+      "path": "ocr-benchmark/data/images/test_094_lvl3.png",
+      "gt_lines": [
+        "꩓꩞꩑꩞ ꨆꨢꨩ ꨋꩇ ꨢꩃ",
+        "꩕꩞꩒꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨣꨕꩀ ꨌꨰꩀ ꨨꨈꨰꩅ?",
+        "ꨣꨪꨈꨮꩌ ꨓꨟꨳꨩ ꨕꨘꩇ ꨧꨯꨱꩃ ꨦꨮꩇ ꨧꨣꨗꨰ ꨦꨟꩃ꩝",
+        "– ꨇꨪꩀ ꨕꨴꨮꩇ ꨚꨴꩆ: ꨙꩌ ꨀꨕꩅ ꨌꨣꨥꩅ꩝ ꨡꨶꨮꩆ ꨤꨨꨪꩀ ꨆꨢꨩ ꨆꩉ꩞",
+        "ꨕꨯꩌ ꨚꨗꨶꨮꩄ ꨓꨊꨪ ꨞꨳꩆ ꨈꨯꨱꩀ",
+        "ꨓꨔꨪꩅ ꨧꨳꩌ ꨕꨯꩌ ꨓꩌꨚꩍ ꨁꨤꨪꨟꨯꨩ ꨕꨘꩇ꩞",
+        "ꨙꩌ ꨀꨕꩅ ꨕꨯꨱꩀ ꨨꨭꨩ ꨃꨥ ꨘꩆ ꨓꨯꨮꩅ ꨆꨓꨯꨮꨩ ꨨꨰ ꨡꨮꩃ ꨆꨓꨯꨮꨩ꩝",
+        "ꨗꨆꨓꨯꨮꨩ ꨗꨪꩂ ꨔꨶꨮꩆ ꨅꨩ ꨘꩆ ꨓꨯꩀ ꨝꨐꨶꨮꩉ ꨝꨶꨮꩊ ꨞꩇ ꨌꩌ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨢꩃ ꨤꨝꩃ꩝ ꨟꨭꩀꨆꨬ ꨧꨯꨱꩃ ꨛꨯꨩꩀ ꨚꨢꨶꨩ ꨌꨯꨱꩃ ꨆꨩ",
+        "꩕꩞꩒꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨣꨕꩀ ꨌꨰꩀ ꨨꨈꨰꩅ?",
+        "ꨓꨟꨳꨩ ꨀꨕꨯꨱꩍ ꨕꨘꩇ ꨧꨯꨱꩃ ꨕꨯꩌ ꨤꨡꨰꩂ ꨝꨶꨮꩊ ꨚꨣꩆ ꨆꨣꨬ ꨌꨪꩍ꩞"
+      ],
+      "image_sha256": "44d335433b5cfd3b905e4fea547562408fa48da53eaf1d8071f0641a2c7dc557"
+    },
+    {
+      "id": "synthetic_099",
+      "tier": 3,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Regular.ttf",
+      "path": "ocr-benchmark/data/images/test_099_lvl3.png",
+      "gt_lines": [
+        "ꨨꨭꨩ ꨨꨤꨪꩌ꩝",
+        "ꨙꩌ ꨀꨕꩅ ꨓꨘꨓꩇ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩝ ꨕꨯꩌ ꨢꩃ ꨤꨝꩃ ꨧꨯꨱꩃ ꨝꨪꨎꩀ",
+        "꩑꩞ ꨀꨉꨩ ꨧꨯꨱꩃ ꨧꩀꨆꨣꩈ",
+        "– ꨇꨪꩀ ꨕꨴꨮꩇ ꨚꨴꩆ: ꨙꩌ ꨀꨕꩅ ꨌꨣꨥꩅ꩝ ꨡꨶꨮꩆ ꨤꨨꨪꩀ ꨆꨢꨩ ꨆꩉ꩞",
+        "ꨙꩌ ꨀꨕꩅ ꨓꨘꨓꩇ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩝ ꨕꨯꩌ ꨢꩃ ꨤꨝꩃ ꨧꨯꨱꩃ ꨝꨪꨎꩀ",
+        "꩓꩞꩑꩞ ꨆꨢꨩ ꨋꩇ ꨢꩃ",
+        "ꨞꨩ ꨋꩇ ꨀꨕꩅ ꨚꨣꨤꨯꨩ ꨝꨆꩌ ꨧꨯꨱꩃ ꨣꨤꨯꨩ ꨀꨕꩅ ꨕꨘꩇ: ꨣꨯꨱꩀ ꨀꨥ",
+        "ꨙꩌ ꨀꨕꩅ ꨓꨘꨓꩇ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩝ ꨕꨯꩌ ꨢꩃ ꨤꨝꩃ ꨧꨯꨱꩃ ꨝꨪꨎꩀ",
+        "꩕꩞꩑꩞ ꨗꨆꨓꨯꨮꨩ ꨗꨪꩂ ꨔꨶꨮꩆ ꨨꨭꨩ ꨣꨕꩀ ꨨꨝꨳꨯꨮꩆ ꨨꨤꨬ?",
+        "ꨞꨩ ꨋꩇ ꨀꨕꩅ ꨚꨣꨤꨯꨩ ꨝꨆꩌ ꨧꨯꨱꩃ ꨣꨤꨯꨩ ꨀꨕꩅ ꨕꨘꩇ: ꨣꨯꨱꩀ ꨀꨥ"
+      ],
+      "image_sha256": "6ae05d7a69afa0ad8b36dfaad0ce4922d057fe6040a2d926dd65a2a94314d941"
+    },
+    {
+      "id": "synthetic_100",
+      "tier": 3,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Bold.ttf",
+      "path": "ocr-benchmark/data/images/test_100_lvl3.png",
+      "gt_lines": [
+        "꩕꩞꩑꩞ ꨗꨆꨓꨯꨮꨩ ꨗꨪꩂ ꨔꨶꨮꩆ ꨨꨭꨩ ꨣꨕꩀ ꨨꨝꨳꨯꨮꩆ ꨨꨤꨬ?",
+        "ꨙꩌ ꨀꨕꩅ ꨓꨘꨓꩇ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩝ ꨕꨯꩌ ꨢꩃ ꨤꨝꩃ ꨧꨯꨱꩃ ꨝꨪꨎꩀ ꨍꨰꨘꨩ"
+      ],
+      "image_sha256": "279676e542d0478f6a2ceb75f14eed7a0932804731cb7612db9459d9b3169472"
+    },
+    {
+      "id": "synthetic_108",
+      "tier": 3,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Regular.ttf",
+      "path": "ocr-benchmark/data/images/test_108_lvl3.png",
+      "gt_lines": [
+        "ꨙꩌ ꨀꨕꩅ ꨞꨳꩆ ꨚꨣꨤꨯꨩ ꨓꨟꨩ ꨀꨆꨯꨱꩀ ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨥꨪ ꨌꩌ (ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꩑꩐",
+        "– ꨇꨪꩀ ꨕꨴꨮꩇ ꨚꨴꩆ: ꨙꩌ ꨀꨕꩅ ꨌꨣꨥꩅ꩝",
+        "ꨝꨣꨗꩃ ꨟꨤꨭꩀ ꨧꨯꨱꩃ ꨆꨐꨪ ꨧꨯꨱꩃ ꨕꨯꩌ ꨣꨪꨈꨮꩌ ꨓꨟꨳꨩ ꨝꨶꨮꩊ ꨚꨣꩆ ꨚꨟꨎꨳꨯꨮꩃ ꨀꩉ ꨔꩀ ꨈꨮꩌ ꨚꨴꨯꨱꩃ",
+        "ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨀꨉꨩ ꨟꩃ ꨀꨕꩅ ꨝꨴꩍꨟꨪꩆ ꨂꨣꩃ ꨌꩌ꩝ ꨎꨳꨮꩃ ꨓꨝꨳꩀ ꨟꩃ ꨣꨪꨓꨭꩍ ꨔꨭꩆ ꨕꨨꨵꨮꨭ꩝ ꨚꨈꨮꩌ",
+        "ꨌꨯꨱꩃ ꨤꨪꨆꨮꨭ ꨨꨭꨩ ꨨꨤꨪꩌ ꨧꨯꨱꩃ ꨟꨋꨥꨯꩌ ꨟꨔꨴꨭꩌ꩝"
+      ],
+      "image_sha256": "107bbf21260052661633cbc883d79335dba93ac55f7f8fa16bbe40947ecc3a56"
+    },
+    {
+      "id": "synthetic_129",
+      "tier": 4,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Regular.ttf",
+      "path": "ocr-benchmark/data/images/test_129_lvl4.png",
+      "gt_lines": [
+        "ꨀꨕꩅ ꨧꨯꨱꩃ ꨁꨦꨗꩃ ꨚꨈꨭꩊ ꨚꨓꨯꨱꩌ ꨝꨶꨮꩊ ꨞꩇ ꨂꨣꩃ ꨌꩌ꩞",
+        "ꨀꩉ ꨔꩀ ꨙꩌ ꨟꨁꩆ ꨔꨴꨰꩈ ꨝꩀ ꨝꨶꨬ ꨝꨰꩈ꩝",
+        "ꨞꨩ ꨋꩇ ꨀꨕꩅ ꨚꨣꨤꨯꨩ ꨝꨆꩌ ꨧꨯꨱꩃ ꨣꨤꨯꨩ ꨀꨕꩅ ꨕꨘꩇ: ꨣꨯꨱꩀ ꨀꨥ ꨇꩆ ꨛꨯꨮ ꨓꨈꨯꩀ",
+        "ꨞꨩ ꨨꨎꩅ ꨚꨣꨤꨯꨩ ꨊꨯꨱꩀ ꨝꨪꨟꨯꩂ; ꨈꩍ ꨀꨤꨩ ꨓꨆꨰ ꨝꨪꨟꨯꩂ꩝",
+        "ꨨꨈꨴꨮꩌ ꨀꨕꩅ ꨃꨥ ꨢꩃ꩝ ꨣꨯꨱꩀ ꨀꨥ ꨇꩆ ꨛꨯꨮ꩝ ꨓꨟꨳꨩ ꨀꨕꨯꨱꩍ ꨕꨘꩇ ꨧꨯꨱꩃ ꨕꨯꩌ ꨤꨡꨰꩂ ꨝꨶꨮꩊ",
+        "꩓꩞꩒꩞ ꨞꨩ ꨋꩇ ꨀꨕꩅ"
+      ],
+      "image_sha256": "48f713b8298abfbf8a900abc7272dbefaf247cd8403d8c1c28dafa171818e3b1"
+    },
+    {
+      "id": "synthetic_134",
+      "tier": 4,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Regular.ttf",
+      "path": "ocr-benchmark/data/images/test_134_lvl4.png",
+      "gt_lines": [
+        "ꨨꨕꨯꩌ ꨝꨣꨪꩍ ꨆꨣꨬ ꨌꨪꩍ ꨙꩌ ꨀꨕꩅ",
+        "꩕꩞꩑꩞ ꨗꨆꨓꨯꨮꨩ ꨗꨪꩂ ꨔꨶꨮꩆ ꨨꨭꨩ ꨣꨕꩀ ꨨꨝꨳꨯꨮꩆ ꨨꨤꨬ?",
+        "ꨕꨤꩌ ꨨꨣꨬ ꨆꨓꨯꨮꨩ꩝ ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ ꨚꩀ ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝ ꨌꨯꨱꩃ"
+      ],
+      "image_sha256": "4da14b04c94ae710f3c1ee954a068aac4467551f3df7663d7ba60603f1af141d"
+    },
+    {
+      "id": "synthetic_142",
+      "tier": 4,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Regular.ttf",
+      "path": "ocr-benchmark/data/images/test_142_lvl4.png",
+      "gt_lines": [
+        "ꨗꨆꨓꨯꨮꨩ ꨚꨣꨤꨯꨩ ꨣꨪꩌ ꨔꨭꩆ ꨓꨟꨩ ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨥꨪ ꨌꩌ (ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꩑꩐ ꨧꨆꨥꨪ ꨀꨳꨩ",
+        "ꨕꨤꩌ ꨨꨣꨬ ꨆꨓꨯꨮꨩ꩝ ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ ꨚꩀ ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝",
+        "ꨙꩌ ꨀꨕꩅ ꨓꨘꨓꩇ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩝",
+        "– ꨇꨪꩀ ꨕꨴꨮꩇ ꨚꨴꩆ: ꨙꩌ ꨀꨕꩅ ꨌꨣꨥꩅ꩝ ꨡꨶꨮꩆ ꨤꨨꨪꩀ ꨆꨢꨩ ꨆꩉ꩞",
+        "ꨨꨈꨴꨮꩌ ꨀꨕꩅ ꨃꨥ ꨢꩃ꩝ ꨣꨯꨱꩀ ꨀꨥ ꨇꩆ ꨛꨯꨮ꩝ ꨓꨟꨳꨩ ꨀꨕꨯꨱꩍ ꨕꨘꩇ ꨧꨯꨱꩃ ꨕꨯꩌ ꨤꨡꨰꩂ",
+        "꩓꩞꩑꩞ ꨆꨢꨩ ꨋꩇ ꨢꩃ",
+        "ꨓꨟꨩ ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨓꨶꨬ ꨧꨆꨥꨪ ꨌꩌ (ꨒꨮꩇ ꨝꨪꨤꩆ ꩑꩐ ꨧꨆꨥꨪ ꨀꨳꨩ ꨨꨣꨬ)꩝",
+        "ꨕꨯꩌ ꨚꨗꨶꨮꩄ ꨓꨊꨪ ꨞꨳꩆ ꨈꨯꨱꩀ"
+      ],
+      "image_sha256": "ed28bd2f71fafc7610505414f1b26dee057d56503677b18d8023c37bce566d50"
+    },
+    {
+      "id": "synthetic_144",
+      "tier": 4,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Regular.ttf",
+      "path": "ocr-benchmark/data/images/test_144_lvl4.png",
+      "gt_lines": [
+        "꩓꩞꩑꩞ ꨆꨢꨩ ꨋꩇ ꨢꩃ",
+        "ꨙꩌ ꨀꨕꩅ ꨞꨳꩆ ꨚꨣꨤꨯꨩ ꨓꨟꨩ ꨀꨆꨯꨱꩀ ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨥꨪ ꨌꩌ (ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꩑꩐",
+        "ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨀꨉꨩ ꨟꩃ ꨀꨕꩅ ꨝꨴꩍꨟꨪꩆ ꨂꨣꩃ ꨌꩌ꩝ ꨎꨳꨮꩃ ꨓꨝꨳꩀ ꨟꩃ ꨣꨪꨓꨭꩍ ꨔꨭꩆ ꨕꨨꨵꨮꨭ꩝"
+      ],
+      "image_sha256": "24630bbe5f0599aa05a949be6c2cda2e96cae1a055f9c4090eb8cda2e9de5ed5"
+    },
+    {
+      "id": "synthetic_147",
+      "tier": 4,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Bold.ttf",
+      "path": "ocr-benchmark/data/images/test_147_lvl4.png",
+      "gt_lines": [
+        "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟꨁꩆ",
+        "ꨞꨩ ꨙꩌ ꨟꨁꩆ ꨤꩃ ꨍꨮꩍ ꨍꨰ꩝ ꨓꨗꨴꨩ ꨝꨮꩉ ꨧꨯꨱꩃ ꨝꨩ ꨚꨴꨮꩇ ꨟꨗꨭꩍ ꨝꩉ"
+      ],
+      "image_sha256": "cd61fed246962bedb8400ad17569522c628f9d33dd330e3f1fd916c60f1832b5"
+    },
+    {
+      "id": "synthetic_150",
+      "tier": 4,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Bold.ttf",
+      "path": "ocr-benchmark/data/images/test_150_lvl4.png",
+      "gt_lines": [
+        "– ꨛꨯꨩꩀ ꨎꨩ ꨀꨕꩅ ꨌꩌ: ꨌꨭꩀ ꨕꨙꨮꩇ꩝ ꨣꨭꨚꩀ; ꨅꨩ ꨆꨵꨥ ꨙꨯꩌ ꨚꨴꨯꨱꩃ ꨚꩀ ꨤꨪꨝꨪꩀ ꨃꨥ ꨢꩃ꩞",
+        "ꨣꨪꨈꨮꩌ ꨓꨟꨳꨩ ꨕꨘꩇ ꨧꨯꨱꩃ ꨦꨮꩇ ꨧꨣꨗꨰ ꨦꨟꩃ꩝",
+        "ꨓꨟꨩ ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨓꨶꨬ ꨧꨆꨥꨪ ꨌꩌ (ꨒꨮꩇ ꨝꨪꨤꩆ ꩑꩐ ꨧꨆꨥꨪ ꨀꨳꨩ ꨨꨣꨬ)꩝",
+        "ꨨꨕꨯꩌ ꨝꨣꨪꩍ ꨆꨣꨬ ꨌꨪꩍ ꨙꩌ ꨀꨕꩅ",
+        "ꨗꨆꨓꨯꨮꨩ ꨚꨣꨤꨯꨩ ꨣꨪꩌ ꨔꨭꩆ ꨓꨟꨩ ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨥꨪ ꨌꩌ (ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꩑꩐ ꨧꨆꨥꨪ ꨀꨳꨩ ꨨꨣꨬ)꩞",
+        "ꨙꩌ ꨀꨕꩅ ꨓꨘꨓꩇ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩝ ꨕꨯꩌ ꨢꩃ ꨤꨝꩃ ꨧꨯꨱꩃ ꨝꨪꨎꩀ ꨍꨰꨘꨩ ꨚꨣꩆ; ꨌꨯꨱꩃ ꨤꨪꨆꨮꨭ ꨨꨎꩆ",
+        "ꨓꨶꨰ ꨣꩍ ꨌꨰꩀ ꨦꨗꩃ ꨨꨰ:",
+        "ꨀꨕꩅ ꨚꨮꩍ ꨡꨮꩃ ꨝꨪꨟꨯꩂ꩝",
+        "꩕꩞꩑꩞ ꨗꨆꨓꨯꨮꨩ ꨗꨪꩂ ꨔꨶꨮꩆ ꨨꨭꨩ ꨣꨕꩀ ꨨꨝꨳꨯꨮꩆ ꨨꨤꨬ?",
+        "ꨞꨩ ꨙꩌ ꨟꨁꩆ ꨤꩃ ꨍꨮꩍ ꨍꨰ꩝ ꨓꨗꨴꨩ ꨝꨮꩉ ꨧꨯꨱꩃ ꨝꨩ ꨚꨴꨮꩇ ꨟꨗꨭꩍ ꨝꩉ ꨁꨤꨪꨟꨯꨩ ꨌꩌ꩞ ꨚꩀ ꨕꨯꩌ ꨚꨤꨬ ꨌꩌ꩝ ꨣꨤꨯꨩ"
+      ],
+      "image_sha256": "4498ffe2bff52922e6ee5665cc085777acd6a512bf3d3108fa807d4269549ffb"
+    },
+    {
+      "id": "synthetic_167",
+      "tier": 5,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Bold.ttf",
+      "path": "ocr-benchmark/data/images/test_167_lvl5.png",
+      "gt_lines": [
+        "꩒꩞ ꨓꨭꩀ ꨥꩀ ꨧꨯꨱꩃ ꨤꨪꨝꨪꩀ ꨣꨕꩀ",
+        "꩕꩞꩑꩞ ꨗꨆꨓꨯꨮꨩ ꨗꨪꩂ ꨔꨶꨮꩆ ꨨꨭꨩ ꨣꨕꩀ ꨨꨝꨳꨯꨮꩆ ꨨꨤꨬ?"
+      ],
+      "image_sha256": "a7686939f5c898d60a0d5afeeee4a4626c8993b20dfe2b808a5b5f5666499fa9"
+    },
+    {
+      "id": "synthetic_171",
+      "tier": 5,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Regular.ttf",
+      "path": "ocr-benchmark/data/images/test_171_lvl5.png",
+      "gt_lines": [
+        "꩔꩞ ꨟꨗꩃ ꨀꨋꩅ ꨓꨭꩀ ꨨꨭꨩ ꨡꨯꨱꩀ ꨕꨫ ꨙꩌ ꨀꨕꩅ",
+        "– ꨇꨪꩀ ꨠꩊ ꨌꨪꩍ: ꨅꨩ ꨆꨵꩀ ꨀꨟꨣꩀ꩝ ꨚꨓꨆꨪꩀ ꨀꨊꨶꨬ ꨆꨢꨩ ꨆꨓꩀ"
+      ],
+      "image_sha256": "06c7fddbd7257536cd4b8269954710baa52f2396c38c9995d16dca52e12b9306"
+    },
+    {
+      "id": "synthetic_180",
+      "tier": 5,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Bold.ttf",
+      "path": "ocr-benchmark/data/images/test_180_lvl5.png",
+      "gt_lines": [
+        "ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ ꨚꩀ ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝",
+        "ꨝꨶꨮꩊ ꨞꩇ ꨌꩌ ꨌꨈꨩ ꨆꨢꨩ ꨋꩇ ꨢꩃ ꨚꨢꩀ ꨟꨭꩀꨆꨬ꩝ ꨕꨯꩌ ꨛꨯꨮ ꨚꨓꨯꨱ",
+        "ꨚꨖꨪꩍ ꨧꨯꨱꩃ ꨣꩍ ꨟꨁꩆ ꨚꨆꨴꨲꩆ ꨘꩆ ꨕꨴꨮꩇ ꨁꨤꨪꨟꨯꨩ ꨝꨪꩀꨧꩀ ꨚꩃꨆꩅ",
+        "ꨞꨩ ꨋꩇ ꨀꨕꩅ ꨚꨣꨤꨯꨩ ꨝꨆꩌ ꨧꨯꨱꩃ ꨣꨤꨯꨩ ꨀꨕꩅ ꨕꨘꩇ: ꨣꨯꨱꩀ ꨀꨥ",
+        "꩕꩞꩒꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨣꨕꩀ ꨌꨰꩀ ꨨꨈꨰꩅ?"
+      ],
+      "image_sha256": "5926f8973ea3d5c53c9d594170fbd68bb1f8429850e30cc74eb497aed9b6081c"
+    },
+    {
+      "id": "synthetic_188",
+      "tier": 5,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Bold.ttf",
+      "path": "ocr-benchmark/data/images/test_188_lvl5.png",
+      "gt_lines": [
+        "꩔꩞ ꨟꨗꩃ ꨀꨋꩅ ꨓꨭꩀ ꨨꨭꨩ ꨡꨯꨱꩀ ꨕꨫ ꨙꩌ ꨀꨕꩅ",
+        "ꨓꨟꨳꨩ ꨀꨕꨯꨱꩍ ꨝꨶꨬ ꨝꨰꩈ ꨟꨪꩆ ꨅꨩ ꨌꨟꨴꨯꨱꩍ꩞"
+      ],
+      "image_sha256": "d264d4c37e4bd6b805a6db36c2a5cbf53f184b551629a8d4bc772e7308d617b7"
+    },
+    {
+      "id": "synthetic_196",
+      "tier": 5,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Bold.ttf",
+      "path": "ocr-benchmark/data/images/test_196_lvl5.png",
+      "gt_lines": [
+        "– ꨇꨪꩀ ꨠꩊ ꨌꨪꩍ: ꨅꨩ ꨆꨵꩀ ꨀꨟꨣꩀ꩝ ꨚꨓꨆꨪꩀ ꨀꨊꨶꨬ ꨆꨢꨩ ꨆꨓꩀ ꨀꨊꨶꨬ ꨧꨩ ꨡꨮꩃ꩞",
+        "– ꨛꨯꨩꩀ ꨎꨩ ꨀꨕꩅ ꨌꩌ: ꨌꨭꩀ ꨕꨙꨮꩇ꩝ ꨣꨭꨚꩀ; ꨅꨩ ꨆꨵꨥ ꨙꨯꩌ ꨚꨴꨯꨱꩃ ꨚꩀ ꨤꨪꨝꨪꩀ ꨃꨥ ꨢꩃ꩞",
+        "꩕꩞꩓꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨕꨯꩌ ꨀꨋꩇ ꨨꨤꨬ ꨡꨶꨮꩆ ꨡꨯꩍ?"
+      ],
+      "image_sha256": "da37bd334545a7b8e3dedf8898021890247330acc4f4429f4effada6c07d725d"
+    },
+    {
+      "id": "synthetic_198",
+      "tier": 5,
+      "kind": "synthetic",
+      "font": "NotoSansCham-Regular.ttf",
+      "path": "ocr-benchmark/data/images/test_198_lvl5.png",
+      "gt_lines": [
+        "꩕꩞꩓꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨕꨯꩌ ꨀꨋꩇ ꨨꨤꨬ ꨡꨶꨮꩆ ꨡꨯꩍ?",
+        "ꨨꨈꨴꨮꩌ ꨀꨕꩅ ꨃꨥ ꨢꩃ꩝ ꨣꨯꨱꩀ ꨀꨥ ꨇꩆ ꨛꨯꨮ꩝ ꨓꨟꨳꨩ ꨀꨕꨯꨱꩍ ꨕꨘꩇ ꨧꨯꨱꩃ ꨕꨯꩌ"
+      ],
+      "image_sha256": "68ccb63ea39d836adf83c83e231fba7ed8665ee386a92c9d70c6409e73928c9f"
+    },
+    {
+      "id": "real_harum_palei_01",
+      "tier": 6,
+      "kind": "real_camera",
+      "font": null,
+      "path": "ocr-benchmark/results/harum_palei_v24_vs_v25/original_image.png",
+      "gt_lines": [
+        "ꨨꨣꨭꩌ ꨚꨤꨬ ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
+        "ꨝꨳꨮꩉ ꨨꨣꨬ ꨁ-ꨗꨫ ꨚꨙꨳꩀ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨬ ꨡꨭꩊ ꨆꨴꩌ",
+        "ꨀꨊꨯꨱꩀ ꨤꨊꨪꩀ ꨨꨎꨥ ꨆꨚꨶꨮꩊ ꨌꨳꨪꩌ ꨈꨪꨤꩄ ꨟꨣꨰ",
+        "ꨦꩇ ꨆꨤꩀ ꨈꨵꨮꩃ ꨆꨝꨥ ꨀꨕꨯꨱꩍ ꨀꨊꨯꨱꩀ ꨝꨗꨮꩀ",
+        "ꨆꨤꩀ ꨚꨕꨴꨭꩅ ꨚꨕꨴꨶꨰ ꨆꨣꩌ ꨈꨕꨮꩃ ꨟꨝꨭꩀ ꨟꨝꩉ",
+        "ꨀꨓꩍ ꨀꨓꩍ ꨀꨓꩍ ꨆꨥꨯꩌ ꨝꨶꨮꩊ ꨤꨪ-ꨂꨀꨩ ꨈꨤꨮꩌ ꨎꨤꨮꩃ",
+        "ꨧꨯꨱꩃ ꨆꨚꨶꨮꩊ ꨆꨝꨥ ꨗꨯꨱ ꨀꨊꨯꨱꩀ ꨎꨤꩆ ꨟꨣꨰ ꨨꨚꩀ",
+        "ꨓꨚꨮꩆ ꨕꨮꩍ ꨆꨴꨯꨱꩃ ꨚꨝꨭꩃ ꨀꨈꩀ ꨗꩌ ꨓꨚꨮꩆ ꨓꨓꨶꨩ",
+        "ꨧꨬ ꨚꨎꨮꩍ ꨟꨯꨱꩃ ꨟꨯꨱꩃ ꨀꨆꨯꨱꩀ ꨌꩃ ꨟꨯꨱꩃ",
+        "ꨓꨳꩇ ꨓꨶꨬ ꨀꨊꨪꩆ ꨤꨖꨶꨮꩆ ꨨꨕꨳꨮꨥ ꨨꨕꨯꩌ ꨦꩇ ꨆꨤꩀ",
+        "ꨣꨤꨮꩃ ꨈꨭꨨꨩ ꨕꨗꩈ ꨆꨣꩌ ꨈꨕꨮꩃ ꨕꨤꩌ ꨡꨵꩃ ꨝꨳꨮꩉ ꨨꨣꨬ",
+        "ꨀꨦꩀ ꨓꨡꩀ ꨓꨚꨮꩆ ꨡꨶꨮꩆ ꨤꨨꨶꨰ ꨤꨨꨩ ꨚꨚꩉ",
+        "ꨝꨊꨭꩀ ꨟꨤꩌ ꨆꨣꩌ ꨈꨕꨮꩃ ꨚꨗꨪꩀ ꨤꨚꨬ ꨟꨝꨭꩀ",
+        "ꨓꨗꨴꩀ ꨟꨐꩀ ꨕꨯꨱꩀ ꨦꨭꩇ ꨨꨕꩍ ꨚꨍꩃ",
+        "ꨕꨯꨱꩀ ꨢꨮꨭ ꨎꨶꨩ ꨤꨊꨶꨬ ꨝꩉ ꨕꨯꨱꩀ ꨟꨝꨭꩀ ꨤꨚꨬ",
+        "ꨧꨯꨱꩃ ꨤꨆꨭꩀ ꨈꨗꨭꨩ ꨥꩊ ꨟꨢꨭꩅ ꨧꨬ ꨎꩌꨎꨫ ꨖꨪꩅ",
+        "ꨕꨯꨱꩀ ꨝꩀ ꨚꨕꨮꩃ ꨀꨣꨰ ꨦꨡꨰ ꨨꨕꨳꨮꩇ ꨨꨕꨯꩌ ꨀꨝꨯꨱꩍ ꨧꩃ",
+        "ꨝꨊꨭꩀ ꨟꨤꩌ ꨓꨡꩀ ꨎꨰꩀ ꨚꨎꨮꨩ ꨚꨣꨤꨯꨱ ꨈꨕꨮꩃ ꨕꨤꩌ ꨆꨤꨪꨟꨭꨩ ꨆꨆꨶꨮꩉ",
+        "ꨦꩇ ꨌꨳꨪꩌ ꨓꨤꩍ ꨆꨚꨶꨮꩊ ꨕꨯꨱꩀ ꨎꨶꨩ ꨧꨩ ꨕꨴꨬ ꨗꨯꨱ ꨕꨶꩍ ꨀꨕꨪꩍ",
+        "ꨌꨳꨪꩌ ꨤꨮꩈ ꨣꩆ ꨌꩃ ꨝꨵꨯꨱꩍ ꨚꨈꨭꩍ ꨨꨕꩍ ꨚꨍꩃ",
+        "ꨚꨯꨱꩀ ꨞꨯꩂ ꨟꨣꨰ ꨣꨝꨮꨭ ꨓꨗꨴꩀ ꨚꨙꨳꩀ ꨀꨧꩅ ꨦꨮꩍ ꨟꨤꨮꩃ ...",
+        "ꨥꩀ ꨕꨫ ꨝꨭꨤꩆ ꨨꨣꨬ ꩘/꩕/꩒꩐꩒꩖",
+        "ꨔꨮꩀꨥꨩ ꨌꩌ ꨚꨤꨬ ꨣꩌ",
+        "ꨦꨮꩍ ꨟꨤꨮꩃ : ꨨꨭꩈ ꨨꨯꨀꩃ",
+        "ꨈꨗꨭꨩ ꨥꩊ : ꨝꨭꩄ ꨟꩆꨨꨩ"
+      ],
+      "image_sha256": "9566588bd7479ae97251136599cbba18b243dcc5d68531ccbde290d1c0182957"
+    }
+  ]
+}

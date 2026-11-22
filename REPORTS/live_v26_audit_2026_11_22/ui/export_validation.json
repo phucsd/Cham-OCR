@@ -1,0 +1,44 @@
+{
+  "txt": {
+    "length": 226,
+    "Cham_characters": 170,
+    "lines": 6
+  },
+  "md": {
+    "length": 859,
+    "has_metadata": false,
+    "has_unicode": true
+  },
+  "json": {
+    "keys": [
+      "image_name",
+      "status",
+      "model",
+      "lines"
+    ],
+    "length": 199941
+  },
+  "xml": {
+    "root_tag": "{http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15}PcGts",
+    "recognized_TextLine_elements": 6
+  },
+  "zip": {
+    "files": 12,
+    "names": [
+      "crops/test_006_lvl1_L001.png",
+      "crops/test_006_lvl1_L002.png",
+      "crops/test_006_lvl1_L003.png",
+      "crops/test_006_lvl1_L004.png",
+      "crops/test_006_lvl1_L005.png",
+      "crops/test_006_lvl1_L006.png",
+      "transcriptions/test_006_lvl1.txt",
+      "transcriptions/combined_corpus.md",
+      "train_list.txt",
+      "corrections.jsonl",
+      "corpus_manifest.json",
+      "README.txt"
+    ],
+    "crc_error": null,
+    "unsafe_paths": []
+  }
+}

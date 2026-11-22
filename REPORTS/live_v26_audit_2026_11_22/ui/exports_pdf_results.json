@@ -1,0 +1,56 @@
+{
+  "results": [
+    {
+      "name": "transcribe",
+      "ok": true,
+      "status": 200,
+      "lines": null
+    },
+    {
+      "name": "export_txt",
+      "ok": true,
+      "filename": "cham_ocr_transcription.txt",
+      "bytes": 566,
+      "path": "E:\\Phuc's Data\\Github\\Cham-OCR\\REPORTS\\live_v26_audit_2026_11_22\\ui\\e2e_txt_cham_ocr_transcription.txt"
+    },
+    {
+      "name": "export_md",
+      "ok": true,
+      "filename": "cham_ocr_scholarly_report.md",
+      "bytes": 1215,
+      "path": "E:\\Phuc's Data\\Github\\Cham-OCR\\REPORTS\\live_v26_audit_2026_11_22\\ui\\e2e_md_cham_ocr_scholarly_report.md"
+    },
+    {
+      "name": "export_json",
+      "ok": true,
+      "filename": "cham_ocr_transcription.json",
+      "bytes": 199941,
+      "path": "E:\\Phuc's Data\\Github\\Cham-OCR\\REPORTS\\live_v26_audit_2026_11_22\\ui\\e2e_json_cham_ocr_transcription.json"
+    },
+    {
+      "name": "export_xml",
+      "ok": true,
+      "filename": "test_006_lvl1_pagexml.xml",
+      "bytes": 1953,
+      "path": "E:\\Phuc's Data\\Github\\Cham-OCR\\REPORTS\\live_v26_audit_2026_11_22\\ui\\e2e_xml_test_006_lvl1_pagexml.xml"
+    },
+    {
+      "name": "export_zip",
+      "ok": true,
+      "filename": "cham_ocr_corpus_export.zip",
+      "bytes": 145826,
+      "path": "E:\\Phuc's Data\\Github\\Cham-OCR\\REPORTS\\live_v26_audit_2026_11_22\\ui\\e2e_zip_cham_ocr_corpus_export.zip"
+    },
+    {
+      "name": "pdf_import",
+      "ok": true,
+      "info": "two_page_sample.pdf — 2 page(s) detected.",
+      "queueVisible": "ꨌ\nCham OCR Studio\nPaleographic Workbench\nMODEL\nV26.1 SOTA\nV25 SOTA\nV24.1-R3.1\nV24.1-R2.1.6\nAuto Router\nVietnamese\nV24 Baseline\nV23 Legacy\nTranscribe\n3-Pane\n▾\nCtrl+K\nExport\nHelp\n▾\nCorpus Queue\n3\nBatch\nAdd Images / PDF\nSpecimens\nAuto-transcribe on upload\nAll (3)\nReview\nOCR Done (1)\nVerified\nPending (2)\n#1\ntest_006_lvl1.png\nOCR done\n6 ln\n#2\ntwo_page_s",
+      "hasPage1": true,
+      "hasPage2": true
+    }
+  ],
+  "pageErrors": [],
+  "failedRequests": [],
+  "utc": "2026-11-22T04:04:45.035Z"
+}

@@ -64,6 +64,8 @@ desktop.ini
 # Logs
 *.log
 *.jsonl
+!REPORTS/live_v26_audit_2026_11_22/**/*.jsonl
+!REPORTS/live_quality_2026_11_20/*.jsonl
 
 # Upstream PaddleOCR third-party documentation & unused apps (Keep repo lightweight)
 ocr-studio/PaddleOCR/docs/
@@ -82,6 +84,8 @@ ocr-studio/PaddleOCR/applications/
 ocr-benchmark/data/images_diagnostic/
 ocr-benchmark/data/images_stress_500/
 ocr-benchmark/data/frozen_suite/crops/
+ocr-benchmark/data/live_v26_2026_11_22/images/
+ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/
 ocr-benchmark/data/realscan_gold_v*/pages/
 ocr-benchmark/data/realscan_gold_v*/crops/
 ocr-benchmark/results/*_raw/

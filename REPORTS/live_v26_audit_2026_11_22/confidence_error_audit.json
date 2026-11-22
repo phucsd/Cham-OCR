@@ -1,0 +1,1047 @@
+{
+  "v24_1_r4": {
+    "n": 29,
+    "mean_confidence": 0.959,
+    "median_confidence": 0.96,
+    "pearson_confidence_vs_cer": -0.331,
+    "n_confidence_ge_90_cer_ge_20": 1,
+    "errors": {
+      "D": 215,
+      "S": 126,
+      "I": 60
+    },
+    "groups": {
+      "Cham vowel / diacritic": 107,
+      "Cham coda": 65,
+      "ASCII punctuation": 55,
+      "Cham digit": 8,
+      "Spacing / linebreak": 58,
+      "Cham base consonant / vowel": 36,
+      "Cham punctuation": 49,
+      "Cham medial": 4,
+      "Other": 19
+    },
+    "high_confidence_bad": [
+      {
+        "id": "synthetic_142",
+        "tier": 4,
+        "cer_pct": 23.84,
+        "mean_conf": 0.9576
+      }
+    ],
+    "top_worst": [
+      {
+        "id": "synthetic_142",
+        "cer_pct": 23.84,
+        "chars_gt": 365,
+        "chars_pred": 294,
+        "lines_gt": 8,
+        "lines_pred": 7,
+        "mean_conf": 0.9576,
+        "gt_first": "ꨗꨆꨓꨯꨮꨩ ꨚꨣꨤꨯꨩ ꨣꨪꩌ ꨔꨭꩆ ꨓꨟꨩ ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨥꨪ ꨌꩌ (ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꩑꩐ ꨧꨆꨥꨪ ꨀꨳꨩ",
+        "pred_first": "ꨗꨆꨓꨯꨩ ꨚꨣꨤꨩ ꨣꨪ ꨔꨭꩆ ꨓꨟꨩ ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨥꨪ ꨌꩌ ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꨅꨭ ꨧꨆꨥꨪ ꨀꨳꨩ"
+      },
+      {
+        "id": "synthetic_134",
+        "cer_pct": 10.37,
+        "chars_gt": 135,
+        "chars_pred": 130,
+        "lines_gt": 3,
+        "lines_pred": 3,
+        "mean_conf": 0.9583,
+        "gt_first": "ꨨꨕꨯꩌ ꨝꨣꨪꩍ ꨆꨣꨬ ꨌꨪꩍ ꨙꩌ ꨀꨕꩅ",
+        "pred_first": "ꨨꨕꨯꩌ ꨝꨣꨪꩍ ꨆꨣꨬ ꨌꨪꩍ ꨙꩌ ꨀꨕꩅ"
+      },
+      {
+        "id": "synthetic_089",
+        "cer_pct": 10.11,
+        "chars_gt": 89,
+        "chars_pred": 85,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.9467,
+        "gt_first": "꩕꩞꩒꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨣꨕꩀ ꨌꨰꩀ ꨨꨈꨰꩅ?",
+        "pred_first": "꩕꩞ ꩒꩞ ꨗꨆꨓꨯꨩ ꨨꨭꨩ ꨣꨕꩀ ꨌꩀ ꨨꨈꨰꩅ"
+      },
+      {
+        "id": "synthetic_196",
+        "cer_pct": 9.82,
+        "chars_gt": 163,
+        "chars_pred": 156,
+        "lines_gt": 3,
+        "lines_pred": 3,
+        "mean_conf": 0.9441,
+        "gt_first": "– ꨇꨪꩀ ꨠꩊ ꨌꨪꩍ: ꨅꨩ ꨆꨵꩀ ꨀꨟꨣꩀ꩝ ꨚꨓꨆꨪꩀ ꨀꨊꨶꨬ ꨆꨢꨩ ꨆꨓꩀ ꨀꨊꨶꨬ ꨧꨩ ꨡꨮꩃ꩞",
+        "pred_first": "ꨇꨪꩀ ꨠꩊ ꨌꨪꩍ; ꨅꨩ ꨆꨵꩀ ꨀꨟꨣꩀ ꨚꨓꨆꨪꩀ ꨀꨋꨶꨬ ꨆꨢꨩ ꨆꨓꩀ ꨀꨊꨶꨬ ꨧꨩ ꨡꨮꩃ ꩞"
+      },
+      {
+        "id": "synthetic_049",
+        "cer_pct": 9.23,
+        "chars_gt": 65,
+        "chars_pred": 65,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.9511,
+        "gt_first": "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟꨁꩆ",
+        "pred_first": "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟ꩓ꩆ"
+      },
+      {
+        "id": "synthetic_147",
+        "cer_pct": 9.23,
+        "chars_gt": 65,
+        "chars_pred": 61,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.9431,
+        "gt_first": "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟꨁꩆ",
+        "pred_first": "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟꨁꩆ"
+      },
+      {
+        "id": "synthetic_180",
+        "cer_pct": 8.48,
+        "chars_gt": 224,
+        "chars_pred": 219,
+        "lines_gt": 5,
+        "lines_pred": 5,
+        "mean_conf": 0.9554,
+        "gt_first": "ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ ꨚꩀ ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝",
+        "pred_first": "ꨂꨣꩃ ꨌꩌ ꨝꨴꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ ꨚꩀ ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ"
+      },
+      {
+        "id": "synthetic_034",
+        "cer_pct": 8.23,
+        "chars_gt": 243,
+        "chars_pred": 234,
+        "lines_gt": 5,
+        "lines_pred": 5,
+        "mean_conf": 0.9604,
+        "gt_first": "– ꨛꨯꨩꩀ ꨎꨩ ꨀꨕꩅ ꨌꩌ: ꨌꨭꩀ ꨕꨙꨮꩇ꩝ ꨣꨭꨚꩀ; ꨅꨩ ꨆꨵꨥ ꨙꨯꩌ ꨚꨴꨯꨱꩃ ꨚꩀ",
+        "pred_first": "- ꨛꨯꨩꩀ ꨎꨩ ꨀꨕꩅ ꨌꩌ; ꨌꨭꩀ ꨕꨙꨮꩇ ꨣꨭꨚꩀ; ꨅꨩ ꨆꨵꨥ ꨙꨯꩌ ꨚꨴꨯꨱꩃ ꨚ"
+      }
+    ]
+  },
+  "v25": {
+    "n": 29,
+    "mean_confidence": 0.656,
+    "median_confidence": 0.757,
+    "pearson_confidence_vs_cer": -0.946,
+    "n_confidence_ge_90_cer_ge_20": 0,
+    "errors": {
+      "I": 1106,
+      "S": 1611,
+      "D": 259
+    },
+    "groups": {
+      "Cham base consonant / vowel": 1117,
+      "Cham vowel / diacritic": 700,
+      "Spacing / linebreak": 213,
+      "Cham digit": 60,
+      "Cham punctuation": 68,
+      "Other": 114,
+      "Cham coda": 417,
+      "Cham medial": 221,
+      "ASCII punctuation": 66
+    },
+    "high_confidence_bad": [],
+    "top_worst": [
+      {
+        "id": "synthetic_198",
+        "cer_pct": 127.66,
+        "chars_gt": 94,
+        "chars_pred": 149,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.3146,
+        "gt_first": "꩕꩞꩓꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨕꨯꩌ ꨀꨋꩇ ꨨꨤꨬ ꨡꨶꨮꩆ ꨡꨯꩍ?",
+        "pred_first": "ꨕꨪꨔꨬ ꨐꨯꨯꨱ mốngưynꨓꨴ ꨴ cy ạư hygunygh dn ꨨꨈꨴꨬ hắ ꨗm rng mꨯáng"
+      },
+      {
+        "id": "synthetic_129",
+        "cer_pct": 118.11,
+        "chars_gt": 254,
+        "chars_pred": 392,
+        "lines_gt": 6,
+        "lines_pred": 6,
+        "mean_conf": 0.2995,
+        "gt_first": "ꨀꨕꩅ ꨧꨯꨱꩃ ꨁꨦꨗꩃ ꨚꨈꨭꩊ ꨚꨓꨯꨱꩌ ꨝꨶꨮꩊ ꨞꩇ ꨂꨣꩃ ꨌꩌ꩞",
+        "pred_first": "ꨁꨗꨴꨮꨢꨴꨴꨯꨯꨭꨬ ꨴ h ꨯ ꨴ ꨈꨴ ꨴ ꨴ uꨴy ꨴ y ꨴ ꨯh ꨨh ꨯꨭ ôlý"
+      },
+      {
+        "id": "synthetic_188",
+        "cer_pct": 114.93,
+        "chars_gt": 67,
+        "chars_pred": 100,
+        "lines_gt": 2,
+        "lines_pred": 3,
+        "mean_conf": 0.393,
+        "gt_first": "꩔꩞ ꨟꨗꩃ ꨀꨋꩅ ꨓꨭꩀ ꨨꨭꨩ ꨡꨯꨱꩀ ꨕꨫ ꨙꩌ ꨀꨕꩅ",
+        "pred_first": "ꨤꨗꨔꨬ ꨈꨵꨰꨯ ꨗầ ꨴcuahng ꨴ ắ ꨨ ꨩ ꨴꨯ ꨯ ꨴꨊꨕꨫ ắ ꨴn áni"
+      },
+      {
+        "id": "synthetic_180",
+        "cer_pct": 108.48,
+        "chars_gt": 224,
+        "chars_pred": 307,
+        "lines_gt": 5,
+        "lines_pred": 5,
+        "mean_conf": 0.3298,
+        "gt_first": "ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ ꨚꩀ ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝",
+        "pred_first": "ꨈꨗꨵꨴꨱ ꨗꨴ ꨝꨴ ꨴ ꨴꨵꨴꨯ ꨕ ꨗꨴꨯ hꨴh ꨴ h ꨝꨯ ꨬ ꨯ ꨴ ꨗꨴꨓ hꨴ ꨵ ꨴ ꨴ ꨓꨴ ꨴ ꨆꨯsáốꨳ"
+      },
+      {
+        "id": "synthetic_196",
+        "cer_pct": 102.45,
+        "chars_gt": 163,
+        "chars_pred": 212,
+        "lines_gt": 3,
+        "lines_pred": 3,
+        "mean_conf": 0.2974,
+        "gt_first": "– ꨇꨪꩀ ꨠꩊ ꨌꨪꩍ: ꨅꨩ ꨆꨵꩀ ꨀꨟꨣꩀ꩝ ꨚꨓꨆꨪꩀ ꨀꨊꨶꨬ ꨆꨢꨩ ꨆꨓꩀ ꨀꨊꨶꨬ ꨧꨩ ꨡꨮꩃ꩞",
+        "pred_first": "ꨤꨗꨔꨴꨬꨲꨓꨈꨴ huyh ꨴ hꨴ ꨓꨴꨶ ꨝꨴꨬ ꨤꨴ hꨴ h ꨴ h ạ ꨴ ꨓꨆꨯꨆꨴ hꨴ h ꨶꨕꨴꨬ hꨴꨬꨩꨓ ꨴꨆꨓꨯ nꨴ hc ꨆꨕꨶ ꨆꨴꨓꨴꨩoáối"
+      },
+      {
+        "id": "synthetic_167",
+        "cer_pct": 92.31,
+        "chars_gt": 65,
+        "chars_pred": 74,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.3098,
+        "gt_first": "꩒꩞ ꨓꨭꩀ ꨥꩀ ꨧꨯꨱꩃ ꨤꨪꨝꨪꩀ ꨣꨕꩀ",
+        "pred_first": "ꨈ ꨈꨰꨭꩀ ꨝꨴꨯꨩ ꨤ ꨚꨶꨬ ꨤ ꨬ ꨶꨵꨯ ꨤꨳ"
+      },
+      {
+        "id": "synthetic_144",
+        "cer_pct": 84.29,
+        "chars_gt": 140,
+        "chars_pred": 209,
+        "lines_gt": 3,
+        "lines_pred": 3,
+        "mean_conf": 0.5023,
+        "gt_first": "꩓꩞꩑꩞ ꨆꨢꨩ ꨋꩇ ꨢꩃ",
+        "pred_first": "꩓꩑꩞꩝꩑ꩍ ꨢꨯꨢꨩ ꨃ ꨣꨭꨩ ꨢꨮ"
+      },
+      {
+        "id": "synthetic_147",
+        "cer_pct": 76.92,
+        "chars_gt": 65,
+        "chars_pred": 68,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.5091,
+        "gt_first": "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟꨁꩆ",
+        "pred_first": "꩓꩕꩞ ꨁà꩞ ꨤꨴꨲꨩ ꨙꨮ ꨟꨘꨐꨪꨮꩆ"
+      }
+    ]
+  },
+  "auto": {
+    "n": 29,
+    "mean_confidence": 0.959,
+    "median_confidence": 0.96,
+    "pearson_confidence_vs_cer": -0.349,
+    "n_confidence_ge_90_cer_ge_20": 1,
+    "errors": {
+      "D": 215,
+      "S": 126,
+      "I": 61
+    },
+    "groups": {
+      "Cham vowel / diacritic": 107,
+      "Cham coda": 65,
+      "ASCII punctuation": 55,
+      "Cham digit": 8,
+      "Spacing / linebreak": 58,
+      "Cham base consonant / vowel": 37,
+      "Cham punctuation": 49,
+      "Cham medial": 4,
+      "Other": 19
+    },
+    "high_confidence_bad": [
+      {
+        "id": "synthetic_142",
+        "tier": 4,
+        "cer_pct": 23.84,
+        "mean_conf": 0.9576
+      }
+    ],
+    "top_worst": [
+      {
+        "id": "synthetic_142",
+        "cer_pct": 23.84,
+        "chars_gt": 365,
+        "chars_pred": 294,
+        "lines_gt": 8,
+        "lines_pred": 7,
+        "mean_conf": 0.9576,
+        "gt_first": "ꨗꨆꨓꨯꨮꨩ ꨚꨣꨤꨯꨩ ꨣꨪꩌ ꨔꨭꩆ ꨓꨟꨩ ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨥꨪ ꨌꩌ (ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꩑꩐ ꨧꨆꨥꨪ ꨀꨳꨩ",
+        "pred_first": "ꨗꨆꨓꨯꨩ ꨚꨣꨤꨩ ꨣꨪ ꨔꨭꩆ ꨓꨟꨩ ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨥꨪ ꨌꩌ ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꨅꨭ ꨧꨆꨥꨪ ꨀꨳꨩ"
+      },
+      {
+        "id": "synthetic_134",
+        "cer_pct": 10.37,
+        "chars_gt": 135,
+        "chars_pred": 130,
+        "lines_gt": 3,
+        "lines_pred": 3,
+        "mean_conf": 0.9583,
+        "gt_first": "ꨨꨕꨯꩌ ꨝꨣꨪꩍ ꨆꨣꨬ ꨌꨪꩍ ꨙꩌ ꨀꨕꩅ",
+        "pred_first": "ꨨꨕꨯꩌ ꨝꨣꨪꩍ ꨆꨣꨬ ꨌꨪꩍ ꨙꩌ ꨀꨕꩅ"
+      },
+      {
+        "id": "synthetic_089",
+        "cer_pct": 10.11,
+        "chars_gt": 89,
+        "chars_pred": 85,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.9467,
+        "gt_first": "꩕꩞꩒꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨣꨕꩀ ꨌꨰꩀ ꨨꨈꨰꩅ?",
+        "pred_first": "꩕꩞ ꩒꩞ ꨗꨆꨓꨯꨩ ꨨꨭꨩ ꨣꨕꩀ ꨌꩀ ꨨꨈꨰꩅ"
+      },
+      {
+        "id": "synthetic_196",
+        "cer_pct": 9.82,
+        "chars_gt": 163,
+        "chars_pred": 156,
+        "lines_gt": 3,
+        "lines_pred": 3,
+        "mean_conf": 0.9441,
+        "gt_first": "– ꨇꨪꩀ ꨠꩊ ꨌꨪꩍ: ꨅꨩ ꨆꨵꩀ ꨀꨟꨣꩀ꩝ ꨚꨓꨆꨪꩀ ꨀꨊꨶꨬ ꨆꨢꨩ ꨆꨓꩀ ꨀꨊꨶꨬ ꨧꨩ ꨡꨮꩃ꩞",
+        "pred_first": "ꨇꨪꩀ ꨠꩊ ꨌꨪꩍ; ꨅꨩ ꨆꨵꩀ ꨀꨟꨣꩀ ꨚꨓꨆꨪꩀ ꨀꨋꨶꨬ ꨆꨢꨩ ꨆꨓꩀ ꨀꨊꨶꨬ ꨧꨩ ꨡꨮꩃ ꩞"
+      },
+      {
+        "id": "synthetic_049",
+        "cer_pct": 9.23,
+        "chars_gt": 65,
+        "chars_pred": 65,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.9511,
+        "gt_first": "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟꨁꩆ",
+        "pred_first": "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟ꩓ꩆ"
+      },
+      {
+        "id": "synthetic_147",
+        "cer_pct": 9.23,
+        "chars_gt": 65,
+        "chars_pred": 61,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.9431,
+        "gt_first": "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟꨁꩆ",
+        "pred_first": "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟꨁꩆ"
+      },
+      {
+        "id": "synthetic_180",
+        "cer_pct": 8.48,
+        "chars_gt": 224,
+        "chars_pred": 219,
+        "lines_gt": 5,
+        "lines_pred": 5,
+        "mean_conf": 0.9554,
+        "gt_first": "ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ ꨚꩀ ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝",
+        "pred_first": "ꨂꨣꩃ ꨌꩌ ꨝꨴꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ ꨚꩀ ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ"
+      },
+      {
+        "id": "synthetic_034",
+        "cer_pct": 8.23,
+        "chars_gt": 243,
+        "chars_pred": 234,
+        "lines_gt": 5,
+        "lines_pred": 5,
+        "mean_conf": 0.9604,
+        "gt_first": "– ꨛꨯꨩꩀ ꨎꨩ ꨀꨕꩅ ꨌꩌ: ꨌꨭꩀ ꨕꨙꨮꩇ꩝ ꨣꨭꨚꩀ; ꨅꨩ ꨆꨵꨥ ꨙꨯꩌ ꨚꨴꨯꨱꩃ ꨚꩀ",
+        "pred_first": "- ꨛꨯꨩꩀ ꨎꨩ ꨀꨕꩅ ꨌꩌ; ꨌꨭꩀ ꨕꨙꨮꩇ ꨣꨭꨚꩀ; ꨅꨩ ꨆꨵꨥ ꨙꨯꩌ ꨚꨴꨯꨱꩃ ꨚ"
+      }
+    ]
+  },
+  "v24_1_r3_1": {
+    "n": 29,
+    "mean_confidence": 0.958,
+    "median_confidence": 0.958,
+    "pearson_confidence_vs_cer": -0.337,
+    "n_confidence_ge_90_cer_ge_20": 1,
+    "errors": {
+      "D": 195,
+      "S": 147,
+      "I": 101
+    },
+    "groups": {
+      "Cham vowel / diacritic": 125,
+      "Cham coda": 65,
+      "Spacing / linebreak": 74,
+      "Cham base consonant / vowel": 57,
+      "ASCII punctuation": 64,
+      "Cham digit": 7,
+      "Cham punctuation": 26,
+      "Cham medial": 6,
+      "Other": 19
+    },
+    "high_confidence_bad": [
+      {
+        "id": "synthetic_142",
+        "tier": 4,
+        "cer_pct": 25.21,
+        "mean_conf": 0.9582
+      }
+    ],
+    "top_worst": [
+      {
+        "id": "synthetic_142",
+        "cer_pct": 25.21,
+        "chars_gt": 365,
+        "chars_pred": 295,
+        "lines_gt": 8,
+        "lines_pred": 7,
+        "mean_conf": 0.9582,
+        "gt_first": "ꨗꨆꨓꨯꨮꨩ ꨚꨣꨤꨯꨩ ꨣꨪꩌ ꨔꨭꩆ ꨓꨟꨩ ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨥꨪ ꨌꩌ (ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꩑꩐ ꨧꨆꨥꨪ ꨀꨳꨩ",
+        "pred_first": "ꨗꨆꨓꨯꨩ ꨚꨣꨤꨯꨩ ꨣꨪꨔꨭꩆ ꨓꨠꨩ ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨥꨪ ꨌꩌ ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꨅꨭ꩐ ꨧꨆꨥꨪ ꨀꨳꨩ"
+      },
+      {
+        "id": "synthetic_196",
+        "cer_pct": 12.88,
+        "chars_gt": 163,
+        "chars_pred": 163,
+        "lines_gt": 3,
+        "lines_pred": 3,
+        "mean_conf": 0.9191,
+        "gt_first": "– ꨇꨪꩀ ꨠꩊ ꨌꨪꩍ: ꨅꨩ ꨆꨵꩀ ꨀꨟꨣꩀ꩝ ꨚꨓꨆꨪꩀ ꨀꨊꨶꨬ ꨆꨢꨩ ꨆꨓꩀ ꨀꨊꨶꨬ ꨧꨩ ꨡꨮꩃ꩞",
+        "pred_first": "ꨇꨪꩀ ꨠꩊ ꨌꨪꩍ* ꨅꨩ ꨆꨵꩀ ꨀꨟꨣꩀ] ꨚꨓꨆꨪꩀ ꨀꨋꨶꨬ ꨆꨢꨩ ꨆꨓꩀ ꨀꨊꨶꨬꩌ ꨧꨩ ꨮꩃ ꩞"
+      },
+      {
+        "id": "synthetic_147",
+        "cer_pct": 10.77,
+        "chars_gt": 65,
+        "chars_pred": 63,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.9555,
+        "gt_first": "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟꨁꩆ",
+        "pred_first": "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟꨄ꩓ꩆ"
+      },
+      {
+        "id": "synthetic_180",
+        "cer_pct": 9.82,
+        "chars_gt": 224,
+        "chars_pred": 223,
+        "lines_gt": 5,
+        "lines_pred": 5,
+        "mean_conf": 0.949,
+        "gt_first": "ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ ꨚꩀ ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝",
+        "pred_first": "ꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨥ ꨢꩃ ꨚꩀ ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ ꩝"
+      },
+      {
+        "id": "synthetic_038",
+        "cer_pct": 9.17,
+        "chars_gt": 120,
+        "chars_pred": 123,
+        "lines_gt": 3,
+        "lines_pred": 3,
+        "mean_conf": 0.9487,
+        "gt_first": "꩓꩞꩒꩞ ꨞꨩ ꨋꩇ ꨀꨕꩅ",
+        "pred_first": "꩓꩞꩒ ꩞ ꨞꨩ ꨋꩇ ꨀꨕꩅ"
+      },
+      {
+        "id": "synthetic_089",
+        "cer_pct": 8.99,
+        "chars_gt": 89,
+        "chars_pred": 88,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.9502,
+        "gt_first": "꩕꩞꩒꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨣꨕꩀ ꨌꨰꩀ ꨨꨈꨰꩅ?",
+        "pred_first": "꩕꩞ ꩒꩞ ꨗꨆꨓꨯꨱꩃ ꨨꨭꨩ ꨣꨕꩀ ꨌꨰꩀ ꨨꨈꨰꩅ"
+      },
+      {
+        "id": "synthetic_198",
+        "cer_pct": 8.51,
+        "chars_gt": 94,
+        "chars_pred": 94,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.9558,
+        "gt_first": "꩕꩞꩓꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨕꨯꩌ ꨀꨋꩇ ꨨꨤꨬ ꨡꨶꨮꩆ ꨡꨯꩍ?",
+        "pred_first": "꩕꩞꩓꩞ ꨗꨆꨓꨯꨩꩃ ꨨꨭꨩ ꨕꨯꩌ ꨀꨋꩇ ꨨꨤꨬ ꨡꨶꨮꩆ ꨡꨯ꩑"
+      },
+      {
+        "id": "synthetic_034",
+        "cer_pct": 8.23,
+        "chars_gt": 243,
+        "chars_pred": 239,
+        "lines_gt": 5,
+        "lines_pred": 5,
+        "mean_conf": 0.9494,
+        "gt_first": "– ꨛꨯꨩꩀ ꨎꨩ ꨀꨕꩅ ꨌꩌ: ꨌꨭꩀ ꨕꨙꨮꩇ꩝ ꨣꨭꨚꩀ; ꨅꨩ ꨆꨵꨥ ꨙꨯꩌ ꨚꨴꨯꨱꩃ ꨚꩀ",
+        "pred_first": "- ꨛꨯꨩꩀ ꨎꨩ ꨀꨕꩅ ꨌꩌ ꨌꨭꩀ ꨕꨙꨮꩇ꩝ ꨣꨭꨚꩀ ꨅꨩ ꨆꨵꨭꨥ ꨙꨯꩌ ꨚꨴꨯꨱꩃ ꨚꩀ"
+      }
+    ]
+  },
+  "v24_1_r2_1_6": {
+    "n": 29,
+    "mean_confidence": 0.948,
+    "median_confidence": 0.947,
+    "pearson_confidence_vs_cer": -0.617,
+    "n_confidence_ge_90_cer_ge_20": 1,
+    "errors": {
+      "D": 179,
+      "S": 183,
+      "I": 113
+    },
+    "groups": {
+      "Cham vowel / diacritic": 146,
+      "Cham coda": 61,
+      "Cham base consonant / vowel": 67,
+      "ASCII punctuation": 65,
+      "Cham digit": 12,
+      "Spacing / linebreak": 68,
+      "Cham punctuation": 26,
+      "Cham medial": 11,
+      "Other": 19
+    },
+    "high_confidence_bad": [
+      {
+        "id": "synthetic_142",
+        "tier": 4,
+        "cer_pct": 27.12,
+        "mean_conf": 0.9271
+      }
+    ],
+    "top_worst": [
+      {
+        "id": "synthetic_142",
+        "cer_pct": 27.12,
+        "chars_gt": 365,
+        "chars_pred": 307,
+        "lines_gt": 8,
+        "lines_pred": 7,
+        "mean_conf": 0.9271,
+        "gt_first": "ꨗꨆꨓꨯꨮꨩ ꨚꨣꨤꨯꨩ ꨣꨪꩌ ꨔꨭꩆ ꨓꨟꨩ ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨥꨪ ꨌꩌ (ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꩑꩐ ꨧꨆꨥꨪ ꨀꨳꨩ",
+        "pred_first": "ꨗꨆꨓꨯꨩ ꨚꨣꨤꨲꨩ ꨣꨪ ꨔꨭꩆ ꨓꨟꨩ ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨶꨪ ꨌꩌ ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꨭꩆ ꨧꨆꨶꨪ ꨀꨳꨩ"
+      },
+      {
+        "id": "synthetic_147",
+        "cer_pct": 13.85,
+        "chars_gt": 65,
+        "chars_pred": 64,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.9409,
+        "gt_first": "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟꨁꩆ",
+        "pred_first": "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟꨄ꩓ꩆ"
+      },
+      {
+        "id": "synthetic_196",
+        "cer_pct": 13.5,
+        "chars_gt": 163,
+        "chars_pred": 164,
+        "lines_gt": 3,
+        "lines_pred": 3,
+        "mean_conf": 0.9075,
+        "gt_first": "– ꨇꨪꩀ ꨠꩊ ꨌꨪꩍ: ꨅꨩ ꨆꨵꩀ ꨀꨟꨣꩀ꩝ ꨚꨓꨆꨪꩀ ꨀꨊꨶꨬ ꨆꨢꨩ ꨆꨓꩀ ꨀꨊꨶꨬ ꨧꨩ ꨡꨮꩃ꩞",
+        "pred_first": "ꨇꨪꩀ ꨠꩊ ꨌꨪꩍ/ ꨅꨩ ꨆꨵꩀ ꨀꨟꨣꨰꩀ] ꨚꨓꨆꨪꩀ ꨀꨋꨶꨬ ꨆꨢꨩ ꨆꨓꩀ ꨀꨊꨶꨬ ꨧꨩ ꨕꨮꩃ꩞"
+      },
+      {
+        "id": "synthetic_134",
+        "cer_pct": 10.37,
+        "chars_gt": 135,
+        "chars_pred": 134,
+        "lines_gt": 3,
+        "lines_pred": 3,
+        "mean_conf": 0.9414,
+        "gt_first": "ꨨꨕꨯꩌ ꨝꨣꨪꩍ ꨆꨣꨬ ꨌꨪꩍ ꨙꩌ ꨀꨕꩅ",
+        "pred_first": "ꨨꨕꨯꩌ ꨝꨣꨪꩍ ꨆꨣꨬ ꨌꨪꩍ ꨙꩌ ꨀꨕꩅ"
+      },
+      {
+        "id": "synthetic_198",
+        "cer_pct": 9.57,
+        "chars_gt": 94,
+        "chars_pred": 94,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.9572,
+        "gt_first": "꩕꩞꩓꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨕꨯꩌ ꨀꨋꩇ ꨨꨤꨬ ꨡꨶꨮꩆ ꨡꨯꩍ?",
+        "pred_first": "꩕꩞꩓꩞ ꨗꨆꨓꨯꨩꩃ ꨨꨭꨩ ꨕꨯꩌ ꨀꨋꩇ ꨨꨤꨬ ꨡꨶꨮꩆ ꨡꨯ꩑"
+      },
+      {
+        "id": "synthetic_049",
+        "cer_pct": 9.23,
+        "chars_gt": 65,
+        "chars_pred": 67,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.954,
+        "gt_first": "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟꨁꩆ",
+        "pred_first": "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟꨄ꩓ꩆ"
+      },
+      {
+        "id": "synthetic_089",
+        "cer_pct": 8.99,
+        "chars_gt": 89,
+        "chars_pred": 87,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.945,
+        "gt_first": "꩕꩞꩒꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨣꨕꩀ ꨌꨰꩀ ꨨꨈꨰꩅ?",
+        "pred_first": "꩕꩞ ꩒꩞ ꨗꨆꨓꨯꨱ ꨨꨭꨩ ꨣꨕꩀ ꨌꨰꩀ ꨨꨈꨰꩅ"
+      },
+      {
+        "id": "synthetic_180",
+        "cer_pct": 8.93,
+        "chars_gt": 224,
+        "chars_pred": 224,
+        "lines_gt": 5,
+        "lines_pred": 5,
+        "mean_conf": 0.9327,
+        "gt_first": "ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ ꨚꩀ ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝",
+        "pred_first": "ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ ꨚꩀ ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ"
+      }
+    ]
+  },
+  "v24": {
+    "n": 29,
+    "mean_confidence": 0.909,
+    "median_confidence": 0.908,
+    "pearson_confidence_vs_cer": -0.428,
+    "n_confidence_ge_90_cer_ge_20": 1,
+    "errors": {
+      "D": 437,
+      "I": 96,
+      "S": 297
+    },
+    "groups": {
+      "Cham vowel / diacritic": 306,
+      "Cham coda": 164,
+      "Cham medial": 30,
+      "ASCII punctuation": 66,
+      "Cham digit": 15,
+      "Spacing / linebreak": 76,
+      "Cham base consonant / vowel": 91,
+      "Cham punctuation": 63,
+      "Other": 19
+    },
+    "high_confidence_bad": [
+      {
+        "id": "synthetic_147",
+        "tier": 4,
+        "cer_pct": 23.08,
+        "mean_conf": 0.9383
+      }
+    ],
+    "top_worst": [
+      {
+        "id": "synthetic_142",
+        "cer_pct": 29.59,
+        "chars_gt": 365,
+        "chars_pred": 284,
+        "lines_gt": 8,
+        "lines_pred": 7,
+        "mean_conf": 0.8899,
+        "gt_first": "ꨗꨆꨓꨯꨮꨩ ꨚꨣꨤꨯꨩ ꨣꨪꩌ ꨔꨭꩆ ꨓꨟꨩ ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨥꨪ ꨌꩌ (ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꩑꩐ ꨧꨆꨥꨪ ꨀꨳꨩ",
+        "pred_first": "ꨗꨆꨓꨩ ꨚꨣꨤꨩ ꨣꨪ ꨔꨭꩆ ꨓꨟꨩ ꨝꨪꨤꩆ ꨓꨎꨳꨭꩍ ꨧꨆꨥꨬ ꨌꩌ ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꨆꩉ ꨧꨆꨥ ꨀꨲꨩ"
+      },
+      {
+        "id": "synthetic_147",
+        "cer_pct": 23.08,
+        "chars_gt": 65,
+        "chars_pred": 58,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.9383,
+        "gt_first": "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟꨁꩆ",
+        "pred_first": "꩓꩞ ꩓꩞ ꨞꨩ ꨙꩌ ꨟ꩓ꩆ"
+      },
+      {
+        "id": "synthetic_198",
+        "cer_pct": 21.28,
+        "chars_gt": 94,
+        "chars_pred": 87,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.8548,
+        "gt_first": "꩕꩞꩓꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨕꨯꩌ ꨀꨋꩇ ꨨꨤꨬ ꨡꨶꨮꩆ ꨡꨯꩍ?",
+        "pred_first": "꩕꩞ ꩓꩞ ꨗꩀꨆꨓꨤꨩ ꨨꨭꨩ ꨕꩌ ꨀꨋꩇ ꨨꨤꨬ ꨡꨶꨮꩆ ꨡꩍ꩝"
+      },
+      {
+        "id": "synthetic_180",
+        "cer_pct": 18.75,
+        "chars_gt": 224,
+        "chars_pred": 212,
+        "lines_gt": 5,
+        "lines_pred": 5,
+        "mean_conf": 0.8597,
+        "gt_first": "ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ ꨚꩀ ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝",
+        "pred_first": "ꨂꨣꩃ ꨌꩌ ꨝꨓꨴꨟꨪꩆ ꨕꨮ ꨋꩇ ꨈꨴꩀ ꨃꨥ ꨢꩃ ꨚꩀ ꨕꨤꩌ ꨝꨪꨟꨡꨯ ꨟꩀꩊ"
+      },
+      {
+        "id": "synthetic_049",
+        "cer_pct": 18.46,
+        "chars_gt": 65,
+        "chars_pred": 65,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.9196,
+        "gt_first": "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟꨁꩆ",
+        "pred_first": "꩓꩞ ꩓꩞ ꨞꨩ ꨙꩌ ꨟ꩓ꩆ꩝"
+      },
+      {
+        "id": "synthetic_038",
+        "cer_pct": 17.5,
+        "chars_gt": 120,
+        "chars_pred": 112,
+        "lines_gt": 3,
+        "lines_pred": 3,
+        "mean_conf": 0.911,
+        "gt_first": "꩓꩞꩒꩞ ꨞꨩ ꨋꩇ ꨀꨕꩅ",
+        "pred_first": "꩓꩞ ꩒꩞ ꨞꨩ ꨋꩇ ꨀꨕꩅ"
+      },
+      {
+        "id": "synthetic_134",
+        "cer_pct": 17.04,
+        "chars_gt": 135,
+        "chars_pred": 124,
+        "lines_gt": 3,
+        "lines_pred": 3,
+        "mean_conf": 0.9072,
+        "gt_first": "ꨨꨕꨯꩌ ꨝꨣꨪꩍ ꨆꨣꨬ ꨌꨪꩍ ꨙꩌ ꨀꨕꩅ",
+        "pred_first": "ꨨꨕꩌ ꨝꨣꨪꩍ ꨆꨣꨬ ꨌꨪꩍ ꨙꩌ ꨀꨕꩅ"
+      },
+      {
+        "id": "synthetic_196",
+        "cer_pct": 15.95,
+        "chars_gt": 163,
+        "chars_pred": 153,
+        "lines_gt": 3,
+        "lines_pred": 3,
+        "mean_conf": 0.8975,
+        "gt_first": "– ꨇꨪꩀ ꨠꩊ ꨌꨪꩍ: ꨅꨩ ꨆꨵꩀ ꨀꨟꨣꩀ꩝ ꨚꨓꨆꨪꩀ ꨀꨊꨶꨬ ꨆꨢꨩ ꨆꨓꩀ ꨀꨊꨶꨬ ꨧꨩ ꨡꨮꩃ꩞",
+        "pred_first": "ꨇꨪꩀ ꨠꩊ ꨌꨪꩍ ꨅꨩ ꨆꨵꩀ ꨀꨟꨣꩀ꩝ ꨚꨓꨆꨪꩀ ꨀꨋꨶꨬ ꨆꨢꨩ ꨆꨓꩀ ꨀꨕꨶꨬ ꨧꨩ ꨡꨮꩃ꩝꩝"
+      }
+    ]
+  },
+  "v23": {
+    "n": 29,
+    "mean_confidence": 0.923,
+    "median_confidence": 0.925,
+    "pearson_confidence_vs_cer": -0.574,
+    "n_confidence_ge_90_cer_ge_20": 16,
+    "errors": {
+      "I": 129,
+      "S": 549,
+      "D": 495
+    },
+    "groups": {
+      "Cham vowel / diacritic": 461,
+      "Cham coda": 180,
+      "Cham digit": 77,
+      "Cham punctuation": 137,
+      "Spacing / linebreak": 116,
+      "ASCII punctuation": 68,
+      "Cham base consonant / vowel": 80,
+      "Cham medial": 35,
+      "Other": 19
+    },
+    "high_confidence_bad": [
+      {
+        "id": "synthetic_142",
+        "tier": 4,
+        "cer_pct": 33.42,
+        "mean_conf": 0.9251
+      },
+      {
+        "id": "synthetic_049",
+        "tier": 2,
+        "cer_pct": 27.69,
+        "mean_conf": 0.919
+      },
+      {
+        "id": "synthetic_089",
+        "tier": 3,
+        "cer_pct": 26.97,
+        "mean_conf": 0.9032
+      },
+      {
+        "id": "synthetic_198",
+        "tier": 5,
+        "cer_pct": 25.53,
+        "mean_conf": 0.9215
+      },
+      {
+        "id": "synthetic_059",
+        "tier": 2,
+        "cer_pct": 24.54,
+        "mean_conf": 0.9207
+      },
+      {
+        "id": "synthetic_029",
+        "tier": 1,
+        "cer_pct": 24.33,
+        "mean_conf": 0.9197
+      },
+      {
+        "id": "synthetic_038",
+        "tier": 1,
+        "cer_pct": 23.33,
+        "mean_conf": 0.9444
+      },
+      {
+        "id": "synthetic_196",
+        "tier": 5,
+        "cer_pct": 23.31,
+        "mean_conf": 0.9021
+      },
+      {
+        "id": "synthetic_134",
+        "tier": 4,
+        "cer_pct": 22.22,
+        "mean_conf": 0.9141
+      },
+      {
+        "id": "synthetic_100",
+        "tier": 3,
+        "cer_pct": 22.11,
+        "mean_conf": 0.9109
+      },
+      {
+        "id": "synthetic_065",
+        "tier": 2,
+        "cer_pct": 21.97,
+        "mean_conf": 0.9404
+      },
+      {
+        "id": "synthetic_094",
+        "tier": 3,
+        "cer_pct": 21.94,
+        "mean_conf": 0.936
+      },
+      {
+        "id": "synthetic_129",
+        "tier": 4,
+        "cer_pct": 21.26,
+        "mean_conf": 0.9261
+      },
+      {
+        "id": "synthetic_034",
+        "tier": 1,
+        "cer_pct": 20.99,
+        "mean_conf": 0.9685
+      },
+      {
+        "id": "synthetic_074",
+        "tier": 2,
+        "cer_pct": 20.69,
+        "mean_conf": 0.9357
+      },
+      {
+        "id": "synthetic_054",
+        "tier": 2,
+        "cer_pct": 20.31,
+        "mean_conf": 0.942
+      }
+    ],
+    "top_worst": [
+      {
+        "id": "synthetic_087",
+        "cer_pct": 39.02,
+        "chars_gt": 82,
+        "chars_pred": 84,
+        "lines_gt": 3,
+        "lines_pred": 3,
+        "mean_conf": 0.8904,
+        "gt_first": "꩕꩞꩓꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨕꨯꩌ ꨀꨋꩇ ꨨꨤꨬ ꨡꨶꨮꩆ ꨡꨯꩍ?",
+        "pred_first": "ꨩꩉ ꨁꨩꩌ ꨗꨆꨓꨩ ꨨꨭꨩ ꨕꩌ ꨯꨀꨋꩇ ꨨꨤꨬ ꨡꨶꨮꩆ ꨡꩍꩍ"
+      },
+      {
+        "id": "synthetic_142",
+        "cer_pct": 33.42,
+        "chars_gt": 365,
+        "chars_pred": 286,
+        "lines_gt": 8,
+        "lines_pred": 7,
+        "mean_conf": 0.9251,
+        "gt_first": "ꨗꨆꨓꨯꨮꨩ ꨚꨣꨤꨯꨩ ꨣꨪꩌ ꨔꨭꩆ ꨓꨟꨩ ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨥꨪ ꨌꩌ (ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꩑꩐ ꨧꨆꨥꨪ ꨀꨳꨩ",
+        "pred_first": "ꨗꨆꨓꨩ ꨚꨣꨤꨩ ꨣꨪ ꨔꨭꩆ ꨓꨟꨩ ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨥꨪ ꨌꩌ ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꨭꩍ ꨧꨆꨥꨪ ꨀꨳꨩ"
+      },
+      {
+        "id": "synthetic_147",
+        "cer_pct": 30.77,
+        "chars_gt": 65,
+        "chars_pred": 63,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.8883,
+        "gt_first": "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟꨁꩆ",
+        "pred_first": "ꨁꨩꩀ ꨁꨩ ꨞꨩ ꨙꩌ ꨟꨄꩆ"
+      },
+      {
+        "id": "synthetic_049",
+        "cer_pct": 27.69,
+        "chars_gt": 65,
+        "chars_pred": 64,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.919,
+        "gt_first": "꩓꩞꩓꩞ ꨞꨩ ꨙꩌ ꨟꨁꩆ",
+        "pred_first": "ꨁꨩꩀ ꨁꨩ ꨞꨩ ꨙꩌ ꨟꨄꨁꩆ"
+      },
+      {
+        "id": "synthetic_167",
+        "cer_pct": 27.69,
+        "chars_gt": 65,
+        "chars_pred": 66,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.8627,
+        "gt_first": "꩒꩞ ꨓꨭꩀ ꨥꩀ ꨧꨯꨱꩃ ꨤꨪꨝꨪꩀ ꨣꨕꩀ",
+        "pred_first": "ꨝꨮ ꩀ ꨓꨭꩀ ꨥꩀ ꨧꨮꨩ ꨤꨪꨝꨪꩀ ꨣꨕꩀ"
+      },
+      {
+        "id": "synthetic_089",
+        "cer_pct": 26.97,
+        "chars_gt": 89,
+        "chars_pred": 85,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.9032,
+        "gt_first": "꩕꩞꩒꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨣꨕꩀ ꨌꨰꩀ ꨨꨈꨰꩅ?",
+        "pred_first": "ꨂꨩꩊ ꨐꨮ ꨗꨆꨓꨩ ꨨꨭꨩ ꨣꨕꩀ ꨌꨆꨶꨰ ꨨꨈꨓꨰ"
+      },
+      {
+        "id": "synthetic_198",
+        "cer_pct": 25.53,
+        "chars_gt": 94,
+        "chars_pred": 85,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.9215,
+        "gt_first": "꩕꩞꩓꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨕꨯꩌ ꨀꨋꩇ ꨨꨤꨬ ꨡꨶꨮꩆ ꨡꨯꩍ?",
+        "pred_first": "ꨩꩀꨁꨩꩀ ꨗꨆꨓꨩ ꨨꨩ ꨕꩌ ꨯꨀꨋꩇ ꨨꨤꨬ ꨡꨶꨮꩆ ꨡꩍꨰꩍ"
+      },
+      {
+        "id": "synthetic_059",
+        "cer_pct": 24.54,
+        "chars_gt": 163,
+        "chars_pred": 164,
+        "lines_gt": 5,
+        "lines_pred": 5,
+        "mean_conf": 0.9207,
+        "gt_first": "ꨙꩌ ꨀꨕꩅ ꨓꨘꨓꩇ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨕꨯꩌ ꨢꩃ ꨤꨝꩃ꩝",
+        "pred_first": "ꨙꩌ ꨀꨕꩅ ꨓꨘꨓꩇ ꨛꨩꩀ ꨨꨕꨮꩉ ꨕꩌ ꨯꨢꩃ ꨤꨝꩃ"
+      }
+    ]
+  },
+  "vi": {
+    "n": 29,
+    "mean_confidence": 0.629,
+    "median_confidence": 0.634,
+    "pearson_confidence_vs_cer": 0.284,
+    "n_confidence_ge_90_cer_ge_20": 0,
+    "errors": {
+      "I": 342,
+      "S": 4543,
+      "D": 412
+    },
+    "groups": {
+      "Other": 210,
+      "Latin digit": 122,
+      "Spacing / linebreak": 374,
+      "Cham digit": 89,
+      "Cham punctuation": 153,
+      "Cham base consonant / vowel": 2033,
+      "Cham vowel / diacritic": 1118,
+      "Cham coda": 976,
+      "ASCII punctuation": 35,
+      "Cham medial": 187
+    },
+    "high_confidence_bad": [],
+    "top_worst": [
+      {
+        "id": "synthetic_054",
+        "cer_pct": 103.12,
+        "chars_gt": 64,
+        "chars_pred": 79,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.6584,
+        "gt_first": "꩓꩞꩒꩞ ꨞꨩ ꨋꩇ ꨀꨕꩅ",
+        "pred_first": "g2ii Gij v07 ZP 5) N386)"
+      },
+      {
+        "id": "synthetic_099",
+        "cer_pct": 101.6,
+        "chars_gt": 374,
+        "chars_pred": 450,
+        "lines_gt": 10,
+        "lines_pred": 10,
+        "mean_conf": 0.5929,
+        "gt_first": "ꨨꨭꨩ ꨨꨤꨪꩌ꩝",
+        "pred_first": "Sz 867/"
+      },
+      {
+        "id": "synthetic_087",
+        "cer_pct": 97.56,
+        "chars_gt": 82,
+        "chars_pred": 95,
+        "lines_gt": 3,
+        "lines_pred": 3,
+        "mean_conf": 0.6657,
+        "gt_first": "꩕꩞꩓꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨕꨯꩌ ꨀꨋꩇ ꨨꨤꨬ ꨡꨶꨮꩆ ꨡꨯꩍ?",
+        "pred_first": "3iị qiị ar5 6ổ S% 36 gZ5) 56' VỄa) L69?"
+      },
+      {
+        "id": "synthetic_089",
+        "cer_pct": 96.63,
+        "chars_gt": 89,
+        "chars_pred": 101,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.7412,
+        "gt_first": "꩕꩞꩒꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨣꨕꩀ ꨌꨰꩀ ꨨꨈꨰꩅ?",
+        "pred_first": "3ij Gij as56Ể SÝ Sb5 XES) SCE6)?"
+      },
+      {
+        "id": "synthetic_029",
+        "cer_pct": 92.7,
+        "chars_gt": 411,
+        "chars_pred": 439,
+        "lines_gt": 9,
+        "lines_pred": 9,
+        "mean_conf": 0.6308,
+        "gt_first": "ꨨꨈꨴꨮꩌ ꨀꨕꩅ ꨃꨥ ꨢꩃ꩝ ꨣꨯꨱꩀ ꨀꨥ ꨇꩆ ꨛꨯꨮ꩝ ꨓꨟꨳꨩ ꨀꨕꨯꨱꩍ ꨕꨘꩇ ꨧꨯꨱꩃ ꨕꨯꩌ ꨤꨡꨰꩂ ꨝꨶꨮꩊ",
+        "pred_first": "56(L3386) VSý VÁ,i S6s Y  S8aD 3S6I 6 gngr6ng 3Z\"5) Mỗ p6 C\"BE3P V6)"
+      },
+      {
+        "id": "synthetic_171",
+        "cer_pct": 92.41,
+        "chars_gt": 79,
+        "chars_pred": 87,
+        "lines_gt": 2,
+        "lines_pred": 2,
+        "mean_conf": 0.6631,
+        "gt_first": "꩔꩞ ꨟꨗꩃ ꨀꨋꩅ ꨓꨭꩀ ꨨꨭꨩ ꨡꨯꨱꩀ ꨕꨫ ꨙꩌ ꨀꨕꩅ",
+        "pred_first": "6ii Waí grz96) 625) S& AZé5) 8 gi 036)"
+      },
+      {
+        "id": "synthetic_059",
+        "cer_pct": 91.41,
+        "chars_gt": 163,
+        "chars_pred": 174,
+        "lines_gt": 5,
+        "lines_pred": 5,
+        "mean_conf": 0.7062,
+        "gt_first": "ꨙꩌ ꨀꨕꩅ ꨓꨘꨓꩇ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨕꨯꩌ ꨢꩃ ꨤꨝꩃ꩝",
+        "pred_first": "a g36) 6'Z6 S) 3S65) 53PS) B6 Jý CÚ)"
+      },
+      {
+        "id": "synthetic_129",
+        "cer_pct": 90.94,
+        "chars_gt": 254,
+        "chars_pred": 265,
+        "lines_gt": 6,
+        "lines_pred": 6,
+        "mean_conf": 0.6944,
+        "gt_first": "ꨀꨕꩅ ꨧꨯꨱꩃ ꨁꨦꨗꩃ ꨚꨈꨭꩊ ꨚꨓꨯꨱꩌ ꨝꨶꨮꩊ ꨞꩇ ꨂꨣꩃ ꨌꩌ꩞",
+        "pred_first": "3S786) SMễ 6ZV SC26) S6Ẽ VẾ6) V\"3) 2í giì"
+      }
+    ]
+  }
+}

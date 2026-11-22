@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PcGts xmlns="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15">
+  <Metadata>
+    <Creator>Cham OCR Studio (https://ocr.cham.asia)</Creator>
+    <Created>2026-11-22T04:04:41.572Z</Created>
+  </Metadata>
+  <Page imageFilename="test_006_lvl1.png" imageWidth="800" imageHeight="384">
+    <TextRegion id="r1">
+      <TextLine id="tl_1">
+        <Coords points="46,40 446,32 446,67 46,75"/>
+        <TextEquiv conf="0.9446"><Unicode>ꨋꩇ ꨡꨯꩍ ꨁꨦꨗꩃ ꨚꨈꨭꩊ ꨚꨓꨯꨱ </Unicode></TextEquiv>
+      </TextLine>
+      <TextLine id="tl_2">
+        <Coords points="40,80 705,82 705,129 40,127"/>
+        <TextEquiv conf="0.9692"><Unicode>ꨙꩌ ꨀꨕꩅ ꨞꨳꩆ ꨚꨣꨤꨯꨩ ꨓꨟꨩ ꨀꨆꨯꨱꩀ ꨝꨪꨤꩆ ꨓꨎꨭꩍ</Unicode></TextEquiv>
+      </TextLine>
+      <TextLine id="tl_3">
+        <Coords points="46,132 635,137 635,181 46,176"/>
+        <TextEquiv conf="0.9630"><Unicode>꩕꩞꩓꩞ ꨗꨆꨓꨯꨱꨩꩌ ꨨꨭꨩ ꨕꨯꩌ ꨀꨋꩇ ꨨꨤꨬ ꨡꨶꨮꩆ ꨡꨯꩍ</Unicode></TextEquiv>
+      </TextLine>
+      <TextLine id="tl_4">
+        <Coords points="42,186 735,189 735,233 42,230"/>
+        <TextEquiv conf="0.9516"><Unicode>ꨕꨤꩌ ꨨꨣꨬ ꨆꨓꨯꨩꩃ ꨂꨣꩃ ꨌꩌ ꨝꨴꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ</Unicode></TextEquiv>
+      </TextLine>
+      <TextLine id="tl_5">
+        <Coords points="62,239 735,240 735,281 62,280"/>
+        <TextEquiv conf="0.9133"><Unicode>- ꨅꨩ ꨟꩀ ꨔꨰꩀ ꨓꨶꨬ ꨤꨪꨈꨰꩍ; ꨓꨯꩀ ꨓꨶꩀ ꨓꨭꩀ ꨃꩃ ꩝ ꨝꨳꩀ ꨆꨣꨬ</Unicode></TextEquiv>
+      </TextLine>
+      <TextLine id="tl_6">
+        <Coords points="50,294 694,289 694,333 50,338"/>
+        <TextEquiv conf="0.9310"><Unicode>ꨨꨈꨴꨮ ꨀꨕꩅ ꨃꨥ ꨢꩃ ꨣꨯꨱꩀ ꨀꨥ ꨇꩆ ꨛꨯꨮꩀ ꨓꨟꨳꨩ</Unicode></TextEquiv>
+      </TextLine>
+    </TextRegion>
+  </Page>
+</PcGts>

@@ -19,8 +19,8 @@ WORKDIR /app
 COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Force cache bust for updated app code & V26.1 Masked-SVTR (6/6 Gates) + Auto Router v2.1 + RealScan-Gold v3
-RUN echo "Cache bust 2026-11-22T01:30:00Z - Cham-OCR Studio: V26.1 Masked-SVTR (6/6 Gates, 1deee5f5ff351070) + Auto Router v2.1 + RealScan-Gold v3"
+# Force cache bust for updated app code & V26.1 Masked-SVTR + API Provenance Hardening + Auto Router v2.2
+RUN echo "Cache bust 2026-11-22T06:40:00Z - Cham-OCR Studio: V26.1 Masked-SVTR + P0/P1 API Contract & Provenance Hardening + Auto Router v2.2"
 
 # Copy application files
 COPY . /app

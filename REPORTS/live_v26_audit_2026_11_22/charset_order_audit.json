@@ -1,0 +1,266 @@
+{
+  "v25": {
+    "yml": "ocr-studio\\data\\output\\rec_cham_inference_v25\\inference.yml",
+    "external": "ocr-studio\\data\\cham_dict_v25.txt",
+    "embedded_len": 162,
+    "external_len": 162,
+    "identical_order": true,
+    "same_multiset": true,
+    "same_position_count": 162,
+    "mismatched_positions": 0,
+    "examples": [],
+    "head_embedded": [
+      ":",
+      "ꨀ",
+      "ꨁ",
+      "ꨂ",
+      "ꨃ",
+      "ꨄ",
+      "ꨅ",
+      "ꨆ",
+      "ꨇ",
+      "ꨈ",
+      "ꨉ",
+      "ꨊ",
+      "ꨋ",
+      "ꨌ",
+      "ꨍ",
+      "ꨎ",
+      "ꨏ",
+      "ꨐ",
+      "ꨑ",
+      "ꨒ"
+    ],
+    "head_external": [
+      ":",
+      "ꨀ",
+      "ꨁ",
+      "ꨂ",
+      "ꨃ",
+      "ꨄ",
+      "ꨅ",
+      "ꨆ",
+      "ꨇ",
+      "ꨈ",
+      "ꨉ",
+      "ꨊ",
+      "ꨋ",
+      "ꨌ",
+      "ꨍ",
+      "ꨎ",
+      "ꨏ",
+      "ꨐ",
+      "ꨑ",
+      "ꨒ"
+    ],
+    "postprocess_name": "CTCLabelDecode",
+    "preprocessing": [
+      {
+        "DecodeImage": {
+          "channel_first": false,
+          "img_mode": "BGR"
+        }
+      },
+      {
+        "MultiLabelEncode": {
+          "gtc_encode": "NRTRLabelEncode"
+        }
+      },
+      {
+        "RecResizeImg": {
+          "image_shape": [
+            3,
+            48,
+            480
+          ]
+        }
+      },
+      {
+        "KeepKeys": {
+          "keep_keys": [
+            "image",
+            "label_ctc",
+            "label_gtc",
+            "length"
+          ]
+        }
+      }
+    ]
+  },
+  "v24_1_r4": {
+    "yml": "ocr-studio\\data\\output\\rec_cham_inference_v24_1_r4\\inference.yml",
+    "external": "ocr-studio\\data\\cham_dict_v24_1_r4.txt",
+    "embedded_len": 114,
+    "external_len": 114,
+    "identical_order": true,
+    "same_multiset": true,
+    "same_position_count": 114,
+    "mismatched_positions": 0,
+    "examples": [],
+    "head_embedded": [
+      ":",
+      "ꨀ",
+      "ꨁ",
+      "ꨂ",
+      "ꨃ",
+      "ꨄ",
+      "ꨅ",
+      "ꨆ",
+      "ꨇ",
+      "ꨈ",
+      "ꨉ",
+      "ꨊ",
+      "ꨋ",
+      "ꨌ",
+      "ꨍ",
+      "ꨎ",
+      "ꨏ",
+      "ꨐ",
+      "ꨑ",
+      "ꨒ"
+    ],
+    "head_external": [
+      ":",
+      "ꨀ",
+      "ꨁ",
+      "ꨂ",
+      "ꨃ",
+      "ꨄ",
+      "ꨅ",
+      "ꨆ",
+      "ꨇ",
+      "ꨈ",
+      "ꨉ",
+      "ꨊ",
+      "ꨋ",
+      "ꨌ",
+      "ꨍ",
+      "ꨎ",
+      "ꨏ",
+      "ꨐ",
+      "ꨑ",
+      "ꨒ"
+    ],
+    "postprocess_name": "CTCLabelDecode",
+    "preprocessing": [
+      {
+        "DecodeImage": {
+          "channel_first": false,
+          "img_mode": "BGR"
+        }
+      },
+      {
+        "MultiLabelEncode": {
+          "gtc_encode": "NRTRLabelEncode"
+        }
+      },
+      {
+        "RecResizeImg": {
+          "image_shape": [
+            3,
+            48,
+            480
+          ]
+        }
+      },
+      {
+        "KeepKeys": {
+          "keep_keys": [
+            "image",
+            "label_ctc",
+            "label_gtc",
+            "length"
+          ]
+        }
+      }
+    ]
+  },
+  "v24_1_r3_1": {
+    "yml": "ocr-studio\\data\\output\\rec_cham_inference_v24_1_r3_1\\inference.yml",
+    "external": "ocr-studio\\data\\cham_dict_v24_1_r3_1.txt",
+    "embedded_len": 114,
+    "external_len": 114,
+    "identical_order": true,
+    "same_multiset": true,
+    "same_position_count": 114,
+    "mismatched_positions": 0,
+    "examples": [],
+    "head_embedded": [
+      ":",
+      "ꨀ",
+      "ꨁ",
+      "ꨂ",
+      "ꨃ",
+      "ꨄ",
+      "ꨅ",
+      "ꨆ",
+      "ꨇ",
+      "ꨈ",
+      "ꨉ",
+      "ꨊ",
+      "ꨋ",
+      "ꨌ",
+      "ꨍ",
+      "ꨎ",
+      "ꨏ",
+      "ꨐ",
+      "ꨑ",
+      "ꨒ"
+    ],
+    "head_external": [
+      ":",
+      "ꨀ",
+      "ꨁ",
+      "ꨂ",
+      "ꨃ",
+      "ꨄ",
+      "ꨅ",
+      "ꨆ",
+      "ꨇ",
+      "ꨈ",
+      "ꨉ",
+      "ꨊ",
+      "ꨋ",
+      "ꨌ",
+      "ꨍ",
+      "ꨎ",
+      "ꨏ",
+      "ꨐ",
+      "ꨑ",
+      "ꨒ"
+    ],
+    "postprocess_name": "CTCLabelDecode",
+    "preprocessing": [
+      {
+        "DecodeImage": {
+          "channel_first": false,
+          "img_mode": "BGR"
+        }
+      },
+      {
+        "MultiLabelEncode": {
+          "gtc_encode": "NRTRLabelEncode"
+        }
+      },
+      {
+        "RecResizeImg": {
+          "image_shape": [
+            3,
+            48,
+            320
+          ]
+        }
+      },
+      {
+        "KeepKeys": {
+          "keep_keys": [
+            "image",
+            "label_ctc",
+            "label_gtc",
+            "length"
+          ]
+        }
+      }
+    ]
+  }
+}

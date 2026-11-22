@@ -1,0 +1,672 @@
+{
+  "v24_1_r4": {
+    "cases": 63,
+    "errors": 0,
+    "cer_pct": 0.75,
+    "full_line_exact_pct": 93.65,
+    "symbols": {
+      "!": {
+        "n": 3,
+        "correct": 3
+      },
+      "#": {
+        "n": 3,
+        "correct": 3
+      },
+      "&": {
+        "n": 3,
+        "correct": 3
+      },
+      "*": {
+        "n": 3,
+        "correct": 3
+      },
+      "/": {
+        "n": 3,
+        "correct": 3
+      },
+      "<": {
+        "n": 3,
+        "correct": 3
+      },
+      ">": {
+        "n": 3,
+        "correct": 3
+      },
+      "?": {
+        "n": 3,
+        "correct": 3
+      },
+      "[": {
+        "n": 3,
+        "correct": 3
+      },
+      "\\": {
+        "n": 3,
+        "correct": 3
+      },
+      "]": {
+        "n": 3,
+        "correct": 3
+      },
+      "_": {
+        "n": 3,
+        "correct": 3
+      },
+      "{": {
+        "n": 3,
+        "correct": 3
+      },
+      "}": {
+        "n": 3,
+        "correct": 3
+      }
+    },
+    "hyphens": {
+      "double hyphen": {
+        "n": 3,
+        "count_correct": 3,
+        "line_exact": 3
+      },
+      "line beginning": {
+        "n": 3,
+        "count_correct": 3,
+        "line_exact": 3
+      },
+      "line ending": {
+        "n": 3,
+        "count_correct": 3,
+        "line_exact": 3
+      },
+      "number-number": {
+        "n": 3,
+        "count_correct": 3,
+        "line_exact": 3
+      },
+      "word - word": {
+        "n": 3,
+        "count_correct": 3,
+        "line_exact": 2
+      },
+      "word-word": {
+        "n": 3,
+        "count_correct": 3,
+        "line_exact": 3
+      },
+      "year-year": {
+        "n": 3,
+        "count_correct": 3,
+        "line_exact": 1
+      }
+    }
+  },
+  "v25": {
+    "cases": 63,
+    "errors": 0,
+    "cer_pct": 43.18,
+    "full_line_exact_pct": 0.0,
+    "symbols": {
+      "!": {
+        "n": 3,
+        "correct": 0
+      },
+      "#": {
+        "n": 3,
+        "correct": 0
+      },
+      "&": {
+        "n": 3,
+        "correct": 0
+      },
+      "*": {
+        "n": 3,
+        "correct": 0
+      },
+      "/": {
+        "n": 3,
+        "correct": 0
+      },
+      "<": {
+        "n": 3,
+        "correct": 0
+      },
+      ">": {
+        "n": 3,
+        "correct": 0
+      },
+      "?": {
+        "n": 3,
+        "correct": 1
+      },
+      "[": {
+        "n": 3,
+        "correct": 0
+      },
+      "\\": {
+        "n": 3,
+        "correct": 0
+      },
+      "]": {
+        "n": 3,
+        "correct": 0
+      },
+      "_": {
+        "n": 3,
+        "correct": 0
+      },
+      "{": {
+        "n": 3,
+        "correct": 0
+      },
+      "}": {
+        "n": 3,
+        "correct": 0
+      }
+    },
+    "hyphens": {
+      "double hyphen": {
+        "n": 3,
+        "count_correct": 0,
+        "line_exact": 0
+      },
+      "line beginning": {
+        "n": 3,
+        "count_correct": 0,
+        "line_exact": 0
+      },
+      "line ending": {
+        "n": 3,
+        "count_correct": 0,
+        "line_exact": 0
+      },
+      "number-number": {
+        "n": 3,
+        "count_correct": 0,
+        "line_exact": 0
+      },
+      "word - word": {
+        "n": 3,
+        "count_correct": 0,
+        "line_exact": 0
+      },
+      "word-word": {
+        "n": 3,
+        "count_correct": 0,
+        "line_exact": 0
+      },
+      "year-year": {
+        "n": 3,
+        "count_correct": 0,
+        "line_exact": 0
+      }
+    }
+  },
+  "auto": {
+    "cases": 63,
+    "errors": 0,
+    "cer_pct": 0.6,
+    "full_line_exact_pct": 93.65,
+    "symbols": {
+      "!": {
+        "n": 3,
+        "correct": 3
+      },
+      "#": {
+        "n": 3,
+        "correct": 3
+      },
+      "&": {
+        "n": 3,
+        "correct": 3
+      },
+      "*": {
+        "n": 3,
+        "correct": 3
+      },
+      "/": {
+        "n": 3,
+        "correct": 3
+      },
+      "<": {
+        "n": 3,
+        "correct": 3
+      },
+      ">": {
+        "n": 3,
+        "correct": 3
+      },
+      "?": {
+        "n": 3,
+        "correct": 3
+      },
+      "[": {
+        "n": 3,
+        "correct": 3
+      },
+      "\\": {
+        "n": 3,
+        "correct": 3
+      },
+      "]": {
+        "n": 3,
+        "correct": 3
+      },
+      "_": {
+        "n": 3,
+        "correct": 3
+      },
+      "{": {
+        "n": 3,
+        "correct": 3
+      },
+      "}": {
+        "n": 3,
+        "correct": 3
+      }
+    },
+    "hyphens": {
+      "double hyphen": {
+        "n": 3,
+        "count_correct": 3,
+        "line_exact": 3
+      },
+      "line beginning": {
+        "n": 3,
+        "count_correct": 3,
+        "line_exact": 3
+      },
+      "line ending": {
+        "n": 3,
+        "count_correct": 3,
+        "line_exact": 3
+      },
+      "number-number": {
+        "n": 3,
+        "count_correct": 3,
+        "line_exact": 3
+      },
+      "word - word": {
+        "n": 3,
+        "count_correct": 3,
+        "line_exact": 2
+      },
+      "word-word": {
+        "n": 3,
+        "count_correct": 3,
+        "line_exact": 3
+      },
+      "year-year": {
+        "n": 3,
+        "count_correct": 3,
+        "line_exact": 1
+      }
+    }
+  },
+  "v24_1_r3_1": {
+    "cases": 63,
+    "errors": 0,
+    "cer_pct": 1.2,
+    "full_line_exact_pct": 87.3,
+    "symbols": {
+      "!": {
+        "n": 3,
+        "correct": 3
+      },
+      "#": {
+        "n": 3,
+        "correct": 3
+      },
+      "&": {
+        "n": 3,
+        "correct": 3
+      },
+      "*": {
+        "n": 3,
+        "correct": 3
+      },
+      "/": {
+        "n": 3,
+        "correct": 3
+      },
+      "<": {
+        "n": 3,
+        "correct": 3
+      },
+      ">": {
+        "n": 3,
+        "correct": 3
+      },
+      "?": {
+        "n": 3,
+        "correct": 3
+      },
+      "[": {
+        "n": 3,
+        "correct": 3
+      },
+      "\\": {
+        "n": 3,
+        "correct": 3
+      },
+      "]": {
+        "n": 3,
+        "correct": 3
+      },
+      "_": {
+        "n": 3,
+        "correct": 3
+      },
+      "{": {
+        "n": 3,
+        "correct": 3
+      },
+      "}": {
+        "n": 3,
+        "correct": 3
+      }
+    },
+    "hyphens": {
+      "double hyphen": {
+        "n": 3,
+        "count_correct": 2,
+        "line_exact": 2
+      },
+      "line beginning": {
+        "n": 3,
+        "count_correct": 2,
+        "line_exact": 2
+      },
+      "line ending": {
+        "n": 3,
+        "count_correct": 3,
+        "line_exact": 3
+      },
+      "number-number": {
+        "n": 3,
+        "count_correct": 3,
+        "line_exact": 3
+      },
+      "word - word": {
+        "n": 3,
+        "count_correct": 3,
+        "line_exact": 3
+      },
+      "word-word": {
+        "n": 3,
+        "count_correct": 3,
+        "line_exact": 2
+      },
+      "year-year": {
+        "n": 3,
+        "count_correct": 3,
+        "line_exact": 1
+      }
+    }
+  },
+  "v24_1_r2_1_6": {
+    "cases": 43,
+    "errors": 0,
+    "cer_pct": 1.41,
+    "full_line_exact_pct": 83.72,
+    "symbols": {
+      "!": {
+        "n": 3,
+        "correct": 3
+      },
+      "#": {
+        "n": 3,
+        "correct": 3
+      },
+      "&": {
+        "n": 3,
+        "correct": 3
+      },
+      "*": {
+        "n": 3,
+        "correct": 3
+      },
+      "/": {
+        "n": 3,
+        "correct": 3
+      },
+      "<": {
+        "n": 3,
+        "correct": 3
+      },
+      ">": {
+        "n": 3,
+        "correct": 3
+      },
+      "?": {
+        "n": 3,
+        "correct": 3
+      },
+      "[": {
+        "n": 3,
+        "correct": 3
+      },
+      "\\": {
+        "n": 3,
+        "correct": 3
+      },
+      "]": {
+        "n": 3,
+        "correct": 3
+      },
+      "_": {
+        "n": 3,
+        "correct": 3
+      },
+      "{": {
+        "n": 3,
+        "correct": 3
+      },
+      "}": {
+        "n": 3,
+        "correct": 3
+      }
+    },
+    "hyphens": {
+      "double hyphen": {
+        "n": 1,
+        "count_correct": 1,
+        "line_exact": 1
+      }
+    }
+  },
+  "v24": {
+    "cases": 42,
+    "errors": 0,
+    "cer_pct": 18.89,
+    "full_line_exact_pct": 0.0,
+    "symbols": {
+      "!": {
+        "n": 3,
+        "correct": 0
+      },
+      "#": {
+        "n": 3,
+        "correct": 0
+      },
+      "&": {
+        "n": 3,
+        "correct": 0
+      },
+      "*": {
+        "n": 3,
+        "correct": 0
+      },
+      "/": {
+        "n": 3,
+        "correct": 0
+      },
+      "<": {
+        "n": 3,
+        "correct": 0
+      },
+      ">": {
+        "n": 3,
+        "correct": 0
+      },
+      "?": {
+        "n": 3,
+        "correct": 0
+      },
+      "[": {
+        "n": 3,
+        "correct": 3
+      },
+      "\\": {
+        "n": 3,
+        "correct": 0
+      },
+      "]": {
+        "n": 3,
+        "correct": 0
+      },
+      "_": {
+        "n": 3,
+        "correct": 0
+      },
+      "{": {
+        "n": 3,
+        "correct": 0
+      },
+      "}": {
+        "n": 3,
+        "correct": 0
+      }
+    },
+    "hyphens": {}
+  },
+  "v23": {
+    "cases": 42,
+    "errors": 0,
+    "cer_pct": 26.9,
+    "full_line_exact_pct": 0.0,
+    "symbols": {
+      "!": {
+        "n": 3,
+        "correct": 0
+      },
+      "#": {
+        "n": 3,
+        "correct": 0
+      },
+      "&": {
+        "n": 3,
+        "correct": 0
+      },
+      "*": {
+        "n": 3,
+        "correct": 0
+      },
+      "/": {
+        "n": 3,
+        "correct": 0
+      },
+      "<": {
+        "n": 3,
+        "correct": 0
+      },
+      ">": {
+        "n": 3,
+        "correct": 0
+      },
+      "?": {
+        "n": 3,
+        "correct": 0
+      },
+      "[": {
+        "n": 3,
+        "correct": 0
+      },
+      "\\": {
+        "n": 3,
+        "correct": 0
+      },
+      "]": {
+        "n": 3,
+        "correct": 0
+      },
+      "_": {
+        "n": 3,
+        "correct": 0
+      },
+      "{": {
+        "n": 3,
+        "correct": 0
+      },
+      "}": {
+        "n": 3,
+        "correct": 0
+      }
+    },
+    "hyphens": {}
+  },
+  "vi": {
+    "cases": 42,
+    "errors": 0,
+    "cer_pct": 118.69,
+    "full_line_exact_pct": 0.0,
+    "symbols": {
+      "!": {
+        "n": 3,
+        "correct": 1
+      },
+      "#": {
+        "n": 3,
+        "correct": 0
+      },
+      "&": {
+        "n": 3,
+        "correct": 1
+      },
+      "*": {
+        "n": 3,
+        "correct": 0
+      },
+      "/": {
+        "n": 3,
+        "correct": 2
+      },
+      "<": {
+        "n": 3,
+        "correct": 0
+      },
+      ">": {
+        "n": 3,
+        "correct": 0
+      },
+      "?": {
+        "n": 3,
+        "correct": 3
+      },
+      "[": {
+        "n": 3,
+        "correct": 0
+      },
+      "\\": {
+        "n": 3,
+        "correct": 0
+      },
+      "]": {
+        "n": 3,
+        "correct": 0
+      },
+      "_": {
+        "n": 3,
+        "correct": 0
+      },
+      "{": {
+        "n": 3,
+        "correct": 0
+      },
+      "}": {
+        "n": 3,
+        "correct": 0
+      }
+    },
+    "hyphens": {}
+  }
+}

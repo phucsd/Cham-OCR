@@ -1,0 +1,3303 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_id": "live_geometry_multifont_2026_11_21",
+  "generated_utc": "2026-11-21T02:10:38.958138+00:00",
+  "source_dataset": "realscan_gold_v2",
+  "source_manifest_sha256": "976a57bb491f01c6a8371e3838a74dfa86ca7e818bf0abb3dca72d8e08196134",
+  "seed": 20261121,
+  "independence": "All source documents are declared document- and font-held-out by realscan_gold_v2; transformations are newly generated, not proof of complete independence.",
+  "ground_truth_policy": "Original verified GT retained; mixed lines concatenate original crop GT in visible left-to-right order.",
+  "limitations": "Synthetic curl approximates local paper curvature; assembled multi-font pages are composite, not photographs of a physical multilingual manuscript.",
+  "case_count": 36,
+  "groups": {
+    "control": 8,
+    "rotation": 12,
+    "corner_curl": 8,
+    "mixed_fonts": 8
+  },
+  "cases": [
+    {
+      "id": "rot_ood_agal_01_panduranga_-12",
+      "group": "rotation",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/rot_ood_agal_01_panduranga_-12.png",
+      "image_sha256": "29423e62c2c47abf3e3b9014f1bf597c2ee2409cd9a491a029ca63d50f66f56a",
+      "width": 694,
+      "height": 972,
+      "gt_lines": [
+        "꩑꩞ ꨗꨫ ꨟꨕꨩ ꨓꩀ ꨕꨫ ꨆꩊ ꨘꩆ",
+        "ꨘꩆ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨧꨯꨱꩃ",
+        "ꨛꨯꨮ ꨚꩆ ꨆꩀ ꨨꨤꨩ꩝ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꩞",
+        "ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨟꨐꨪꩌ ꨕꨶꨩ ꩞",
+        "ꨝꨰ ꨙꨮ ꨎꨤꨭꩀ ꨟꨐꨭꩌ ꨀꨳꨩ",
+        "ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨧꨯꨱꩃ",
+        "ꨛꨯꨮ ꨚꩆ ꨝꨩ ꨧꨩ ꩝꩝",
+        "ꨀꨇꩆ ꨗꨯꨱ ꨆꩀ ꨨꨤꨩ꩝ ꨝꨣꨭꨥ ꩝",
+        "ꨟꩃ ꨗꨯꨱ ꨓꨮꩊ ꨊꨯꨱꩀ ꨣꨈꨵꨰ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ",
+        "꩒꩞ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨚꨢꨯꨱꩌ ꨀꨇꩆ ꨘꩆ ꨤꩄ ꨀꨇꩆ ꩞",
+        "ꨤꩄ ꨀꨇꩆ ꨘꩆ ꨛꨯꨮ ꩝",
+        "ꨧꨤꨪꩍ ꨨꨤꨩ-ꨕꨨꨵꩀ ꨨꨕꨯꩌ꩝",
+        "ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨤꩄ ꨀꨣꩀ ꩞",
+        "ꨗꨫ ꨢꨭꩅ ꨚꨰꩀ ꨨꨤꨩ ꨝꨪ ꩒꩔/꩓/꩒꩐꩒꩑ ꩞"
+      ],
+      "gt_count": 14,
+      "source_doc_ids": [
+        "ood_agal_01_panduranga"
+      ],
+      "font_names": [
+        "EFEO Cam Panduranga.otf"
+      ],
+      "transform": {
+        "type": "rotation",
+        "degrees": -12,
+        "affine_matrix": [
+          [
+            0.9781476007338057,
+            -0.20791169081775934,
+            200.05655976771246
+          ],
+          [
+            0.20791169081775934,
+            0.9781476007338057,
+            25.38315774094825
+          ]
+        ],
+        "source_bbox_crop": true
+      },
+      "nominal_line_bboxes": null
+    },
+    {
+      "id": "rot_ood_agal_01_panduranga_-06",
+      "group": "rotation",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/rot_ood_agal_01_panduranga_-06.png",
+      "image_sha256": "cccc3f3e84a647b4c4a4468f349595862d5542d04dc6c07378f3a41ad3cff4ee",
+      "width": 615,
+      "height": 936,
+      "gt_lines": [
+        "꩑꩞ ꨗꨫ ꨟꨕꨩ ꨓꩀ ꨕꨫ ꨆꩊ ꨘꩆ",
+        "ꨘꩆ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨧꨯꨱꩃ",
+        "ꨛꨯꨮ ꨚꩆ ꨆꩀ ꨨꨤꨩ꩝ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꩞",
+        "ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨟꨐꨪꩌ ꨕꨶꨩ ꩞",
+        "ꨝꨰ ꨙꨮ ꨎꨤꨭꩀ ꨟꨐꨭꩌ ꨀꨳꨩ",
+        "ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨧꨯꨱꩃ",
+        "ꨛꨯꨮ ꨚꩆ ꨝꨩ ꨧꨩ ꩝꩝",
+        "ꨀꨇꩆ ꨗꨯꨱ ꨆꩀ ꨨꨤꨩ꩝ ꨝꨣꨭꨥ ꩝",
+        "ꨟꩃ ꨗꨯꨱ ꨓꨮꩊ ꨊꨯꨱꩀ ꨣꨈꨵꨰ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ",
+        "꩒꩞ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨚꨢꨯꨱꩌ ꨀꨇꩆ ꨘꩆ ꨤꩄ ꨀꨇꩆ ꩞",
+        "ꨤꩄ ꨀꨇꩆ ꨘꩆ ꨛꨯꨮ ꩝",
+        "ꨧꨤꨪꩍ ꨨꨤꨩ-ꨕꨨꨵꩀ ꨨꨕꨯꩌ꩝",
+        "ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨤꩄ ꨀꨣꩀ ꩞",
+        "ꨗꨫ ꨢꨭꩅ ꨚꨰꩀ ꨨꨤꨩ ꨝꨪ ꩒꩔/꩓/꩒꩐꩒꩑ ꩞"
+      ],
+      "gt_count": 14,
+      "source_doc_ids": [
+        "ood_agal_01_panduranga"
+      ],
+      "font_names": [
+        "EFEO Cam Panduranga.otf"
+      ],
+      "transform": {
+        "type": "rotation",
+        "degrees": -6,
+        "affine_matrix": [
+          [
+            0.9945218953682733,
+            -0.10452846326765347,
+            113.21396063171301
+          ],
+          [
+            0.10452846326765347,
+            0.9945218953682733,
+            25.26623699272221
+          ]
+        ],
+        "source_bbox_crop": true
+      },
+      "nominal_line_bboxes": null
+    },
+    {
+      "id": "rot_ood_agal_01_panduranga_+08",
+      "group": "rotation",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/rot_ood_agal_01_panduranga_+08.png",
+      "image_sha256": "69d2ff686a7468c7f35e38b0df1278ddfbb29c419db8c4c6c1650813c304db28",
+      "width": 642,
+      "height": 949,
+      "gt_lines": [
+        "꩑꩞ ꨗꨫ ꨟꨕꨩ ꨓꩀ ꨕꨫ ꨆꩊ ꨘꩆ",
+        "ꨘꩆ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨧꨯꨱꩃ",
+        "ꨛꨯꨮ ꨚꩆ ꨆꩀ ꨨꨤꨩ꩝ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꩞",
+        "ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨟꨐꨪꩌ ꨕꨶꨩ ꩞",
+        "ꨝꨰ ꨙꨮ ꨎꨤꨭꩀ ꨟꨐꨭꩌ ꨀꨳꨩ",
+        "ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨧꨯꨱꩃ",
+        "ꨛꨯꨮ ꨚꩆ ꨝꨩ ꨧꨩ ꩝꩝",
+        "ꨀꨇꩆ ꨗꨯꨱ ꨆꩀ ꨨꨤꨩ꩝ ꨝꨣꨭꨥ ꩝",
+        "ꨟꩃ ꨗꨯꨱ ꨓꨮꩊ ꨊꨯꨱꩀ ꨣꨈꨵꨰ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ",
+        "꩒꩞ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨚꨢꨯꨱꩌ ꨀꨇꩆ ꨘꩆ ꨤꩄ ꨀꨇꩆ ꩞",
+        "ꨤꩄ ꨀꨇꩆ ꨘꩆ ꨛꨯꨮ ꩝",
+        "ꨧꨤꨪꩍ ꨨꨤꨩ-ꨕꨨꨵꩀ ꨨꨕꨯꩌ꩝",
+        "ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨤꩄ ꨀꨣꩀ ꩞",
+        "ꨗꨫ ꨢꨭꩅ ꨚꨰꩀ ꨨꨤꨩ ꨝꨪ ꩒꩔/꩓/꩒꩐꩒꩑ ꩞"
+      ],
+      "gt_count": 14,
+      "source_doc_ids": [
+        "ood_agal_01_panduranga"
+      ],
+      "font_names": [
+        "EFEO Cam Panduranga.otf"
+      ],
+      "transform": {
+        "type": "rotation",
+        "degrees": 8,
+        "affine_matrix": [
+          [
+            0.9902680687415704,
+            0.13917310096006544,
+            25.37809513316641
+          ],
+          [
+            -0.13917310096006544,
+            0.9902680687415704,
+            91.91936880847612
+          ]
+        ],
+        "source_bbox_crop": true
+      },
+      "nominal_line_bboxes": null
+    },
+    {
+      "id": "rot_ood_agal_04_thrah_-09",
+      "group": "rotation",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/rot_ood_agal_04_thrah_-09.png",
+      "image_sha256": "24f989305c318fad60923815679b548715679d41305af73f11cc0a84d3dafd48",
+      "width": 654,
+      "height": 955,
+      "gt_lines": [
+        "ꨕꨫ ꨧꨤꨪꩍ ꨅꨩ꩝ ꨢꨭꩅ ꨚꨰꩀ ꨨꨤꨩ ꩝꩝",
+        "ꨨꨤꨩ ꨝꨩ-ꨟꨰ ꨝꨭꩍ ꨝꨪ ꨝꩀ ꩝꩝",
+        "꩖꩞ ꨝꩀ ꨕꨶꨩ ꨝꨯꨱꩍ ꨝꨰ ꨆꨮꨭ ꨘꩆ ꩝꩝",
+        "ꨘꩆ ꨆꨮꨭ ꨝꨴꨬ ꨀꨇꩆ ꨗꨫ ꨆꨩ ꨝꨵꨯꨱꩍ ꩞",
+        "ꨆꨩ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꨤꩄ꩝ ꨤꩄ ꨝꨰ ꩞",
+        "ꨤꩄ ꨝꨰ ꨛꨯꨮ ꨙꨮ ꨀꨧꨪꩅ ꩞",
+        "ꨢꨮꨭ ꨕꨨꨵꩀ ꨝꨭꩍ ꨕꨶꨩ ꨕꨘꩀ ꨨꨤꨩ ꩝",
+        "ꨨꨤꨩ ꨕꨨꨵꩀ ꨝꩀ ꨎꨮ ꨛꨯꨮ꩝ ꨛꨯꨮ ꨚꨶꨮꩄ ꩝",
+        "ꨛꨯꨮ ꨚꨶꨮꩄ ꨚꨆꨴꨲꨩ ꨟꨪꩆ ꨙꨩ ꨛꨯꨮ꩝ ꩝",
+        "ꨛꨯꨮ꩝ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨤꩄ ꨅꨩ ꩒꩐/꩑/꩒꩐꩑꩔ ꩞",
+        "ꨤꩄ ꨅꨩ ꨆꨮꨭ ꨚꨶꨮꩄ ꩞",
+        "꩗꩞ ꨟꨪꩆ꩝ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꩝",
+        "ꨚꨗꨶꨮꩄ ꨘꩆ-ꨕꨨꨵꩀ ꨕꨫ ꨔꨮꨭ ꨅꨩ ꩝",
+        "ꨅꨩ ꨕꨯꨱꩀ ꨕꨫ ꨓꨳꩆ ꨛꨯꨮ ꩝꩝",
+        "ꨢꨮ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨣꨈꨵꨰ ꨘꩆ ꨀꨶꨮꩆ ꨓꨝꨶꨮꩆ ꩝"
+      ],
+      "gt_count": 15,
+      "source_doc_ids": [
+        "ood_agal_04_thrah"
+      ],
+      "font_names": [
+        "EFEO Cam Thrah.otf"
+      ],
+      "transform": {
+        "type": "rotation",
+        "degrees": -9,
+        "affine_matrix": [
+          [
+            0.9876883405951378,
+            -0.15643446504023087,
+            156.64496191465904
+          ],
+          [
+            0.15643446504023087,
+            0.9876883405951378,
+            25.28305980542696
+          ]
+        ],
+        "source_bbox_crop": true
+      },
+      "nominal_line_bboxes": null
+    },
+    {
+      "id": "rot_ood_agal_04_thrah_+05",
+      "group": "rotation",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/rot_ood_agal_04_thrah_+05.png",
+      "image_sha256": "95ca287a2a815a76d7fcfb4388875ee794e56d3776b47b535c719768ac83f96a",
+      "width": 600,
+      "height": 929,
+      "gt_lines": [
+        "ꨕꨫ ꨧꨤꨪꩍ ꨅꨩ꩝ ꨢꨭꩅ ꨚꨰꩀ ꨨꨤꨩ ꩝꩝",
+        "ꨨꨤꨩ ꨝꨩ-ꨟꨰ ꨝꨭꩍ ꨝꨪ ꨝꩀ ꩝꩝",
+        "꩖꩞ ꨝꩀ ꨕꨶꨩ ꨝꨯꨱꩍ ꨝꨰ ꨆꨮꨭ ꨘꩆ ꩝꩝",
+        "ꨘꩆ ꨆꨮꨭ ꨝꨴꨬ ꨀꨇꩆ ꨗꨫ ꨆꨩ ꨝꨵꨯꨱꩍ ꩞",
+        "ꨆꨩ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꨤꩄ꩝ ꨤꩄ ꨝꨰ ꩞",
+        "ꨤꩄ ꨝꨰ ꨛꨯꨮ ꨙꨮ ꨀꨧꨪꩅ ꩞",
+        "ꨢꨮꨭ ꨕꨨꨵꩀ ꨝꨭꩍ ꨕꨶꨩ ꨕꨘꩀ ꨨꨤꨩ ꩝",
+        "ꨨꨤꨩ ꨕꨨꨵꩀ ꨝꩀ ꨎꨮ ꨛꨯꨮ꩝ ꨛꨯꨮ ꨚꨶꨮꩄ ꩝",
+        "ꨛꨯꨮ ꨚꨶꨮꩄ ꨚꨆꨴꨲꨩ ꨟꨪꩆ ꨙꨩ ꨛꨯꨮ꩝ ꩝",
+        "ꨛꨯꨮ꩝ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨤꩄ ꨅꨩ ꩒꩐/꩑/꩒꩐꩑꩔ ꩞",
+        "ꨤꩄ ꨅꨩ ꨆꨮꨭ ꨚꨶꨮꩄ ꩞",
+        "꩗꩞ ꨟꨪꩆ꩝ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꩝",
+        "ꨚꨗꨶꨮꩄ ꨘꩆ-ꨕꨨꨵꩀ ꨕꨫ ꨔꨮꨭ ꨅꨩ ꩝",
+        "ꨅꨩ ꨕꨯꨱꩀ ꨕꨫ ꨓꨳꩆ ꨛꨯꨮ ꩝꩝",
+        "ꨢꨮ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨣꨈꨵꨰ ꨘꩆ ꨀꨶꨮꩆ ꨓꨝꨶꨮꩆ ꩝"
+      ],
+      "gt_count": 15,
+      "source_doc_ids": [
+        "ood_agal_04_thrah"
+      ],
+      "font_names": [
+        "EFEO Cam Thrah.otf"
+      ],
+      "transform": {
+        "type": "rotation",
+        "degrees": 5,
+        "affine_matrix": [
+          [
+            0.9961946980917455,
+            0.08715574274765817,
+            25.304055202056382
+          ],
+          [
+            -0.08715574274765817,
+            0.9961946980917455,
+            66.92844931815718
+          ]
+        ],
+        "source_bbox_crop": true
+      },
+      "nominal_line_bboxes": null
+    },
+    {
+      "id": "rot_ood_agal_04_thrah_+14",
+      "group": "rotation",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/rot_ood_agal_04_thrah_+14.png",
+      "image_sha256": "023b63b58828f3b885d326bf87badb77796b71a5963c5859a8ba7be649c62fc1",
+      "width": 718,
+      "height": 981,
+      "gt_lines": [
+        "ꨕꨫ ꨧꨤꨪꩍ ꨅꨩ꩝ ꨢꨭꩅ ꨚꨰꩀ ꨨꨤꨩ ꩝꩝",
+        "ꨨꨤꨩ ꨝꨩ-ꨟꨰ ꨝꨭꩍ ꨝꨪ ꨝꩀ ꩝꩝",
+        "꩖꩞ ꨝꩀ ꨕꨶꨩ ꨝꨯꨱꩍ ꨝꨰ ꨆꨮꨭ ꨘꩆ ꩝꩝",
+        "ꨘꩆ ꨆꨮꨭ ꨝꨴꨬ ꨀꨇꩆ ꨗꨫ ꨆꨩ ꨝꨵꨯꨱꩍ ꩞",
+        "ꨆꨩ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꨤꩄ꩝ ꨤꩄ ꨝꨰ ꩞",
+        "ꨤꩄ ꨝꨰ ꨛꨯꨮ ꨙꨮ ꨀꨧꨪꩅ ꩞",
+        "ꨢꨮꨭ ꨕꨨꨵꩀ ꨝꨭꩍ ꨕꨶꨩ ꨕꨘꩀ ꨨꨤꨩ ꩝",
+        "ꨨꨤꨩ ꨕꨨꨵꩀ ꨝꩀ ꨎꨮ ꨛꨯꨮ꩝ ꨛꨯꨮ ꨚꨶꨮꩄ ꩝",
+        "ꨛꨯꨮ ꨚꨶꨮꩄ ꨚꨆꨴꨲꨩ ꨟꨪꩆ ꨙꨩ ꨛꨯꨮ꩝ ꩝",
+        "ꨛꨯꨮ꩝ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨤꩄ ꨅꨩ ꩒꩐/꩑/꩒꩐꩑꩔ ꩞",
+        "ꨤꩄ ꨅꨩ ꨆꨮꨭ ꨚꨶꨮꩄ ꩞",
+        "꩗꩞ ꨟꨪꩆ꩝ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꩝",
+        "ꨚꨗꨶꨮꩄ ꨘꩆ-ꨕꨨꨵꩀ ꨕꨫ ꨔꨮꨭ ꨅꨩ ꩝",
+        "ꨅꨩ ꨕꨯꨱꩀ ꨕꨫ ꨓꨳꩆ ꨛꨯꨮ ꩝꩝",
+        "ꨢꨮ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨣꨈꨵꨰ ꨘꩆ ꨀꨶꨮꩆ ꨓꨝꨶꨮꩆ ꩝"
+      ],
+      "gt_count": 15,
+      "source_doc_ids": [
+        "ood_agal_04_thrah"
+      ],
+      "font_names": [
+        "EFEO Cam Thrah.otf"
+      ],
+      "transform": {
+        "type": "rotation",
+        "degrees": 14,
+        "affine_matrix": [
+          [
+            0.9702957262759965,
+            0.24192189559966773,
+            25.492125268176395
+          ],
+          [
+            -0.24192189559966773,
+            0.9702957262759965,
+            140.79512801240207
+          ]
+        ],
+        "source_bbox_crop": true
+      },
+      "nominal_line_bboxes": null
+    },
+    {
+      "id": "rot_ood_book_11_light_-14",
+      "group": "rotation",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/rot_ood_book_11_light_-14.png",
+      "image_sha256": "3b19e3ee8ce9dca17d1471c0eb1cc397d66685b3c61f4062ee7b898d448ca948",
+      "width": 820,
+      "height": 1124,
+      "gt_lines": [
+        "ꨀꨋꩇ ꨍꨮꩍ ꨍꨰ꩝ ꨙꩌ ꨀꨕꩅ",
+        "ꨋꩇ ꨡꨯꩍ ꨕꨤꩌ ꨚꩌ ꩝",
+        "꩑꩘꩞ ꨨꨕꨳꨯꨮꩇ ꨁꨤꨪꨟꨯꨩ꩝ ꨀꨕꩅ ꨧꨯꨱꩃ ꨁꨦꨗꩃ ꩝",
+        "ꨚꨈꨭꩊ ꨚꨓꨯꨱꩌ-ꨝꨶꨮꩊ ꨞꩇ ꩝",
+        "ꨌꩌ꩞ ꩑꩞ ꨀꨉꨩ ꨧꨯꨱꩃ ꨧꩀꨆꨣꩈ",
+        "ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨀꨉꨩ ꨟꩃ ꩑꩒/꩑/꩑꩙꩙꩘",
+        "ꨝꨴꩍꨟꨪꩆ ꨂꨣꩃ ꨌꩌ꩝ ꨎꨳꨮꩃ ꨓꨝꨳꩀ ꩞",
+        "ꨟꩃ ꨣꨪꨓꨭꩍ ꨔꨭꩆ ꨕꨨꨵꨮꨭ꩝ ꨚꨈꨮꩌ ꨓꨟꨩ ꨧꨯꨱꩃ",
+        "ꨓꨟꨩ ꨧꨯꨱꩃ ꨕꨘꩇ ꨝꨗꨳꨩ ꩝",
+        "ꨢꩃ ꨧꨯꨱꩃ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩞ ꨣꨪꩌ ꩝꩝",
+        "ꨣꨪꩌ ꨔꨭꩆ꩝ ꨓꨟꨩ ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꩝",
+        "꩑꩙꩞ ꨓꨎꨭꩍ ꨓꨶꨬ ꨧꨆꨥꨪ ꨌꩌ (ꨒꨮꩇ ꨝꨪꨤꩆ ꩑꩐ ꩝꩝",
+        "ꨝꨪꨤꩆ ꩑꩐ ꨧꨆꨥꨪ ꨀꨳꨩ",
+        "ꨝꨶꨮꩊ ꨞꩇ ꨌꩌ ꨕꨫ ꨗꨪꩂ ꨔꨶꨮꩆ",
+        "ꨔꨶꨮꩆ ꨥꨮꩀ-ꨧꨟꩃ ꨍꨮꩍ ꨣꨕꩀ ꨙꩌ ꩝꩝"
+      ],
+      "gt_count": 15,
+      "source_doc_ids": [
+        "ood_book_11_light"
+      ],
+      "font_names": [
+        "NotoSansCham-Light.ttf"
+      ],
+      "transform": {
+        "type": "rotation",
+        "degrees": -14,
+        "affine_matrix": [
+          [
+            0.9702957262759965,
+            -0.24192189559966773,
+            259.894685829002
+          ],
+          [
+            0.24192189559966773,
+            0.9702957262759965,
+            25.242238381571255
+          ]
+        ],
+        "source_bbox_crop": true
+      },
+      "nominal_line_bboxes": null
+    },
+    {
+      "id": "rot_ood_book_11_light_-05",
+      "group": "rotation",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/rot_ood_book_11_light_-05.png",
+      "image_sha256": "917d1c45f6df0ba12047cd076a2eb23f5c7f0691842042472696fdfec8d1e56c",
+      "width": 684,
+      "height": 1064,
+      "gt_lines": [
+        "ꨀꨋꩇ ꨍꨮꩍ ꨍꨰ꩝ ꨙꩌ ꨀꨕꩅ",
+        "ꨋꩇ ꨡꨯꩍ ꨕꨤꩌ ꨚꩌ ꩝",
+        "꩑꩘꩞ ꨨꨕꨳꨯꨮꩇ ꨁꨤꨪꨟꨯꨩ꩝ ꨀꨕꩅ ꨧꨯꨱꩃ ꨁꨦꨗꩃ ꩝",
+        "ꨚꨈꨭꩊ ꨚꨓꨯꨱꩌ-ꨝꨶꨮꩊ ꨞꩇ ꩝",
+        "ꨌꩌ꩞ ꩑꩞ ꨀꨉꨩ ꨧꨯꨱꩃ ꨧꩀꨆꨣꩈ",
+        "ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨀꨉꨩ ꨟꩃ ꩑꩒/꩑/꩑꩙꩙꩘",
+        "ꨝꨴꩍꨟꨪꩆ ꨂꨣꩃ ꨌꩌ꩝ ꨎꨳꨮꩃ ꨓꨝꨳꩀ ꩞",
+        "ꨟꩃ ꨣꨪꨓꨭꩍ ꨔꨭꩆ ꨕꨨꨵꨮꨭ꩝ ꨚꨈꨮꩌ ꨓꨟꨩ ꨧꨯꨱꩃ",
+        "ꨓꨟꨩ ꨧꨯꨱꩃ ꨕꨘꩇ ꨝꨗꨳꨩ ꩝",
+        "ꨢꩃ ꨧꨯꨱꩃ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩞ ꨣꨪꩌ ꩝꩝",
+        "ꨣꨪꩌ ꨔꨭꩆ꩝ ꨓꨟꨩ ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꩝",
+        "꩑꩙꩞ ꨓꨎꨭꩍ ꨓꨶꨬ ꨧꨆꨥꨪ ꨌꩌ (ꨒꨮꩇ ꨝꨪꨤꩆ ꩑꩐ ꩝꩝",
+        "ꨝꨪꨤꩆ ꩑꩐ ꨧꨆꨥꨪ ꨀꨳꨩ",
+        "ꨝꨶꨮꩊ ꨞꩇ ꨌꩌ ꨕꨫ ꨗꨪꩂ ꨔꨶꨮꩆ",
+        "ꨔꨶꨮꩆ ꨥꨮꩀ-ꨧꨟꩃ ꨍꨮꩍ ꨣꨕꩀ ꨙꩌ ꩝꩝"
+      ],
+      "gt_count": 15,
+      "source_doc_ids": [
+        "ood_book_11_light"
+      ],
+      "font_names": [
+        "NotoSansCham-Light.ttf"
+      ],
+      "transform": {
+        "type": "rotation",
+        "degrees": -5,
+        "affine_matrix": [
+          [
+            0.9961946980917455,
+            -0.08715574274765817,
+            109.77531803696448
+          ],
+          [
+            0.08715574274765817,
+            0.9961946980917455,
+            25.332261647569457
+          ]
+        ],
+        "source_bbox_crop": true
+      },
+      "nominal_line_bboxes": null
+    },
+    {
+      "id": "rot_ood_book_11_light_+10",
+      "group": "rotation",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/rot_ood_book_11_light_+10.png",
+      "image_sha256": "757564c82af6c335d291f62449806c2f17632dd8d4f0a390936877621a06172e",
+      "width": 761,
+      "height": 1100,
+      "gt_lines": [
+        "ꨀꨋꩇ ꨍꨮꩍ ꨍꨰ꩝ ꨙꩌ ꨀꨕꩅ",
+        "ꨋꩇ ꨡꨯꩍ ꨕꨤꩌ ꨚꩌ ꩝",
+        "꩑꩘꩞ ꨨꨕꨳꨯꨮꩇ ꨁꨤꨪꨟꨯꨩ꩝ ꨀꨕꩅ ꨧꨯꨱꩃ ꨁꨦꨗꩃ ꩝",
+        "ꨚꨈꨭꩊ ꨚꨓꨯꨱꩌ-ꨝꨶꨮꩊ ꨞꩇ ꩝",
+        "ꨌꩌ꩞ ꩑꩞ ꨀꨉꨩ ꨧꨯꨱꩃ ꨧꩀꨆꨣꩈ",
+        "ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨀꨉꨩ ꨟꩃ ꩑꩒/꩑/꩑꩙꩙꩘",
+        "ꨝꨴꩍꨟꨪꩆ ꨂꨣꩃ ꨌꩌ꩝ ꨎꨳꨮꩃ ꨓꨝꨳꩀ ꩞",
+        "ꨟꩃ ꨣꨪꨓꨭꩍ ꨔꨭꩆ ꨕꨨꨵꨮꨭ꩝ ꨚꨈꨮꩌ ꨓꨟꨩ ꨧꨯꨱꩃ",
+        "ꨓꨟꨩ ꨧꨯꨱꩃ ꨕꨘꩇ ꨝꨗꨳꨩ ꩝",
+        "ꨢꩃ ꨧꨯꨱꩃ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩞ ꨣꨪꩌ ꩝꩝",
+        "ꨣꨪꩌ ꨔꨭꩆ꩝ ꨓꨟꨩ ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꩝",
+        "꩑꩙꩞ ꨓꨎꨭꩍ ꨓꨶꨬ ꨧꨆꨥꨪ ꨌꩌ (ꨒꨮꩇ ꨝꨪꨤꩆ ꩑꩐ ꩝꩝",
+        "ꨝꨪꨤꩆ ꩑꩐ ꨧꨆꨥꨪ ꨀꨳꨩ",
+        "ꨝꨶꨮꩊ ꨞꩇ ꨌꩌ ꨕꨫ ꨗꨪꩂ ꨔꨶꨮꩆ",
+        "ꨔꨶꨮꩆ ꨥꨮꩀ-ꨧꨟꩃ ꨍꨮꩍ ꨣꨕꩀ ꨙꩌ ꩝꩝"
+      ],
+      "gt_count": 15,
+      "source_doc_ids": [
+        "ood_book_11_light"
+      ],
+      "font_names": [
+        "NotoSansCham-Light.ttf"
+      ],
+      "transform": {
+        "type": "rotation",
+        "degrees": 10,
+        "affine_matrix": [
+          [
+            0.984807753012208,
+            0.17364817766693033,
+            25.052921965508943
+          ],
+          [
+            -0.17364817766693033,
+            0.984807753012208,
+            120.70071661282452
+          ]
+        ],
+        "source_bbox_crop": true
+      },
+      "nominal_line_bboxes": null
+    },
+    {
+      "id": "rot_ood_book_12_extrabold_-07",
+      "group": "rotation",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/rot_ood_book_12_extrabold_-07.png",
+      "image_sha256": "7e66431d6d83c3df9d4d8b01c55252aefc6e02590e703a22d31e8150b3d50e65",
+      "width": 934,
+      "height": 1126,
+      "gt_lines": [
+        "ꨙꩌ ꨀꨕꩅ ꨗꨫ꩞ ꨕꨤꩌ ꨨꨣꨬ ꩞",
+        "ꨆꨓꨯꨮꨩ꩝ ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꩝꩝",
+        "ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ",
+        "ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝ ꨌꨯꨱꩃ ꨤꨪꨆꨮꨭ ꨨꨎꩆ ꨀꨊꨪꩆ ꩒꩒/꩘/꩒꩐꩒꩑",
+        "ꨨꨎꩆ ꨀꨊꨪꩆ ꨈꨮꩇ ꨧꨳꩌ ꨧꨯꨱꩃ ꨨꨭꨩ ꩝꩝",
+        "꩒꩐꩞ ꨨꨭꨩ ꨨꨤꨪꩌ꩞ ꨙꩌ ꨀꨕꩅ ꨕꨯꨱꩀ ꩞",
+        "ꨨꨭꨩ ꨃꨥ ꨘꩆ ꨓꨯꨮꩅ ꨆꨓꨯꨮꨩ ꨨꨰ ꨡꨮꩃ ꩝",
+        "ꨨꨰ ꨡꨮꩃ ꨆꨓꨯꨮꨩ꩝ ꨧꨯꨱꩃ ꨨꨭꨩ ꨈꨵꨮꩃ ꩝꩝",
+        "ꨈꨵꨮꩃ ꨢꨮꨭ ꨨꨣꨬ ꨚꨓꨯꨱꩌ꩝ ꨟꨁꩆ꩝ ꩝",
+        "ꨧꨯꨱꩃ ꨋꩇ ꨡꨯꩍ ꨟꨗꨭꩍ ꨝꩉ",
+        "ꨁꨤꨪꨟꨯꨩ ꨚꨣꩆ-ꨂꨣꩃ ꨌꩌ꩞ ꩒꩞ ꨓꨭꩀ ꨥꩀ",
+        "ꨓꨭꩀ ꨥꩀ ꨧꨯꨱꩃ ꨤꨪꨝꨪꩀ",
+        "ꨗꨆꨓꨯꨮꨩ ꨚꨣꨤꨯꨩ ꨣꨪꩌ ꨔꨭꩆ ꨓꨟꨩ ꩝꩝",
+        "ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨥꨪ ꨌꩌ (ꨗꨶꨮꩄ",
+        "꩒꩑꩞ ꨝꨪꨤꩆ ꩑꩐ ꨧꨆꨥꨪ ꨀꨳꨩ ꨨꨣꨬ)꩞ ꨗꨫ ꨘꩆ ꩝꩝"
+      ],
+      "gt_count": 15,
+      "source_doc_ids": [
+        "ood_book_12_extrabold"
+      ],
+      "font_names": [
+        "NotoSansCham-ExtraBold.ttf"
+      ],
+      "transform": {
+        "type": "rotation",
+        "degrees": -7,
+        "affine_matrix": [
+          [
+            0.992546151641322,
+            -0.12186934340514748,
+            145.63039500775713
+          ],
+          [
+            0.12186934340514748,
+            0.992546151641322,
+            25.327165474087074
+          ]
+        ],
+        "source_bbox_crop": true
+      },
+      "nominal_line_bboxes": null
+    },
+    {
+      "id": "rot_ood_book_12_extrabold_+07",
+      "group": "rotation",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/rot_ood_book_12_extrabold_+07.png",
+      "image_sha256": "195059b169387f3ffc87a63cf8f80f97839cb6e5583203667ff7379b6b0cc84f",
+      "width": 934,
+      "height": 1126,
+      "gt_lines": [
+        "ꨙꩌ ꨀꨕꩅ ꨗꨫ꩞ ꨕꨤꩌ ꨨꨣꨬ ꩞",
+        "ꨆꨓꨯꨮꨩ꩝ ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꩝꩝",
+        "ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ",
+        "ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝ ꨌꨯꨱꩃ ꨤꨪꨆꨮꨭ ꨨꨎꩆ ꨀꨊꨪꩆ ꩒꩒/꩘/꩒꩐꩒꩑",
+        "ꨨꨎꩆ ꨀꨊꨪꩆ ꨈꨮꩇ ꨧꨳꩌ ꨧꨯꨱꩃ ꨨꨭꨩ ꩝꩝",
+        "꩒꩐꩞ ꨨꨭꨩ ꨨꨤꨪꩌ꩞ ꨙꩌ ꨀꨕꩅ ꨕꨯꨱꩀ ꩞",
+        "ꨨꨭꨩ ꨃꨥ ꨘꩆ ꨓꨯꨮꩅ ꨆꨓꨯꨮꨩ ꨨꨰ ꨡꨮꩃ ꩝",
+        "ꨨꨰ ꨡꨮꩃ ꨆꨓꨯꨮꨩ꩝ ꨧꨯꨱꩃ ꨨꨭꨩ ꨈꨵꨮꩃ ꩝꩝",
+        "ꨈꨵꨮꩃ ꨢꨮꨭ ꨨꨣꨬ ꨚꨓꨯꨱꩌ꩝ ꨟꨁꩆ꩝ ꩝",
+        "ꨧꨯꨱꩃ ꨋꩇ ꨡꨯꩍ ꨟꨗꨭꩍ ꨝꩉ",
+        "ꨁꨤꨪꨟꨯꨩ ꨚꨣꩆ-ꨂꨣꩃ ꨌꩌ꩞ ꩒꩞ ꨓꨭꩀ ꨥꩀ",
+        "ꨓꨭꩀ ꨥꩀ ꨧꨯꨱꩃ ꨤꨪꨝꨪꩀ",
+        "ꨗꨆꨓꨯꨮꨩ ꨚꨣꨤꨯꨩ ꨣꨪꩌ ꨔꨭꩆ ꨓꨟꨩ ꩝꩝",
+        "ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨥꨪ ꨌꩌ (ꨗꨶꨮꩄ",
+        "꩒꩑꩞ ꨝꨪꨤꩆ ꩑꩐ ꨧꨆꨥꨪ ꨀꨳꨩ ꨨꨣꨬ)꩞ ꨗꨫ ꨘꩆ ꩝꩝"
+      ],
+      "gt_count": 15,
+      "source_doc_ids": [
+        "ood_book_12_extrabold"
+      ],
+      "font_names": [
+        "NotoSansCham-ExtraBold.ttf"
+      ],
+      "transform": {
+        "type": "rotation",
+        "degrees": 7,
+        "affine_matrix": [
+          [
+            0.992546151641322,
+            0.12186934340514748,
+            25.101614380066273
+          ],
+          [
+            -0.12186934340514748,
+            0.992546151641322,
+            119.04469055264548
+          ]
+        ],
+        "source_bbox_crop": true
+      },
+      "nominal_line_bboxes": null
+    },
+    {
+      "id": "rot_ood_book_12_extrabold_+15",
+      "group": "rotation",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/rot_ood_book_12_extrabold_+15.png",
+      "image_sha256": "287e234e9a3dc6889c0944624a28393826aed9079f9591abb05f4effc41fc497",
+      "width": 1049,
+      "height": 1205,
+      "gt_lines": [
+        "ꨙꩌ ꨀꨕꩅ ꨗꨫ꩞ ꨕꨤꩌ ꨨꨣꨬ ꩞",
+        "ꨆꨓꨯꨮꨩ꩝ ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꩝꩝",
+        "ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ",
+        "ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝ ꨌꨯꨱꩃ ꨤꨪꨆꨮꨭ ꨨꨎꩆ ꨀꨊꨪꩆ ꩒꩒/꩘/꩒꩐꩒꩑",
+        "ꨨꨎꩆ ꨀꨊꨪꩆ ꨈꨮꩇ ꨧꨳꩌ ꨧꨯꨱꩃ ꨨꨭꨩ ꩝꩝",
+        "꩒꩐꩞ ꨨꨭꨩ ꨨꨤꨪꩌ꩞ ꨙꩌ ꨀꨕꩅ ꨕꨯꨱꩀ ꩞",
+        "ꨨꨭꨩ ꨃꨥ ꨘꩆ ꨓꨯꨮꩅ ꨆꨓꨯꨮꨩ ꨨꨰ ꨡꨮꩃ ꩝",
+        "ꨨꨰ ꨡꨮꩃ ꨆꨓꨯꨮꨩ꩝ ꨧꨯꨱꩃ ꨨꨭꨩ ꨈꨵꨮꩃ ꩝꩝",
+        "ꨈꨵꨮꩃ ꨢꨮꨭ ꨨꨣꨬ ꨚꨓꨯꨱꩌ꩝ ꨟꨁꩆ꩝ ꩝",
+        "ꨧꨯꨱꩃ ꨋꩇ ꨡꨯꩍ ꨟꨗꨭꩍ ꨝꩉ",
+        "ꨁꨤꨪꨟꨯꨩ ꨚꨣꩆ-ꨂꨣꩃ ꨌꩌ꩞ ꩒꩞ ꨓꨭꩀ ꨥꩀ",
+        "ꨓꨭꩀ ꨥꩀ ꨧꨯꨱꩃ ꨤꨪꨝꨪꩀ",
+        "ꨗꨆꨓꨯꨮꨩ ꨚꨣꨤꨯꨩ ꨣꨪꩌ ꨔꨭꩆ ꨓꨟꨩ ꩝꩝",
+        "ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨥꨪ ꨌꩌ (ꨗꨶꨮꩄ",
+        "꩒꩑꩞ ꨝꨪꨤꩆ ꩑꩐ ꨧꨆꨥꨪ ꨀꨳꨩ ꨨꨣꨬ)꩞ ꨗꨫ ꨘꩆ ꩝꩝"
+      ],
+      "gt_count": 15,
+      "source_doc_ids": [
+        "ood_book_12_extrabold"
+      ],
+      "font_names": [
+        "NotoSansCham-ExtraBold.ttf"
+      ],
+      "transform": {
+        "type": "rotation",
+        "degrees": 15,
+        "affine_matrix": [
+          [
+            0.9659258262890683,
+            0.25881904510252074,
+            25.11550198865673
+          ],
+          [
+            -0.25881904510252074,
+            0.9659258262890683,
+            224.36560174197496
+          ]
+        ],
+        "source_bbox_crop": true
+      },
+      "nominal_line_bboxes": null
+    },
+    {
+      "id": "curl_ood_agal_02_panrang_tl_10",
+      "group": "corner_curl",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/curl_ood_agal_02_panrang_tl_10.png",
+      "image_sha256": "31a2f476e1c411eaff083d146aabbbb25a531e044574d740ac2eee4139f93c1c",
+      "width": 409,
+      "height": 783,
+      "gt_lines": [
+        "ꨝꩀ ꨕꨶꨩ ꨝꨯꨱꩍ ꨝꨰ ꨆꨮꨭ ꨘꩆ ꩞",
+        "ꨘꩆ ꨝꨵꨯꨱꩍ ꨆꨮꨭ ꨝꨴꨬ ꨀꨇꩆ ꨗꨫ ꩝꩝",
+        "ꨗꨫ ꨆꨩ ꨨꨲꨩ꩝ ꨝꨣꨭꨥ",
+        "ꨣꨈꨵꨰ ꨘꩆ ꨡꨯꩍ ꨝꨰ ꨘꩆ ꨀꨦꨪꩅ ꨝꨵꨯꨱꩍ ꩝꩝",
+        "꩓꩞ ꨀꨦꨪꩅ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꨟꩀ ꩞",
+        "ꨀꨇꩆ ꨘꩆ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꨗꨯꨱ ꨚꨰꩀ ꩝",
+        "ꨗꨯꨱ ꨚꨰꩀ ꨨꨤꨩ ꨝꨩ ꨟꨰ ꩝",
+        "ꨝꨭꩍ ꨕꨫ ꨕꨤꩌ ꨝꨰ ꨘꩆ ꩞",
+        "ꨝꨵꨯꨱꩍ ꨕꨫ-ꨝꩀ ꨝꨰ ꨘꩆ ꨅꨩ꩝ ꩝꩝",
+        "ꨅꨩ꩝ ꨣꨈꨵꨰ ꨘꩆ ꨝꨩ",
+        "ꨝꨩ ꨀꨗꩀ ꨝꨩ ꨓꨌꨯꨱꨥ ꨗꨯꨱ ꩝",
+        "ꨚꨰꩀ ꨨꨤꨩ ꨙꩃ ꨆꨳꨮꩃ ꨀꨝꨪꩍ ꨧꨩ ꩞",
+        "ꨧꨩ ꨤꨝꨭꩀ ꨨꨤꨩ ꨝꨵꨯꨱꩍ ꨝꨩ ꨟꨰ ꩒꩕/꩑꩐/꩒꩐꩒꩑ ꩝",
+        "꩔꩞ ꨟꨰ ꨝꨭꩍ ꨕꨫ ꨝꩀ ꨝꨰ ꩝"
+      ],
+      "gt_count": 14,
+      "source_doc_ids": [
+        "ood_agal_02_panrang"
+      ],
+      "font_names": [
+        "EFEO Cam Panrang.otf"
+      ],
+      "transform": {
+        "type": "corner_curl",
+        "source_bbox_crop": true,
+        "corner": "tl",
+        "strength_ratio": 0.1,
+        "max_displacement_px": 40.9,
+        "warp": "localized_gaussian_displacement_v1"
+      },
+      "nominal_line_bboxes": null
+    },
+    {
+      "id": "curl_ood_agal_02_panrang_br_18",
+      "group": "corner_curl",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/curl_ood_agal_02_panrang_br_18.png",
+      "image_sha256": "c89c33fa1dd2db02c889c098164a06c132f4d98479d9081e1810a17ebf7bd8a5",
+      "width": 409,
+      "height": 783,
+      "gt_lines": [
+        "ꨝꩀ ꨕꨶꨩ ꨝꨯꨱꩍ ꨝꨰ ꨆꨮꨭ ꨘꩆ ꩞",
+        "ꨘꩆ ꨝꨵꨯꨱꩍ ꨆꨮꨭ ꨝꨴꨬ ꨀꨇꩆ ꨗꨫ ꩝꩝",
+        "ꨗꨫ ꨆꨩ ꨨꨲꨩ꩝ ꨝꨣꨭꨥ",
+        "ꨣꨈꨵꨰ ꨘꩆ ꨡꨯꩍ ꨝꨰ ꨘꩆ ꨀꨦꨪꩅ ꨝꨵꨯꨱꩍ ꩝꩝",
+        "꩓꩞ ꨀꨦꨪꩅ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꨟꩀ ꩞",
+        "ꨀꨇꩆ ꨘꩆ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꨗꨯꨱ ꨚꨰꩀ ꩝",
+        "ꨗꨯꨱ ꨚꨰꩀ ꨨꨤꨩ ꨝꨩ ꨟꨰ ꩝",
+        "ꨝꨭꩍ ꨕꨫ ꨕꨤꩌ ꨝꨰ ꨘꩆ ꩞",
+        "ꨝꨵꨯꨱꩍ ꨕꨫ-ꨝꩀ ꨝꨰ ꨘꩆ ꨅꨩ꩝ ꩝꩝",
+        "ꨅꨩ꩝ ꨣꨈꨵꨰ ꨘꩆ ꨝꨩ",
+        "ꨝꨩ ꨀꨗꩀ ꨝꨩ ꨓꨌꨯꨱꨥ ꨗꨯꨱ ꩝",
+        "ꨚꨰꩀ ꨨꨤꨩ ꨙꩃ ꨆꨳꨮꩃ ꨀꨝꨪꩍ ꨧꨩ ꩞",
+        "ꨧꨩ ꨤꨝꨭꩀ ꨨꨤꨩ ꨝꨵꨯꨱꩍ ꨝꨩ ꨟꨰ ꩒꩕/꩑꩐/꩒꩐꩒꩑ ꩝",
+        "꩔꩞ ꨟꨰ ꨝꨭꩍ ꨕꨫ ꨝꩀ ꨝꨰ ꩝"
+      ],
+      "gt_count": 14,
+      "source_doc_ids": [
+        "ood_agal_02_panrang"
+      ],
+      "font_names": [
+        "EFEO Cam Panrang.otf"
+      ],
+      "transform": {
+        "type": "corner_curl",
+        "source_bbox_crop": true,
+        "corner": "br",
+        "strength_ratio": 0.18,
+        "max_displacement_px": 73.62,
+        "warp": "localized_gaussian_displacement_v1"
+      },
+      "nominal_line_bboxes": null
+    },
+    {
+      "id": "curl_ood_agal_03_parik_tr_12",
+      "group": "corner_curl",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/curl_ood_agal_03_parik_tr_12.png",
+      "image_sha256": "d1e284b2b1e3d425da9c05d750da882687528cd466ed1f60e59a07a393f8610e",
+      "width": 392,
+      "height": 812,
+      "gt_lines": [
+        "ꨘꩆ ꨅꨩ꩝ ꨝꨣꨭꨥ ꨟꩃ ꩝",
+        "ꨘꩆ ꨝꨩ ꨀꨇꩆ ꨟꨰ ꨎꨥ ꨆꨩ ꨛꨯꨮ",
+        "ꨆꨩ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꨰ ꨥꨮꩀ ꨢꨮ ꨐꨭꨩ ꩝꩝",
+        "ꨢꨮ ꨐꨭꨩ ꨚꨰꩀ ꨨꨤꨩ ꨕꨫ ꨝꩀ ꨝꨰ",
+        "ꨝꩀ ꨝꨰ ꨘꩆ ꨓꨴꨩ ꨅꨩ ꨘꩆ",
+        "ꨘꩆ ꨣꨈꨵꨰ-ꨚꨤꨬ ꨂꩀ꩝ ꨝꨣꨭꨥ ꨟꩃ ꩝",
+        "ꨟꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꩝꩝",
+        "ꨛꨯꨮ ꨚꩆ ꨀꨗꨯꨱꩃ ꨨꨤꨩ ꨘꩆ ꨟꩃ ꩝꩝",
+        "꩕꩞ ꨟꩃ ꨣꨈꨵꨰ ꨚꨤꨬ ꨂꩀ ꨘꩆ ꩝",
+        "ꨟꨰ ꨟꩀ ꨣꨈꨵꨰ ꨧꨝꨭꩃ꩝ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꩝꩝",
+        "ꨣꨈꨵꨰ ꨧꨝꨭꩃ ꨝꨩ ꨈꨮꩇ ꨟꨰ ꨚꨢꨯꨱꩌ ꩝",
+        "ꨚꨢꨯꨱꩌ ꨀꨇꩆ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩒꩐/꩑꩒/꩑꩙꩙꩘",
+        "ꨤꩄ ꨀꨇꩆ ꨛꨯꨮ ꨧꨤꨪꩍ ꨨꨤꨩ ꨕꨨꨵꩀ ꩞",
+        "ꨕꨨꨵꩀ ꨨꨕꨯꩌ꩝ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩝꩝",
+        "ꨈꨣꩈ ꨤꩄ ꨀꨣꩀ ꨗꨫ ꨆꨮꨭ ꨕꨫ ꩞"
+      ],
+      "gt_count": 15,
+      "source_doc_ids": [
+        "ood_agal_03_parik"
+      ],
+      "font_names": [
+        "EFEO Cam Parik.otf"
+      ],
+      "transform": {
+        "type": "corner_curl",
+        "source_bbox_crop": true,
+        "corner": "tr",
+        "strength_ratio": 0.12,
+        "max_displacement_px": 47.04,
+        "warp": "localized_gaussian_displacement_v1"
+      },
+      "nominal_line_bboxes": null
+    },
+    {
+      "id": "curl_ood_agal_03_parik_bl_17",
+      "group": "corner_curl",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/curl_ood_agal_03_parik_bl_17.png",
+      "image_sha256": "3517f07607b36be6c09b87b52cb03b95d97bf31a408d5e087153caf7886d1992",
+      "width": 392,
+      "height": 812,
+      "gt_lines": [
+        "ꨘꩆ ꨅꨩ꩝ ꨝꨣꨭꨥ ꨟꩃ ꩝",
+        "ꨘꩆ ꨝꨩ ꨀꨇꩆ ꨟꨰ ꨎꨥ ꨆꨩ ꨛꨯꨮ",
+        "ꨆꨩ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꨰ ꨥꨮꩀ ꨢꨮ ꨐꨭꨩ ꩝꩝",
+        "ꨢꨮ ꨐꨭꨩ ꨚꨰꩀ ꨨꨤꨩ ꨕꨫ ꨝꩀ ꨝꨰ",
+        "ꨝꩀ ꨝꨰ ꨘꩆ ꨓꨴꨩ ꨅꨩ ꨘꩆ",
+        "ꨘꩆ ꨣꨈꨵꨰ-ꨚꨤꨬ ꨂꩀ꩝ ꨝꨣꨭꨥ ꨟꩃ ꩝",
+        "ꨟꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꩝꩝",
+        "ꨛꨯꨮ ꨚꩆ ꨀꨗꨯꨱꩃ ꨨꨤꨩ ꨘꩆ ꨟꩃ ꩝꩝",
+        "꩕꩞ ꨟꩃ ꨣꨈꨵꨰ ꨚꨤꨬ ꨂꩀ ꨘꩆ ꩝",
+        "ꨟꨰ ꨟꩀ ꨣꨈꨵꨰ ꨧꨝꨭꩃ꩝ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꩝꩝",
+        "ꨣꨈꨵꨰ ꨧꨝꨭꩃ ꨝꨩ ꨈꨮꩇ ꨟꨰ ꨚꨢꨯꨱꩌ ꩝",
+        "ꨚꨢꨯꨱꩌ ꨀꨇꩆ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩒꩐/꩑꩒/꩑꩙꩙꩘",
+        "ꨤꩄ ꨀꨇꩆ ꨛꨯꨮ ꨧꨤꨪꩍ ꨨꨤꨩ ꨕꨨꨵꩀ ꩞",
+        "ꨕꨨꨵꩀ ꨨꨕꨯꩌ꩝ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩝꩝",
+        "ꨈꨣꩈ ꨤꩄ ꨀꨣꩀ ꨗꨫ ꨆꨮꨭ ꨕꨫ ꩞"
+      ],
+      "gt_count": 15,
+      "source_doc_ids": [
+        "ood_agal_03_parik"
+      ],
+      "font_names": [
+        "EFEO Cam Parik.otf"
+      ],
+      "transform": {
+        "type": "corner_curl",
+        "source_bbox_crop": true,
+        "corner": "bl",
+        "strength_ratio": 0.17,
+        "max_displacement_px": 66.64,
+        "warp": "localized_gaussian_displacement_v1"
+      },
+      "nominal_line_bboxes": null
+    },
+    {
+      "id": "curl_ood_folio_07_campa_tl_18",
+      "group": "corner_curl",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/curl_ood_folio_07_campa_tl_18.png",
+      "image_sha256": "11cd92b9b33168469a9ca9db7c3afd5c2a4257cb5f6955af5944e2bc39ed8337",
+      "width": 401,
+      "height": 866,
+      "gt_lines": [
+        "ꨈꨣꩈ ꨕꨯꨱꩀ ꨇꨪꩀ ꨨꨤꨩ꩝ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꩞",
+        "꩑꩑꩞ ꨛꨯꨮ ꨚꩆ ꨗꨯꨱ ꨟꩀ ꨤꨪꨔꨬ ꩝",
+        "ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨚꩆ ꨝꨩ ꨤꨪꨔꨬ ꩑꩘/꩒/꩒꩐꩒꩑",
+        "ꨟꨰ ꨚꩀ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨝꨵꨯꨱꩍ",
+        "ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨚꩆ ꨡꨯꩍ ꨛꨯꨮ ꩝",
+        "ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨙꨪꩍ ꨥꩉ",
+        "ꨡꨯꩍ ꨕꨶꨩ ꨕꨴꨬ ꨁꨗꨩ",
+        "ꨕꨯꨱꩀ ꨤꨳꩍ ꨣꨭꩇ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩝",
+        "ꨈꨣꩈ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨕꨶꨩ ꨕꨴꨬ ꨁꨗꨩ",
+        "ꨁꨗꨩ ꨈꨭꨣꩈ ꨘꩆ ꨡꨯꩍ ꨛꨯꨮ ꨚꩆ ꩝꩝",
+        "꩑꩒꩞ ꨚꩆ ꨝꨵꨯꨱꩍ ꨁꨗꨩ ꨈꨭꨣꩈ ꨘꩆ ꨤꨶꩀ ꩞",
+        "ꨤꨶꩀ ꨓꨟꨩ ꨓꨗꩍ ꨣꨪꨢꨩ ꩞",
+        "ꨖꨪꩅ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨛꨯꨮ ꩝꩝",
+        "ꨔꨮꨭ ꨆꨩ ꨛꨯꨮ ꨆꨤꨯꨱꩃ ꨈꨣꩈ",
+        "ꨝꨳꩀ ꨀꨧꩉ ꨚꨓꨯꨱ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨛꨯꨮ ꩝"
+      ],
+      "gt_count": 15,
+      "source_doc_ids": [
+        "ood_folio_07_campa"
+      ],
+      "font_names": [
+        "EFEO Cam Campa.otf"
+      ],
+      "transform": {
+        "type": "corner_curl",
+        "source_bbox_crop": true,
+        "corner": "tl",
+        "strength_ratio": 0.18,
+        "max_displacement_px": 72.18,
+        "warp": "localized_gaussian_displacement_v1"
+      },
+      "nominal_line_bboxes": null
+    },
+    {
+      "id": "curl_ood_folio_07_campa_br_10",
+      "group": "corner_curl",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/curl_ood_folio_07_campa_br_10.png",
+      "image_sha256": "b794779fbd19610be7a06dbcf44723f03f5799da0ae2c3a0a18dfad0bb9d932f",
+      "width": 401,
+      "height": 866,
+      "gt_lines": [
+        "ꨈꨣꩈ ꨕꨯꨱꩀ ꨇꨪꩀ ꨨꨤꨩ꩝ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꩞",
+        "꩑꩑꩞ ꨛꨯꨮ ꨚꩆ ꨗꨯꨱ ꨟꩀ ꨤꨪꨔꨬ ꩝",
+        "ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨚꩆ ꨝꨩ ꨤꨪꨔꨬ ꩑꩘/꩒/꩒꩐꩒꩑",
+        "ꨟꨰ ꨚꩀ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨝꨵꨯꨱꩍ",
+        "ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨚꩆ ꨡꨯꩍ ꨛꨯꨮ ꩝",
+        "ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨙꨪꩍ ꨥꩉ",
+        "ꨡꨯꩍ ꨕꨶꨩ ꨕꨴꨬ ꨁꨗꨩ",
+        "ꨕꨯꨱꩀ ꨤꨳꩍ ꨣꨭꩇ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩝",
+        "ꨈꨣꩈ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨕꨶꨩ ꨕꨴꨬ ꨁꨗꨩ",
+        "ꨁꨗꨩ ꨈꨭꨣꩈ ꨘꩆ ꨡꨯꩍ ꨛꨯꨮ ꨚꩆ ꩝꩝",
+        "꩑꩒꩞ ꨚꩆ ꨝꨵꨯꨱꩍ ꨁꨗꨩ ꨈꨭꨣꩈ ꨘꩆ ꨤꨶꩀ ꩞",
+        "ꨤꨶꩀ ꨓꨟꨩ ꨓꨗꩍ ꨣꨪꨢꨩ ꩞",
+        "ꨖꨪꩅ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨛꨯꨮ ꩝꩝",
+        "ꨔꨮꨭ ꨆꨩ ꨛꨯꨮ ꨆꨤꨯꨱꩃ ꨈꨣꩈ",
+        "ꨝꨳꩀ ꨀꨧꩉ ꨚꨓꨯꨱ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨛꨯꨮ ꩝"
+      ],
+      "gt_count": 15,
+      "source_doc_ids": [
+        "ood_folio_07_campa"
+      ],
+      "font_names": [
+        "EFEO Cam Campa.otf"
+      ],
+      "transform": {
+        "type": "corner_curl",
+        "source_bbox_crop": true,
+        "corner": "br",
+        "strength_ratio": 0.1,
+        "max_displacement_px": 40.1,
+        "warp": "localized_gaussian_displacement_v1"
+      },
+      "nominal_line_bboxes": null
+    },
+    {
+      "id": "curl_ood_book_10_semibold_tr_18",
+      "group": "corner_curl",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/curl_ood_book_10_semibold_tr_18.png",
+      "image_sha256": "2fd21cf9da56621ee021cb232bf2ae772b524b643270f5c88de9bc49dee2c99b",
+      "width": 504,
+      "height": 986,
+      "gt_lines": [
+        "ꨟꨐꨭꩌ ꨀꨳꨩ ꨧꨩ ꨝꨯꨱꩍ ꨆꨕꨯꨱꩍ ꨧꨯꨱꩃ ꩝",
+        "ꨧꨯꨱꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨅꨩ꩝ ꨝꨣꨭꨥ ꩞",
+        "ꨝꨣꨭꨥ ꨟꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨟꨐꨭꩌ ꨀꨳꨩ ꩝",
+        "ꨟꨐꨭꩌ ꨀꨳꨩ ꨕꨫ ꨆꨕꨯꨱꩍ ꨘꩆ ꨕꨨꨵꨮꨭ ꩝꩝",
+        "ꨕꨨꨵꨮꨭ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨌꨙꨳꩀ ꩝꩝",
+        "ꨌꨙꨳꩀ ꨓꨆꨶꨯꩈ ꨆꨕꨯꨱꩍ ꨘꩆ ꨨꨭꨩ ꨗꩌ ꩝꩝",
+        "ꨗꩌ ꨓꨮꩊ ꨀꨣꩀ ꨗꨫ ꩝",
+        "ꨆꨩ ꨛꨯꨮ ꨚꩆ ꨟꨐꨭꩌ ꩙/꩖/꩒꩐꩐꩕ ꩞",
+        "꩑꩗꩞ ꨀꨥꨰꩅ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨟꨐꨭꩌ ꨧꨩ",
+        "ꨧꨩ ꨀꨥꨰꩅ꩞ ꨗꨆꨓꨯꨮꨩ ꨘꩆ ꨧꨩ ꨕꨤꩌ ꩝",
+        "ꨕꨤꩌ ꨨꨕꨯꩌ ꨙꩌ ꨀꨕꩅ ꨚꨴꨯꨱꩃ ꨧꨯꨱꩃ ꩝",
+        "ꨧꨯꨱꩃ ꨆꨣꨬ ꨌꨪꩍ ꨀꨝꨪꩍ ꨝꨶꨮꩊ",
+        "ꨞꩇ ꨌꩌ ꨓꨭꨝꩅ ꨝꨴꩍꨟꨪꩆ꩞ ꩝",
+        "ꨣꨕꩀ ꨣꨪꩌ ꨔꨭꩆ ꨧꨯꨱꩃ ꨣꨤꨯꨩ ꩝꩝",
+        "ꨀꨕꩅ ꨚꨴꨯꨱꩃ ꨝꨪꨗꨴꨪꩀ ꨧꨯꨱꩃ ꨕꨯꩌ ꨀꨋꩇ ꩝꩝"
+      ],
+      "gt_count": 15,
+      "source_doc_ids": [
+        "ood_book_10_semibold"
+      ],
+      "font_names": [
+        "NotoSansCham-SemiBold.ttf"
+      ],
+      "transform": {
+        "type": "corner_curl",
+        "source_bbox_crop": true,
+        "corner": "tr",
+        "strength_ratio": 0.18,
+        "max_displacement_px": 90.72,
+        "warp": "localized_gaussian_displacement_v1"
+      },
+      "nominal_line_bboxes": null
+    },
+    {
+      "id": "curl_ood_book_10_semibold_bl_11",
+      "group": "corner_curl",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/curl_ood_book_10_semibold_bl_11.png",
+      "image_sha256": "6742f6fe755b704a750cd66b5d955e59a524d2b539cd6da264458663c2855ee0",
+      "width": 504,
+      "height": 986,
+      "gt_lines": [
+        "ꨟꨐꨭꩌ ꨀꨳꨩ ꨧꨩ ꨝꨯꨱꩍ ꨆꨕꨯꨱꩍ ꨧꨯꨱꩃ ꩝",
+        "ꨧꨯꨱꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨅꨩ꩝ ꨝꨣꨭꨥ ꩞",
+        "ꨝꨣꨭꨥ ꨟꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨟꨐꨭꩌ ꨀꨳꨩ ꩝",
+        "ꨟꨐꨭꩌ ꨀꨳꨩ ꨕꨫ ꨆꨕꨯꨱꩍ ꨘꩆ ꨕꨨꨵꨮꨭ ꩝꩝",
+        "ꨕꨨꨵꨮꨭ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨌꨙꨳꩀ ꩝꩝",
+        "ꨌꨙꨳꩀ ꨓꨆꨶꨯꩈ ꨆꨕꨯꨱꩍ ꨘꩆ ꨨꨭꨩ ꨗꩌ ꩝꩝",
+        "ꨗꩌ ꨓꨮꩊ ꨀꨣꩀ ꨗꨫ ꩝",
+        "ꨆꨩ ꨛꨯꨮ ꨚꩆ ꨟꨐꨭꩌ ꩙/꩖/꩒꩐꩐꩕ ꩞",
+        "꩑꩗꩞ ꨀꨥꨰꩅ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨟꨐꨭꩌ ꨧꨩ",
+        "ꨧꨩ ꨀꨥꨰꩅ꩞ ꨗꨆꨓꨯꨮꨩ ꨘꩆ ꨧꨩ ꨕꨤꩌ ꩝",
+        "ꨕꨤꩌ ꨨꨕꨯꩌ ꨙꩌ ꨀꨕꩅ ꨚꨴꨯꨱꩃ ꨧꨯꨱꩃ ꩝",
+        "ꨧꨯꨱꩃ ꨆꨣꨬ ꨌꨪꩍ ꨀꨝꨪꩍ ꨝꨶꨮꩊ",
+        "ꨞꩇ ꨌꩌ ꨓꨭꨝꩅ ꨝꨴꩍꨟꨪꩆ꩞ ꩝",
+        "ꨣꨕꩀ ꨣꨪꩌ ꨔꨭꩆ ꨧꨯꨱꩃ ꨣꨤꨯꨩ ꩝꩝",
+        "ꨀꨕꩅ ꨚꨴꨯꨱꩃ ꨝꨪꨗꨴꨪꩀ ꨧꨯꨱꩃ ꨕꨯꩌ ꨀꨋꩇ ꩝꩝"
+      ],
+      "gt_count": 15,
+      "source_doc_ids": [
+        "ood_book_10_semibold"
+      ],
+      "font_names": [
+        "NotoSansCham-SemiBold.ttf"
+      ],
+      "transform": {
+        "type": "corner_curl",
+        "source_bbox_crop": true,
+        "corner": "bl",
+        "strength_ratio": 0.11,
+        "max_displacement_px": 55.44,
+        "warp": "localized_gaussian_displacement_v1"
+      },
+      "nominal_line_bboxes": null
+    },
+    {
+      "id": "base_ood_agal_01_panduranga",
+      "group": "control",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/base_ood_agal_01_panduranga.png",
+      "image_sha256": "85ad512143da56fa0d855db67efbf7bdf8a214634bad6df16ccc4d4e168f5b95",
+      "width": 479,
+      "height": 840,
+      "gt_lines": [
+        "꩑꩞ ꨗꨫ ꨟꨕꨩ ꨓꩀ ꨕꨫ ꨆꩊ ꨘꩆ",
+        "ꨘꩆ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨧꨯꨱꩃ",
+        "ꨛꨯꨮ ꨚꩆ ꨆꩀ ꨨꨤꨩ꩝ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꩞",
+        "ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨟꨐꨪꩌ ꨕꨶꨩ ꩞",
+        "ꨝꨰ ꨙꨮ ꨎꨤꨭꩀ ꨟꨐꨭꩌ ꨀꨳꨩ",
+        "ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨧꨯꨱꩃ",
+        "ꨛꨯꨮ ꨚꩆ ꨝꨩ ꨧꨩ ꩝꩝",
+        "ꨀꨇꩆ ꨗꨯꨱ ꨆꩀ ꨨꨤꨩ꩝ ꨝꨣꨭꨥ ꩝",
+        "ꨟꩃ ꨗꨯꨱ ꨓꨮꩊ ꨊꨯꨱꩀ ꨣꨈꨵꨰ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ",
+        "꩒꩞ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨚꨢꨯꨱꩌ ꨀꨇꩆ ꨘꩆ ꨤꩄ ꨀꨇꩆ ꩞",
+        "ꨤꩄ ꨀꨇꩆ ꨘꩆ ꨛꨯꨮ ꩝",
+        "ꨧꨤꨪꩍ ꨨꨤꨩ-ꨕꨨꨵꩀ ꨨꨕꨯꩌ꩝",
+        "ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨤꩄ ꨀꨣꩀ ꩞",
+        "ꨗꨫ ꨢꨭꩅ ꨚꨰꩀ ꨨꨤꨩ ꨝꨪ ꩒꩔/꩓/꩒꩐꩒꩑ ꩞"
+      ],
+      "gt_count": 14,
+      "source_doc_ids": [
+        "ood_agal_01_panduranga"
+      ],
+      "font_names": [
+        "EFEO Cam Panduranga.otf"
+      ],
+      "transform": {
+        "type": "untransformed_control",
+        "source_bbox_crop": true
+      },
+      "nominal_line_bboxes": [
+        [
+          36,
+          24,
+          291,
+          68
+        ],
+        [
+          30,
+          81,
+          245,
+          125
+        ],
+        [
+          32,
+          139,
+          349,
+          183
+        ],
+        [
+          39,
+          201,
+          230,
+          245
+        ],
+        [
+          27,
+          263,
+          243,
+          305
+        ],
+        [
+          37,
+          316,
+          251,
+          360
+        ],
+        [
+          33,
+          372,
+          191,
+          413
+        ],
+        [
+          41,
+          429,
+          309,
+          472
+        ],
+        [
+          26,
+          484,
+          321,
+          528
+        ],
+        [
+          37,
+          545,
+          455,
+          589
+        ],
+        [
+          24,
+          601,
+          231,
+          640
+        ],
+        [
+          29,
+          655,
+          248,
+          699
+        ],
+        [
+          35,
+          712,
+          283,
+          756
+        ],
+        [
+          36,
+          772,
+          378,
+          816
+        ]
+      ]
+    },
+    {
+      "id": "base_ood_agal_02_panrang",
+      "group": "control",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/base_ood_agal_02_panrang.png",
+      "image_sha256": "8e429cbd7b775cdb3900372cd7c2b89963c420f62b7f17f63f9fab69d8b453ec",
+      "width": 409,
+      "height": 783,
+      "gt_lines": [
+        "ꨝꩀ ꨕꨶꨩ ꨝꨯꨱꩍ ꨝꨰ ꨆꨮꨭ ꨘꩆ ꩞",
+        "ꨘꩆ ꨝꨵꨯꨱꩍ ꨆꨮꨭ ꨝꨴꨬ ꨀꨇꩆ ꨗꨫ ꩝꩝",
+        "ꨗꨫ ꨆꨩ ꨨꨲꨩ꩝ ꨝꨣꨭꨥ",
+        "ꨣꨈꨵꨰ ꨘꩆ ꨡꨯꩍ ꨝꨰ ꨘꩆ ꨀꨦꨪꩅ ꨝꨵꨯꨱꩍ ꩝꩝",
+        "꩓꩞ ꨀꨦꨪꩅ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꨟꩀ ꩞",
+        "ꨀꨇꩆ ꨘꩆ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꨗꨯꨱ ꨚꨰꩀ ꩝",
+        "ꨗꨯꨱ ꨚꨰꩀ ꨨꨤꨩ ꨝꨩ ꨟꨰ ꩝",
+        "ꨝꨭꩍ ꨕꨫ ꨕꨤꩌ ꨝꨰ ꨘꩆ ꩞",
+        "ꨝꨵꨯꨱꩍ ꨕꨫ-ꨝꩀ ꨝꨰ ꨘꩆ ꨅꨩ꩝ ꩝꩝",
+        "ꨅꨩ꩝ ꨣꨈꨵꨰ ꨘꩆ ꨝꨩ",
+        "ꨝꨩ ꨀꨗꩀ ꨝꨩ ꨓꨌꨯꨱꨥ ꨗꨯꨱ ꩝",
+        "ꨚꨰꩀ ꨨꨤꨩ ꨙꩃ ꨆꨳꨮꩃ ꨀꨝꨪꩍ ꨧꨩ ꩞",
+        "ꨧꨩ ꨤꨝꨭꩀ ꨨꨤꨩ ꨝꨵꨯꨱꩍ ꨝꨩ ꨟꨰ ꩒꩕/꩑꩐/꩒꩐꩒꩑ ꩝",
+        "꩔꩞ ꨟꨰ ꨝꨭꩍ ꨕꨫ ꨝꩀ ꨝꨰ ꩝"
+      ],
+      "gt_count": 14,
+      "source_doc_ids": [
+        "ood_agal_02_panrang"
+      ],
+      "font_names": [
+        "EFEO Cam Panrang.otf"
+      ],
+      "transform": {
+        "type": "untransformed_control",
+        "source_bbox_crop": true
+      },
+      "nominal_line_bboxes": [
+        [
+          36,
+          24,
+          275,
+          65
+        ],
+        [
+          37,
+          80,
+          295,
+          121
+        ],
+        [
+          25,
+          137,
+          166,
+          175
+        ],
+        [
+          34,
+          188,
+          374,
+          229
+        ],
+        [
+          34,
+          237,
+          320,
+          278
+        ],
+        [
+          41,
+          293,
+          385,
+          334
+        ],
+        [
+          40,
+          344,
+          238,
+          382
+        ],
+        [
+          36,
+          398,
+          243,
+          439
+        ],
+        [
+          40,
+          455,
+          283,
+          496
+        ],
+        [
+          32,
+          504,
+          178,
+          545
+        ],
+        [
+          28,
+          553,
+          261,
+          593
+        ],
+        [
+          24,
+          606,
+          266,
+          647
+        ],
+        [
+          27,
+          658,
+          377,
+          700
+        ],
+        [
+          24,
+          718,
+          242,
+          759
+        ]
+      ]
+    },
+    {
+      "id": "base_ood_agal_03_parik",
+      "group": "control",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/base_ood_agal_03_parik.png",
+      "image_sha256": "9e34ae68c5127be6fef2de43041b3242ae774391473fbf5b78d1f2e1d51d5d87",
+      "width": 392,
+      "height": 812,
+      "gt_lines": [
+        "ꨘꩆ ꨅꨩ꩝ ꨝꨣꨭꨥ ꨟꩃ ꩝",
+        "ꨘꩆ ꨝꨩ ꨀꨇꩆ ꨟꨰ ꨎꨥ ꨆꨩ ꨛꨯꨮ",
+        "ꨆꨩ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꨰ ꨥꨮꩀ ꨢꨮ ꨐꨭꨩ ꩝꩝",
+        "ꨢꨮ ꨐꨭꨩ ꨚꨰꩀ ꨨꨤꨩ ꨕꨫ ꨝꩀ ꨝꨰ",
+        "ꨝꩀ ꨝꨰ ꨘꩆ ꨓꨴꨩ ꨅꨩ ꨘꩆ",
+        "ꨘꩆ ꨣꨈꨵꨰ-ꨚꨤꨬ ꨂꩀ꩝ ꨝꨣꨭꨥ ꨟꩃ ꩝",
+        "ꨟꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꩝꩝",
+        "ꨛꨯꨮ ꨚꩆ ꨀꨗꨯꨱꩃ ꨨꨤꨩ ꨘꩆ ꨟꩃ ꩝꩝",
+        "꩕꩞ ꨟꩃ ꨣꨈꨵꨰ ꨚꨤꨬ ꨂꩀ ꨘꩆ ꩝",
+        "ꨟꨰ ꨟꩀ ꨣꨈꨵꨰ ꨧꨝꨭꩃ꩝ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꩝꩝",
+        "ꨣꨈꨵꨰ ꨧꨝꨭꩃ ꨝꨩ ꨈꨮꩇ ꨟꨰ ꨚꨢꨯꨱꩌ ꩝",
+        "ꨚꨢꨯꨱꩌ ꨀꨇꩆ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩒꩐/꩑꩒/꩑꩙꩙꩘",
+        "ꨤꩄ ꨀꨇꩆ ꨛꨯꨮ ꨧꨤꨪꩍ ꨨꨤꨩ ꨕꨨꨵꩀ ꩞",
+        "ꨕꨨꨵꩀ ꨨꨕꨯꩌ꩝ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩝꩝",
+        "ꨈꨣꩈ ꨤꩄ ꨀꨣꩀ ꨗꨫ ꨆꨮꨭ ꨕꨫ ꩞"
+      ],
+      "gt_count": 15,
+      "source_doc_ids": [
+        "ood_agal_03_parik"
+      ],
+      "font_names": [
+        "EFEO Cam Parik.otf"
+      ],
+      "transform": {
+        "type": "untransformed_control",
+        "source_bbox_crop": true
+      },
+      "nominal_line_bboxes": [
+        [
+          30,
+          24,
+          201,
+          64
+        ],
+        [
+          24,
+          73,
+          307,
+          113
+        ],
+        [
+          37,
+          128,
+          294,
+          168
+        ],
+        [
+          36,
+          178,
+          300,
+          215
+        ],
+        [
+          35,
+          229,
+          254,
+          269
+        ],
+        [
+          28,
+          283,
+          305,
+          323
+        ],
+        [
+          35,
+          336,
+          208,
+          376
+        ],
+        [
+          34,
+          389,
+          305,
+          429
+        ],
+        [
+          26,
+          446,
+          259,
+          486
+        ],
+        [
+          36,
+          497,
+          317,
+          537
+        ],
+        [
+          40,
+          552,
+          315,
+          592
+        ],
+        [
+          38,
+          600,
+          368,
+          640
+        ],
+        [
+          37,
+          648,
+          358,
+          688
+        ],
+        [
+          37,
+          704,
+          286,
+          744
+        ],
+        [
+          25,
+          752,
+          275,
+          788
+        ]
+      ]
+    },
+    {
+      "id": "base_ood_agal_04_thrah",
+      "group": "control",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/base_ood_agal_04_thrah.png",
+      "image_sha256": "33b42f204d80434ca15f1de3d39c1cf36cffc1413df8d3b30509467c09ec5a2a",
+      "width": 478,
+      "height": 840,
+      "gt_lines": [
+        "ꨕꨫ ꨧꨤꨪꩍ ꨅꨩ꩝ ꨢꨭꩅ ꨚꨰꩀ ꨨꨤꨩ ꩝꩝",
+        "ꨨꨤꨩ ꨝꨩ-ꨟꨰ ꨝꨭꩍ ꨝꨪ ꨝꩀ ꩝꩝",
+        "꩖꩞ ꨝꩀ ꨕꨶꨩ ꨝꨯꨱꩍ ꨝꨰ ꨆꨮꨭ ꨘꩆ ꩝꩝",
+        "ꨘꩆ ꨆꨮꨭ ꨝꨴꨬ ꨀꨇꩆ ꨗꨫ ꨆꨩ ꨝꨵꨯꨱꩍ ꩞",
+        "ꨆꨩ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꨤꩄ꩝ ꨤꩄ ꨝꨰ ꩞",
+        "ꨤꩄ ꨝꨰ ꨛꨯꨮ ꨙꨮ ꨀꨧꨪꩅ ꩞",
+        "ꨢꨮꨭ ꨕꨨꨵꩀ ꨝꨭꩍ ꨕꨶꨩ ꨕꨘꩀ ꨨꨤꨩ ꩝",
+        "ꨨꨤꨩ ꨕꨨꨵꩀ ꨝꩀ ꨎꨮ ꨛꨯꨮ꩝ ꨛꨯꨮ ꨚꨶꨮꩄ ꩝",
+        "ꨛꨯꨮ ꨚꨶꨮꩄ ꨚꨆꨴꨲꨩ ꨟꨪꩆ ꨙꨩ ꨛꨯꨮ꩝ ꩝",
+        "ꨛꨯꨮ꩝ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨤꩄ ꨅꨩ ꩒꩐/꩑/꩒꩐꩑꩔ ꩞",
+        "ꨤꩄ ꨅꨩ ꨆꨮꨭ ꨚꨶꨮꩄ ꩞",
+        "꩗꩞ ꨟꨪꩆ꩝ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꩝",
+        "ꨚꨗꨶꨮꩄ ꨘꩆ-ꨕꨨꨵꩀ ꨕꨫ ꨔꨮꨭ ꨅꨩ ꩝",
+        "ꨅꨩ ꨕꨯꨱꩀ ꨕꨫ ꨓꨳꩆ ꨛꨯꨮ ꩝꩝",
+        "ꨢꨮ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨣꨈꨵꨰ ꨘꩆ ꨀꨶꨮꩆ ꨓꨝꨶꨮꩆ ꩝"
+      ],
+      "gt_count": 15,
+      "source_doc_ids": [
+        "ood_agal_04_thrah"
+      ],
+      "font_names": [
+        "EFEO Cam Thrah.otf"
+      ],
+      "transform": {
+        "type": "untransformed_control",
+        "source_bbox_crop": true
+      },
+      "nominal_line_bboxes": [
+        [
+          29,
+          24,
+          307,
+          65
+        ],
+        [
+          29,
+          82,
+          265,
+          123
+        ],
+        [
+          34,
+          139,
+          309,
+          180
+        ],
+        [
+          38,
+          190,
+          326,
+          231
+        ],
+        [
+          31,
+          249,
+          341,
+          290
+        ],
+        [
+          27,
+          302,
+          254,
+          342
+        ],
+        [
+          34,
+          354,
+          320,
+          395
+        ],
+        [
+          25,
+          406,
+          352,
+          446
+        ],
+        [
+          36,
+          463,
+          302,
+          504
+        ],
+        [
+          33,
+          522,
+          454,
+          563
+        ],
+        [
+          33,
+          578,
+          187,
+          616
+        ],
+        [
+          32,
+          628,
+          277,
+          669
+        ],
+        [
+          27,
+          680,
+          296,
+          720
+        ],
+        [
+          24,
+          731,
+          237,
+          769
+        ],
+        [
+          40,
+          779,
+          384,
+          816
+        ]
+      ]
+    },
+    {
+      "id": "base_ood_book_10_semibold",
+      "group": "control",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/base_ood_book_10_semibold.png",
+      "image_sha256": "de5319da41c6094882b2cfd8a99971008f449b9bb8be8a2867683e184cf75d45",
+      "width": 504,
+      "height": 986,
+      "gt_lines": [
+        "ꨟꨐꨭꩌ ꨀꨳꨩ ꨧꨩ ꨝꨯꨱꩍ ꨆꨕꨯꨱꩍ ꨧꨯꨱꩃ ꩝",
+        "ꨧꨯꨱꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨅꨩ꩝ ꨝꨣꨭꨥ ꩞",
+        "ꨝꨣꨭꨥ ꨟꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨟꨐꨭꩌ ꨀꨳꨩ ꩝",
+        "ꨟꨐꨭꩌ ꨀꨳꨩ ꨕꨫ ꨆꨕꨯꨱꩍ ꨘꩆ ꨕꨨꨵꨮꨭ ꩝꩝",
+        "ꨕꨨꨵꨮꨭ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨌꨙꨳꩀ ꩝꩝",
+        "ꨌꨙꨳꩀ ꨓꨆꨶꨯꩈ ꨆꨕꨯꨱꩍ ꨘꩆ ꨨꨭꨩ ꨗꩌ ꩝꩝",
+        "ꨗꩌ ꨓꨮꩊ ꨀꨣꩀ ꨗꨫ ꩝",
+        "ꨆꨩ ꨛꨯꨮ ꨚꩆ ꨟꨐꨭꩌ ꩙/꩖/꩒꩐꩐꩕ ꩞",
+        "꩑꩗꩞ ꨀꨥꨰꩅ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨟꨐꨭꩌ ꨧꨩ",
+        "ꨧꨩ ꨀꨥꨰꩅ꩞ ꨗꨆꨓꨯꨮꨩ ꨘꩆ ꨧꨩ ꨕꨤꩌ ꩝",
+        "ꨕꨤꩌ ꨨꨕꨯꩌ ꨙꩌ ꨀꨕꩅ ꨚꨴꨯꨱꩃ ꨧꨯꨱꩃ ꩝",
+        "ꨧꨯꨱꩃ ꨆꨣꨬ ꨌꨪꩍ ꨀꨝꨪꩍ ꨝꨶꨮꩊ",
+        "ꨞꩇ ꨌꩌ ꨓꨭꨝꩅ ꨝꨴꩍꨟꨪꩆ꩞ ꩝",
+        "ꨣꨕꩀ ꨣꨪꩌ ꨔꨭꩆ ꨧꨯꨱꩃ ꨣꨤꨯꨩ ꩝꩝",
+        "ꨀꨕꩅ ꨚꨴꨯꨱꩃ ꨝꨪꨗꨴꨪꩀ ꨧꨯꨱꩃ ꨕꨯꩌ ꨀꨋꩇ ꩝꩝"
+      ],
+      "gt_count": 15,
+      "source_doc_ids": [
+        "ood_book_10_semibold"
+      ],
+      "font_names": [
+        "NotoSansCham-SemiBold.ttf"
+      ],
+      "transform": {
+        "type": "untransformed_control",
+        "source_bbox_crop": true
+      },
+      "nominal_line_bboxes": [
+        [
+          41,
+          24,
+          393,
+          77
+        ],
+        [
+          27,
+          87,
+          371,
+          140
+        ],
+        [
+          26,
+          155,
+          430,
+          208
+        ],
+        [
+          26,
+          221,
+          397,
+          269
+        ],
+        [
+          35,
+          285,
+          436,
+          339
+        ],
+        [
+          27,
+          347,
+          447,
+          395
+        ],
+        [
+          24,
+          410,
+          236,
+          453
+        ],
+        [
+          29,
+          471,
+          395,
+          519
+        ],
+        [
+          27,
+          533,
+          452,
+          587
+        ],
+        [
+          38,
+          603,
+          437,
+          652
+        ],
+        [
+          33,
+          666,
+          397,
+          720
+        ],
+        [
+          36,
+          730,
+          307,
+          783
+        ],
+        [
+          29,
+          794,
+          343,
+          842
+        ],
+        [
+          36,
+          850,
+          337,
+          899
+        ],
+        [
+          40,
+          908,
+          480,
+          962
+        ]
+      ]
+    },
+    {
+      "id": "base_ood_book_11_light",
+      "group": "control",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/base_ood_book_11_light.png",
+      "image_sha256": "405142aa0497f70058bae94bd0492771e8944ef9329b01bd4ea1fc57ea7d1765",
+      "width": 551,
+      "height": 969,
+      "gt_lines": [
+        "ꨀꨋꩇ ꨍꨮꩍ ꨍꨰ꩝ ꨙꩌ ꨀꨕꩅ",
+        "ꨋꩇ ꨡꨯꩍ ꨕꨤꩌ ꨚꩌ ꩝",
+        "꩑꩘꩞ ꨨꨕꨳꨯꨮꩇ ꨁꨤꨪꨟꨯꨩ꩝ ꨀꨕꩅ ꨧꨯꨱꩃ ꨁꨦꨗꩃ ꩝",
+        "ꨚꨈꨭꩊ ꨚꨓꨯꨱꩌ-ꨝꨶꨮꩊ ꨞꩇ ꩝",
+        "ꨌꩌ꩞ ꩑꩞ ꨀꨉꨩ ꨧꨯꨱꩃ ꨧꩀꨆꨣꩈ",
+        "ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨀꨉꨩ ꨟꩃ ꩑꩒/꩑/꩑꩙꩙꩘",
+        "ꨝꨴꩍꨟꨪꩆ ꨂꨣꩃ ꨌꩌ꩝ ꨎꨳꨮꩃ ꨓꨝꨳꩀ ꩞",
+        "ꨟꩃ ꨣꨪꨓꨭꩍ ꨔꨭꩆ ꨕꨨꨵꨮꨭ꩝ ꨚꨈꨮꩌ ꨓꨟꨩ ꨧꨯꨱꩃ",
+        "ꨓꨟꨩ ꨧꨯꨱꩃ ꨕꨘꩇ ꨝꨗꨳꨩ ꩝",
+        "ꨢꩃ ꨧꨯꨱꩃ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩞ ꨣꨪꩌ ꩝꩝",
+        "ꨣꨪꩌ ꨔꨭꩆ꩝ ꨓꨟꨩ ꨗꨶꨮꩄ ꨝꨪꨤꩆ ꩝",
+        "꩑꩙꩞ ꨓꨎꨭꩍ ꨓꨶꨬ ꨧꨆꨥꨪ ꨌꩌ (ꨒꨮꩇ ꨝꨪꨤꩆ ꩑꩐ ꩝꩝",
+        "ꨝꨪꨤꩆ ꩑꩐ ꨧꨆꨥꨪ ꨀꨳꨩ",
+        "ꨝꨶꨮꩊ ꨞꩇ ꨌꩌ ꨕꨫ ꨗꨪꩂ ꨔꨶꨮꩆ",
+        "ꨔꨶꨮꩆ ꨥꨮꩀ-ꨧꨟꩃ ꨍꨮꩍ ꨣꨕꩀ ꨙꩌ ꩝꩝"
+      ],
+      "gt_count": 15,
+      "source_doc_ids": [
+        "ood_book_11_light"
+      ],
+      "font_names": [
+        "NotoSansCham-Light.ttf"
+      ],
+      "transform": {
+        "type": "untransformed_control",
+        "source_bbox_crop": true
+      },
+      "nominal_line_bboxes": [
+        [
+          25,
+          24,
+          357,
+          69
+        ],
+        [
+          28,
+          80,
+          257,
+          124
+        ],
+        [
+          24,
+          133,
+          526,
+          186
+        ],
+        [
+          38,
+          202,
+          331,
+          252
+        ],
+        [
+          39,
+          263,
+          371,
+          316
+        ],
+        [
+          38,
+          330,
+          428,
+          378
+        ],
+        [
+          28,
+          389,
+          383,
+          439
+        ],
+        [
+          38,
+          457,
+          429,
+          510
+        ],
+        [
+          28,
+          524,
+          303,
+          577
+        ],
+        [
+          29,
+          590,
+          408,
+          639
+        ],
+        [
+          27,
+          655,
+          338,
+          701
+        ],
+        [
+          32,
+          717,
+          527,
+          765
+        ],
+        [
+          38,
+          781,
+          293,
+          829
+        ],
+        [
+          40,
+          837,
+          348,
+          885
+        ],
+        [
+          38,
+          900,
+          411,
+          945
+        ]
+      ]
+    },
+    {
+      "id": "base_ood_book_12_extrabold",
+      "group": "control",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/base_ood_book_12_extrabold.png",
+      "image_sha256": "4c3abc3cf6731f00650d80e3bf26dc7e347e92776b061e44b9e5c6c86c20692f",
+      "width": 769,
+      "height": 989,
+      "gt_lines": [
+        "ꨙꩌ ꨀꨕꩅ ꨗꨫ꩞ ꨕꨤꩌ ꨨꨣꨬ ꩞",
+        "ꨆꨓꨯꨮꨩ꩝ ꨂꨣꩃ ꨌꩌ ꨝꨴꩍꨟꨪꩆ ꨕꨮꩃ ꨋꩇ ꨈꨴꨭꩀ ꩝꩝",
+        "ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ",
+        "ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝ ꨌꨯꨱꩃ ꨤꨪꨆꨮꨭ ꨨꨎꩆ ꨀꨊꨪꩆ ꩒꩒/꩘/꩒꩐꩒꩑",
+        "ꨨꨎꩆ ꨀꨊꨪꩆ ꨈꨮꩇ ꨧꨳꩌ ꨧꨯꨱꩃ ꨨꨭꨩ ꩝꩝",
+        "꩒꩐꩞ ꨨꨭꨩ ꨨꨤꨪꩌ꩞ ꨙꩌ ꨀꨕꩅ ꨕꨯꨱꩀ ꩞",
+        "ꨨꨭꨩ ꨃꨥ ꨘꩆ ꨓꨯꨮꩅ ꨆꨓꨯꨮꨩ ꨨꨰ ꨡꨮꩃ ꩝",
+        "ꨨꨰ ꨡꨮꩃ ꨆꨓꨯꨮꨩ꩝ ꨧꨯꨱꩃ ꨨꨭꨩ ꨈꨵꨮꩃ ꩝꩝",
+        "ꨈꨵꨮꩃ ꨢꨮꨭ ꨨꨣꨬ ꨚꨓꨯꨱꩌ꩝ ꨟꨁꩆ꩝ ꩝",
+        "ꨧꨯꨱꩃ ꨋꩇ ꨡꨯꩍ ꨟꨗꨭꩍ ꨝꩉ",
+        "ꨁꨤꨪꨟꨯꨩ ꨚꨣꩆ-ꨂꨣꩃ ꨌꩌ꩞ ꩒꩞ ꨓꨭꩀ ꨥꩀ",
+        "ꨓꨭꩀ ꨥꩀ ꨧꨯꨱꩃ ꨤꨪꨝꨪꩀ",
+        "ꨗꨆꨓꨯꨮꨩ ꨚꨣꨤꨯꨩ ꨣꨪꩌ ꨔꨭꩆ ꨓꨟꨩ ꩝꩝",
+        "ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨥꨪ ꨌꩌ (ꨗꨶꨮꩄ",
+        "꩒꩑꩞ ꨝꨪꨤꩆ ꩑꩐ ꨧꨆꨥꨪ ꨀꨳꨩ ꨨꨣꨬ)꩞ ꨗꨫ ꨘꩆ ꩝꩝"
+      ],
+      "gt_count": 15,
+      "source_doc_ids": [
+        "ood_book_12_extrabold"
+      ],
+      "font_names": [
+        "NotoSansCham-ExtraBold.ttf"
+      ],
+      "transform": {
+        "type": "untransformed_control",
+        "source_bbox_crop": true
+      },
+      "nominal_line_bboxes": [
+        [
+          30,
+          24,
+          338,
+          74
+        ],
+        [
+          26,
+          90,
+          476,
+          143
+        ],
+        [
+          37,
+          157,
+          268,
+          205
+        ],
+        [
+          39,
+          214,
+          745,
+          269
+        ],
+        [
+          31,
+          279,
+          443,
+          330
+        ],
+        [
+          40,
+          343,
+          428,
+          393
+        ],
+        [
+          24,
+          409,
+          409,
+          461
+        ],
+        [
+          29,
+          471,
+          327,
+          526
+        ],
+        [
+          34,
+          537,
+          355,
+          591
+        ],
+        [
+          30,
+          602,
+          340,
+          657
+        ],
+        [
+          26,
+          665,
+          452,
+          715
+        ],
+        [
+          34,
+          728,
+          271,
+          783
+        ],
+        [
+          34,
+          798,
+          393,
+          844
+        ],
+        [
+          38,
+          854,
+          387,
+          904
+        ],
+        [
+          25,
+          915,
+          546,
+          965
+        ]
+      ]
+    },
+    {
+      "id": "base_ood_folio_07_campa",
+      "group": "control",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/base_ood_folio_07_campa.png",
+      "image_sha256": "a147f95f4f5c09eadbb3e00338212529007e69a20bee4a915b9537ce626204b5",
+      "width": 401,
+      "height": 866,
+      "gt_lines": [
+        "ꨈꨣꩈ ꨕꨯꨱꩀ ꨇꨪꩀ ꨨꨤꨩ꩝ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꩞",
+        "꩑꩑꩞ ꨛꨯꨮ ꨚꩆ ꨗꨯꨱ ꨟꩀ ꨤꨪꨔꨬ ꩝",
+        "ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨚꩆ ꨝꨩ ꨤꨪꨔꨬ ꩑꩘/꩒/꩒꩐꩒꩑",
+        "ꨟꨰ ꨚꩀ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨝꨵꨯꨱꩍ",
+        "ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨚꩆ ꨡꨯꩍ ꨛꨯꨮ ꩝",
+        "ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨙꨪꩍ ꨥꩉ",
+        "ꨡꨯꩍ ꨕꨶꨩ ꨕꨴꨬ ꨁꨗꨩ",
+        "ꨕꨯꨱꩀ ꨤꨳꩍ ꨣꨭꩇ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩝",
+        "ꨈꨣꩈ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨕꨶꨩ ꨕꨴꨬ ꨁꨗꨩ",
+        "ꨁꨗꨩ ꨈꨭꨣꩈ ꨘꩆ ꨡꨯꩍ ꨛꨯꨮ ꨚꩆ ꩝꩝",
+        "꩑꩒꩞ ꨚꩆ ꨝꨵꨯꨱꩍ ꨁꨗꨩ ꨈꨭꨣꩈ ꨘꩆ ꨤꨶꩀ ꩞",
+        "ꨤꨶꩀ ꨓꨟꨩ ꨓꨗꩍ ꨣꨪꨢꨩ ꩞",
+        "ꨖꨪꩅ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨛꨯꨮ ꩝꩝",
+        "ꨔꨮꨭ ꨆꨩ ꨛꨯꨮ ꨆꨤꨯꨱꩃ ꨈꨣꩈ",
+        "ꨝꨳꩀ ꨀꨧꩉ ꨚꨓꨯꨱ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨛꨯꨮ ꩝"
+      ],
+      "gt_count": 15,
+      "source_doc_ids": [
+        "ood_folio_07_campa"
+      ],
+      "font_names": [
+        "EFEO Cam Campa.otf"
+      ],
+      "transform": {
+        "type": "untransformed_control",
+        "source_bbox_crop": true
+      },
+      "nominal_line_bboxes": [
+        [
+          38,
+          24,
+          341,
+          66
+        ],
+        [
+          38,
+          79,
+          296,
+          117
+        ],
+        [
+          24,
+          129,
+          358,
+          171
+        ],
+        [
+          30,
+          184,
+          286,
+          226
+        ],
+        [
+          28,
+          244,
+          258,
+          286
+        ],
+        [
+          33,
+          301,
+          211,
+          343
+        ],
+        [
+          34,
+          352,
+          190,
+          396
+        ],
+        [
+          31,
+          414,
+          250,
+          456
+        ],
+        [
+          24,
+          466,
+          279,
+          510
+        ],
+        [
+          36,
+          525,
+          335,
+          569
+        ],
+        [
+          36,
+          580,
+          377,
+          624
+        ],
+        [
+          30,
+          640,
+          224,
+          682
+        ],
+        [
+          38,
+          695,
+          231,
+          735
+        ],
+        [
+          31,
+          743,
+          228,
+          783
+        ],
+        [
+          31,
+          801,
+          333,
+          842
+        ]
+      ]
+    },
+    {
+      "id": "mix_02_fonts",
+      "group": "mixed_fonts",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/mix_02_fonts.png",
+      "image_sha256": "d5aeb57111e98fcc7a1ab1963caef5ccbf03a39355528a0fb3be85a447f25518",
+      "width": 600,
+      "height": 664,
+      "gt_lines": [
+        "꩑꩞ ꨗꨫ ꨟꨕꨩ ꨓꩀ ꨕꨫ ꨆꩊ ꨘꩆ",
+        "ꨧꨯꨱꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨅꨩ꩝ ꨝꨣꨭꨥ ꩞",
+        "ꨝꨰ ꨙꨮ ꨎꨤꨭꩀ ꨟꨐꨭꩌ ꨀꨳꨩ",
+        "ꨌꨙꨳꩀ ꨓꨆꨶꨯꩈ ꨆꨕꨯꨱꩍ ꨘꩆ ꨨꨭꨩ ꨗꩌ ꩝꩝",
+        "ꨟꩃ ꨗꨯꨱ ꨓꨮꩊ ꨊꨯꨱꩀ ꨣꨈꨵꨰ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ",
+        "ꨧꨩ ꨀꨥꨰꩅ꩞ ꨗꨆꨓꨯꨮꨩ ꨘꩆ ꨧꨩ ꨕꨤꩌ ꩝",
+        "ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨤꩄ ꨀꨣꩀ ꩞",
+        "ꨣꨕꩀ ꨣꨪꩌ ꨔꨭꩆ ꨧꨯꨱꩃ ꨣꨤꨯꨩ ꩝꩝"
+      ],
+      "gt_count": 8,
+      "source_doc_ids": [
+        "ood_agal_01_panduranga",
+        "ood_book_10_semibold"
+      ],
+      "font_names": [
+        "EFEO Cam Panduranga.otf",
+        "NotoSansCham-SemiBold.ttf"
+      ],
+      "transform": {
+        "type": "multifont_composition",
+        "construction": "mix_fonts_across_lines",
+        "font_names": [
+          "EFEO Cam Panduranga.otf",
+          "NotoSansCham-SemiBold.ttf"
+        ],
+        "line_source_details": [
+          {
+            "doc_id": "ood_agal_01_panduranga",
+            "font": "EFEO Cam Panduranga.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_01.png",
+            "crop_sha256": "4cbeb36322a389aacdeb87d51923c8652931c0cb4bc09cbc60400d842422d322",
+            "gt": "꩑꩞ ꨗꨫ ꨟꨕꨩ ꨓꩀ ꨕꨫ ꨆꩊ ꨘꩆ"
+          },
+          {
+            "doc_id": "ood_book_10_semibold",
+            "font": "NotoSansCham-SemiBold.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_02.png",
+            "crop_sha256": "7581df5c615342b1cb5aa4c5d45e5290cdd316d81c3f6f3fe7d9af641a252890",
+            "gt": "ꨧꨯꨱꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨅꨩ꩝ ꨝꨣꨭꨥ ꩞"
+          },
+          {
+            "doc_id": "ood_agal_01_panduranga",
+            "font": "EFEO Cam Panduranga.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_05.png",
+            "crop_sha256": "41199ebe2d531ee9470cc39f2c96ad0f1a75aaab37cae77962c50451f07cb783",
+            "gt": "ꨝꨰ ꨙꨮ ꨎꨤꨭꩀ ꨟꨐꨭꩌ ꨀꨳꨩ"
+          },
+          {
+            "doc_id": "ood_book_10_semibold",
+            "font": "NotoSansCham-SemiBold.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_06.png",
+            "crop_sha256": "bd76bb301581b8064f5165eceb115e6676f9a23669b1879490056b315998dc61",
+            "gt": "ꨌꨙꨳꩀ ꨓꨆꨶꨯꩈ ꨆꨕꨯꨱꩍ ꨘꩆ ꨨꨭꨩ ꨗꩌ ꩝꩝"
+          },
+          {
+            "doc_id": "ood_agal_01_panduranga",
+            "font": "EFEO Cam Panduranga.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_09.png",
+            "crop_sha256": "173346381bd3b6df224e1e0983033e076495d21d825670e9871901020e31b224",
+            "gt": "ꨟꩃ ꨗꨯꨱ ꨓꨮꩊ ꨊꨯꨱꩀ ꨣꨈꨵꨰ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ"
+          },
+          {
+            "doc_id": "ood_book_10_semibold",
+            "font": "NotoSansCham-SemiBold.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_10.png",
+            "crop_sha256": "39dd84971ef27dd0d93d98d1190863c376a329db9c88dd8fdd01b4008fa839de",
+            "gt": "ꨧꨩ ꨀꨥꨰꩅ꩞ ꨗꨆꨓꨯꨮꨩ ꨘꩆ ꨧꨩ ꨕꨤꩌ ꩝"
+          },
+          {
+            "doc_id": "ood_agal_01_panduranga",
+            "font": "EFEO Cam Panduranga.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_13.png",
+            "crop_sha256": "ee5dc6aad73a4bf98dc1bea15357a3668ef320b234ce297ff59e078573c98744",
+            "gt": "ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨤꩄ ꨀꨣꩀ ꩞"
+          },
+          {
+            "doc_id": "ood_book_10_semibold",
+            "font": "NotoSansCham-SemiBold.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_14.png",
+            "crop_sha256": "026def1ea8987355e5060d5b97f22ea865e93a26af66e55472c4b2919b2fa55f",
+            "gt": "ꨣꨕꩀ ꨣꨪꩌ ꨔꨭꩆ ꨧꨯꨱꩃ ꨣꨤꨯꨩ ꩝꩝"
+          }
+        ],
+        "fonts_per_line": 1
+      },
+      "nominal_line_bboxes": [
+        [
+          45,
+          40,
+          300,
+          84
+        ],
+        [
+          45,
+          111,
+          389,
+          164
+        ],
+        [
+          45,
+          191,
+          261,
+          233
+        ],
+        [
+          45,
+          260,
+          465,
+          308
+        ],
+        [
+          45,
+          335,
+          340,
+          379
+        ],
+        [
+          45,
+          406,
+          444,
+          455
+        ],
+        [
+          45,
+          482,
+          293,
+          526
+        ],
+        [
+          45,
+          553,
+          346,
+          602
+        ]
+      ]
+    },
+    {
+      "id": "mix_03_fonts",
+      "group": "mixed_fonts",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/mix_03_fonts.png",
+      "image_sha256": "f8e952995105a582dbfc0c62c70e376c9be2fa7fd117ae2d7571dfe8d13ed667",
+      "width": 600,
+      "height": 681,
+      "gt_lines": [
+        "ꨝꩀ ꨕꨶꨩ ꨝꨯꨱꩍ ꨝꨰ ꨆꨮꨭ ꨘꩆ ꩞",
+        "ꨘꩆ ꨝꨩ ꨀꨇꩆ ꨟꨰ ꨎꨥ ꨆꨩ ꨛꨯꨮ",
+        "꩖꩞ ꨝꩀ ꨕꨶꨩ ꨝꨯꨱꩍ ꨝꨰ ꨆꨮꨭ ꨘꩆ ꩝꩝",
+        "ꨀꨇꩆ ꨘꩆ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꨗꨯꨱ ꨚꨰꩀ ꩝",
+        "ꨟꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꩝꩝",
+        "ꨨꨤꨩ ꨕꨨꨵꩀ ꨝꩀ ꨎꨮ ꨛꨯꨮ꩝ ꨛꨯꨮ ꨚꨶꨮꩄ ꩝",
+        "ꨝꨩ ꨀꨗꩀ ꨝꨩ ꨓꨌꨯꨱꨥ ꨗꨯꨱ ꩝",
+        "ꨚꨢꨯꨱꩌ ꨀꨇꩆ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩒꩐/꩑꩒/꩑꩙꩙꩘",
+        "ꨚꨗꨶꨮꩄ ꨘꩆ-ꨕꨨꨵꩀ ꨕꨫ ꨔꨮꨭ ꨅꨩ ꩝"
+      ],
+      "gt_count": 9,
+      "source_doc_ids": [
+        "ood_agal_02_panrang",
+        "ood_agal_03_parik",
+        "ood_agal_04_thrah"
+      ],
+      "font_names": [
+        "EFEO Cam Panrang.otf",
+        "EFEO Cam Parik.otf",
+        "EFEO Cam Thrah.otf"
+      ],
+      "transform": {
+        "type": "multifont_composition",
+        "construction": "mix_fonts_across_lines",
+        "font_names": [
+          "EFEO Cam Panrang.otf",
+          "EFEO Cam Parik.otf",
+          "EFEO Cam Thrah.otf"
+        ],
+        "line_source_details": [
+          {
+            "doc_id": "ood_agal_02_panrang",
+            "font": "EFEO Cam Panrang.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_02_panrang_line_01.png",
+            "crop_sha256": "54962c7561a203b0a55cd073ba819fc93ad9a1dfe9fee374eccd8000436692c1",
+            "gt": "ꨝꩀ ꨕꨶꨩ ꨝꨯꨱꩍ ꨝꨰ ꨆꨮꨭ ꨘꩆ ꩞"
+          },
+          {
+            "doc_id": "ood_agal_03_parik",
+            "font": "EFEO Cam Parik.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_02.png",
+            "crop_sha256": "30d1b3c5da05a2c53c89ce0b062a67a75240b3e87a7f5573e882752b28c8de88",
+            "gt": "ꨘꩆ ꨝꨩ ꨀꨇꩆ ꨟꨰ ꨎꨥ ꨆꨩ ꨛꨯꨮ"
+          },
+          {
+            "doc_id": "ood_agal_04_thrah",
+            "font": "EFEO Cam Thrah.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_04_thrah_line_03.png",
+            "crop_sha256": "490025bdc43d5e58d4517afbce4f35fae7c2c8447f24ee886683ef87177e1de0",
+            "gt": "꩖꩞ ꨝꩀ ꨕꨶꨩ ꨝꨯꨱꩍ ꨝꨰ ꨆꨮꨭ ꨘꩆ ꩝꩝"
+          },
+          {
+            "doc_id": "ood_agal_02_panrang",
+            "font": "EFEO Cam Panrang.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_02_panrang_line_06.png",
+            "crop_sha256": "929b507ea3d7074f796619ae6f006b45abb14e6f9731d29b1d9a4e845fa49cae",
+            "gt": "ꨀꨇꩆ ꨘꩆ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꨗꨯꨱ ꨚꨰꩀ ꩝"
+          },
+          {
+            "doc_id": "ood_agal_03_parik",
+            "font": "EFEO Cam Parik.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_07.png",
+            "crop_sha256": "8f45cbb5c2e5362c019612813e9056d5ac5b90fd63199458ce3882871b3061b2",
+            "gt": "ꨟꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꩝꩝"
+          },
+          {
+            "doc_id": "ood_agal_04_thrah",
+            "font": "EFEO Cam Thrah.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_04_thrah_line_08.png",
+            "crop_sha256": "2ef52c2b092492aa1e085ea194bfb377ee5d422024da47b0a980197307fc5c7e",
+            "gt": "ꨨꨤꨩ ꨕꨨꨵꩀ ꨝꩀ ꨎꨮ ꨛꨯꨮ꩝ ꨛꨯꨮ ꨚꨶꨮꩄ ꩝"
+          },
+          {
+            "doc_id": "ood_agal_02_panrang",
+            "font": "EFEO Cam Panrang.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_02_panrang_line_11.png",
+            "crop_sha256": "25aff9190368b5794f77a79da2e1192add9a18b0b1538e456b542cdf6da2282a",
+            "gt": "ꨝꨩ ꨀꨗꩀ ꨝꨩ ꨓꨌꨯꨱꨥ ꨗꨯꨱ ꩝"
+          },
+          {
+            "doc_id": "ood_agal_03_parik",
+            "font": "EFEO Cam Parik.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_12.png",
+            "crop_sha256": "3e0a06ac24ca601811a6899560ca97cbaa875cf421928e2e2c64c6ca415ebdfd",
+            "gt": "ꨚꨢꨯꨱꩌ ꨀꨇꩆ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩒꩐/꩑꩒/꩑꩙꩙꩘"
+          },
+          {
+            "doc_id": "ood_agal_04_thrah",
+            "font": "EFEO Cam Thrah.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_04_thrah_line_13.png",
+            "crop_sha256": "9fdbf9e51ae6a8df2a164528f96e8d1dbbf269b8b30e9d9bdf10c656f83d6ba8",
+            "gt": "ꨚꨗꨶꨮꩄ ꨘꩆ-ꨕꨨꨵꩀ ꨕꨫ ꨔꨮꨭ ꨅꨩ ꩝"
+          }
+        ],
+        "fonts_per_line": 1
+      },
+      "nominal_line_bboxes": [
+        [
+          45,
+          40,
+          284,
+          81
+        ],
+        [
+          45,
+          108,
+          328,
+          148
+        ],
+        [
+          45,
+          175,
+          320,
+          216
+        ],
+        [
+          45,
+          243,
+          389,
+          284
+        ],
+        [
+          45,
+          311,
+          218,
+          351
+        ],
+        [
+          45,
+          378,
+          372,
+          418
+        ],
+        [
+          45,
+          445,
+          278,
+          485
+        ],
+        [
+          45,
+          512,
+          375,
+          552
+        ],
+        [
+          45,
+          579,
+          314,
+          619
+        ]
+      ]
+    },
+    {
+      "id": "mix_04_fonts",
+      "group": "mixed_fonts",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/mix_04_fonts.png",
+      "image_sha256": "f418e0bb1a954a107d3c83af6c70573f4c4da1c1bd6130c994408e9802fb5a4a",
+      "width": 600,
+      "height": 690,
+      "gt_lines": [
+        "ꨀꨶꨮꩆ ꨓꨝꨶꨮꩆ ꨚꨎꨳꩀ ꨈꨮꩇ ꩞",
+        "꩑꩑꩞ ꨛꨯꨮ ꨚꩆ ꨗꨯꨱ ꨟꩀ ꨤꨪꨔꨬ ꩝",
+        "ꨈꨣꩈ ꨝꨣꨭꨥ ꨟꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ",
+        "ꨚꨈꨭꩊ ꨚꨓꨯꨱꩌ-ꨝꨶꨮꩊ ꨞꩇ ꩝",
+        "ꨕꨫ ꨝꩀ ꨝꨰ ꨘꩆ ꨅꨩ꩝ ꩞",
+        "ꨕꨯꨱꩀ ꨤꨳꩍ ꨣꨭꩇ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩝",
+        "ꨗꨫ ꨟꨰ꩝ ꨌꨪꩍ ꨈꩆ ꩝",
+        "ꨢꩃ ꨧꨯꨱꩃ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩞ ꨣꨪꩌ ꩝꩝",
+        "ꨕꨨꨵꩀ ꨝꨭꩍ ꨨꨤꨩ ꨕꨫ ꨝꩀ"
+      ],
+      "gt_count": 9,
+      "source_doc_ids": [
+        "ood_folio_05_kauthara",
+        "ood_folio_07_campa",
+        "ood_book_09_aiaru",
+        "ood_book_11_light"
+      ],
+      "font_names": [
+        "EFEO Cam Kauthara.otf",
+        "EFEO Cam Campa.otf",
+        "EFEO Cam AiaRu.otf",
+        "NotoSansCham-Light.ttf"
+      ],
+      "transform": {
+        "type": "multifont_composition",
+        "construction": "mix_fonts_across_lines",
+        "font_names": [
+          "EFEO Cam Kauthara.otf",
+          "EFEO Cam Campa.otf",
+          "EFEO Cam AiaRu.otf",
+          "NotoSansCham-Light.ttf"
+        ],
+        "line_source_details": [
+          {
+            "doc_id": "ood_folio_05_kauthara",
+            "font": "EFEO Cam Kauthara.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_01.png",
+            "crop_sha256": "7c1b8d0e24bc61a2565104a5e929f78dc4db2e263b7c5a71a8e521f79e1385a0",
+            "gt": "ꨀꨶꨮꩆ ꨓꨝꨶꨮꩆ ꨚꨎꨳꩀ ꨈꨮꩇ ꩞"
+          },
+          {
+            "doc_id": "ood_folio_07_campa",
+            "font": "EFEO Cam Campa.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_02.png",
+            "crop_sha256": "203b49eeaf565ba7db715634e79cab8639f1b159e4121ca23a9662d2af39b148",
+            "gt": "꩑꩑꩞ ꨛꨯꨮ ꨚꩆ ꨗꨯꨱ ꨟꩀ ꨤꨪꨔꨬ ꩝"
+          },
+          {
+            "doc_id": "ood_book_09_aiaru",
+            "font": "EFEO Cam AiaRu.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_03.png",
+            "crop_sha256": "222d724000da0a3c2d9c5503e061b247ee874a4866effb75706d3280da473076",
+            "gt": "ꨈꨣꩈ ꨝꨣꨭꨥ ꨟꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ"
+          },
+          {
+            "doc_id": "ood_book_11_light",
+            "font": "NotoSansCham-Light.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_04.png",
+            "crop_sha256": "3f0a53b15bd05e7b2396013aa608260f472beeedb864af7f16ac639ecd3183a9",
+            "gt": "ꨚꨈꨭꩊ ꨚꨓꨯꨱꩌ-ꨝꨶꨮꩊ ꨞꩇ ꩝"
+          },
+          {
+            "doc_id": "ood_folio_05_kauthara",
+            "font": "EFEO Cam Kauthara.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_07.png",
+            "crop_sha256": "36ec59f92eaa8668acc8f9845177035db954c33fe832ba2d9fcfa649d45a8482",
+            "gt": "ꨕꨫ ꨝꩀ ꨝꨰ ꨘꩆ ꨅꨩ꩝ ꩞"
+          },
+          {
+            "doc_id": "ood_folio_07_campa",
+            "font": "EFEO Cam Campa.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_08.png",
+            "crop_sha256": "fec9cce8775168ab8a34061dc6cc0bb966cdeb3124fe8b618a519e4f601731de",
+            "gt": "ꨕꨯꨱꩀ ꨤꨳꩍ ꨣꨭꩇ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩝"
+          },
+          {
+            "doc_id": "ood_book_09_aiaru",
+            "font": "EFEO Cam AiaRu.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_09.png",
+            "crop_sha256": "5922b4c1c7600af8fd234acf817875d9aa1663ab404bf3da38f26b00fd30ec6d",
+            "gt": "ꨗꨫ ꨟꨰ꩝ ꨌꨪꩍ ꨈꩆ ꩝"
+          },
+          {
+            "doc_id": "ood_book_11_light",
+            "font": "NotoSansCham-Light.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_10.png",
+            "crop_sha256": "405b6fc3b958b8f87f6e8267fe38b3a1a59b1428ac1659d66b4a8ffb83aceaaa",
+            "gt": "ꨢꩃ ꨧꨯꨱꩃ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩞ ꨣꨪꩌ ꩝꩝"
+          },
+          {
+            "doc_id": "ood_folio_05_kauthara",
+            "font": "EFEO Cam Kauthara.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_13.png",
+            "crop_sha256": "1308f92f4459a18de2a54146af85e8eef2aa543f9df9126e493c30b3e1825239",
+            "gt": "ꨕꨨꨵꩀ ꨝꨭꩍ ꨨꨤꨩ ꨕꨫ ꨝꩀ"
+          }
+        ],
+        "fonts_per_line": 1
+      },
+      "nominal_line_bboxes": [
+        [
+          45,
+          40,
+          266,
+          76
+        ],
+        [
+          45,
+          103,
+          303,
+          141
+        ],
+        [
+          45,
+          168,
+          348,
+          209
+        ],
+        [
+          45,
+          236,
+          338,
+          286
+        ],
+        [
+          45,
+          313,
+          220,
+          350
+        ],
+        [
+          45,
+          377,
+          264,
+          419
+        ],
+        [
+          45,
+          446,
+          222,
+          485
+        ],
+        [
+          45,
+          512,
+          424,
+          561
+        ],
+        [
+          45,
+          588,
+          236,
+          628
+        ]
+      ]
+    },
+    {
+      "id": "mix_06_fonts",
+      "group": "mixed_fonts",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/mix_06_fonts.png",
+      "image_sha256": "fc879ecbb8f65d9730c733a6ce6cfd17fe9626972848a2121770d936d47fd21c",
+      "width": 600,
+      "height": 937,
+      "gt_lines": [
+        "꩑꩞ ꨗꨫ ꨟꨕꨩ ꨓꩀ ꨕꨫ ꨆꩊ ꨘꩆ",
+        "ꨘꩆ ꨝꨵꨯꨱꩍ ꨆꨮꨭ ꨝꨴꨬ ꨀꨇꩆ ꨗꨫ ꩝꩝",
+        "ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨚꩆ ꨝꨩ ꨤꨪꨔꨬ ꩑꩘/꩒/꩒꩐꩒꩑",
+        "ꨈꨣꩈ ꨓꨭꩍ ꨤꨪꨔꨬ ꨓꨝꨳꩀ ꨕꨫ ꨨꨤꨩ ꩝꩝",
+        "ꨕꨨꨵꨮꨭ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨌꨙꨳꩀ ꩝꩝",
+        "꩒꩐꩞ ꨨꨭꨩ ꨨꨤꨪꩌ꩞ ꨙꩌ ꨀꨕꩅ ꨕꨯꨱꩀ ꩞",
+        "ꨟꩃ ꨗꨯꨱ ꨓꨮꩊ ꨊꨯꨱꩀ ꨣꨈꨵꨰ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ",
+        "ꨅꨩ꩝ ꨣꨈꨵꨰ ꨘꩆ ꨝꨩ",
+        "꩑꩒꩞ ꨚꩆ ꨝꨵꨯꨱꩍ ꨁꨗꨩ ꨈꨭꨣꩈ ꨘꩆ ꨤꨶꩀ ꩞",
+        "ꨆꨵꨯꨱꩃ ꨈꨣꩈ-ꨨꨶꩀ ꨧꨩ ꨈꩍ ꨘꩆ",
+        "ꨞꩇ ꨌꩌ ꨓꨭꨝꩅ ꨝꨴꩍꨟꨪꩆ꩞ ꩝",
+        "ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨥꨪ ꨌꩌ (ꨗꨶꨮꩄ"
+      ],
+      "gt_count": 12,
+      "source_doc_ids": [
+        "ood_agal_01_panduranga",
+        "ood_agal_02_panrang",
+        "ood_folio_07_campa",
+        "ood_book_09_aiaru",
+        "ood_book_10_semibold",
+        "ood_book_12_extrabold"
+      ],
+      "font_names": [
+        "EFEO Cam Panduranga.otf",
+        "EFEO Cam Panrang.otf",
+        "EFEO Cam Campa.otf",
+        "EFEO Cam AiaRu.otf",
+        "NotoSansCham-SemiBold.ttf",
+        "NotoSansCham-ExtraBold.ttf"
+      ],
+      "transform": {
+        "type": "multifont_composition",
+        "construction": "mix_fonts_across_lines",
+        "font_names": [
+          "EFEO Cam Panduranga.otf",
+          "EFEO Cam Panrang.otf",
+          "EFEO Cam Campa.otf",
+          "EFEO Cam AiaRu.otf",
+          "NotoSansCham-SemiBold.ttf",
+          "NotoSansCham-ExtraBold.ttf"
+        ],
+        "line_source_details": [
+          {
+            "doc_id": "ood_agal_01_panduranga",
+            "font": "EFEO Cam Panduranga.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_01.png",
+            "crop_sha256": "4cbeb36322a389aacdeb87d51923c8652931c0cb4bc09cbc60400d842422d322",
+            "gt": "꩑꩞ ꨗꨫ ꨟꨕꨩ ꨓꩀ ꨕꨫ ꨆꩊ ꨘꩆ"
+          },
+          {
+            "doc_id": "ood_agal_02_panrang",
+            "font": "EFEO Cam Panrang.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_02_panrang_line_02.png",
+            "crop_sha256": "9c9c4c02d57a5193adddf323b4af50479c5089d25337954435e980678460ce2f",
+            "gt": "ꨘꩆ ꨝꨵꨯꨱꩍ ꨆꨮꨭ ꨝꨴꨬ ꨀꨇꩆ ꨗꨫ ꩝꩝"
+          },
+          {
+            "doc_id": "ood_folio_07_campa",
+            "font": "EFEO Cam Campa.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_03.png",
+            "crop_sha256": "060d50c8042e2699e5c9488c79e7dd61cd619ecc01fb40c9cab33e06e74c0d04",
+            "gt": "ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨚꩆ ꨝꨩ ꨤꨪꨔꨬ ꩑꩘/꩒/꩒꩐꩒꩑"
+          },
+          {
+            "doc_id": "ood_book_09_aiaru",
+            "font": "EFEO Cam AiaRu.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_04.png",
+            "crop_sha256": "f4cf53e5032e6dd091753828d6b84a5537b51472a88972bf5bed38b249283258",
+            "gt": "ꨈꨣꩈ ꨓꨭꩍ ꨤꨪꨔꨬ ꨓꨝꨳꩀ ꨕꨫ ꨨꨤꨩ ꩝꩝"
+          },
+          {
+            "doc_id": "ood_book_10_semibold",
+            "font": "NotoSansCham-SemiBold.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_05.png",
+            "crop_sha256": "e74c8e56273e06c6abee4fd939423d021e5917a92f5eedd3854292c02320f0e0",
+            "gt": "ꨕꨨꨵꨮꨭ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨌꨙꨳꩀ ꩝꩝"
+          },
+          {
+            "doc_id": "ood_book_12_extrabold",
+            "font": "NotoSansCham-ExtraBold.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_06.png",
+            "crop_sha256": "c6add7cbf2a052674a6e1b7678df977ccbd04c91d965749b0035fa67d3e10c34",
+            "gt": "꩒꩐꩞ ꨨꨭꨩ ꨨꨤꨪꩌ꩞ ꨙꩌ ꨀꨕꩅ ꨕꨯꨱꩀ ꩞"
+          },
+          {
+            "doc_id": "ood_agal_01_panduranga",
+            "font": "EFEO Cam Panduranga.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_09.png",
+            "crop_sha256": "173346381bd3b6df224e1e0983033e076495d21d825670e9871901020e31b224",
+            "gt": "ꨟꩃ ꨗꨯꨱ ꨓꨮꩊ ꨊꨯꨱꩀ ꨣꨈꨵꨰ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ"
+          },
+          {
+            "doc_id": "ood_agal_02_panrang",
+            "font": "EFEO Cam Panrang.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_02_panrang_line_10.png",
+            "crop_sha256": "e00d78f36c29aaf1f1990555cb1b8e5083a25078d646816d0d95d248926f36e1",
+            "gt": "ꨅꨩ꩝ ꨣꨈꨵꨰ ꨘꩆ ꨝꨩ"
+          },
+          {
+            "doc_id": "ood_folio_07_campa",
+            "font": "EFEO Cam Campa.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_11.png",
+            "crop_sha256": "c4eed1c0c35fe9b21f227fe90ec42781b1ccc8be4e12040900762f84c58f78f0",
+            "gt": "꩑꩒꩞ ꨚꩆ ꨝꨵꨯꨱꩍ ꨁꨗꨩ ꨈꨭꨣꩈ ꨘꩆ ꨤꨶꩀ ꩞"
+          },
+          {
+            "doc_id": "ood_book_09_aiaru",
+            "font": "EFEO Cam AiaRu.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_12.png",
+            "crop_sha256": "e806dc0162f8e130bfd477ab654884e65597010d5955133977b24a07ed882dad",
+            "gt": "ꨆꨵꨯꨱꩃ ꨈꨣꩈ-ꨨꨶꩀ ꨧꨩ ꨈꩍ ꨘꩆ"
+          },
+          {
+            "doc_id": "ood_book_10_semibold",
+            "font": "NotoSansCham-SemiBold.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_13.png",
+            "crop_sha256": "af1aea5177e3fb4e3b508fdb8c9d71578874aaedadd8dafa9fc05a7a52bce7a5",
+            "gt": "ꨞꩇ ꨌꩌ ꨓꨭꨝꩅ ꨝꨴꩍꨟꨪꩆ꩞ ꩝"
+          },
+          {
+            "doc_id": "ood_book_12_extrabold",
+            "font": "NotoSansCham-ExtraBold.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_14.png",
+            "crop_sha256": "1566bd0fcd762a65f1e69a1d431b71ff35a1e1909e54bb75aecb9efbf02cc375",
+            "gt": "ꨝꨪꨤꩆ ꨓꨎꨭꩍ ꨧꨆꨥꨪ ꨌꩌ (ꨗꨶꨮꩄ"
+          }
+        ],
+        "fonts_per_line": 1
+      },
+      "nominal_line_bboxes": [
+        [
+          45,
+          40,
+          300,
+          84
+        ],
+        [
+          45,
+          111,
+          303,
+          152
+        ],
+        [
+          45,
+          179,
+          379,
+          221
+        ],
+        [
+          45,
+          248,
+          362,
+          287
+        ],
+        [
+          45,
+          314,
+          446,
+          368
+        ],
+        [
+          45,
+          395,
+          433,
+          445
+        ],
+        [
+          45,
+          472,
+          340,
+          516
+        ],
+        [
+          45,
+          543,
+          191,
+          584
+        ],
+        [
+          45,
+          611,
+          386,
+          655
+        ],
+        [
+          45,
+          682,
+          323,
+          723
+        ],
+        [
+          45,
+          750,
+          359,
+          798
+        ],
+        [
+          45,
+          825,
+          394,
+          875
+        ]
+      ]
+    },
+    {
+      "id": "mix_04_bold_light",
+      "group": "mixed_fonts",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/mix_04_bold_light.png",
+      "image_sha256": "38a4689ba6e86ddf84fed2c9067a56a17e358307f72430c872642a2a318a3869",
+      "width": 600,
+      "height": 668,
+      "gt_lines": [
+        "ꨟꨐꨭꩌ ꨀꨳꨩ ꨧꨩ ꨝꨯꨱꩍ ꨆꨕꨯꨱꩍ ꨧꨯꨱꩃ ꩝",
+        "ꨋꩇ ꨡꨯꩍ ꨕꨤꩌ ꨚꩌ ꩝",
+        "ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ",
+        "ꨘꩆ ꨆꨮꨭ ꨝꨴꨬ ꨀꨇꩆ ꨗꨫ ꨆꨩ ꨝꨵꨯꨱꩍ ꩞",
+        "ꨗꩌ ꨓꨮꩊ ꨀꨣꩀ ꨗꨫ ꩝",
+        "ꨟꩃ ꨣꨪꨓꨭꩍ ꨔꨭꩆ ꨕꨨꨵꨮꨭ꩝ ꨚꨈꨮꩌ ꨓꨟꨩ ꨧꨯꨱꩃ",
+        "ꨈꨵꨮꩃ ꨢꨮꨭ ꨨꨣꨬ ꨚꨓꨯꨱꩌ꩝ ꨟꨁꩆ꩝ ꩝",
+        "ꨛꨯꨮ꩝ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨤꩄ ꨅꨩ ꩒꩐/꩑/꩒꩐꩑꩔ ꩞"
+      ],
+      "gt_count": 8,
+      "source_doc_ids": [
+        "ood_book_10_semibold",
+        "ood_book_11_light",
+        "ood_book_12_extrabold",
+        "ood_agal_04_thrah"
+      ],
+      "font_names": [
+        "NotoSansCham-SemiBold.ttf",
+        "NotoSansCham-Light.ttf",
+        "NotoSansCham-ExtraBold.ttf",
+        "EFEO Cam Thrah.otf"
+      ],
+      "transform": {
+        "type": "multifont_composition",
+        "construction": "mix_fonts_across_lines",
+        "font_names": [
+          "NotoSansCham-SemiBold.ttf",
+          "NotoSansCham-Light.ttf",
+          "NotoSansCham-ExtraBold.ttf",
+          "EFEO Cam Thrah.otf"
+        ],
+        "line_source_details": [
+          {
+            "doc_id": "ood_book_10_semibold",
+            "font": "NotoSansCham-SemiBold.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_01.png",
+            "crop_sha256": "e0e5e614106856551c51195e7694bf40b00b539f6992c9f1cd8abbad4e44293b",
+            "gt": "ꨟꨐꨭꩌ ꨀꨳꨩ ꨧꨩ ꨝꨯꨱꩍ ꨆꨕꨯꨱꩍ ꨧꨯꨱꩃ ꩝"
+          },
+          {
+            "doc_id": "ood_book_11_light",
+            "font": "NotoSansCham-Light.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_02.png",
+            "crop_sha256": "002ea6c12ad3f52c2c9e5f9a78ff02fc1231a46a8bf3072483b65491851dd293",
+            "gt": "ꨋꩇ ꨡꨯꩍ ꨕꨤꩌ ꨚꩌ ꩝"
+          },
+          {
+            "doc_id": "ood_book_12_extrabold",
+            "font": "NotoSansCham-ExtraBold.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_03.png",
+            "crop_sha256": "dd0161a5d5c2be3f8faf981c5c0da4c4b1a83997c03548b52509487aa4ea7bf1",
+            "gt": "ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ"
+          },
+          {
+            "doc_id": "ood_agal_04_thrah",
+            "font": "EFEO Cam Thrah.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_04_thrah_line_04.png",
+            "crop_sha256": "c90530bf27a9cc17bdca1f05b2b5e1fd823627ea66485ae855c5982a466330e9",
+            "gt": "ꨘꩆ ꨆꨮꨭ ꨝꨴꨬ ꨀꨇꩆ ꨗꨫ ꨆꨩ ꨝꨵꨯꨱꩍ ꩞"
+          },
+          {
+            "doc_id": "ood_book_10_semibold",
+            "font": "NotoSansCham-SemiBold.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_07.png",
+            "crop_sha256": "5e728c6a0c1ae0c868cc1a994d7b5f27d8a213a962dbda1c6aa3a44775cd2b1b",
+            "gt": "ꨗꩌ ꨓꨮꩊ ꨀꨣꩀ ꨗꨫ ꩝"
+          },
+          {
+            "doc_id": "ood_book_11_light",
+            "font": "NotoSansCham-Light.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_08.png",
+            "crop_sha256": "81b8b5127c970b72258fa1cf6c52169431c111c5f9b81747fc4313730153511e",
+            "gt": "ꨟꩃ ꨣꨪꨓꨭꩍ ꨔꨭꩆ ꨕꨨꨵꨮꨭ꩝ ꨚꨈꨮꩌ ꨓꨟꨩ ꨧꨯꨱꩃ"
+          },
+          {
+            "doc_id": "ood_book_12_extrabold",
+            "font": "NotoSansCham-ExtraBold.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_09.png",
+            "crop_sha256": "50a4c343191dcae95fc534633ffe933ad5232c32f543d8143aa95e1fda017008",
+            "gt": "ꨈꨵꨮꩃ ꨢꨮꨭ ꨨꨣꨬ ꨚꨓꨯꨱꩌ꩝ ꨟꨁꩆ꩝ ꩝"
+          },
+          {
+            "doc_id": "ood_agal_04_thrah",
+            "font": "EFEO Cam Thrah.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_04_thrah_line_10.png",
+            "crop_sha256": "af985a83cb8c4c1ec71417979ed3c175d9bd8e40ed43f7d429a11ef4a14bbab7",
+            "gt": "ꨛꨯꨮ꩝ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨤꩄ ꨅꨩ ꩒꩐/꩑/꩒꩐꩑꩔ ꩞"
+          }
+        ],
+        "fonts_per_line": 1
+      },
+      "nominal_line_bboxes": [
+        [
+          45,
+          40,
+          397,
+          93
+        ],
+        [
+          45,
+          120,
+          274,
+          164
+        ],
+        [
+          45,
+          191,
+          276,
+          239
+        ],
+        [
+          45,
+          266,
+          333,
+          307
+        ],
+        [
+          45,
+          334,
+          257,
+          377
+        ],
+        [
+          45,
+          404,
+          436,
+          457
+        ],
+        [
+          45,
+          484,
+          366,
+          538
+        ],
+        [
+          45,
+          565,
+          466,
+          606
+        ]
+      ]
+    },
+    {
+      "id": "mix_within_02",
+      "group": "mixed_fonts",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/mix_within_02.png",
+      "image_sha256": "393f492034c1fd1a430d3c41e5b74753e16f1724ef1b886bfef72cd1646f0cb6",
+      "width": 924,
+      "height": 519,
+      "gt_lines": [
+        "ꨀꨶꨮꩆ ꨓꨝꨶꨮꩆ ꨚꨎꨳꩀ ꨈꨮꩇ ꩞ ꨋꩇ ꨡꨯꩍ ꨕꨤꩌ ꨚꩌ ꩝",
+        "ꨋꩇ ꨡꨯꩍ ꨕꨤꩌ ꨚꩌ ꩝ ꨝꩀ ꨅꨩ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨣꨈꨵꨰ ꨘꩆ ꩝꩝",
+        "ꨘꩆ ꨚꨰꩀ ꨙꩃ ꨆꨳꨮꩃ ꨀꨝꨪꩍ ꨆꨵꨮꨭ ꨤꨝꨭꩀ ꩞ ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨀꨉꨩ ꨟꩃ ꩑꩒/꩑/꩑꩙꩙꩘",
+        "ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨀꨉꨩ ꨟꩃ ꩑꩒/꩑/꩑꩙꩙꩘ ꨝꨣꨭꨥ ꨟꩃ ꨣꨈꨵꨰ ꨘꩆ ꨝꨩ ꨀꨇꩆ ꨟꨰ ꩑/꩔/꩑꩙꩙꩘ ꩝",
+        "ꨀꨇꩆ ꨟꨰ-ꨎꨥ ꨆꨩ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩝꩝ ꨢꩃ ꨧꨯꨱꩃ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩞ ꨣꨪꩌ ꩝꩝",
+        "ꨢꩃ ꨧꨯꨱꩃ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩞ ꨣꨪꩌ ꩝꩝ ꨎꨮ ꨛꨯꨮ ꨝꨰ ꨛꨯꨮ ꨈꨗꨴꨮꩍ ꨕꨨꨵꩀ ꨝꨭꩍ ꩝꩝"
+      ],
+      "gt_count": 6,
+      "source_doc_ids": [
+        "ood_folio_05_kauthara",
+        "ood_book_11_light"
+      ],
+      "font_names": [
+        "EFEO Cam Kauthara.otf",
+        "NotoSansCham-Light.ttf"
+      ],
+      "transform": {
+        "type": "multifont_composition",
+        "construction": "mix_fonts_within_lines",
+        "font_names": [
+          "EFEO Cam Kauthara.otf",
+          "NotoSansCham-Light.ttf"
+        ],
+        "line_source_details": [
+          {
+            "doc_id": "ood_folio_05_kauthara",
+            "font": "EFEO Cam Kauthara.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_01.png",
+            "crop_sha256": "7c1b8d0e24bc61a2565104a5e929f78dc4db2e263b7c5a71a8e521f79e1385a0",
+            "gt": "ꨀꨶꨮꩆ ꨓꨝꨶꨮꩆ ꨚꨎꨳꩀ ꨈꨮꩇ ꩞"
+          },
+          {
+            "doc_id": "ood_book_11_light",
+            "font": "NotoSansCham-Light.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_02.png",
+            "crop_sha256": "002ea6c12ad3f52c2c9e5f9a78ff02fc1231a46a8bf3072483b65491851dd293",
+            "gt": "ꨋꩇ ꨡꨯꩍ ꨕꨤꩌ ꨚꩌ ꩝"
+          },
+          {
+            "doc_id": "ood_book_11_light",
+            "font": "NotoSansCham-Light.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_02.png",
+            "crop_sha256": "002ea6c12ad3f52c2c9e5f9a78ff02fc1231a46a8bf3072483b65491851dd293",
+            "gt": "ꨋꩇ ꨡꨯꩍ ꨕꨤꩌ ꨚꩌ ꩝"
+          },
+          {
+            "doc_id": "ood_folio_05_kauthara",
+            "font": "EFEO Cam Kauthara.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_04.png",
+            "crop_sha256": "87e4da9e4c8a1437aee7d61d57f9156802c2cced990616cbe5ba31503cf6114b",
+            "gt": "ꨝꩀ ꨅꨩ꩝ ꨝꨣꨭꨥ ꨟꩃ ꨣꨈꨵꨰ ꨘꩆ ꩝꩝"
+          },
+          {
+            "doc_id": "ood_folio_05_kauthara",
+            "font": "EFEO Cam Kauthara.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_05.png",
+            "crop_sha256": "e7f7111fc1cbbdf878306f87de6ce25863d1d782176aa38b30cd197038525be5",
+            "gt": "ꨘꩆ ꨚꨰꩀ ꨙꩃ ꨆꨳꨮꩃ ꨀꨝꨪꩍ ꨆꨵꨮꨭ ꨤꨝꨭꩀ ꩞"
+          },
+          {
+            "doc_id": "ood_book_11_light",
+            "font": "NotoSansCham-Light.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_06.png",
+            "crop_sha256": "652ef0c830106f291e520d3583df8f191e3b56e9c36318c8d7b6456d4dac9843",
+            "gt": "ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨀꨉꨩ ꨟꩃ ꩑꩒/꩑/꩑꩙꩙꩘"
+          },
+          {
+            "doc_id": "ood_book_11_light",
+            "font": "NotoSansCham-Light.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_06.png",
+            "crop_sha256": "652ef0c830106f291e520d3583df8f191e3b56e9c36318c8d7b6456d4dac9843",
+            "gt": "ꨗꨆꨓꨯꨮꨩ ꨨꨭꨩ ꨀꨉꨩ ꨟꩃ ꩑꩒/꩑/꩑꩙꩙꩘"
+          },
+          {
+            "doc_id": "ood_folio_05_kauthara",
+            "font": "EFEO Cam Kauthara.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_08.png",
+            "crop_sha256": "b30bf5b8669e1f8e13cb36f8db23585d60226bf46a8bfc263c3663b5ac0fdfcc",
+            "gt": "ꨝꨣꨭꨥ ꨟꩃ ꨣꨈꨵꨰ ꨘꩆ ꨝꨩ ꨀꨇꩆ ꨟꨰ ꩑/꩔/꩑꩙꩙꩘ ꩝"
+          },
+          {
+            "doc_id": "ood_folio_05_kauthara",
+            "font": "EFEO Cam Kauthara.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_09.png",
+            "crop_sha256": "48b8015b88e016812c13ad782b994390eeb6c692a1e6188f237d84036ab73d2b",
+            "gt": "ꨀꨇꩆ ꨟꨰ-ꨎꨥ ꨆꨩ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩝꩝"
+          },
+          {
+            "doc_id": "ood_book_11_light",
+            "font": "NotoSansCham-Light.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_10.png",
+            "crop_sha256": "405b6fc3b958b8f87f6e8267fe38b3a1a59b1428ac1659d66b4a8ffb83aceaaa",
+            "gt": "ꨢꩃ ꨧꨯꨱꩃ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩞ ꨣꨪꩌ ꩝꩝"
+          },
+          {
+            "doc_id": "ood_book_11_light",
+            "font": "NotoSansCham-Light.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_11_light_line_10.png",
+            "crop_sha256": "405b6fc3b958b8f87f6e8267fe38b3a1a59b1428ac1659d66b4a8ffb83aceaaa",
+            "gt": "ꨢꩃ ꨧꨯꨱꩃ ꨛꨯꨩꩀ ꨨꨕꨮꩉ ꨟꨭꩀꨆꨬ꩞ ꨣꨪꩌ ꩝꩝"
+          },
+          {
+            "doc_id": "ood_folio_05_kauthara",
+            "font": "EFEO Cam Kauthara.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_05_kauthara_line_12.png",
+            "crop_sha256": "ec045da479e66893c43748ee2d31f25ffa76d238edd6d1c1f0a0adbf7649431a",
+            "gt": "ꨎꨮ ꨛꨯꨮ ꨝꨰ ꨛꨯꨮ ꨈꨗꨴꨮꩍ ꨕꨨꨵꩀ ꨝꨭꩍ ꩝꩝"
+          }
+        ],
+        "fonts_per_line": 2
+      },
+      "nominal_line_bboxes": [
+        [
+          45,
+          40,
+          519,
+          84
+        ],
+        [
+          45,
+          111,
+          535,
+          155
+        ],
+        [
+          45,
+          182,
+          744,
+          230
+        ],
+        [
+          45,
+          257,
+          854,
+          305
+        ],
+        [
+          45,
+          332,
+          696,
+          381
+        ],
+        [
+          45,
+          408,
+          732,
+          457
+        ]
+      ]
+    },
+    {
+      "id": "mix_within_03",
+      "group": "mixed_fonts",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/mix_within_03.png",
+      "image_sha256": "e54f29db8c988981e5d586cb380d92801d116e8510a04c279eafc46c1616afe2",
+      "width": 1035,
+      "height": 538,
+      "gt_lines": [
+        "꩑꩞ ꨗꨫ ꨟꨕꨩ ꨓꩀ ꨕꨫ ꨆꩊ ꨘꩆ ꨟꨰ ꨝꨴꨬ ꨆꨩ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩝꩝",
+        "ꨟꨰ ꨝꨴꨬ ꨆꨩ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩝꩝ ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝ ꨌꨯꨱꩃ ꨤꨪꨆꨮꨭ ꨨꨎꩆ ꨀꨊꨪꩆ ꩒꩒/꩘/꩒꩐꩒꩑",
+        "ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨧꨯꨱꩃ",
+        "ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨧꨯꨱꩃ ꨝꨵꨯꨱꩍ ꨨꨭꨩ ꨗꩌ ꨓꨮꩊ ꩝",
+        "ꨈꩆ ꨆꨴꨲꩍ ꨓꨟꨯꨱꩃ ꨚꨓꨬ ꩝ ꨧꨯꨱꩃ ꨋꩇ ꨡꨯꩍ ꨟꨗꨭꩍ ꨝꩉ",
+        "ꨨꨰ ꨡꨮꩃ ꨆꨓꨯꨮꨩ꩝ ꨧꨯꨱꩃ ꨨꨭꨩ ꨈꨵꨮꩃ ꩝꩝ ꨧꨤꨪꩍ ꨨꨤꨩ-ꨕꨨꨵꩀ ꨨꨕꨯꩌ꩝"
+      ],
+      "gt_count": 6,
+      "source_doc_ids": [
+        "ood_agal_01_panduranga",
+        "ood_book_09_aiaru",
+        "ood_book_12_extrabold"
+      ],
+      "font_names": [
+        "EFEO Cam Panduranga.otf",
+        "EFEO Cam AiaRu.otf",
+        "NotoSansCham-ExtraBold.ttf"
+      ],
+      "transform": {
+        "type": "multifont_composition",
+        "construction": "mix_fonts_within_lines",
+        "font_names": [
+          "EFEO Cam Panduranga.otf",
+          "EFEO Cam AiaRu.otf",
+          "NotoSansCham-ExtraBold.ttf"
+        ],
+        "line_source_details": [
+          {
+            "doc_id": "ood_agal_01_panduranga",
+            "font": "EFEO Cam Panduranga.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_01.png",
+            "crop_sha256": "4cbeb36322a389aacdeb87d51923c8652931c0cb4bc09cbc60400d842422d322",
+            "gt": "꩑꩞ ꨗꨫ ꨟꨕꨩ ꨓꩀ ꨕꨫ ꨆꩊ ꨘꩆ"
+          },
+          {
+            "doc_id": "ood_book_09_aiaru",
+            "font": "EFEO Cam AiaRu.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_02.png",
+            "crop_sha256": "0d378b4425b1f6806e22870cc6840b88de829b3537bf2f5b6c0fe522d63cdf78",
+            "gt": "ꨟꨰ ꨝꨴꨬ ꨆꨩ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩝꩝"
+          },
+          {
+            "doc_id": "ood_book_09_aiaru",
+            "font": "EFEO Cam AiaRu.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_02.png",
+            "crop_sha256": "0d378b4425b1f6806e22870cc6840b88de829b3537bf2f5b6c0fe522d63cdf78",
+            "gt": "ꨟꨰ ꨝꨴꨬ ꨆꨩ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩝꩝"
+          },
+          {
+            "doc_id": "ood_book_12_extrabold",
+            "font": "NotoSansCham-ExtraBold.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_04.png",
+            "crop_sha256": "fcaaafd1c9276b51aacd0bbc2cb9f3c6d3dff1b6221676dfa1399376af49e3f4",
+            "gt": "ꨕꨯꩌ ꨝꨪꨟꨯꩂ ꨟꨆꩊ꩝ ꨌꨯꨱꩃ ꨤꨪꨆꨮꨭ ꨨꨎꩆ ꨀꨊꨪꩆ ꩒꩒/꩘/꩒꩐꩒꩑"
+          },
+          {
+            "doc_id": "ood_book_12_extrabold",
+            "font": "NotoSansCham-ExtraBold.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_03.png",
+            "crop_sha256": "dd0161a5d5c2be3f8faf981c5c0da4c4b1a83997c03548b52509487aa4ea7bf1",
+            "gt": "ꨋꩇ ꨈꨴꨭꩀ ꨃꨥ ꨢꩃ"
+          },
+          {
+            "doc_id": "ood_agal_01_panduranga",
+            "font": "EFEO Cam Panduranga.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_06.png",
+            "crop_sha256": "67d0d9077f76827652a15f71805266dc3a17646db652c773aa0d6f13fcc1be4d",
+            "gt": "ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨧꨯꨱꩃ"
+          },
+          {
+            "doc_id": "ood_agal_01_panduranga",
+            "font": "EFEO Cam Panduranga.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_06.png",
+            "crop_sha256": "67d0d9077f76827652a15f71805266dc3a17646db652c773aa0d6f13fcc1be4d",
+            "gt": "ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨧꨯꨱꩃ"
+          },
+          {
+            "doc_id": "ood_book_09_aiaru",
+            "font": "EFEO Cam AiaRu.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_08.png",
+            "crop_sha256": "b3e896ac44c5120d757bafcf21ae7b6280c74bed38c60ca5729e1fee871e2c60",
+            "gt": "ꨝꨵꨯꨱꩍ ꨨꨭꨩ ꨗꩌ ꨓꨮꩊ ꩝"
+          },
+          {
+            "doc_id": "ood_book_09_aiaru",
+            "font": "EFEO Cam AiaRu.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_09_aiaru_line_07.png",
+            "crop_sha256": "0bce82f58bd1716347e8beba47a85a69931f28c635b5214a27208a59b89be8e9",
+            "gt": "ꨈꩆ ꨆꨴꨲꩍ ꨓꨟꨯꨱꩃ ꨚꨓꨬ ꩝"
+          },
+          {
+            "doc_id": "ood_book_12_extrabold",
+            "font": "NotoSansCham-ExtraBold.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_10.png",
+            "crop_sha256": "f85cc17710dbddb53f5cd9566775c737f0372fd910c1c81eaecc061b41e78e98",
+            "gt": "ꨧꨯꨱꩃ ꨋꩇ ꨡꨯꩍ ꨟꨗꨭꩍ ꨝꩉ"
+          },
+          {
+            "doc_id": "ood_book_12_extrabold",
+            "font": "NotoSansCham-ExtraBold.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_12_extrabold_line_08.png",
+            "crop_sha256": "a4b3d61d7363be59e3317ec3f2502cb29fa1d52ecc1e8491a8aecfdf81dd8dfe",
+            "gt": "ꨨꨰ ꨡꨮꩃ ꨆꨓꨯꨮꨩ꩝ ꨧꨯꨱꩃ ꨨꨭꨩ ꨈꨵꨮꩃ ꩝꩝"
+          },
+          {
+            "doc_id": "ood_agal_01_panduranga",
+            "font": "EFEO Cam Panduranga.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_01_panduranga_line_12.png",
+            "crop_sha256": "ea1f23214f119df69f73e8800bda498d0d0b626a13c8ef5ea4e987aad7b95f46",
+            "gt": "ꨧꨤꨪꩍ ꨨꨤꨩ-ꨕꨨꨵꩀ ꨨꨕꨯꩌ꩝"
+          }
+        ],
+        "fonts_per_line": 2
+      },
+      "nominal_line_bboxes": [
+        [
+          45,
+          40,
+          514,
+          84
+        ],
+        [
+          45,
+          111,
+          965,
+          166
+        ],
+        [
+          45,
+          193,
+          514,
+          241
+        ],
+        [
+          45,
+          268,
+          452,
+          312
+        ],
+        [
+          45,
+          339,
+          590,
+          394
+        ],
+        [
+          45,
+          421,
+          586,
+          476
+        ]
+      ]
+    },
+    {
+      "id": "mix_within_04",
+      "group": "mixed_fonts",
+      "kind": "synthetic_heldout_transform",
+      "image_relpath": "ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/mix_within_04.png",
+      "image_sha256": "10dc5c2874d5878d8a4a35e47bd738ae4b069850037cefb18aa9b34ed889b552",
+      "width": 887,
+      "height": 519,
+      "gt_lines": [
+        "ꨈꨣꩈ ꨕꨯꨱꩀ ꨇꨪꩀ ꨨꨤꨩ꩝ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꩞ ꨘꩆ ꨝꨩ ꨀꨇꩆ ꨟꨰ ꨎꨥ ꨆꨩ ꨛꨯꨮ",
+        "ꨘꩆ ꨝꨩ ꨀꨇꩆ ꨟꨰ ꨎꨥ ꨆꨩ ꨛꨯꨮ ꨟꨐꨭꩌ ꨀꨳꨩ ꨕꨫ ꨆꨕꨯꨱꩍ ꨘꩆ ꨕꨨꨵꨮꨭ ꩝꩝",
+        "ꨝꨣꨭꨥ ꨟꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨟꨐꨭꩌ ꨀꨳꨩ ꩝ ꨀꨇꩆ ꨘꩆ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꨗꨯꨱ ꨚꨰꩀ ꩝",
+        "ꨣꨈꨵꨰ ꨘꩆ ꨡꨯꩍ ꨝꨰ ꨘꩆ ꨀꨦꨪꩅ ꨝꨵꨯꨱꩍ ꩝꩝ ꨕꨯꨱꩀ ꨤꨳꩍ ꨣꨭꩇ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩝",
+        "ꨡꨯꩍ ꨕꨶꨩ ꨕꨴꨬ ꨁꨗꨩ ꨟꨰ ꨟꩀ ꨣꨈꨵꨰ ꨧꨝꨭꩃ꩝ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꩝꩝",
+        "ꨛꨯꨮ ꨚꩆ ꨀꨗꨯꨱꩃ ꨨꨤꨩ ꨘꩆ ꨟꩃ ꩝꩝ ꨧꨯꨱꩃ ꨆꨣꨬ ꨌꨪꩍ ꨀꨝꨪꩍ ꨝꨶꨮꩊ"
+      ],
+      "gt_count": 6,
+      "source_doc_ids": [
+        "ood_folio_07_campa",
+        "ood_agal_03_parik",
+        "ood_book_10_semibold",
+        "ood_agal_02_panrang"
+      ],
+      "font_names": [
+        "EFEO Cam Campa.otf",
+        "EFEO Cam Parik.otf",
+        "NotoSansCham-SemiBold.ttf",
+        "EFEO Cam Panrang.otf"
+      ],
+      "transform": {
+        "type": "multifont_composition",
+        "construction": "mix_fonts_within_lines",
+        "font_names": [
+          "EFEO Cam Campa.otf",
+          "EFEO Cam Parik.otf",
+          "NotoSansCham-SemiBold.ttf",
+          "EFEO Cam Panrang.otf"
+        ],
+        "line_source_details": [
+          {
+            "doc_id": "ood_folio_07_campa",
+            "font": "EFEO Cam Campa.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_01.png",
+            "crop_sha256": "6586739eba56889f1c951c1af73f961de1da6e57992fe84bb67a33352bbed523",
+            "gt": "ꨈꨣꩈ ꨕꨯꨱꩀ ꨇꨪꩀ ꨨꨤꨩ꩝ ꨝꨵꨯꨱꩍ ꨛꨯꨮ ꩞"
+          },
+          {
+            "doc_id": "ood_agal_03_parik",
+            "font": "EFEO Cam Parik.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_02.png",
+            "crop_sha256": "30d1b3c5da05a2c53c89ce0b062a67a75240b3e87a7f5573e882752b28c8de88",
+            "gt": "ꨘꩆ ꨝꨩ ꨀꨇꩆ ꨟꨰ ꨎꨥ ꨆꨩ ꨛꨯꨮ"
+          },
+          {
+            "doc_id": "ood_agal_03_parik",
+            "font": "EFEO Cam Parik.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_02.png",
+            "crop_sha256": "30d1b3c5da05a2c53c89ce0b062a67a75240b3e87a7f5573e882752b28c8de88",
+            "gt": "ꨘꩆ ꨝꨩ ꨀꨇꩆ ꨟꨰ ꨎꨥ ꨆꨩ ꨛꨯꨮ"
+          },
+          {
+            "doc_id": "ood_book_10_semibold",
+            "font": "NotoSansCham-SemiBold.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_04.png",
+            "crop_sha256": "e6c6810c7d44476fa616191642e4d78a5bd593000413a6d3dd9bb79564225273",
+            "gt": "ꨟꨐꨭꩌ ꨀꨳꨩ ꨕꨫ ꨆꨕꨯꨱꩍ ꨘꩆ ꨕꨨꨵꨮꨭ ꩝꩝"
+          },
+          {
+            "doc_id": "ood_book_10_semibold",
+            "font": "NotoSansCham-SemiBold.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_03.png",
+            "crop_sha256": "bf23a0efcb736a4b502dcc8a42d51e593cc76419a25b9d6b4adaf89be8ebfbab",
+            "gt": "ꨝꨣꨭꨥ ꨟꩃ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꨈꨣꩈ ꨟꨐꨭꩌ ꨀꨳꨩ ꩝"
+          },
+          {
+            "doc_id": "ood_agal_02_panrang",
+            "font": "EFEO Cam Panrang.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_02_panrang_line_06.png",
+            "crop_sha256": "929b507ea3d7074f796619ae6f006b45abb14e6f9731d29b1d9a4e845fa49cae",
+            "gt": "ꨀꨇꩆ ꨘꩆ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꨘꩆ ꨗꨯꨱ ꨚꨰꩀ ꩝"
+          },
+          {
+            "doc_id": "ood_agal_02_panrang",
+            "font": "EFEO Cam Panrang.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_02_panrang_line_04.png",
+            "crop_sha256": "d04ff2ec56bf50dc3437c3767533a89d9c8a77342d3cab9b658e1ec195e87573",
+            "gt": "ꨣꨈꨵꨰ ꨘꩆ ꨡꨯꩍ ꨝꨰ ꨘꩆ ꨀꨦꨪꩅ ꨝꨵꨯꨱꩍ ꩝꩝"
+          },
+          {
+            "doc_id": "ood_folio_07_campa",
+            "font": "EFEO Cam Campa.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_08.png",
+            "crop_sha256": "fec9cce8775168ab8a34061dc6cc0bb966cdeb3124fe8b618a519e4f601731de",
+            "gt": "ꨕꨯꨱꩀ ꨤꨳꩍ ꨣꨭꩇ ꨛꨯꨮ ꨆꨵꨯꨱꩃ ꩝"
+          },
+          {
+            "doc_id": "ood_folio_07_campa",
+            "font": "EFEO Cam Campa.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_folio_07_campa_line_07.png",
+            "crop_sha256": "fcd9ddfb78ec9290a73ec368bdaa6c84195cde4404bb00b0faaad2a51f7528e3",
+            "gt": "ꨡꨯꩍ ꨕꨶꨩ ꨕꨴꨬ ꨁꨗꨩ"
+          },
+          {
+            "doc_id": "ood_agal_03_parik",
+            "font": "EFEO Cam Parik.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_10.png",
+            "crop_sha256": "6cdaf2a25426b28cf292f3e30dceac8cec0bdd8aabe29eee7cd26e199814775f",
+            "gt": "ꨟꨰ ꨟꩀ ꨣꨈꨵꨰ ꨧꨝꨭꩃ꩝ ꨝꨵꨯꨱꩍ ꨣꨈꨵꨰ ꩝꩝"
+          },
+          {
+            "doc_id": "ood_agal_03_parik",
+            "font": "EFEO Cam Parik.otf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_agal_03_parik_line_08.png",
+            "crop_sha256": "ed88e4c71e8ccfe44498f53891306f5753b881d247c2cd2101656bf75ed0b3f6",
+            "gt": "ꨛꨯꨮ ꨚꩆ ꨀꨗꨯꨱꩃ ꨨꨤꨩ ꨘꩆ ꨟꩃ ꩝꩝"
+          },
+          {
+            "doc_id": "ood_book_10_semibold",
+            "font": "NotoSansCham-SemiBold.ttf",
+            "crop_relpath": "ocr-benchmark/data/realscan_gold_v2/crops/ood_book_10_semibold_line_12.png",
+            "crop_sha256": "b25c9cd458e4499d0d3e0705a9e4ec80f4e8e894b62128ba669d7c0c34415788",
+            "gt": "ꨧꨯꨱꩃ ꨆꨣꨬ ꨌꨪꩍ ꨀꨝꨪꩍ ꨝꨶꨮꩊ"
+          }
+        ],
+        "fonts_per_line": 2
+      },
+      "nominal_line_bboxes": [
+        [
+          45,
+          40,
+          655,
+          82
+        ],
+        [
+          45,
+          109,
+          723,
+          157
+        ],
+        [
+          45,
+          184,
+          817,
+          237
+        ],
+        [
+          45,
+          264,
+          628,
+          306
+        ],
+        [
+          45,
+          333,
+          506,
+          377
+        ],
+        [
+          45,
+          404,
+          611,
+          457
+        ]
+      ]
+    }
+  ]
+}

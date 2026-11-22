@@ -1,0 +1,2242 @@
+[
+  {
+    "sample_id": 1,
+    "symbol": "?",
+    "gt": "ꨧꨪ ꨀꨆꨢꨯꨮꩅ ?",
+    "crop_file": "crops/symbol_lines/symbol_000.png",
+    "width": 169,
+    "height": 48
+  },
+  {
+    "sample_id": 2,
+    "symbol": "?",
+    "gt": "ꨓꨝꨳꩀ ꨓꨶꨮꩉ ?",
+    "crop_file": "crops/symbol_lines/symbol_001.png",
+    "width": 150,
+    "height": 48
+  },
+  {
+    "sample_id": 3,
+    "symbol": "?",
+    "gt": "ꨚꨗꩍ ꨧꨪ ?",
+    "crop_file": "crops/symbol_lines/symbol_002.png",
+    "width": 129,
+    "height": 48
+  },
+  {
+    "sample_id": 4,
+    "symbol": "?",
+    "gt": "ꨧꨪ ꨆꨭꨖꨩ ?",
+    "crop_file": "crops/symbol_lines/symbol_003.png",
+    "width": 111,
+    "height": 48
+  },
+  {
+    "sample_id": 5,
+    "symbol": "?",
+    "gt": "ꨀꨆꨢꨯꨮꩅ ꨧꨪ ?",
+    "crop_file": "crops/symbol_lines/symbol_004.png",
+    "width": 169,
+    "height": 48
+  },
+  {
+    "sample_id": 6,
+    "symbol": "?",
+    "gt": "ꨓꨶꨮꩉ ꨀꨆꨢꨯꨮꩅ ?",
+    "crop_file": "crops/symbol_lines/symbol_005.png",
+    "width": 179,
+    "height": 48
+  },
+  {
+    "sample_id": 7,
+    "symbol": "?",
+    "gt": "ꨓꨶꨮꩉ ꨆꨭꨖꨩ ?",
+    "crop_file": "crops/symbol_lines/symbol_006.png",
+    "width": 122,
+    "height": 48
+  },
+  {
+    "sample_id": 8,
+    "symbol": "?",
+    "gt": "ꨔꩅ ꨓꨝꨳꩀ ?",
+    "crop_file": "crops/symbol_lines/symbol_007.png",
+    "width": 157,
+    "height": 48
+  },
+  {
+    "sample_id": 9,
+    "symbol": "?",
+    "gt": "ꨀꨆꨢꨯꨮꩅ ꨚꨗꩍ ?",
+    "crop_file": "crops/symbol_lines/symbol_008.png",
+    "width": 201,
+    "height": 48
+  },
+  {
+    "sample_id": 10,
+    "symbol": "?",
+    "gt": "ꨆꨭꨖꨩ ꨚꨗꨶꨮꩄ ?",
+    "crop_file": "crops/symbol_lines/symbol_009.png",
+    "width": 153,
+    "height": 48
+  },
+  {
+    "sample_id": 11,
+    "symbol": "?",
+    "gt": "ꨚꨗꩍ ꨓꨶꨮꩉ ?",
+    "crop_file": "crops/symbol_lines/symbol_010.png",
+    "width": 140,
+    "height": 48
+  },
+  {
+    "sample_id": 12,
+    "symbol": "?",
+    "gt": "ꨚꨗꨶꨮꩄ ꨧꨪ ?",
+    "crop_file": "crops/symbol_lines/symbol_011.png",
+    "width": 139,
+    "height": 48
+  },
+  {
+    "sample_id": 13,
+    "symbol": "?",
+    "gt": "ꨆꨭꨖꨩ ꨧꨪ ?",
+    "crop_file": "crops/symbol_lines/symbol_012.png",
+    "width": 111,
+    "height": 48
+  },
+  {
+    "sample_id": 14,
+    "symbol": "?",
+    "gt": "ꨚꨗꨶꨮꩄ ꨓꨝꨳꩀ ?",
+    "crop_file": "crops/symbol_lines/symbol_013.png",
+    "width": 182,
+    "height": 48
+  },
+  {
+    "sample_id": 15,
+    "symbol": "?",
+    "gt": "ꨀꨆꨢꨯꨮꩅ ꨔꩅ ?",
+    "crop_file": "crops/symbol_lines/symbol_014.png",
+    "width": 186,
+    "height": 48
+  },
+  {
+    "sample_id": 16,
+    "symbol": "?",
+    "gt": "ꨧꨪ ꨆꨭꨖꨩ ?",
+    "crop_file": "crops/symbol_lines/symbol_015.png",
+    "width": 111,
+    "height": 48
+  },
+  {
+    "sample_id": 17,
+    "symbol": "?",
+    "gt": "ꨓꨝꨳꩀ ꨚꨗꨶꨮꩄ ?",
+    "crop_file": "crops/symbol_lines/symbol_016.png",
+    "width": 182,
+    "height": 48
+  },
+  {
+    "sample_id": 18,
+    "symbol": "?",
+    "gt": "ꨓꨶꨮꩉ ꨧꨪ ?",
+    "crop_file": "crops/symbol_lines/symbol_017.png",
+    "width": 107,
+    "height": 48
+  },
+  {
+    "sample_id": 19,
+    "symbol": "?",
+    "gt": "ꨓꨶꨮꩉ ꨓꨝꨳꩀ ?",
+    "crop_file": "crops/symbol_lines/symbol_018.png",
+    "width": 150,
+    "height": 48
+  },
+  {
+    "sample_id": 20,
+    "symbol": "?",
+    "gt": "ꨓꨶꨮꩉ ꨧꨪ ?",
+    "crop_file": "crops/symbol_lines/symbol_019.png",
+    "width": 107,
+    "height": 48
+  },
+  {
+    "sample_id": 21,
+    "symbol": "!",
+    "gt": "ꨓꨝꨳꩀ ꨔꩅ !",
+    "crop_file": "crops/symbol_lines/symbol_020.png",
+    "width": 153,
+    "height": 48
+  },
+  {
+    "sample_id": 22,
+    "symbol": "!",
+    "gt": "ꨚꨗꨶꨮꩄ ꨚꨗꩍ !",
+    "crop_file": "crops/symbol_lines/symbol_021.png",
+    "width": 168,
+    "height": 48
+  },
+  {
+    "sample_id": 23,
+    "symbol": "!",
+    "gt": "ꨚꨗꨶꨮꩄ ꨓꨶꨮꩉ !",
+    "crop_file": "crops/symbol_lines/symbol_022.png",
+    "width": 146,
+    "height": 48
+  },
+  {
+    "sample_id": 24,
+    "symbol": "!",
+    "gt": "ꨓꨝꨳꩀ ꨧꨪ !",
+    "crop_file": "crops/symbol_lines/symbol_023.png",
+    "width": 136,
+    "height": 48
+  },
+  {
+    "sample_id": 25,
+    "symbol": "!",
+    "gt": "ꨚꨗꩍ ꨓꨶꨮꩉ !",
+    "crop_file": "crops/symbol_lines/symbol_024.png",
+    "width": 136,
+    "height": 48
+  },
+  {
+    "sample_id": 26,
+    "symbol": "!",
+    "gt": "ꨔꩅ ꨆꨭꨖꨩ !",
+    "crop_file": "crops/symbol_lines/symbol_025.png",
+    "width": 124,
+    "height": 48
+  },
+  {
+    "sample_id": 27,
+    "symbol": "!",
+    "gt": "ꨓꨶꨮꩉ ꨚꨗꨶꨮꩄ !",
+    "crop_file": "crops/symbol_lines/symbol_026.png",
+    "width": 146,
+    "height": 48
+  },
+  {
+    "sample_id": 28,
+    "symbol": "!",
+    "gt": "ꨀꨆꨢꨯꨮꩅ ꨓꨶꨮꩉ !",
+    "crop_file": "crops/symbol_lines/symbol_027.png",
+    "width": 176,
+    "height": 48
+  },
+  {
+    "sample_id": 29,
+    "symbol": "!",
+    "gt": "ꨀꨆꨢꨯꨮꩅ ꨚꨗꨶꨮꩄ !",
+    "crop_file": "crops/symbol_lines/symbol_028.png",
+    "width": 207,
+    "height": 48
+  },
+  {
+    "sample_id": 30,
+    "symbol": "!",
+    "gt": "ꨓꨝꨳꩀ ꨧꨪ !",
+    "crop_file": "crops/symbol_lines/symbol_029.png",
+    "width": 136,
+    "height": 48
+  },
+  {
+    "sample_id": 31,
+    "symbol": "!",
+    "gt": "ꨚꨗꨶꨮꩄ ꨓꨶꨮꩉ !",
+    "crop_file": "crops/symbol_lines/symbol_030.png",
+    "width": 146,
+    "height": 48
+  },
+  {
+    "sample_id": 32,
+    "symbol": "!",
+    "gt": "ꨔꩅ ꨆꨭꨖꨩ !",
+    "crop_file": "crops/symbol_lines/symbol_031.png",
+    "width": 124,
+    "height": 48
+  },
+  {
+    "sample_id": 33,
+    "symbol": "!",
+    "gt": "ꨔꩅ ꨚꨗꩍ !",
+    "crop_file": "crops/symbol_lines/symbol_032.png",
+    "width": 143,
+    "height": 48
+  },
+  {
+    "sample_id": 34,
+    "symbol": "!",
+    "gt": "ꨚꨗꩍ ꨓꨶꨮꩉ !",
+    "crop_file": "crops/symbol_lines/symbol_033.png",
+    "width": 136,
+    "height": 48
+  },
+  {
+    "sample_id": 35,
+    "symbol": "!",
+    "gt": "ꨓꨝꨳꩀ ꨆꨭꨖꨩ !",
+    "crop_file": "crops/symbol_lines/symbol_034.png",
+    "width": 151,
+    "height": 48
+  },
+  {
+    "sample_id": 36,
+    "symbol": "!",
+    "gt": "ꨆꨭꨖꨩ ꨚꨗꨶꨮꩄ !",
+    "crop_file": "crops/symbol_lines/symbol_035.png",
+    "width": 150,
+    "height": 48
+  },
+  {
+    "sample_id": 37,
+    "symbol": "!",
+    "gt": "ꨚꨗꩍ ꨔꩅ !",
+    "crop_file": "crops/symbol_lines/symbol_036.png",
+    "width": 143,
+    "height": 48
+  },
+  {
+    "sample_id": 38,
+    "symbol": "!",
+    "gt": "ꨀꨆꨢꨯꨮꩅ ꨧꨪ !",
+    "crop_file": "crops/symbol_lines/symbol_037.png",
+    "width": 165,
+    "height": 48
+  },
+  {
+    "sample_id": 39,
+    "symbol": "!",
+    "gt": "ꨚꨗꩍ ꨆꨭꨖꨩ !",
+    "crop_file": "crops/symbol_lines/symbol_038.png",
+    "width": 141,
+    "height": 48
+  },
+  {
+    "sample_id": 40,
+    "symbol": "!",
+    "gt": "ꨧꨪ ꨆꨭꨖꨩ !",
+    "crop_file": "crops/symbol_lines/symbol_039.png",
+    "width": 107,
+    "height": 48
+  },
+  {
+    "sample_id": 41,
+    "symbol": "#",
+    "gt": "ꨔꩅ #995 ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_040.png",
+    "width": 196,
+    "height": 48
+  },
+  {
+    "sample_id": 42,
+    "symbol": "#",
+    "gt": "ꨀꨆꨢꨯꨮꩅ #699 ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_041.png",
+    "width": 208,
+    "height": 48
+  },
+  {
+    "sample_id": 43,
+    "symbol": "#",
+    "gt": "ꨓꨝꨳꩀ #115 ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_042.png",
+    "width": 222,
+    "height": 48
+  },
+  {
+    "sample_id": 44,
+    "symbol": "#",
+    "gt": "ꨓꨝꨳꩀ #162 ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_043.png",
+    "width": 194,
+    "height": 48
+  },
+  {
+    "sample_id": 45,
+    "symbol": "#",
+    "gt": "ꨔꩅ #977 ꨀꨆꨢꨯꨮꩅ",
+    "crop_file": "crops/symbol_lines/symbol_044.png",
+    "width": 225,
+    "height": 48
+  },
+  {
+    "sample_id": 46,
+    "symbol": "#",
+    "gt": "ꨓꨝꨳꩀ #520 ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_045.png",
+    "width": 212,
+    "height": 48
+  },
+  {
+    "sample_id": 47,
+    "symbol": "#",
+    "gt": "ꨧꨪ #862 ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_046.png",
+    "width": 179,
+    "height": 48
+  },
+  {
+    "sample_id": 48,
+    "symbol": "#",
+    "gt": "ꨓꨶꨮꩉ #383 ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_047.png",
+    "width": 179,
+    "height": 48
+  },
+  {
+    "sample_id": 49,
+    "symbol": "#",
+    "gt": "ꨚꨗꩍ #614 ꨀꨆꨢꨯꨮꩅ",
+    "crop_file": "crops/symbol_lines/symbol_048.png",
+    "width": 242,
+    "height": 48
+  },
+  {
+    "sample_id": 50,
+    "symbol": "#",
+    "gt": "ꨚꨗꨶꨮꩄ #20 ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_049.png",
+    "width": 183,
+    "height": 48
+  },
+  {
+    "sample_id": 51,
+    "symbol": "#",
+    "gt": "ꨧꨪ #900 ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_050.png",
+    "width": 178,
+    "height": 48
+  },
+  {
+    "sample_id": 52,
+    "symbol": "#",
+    "gt": "ꨓꨝꨳꩀ #60 ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_051.png",
+    "width": 177,
+    "height": 48
+  },
+  {
+    "sample_id": 53,
+    "symbol": "#",
+    "gt": "ꨓꨶꨮꩉ #88 ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_052.png",
+    "width": 135,
+    "height": 48
+  },
+  {
+    "sample_id": 54,
+    "symbol": "#",
+    "gt": "ꨔꩅ #779 ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_053.png",
+    "width": 153,
+    "height": 48
+  },
+  {
+    "sample_id": 55,
+    "symbol": "#",
+    "gt": "ꨚꨗꩍ #676 ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_054.png",
+    "width": 202,
+    "height": 48
+  },
+  {
+    "sample_id": 56,
+    "symbol": "#",
+    "gt": "ꨔꩅ #272 ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_055.png",
+    "width": 186,
+    "height": 48
+  },
+  {
+    "sample_id": 57,
+    "symbol": "#",
+    "gt": "ꨆꨭꨖꨩ #952 ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_056.png",
+    "width": 161,
+    "height": 48
+  },
+  {
+    "sample_id": 58,
+    "symbol": "#",
+    "gt": "ꨓꨶꨮꩉ #409 ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_057.png",
+    "width": 189,
+    "height": 48
+  },
+  {
+    "sample_id": 59,
+    "symbol": "#",
+    "gt": "ꨚꨗꨶꨮꩄ #922 ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_058.png",
+    "width": 195,
+    "height": 48
+  },
+  {
+    "sample_id": 60,
+    "symbol": "#",
+    "gt": "ꨔꩅ #254 ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_059.png",
+    "width": 153,
+    "height": 48
+  },
+  {
+    "sample_id": 61,
+    "symbol": "&",
+    "gt": "ꨓꨶꨮꩉ & ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_060.png",
+    "width": 113,
+    "height": 48
+  },
+  {
+    "sample_id": 62,
+    "symbol": "&",
+    "gt": "ꨀꨆꨢꨯꨮꩅ & ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_061.png",
+    "width": 185,
+    "height": 48
+  },
+  {
+    "sample_id": 63,
+    "symbol": "&",
+    "gt": "ꨓꨶꨮꩉ & ꨀꨆꨢꨯꨮꩅ",
+    "crop_file": "crops/symbol_lines/symbol_062.png",
+    "width": 185,
+    "height": 48
+  },
+  {
+    "sample_id": 64,
+    "symbol": "&",
+    "gt": "ꨀꨆꨢꨯꨮꩅ & ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_063.png",
+    "width": 185,
+    "height": 48
+  },
+  {
+    "sample_id": 65,
+    "symbol": "&",
+    "gt": "ꨀꨆꨢꨯꨮꩅ & ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_064.png",
+    "width": 217,
+    "height": 48
+  },
+  {
+    "sample_id": 66,
+    "symbol": "&",
+    "gt": "ꨓꨶꨮꩉ & ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_065.png",
+    "width": 156,
+    "height": 48
+  },
+  {
+    "sample_id": 67,
+    "symbol": "&",
+    "gt": "ꨔꩅ & ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_066.png",
+    "width": 130,
+    "height": 48
+  },
+  {
+    "sample_id": 68,
+    "symbol": "&",
+    "gt": "ꨚꨗꩍ & ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_067.png",
+    "width": 153,
+    "height": 48
+  },
+  {
+    "sample_id": 69,
+    "symbol": "&",
+    "gt": "ꨔꩅ & ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_068.png",
+    "width": 134,
+    "height": 48
+  },
+  {
+    "sample_id": 70,
+    "symbol": "&",
+    "gt": "ꨧꨪ & ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_069.png",
+    "width": 102,
+    "height": 48
+  },
+  {
+    "sample_id": 71,
+    "symbol": "&",
+    "gt": "ꨆꨭꨖꨩ & ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_070.png",
+    "width": 159,
+    "height": 48
+  },
+  {
+    "sample_id": 72,
+    "symbol": "&",
+    "gt": "ꨆꨭꨖꨩ & ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_071.png",
+    "width": 134,
+    "height": 48
+  },
+  {
+    "sample_id": 73,
+    "symbol": "&",
+    "gt": "ꨀꨆꨢꨯꨮꩅ & ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_072.png",
+    "width": 175,
+    "height": 48
+  },
+  {
+    "sample_id": 74,
+    "symbol": "&",
+    "gt": "ꨆꨭꨖꨩ & ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_073.png",
+    "width": 159,
+    "height": 48
+  },
+  {
+    "sample_id": 75,
+    "symbol": "&",
+    "gt": "ꨧꨪ & ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_074.png",
+    "width": 113,
+    "height": 48
+  },
+  {
+    "sample_id": 76,
+    "symbol": "&",
+    "gt": "ꨓꨶꨮꩉ & ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_075.png",
+    "width": 130,
+    "height": 48
+  },
+  {
+    "sample_id": 77,
+    "symbol": "&",
+    "gt": "ꨆꨭꨖꨩ & ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_076.png",
+    "width": 150,
+    "height": 48
+  },
+  {
+    "sample_id": 78,
+    "symbol": "&",
+    "gt": "ꨔꩅ & ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_077.png",
+    "width": 130,
+    "height": 48
+  },
+  {
+    "sample_id": 79,
+    "symbol": "&",
+    "gt": "ꨧꨪ & ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_078.png",
+    "width": 119,
+    "height": 48
+  },
+  {
+    "sample_id": 80,
+    "symbol": "&",
+    "gt": "ꨧꨪ & ꨀꨆꨢꨯꨮꩅ",
+    "crop_file": "crops/symbol_lines/symbol_079.png",
+    "width": 175,
+    "height": 48
+  },
+  {
+    "sample_id": 81,
+    "symbol": "*",
+    "gt": "* ꨀꨆꨢꨯꨮꩅ ꨧꨪ *",
+    "crop_file": "crops/symbol_lines/symbol_080.png",
+    "width": 188,
+    "height": 48
+  },
+  {
+    "sample_id": 82,
+    "symbol": "*",
+    "gt": "* ꨓꨶꨮꩉ ꨚꨗꩍ *",
+    "crop_file": "crops/symbol_lines/symbol_081.png",
+    "width": 159,
+    "height": 48
+  },
+  {
+    "sample_id": 83,
+    "symbol": "*",
+    "gt": "* ꨔꩅ ꨔꩅ *",
+    "crop_file": "crops/symbol_lines/symbol_082.png",
+    "width": 149,
+    "height": 48
+  },
+  {
+    "sample_id": 84,
+    "symbol": "*",
+    "gt": "* ꨆꨭꨖꨩ ꨀꨆꨢꨯꨮꩅ *",
+    "crop_file": "crops/symbol_lines/symbol_083.png",
+    "width": 202,
+    "height": 48
+  },
+  {
+    "sample_id": 85,
+    "symbol": "*",
+    "gt": "* ꨆꨭꨖꨩ ꨀꨆꨢꨯꨮꩅ *",
+    "crop_file": "crops/symbol_lines/symbol_084.png",
+    "width": 202,
+    "height": 48
+  },
+  {
+    "sample_id": 86,
+    "symbol": "*",
+    "gt": "* ꨓꨝꨳꩀ ꨔꩅ *",
+    "crop_file": "crops/symbol_lines/symbol_085.png",
+    "width": 176,
+    "height": 48
+  },
+  {
+    "sample_id": 87,
+    "symbol": "*",
+    "gt": "* ꨆꨭꨖꨩ ꨔꩅ *",
+    "crop_file": "crops/symbol_lines/symbol_086.png",
+    "width": 147,
+    "height": 48
+  },
+  {
+    "sample_id": 88,
+    "symbol": "*",
+    "gt": "* ꨓꨶꨮꩉ ꨓꨝꨳꩀ *",
+    "crop_file": "crops/symbol_lines/symbol_087.png",
+    "width": 169,
+    "height": 48
+  },
+  {
+    "sample_id": 89,
+    "symbol": "*",
+    "gt": "* ꨀꨆꨢꨯꨮꩅ ꨀꨆꨢꨯꨮꩅ *",
+    "crop_file": "crops/symbol_lines/symbol_088.png",
+    "width": 260,
+    "height": 48
+  },
+  {
+    "sample_id": 90,
+    "symbol": "*",
+    "gt": "* ꨚꨗꨶꨮꩄ ꨀꨆꨢꨯꨮꩅ *",
+    "crop_file": "crops/symbol_lines/symbol_089.png",
+    "width": 231,
+    "height": 48
+  },
+  {
+    "sample_id": 91,
+    "symbol": "*",
+    "gt": "* ꨔꩅ ꨚꨗꩍ *",
+    "crop_file": "crops/symbol_lines/symbol_090.png",
+    "width": 165,
+    "height": 48
+  },
+  {
+    "sample_id": 92,
+    "symbol": "*",
+    "gt": "* ꨧꨪ ꨚꨗꩍ *",
+    "crop_file": "crops/symbol_lines/symbol_091.png",
+    "width": 148,
+    "height": 48
+  },
+  {
+    "sample_id": 93,
+    "symbol": "*",
+    "gt": "* ꨧꨪ ꨓꨶꨮꩉ *",
+    "crop_file": "crops/symbol_lines/symbol_092.png",
+    "width": 126,
+    "height": 48
+  },
+  {
+    "sample_id": 94,
+    "symbol": "*",
+    "gt": "* ꨧꨪ ꨓꨶꨮꩉ *",
+    "crop_file": "crops/symbol_lines/symbol_093.png",
+    "width": 126,
+    "height": 48
+  },
+  {
+    "sample_id": 95,
+    "symbol": "*",
+    "gt": "* ꨀꨆꨢꨯꨮꩅ ꨧꨪ *",
+    "crop_file": "crops/symbol_lines/symbol_094.png",
+    "width": 188,
+    "height": 48
+  },
+  {
+    "sample_id": 96,
+    "symbol": "*",
+    "gt": "* ꨚꨗꨶꨮꩄ ꨓꨝꨳꩀ *",
+    "crop_file": "crops/symbol_lines/symbol_095.png",
+    "width": 201,
+    "height": 48
+  },
+  {
+    "sample_id": 97,
+    "symbol": "*",
+    "gt": "* ꨚꨗꨶꨮꩄ ꨓꨶꨮꩉ *",
+    "crop_file": "crops/symbol_lines/symbol_096.png",
+    "width": 168,
+    "height": 48
+  },
+  {
+    "sample_id": 98,
+    "symbol": "*",
+    "gt": "* ꨆꨭꨖꨩ ꨚꨗꩍ *",
+    "crop_file": "crops/symbol_lines/symbol_097.png",
+    "width": 163,
+    "height": 48
+  },
+  {
+    "sample_id": 99,
+    "symbol": "*",
+    "gt": "* ꨓꨝꨳꩀ ꨔꩅ *",
+    "crop_file": "crops/symbol_lines/symbol_098.png",
+    "width": 176,
+    "height": 48
+  },
+  {
+    "sample_id": 100,
+    "symbol": "*",
+    "gt": "* ꨧꨪ ꨀꨆꨢꨯꨮꩅ *",
+    "crop_file": "crops/symbol_lines/symbol_099.png",
+    "width": 188,
+    "height": 48
+  },
+  {
+    "sample_id": 101,
+    "symbol": "<",
+    "gt": "ꨧꨪ < ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_100.png",
+    "width": 99,
+    "height": 48
+  },
+  {
+    "sample_id": 102,
+    "symbol": "<",
+    "gt": "ꨓꨶꨮꩉ < ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_101.png",
+    "width": 153,
+    "height": 48
+  },
+  {
+    "sample_id": 103,
+    "symbol": "<",
+    "gt": "ꨚꨗꨶꨮꩄ < ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_102.png",
+    "width": 141,
+    "height": 48
+  },
+  {
+    "sample_id": 104,
+    "symbol": "<",
+    "gt": "ꨓꨶꨮꩉ < ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_103.png",
+    "width": 152,
+    "height": 48
+  },
+  {
+    "sample_id": 105,
+    "symbol": "<",
+    "gt": "ꨚꨗꩍ < ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_104.png",
+    "width": 149,
+    "height": 48
+  },
+  {
+    "sample_id": 106,
+    "symbol": "<",
+    "gt": "ꨓꨝꨳꩀ < ꨀꨆꨢꨯꨮꩅ",
+    "crop_file": "crops/symbol_lines/symbol_105.png",
+    "width": 214,
+    "height": 48
+  },
+  {
+    "sample_id": 107,
+    "symbol": "<",
+    "gt": "ꨓꨝꨳꩀ < ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_106.png",
+    "width": 142,
+    "height": 48
+  },
+  {
+    "sample_id": 108,
+    "symbol": "<",
+    "gt": "ꨚꨗꩍ < ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_107.png",
+    "width": 176,
+    "height": 48
+  },
+  {
+    "sample_id": 109,
+    "symbol": "<",
+    "gt": "ꨧꨪ < ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_108.png",
+    "width": 132,
+    "height": 48
+  },
+  {
+    "sample_id": 110,
+    "symbol": "<",
+    "gt": "ꨓꨝꨳꩀ < ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_109.png",
+    "width": 153,
+    "height": 48
+  },
+  {
+    "sample_id": 111,
+    "symbol": "<",
+    "gt": "ꨚꨗꨶꨮꩄ < ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_110.png",
+    "width": 152,
+    "height": 48
+  },
+  {
+    "sample_id": 112,
+    "symbol": "<",
+    "gt": "ꨓꨝꨳꩀ < ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_111.png",
+    "width": 159,
+    "height": 48
+  },
+  {
+    "sample_id": 113,
+    "symbol": "<",
+    "gt": "ꨀꨆꨢꨯꨮꩅ < ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_112.png",
+    "width": 171,
+    "height": 48
+  },
+  {
+    "sample_id": 114,
+    "symbol": "<",
+    "gt": "ꨆꨭꨖꨩ < ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_113.png",
+    "width": 157,
+    "height": 48
+  },
+  {
+    "sample_id": 115,
+    "symbol": "<",
+    "gt": "ꨀꨆꨢꨯꨮꩅ < ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_114.png",
+    "width": 214,
+    "height": 48
+  },
+  {
+    "sample_id": 116,
+    "symbol": "<",
+    "gt": "ꨚꨗꩍ < ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_115.png",
+    "width": 176,
+    "height": 48
+  },
+  {
+    "sample_id": 117,
+    "symbol": "<",
+    "gt": "ꨔꩅ < ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_116.png",
+    "width": 131,
+    "height": 48
+  },
+  {
+    "sample_id": 118,
+    "symbol": "<",
+    "gt": "ꨀꨆꨢꨯꨮꩅ < ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_117.png",
+    "width": 171,
+    "height": 48
+  },
+  {
+    "sample_id": 119,
+    "symbol": "<",
+    "gt": "ꨚꨗꩍ < ꨀꨆꨢꨯꨮꩅ",
+    "crop_file": "crops/symbol_lines/symbol_118.png",
+    "width": 205,
+    "height": 48
+  },
+  {
+    "sample_id": 120,
+    "symbol": "<",
+    "gt": "ꨚꨗꨶꨮꩄ < ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_119.png",
+    "width": 175,
+    "height": 48
+  },
+  {
+    "sample_id": 121,
+    "symbol": ">",
+    "gt": "ꨚꨗꩍ > ꨀꨆꨢꨯꨮꩅ",
+    "crop_file": "crops/symbol_lines/symbol_120.png",
+    "width": 205,
+    "height": 48
+  },
+  {
+    "sample_id": 122,
+    "symbol": ">",
+    "gt": "ꨚꨗꨶꨮꩄ > ꨀꨆꨢꨯꨮꩅ",
+    "crop_file": "crops/symbol_lines/symbol_121.png",
+    "width": 214,
+    "height": 48
+  },
+  {
+    "sample_id": 123,
+    "symbol": ">",
+    "gt": "ꨚꨗꨶꨮꩄ > ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_122.png",
+    "width": 152,
+    "height": 48
+  },
+  {
+    "sample_id": 124,
+    "symbol": ">",
+    "gt": "ꨓꨶꨮꩉ > ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_123.png",
+    "width": 110,
+    "height": 48
+  },
+  {
+    "sample_id": 125,
+    "symbol": ">",
+    "gt": "ꨆꨭꨖꨩ > ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_124.png",
+    "width": 147,
+    "height": 48
+  },
+  {
+    "sample_id": 126,
+    "symbol": ">",
+    "gt": "ꨓꨶꨮꩉ > ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_125.png",
+    "width": 142,
+    "height": 48
+  },
+  {
+    "sample_id": 127,
+    "symbol": ">",
+    "gt": "ꨚꨗꩍ > ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_126.png",
+    "width": 147,
+    "height": 48
+  },
+  {
+    "sample_id": 128,
+    "symbol": ">",
+    "gt": "ꨚꨗꩍ > ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_127.png",
+    "width": 175,
+    "height": 48
+  },
+  {
+    "sample_id": 129,
+    "symbol": ">",
+    "gt": "ꨆꨭꨖꨩ > ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_128.png",
+    "width": 124,
+    "height": 48
+  },
+  {
+    "sample_id": 130,
+    "symbol": ">",
+    "gt": "ꨚꨗꩍ > ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_129.png",
+    "width": 132,
+    "height": 48
+  },
+  {
+    "sample_id": 131,
+    "symbol": ">",
+    "gt": "ꨀꨆꨢꨯꨮꩅ > ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_130.png",
+    "width": 189,
+    "height": 48
+  },
+  {
+    "sample_id": 132,
+    "symbol": ">",
+    "gt": "ꨓꨶꨮꩉ > ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_131.png",
+    "width": 127,
+    "height": 48
+  },
+  {
+    "sample_id": 133,
+    "symbol": ">",
+    "gt": "ꨓꨝꨳꩀ > ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_132.png",
+    "width": 153,
+    "height": 48
+  },
+  {
+    "sample_id": 134,
+    "symbol": ">",
+    "gt": "ꨀꨆꨢꨯꨮꩅ > ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_133.png",
+    "width": 182,
+    "height": 48
+  },
+  {
+    "sample_id": 135,
+    "symbol": ">",
+    "gt": "ꨚꨗꨶꨮꩄ > ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_134.png",
+    "width": 185,
+    "height": 48
+  },
+  {
+    "sample_id": 136,
+    "symbol": ">",
+    "gt": "ꨧꨪ > ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_135.png",
+    "width": 142,
+    "height": 48
+  },
+  {
+    "sample_id": 137,
+    "symbol": ">",
+    "gt": "ꨆꨭꨖꨩ > ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_136.png",
+    "width": 156,
+    "height": 48
+  },
+  {
+    "sample_id": 138,
+    "symbol": ">",
+    "gt": "ꨀꨆꨢꨯꨮꩅ > ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_137.png",
+    "width": 171,
+    "height": 48
+  },
+  {
+    "sample_id": 139,
+    "symbol": ">",
+    "gt": "ꨓꨝꨳꩀ > ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_138.png",
+    "width": 176,
+    "height": 48
+  },
+  {
+    "sample_id": 140,
+    "symbol": ">",
+    "gt": "ꨓꨝꨳꩀ > ꨀꨆꨢꨯꨮꩅ",
+    "crop_file": "crops/symbol_lines/symbol_139.png",
+    "width": 214,
+    "height": 48
+  },
+  {
+    "sample_id": 141,
+    "symbol": "{",
+    "gt": "ꨆꨭꨖꨩ {747} ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_140.png",
+    "width": 195,
+    "height": 48
+  },
+  {
+    "sample_id": 142,
+    "symbol": "{",
+    "gt": "ꨚꨗꨶꨮꩄ {621} ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_141.png",
+    "width": 195,
+    "height": 48
+  },
+  {
+    "sample_id": 143,
+    "symbol": "{",
+    "gt": "ꨧꨪ {922} ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_142.png",
+    "width": 153,
+    "height": 48
+  },
+  {
+    "sample_id": 144,
+    "symbol": "{",
+    "gt": "ꨓꨶꨮꩉ {46} ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_143.png",
+    "width": 180,
+    "height": 48
+  },
+  {
+    "sample_id": 145,
+    "symbol": "{",
+    "gt": "ꨆꨭꨖꨩ {533} ꨀꨆꨢꨯꨮꩅ",
+    "crop_file": "crops/symbol_lines/symbol_144.png",
+    "width": 225,
+    "height": 48
+  },
+  {
+    "sample_id": 146,
+    "symbol": "{",
+    "gt": "ꨓꨶꨮꩉ {442} ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_145.png",
+    "width": 191,
+    "height": 48
+  },
+  {
+    "sample_id": 147,
+    "symbol": "{",
+    "gt": "ꨧꨪ {639} ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_146.png",
+    "width": 181,
+    "height": 48
+  },
+  {
+    "sample_id": 148,
+    "symbol": "{",
+    "gt": "ꨚꨗꨶꨮꩄ {738} ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_147.png",
+    "width": 181,
+    "height": 48
+  },
+  {
+    "sample_id": 149,
+    "symbol": "{",
+    "gt": "ꨓꨝꨳꩀ {683} ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_148.png",
+    "width": 225,
+    "height": 48
+  },
+  {
+    "sample_id": 150,
+    "symbol": "{",
+    "gt": "ꨆꨭꨖꨩ {413} ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_149.png",
+    "width": 195,
+    "height": 48
+  },
+  {
+    "sample_id": 151,
+    "symbol": "{",
+    "gt": "ꨓꨝꨳꩀ {197} ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_150.png",
+    "width": 214,
+    "height": 48
+  },
+  {
+    "sample_id": 152,
+    "symbol": "{",
+    "gt": "ꨆꨭꨖꨩ {694} ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_151.png",
+    "width": 168,
+    "height": 48
+  },
+  {
+    "sample_id": 153,
+    "symbol": "{",
+    "gt": "ꨚꨗꩍ {416} ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_152.png",
+    "width": 214,
+    "height": 48
+  },
+  {
+    "sample_id": 154,
+    "symbol": "{",
+    "gt": "ꨀꨆꨢꨯꨮꩅ {294} ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_153.png",
+    "width": 254,
+    "height": 48
+  },
+  {
+    "sample_id": 155,
+    "symbol": "{",
+    "gt": "ꨓꨶꨮꩉ {805} ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_154.png",
+    "width": 164,
+    "height": 48
+  },
+  {
+    "sample_id": 156,
+    "symbol": "{",
+    "gt": "ꨚꨗꨶꨮꩄ {453} ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_155.png",
+    "width": 198,
+    "height": 48
+  },
+  {
+    "sample_id": 157,
+    "symbol": "{",
+    "gt": "ꨔꩅ {524} ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_156.png",
+    "width": 165,
+    "height": 48
+  },
+  {
+    "sample_id": 158,
+    "symbol": "{",
+    "gt": "ꨔꩅ {675} ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_157.png",
+    "width": 189,
+    "height": 48
+  },
+  {
+    "sample_id": 159,
+    "symbol": "{",
+    "gt": "ꨧꨪ {528} ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_158.png",
+    "width": 182,
+    "height": 48
+  },
+  {
+    "sample_id": 160,
+    "symbol": "{",
+    "gt": "ꨚꨗꨶꨮꩄ {839} ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_159.png",
+    "width": 181,
+    "height": 48
+  },
+  {
+    "sample_id": 161,
+    "symbol": "}",
+    "gt": "ꨓꨶꨮꩉ {231} ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_160.png",
+    "width": 192,
+    "height": 48
+  },
+  {
+    "sample_id": 162,
+    "symbol": "}",
+    "gt": "ꨓꨶꨮꩉ {26} ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_161.png",
+    "width": 170,
+    "height": 48
+  },
+  {
+    "sample_id": 163,
+    "symbol": "}",
+    "gt": "ꨀꨆꨢꨯꨮꩅ {487} ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_162.png",
+    "width": 221,
+    "height": 48
+  },
+  {
+    "sample_id": 164,
+    "symbol": "}",
+    "gt": "ꨧꨪ {425} ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_163.png",
+    "width": 155,
+    "height": 48
+  },
+  {
+    "sample_id": 165,
+    "symbol": "}",
+    "gt": "ꨓꨶꨮꩉ {507} ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_164.png",
+    "width": 164,
+    "height": 48
+  },
+  {
+    "sample_id": 166,
+    "symbol": "}",
+    "gt": "ꨆꨭꨖꨩ {152} ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_165.png",
+    "width": 164,
+    "height": 48
+  },
+  {
+    "sample_id": 167,
+    "symbol": "}",
+    "gt": "ꨀꨆꨢꨯꨮꩅ {798} ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_166.png",
+    "width": 211,
+    "height": 48
+  },
+  {
+    "sample_id": 168,
+    "symbol": "}",
+    "gt": "ꨆꨭꨖꨩ {181} ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_167.png",
+    "width": 164,
+    "height": 48
+  },
+  {
+    "sample_id": 169,
+    "symbol": "}",
+    "gt": "ꨔꩅ {571} ꨀꨆꨢꨯꨮꩅ",
+    "crop_file": "crops/symbol_lines/symbol_168.png",
+    "width": 228,
+    "height": 48
+  },
+  {
+    "sample_id": 170,
+    "symbol": "}",
+    "gt": "ꨓꨶꨮꩉ {468} ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_169.png",
+    "width": 149,
+    "height": 48
+  },
+  {
+    "sample_id": 171,
+    "symbol": "}",
+    "gt": "ꨚꨗꩍ {684} ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_170.png",
+    "width": 189,
+    "height": 48
+  },
+  {
+    "sample_id": 172,
+    "symbol": "}",
+    "gt": "ꨚꨗꨶꨮꩄ {628} ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_171.png",
+    "width": 198,
+    "height": 48
+  },
+  {
+    "sample_id": 173,
+    "symbol": "}",
+    "gt": "ꨆꨭꨖꨩ {919} ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_172.png",
+    "width": 170,
+    "height": 48
+  },
+  {
+    "sample_id": 174,
+    "symbol": "}",
+    "gt": "ꨚꨗꩍ {461} ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_173.png",
+    "width": 189,
+    "height": 48
+  },
+  {
+    "sample_id": 175,
+    "symbol": "}",
+    "gt": "ꨓꨝꨳꩀ {861} ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_174.png",
+    "width": 192,
+    "height": 48
+  },
+  {
+    "sample_id": 176,
+    "symbol": "}",
+    "gt": "ꨓꨝꨳꩀ {642} ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_175.png",
+    "width": 199,
+    "height": 48
+  },
+  {
+    "sample_id": 177,
+    "symbol": "}",
+    "gt": "ꨓꨶꨮꩉ {451} ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_176.png",
+    "width": 192,
+    "height": 48
+  },
+  {
+    "sample_id": 178,
+    "symbol": "}",
+    "gt": "ꨧꨪ {241} ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_177.png",
+    "width": 182,
+    "height": 48
+  },
+  {
+    "sample_id": 179,
+    "symbol": "}",
+    "gt": "ꨓꨝꨳꩀ {328} ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_178.png",
+    "width": 224,
+    "height": 48
+  },
+  {
+    "sample_id": 180,
+    "symbol": "}",
+    "gt": "ꨧꨪ {155} ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_179.png",
+    "width": 171,
+    "height": 48
+  },
+  {
+    "sample_id": 181,
+    "symbol": "\\",
+    "gt": "ꨓꨶꨮꩉ \\ ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_180.png",
+    "width": 120,
+    "height": 48
+  },
+  {
+    "sample_id": 182,
+    "symbol": "\\",
+    "gt": "ꨚꨗꩍ \\ ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_181.png",
+    "width": 139,
+    "height": 48
+  },
+  {
+    "sample_id": 183,
+    "symbol": "\\",
+    "gt": "ꨆꨭꨖꨩ \\ ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_182.png",
+    "width": 124,
+    "height": 48
+  },
+  {
+    "sample_id": 184,
+    "symbol": "\\",
+    "gt": "ꨔꩅ \\ ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_183.png",
+    "width": 127,
+    "height": 48
+  },
+  {
+    "sample_id": 185,
+    "symbol": "\\",
+    "gt": "ꨓꨶꨮꩉ \\ ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_184.png",
+    "width": 120,
+    "height": 48
+  },
+  {
+    "sample_id": 186,
+    "symbol": "\\",
+    "gt": "ꨀꨆꨢꨯꨮꩅ \\ ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_185.png",
+    "width": 182,
+    "height": 48
+  },
+  {
+    "sample_id": 187,
+    "symbol": "\\",
+    "gt": "ꨀꨆꨢꨯꨮꩅ \\ ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_186.png",
+    "width": 210,
+    "height": 48
+  },
+  {
+    "sample_id": 188,
+    "symbol": "\\",
+    "gt": "ꨆꨭꨖꨩ \\ ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_187.png",
+    "width": 124,
+    "height": 48
+  },
+  {
+    "sample_id": 189,
+    "symbol": "\\",
+    "gt": "ꨓꨶꨮꩉ \\ ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_188.png",
+    "width": 123,
+    "height": 48
+  },
+  {
+    "sample_id": 190,
+    "symbol": "\\",
+    "gt": "ꨓꨝꨳꩀ \\ ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_189.png",
+    "width": 153,
+    "height": 48
+  },
+  {
+    "sample_id": 191,
+    "symbol": "\\",
+    "gt": "ꨀꨆꨢꨯꨮꩅ \\ ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_190.png",
+    "width": 182,
+    "height": 48
+  },
+  {
+    "sample_id": 192,
+    "symbol": "\\",
+    "gt": "ꨆꨭꨖꨩ \\ ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_191.png",
+    "width": 143,
+    "height": 48
+  },
+  {
+    "sample_id": 193,
+    "symbol": "\\",
+    "gt": "ꨔꩅ \\ ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_192.png",
+    "width": 145,
+    "height": 48
+  },
+  {
+    "sample_id": 194,
+    "symbol": "\\",
+    "gt": "ꨀꨆꨢꨯꨮꩅ \\ ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_193.png",
+    "width": 182,
+    "height": 48
+  },
+  {
+    "sample_id": 195,
+    "symbol": "\\",
+    "gt": "ꨀꨆꨢꨯꨮꩅ \\ ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_194.png",
+    "width": 167,
+    "height": 48
+  },
+  {
+    "sample_id": 196,
+    "symbol": "\\",
+    "gt": "ꨆꨭꨖꨩ \\ ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_195.png",
+    "width": 143,
+    "height": 48
+  },
+  {
+    "sample_id": 197,
+    "symbol": "\\",
+    "gt": "ꨔꩅ \\ ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_196.png",
+    "width": 145,
+    "height": 48
+  },
+  {
+    "sample_id": 198,
+    "symbol": "\\",
+    "gt": "ꨓꨝꨳꩀ \\ ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_197.png",
+    "width": 153,
+    "height": 48
+  },
+  {
+    "sample_id": 199,
+    "symbol": "\\",
+    "gt": "ꨓꨶꨮꩉ \\ ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_198.png",
+    "width": 123,
+    "height": 48
+  },
+  {
+    "sample_id": 200,
+    "symbol": "\\",
+    "gt": "ꨚꨗꨶꨮꩄ \\ ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_199.png",
+    "width": 153,
+    "height": 48
+  },
+  {
+    "sample_id": 201,
+    "symbol": "_",
+    "gt": "ꨆꨭꨖꨩ_ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_200.png",
+    "width": 144,
+    "height": 48
+  },
+  {
+    "sample_id": 202,
+    "symbol": "_",
+    "gt": "ꨧꨪ_ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_201.png",
+    "width": 103,
+    "height": 48
+  },
+  {
+    "sample_id": 203,
+    "symbol": "_",
+    "gt": "ꨀꨆꨢꨯꨮꩅ_ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_202.png",
+    "width": 201,
+    "height": 48
+  },
+  {
+    "sample_id": 204,
+    "symbol": "_",
+    "gt": "ꨧꨪ_ꨀꨆꨢꨯꨮꩅ",
+    "crop_file": "crops/symbol_lines/symbol_203.png",
+    "width": 158,
+    "height": 48
+  },
+  {
+    "sample_id": 205,
+    "symbol": "_",
+    "gt": "ꨀꨆꨢꨯꨮꩅ_ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_204.png",
+    "width": 169,
+    "height": 48
+  },
+  {
+    "sample_id": 206,
+    "symbol": "_",
+    "gt": "ꨀꨆꨢꨯꨮꩅ_ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_205.png",
+    "width": 191,
+    "height": 48
+  },
+  {
+    "sample_id": 207,
+    "symbol": "_",
+    "gt": "ꨚꨗꩍ_ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_206.png",
+    "width": 135,
+    "height": 48
+  },
+  {
+    "sample_id": 208,
+    "symbol": "_",
+    "gt": "ꨧꨪ_ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_207.png",
+    "width": 96,
+    "height": 48
+  },
+  {
+    "sample_id": 209,
+    "symbol": "_",
+    "gt": "ꨓꨝꨳꩀ_ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_208.png",
+    "width": 171,
+    "height": 48
+  },
+  {
+    "sample_id": 210,
+    "symbol": "_",
+    "gt": "ꨧꨪ_ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_209.png",
+    "width": 119,
+    "height": 48
+  },
+  {
+    "sample_id": 211,
+    "symbol": "_",
+    "gt": "ꨓꨝꨳꩀ_ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_210.png",
+    "width": 129,
+    "height": 48
+  },
+  {
+    "sample_id": 212,
+    "symbol": "_",
+    "gt": "ꨀꨆꨢꨯꨮꩅ_ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_211.png",
+    "width": 201,
+    "height": 48
+  },
+  {
+    "sample_id": 213,
+    "symbol": "_",
+    "gt": "ꨆꨭꨖꨩ_ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_212.png",
+    "width": 115,
+    "height": 48
+  },
+  {
+    "sample_id": 214,
+    "symbol": "_",
+    "gt": "ꨓꨶꨮꩉ_ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_213.png",
+    "width": 96,
+    "height": 48
+  },
+  {
+    "sample_id": 215,
+    "symbol": "_",
+    "gt": "ꨓꨶꨮꩉ_ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_214.png",
+    "width": 96,
+    "height": 48
+  },
+  {
+    "sample_id": 216,
+    "symbol": "_",
+    "gt": "ꨓꨝꨳꩀ_ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_215.png",
+    "width": 129,
+    "height": 48
+  },
+  {
+    "sample_id": 217,
+    "symbol": "_",
+    "gt": "ꨀꨆꨢꨯꨮꩅ_ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_216.png",
+    "width": 201,
+    "height": 48
+  },
+  {
+    "sample_id": 218,
+    "symbol": "_",
+    "gt": "ꨆꨭꨖꨩ_ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_217.png",
+    "width": 143,
+    "height": 48
+  },
+  {
+    "sample_id": 219,
+    "symbol": "_",
+    "gt": "ꨚꨗꨶꨮꩄ_ꨀꨆꨢꨯꨮꩅ",
+    "crop_file": "crops/symbol_lines/symbol_218.png",
+    "width": 201,
+    "height": 48
+  },
+  {
+    "sample_id": 220,
+    "symbol": "_",
+    "gt": "ꨆꨭꨖꨩ_ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_219.png",
+    "width": 117,
+    "height": 48
+  },
+  {
+    "sample_id": 221,
+    "symbol": "[",
+    "gt": "ꨆꨭꨖꨩ [651] ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_220.png",
+    "width": 194,
+    "height": 48
+  },
+  {
+    "sample_id": 222,
+    "symbol": "[",
+    "gt": "ꨔꩅ [446] ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_221.png",
+    "width": 186,
+    "height": 48
+  },
+  {
+    "sample_id": 223,
+    "symbol": "[",
+    "gt": "ꨚꨗꩍ [631] ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_222.png",
+    "width": 213,
+    "height": 48
+  },
+  {
+    "sample_id": 224,
+    "symbol": "[",
+    "gt": "ꨔꩅ [447] ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_223.png",
+    "width": 171,
+    "height": 48
+  },
+  {
+    "sample_id": 225,
+    "symbol": "[",
+    "gt": "ꨓꨝꨳꩀ [873] ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_224.png",
+    "width": 222,
+    "height": 48
+  },
+  {
+    "sample_id": 226,
+    "symbol": "[",
+    "gt": "ꨓꨶꨮꩉ [286] ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_225.png",
+    "width": 147,
+    "height": 48
+  },
+  {
+    "sample_id": 227,
+    "symbol": "[",
+    "gt": "ꨔꩅ [769] ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_226.png",
+    "width": 164,
+    "height": 48
+  },
+  {
+    "sample_id": 228,
+    "symbol": "[",
+    "gt": "ꨔꩅ [345] ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_227.png",
+    "width": 168,
+    "height": 48
+  },
+  {
+    "sample_id": 229,
+    "symbol": "[",
+    "gt": "ꨀꨆꨢꨯꨮꩅ [872] ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_228.png",
+    "width": 225,
+    "height": 48
+  },
+  {
+    "sample_id": 230,
+    "symbol": "[",
+    "gt": "ꨚꨗꨶꨮꩄ [500] ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_229.png",
+    "width": 212,
+    "height": 48
+  },
+  {
+    "sample_id": 231,
+    "symbol": "[",
+    "gt": "ꨓꨶꨮꩉ [817] ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_230.png",
+    "width": 189,
+    "height": 48
+  },
+  {
+    "sample_id": 232,
+    "symbol": "[",
+    "gt": "ꨓꨝꨳꩀ [287] ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_231.png",
+    "width": 222,
+    "height": 48
+  },
+  {
+    "sample_id": 233,
+    "symbol": "[",
+    "gt": "ꨓꨝꨳꩀ [530] ꨀꨆꨢꨯꨮꩅ",
+    "crop_file": "crops/symbol_lines/symbol_232.png",
+    "width": 252,
+    "height": 48
+  },
+  {
+    "sample_id": 234,
+    "symbol": "[",
+    "gt": "ꨓꨶꨮꩉ [248] ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_233.png",
+    "width": 147,
+    "height": 48
+  },
+  {
+    "sample_id": 235,
+    "symbol": "[",
+    "gt": "ꨆꨭꨖꨩ [569] ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_234.png",
+    "width": 168,
+    "height": 48
+  },
+  {
+    "sample_id": 236,
+    "symbol": "[",
+    "gt": "ꨓꨶꨮꩉ [662] ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_235.png",
+    "width": 164,
+    "height": 48
+  },
+  {
+    "sample_id": 237,
+    "symbol": "[",
+    "gt": "ꨔꩅ [812] ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_236.png",
+    "width": 171,
+    "height": 48
+  },
+  {
+    "sample_id": 238,
+    "symbol": "[",
+    "gt": "ꨀꨆꨢꨯꨮꩅ [302] ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_237.png",
+    "width": 208,
+    "height": 48
+  },
+  {
+    "sample_id": 239,
+    "symbol": "[",
+    "gt": "ꨓꨶꨮꩉ [709] ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_238.png",
+    "width": 161,
+    "height": 48
+  },
+  {
+    "sample_id": 240,
+    "symbol": "[",
+    "gt": "ꨓꨶꨮꩉ [680] ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_239.png",
+    "width": 189,
+    "height": 48
+  },
+  {
+    "sample_id": 241,
+    "symbol": "]",
+    "gt": "ꨚꨗꨶꨮꩄ [567] ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_240.png",
+    "width": 195,
+    "height": 48
+  },
+  {
+    "sample_id": 242,
+    "symbol": "]",
+    "gt": "ꨚꨗꨶꨮꩄ [764] ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_241.png",
+    "width": 194,
+    "height": 48
+  },
+  {
+    "sample_id": 243,
+    "symbol": "]",
+    "gt": "ꨚꨗꨶꨮꩄ [720] ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_242.png",
+    "width": 221,
+    "height": 48
+  },
+  {
+    "sample_id": 244,
+    "symbol": "]",
+    "gt": "ꨔꩅ [314] ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_243.png",
+    "width": 196,
+    "height": 48
+  },
+  {
+    "sample_id": 245,
+    "symbol": "]",
+    "gt": "ꨓꨝꨳꩀ [124] ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_244.png",
+    "width": 189,
+    "height": 48
+  },
+  {
+    "sample_id": 246,
+    "symbol": "]",
+    "gt": "ꨓꨶꨮꩉ [123] ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/symbol_lines/symbol_245.png",
+    "width": 189,
+    "height": 48
+  },
+  {
+    "sample_id": 247,
+    "symbol": "]",
+    "gt": "ꨚꨗꩍ [222] ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_246.png",
+    "width": 180,
+    "height": 48
+  },
+  {
+    "sample_id": 248,
+    "symbol": "]",
+    "gt": "ꨔꩅ [742] ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_247.png",
+    "width": 196,
+    "height": 48
+  },
+  {
+    "sample_id": 249,
+    "symbol": "]",
+    "gt": "ꨓꨝꨳꩀ [853] ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_248.png",
+    "width": 179,
+    "height": 48
+  },
+  {
+    "sample_id": 250,
+    "symbol": "]",
+    "gt": "ꨓꨶꨮꩉ [233] ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_249.png",
+    "width": 189,
+    "height": 48
+  },
+  {
+    "sample_id": 251,
+    "symbol": "]",
+    "gt": "ꨚꨗꨶꨮꩄ [310] ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_250.png",
+    "width": 212,
+    "height": 48
+  },
+  {
+    "sample_id": 252,
+    "symbol": "]",
+    "gt": "ꨀꨆꨢꨯꨮꩅ [281] ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_251.png",
+    "width": 242,
+    "height": 48
+  },
+  {
+    "sample_id": 253,
+    "symbol": "]",
+    "gt": "ꨀꨆꨢꨯꨮꩅ [567] ꨀꨆꨢꨯꨮꩅ",
+    "crop_file": "crops/symbol_lines/symbol_252.png",
+    "width": 281,
+    "height": 48
+  },
+  {
+    "sample_id": 254,
+    "symbol": "]",
+    "gt": "ꨓꨝꨳꩀ [654] ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_253.png",
+    "width": 213,
+    "height": 48
+  },
+  {
+    "sample_id": 255,
+    "symbol": "]",
+    "gt": "ꨔꩅ [894] ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_254.png",
+    "width": 153,
+    "height": 48
+  },
+  {
+    "sample_id": 256,
+    "symbol": "]",
+    "gt": "ꨀꨆꨢꨯꨮꩅ [481] ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_255.png",
+    "width": 252,
+    "height": 48
+  },
+  {
+    "sample_id": 257,
+    "symbol": "]",
+    "gt": "ꨔꩅ [349] ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_256.png",
+    "width": 171,
+    "height": 48
+  },
+  {
+    "sample_id": 258,
+    "symbol": "]",
+    "gt": "ꨚꨗꩍ [259] ꨀꨆꨢꨯꨮꩅ",
+    "crop_file": "crops/symbol_lines/symbol_257.png",
+    "width": 242,
+    "height": 48
+  },
+  {
+    "sample_id": 259,
+    "symbol": "]",
+    "gt": "ꨔꩅ [842] ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_258.png",
+    "width": 153,
+    "height": 48
+  },
+  {
+    "sample_id": 260,
+    "symbol": "]",
+    "gt": "ꨧꨪ [504] ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_259.png",
+    "width": 151,
+    "height": 48
+  },
+  {
+    "sample_id": 261,
+    "symbol": "/",
+    "gt": "ꨧꨪ/ꨀꨆꨢꨯꨮꩅ",
+    "crop_file": "crops/symbol_lines/symbol_260.png",
+    "width": 157,
+    "height": 48
+  },
+  {
+    "sample_id": 262,
+    "symbol": "/",
+    "gt": "ꨚꨗꩍ/ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_261.png",
+    "width": 160,
+    "height": 48
+  },
+  {
+    "sample_id": 263,
+    "symbol": "/",
+    "gt": "ꨓꨶꨮꩉ/ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_262.png",
+    "width": 95,
+    "height": 48
+  },
+  {
+    "sample_id": 264,
+    "symbol": "/",
+    "gt": "ꨆꨭꨖꨩ/ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_263.png",
+    "width": 110,
+    "height": 48
+  },
+  {
+    "sample_id": 265,
+    "symbol": "/",
+    "gt": "ꨆꨭꨖꨩ/ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_264.png",
+    "width": 116,
+    "height": 48
+  },
+  {
+    "sample_id": 266,
+    "symbol": "/",
+    "gt": "ꨔꩅ/ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_265.png",
+    "width": 145,
+    "height": 48
+  },
+  {
+    "sample_id": 267,
+    "symbol": "/",
+    "gt": "ꨆꨭꨖꨩ/ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_266.png",
+    "width": 142,
+    "height": 48
+  },
+  {
+    "sample_id": 268,
+    "symbol": "/",
+    "gt": "ꨀꨆꨢꨯꨮꩅ/ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_267.png",
+    "width": 157,
+    "height": 48
+  },
+  {
+    "sample_id": 269,
+    "symbol": "/",
+    "gt": "ꨓꨶꨮꩉ/ꨓꨶꨮꩉ",
+    "crop_file": "crops/symbol_lines/symbol_268.png",
+    "width": 105,
+    "height": 48
+  },
+  {
+    "sample_id": 270,
+    "symbol": "/",
+    "gt": "ꨧꨪ/ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_269.png",
+    "width": 117,
+    "height": 48
+  },
+  {
+    "sample_id": 271,
+    "symbol": "/",
+    "gt": "ꨚꨗꩍ/ꨧꨪ",
+    "crop_file": "crops/symbol_lines/symbol_270.png",
+    "width": 117,
+    "height": 48
+  },
+  {
+    "sample_id": 272,
+    "symbol": "/",
+    "gt": "ꨀꨆꨢꨯꨮꩅ/ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_271.png",
+    "width": 171,
+    "height": 48
+  },
+  {
+    "sample_id": 273,
+    "symbol": "/",
+    "gt": "ꨔꩅ/ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_272.png",
+    "width": 145,
+    "height": 48
+  },
+  {
+    "sample_id": 274,
+    "symbol": "/",
+    "gt": "ꨓꨶꨮꩉ/ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_273.png",
+    "width": 138,
+    "height": 48
+  },
+  {
+    "sample_id": 275,
+    "symbol": "/",
+    "gt": "ꨓꨝꨳꩀ/ꨔꩅ",
+    "crop_file": "crops/symbol_lines/symbol_274.png",
+    "width": 145,
+    "height": 48
+  },
+  {
+    "sample_id": 276,
+    "symbol": "/",
+    "gt": "ꨓꨶꨮꩉ/ꨓꨝꨳꩀ",
+    "crop_file": "crops/symbol_lines/symbol_275.png",
+    "width": 138,
+    "height": 48
+  },
+  {
+    "sample_id": 277,
+    "symbol": "/",
+    "gt": "ꨓꨶꨮꩉ/ꨆꨭꨖꨩ",
+    "crop_file": "crops/symbol_lines/symbol_276.png",
+    "width": 110,
+    "height": 48
+  },
+  {
+    "sample_id": 278,
+    "symbol": "/",
+    "gt": "ꨓꨶꨮꩉ/ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_277.png",
+    "width": 128,
+    "height": 48
+  },
+  {
+    "sample_id": 279,
+    "symbol": "/",
+    "gt": "ꨓꨝꨳꩀ/ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_278.png",
+    "width": 160,
+    "height": 48
+  },
+  {
+    "sample_id": 280,
+    "symbol": "/",
+    "gt": "ꨀꨆꨢꨯꨮꩅ/ꨚꨗꩍ",
+    "crop_file": "crops/symbol_lines/symbol_279.png",
+    "width": 189,
+    "height": 48
+  }
+]

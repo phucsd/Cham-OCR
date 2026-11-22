@@ -1,0 +1,17 @@
+{
+  "http": 200,
+  "requested": "nonexistent_model_2026",
+  "actual": "nonexistent_model_2026",
+  "recognizers": [
+    {
+      "version": "nonexistent_model_2026",
+      "model_dir": "data/output/rec_cham_inference_v23",
+      "weights_sha256_16": "70dac0b0d59fc995",
+      "dict": "cham_dict_v23.txt",
+      "dict_sha256_16": "cf853b1a54cc610f",
+      "rec_image_shape": "3, 48, 320",
+      "confidence_temperature": 1.0
+    }
+  ],
+  "line_count": 3
+}

@@ -1,0 +1,222 @@
+{
+  "vietnamese_00": {
+    "line_keys": [
+      "index",
+      "text",
+      "confidence",
+      "calibrated_confidence",
+      "coords",
+      "bbox",
+      "polygon",
+      "image",
+      "segmentation"
+    ],
+    "model_info": {
+      "model": "auto",
+      "normalizer": "generate_data.normalize_unicode/parse_unicode_clusters",
+      "recognizers": [
+        {
+          "version": "v24_1_r4",
+          "model_dir": "data/output/rec_cham_inference_v24_1_r4",
+          "weights_sha256_16": "1deee5f5ff351070",
+          "dict": "cham_dict_v24_1_r4.txt",
+          "dict_sha256_16": "ec1e1f08254dbde6",
+          "rec_image_shape": "3, 48, 480",
+          "confidence_temperature": 0.883077
+        },
+        {
+          "version": "v24_1_r3_1",
+          "model_dir": "data/output/rec_cham_inference_v24_1_r3_1",
+          "weights_sha256_16": "5fb0d8e4d512b4c0",
+          "dict": "cham_dict_v24_1_r3_1.txt",
+          "dict_sha256_16": "ec1e1f08254dbde6",
+          "rec_image_shape": "3, 48, 320",
+          "confidence_temperature": 0.914851
+        },
+        {
+          "version": "vi",
+          "model_dir": "data/output/rec_vietnamese_infer",
+          "weights_sha256_16": "eb929c47e349f528",
+          "dict": "vietnamese_dict.txt",
+          "dict_sha256_16": "aee6e6d4c5023ba7",
+          "rec_image_shape": "3, 48, 320",
+          "confidence_temperature": 1.0
+        }
+      ],
+      "detector": {
+        "name": "generic_ppocrv4_dbnet",
+        "mode": "hybrid",
+        "loaded": true,
+        "weights_sha256_16": "49ee815e30cff43c",
+        "cham_dbnet_available": true,
+        "cham_dbnet_sha256_16": "cfc65a686ecaa5fd",
+        "cham_dbnet_box_type": "poly"
+      },
+      "paddle_version": "3.3.1"
+    },
+    "lines": [
+      {
+        "index": 1,
+        "text": "Cộng hòa xã hội chủ nghĩa Việt Nam",
+        "confidence": 0.9061183333396912,
+        "calibrated_confidence": 0.906118,
+        "coords": [
+          44,
+          80
+        ],
+        "segmentation": {
+          "overlap_prev_px": 0,
+          "overlap_next_px": 0,
+          "crop_confidence": "high",
+          "selected_crop_type": "dbnet",
+          "crop_sanity_score": 1.0,
+          "needs_review": false,
+          "reason": []
+        }
+      },
+      {
+        "index": 2,
+        "text": "Đây là bản phiên âm tiếng Chăm và tiếng Việt.",
+        "confidence": 0.9662908911705017,
+        "calibrated_confidence": 0.966291,
+        "coords": [
+          116,
+          161
+        ],
+        "segmentation": {
+          "overlap_prev_px": 0,
+          "overlap_next_px": 0,
+          "crop_confidence": "high",
+          "selected_crop_type": "dbnet",
+          "crop_sanity_score": 1.0,
+          "needs_review": false,
+          "reason": []
+        }
+      },
+      {
+        "index": 3,
+        "text": " {889- 0128466780} ꨏ}51/",
+        "confidence": 0.7554282546043396,
+        "calibrated_confidence": 0.781955,
+        "coords": [
+          194,
+          238
+        ],
+        "segmentation": {
+          "overlap_prev_px": 0,
+          "overlap_next_px": 0,
+          "crop_confidence": "medium",
+          "selected_crop_type": "dbnet",
+          "crop_sanity_score": 1.0,
+          "needs_review": false,
+          "reason": []
+        }
+      }
+    ],
+    "gt_lines": [
+      "Cộng hòa xã hội chủ nghĩa Việt Nam.",
+      "Đây là bản phiên âm tiếng Chăm và tiếng Việt.",
+      "Số trang: 0123456789, dấu ! ? : ; ( ) / -"
+    ]
+  },
+  "mixed_vi_cham_00": {
+    "line_keys": [
+      "index",
+      "text",
+      "confidence",
+      "calibrated_confidence",
+      "coords",
+      "bbox",
+      "polygon",
+      "image",
+      "segmentation"
+    ],
+    "model_info": {
+      "model": "auto",
+      "normalizer": "generate_data.normalize_unicode/parse_unicode_clusters",
+      "recognizers": [
+        {
+          "version": "v24_1_r4",
+          "model_dir": "data/output/rec_cham_inference_v24_1_r4",
+          "weights_sha256_16": "1deee5f5ff351070",
+          "dict": "cham_dict_v24_1_r4.txt",
+          "dict_sha256_16": "ec1e1f08254dbde6",
+          "rec_image_shape": "3, 48, 480",
+          "confidence_temperature": 0.883077
+        },
+        {
+          "version": "v24_1_r3_1",
+          "model_dir": "data/output/rec_cham_inference_v24_1_r3_1",
+          "weights_sha256_16": "5fb0d8e4d512b4c0",
+          "dict": "cham_dict_v24_1_r3_1.txt",
+          "dict_sha256_16": "ec1e1f08254dbde6",
+          "rec_image_shape": "3, 48, 320",
+          "confidence_temperature": 0.914851
+        },
+        {
+          "version": "vi",
+          "model_dir": "data/output/rec_vietnamese_infer",
+          "weights_sha256_16": "eb929c47e349f528",
+          "dict": "vietnamese_dict.txt",
+          "dict_sha256_16": "aee6e6d4c5023ba7",
+          "rec_image_shape": "3, 48, 320",
+          "confidence_temperature": 1.0
+        }
+      ],
+      "detector": {
+        "name": "generic_ppocrv4_dbnet",
+        "mode": "hybrid",
+        "loaded": true,
+        "weights_sha256_16": "49ee815e30cff43c",
+        "cham_dbnet_available": true,
+        "cham_dbnet_sha256_16": "cfc65a686ecaa5fd",
+        "cham_dbnet_box_type": "poly"
+      },
+      "paddle_version": "3.3.1"
+    },
+    "lines": [
+      {
+        "index": 1,
+        "text": "Cộng hòa xã hội chủ nghĩa Việt Nam.",
+        "confidence": 0.9185354113578796,
+        "calibrated_confidence": 0.918535,
+        "coords": [
+          39,
+          75
+        ],
+        "segmentation": {
+          "overlap_prev_px": 0,
+          "overlap_next_px": 0,
+          "crop_confidence": "high",
+          "selected_crop_type": "dbnet",
+          "crop_sanity_score": 1.0,
+          "needs_review": false,
+          "reason": []
+        }
+      },
+      {
+        "index": 2,
+        "text": "ꨓꨝꨳꩀ ꨔꩅ !",
+        "confidence": 0.9880448579788208,
+        "calibrated_confidence": 0.993301,
+        "coords": [
+          154,
+          180
+        ],
+        "segmentation": {
+          "overlap_prev_px": 0,
+          "overlap_next_px": 0,
+          "crop_confidence": "high",
+          "selected_crop_type": "dbnet",
+          "crop_sanity_score": 1.0,
+          "needs_review": false,
+          "reason": []
+        }
+      }
+    ],
+    "gt_lines": [
+      "Cộng hòa xã hội chủ nghĩa Việt Nam.",
+      "ꨓꨝꨳꩀ ꨔꩅ !"
+    ]
+  }
+}

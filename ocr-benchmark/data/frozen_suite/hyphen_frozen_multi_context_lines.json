@@ -1,0 +1,562 @@
+[
+  {
+    "sample_id": 1,
+    "group": "word-word",
+    "gt": "ꨀꨆꨢꨯꨮꩅ-ꨧꨪ",
+    "crop_file": "crops/hyphen_lines/hyphen_000.png",
+    "width": 156,
+    "height": 48
+  },
+  {
+    "sample_id": 2,
+    "group": "word-word",
+    "gt": "ꨚꨗꩍ-ꨓꨶꨮꩉ",
+    "crop_file": "crops/hyphen_lines/hyphen_001.png",
+    "width": 127,
+    "height": 48
+  },
+  {
+    "sample_id": 3,
+    "group": "word-word",
+    "gt": "ꨓꨝꨳꩀ-ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/hyphen_lines/hyphen_002.png",
+    "width": 169,
+    "height": 48
+  },
+  {
+    "sample_id": 4,
+    "group": "word-word",
+    "gt": "ꨆꨭꨖꨩ-ꨔꩅ",
+    "crop_file": "crops/hyphen_lines/hyphen_003.png",
+    "width": 115,
+    "height": 48
+  },
+  {
+    "sample_id": 5,
+    "group": "word-word",
+    "gt": "ꨨꨤꨭꩆ-ꨋꩇ",
+    "crop_file": "crops/hyphen_lines/hyphen_004.png",
+    "width": 145,
+    "height": 48
+  },
+  {
+    "sample_id": 6,
+    "group": "word-word",
+    "gt": "ꨝꨩ-ꨤꨪꨠꩍ",
+    "crop_file": "crops/hyphen_lines/hyphen_005.png",
+    "width": 106,
+    "height": 48
+  },
+  {
+    "sample_id": 7,
+    "group": "word-word",
+    "gt": "ꨦꩀꨆꨣꨰ-ꨝꨪꨗꨴꨪꩀ",
+    "crop_file": "crops/hyphen_lines/hyphen_006.png",
+    "width": 190,
+    "height": 48
+  },
+  {
+    "sample_id": 8,
+    "group": "word-word",
+    "gt": "ꨕꨨꨵꩀ-ꨥꩀ",
+    "crop_file": "crops/hyphen_lines/hyphen_007.png",
+    "width": 135,
+    "height": 48
+  },
+  {
+    "sample_id": 9,
+    "group": "word-word",
+    "gt": "ꨎꩊ-ꨈꨴꨭꩀ",
+    "crop_file": "crops/hyphen_lines/hyphen_008.png",
+    "width": 125,
+    "height": 48
+  },
+  {
+    "sample_id": 10,
+    "group": "word-word",
+    "gt": "ꨆꨔꨯꨱꩅ-ꨣꨪꨡꩍ",
+    "crop_file": "crops/hyphen_lines/hyphen_009.png",
+    "width": 155,
+    "height": 48
+  },
+  {
+    "sample_id": 11,
+    "group": "word - word",
+    "gt": "ꨀꨆꨢꨯꨮꩅ - ꨧꨪ",
+    "crop_file": "crops/hyphen_lines/hyphen_010.png",
+    "width": 166,
+    "height": 48
+  },
+  {
+    "sample_id": 12,
+    "group": "word - word",
+    "gt": "ꨚꨗꩍ - ꨓꨶꨮꩉ",
+    "crop_file": "crops/hyphen_lines/hyphen_011.png",
+    "width": 137,
+    "height": 48
+  },
+  {
+    "sample_id": 13,
+    "group": "word - word",
+    "gt": "ꨓꨝꨳꩀ - ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/hyphen_lines/hyphen_012.png",
+    "width": 180,
+    "height": 48
+  },
+  {
+    "sample_id": 14,
+    "group": "word - word",
+    "gt": "ꨆꨭꨖꨩ - ꨔꩅ",
+    "crop_file": "crops/hyphen_lines/hyphen_013.png",
+    "width": 126,
+    "height": 48
+  },
+  {
+    "sample_id": 15,
+    "group": "word - word",
+    "gt": "ꨨꨤꨭꩆ - ꨋꩇ",
+    "crop_file": "crops/hyphen_lines/hyphen_014.png",
+    "width": 155,
+    "height": 48
+  },
+  {
+    "sample_id": 16,
+    "group": "word - word",
+    "gt": "ꨝꨩ - ꨤꨪꨠꩍ",
+    "crop_file": "crops/hyphen_lines/hyphen_015.png",
+    "width": 117,
+    "height": 48
+  },
+  {
+    "sample_id": 17,
+    "group": "word - word",
+    "gt": "ꨦꩀꨆꨣꨰ - ꨝꨪꨗꨴꨪꩀ",
+    "crop_file": "crops/hyphen_lines/hyphen_016.png",
+    "width": 201,
+    "height": 48
+  },
+  {
+    "sample_id": 18,
+    "group": "word - word",
+    "gt": "ꨕꨨꨵꩀ - ꨥꩀ",
+    "crop_file": "crops/hyphen_lines/hyphen_017.png",
+    "width": 146,
+    "height": 48
+  },
+  {
+    "sample_id": 19,
+    "group": "word - word",
+    "gt": "ꨎꩊ - ꨈꨴꨭꩀ",
+    "crop_file": "crops/hyphen_lines/hyphen_018.png",
+    "width": 136,
+    "height": 48
+  },
+  {
+    "sample_id": 20,
+    "group": "word - word",
+    "gt": "ꨆꨔꨯꨱꩅ - ꨣꨪꨡꩍ",
+    "crop_file": "crops/hyphen_lines/hyphen_019.png",
+    "width": 166,
+    "height": 48
+  },
+  {
+    "sample_id": 21,
+    "group": "number-number",
+    "gt": "1-2",
+    "crop_file": "crops/hyphen_lines/hyphen_020.png",
+    "width": 58,
+    "height": 48
+  },
+  {
+    "sample_id": 22,
+    "group": "number-number",
+    "gt": "12-34",
+    "crop_file": "crops/hyphen_lines/hyphen_021.png",
+    "width": 81,
+    "height": 48
+  },
+  {
+    "sample_id": 23,
+    "group": "number-number",
+    "gt": "5-10",
+    "crop_file": "crops/hyphen_lines/hyphen_022.png",
+    "width": 69,
+    "height": 48
+  },
+  {
+    "sample_id": 24,
+    "group": "number-number",
+    "gt": "20-30",
+    "crop_file": "crops/hyphen_lines/hyphen_023.png",
+    "width": 81,
+    "height": 48
+  },
+  {
+    "sample_id": 25,
+    "group": "number-number",
+    "gt": "100-200",
+    "crop_file": "crops/hyphen_lines/hyphen_024.png",
+    "width": 105,
+    "height": 48
+  },
+  {
+    "sample_id": 26,
+    "group": "number-number",
+    "gt": "7-8",
+    "crop_file": "crops/hyphen_lines/hyphen_025.png",
+    "width": 58,
+    "height": 48
+  },
+  {
+    "sample_id": 27,
+    "group": "number-number",
+    "gt": "45-67",
+    "crop_file": "crops/hyphen_lines/hyphen_026.png",
+    "width": 81,
+    "height": 48
+  },
+  {
+    "sample_id": 28,
+    "group": "number-number",
+    "gt": "89-90",
+    "crop_file": "crops/hyphen_lines/hyphen_027.png",
+    "width": 81,
+    "height": 48
+  },
+  {
+    "sample_id": 29,
+    "group": "number-number",
+    "gt": "3-4",
+    "crop_file": "crops/hyphen_lines/hyphen_028.png",
+    "width": 58,
+    "height": 48
+  },
+  {
+    "sample_id": 30,
+    "group": "number-number",
+    "gt": "15-25",
+    "crop_file": "crops/hyphen_lines/hyphen_029.png",
+    "width": 81,
+    "height": 48
+  },
+  {
+    "sample_id": 31,
+    "group": "year-year",
+    "gt": "1954-1975",
+    "crop_file": "crops/hyphen_lines/hyphen_030.png",
+    "width": 129,
+    "height": 48
+  },
+  {
+    "sample_id": 32,
+    "group": "year-year",
+    "gt": "1975-1986",
+    "crop_file": "crops/hyphen_lines/hyphen_031.png",
+    "width": 129,
+    "height": 48
+  },
+  {
+    "sample_id": 33,
+    "group": "year-year",
+    "gt": "2000-2025",
+    "crop_file": "crops/hyphen_lines/hyphen_032.png",
+    "width": 129,
+    "height": 48
+  },
+  {
+    "sample_id": 34,
+    "group": "year-year",
+    "gt": "2025-2026",
+    "crop_file": "crops/hyphen_lines/hyphen_033.png",
+    "width": 129,
+    "height": 48
+  },
+  {
+    "sample_id": 35,
+    "group": "year-year",
+    "gt": "1802-1832",
+    "crop_file": "crops/hyphen_lines/hyphen_034.png",
+    "width": 129,
+    "height": 48
+  },
+  {
+    "sample_id": 36,
+    "group": "year-year",
+    "gt": "1990-2000",
+    "crop_file": "crops/hyphen_lines/hyphen_035.png",
+    "width": 129,
+    "height": 48
+  },
+  {
+    "sample_id": 37,
+    "group": "year-year",
+    "gt": "1945-1954",
+    "crop_file": "crops/hyphen_lines/hyphen_036.png",
+    "width": 129,
+    "height": 48
+  },
+  {
+    "sample_id": 38,
+    "group": "year-year",
+    "gt": "2020-2024",
+    "crop_file": "crops/hyphen_lines/hyphen_037.png",
+    "width": 129,
+    "height": 48
+  },
+  {
+    "sample_id": 39,
+    "group": "year-year",
+    "gt": "1980-1990",
+    "crop_file": "crops/hyphen_lines/hyphen_038.png",
+    "width": 129,
+    "height": 48
+  },
+  {
+    "sample_id": 40,
+    "group": "year-year",
+    "gt": "2010-2020",
+    "crop_file": "crops/hyphen_lines/hyphen_039.png",
+    "width": 129,
+    "height": 48
+  },
+  {
+    "sample_id": 41,
+    "group": "line ending",
+    "gt": "ꨀꨆꨢꨯꨮꩅ ꨧꨪ-",
+    "crop_file": "crops/hyphen_lines/hyphen_040.png",
+    "width": 161,
+    "height": 48
+  },
+  {
+    "sample_id": 42,
+    "group": "line ending",
+    "gt": "ꨚꨗꩍ ꨓꨶꨮꩉ-",
+    "crop_file": "crops/hyphen_lines/hyphen_041.png",
+    "width": 132,
+    "height": 48
+  },
+  {
+    "sample_id": 43,
+    "group": "line ending",
+    "gt": "ꨓꨝꨳꩀ ꨚꨗꨶꨮꩄ-",
+    "crop_file": "crops/hyphen_lines/hyphen_042.png",
+    "width": 174,
+    "height": 48
+  },
+  {
+    "sample_id": 44,
+    "group": "line ending",
+    "gt": "ꨆꨭꨖꨩ ꨔꩅ-",
+    "crop_file": "crops/hyphen_lines/hyphen_043.png",
+    "width": 120,
+    "height": 48
+  },
+  {
+    "sample_id": 45,
+    "group": "line ending",
+    "gt": "ꨨꨤꨭꩆ ꨋꩇ-",
+    "crop_file": "crops/hyphen_lines/hyphen_044.png",
+    "width": 150,
+    "height": 48
+  },
+  {
+    "sample_id": 46,
+    "group": "line ending",
+    "gt": "ꨝꨩ ꨤꨪꨠꩍ-",
+    "crop_file": "crops/hyphen_lines/hyphen_045.png",
+    "width": 111,
+    "height": 48
+  },
+  {
+    "sample_id": 47,
+    "group": "line ending",
+    "gt": "ꨦꩀꨆꨣꨰ ꨝꨪꨗꨴꨪꩀ-",
+    "crop_file": "crops/hyphen_lines/hyphen_046.png",
+    "width": 195,
+    "height": 48
+  },
+  {
+    "sample_id": 48,
+    "group": "line ending",
+    "gt": "ꨕꨨꨵꩀ ꨥꩀ-",
+    "crop_file": "crops/hyphen_lines/hyphen_047.png",
+    "width": 141,
+    "height": 48
+  },
+  {
+    "sample_id": 49,
+    "group": "line ending",
+    "gt": "ꨎꩊ ꨈꨴꨭꩀ-",
+    "crop_file": "crops/hyphen_lines/hyphen_048.png",
+    "width": 131,
+    "height": 48
+  },
+  {
+    "sample_id": 50,
+    "group": "line ending",
+    "gt": "ꨆꨔꨯꨱꩅ ꨣꨪꨡꩍ-",
+    "crop_file": "crops/hyphen_lines/hyphen_049.png",
+    "width": 161,
+    "height": 48
+  },
+  {
+    "sample_id": 51,
+    "group": "line beginning",
+    "gt": "-ꨀꨆꨢꨯꨮꩅ ꨧꨪ",
+    "crop_file": "crops/hyphen_lines/hyphen_050.png",
+    "width": 161,
+    "height": 48
+  },
+  {
+    "sample_id": 52,
+    "group": "line beginning",
+    "gt": "-ꨚꨗꩍ ꨓꨶꨮꩉ",
+    "crop_file": "crops/hyphen_lines/hyphen_051.png",
+    "width": 132,
+    "height": 48
+  },
+  {
+    "sample_id": 53,
+    "group": "line beginning",
+    "gt": "-ꨓꨝꨳꩀ ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/hyphen_lines/hyphen_052.png",
+    "width": 174,
+    "height": 48
+  },
+  {
+    "sample_id": 54,
+    "group": "line beginning",
+    "gt": "-ꨆꨭꨖꨩ ꨔꩅ",
+    "crop_file": "crops/hyphen_lines/hyphen_053.png",
+    "width": 120,
+    "height": 48
+  },
+  {
+    "sample_id": 55,
+    "group": "line beginning",
+    "gt": "-ꨨꨤꨭꩆ ꨋꩇ",
+    "crop_file": "crops/hyphen_lines/hyphen_054.png",
+    "width": 150,
+    "height": 48
+  },
+  {
+    "sample_id": 56,
+    "group": "line beginning",
+    "gt": "-ꨝꨩ ꨤꨪꨠꩍ",
+    "crop_file": "crops/hyphen_lines/hyphen_055.png",
+    "width": 111,
+    "height": 48
+  },
+  {
+    "sample_id": 57,
+    "group": "line beginning",
+    "gt": "-ꨦꩀꨆꨣꨰ ꨝꨪꨗꨴꨪꩀ",
+    "crop_file": "crops/hyphen_lines/hyphen_056.png",
+    "width": 195,
+    "height": 48
+  },
+  {
+    "sample_id": 58,
+    "group": "line beginning",
+    "gt": "-ꨕꨨꨵꩀ ꨥꩀ",
+    "crop_file": "crops/hyphen_lines/hyphen_057.png",
+    "width": 141,
+    "height": 48
+  },
+  {
+    "sample_id": 59,
+    "group": "line beginning",
+    "gt": "-ꨎꩊ ꨈꨴꨭꩀ",
+    "crop_file": "crops/hyphen_lines/hyphen_058.png",
+    "width": 131,
+    "height": 48
+  },
+  {
+    "sample_id": 60,
+    "group": "line beginning",
+    "gt": "-ꨆꨔꨯꨱꩅ ꨣꨪꨡꩍ",
+    "crop_file": "crops/hyphen_lines/hyphen_059.png",
+    "width": 161,
+    "height": 48
+  },
+  {
+    "sample_id": 61,
+    "group": "double hyphen",
+    "gt": "ꨀꨆꨢꨯꨮꩅ--ꨧꨪ",
+    "crop_file": "crops/hyphen_lines/hyphen_060.png",
+    "width": 162,
+    "height": 48
+  },
+  {
+    "sample_id": 62,
+    "group": "double hyphen",
+    "gt": "ꨚꨗꩍ--ꨓꨶꨮꩉ",
+    "crop_file": "crops/hyphen_lines/hyphen_061.png",
+    "width": 134,
+    "height": 48
+  },
+  {
+    "sample_id": 63,
+    "group": "double hyphen",
+    "gt": "ꨓꨝꨳꩀ--ꨚꨗꨶꨮꩄ",
+    "crop_file": "crops/hyphen_lines/hyphen_062.png",
+    "width": 176,
+    "height": 48
+  },
+  {
+    "sample_id": 64,
+    "group": "double hyphen",
+    "gt": "ꨆꨭꨖꨩ--ꨔꩅ",
+    "crop_file": "crops/hyphen_lines/hyphen_063.png",
+    "width": 122,
+    "height": 48
+  },
+  {
+    "sample_id": 65,
+    "group": "double hyphen",
+    "gt": "ꨨꨤꨭꩆ--ꨋꩇ",
+    "crop_file": "crops/hyphen_lines/hyphen_064.png",
+    "width": 152,
+    "height": 48
+  },
+  {
+    "sample_id": 66,
+    "group": "double hyphen",
+    "gt": "ꨝꨩ--ꨤꨪꨠꩍ",
+    "crop_file": "crops/hyphen_lines/hyphen_065.png",
+    "width": 113,
+    "height": 48
+  },
+  {
+    "sample_id": 67,
+    "group": "double hyphen",
+    "gt": "ꨦꩀꨆꨣꨰ--ꨝꨪꨗꨴꨪꩀ",
+    "crop_file": "crops/hyphen_lines/hyphen_066.png",
+    "width": 197,
+    "height": 48
+  },
+  {
+    "sample_id": 68,
+    "group": "double hyphen",
+    "gt": "ꨕꨨꨵꩀ--ꨥꩀ",
+    "crop_file": "crops/hyphen_lines/hyphen_067.png",
+    "width": 142,
+    "height": 48
+  },
+  {
+    "sample_id": 69,
+    "group": "double hyphen",
+    "gt": "ꨎꩊ--ꨈꨴꨭꩀ",
+    "crop_file": "crops/hyphen_lines/hyphen_068.png",
+    "width": 132,
+    "height": 48
+  },
+  {
+    "sample_id": 70,
+    "group": "double hyphen",
+    "gt": "ꨆꨔꨯꨱꩅ--ꨣꨪꨡꩍ",
+    "crop_file": "crops/hyphen_lines/hyphen_069.png",
+    "width": 162,
+    "height": 48
+  }
+]

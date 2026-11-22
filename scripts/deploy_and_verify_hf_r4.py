@@ -204,15 +204,21 @@ def wait_for_space_rollout(api: HfApi, commit_sha: str, max_wait_s: int = 900) -
                     and helpr.status_code == 200
                 )
                 if hr.status_code == 200 and ui_ok:
-                    # Probe default model_info via live /ocr on tiny image to confirm NEW container is live
+                    # Probe default model_info + new P0 invalid-model HTTP 400 guard to confirm NEW container is live
+                    inv_r = requests.post(
+                        f"{LIVE_BASE_URL}/ocr",
+                        json={"image": base64.b64encode( cv2.imencode(".png", probe_img)[1].tobytes() ).decode("ascii"), "model": "nonexistent_model_2026"},
+                        timeout=20,
+                    )
                     resp = post_live_ocr(probe_img, model=None, timeout=60)
                     mi = resp.get("model_info") or {}
                     recs = mi.get("recognizers") or []
                     det = mi.get("detector") or {}
                     rec_ok = (recs and recs[0].get("version") == "v24_1_r4" and recs[0].get("weights_sha256_16") == EXPECTED_R4_SHA16)
                     det_ok = (det.get("cham_dbnet_box_type") == EXPECTED_CHAM_DET_BOX_TYPE and det.get("cham_dbnet_sha256_16") == EXPECTED_CHAM_DET_SHA16)
-                    if rec_ok and det_ok:
-                        print(f"✅ Live `{LIVE_BASE_URL}` confirmed serving `v24_1_r4` ({EXPECTED_R4_SHA16}) + detector `box_type={EXPECTED_CHAM_DET_BOX_TYPE}` ({EXPECTED_CHAM_DET_SHA16}) in {el}s!")
+                    p0_guard_ok = (inv_r.status_code == 400)
+                    if rec_ok and det_ok and p0_guard_ok:
+                        print(f"✅ Live `{LIVE_BASE_URL}` confirmed serving `v24_1_r4` ({EXPECTED_R4_SHA16}) + P0 HTTP 400 guard + detector `box_type={EXPECTED_CHAM_DET_BOX_TYPE}` ({EXPECTED_CHAM_DET_SHA16}) in {el}s!")
                         try:
                             h_body = hr.json()
                         except Exception:
@@ -252,7 +258,7 @@ def main():
             repo_id=SPACE_ID,
             repo_type="space",
             operations=ops,
-            commit_message="Deploy Cham-OCR V26.1 Masked-SVTR (6/6 Gates, 1deee5f5ff351070), Tri-Specialist Auto Router v2.1 & RealScan-Gold v3 Whitepaper",
+            commit_message="Deploy Cham-OCR V26.1 API Provenance Hardening (P0/P1 HTTP 400), Auto Router v2.2 & V25 Legacy Reclassification",
         )
         commit_sha = str(getattr(commit_info, "oid", "") or getattr(commit_info, "commit_url", "").rstrip("/").split("/")[-1])
         print(f"🚀 Commit created on `{SPACE_ID}`: `{commit_sha}`")
@@ -271,7 +277,26 @@ def main():
     blank_resp = post_live_ocr(blank_img, model=None)
     assert len(blank_resp.get("lines", [])) == 0, f"Blank guard failed: {blank_resp}"
     assert (blank_resp.get("document") or {}).get("status") == "no_text", f"Unexpected blank status: {blank_resp.get('document')}"
-    print("✅ [Live Check 1/3] Blank-page guard PASSED (`0` lines, `status == no_text`).")
+    print("✅ [Live Check 1/4] Blank-page guard PASSED (`0` lines, `status == no_text`).")
+
+    # 1b. Live P0/P1 API Contract & Model Catalog Verification
+    models_resp = requests.get(f"{LIVE_BASE_URL}/api/models", timeout=20).json()
+    models_by_id = {m["id"]: m for m in models_resp.get("models", [])}
+    assert models_by_id["v25"]["group"] == "Historical Baselines" and models_by_id["v25"].get("deprecated") is True, models_by_id.get("v25")
+    ok_b, blank_png = cv2.imencode(".png", blank_img)
+    assert ok_b
+    blank_b64 = base64.b64encode(blank_png.tobytes()).decode("ascii")
+    for case_name, ep, bad_body in [
+        ("missing_image", "/ocr", {"model": "v24_1_r4"}),
+        ("invalid_model", "/ocr", {"image": blank_b64, "model": "nonexistent_model_2026"}),
+        ("invalid_method", "/ocr", {"image": blank_b64, "model": "v24_1_r4", "method": "not_a_method"}),
+        ("invalid_reading_order", "/ocr", {"image": blank_b64, "model": "v24_1_r4", "reading_order": "invalid"}),
+        ("invalid_bbox_zero", "/ocr_crop", {"image": blank_b64, "model": "v24_1_r4", "bbox": [0, 0, 0, 0]}),
+        ("invalid_bbox_neg", "/ocr_crop", {"image": blank_b64, "model": "v24_1_r4", "bbox": [-200, -200, -1, -1]}),
+    ]:
+        cr = requests.post(f"{LIVE_BASE_URL}{ep}", json=bad_body, timeout=20)
+        assert cr.status_code == 400 and "error" in cr.json(), f"{case_name} expected HTTP 400 JSON, got {cr.status_code}: {cr.text[:200]}"
+    print("✅ [Live Check 1b/4] P0/P1 API Contract Hardening PASSED (all 6 malformed/unknown-model probes returned HTTP 400 JSON; V25 marked Legacy).")
 
     # 2. Live RealScan-Gold harum_palei_01 across default (`v24_1_r4`), `v24_1_r3_1`, and `auto`
     m_path = os.path.join(PROJECT_ROOT, "ocr-benchmark", "data", "realscan_gold_v1", "manifest.json")
@@ -287,7 +312,7 @@ def main():
         wall_s = round(time.time() - t0, 3)
         pred_lines = [l["text"] for l in resp.get("lines", [])]
         stats = matched_line_stats(harum_gt, pred_lines)
-        has_cal = all("calibrated_confidence" in l for l in resp.get("lines", []))
+        has_cal = all("calibrated_confidence" in l and "selected_recognizer" in l for l in resp.get("lines", []))
         live_harum[label] = {
             "wall_sec": wall_s,
             "backend_sec": (resp.get("profiler") or {}).get("backend_total_sec"),

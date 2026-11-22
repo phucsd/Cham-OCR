@@ -1,0 +1,12 @@
+[
+  {
+    "name": "missing_image_retest",
+    "status": 502,
+    "body": "error code: 502\n"
+  },
+  {
+    "name": "invalid_model_valid_image",
+    "status": 200,
+    "body": "{\"lines\": [{\"index\": 1, \"text\": \"\\uaa22\\uaa43 \\uaa24\\uaa1d\\uaa43 \\uaa27\\uaa2e\\uaa29 \\uaa1f\\uaa2d\\uaa40\\uaa06\\uaa2c \\uaa02\\uaa23\\uaa43 \\uaa0c\\uaa4c \", \"confidence\": 0.9510323405265808, \"calibrated_confidence\": 0.951032, \"coords\": [49, 79], \"bbox\": [54, 49, 332, 79], \"polygon\": [[54.0, 49.0], [332.0, 49.0], [332.0, 79.0], [54.0, 79.0]], \"image\": \"iVBORw0KGgoAAAANSUhEUgAAARYAAAAeCAIAAABmC6bBAAAfAUlEQVR4Ae3BBzjVi/848PfndJyjHJRoquw90y63gexCKDN775Qto1SKZIdkCyFZbXuv0CabCtnb5/D/P+d5zvO4T7m37u3e+7v32+uFoCgKP/0Tujs7P/T1iuzavWLFCvi3ed/SUlzwbKC/n5aW9pcjR7h5+eB/FYKiKPz0VyISifcz0qvKy6gIBLGjknsPiCIIAgDnrC2T42IfFJfy8gvAvweKou4O5+KjowCAmoZmYnx8cXFRXlHJLyRs5cqV8F/U09XV3/9JWGQHgiDwBQRFUfjpr2Smr5udkb6Gjo5IJI6Nj"
+  }
+]

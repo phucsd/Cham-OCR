@@ -87,6 +87,38 @@ _model_manifest_cache = {}
 #           'cham'    : Cham-DBNet only.   'generic': legacy detector only (pre-2026-11-04 behaviour).
 DET_MODE = os.getenv("DET_MODE", "hybrid").lower()
 DEFAULT_CHAM_MODEL = os.getenv("DEFAULT_CHAM_MODEL", "v24_1_r4")
+ADVERTISED_MODEL_IDS = (
+    "v24_1_r4",
+    "auto",
+    "v24_1_r3_1",
+    "v24_1_r2_1_6",
+    "vi",
+    "v25",
+    "v24",
+    "v23",
+)
+ALLOWED_MODEL_IDS = (
+    "v24_1_r4",
+    "auto",
+    "v24_1_r3_1",
+    "v24_1_r3",
+    "v24_1_r2_1_6",
+    "v25",
+    "v24",
+    "v23",
+    "v22",
+    "vi",
+    "en",
+    "fr",
+    "japan",
+)
+ALLOWED_SEG_METHODS = ("dbnet", "valley", "adaptive")
+ALLOWED_READING_ORDERS = ("auto", "rows")
+
+
+class UnknownModelError(ValueError):
+    """Raised when a client requests a non-existent or uninstalled recognizer model ID."""
+    pass
 CHAM_DET_DB_THRESH = float(os.getenv("CHAM_DET_DB_THRESH", "0.3"))
 CHAM_DET_BOX_THRESH = float(os.getenv("CHAM_DET_BOX_THRESH", "0.4"))
 CHAM_DET_UNCLIP = float(os.getenv("CHAM_DET_UNCLIP", "1.8"))
@@ -225,6 +257,14 @@ def _latin_alpha_ratio(text):
     return lat_cnt / float(len(non_space))
 
 
+def _latin_alpha_count(text):
+    return sum(1 for ch in (text or '') if ('a' <= ch.lower() <= 'z') or ('\u00C0' <= ch <= '\u1EF9'))
+
+
+def _has_viet_diacritics(text):
+    return any('\u00C0' <= ch <= '\u1EF9' for ch in (text or ''))
+
+
 class AutoRoutingOCRWrapper:
     """Tri-specialist adaptive router combining W=480 Cham primary, W=320 archival Cham adjudicator, and Vi/Latin OCR."""
 
@@ -319,6 +359,7 @@ class AutoRoutingOCRWrapper:
             v_conf = float(v_conf)
             c_ratio = _cham_script_ratio(c_txt)
             v_alpha = _latin_alpha_ratio(v_txt)
+            v_lat_cnt = _latin_alpha_count(v_txt)
 
             take_viet = False
             if v_alpha >= 0.42:
@@ -328,6 +369,10 @@ class AutoRoutingOCRWrapper:
                 else:
                     # Coherent Cham script present -> protect historical Cham folios unless Vi is overwhelmingly confident
                     take_viet = (c_conf < 0.50 and v_conf >= 0.88 and v_alpha >= 0.70)
+            elif c_ratio < 0.35 and v_lat_cnt >= 2 and (v_alpha >= 0.18 or _has_viet_diacritics(v_txt)):
+                # Digit/punctuation-heavy Vietnamese lines (e.g. "Số trang: 0123456789, dấu ! ? : ; ( ) / -")
+                # where Cham CTC emits non-Cham bracket/digit soup while Vi decodes valid Latin words + numbers
+                take_viet = (v_conf >= 0.55 and v_conf >= c_conf - 0.05)
             elif c_conf < 0.25 and v_conf > c_conf + 0.25:
                 take_viet = True
 
@@ -341,9 +386,38 @@ class AutoRoutingOCRWrapper:
         self.last_selected_versions = selected_vers
         return final_results, 0.0
 
+def validate_requested_model(raw_model):
+    """Validates a client-supplied model identifier against ALLOWED_MODEL_IDS and local installation."""
+    if raw_model is None:
+        ver = DEFAULT_CHAM_MODEL
+    elif isinstance(raw_model, str):
+        ver = raw_model.strip() or DEFAULT_CHAM_MODEL
+    else:
+        raise UnknownModelError("Invalid 'model' parameter: expected a model identifier string.")
+
+    if ver not in ALLOWED_MODEL_IDS:
+        raise UnknownModelError(
+            f"Unknown model '{ver}'. Allowed models: {', '.join(ADVERTISED_MODEL_IDS)}"
+        )
+
+    if ver not in ('auto', 'vi', 'en', 'fr', 'japan'):
+        mdir = os.path.join(PROJECT_ROOT, "data", "output", f"rec_cham_inference_{ver}")
+        has_weights = os.path.exists(os.path.join(mdir, "inference.pdiparams")) and (
+            os.path.exists(os.path.join(mdir, "inference.pdmodel"))
+            or os.path.exists(os.path.join(mdir, "inference.json"))
+        )
+        if not os.path.isdir(mdir) or not has_weights:
+            raise UnknownModelError(
+                f"Model '{ver}' is not installed on this server. Allowed installed models: "
+                f"{', '.join(m['id'] for m in list_available_models()['models'] if m.get('installed'))}"
+            )
+    return ver
+
+
 def get_ocr_model(version):
     """Loads and caches the PaddleOCR model for the given version dynamically"""
     global ocr_models
+    version = validate_requested_model(version)
     if version in ocr_models:
         return ocr_models[version]
         
@@ -396,9 +470,10 @@ def get_ocr_model(version):
         model_dir = os.path.join(PROJECT_ROOT, "data", "output", f"rec_cham_inference_{version}")
         dict_path = os.path.join(PROJECT_ROOT, "data", f"cham_dict_{version}.txt")
         
-        if not os.path.exists(model_dir):
-            # Fallback to Golden Baseline v23 if version-specific folder is missing
-            model_dir = os.path.join(PROJECT_ROOT, "data", "output", "rec_cham_inference_v23")
+        if not os.path.isdir(model_dir):
+            raise UnknownModelError(
+                f"Model directory missing for '{version}': expected rec_cham_inference_{version} (silent fallback is disabled)."
+            )
         if not os.path.exists(dict_path):
             bundled_dict = os.path.join(model_dir, f"cham_dict_{version}.txt")
             if os.path.exists(bundled_dict):
@@ -1201,15 +1276,21 @@ def get_model_info(model_ver):
     for v in rec_versions:
         p = ocr_model_paths.get(v)
         if p:
-            manifest = get_model_manifest(v)
+            dir_base = os.path.basename(os.path.normpath(p["model_dir"]))
+            inferred_ver = (
+                "vi" if dir_base == "rec_vietnamese_infer"
+                else (dir_base[len("rec_cham_inference_"):] if dir_base.startswith("rec_cham_inference_") else v)
+            )
+            manifest = get_model_manifest(inferred_ver)
+            actual_ver = str(manifest.get("model_id") or inferred_ver)
             try:
                 conf_temp = float(manifest.get("confidence_temperature", 1.0))
             except (TypeError, ValueError):
                 conf_temp = 1.0
             rec_shape_info = manifest.get("rec_image_shape") or (
-                "3, 48, 480" if (v == "v25" or str(v).startswith("v24_1_r4")) else "3, 48, 320"
+                "3, 48, 480" if (actual_ver == "v25" or str(actual_ver).startswith("v24_1_r4")) else "3, 48, 320"
             )
-            recs.append({"version": v,
+            recs.append({"version": actual_ver,
                          "model_dir": os.path.relpath(p["model_dir"], PROJECT_ROOT).replace("\\", "/"),
                          "weights_sha256_16": _file_fingerprint(os.path.join(p["model_dir"], "inference.pdiparams")),
                          "dict": os.path.basename(p["dict_path"]),
@@ -2126,13 +2207,16 @@ def segment_lines_advanced(img, base_coords, ocr_model):
             try:
                 print(f"DEBUG: [segment_lines_advanced] Calling ocr_model for Pass 1 ({len(valid_imgs)} images)...")
                 results, _ = ocr_model(valid_imgs)
+                sel_vers_p1 = getattr(ocr_model, 'last_selected_versions', None) or []
                 print("DEBUG: [segment_lines_advanced] Pass 1 prediction finished.")
-                for vi, res in zip(valid_indices, results):
+                for local_idx, (vi, res) in enumerate(zip(valid_indices, results)):
                     pred_text, conf = res if res else ("", 0.0)
                     pred_text = pred_text.strip()
                     pass1_candidates[vi]["prediction"] = pred_text
                     pass1_candidates[vi]["confidence"] = float(conf)
                     pass1_candidates[vi]["pred_length"] = len(pred_text)
+                    if local_idx < len(sel_vers_p1):
+                        pass1_candidates[vi]["routed_version"] = sel_vers_p1[local_idx]
             except Exception as e:
                 print(f"DEBUG: [segment_lines_advanced] Batch inference pass 1 failed: {e}")
                 
@@ -2663,8 +2747,9 @@ def run_ocr_pipeline(img, model_ver=None, method='dbnet', threshold=0.05, gap=12
     # Prepare backward-compatible response
     results = []
     for idx, (line_img, meta) in enumerate(zip(final_crops, lines_metadata)):
-        pred_text = meta['candidates'][meta['selected_crop_type']]['prediction']
-        confidence = meta['candidates'][meta['selected_crop_type']]['confidence']
+        cand_sel = meta['candidates'][meta['selected_crop_type']]
+        pred_text = cand_sel['prediction']
+        confidence = cand_sel['confidence']
 
         if model_ver in ['auto', 'v24', 'v25', 'v26'] or str(model_ver).startswith('v24'):
             if model_ver != 'auto' or any('\uAA00' <= ch <= '\uAA5F' for ch in (pred_text or '')):
@@ -2678,15 +2763,18 @@ def run_ocr_pipeline(img, model_ver=None, method='dbnet', threshold=0.05, gap=12
         _, buffer = cv2.imencode('.png', line_img)
         line_b64 = base64.b64encode(buffer).decode('utf-8')
 
-        cal_ver = meta.get('routed_version') or model_ver
+        cal_ver = meta.get('routed_version') or cand_sel.get('routed_version') or model_ver
+        if cal_ver == 'auto':
+            cal_ver = DEFAULT_CHAM_MODEL if any('\uAA00' <= ch <= '\uAA5F' for ch in (pred_text or '')) else 'vi'
         cal_conf = calibrate_line_confidence(confidence, cal_ver, pred_text)
 
-        # Backward-compatible format
+        # Backward-compatible format with explicit per-line recognizer provenance
         results.append({
             'index': idx + 1,
             'text': pred_text,
             'confidence': float(confidence),
             'calibrated_confidence': cal_conf,
+            'selected_recognizer': cal_ver,
             'coords': meta['core_box'],
             'bbox': meta.get('bbox', [0, meta['core_box'][0], img.shape[1], meta['core_box'][1]]),
             'polygon': meta.get('polygon'),
@@ -2933,15 +3021,6 @@ def list_available_models():
             "folder": "rec_cham_inference_v24_1_r4"
         },
         {
-            "id": "v25",
-            "label": "Cham V25 (40-Epoch Dual-T4x2 Bilingual SOTA)",
-            "short_label": "V25 SOTA",
-            "group": "Paleographic Cham Specialists",
-            "shape": "3, 48, 480",
-            "summary": "Official 40-epoch Kaggle Dual-T4x2 SOTA (90.96% Seq Acc, 0.72% Val CER on 10K frozen validation).",
-            "folder": "rec_cham_inference_v25"
-        },
-        {
             "id": "auto",
             "label": "Auto Tri-Specialist Router (Cham W480 + W320 + Vietnamese)",
             "short_label": "Auto Router",
@@ -2967,6 +3046,16 @@ def list_available_models():
             "shape": "3, 48, 320",
             "summary": "100% accuracy across all 14 editorial symbols and multi-context hyphens.",
             "folder": "rec_cham_inference_v24_1_r2_1_6"
+        },
+        {
+            "id": "v25",
+            "label": "Cham V25 (40-Epoch Dual-T4x2 Bilingual — Legacy Unmasked)",
+            "short_label": "V25 Bilingual (Legacy)",
+            "group": "Historical Baselines",
+            "shape": "3, 48, 480",
+            "deprecated": True,
+            "summary": "40-epoch Kaggle Dual-T4x2 162-token bilingual model (90.96% Seq Acc / 0.72% CER on 10K in-domain validation; superseded in E2E production by V26.1 + Auto Router due to unmasked W=480 padding & CTC Latin dispersion).",
+            "folder": "rec_cham_inference_v25"
         },
         {
             "id": "v24",
@@ -3013,7 +3102,7 @@ def list_available_models():
             if installed and item["id"] != "vi":
                 has_pdm = os.path.exists(os.path.join(mdir, "inference.pdmodel"))
                 has_jsn = os.path.exists(os.path.join(mdir, "inference.json"))
-                if has_jsn and not has_pdm and paddle_major < 3:
+                if has_jsn and not has_pdm and 0 < paddle_major < 3:
                     installed = False
         entry = dict(item)
         entry["installed"] = installed
@@ -3256,13 +3345,35 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
         else:
             self.send_error(404, 'File Not Found')
             
+    def _read_json_object(self, allow_empty=False):
+        try:
+            content_length = int(self.headers.get('Content-Length') or 0)
+        except (TypeError, ValueError):
+            self.send_json_response({'error': 'Invalid Content-Length header'}, 400)
+            return None
+        if content_length <= 0:
+            if allow_empty:
+                return {}
+            self.send_json_response({'error': 'Empty request body (expected JSON object)'}, 400)
+            return None
+        post_data = self.rfile.read(content_length)
+        try:
+            data = json.loads(post_data.decode('utf-8'))
+        except Exception as e:
+            self.send_json_response({'error': f'Invalid JSON payload: {e}'}, 400)
+            return None
+        if not isinstance(data, dict):
+            self.send_json_response({'error': 'JSON payload must be an object'}, 400)
+            return None
+        return data
+
     def do_POST(self):
         import time
         t_start = time.time()
         print(f"📥 Received POST request: {self.path}...")
         if self.path == '/log':
-            content_length = int(self.headers['Content-Length'])
-            post_data = self.rfile.read(content_length)
+            content_length = int(self.headers.get('Content-Length') or 0)
+            post_data = self.rfile.read(content_length) if content_length > 0 else b'{}'
             try:
                 log_data = json.loads(post_data.decode('utf-8'))
                 print(f"\n🚨 [FRONTEND LOG] {log_data.get('message')}\n")
@@ -3276,22 +3387,51 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             return
 
         if self.path == '/ocr':
-            content_length = int(self.headers['Content-Length'])
-            post_data = self.rfile.read(content_length)
+            data = self._read_json_object()
+            if data is None:
+                return
             print(f"⏱️  Read request body in: {time.time() - t_start:.4f}s")
             t_parse = time.time()
-            data = json.loads(post_data.decode('utf-8'))
-            
-            # Extract parameters
-            img_b64 = data['image']
-            model_ver = data.get('model') or DEFAULT_CHAM_MODEL
-            method = data.get('method', 'dbnet')
-            threshold = float(data.get('threshold', 0.05))
-            gap = int(data.get('gap', 12))
-            win = int(data.get('window', 25))
-            reading_order = data.get('reading_order', 'auto')
-            if reading_order not in ('auto', 'rows'):
-                reading_order = 'auto'
+
+            # 1. Validate model against strict allowlist (prevents silent fallback / fake provenance)
+            try:
+                model_ver = validate_requested_model(data.get('model'))
+            except UnknownModelError as ume:
+                self.send_json_response({'error': str(ume), 'allowed_models': list(ADVERTISED_MODEL_IDS)}, 400)
+                return
+
+            # 2. Validate segmentation method, reading order, and numeric parameters explicitly
+            method_raw = data.get('method')
+            method = 'dbnet' if method_raw is None else str(method_raw).strip().lower()
+            if method not in ALLOWED_SEG_METHODS:
+                self.send_json_response({
+                    'error': f"Invalid segmentation method '{method_raw}'. Allowed methods: {', '.join(ALLOWED_SEG_METHODS)}",
+                    'allowed_methods': list(ALLOWED_SEG_METHODS),
+                }, 400)
+                return
+
+            order_raw = data.get('reading_order')
+            reading_order = 'auto' if order_raw is None else str(order_raw).strip().lower()
+            if reading_order not in ALLOWED_READING_ORDERS:
+                self.send_json_response({
+                    'error': f"Invalid reading_order '{order_raw}'. Allowed values: {', '.join(ALLOWED_READING_ORDERS)}",
+                    'allowed_reading_orders': list(ALLOWED_READING_ORDERS),
+                }, 400)
+                return
+
+            try:
+                threshold = float(data.get('threshold', 0.05))
+                gap = int(data.get('gap', 12))
+                win = int(data.get('window', 25))
+            except (TypeError, ValueError) as pe:
+                self.send_json_response({'error': f'Invalid numeric segmentation parameter: {pe}'}, 400)
+                return
+
+            # 3. Validate image field presence before base64/OpenCV decoding (eliminates KeyError -> HTTP 502)
+            if 'image' not in data or not isinstance(data.get('image'), str) or not data['image'].strip():
+                self.send_json_response({'error': "Missing or empty 'image' field (expected base64-encoded image)"}, 400)
+                return
+            img_b64 = data['image'].strip()
             
             # Decode image
             if ',' in img_b64:
@@ -3300,7 +3440,10 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             if missing_padding:
                 img_b64 += '=' * (4 - missing_padding)
             try:
-                img_data = base64.b64decode(img_b64)
+                img_data = base64.b64decode(img_b64, validate=False)
+                if not img_data:
+                    self.send_json_response({'error': 'Decoded image payload is empty'}, 400)
+                    return
                 nparr = np.frombuffer(img_data, np.uint8)
                 img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
             except Exception as e:
@@ -3311,7 +3454,7 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             print(f"⏱️  Parsed parameters and decoded image in: {time.time() - t_parse:.4f}s")
             
             if img is None:
-                self.send_json_response({'error': 'Unable to read image (corrupted base64 payload)'}, 400)
+                self.send_json_response({'error': 'Unable to read image (unsupported format or corrupted base64 payload)'}, 400)
                 return
                 
             # Serialize Paddle C++ model loading & inference safely while keeping HTTP GET/health non-blocking
@@ -3319,10 +3462,13 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                 t_model = time.time()
                 try:
                     get_ocr_model(model_ver)
+                except UnknownModelError as ume:
+                    self.send_json_response({'error': str(ume), 'allowed_models': list(ADVERTISED_MODEL_IDS)}, 400)
+                    return
                 except Exception as e:
                     import traceback
                     print(f"❌ Error loading OCR model '{model_ver}': {traceback.format_exc()}")
-                    self.send_json_response({'error': f'Model loading failure ({model_ver}): {e}'}, 200)
+                    self.send_json_response({'error': f'Model loading failure ({model_ver}): {e}'}, 500)
                     return
                 print(f"⏱️  Loaded model in: {time.time() - t_model:.4f}s")
 
@@ -3332,7 +3478,7 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                 except Exception as e:
                     import traceback
                     print(f"❌ Error during OCR pipeline: {traceback.format_exc()}")
-                    self.send_json_response({'error': f'OCR transcription engine error: {e}'}, 200)
+                    self.send_json_response({'error': f'OCR transcription engine error: {e}'}, 500)
                     return
 
             t_send = time.time()
@@ -3341,20 +3487,43 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             print(f"🎉 Total POST /ocr execution time: {response['profiler']['backend_total_sec']:.4f}s (document status: {response['document']['status']})")
             
         elif self.path == '/save_correction':
-            content_length = int(self.headers['Content-Length'])
-            post_data = self.rfile.read(content_length)
-            data = json.loads(post_data.decode('utf-8'))
+            data = self._read_json_object()
+            if data is None:
+                return
             with _CORRECTION_LOCK:
                 result = save_correction_entry(data)
             self.send_json_response(result)
         elif self.path == '/ocr_crop':
-            content_length = int(self.headers['Content-Length'])
-            post_data = self.rfile.read(content_length)
-            data = json.loads(post_data.decode('utf-8'))
-            
-            img_b64 = data.get('image', '')
-            model_ver = data.get('model') or DEFAULT_CHAM_MODEL
-            bbox = data.get('bbox', [0, 0, 0, 0])
+            data = self._read_json_object()
+            if data is None:
+                return
+
+            try:
+                model_ver = validate_requested_model(data.get('model'))
+            except UnknownModelError as ume:
+                self.send_json_response({'error': str(ume), 'allowed_models': list(ADVERTISED_MODEL_IDS)}, 400)
+                return
+
+            if 'image' not in data or not isinstance(data.get('image'), str) or not data['image'].strip():
+                self.send_json_response({'error': "Missing or empty 'image' field (expected base64-encoded image)"}, 400)
+                return
+            img_b64 = data['image'].strip()
+
+            raw_bbox = data.get('bbox')
+            if not isinstance(raw_bbox, (list, tuple)) or len(raw_bbox) != 4:
+                self.send_json_response({'error': "Invalid 'bbox': expected a 4-element array [x1, y1, x2, y2]"}, 400)
+                return
+            try:
+                rx1, ry1, rx2, ry2 = [float(v) for v in raw_bbox]
+            except (TypeError, ValueError):
+                self.send_json_response({'error': "Invalid 'bbox': coordinates must be numbers"}, 400)
+                return
+            if not (math.isfinite(rx1) and math.isfinite(ry1) and math.isfinite(rx2) and math.isfinite(ry2)):
+                self.send_json_response({'error': "Invalid 'bbox': coordinates must be finite numbers"}, 400)
+                return
+            if rx2 <= rx1 or ry2 <= ry1:
+                self.send_json_response({'error': f"Invalid 'bbox' {list(raw_bbox)}: must satisfy x2 > x1 and y2 > y1"}, 400)
+                return
             
             if ',' in img_b64:
                 img_b64 = img_b64.split(',', 1)[1]
@@ -3362,7 +3531,10 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             if missing_padding:
                 img_b64 += '=' * (4 - missing_padding)
             try:
-                img_data = base64.b64decode(img_b64)
+                img_data = base64.b64decode(img_b64, validate=False)
+                if not img_data:
+                    self.send_json_response({'error': 'Decoded image payload is empty'}, 400)
+                    return
                 nparr = np.frombuffer(img_data, np.uint8)
                 img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
             except Exception as e:
@@ -3374,11 +3546,15 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                 return
                 
             h, w = img.shape[:2]
-            x1, y1, x2, y2 = [int(v) for v in bbox]
-            x1 = max(0, min(w - 1, x1))
-            x2 = max(x1 + 1, min(w, x2))
-            y1 = max(0, min(h - 1, y1))
-            y2 = max(y1 + 1, min(h, y2))
+            x1 = max(0, int(math.floor(rx1)))
+            y1 = max(0, int(math.floor(ry1)))
+            x2 = min(w, int(math.ceil(rx2)))
+            y2 = min(h, int(math.ceil(ry2)))
+            if x2 <= x1 or y2 <= y1:
+                self.send_json_response({
+                    'error': f"Invalid 'bbox' {list(raw_bbox)}: region lies outside image bounds ({w}x{h})"
+                }, 400)
+                return
             
             crop_img = img[y1:y2, x1:x2]
             if crop_img.size == 0:
@@ -3388,10 +3564,14 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             try:
                 with _INFERENCE_LOCK:
                     ocr = get_ocr_model(model_ver)
-                    res, _ = ocr([crop_img])
+                    res, _ = ocr([preprocess_crop_for_rec(crop_img)])
+                    sel_vers = list(getattr(ocr, 'last_selected_versions', None) or [])
                 pred_text, conf = res[0] if res else ("", 0.0)
+            except UnknownModelError as ume:
+                self.send_json_response({'error': str(ume), 'allowed_models': list(ADVERTISED_MODEL_IDS)}, 400)
+                return
             except Exception as e:
-                self.send_json_response({'error': f'Cropped OCR transcription error ({model_ver}): {e}'}, 200)
+                self.send_json_response({'error': f'Cropped OCR transcription error ({model_ver}): {e}'}, 500)
                 return
                 
             if model_ver in ['auto', 'v24', 'v25', 'v26'] or str(model_ver).startswith('v24'):
@@ -3401,6 +3581,10 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                         pred_text = normalize_unicode(pred_text)
                     except Exception as e:
                         print(f"Warning: normalize_unicode failed: {e}")
+
+            sel_ver = sel_vers[0] if sel_vers else model_ver
+            if sel_ver == 'auto':
+                sel_ver = DEFAULT_CHAM_MODEL if any('\uAA00' <= ch <= '\uAA5F' for ch in (pred_text or '')) else 'vi'
                     
             _, buffer = cv2.imencode('.png', crop_img)
             crop_b64 = base64.b64encode(buffer).decode('utf-8')
@@ -3408,7 +3592,9 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             self.send_json_response({
                 'text': pred_text,
                 'confidence': float(conf),
-                'calibrated_confidence': calibrate_line_confidence(conf, model_ver, pred_text),
+                'calibrated_confidence': calibrate_line_confidence(conf, sel_ver, pred_text),
+                'selected_recognizer': sel_ver,
+                'model_info': get_model_info(model_ver),
                 'image': crop_b64,
                 'crop_image': f"data:image/png;base64,{crop_b64}",
                 'bbox': [x1, y1, x2, y2]

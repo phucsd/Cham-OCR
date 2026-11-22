@@ -35,7 +35,6 @@
                     <select id="model-select" class="model-select" aria-label="Select Recognition Model">
                         <optgroup label="Paleographic Cham Specialists">
                             <option value="v24_1_r4" selected>V26.1 SOTA</option>
-                            <option value="v25">V25 SOTA</option>
                             <option value="v24_1_r3_1">V24.1-R3.1</option>
                             <option value="v24_1_r2_1_6">V24.1-R2.1.6</option>
                         </optgroup>
@@ -44,6 +43,7 @@
                             <option value="vi">Vietnamese</option>
                         </optgroup>
                         <optgroup label="Historical Baselines">
+                            <option value="v25">V25 Bilingual (Legacy)</option>
                             <option value="v24">V24 Baseline</option>
                             <option value="v23">V23 Legacy</option>
                         </optgroup>
@@ -685,9 +685,9 @@
                         </p>
                     </div>
                     <div style="padding: 12px; border: 1px solid var(--border-subtle); border-radius: 10px; background: var(--bg-elevated);">
-                        <strong style="color: var(--accent);">2. SOTA Recognition &amp; Tri-Specialist Routing</strong>
+                        <strong style="color: var(--accent);">2. Masked-SVTR Recognition &amp; Tri-Specialist Routing</strong>
                         <p style="margin-top: 4px; color: var(--text-secondary); font-size: 12px;">
-                            Deploys <strong>V24.1-R4</strong> (W=480 WiSE-FT pure-Cham SOTA, 2.55% real-camera CER), <strong>V25</strong> (40-epoch Dual-T4x2 SOTA, 90.96% Seq Acc / 0.72% Val CER), and the adaptive <strong>Auto Tri-Router</strong> with deterministic Logical Order normalization.
+                            Deploys <strong>V26.1 Masked-SVTR</strong> (W=480 padding-masked WiSE-FT pure-Cham SOTA, 6/6 Gates, 2.07% real-camera crop CER) and the adaptive <strong>Auto Tri-Router v2.2</strong> (W=480 + W=320 + Vietnamese PP-OCRv5) with per-line recognizer provenance and Logical Order normalization.
                         </p>
                     </div>
                 </div>
