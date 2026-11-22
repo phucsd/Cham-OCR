@@ -834,6 +834,107 @@ def test_priority_a_pass2_provenance_and_zero_script_guessing():
             app.ocr_models['auto'] = saved_auto
 
 
+def test_realscan_gold_v4_anti_circular_and_promotion_gates():
+    """RealScan-Gold v4: enforces gt=None on staging_review_queue, blocks unverified Studio drafts, promotes Verified pages."""
+    import json
+    import tempfile
+
+    repo_root = os.path.dirname(app.PROJECT_ROOT)
+    scripts_dir = os.path.join(repo_root, 'scripts')
+    if scripts_dir not in sys.path:
+        sys.path.insert(0, scripts_dir)
+    import ingest_studio_to_realscan_gold as ingest_v4
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        v4_dir = os.path.join(tmpdir, 'ocr-benchmark', 'data', 'realscan_gold_v4')
+        pages_dir = os.path.join(v4_dir, 'pages')
+        os.makedirs(pages_dir, exist_ok=True)
+        page_p = os.path.join(pages_dir, 'eap_test_folio_01.jpg')
+        img = np.full((240, 600, 3), 235, dtype=np.uint8)
+        cv2.rectangle(img, (40, 50), (520, 92), (25, 25, 25), -1)
+        cv2.rectangle(img, (40, 120), (490, 162), (25, 25, 25), -1)
+        cv2.imwrite(page_p, img)
+
+        manifest_p = os.path.join(v4_dir, 'manifest.json')
+        seed_manifest = {
+            'schema_version': '4.0.0',
+            'dataset_id': 'realscan_gold_v4',
+            'summary': {},
+            'documents': [{
+                'doc_id': 'eap_test_folio_01',
+                'split': 'staging_review_queue',
+                'verification_status': 'pending_human_review',
+                'verified_by_human': False,
+                'gold_eligible': False,
+                'stratum': 'handwritten_paper_traditional',
+                'source_collection_id': 'EAP698-TEST',
+                'redistribution_allowed_in_git': False,
+                'page_relpath': 'ocr-benchmark/data/realscan_gold_v4/pages/eap_test_folio_01.jpg',
+                'page_sha256': ingest_v4.sha256_file(page_p),
+                'draft_ocr_summary': {'cham_bearing_lines': 2},
+                'line_count': 2,
+                'lines': [
+                    {'line': 1, 'bbox': [40, 50, 520, 92], 'crop_relpath': 'ocr-benchmark/data/realscan_gold_v4/crops/x1.png',
+                     'crop_sha256': '0' * 64, 'gt': None, 'verified_by_human': False, 'draft_prediction': 'ꨙꨳꨯꨮ'},
+                    {'line': 2, 'bbox': [40, 120, 490, 162], 'crop_relpath': 'ocr-benchmark/data/realscan_gold_v4/crops/x2.png',
+                     'crop_sha256': '0' * 64, 'gt': None, 'verified_by_human': False, 'draft_prediction': 'ꨌꩌ'},
+                ],
+            }],
+        }
+        with open(manifest_p, 'w', encoding='utf-8') as f:
+            json.dump(seed_manifest, f)
+
+        # 1. Unverified draft Studio JSON MUST be rejected by Anti-Circularity Gate
+        unverified_json = os.path.join(tmpdir, 'draft_unverified.json')
+        with open(unverified_json, 'w', encoding='utf-8') as f:
+            json.dump({
+                'image_name': 'eap_test_folio_01.jpg',
+                'status': 'Needs review',
+                'lines': [
+                    {'bbox': [40, 50, 520, 92], 'text': 'ꨙꨯꨳꨮ', 'human_verified': False},
+                    {'bbox': [40, 120, 490, 162], 'text': 'ꨌꩌ', 'human_verified': False},
+                ],
+            }, f)
+        rejected = False
+        try:
+            ingest_v4.promote_verified_v4(unverified_json, manifest_path=manifest_p, project_root=tmpdir)
+        except ValueError as exc:
+            rejected = 'Anti-Circularity Gate' in str(exc)
+        assert rejected, 'Expected ValueError from Anti-Circularity Gate on unverified Studio draft!'
+
+        # 2. Human-verified Studio JSON promotes cleanly & enforces Logical Order normalize_unicode ('ꨙꨯꨳꨮ' -> 'ꨙꨳꨯꨮ')
+        verified_json = os.path.join(tmpdir, 'human_verified.json')
+        with open(verified_json, 'w', encoding='utf-8') as f:
+            json.dump({
+                'image_name': 'eap_test_folio_01.jpg',
+                'status': 'Verified',
+                'lines': [
+                    {'bbox': [40, 50, 520, 92], 'text': 'ꨙꨯꨳꨮ ꨚꨤꨬ', 'original_text': 'ꨙꨳꨯꨮ', 'human_verified': True},
+                    {'bbox': [40, 120, 490, 162], 'text': 'ꨌꩌ ꨣꩌ', 'original_text': 'ꨌꩌ', 'human_verified': True},
+                ],
+            }, f)
+        updated = ingest_v4.promote_verified_v4(
+            verified_json, annotator='paleographer_a', review_round=2, manifest_path=manifest_p, project_root=tmpdir
+        )
+        doc = updated['documents'][0]
+        assert doc['split'] == 'verified_gold' and doc['verified_by_human'] is True and doc['gold_eligible'] is True
+        assert doc['annotator_id'] == 'paleographer_a' and doc['review_round'] == 2
+        assert doc['lines'][0]['gt'] == 'ꨙꨳꨯꨮ ꨚꨤꨬ', doc['lines'][0]
+        assert updated['summary']['verified_gold_pages'] == 1
+        assert updated['summary']['staging_new_physical_pages'] == 0
+        stats = ingest_v4.verify_manifest_integrity(manifest_p, project_root=tmpdir)
+        assert stats['checked_files'] == 3, stats
+
+    # 3. Verify production RealScan-Gold v4 manifest on disk if already built
+    prod_v4 = os.path.join(repo_root, 'ocr-benchmark', 'data', 'realscan_gold_v4', 'manifest.json')
+    if os.path.exists(prod_v4):
+        m4 = json.load(open(prod_v4, encoding='utf-8'))
+        assert m4['summary']['synthetic_pages_included'] == 0
+        assert m4['summary']['total_physical_pages'] >= 50
+        prod_stats = ingest_v4.verify_manifest_integrity(prod_v4, project_root=repo_root)
+        assert prod_stats['documents'] >= 58, prod_stats
+
+
 class TestQualityGates(unittest.TestCase):
     pass
 

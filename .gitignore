@@ -90,6 +90,7 @@ ocr-benchmark/data/priority_b_2026_11_22/images/
 ocr-benchmark/data/live_geometry_multifont_2026_11_21/images/
 ocr-benchmark/data/realscan_gold_v*/pages/
 ocr-benchmark/data/realscan_gold_v*/crops/
+ocr-benchmark/data/realscan_gold_v*/review_queue/
 ocr-benchmark/results/*_raw/
 ocr-benchmark/results/*_raw_results/
 ocr-studio/data/output/rec_cham_inference_v24_1_r1*/
