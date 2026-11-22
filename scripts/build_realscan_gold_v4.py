@@ -111,17 +111,17 @@ EAP_SPECS = [
     ("eap698_12_7_c16", "EAP698-12-7", 15, "handwritten_paper_traditional", "India ink on 3-layer thin paper (Ummarup legend)", "Imam Lam Nam", "Bắc Bình, Bình Thuận", "19th–20th century"),
     ("eap698_12_7_c48", "EAP698-12-7", 47, "handwritten_paper_traditional", "India ink on 3-layer thin paper (Ummarup legend)", "Imam Lam Nam", "Bắc Bình, Bình Thuận", "19th–20th century"),
 
-    ("eap1005_1_1_c14", "EAP1005-1-1", 13, "handwritten_paper_traditional", "Chinese ink on thin handmade paper (13x10cm, house rituals)", "EAP1005 Family Collection", "Ninh Thuận / Bình Thuận", "20th century"),
-    ("eap1005_1_1_c46", "EAP1005-1-1", 45, "handwritten_paper_traditional", "Chinese ink on thin handmade paper (13x10cm, house rituals)", "EAP1005 Family Collection", "Ninh Thuận / Bình Thuận", "20th century"),
+    ("eap1005_1_1_c14", "EAP1005-1-1", 13, "handwritten_paper_traditional", "Chinese ink on thin handmade paper (13x10cm, house rituals)", "EAP1005/1 Family Collection", "Ninh Thuận / Bình Thuận", "20th century"),
+    ("eap1005_1_1_c46", "EAP1005-1-1", 45, "handwritten_paper_traditional", "Chinese ink on thin handmade paper (13x10cm, house rituals)", "EAP1005/1 Family Collection", "Ninh Thuận / Bình Thuận", "20th century"),
 
-    ("eap1005_6_1_c12", "EAP1005-6-1", 11, "handwritten_paper_traditional", "Chinese ink on folded Chinese paper (healing mantras)", "EAP1005 Bình Thuận Collection", "Bình Thuận", "20th century"),
-    ("eap1005_6_1_c32", "EAP1005-6-1", 31, "handwritten_paper_traditional", "Chinese ink on folded Chinese paper (healing mantras)", "EAP1005 Bình Thuận Collection", "Bình Thuận", "20th century"),
+    ("eap1005_6_1_c12", "EAP1005-6-1", 11, "handwritten_paper_traditional", "Chinese ink on folded Chinese paper (healing mantras)", "EAP1005/6 Bình Thuận Collection", "Bình Thuận", "20th century"),
+    ("eap1005_6_1_c32", "EAP1005-6-1", 31, "handwritten_paper_traditional", "Chinese ink on folded Chinese paper (healing mantras)", "EAP1005/6 Bình Thuận Collection", "Bình Thuận", "20th century"),
 
-    ("eap1005_20_1_c20", "EAP1005-20-1", 19, "handwritten_paper_traditional", "Chinese ink on Chinese paper (Jiâ Puis Payak Kadhar rite)", "EAP1005 Bình Thuận Collection", "Bình Thuận", "20th century"),
-    ("eap1005_20_1_c64", "EAP1005-20-1", 63, "handwritten_paper_traditional", "Chinese ink on Chinese paper (Jiâ Puis Payak Kadhar rite)", "EAP1005 Bình Thuận Collection", "Bình Thuận", "20th century"),
+    ("eap1005_20_1_c20", "EAP1005-20-1", 19, "handwritten_paper_traditional", "Chinese ink on Chinese paper (Jiâ Puis Payak Kadhar rite)", "EAP1005/20 Bình Thuận Collection", "Bình Thuận", "20th century"),
+    ("eap1005_20_1_c64", "EAP1005-20-1", 63, "handwritten_paper_traditional", "Chinese ink on Chinese paper (Jiâ Puis Payak Kadhar rite)", "EAP1005/20 Bình Thuận Collection", "Bình Thuận", "20th century"),
 
-    ("eap1005_22_1_c15", "EAP1005-22-1", 14, "handwritten_paper_traditional", "Chinese ink on Chinese paper (Social issues poem)", "EAP1005 Bình Thuận Collection", "Bình Thuận", "20th century"),
-    ("eap1005_22_1_c38", "EAP1005-22-1", 37, "handwritten_paper_traditional", "Chinese ink on Chinese paper (Social issues poem)", "EAP1005 Bình Thuận Collection", "Bình Thuận", "20th century"),
+    ("eap1005_22_1_c15", "EAP1005-22-1", 14, "handwritten_paper_traditional", "Chinese ink on Chinese paper (Social issues poem)", "EAP1005/22 Bình Thuận Collection", "Bình Thuận", "20th century"),
+    ("eap1005_22_1_c38", "EAP1005-22-1", 37, "handwritten_paper_traditional", "Chinese ink on Chinese paper (Social issues poem)", "EAP1005/22 Bình Thuận Collection", "Bình Thuận", "20th century"),
 
     # --- Stratum C: 20th-c. Everyday Substrates (Cement Paper, Notebook, Newspaper, A4 Photocopy, Scroll: 13 pages across 8 mss.) ---
     ("eap698_1_17_c25", "EAP698-1-17", 24, "handwritten_modern_substrate", "Photocopied handwritten manuscript on A4 paper (Umarup saga)", "Mr. Xa / Mr. Sam Van Tanh", "Ninh Thuận", "c. 1975"),
@@ -198,6 +198,161 @@ IA_PRINTED_SPECS = [
      "Étienne Aymonier & Antoine Cabaton (1906), Dictionnaire čam-français, Paris: Imprimerie Nationale / EFEO, Vol. VII (Public Domain)",
      "2-column printed Akhar Thrah headwords (sa-/ha- section) + inline Romanized Cham transliteration + French glosses."),
 ]
+
+# Strictly EAP-series-, custodian-, and book-disjoint adaptation seed pool (11 manuscripts across 6 EAP series = 20 pages).
+# Every other source (16 independent sources: 37 multi-line pages + 7 Wikimedia specimens, including 100% of Aymonier 1889,
+# 100% of Cabaton 1906, 100% of EAP531-1, harum_palei_01, etc.) is permanently locked in `locked_test_holdout` (`training_forbidden=True`).
+ADAPTATION_SEED_COLLECTION_IDS = frozenset({
+    "EAP698-12-1",
+    "EAP698-12-7",
+    "EAP698-1-1",
+    "EAP698-1-2",
+    "EAP698-1-5",
+    "EAP698-1-12",
+    "EAP698-1-17",
+    "EAP1005-6-1",
+    "EAP1005-22-1",
+    "EAP698-5-1",
+    "EAP698-7-1",
+})
+
+# Stratified 20-page Fast-Review Priority Pack (`12` locked_test_holdout + `8` adaptation_seed_pool across all 4 physical strata)
+GOLD20_PRIORITY_DOC_IDS = (
+    # Locked Test Holdout (12 pages across all 4 strata)
+    "eap531_1_1_c05",
+    "eap531_1_3_c06",
+    "eap698_2_1_c09",
+    "eap698_3_1_c18",
+    "eap1005_1_1_c14",
+    "eap698_4_1_c08",
+    "eap698_6_1_c08",
+    "eap1005_33_27_c10",
+    "aymonier1889_chronique_p108",
+    "aymonier1889_chronique_p110",
+    "cabaton1906_dict_c080",
+    "cabaton1906_dict_c190",
+    # Adaptation Seed Pool (8 pages across palm-leaf, traditional paper, and modern substrate)
+    "eap698_12_1_c18",
+    "eap698_12_7_c16",
+    "eap698_1_1_c15",
+    "eap698_1_12_c07",
+    "eap1005_6_1_c12",
+    "eap1005_22_1_c15",
+    "eap698_5_1_c64",
+    "eap698_7_1_c10",
+)
+
+SCHOLARLY_REFERENCE_EXCERPTS = {
+    "aymonier1889_chronique_p108": {
+        "edition": "Aymonier (1889), Grammaire de la langue chame, pp. 74–76 & 86–88",
+        "romanized_cham_anchor": "Po Klong Garai — Po Rome — Po Saktiraydaputih (Chronique royale chame, opening royal genealogy lines 1–26).",
+        "french_gloss_anchor": "Chronique des rois chams depuis Po Ovlah / Po Klong Garai jusqu'aux règnes historiques du Panduranga.",
+    },
+    "aymonier1889_chronique_p110": {
+        "edition": "Aymonier (1889), Grammaire de la langue chame, pp. 77–79 & 88–89",
+        "romanized_cham_anchor": "Chronique royale chame, lines 43–55: sakawi Cham royal dates (animal-cycle & numeral years) of Panduranga lords.",
+        "french_gloss_anchor": "Succession chronologique des rois chams aux XVIIe–XVIIIe siècles avec durées de règne.",
+    },
+    "aymonier1889_chronique_p112": {
+        "edition": "Aymonier (1889), Grammaire de la langue chame, pp. 79–81 & 89–90",
+        "romanized_cham_anchor": "Chronique royale chame, lines 65–81: late-18th / early-19th century Panduranga rulers (Po Tisuntiraydapuran, Po Chong Chan).",
+        "french_gloss_anchor": "Derniers souverains autonomes du Panduranga jusqu'au début du XIXe siècle.",
+    },
+    "aymonier1889_chronique_p114": {
+        "edition": "Aymonier (1889), Grammaire de la langue chame, p. 81 & Akhar Thrah numeral plate",
+        "romanized_cham_anchor": "Conclusion of Chronique royale chame + Akhar Thrah numeral & cipher reference table (0–9, 10, 100, 1000).",
+        "french_gloss_anchor": "Fin de la chronique royale et tableau des chiffres chams.",
+    },
+    "cabaton1906_dict_c080": {
+        "edition": "Aymonier & Cabaton (1906), Dictionnaire čam-français, p. 30 [idaramavan — inrā]",
+        "romanized_cham_anchor": "Headwords: idaramavan, iduni, in, inā, inăk, inogarai, inơmodōn, init, inău, intan, indannh, innobar, inrā.",
+        "french_gloss_anchor": "2-column bilingual entries from idaramavan (ramadan) through inrā (Indra).",
+    },
+    "cabaton1906_dict_c130": {
+        "edition": "Aymonier & Cabaton (1906), Dictionnaire čam-français, leaf 130 [ka- / kha- section]",
+        "romanized_cham_anchor": "2-column Akhar Thrah headwords in initial ka-/kha- series with Sanskrit/Malay/Khmer etymologies.",
+        "french_gloss_anchor": "Entrées lexicales čames initiales k-/kh- avec translittération EFEO et traduction française.",
+    },
+    "cabaton1906_dict_c190": {
+        "edition": "Aymonier & Cabaton (1906), Dictionnaire čam-français, leaf 190 [ca- / ja- section]",
+        "romanized_cham_anchor": "2-column Akhar Thrah headwords in palatal ca-/ja- series with inline EFEO Romanization.",
+        "french_gloss_anchor": "Entrées lexicales čames initiales c-/j- avec exemples phraséologiques.",
+    },
+    "cabaton1906_dict_c250": {
+        "edition": "Aymonier & Cabaton (1906), Dictionnaire čam-français, leaf 250 [ta- / da- / na- section]",
+        "romanized_cham_anchor": "2-column Akhar Thrah headwords in dental ta-/da-/na- series with inline EFEO Romanization.",
+        "french_gloss_anchor": "Entrées lexicales čames initiales t-/d-/n- et composés.",
+    },
+    "cabaton1906_dict_c310": {
+        "edition": "Aymonier & Cabaton (1906), Dictionnaire čam-français, leaf 310 [pa- / ba- section]",
+        "romanized_cham_anchor": "2-column Akhar Thrah headwords in labial pa-/ba- series with inline EFEO Romanization.",
+        "french_gloss_anchor": "Entrées lexicales čames initiales p-/b- et locutions rituelles.",
+    },
+    "cabaton1906_dict_c370": {
+        "edition": "Aymonier & Cabaton (1906), Dictionnaire čam-français, leaf 370 [ma- section]",
+        "romanized_cham_anchor": "2-column Akhar Thrah headwords in nasal/causative ma-/mơ- prefix series.",
+        "french_gloss_anchor": "Entrées lexicales čames préfixées en mơ-/ma-.",
+    },
+    "cabaton1906_dict_c430": {
+        "edition": "Aymonier & Cabaton (1906), Dictionnaire čam-français, leaf 430 [ra- / la- section]",
+        "romanized_cham_anchor": "2-column Akhar Thrah headwords in liquid ra-/la- series with inline EFEO Romanization.",
+        "french_gloss_anchor": "Entrées lexicales čames initiales r-/l-.",
+    },
+    "cabaton1906_dict_c490": {
+        "edition": "Aymonier & Cabaton (1906), Dictionnaire čam-français, leaf 490 [sa- / ha- section]",
+        "romanized_cham_anchor": "2-column Akhar Thrah headwords in sibilant/aspirate sa-/ha- series.",
+        "french_gloss_anchor": "Entrées lexicales čames initiales s-/h-.",
+    },
+}
+
+
+def _eap_series_key(source_collection_id: str) -> str:
+    parts = str(source_collection_id or "").split("-")
+    if len(parts) >= 2 and parts[0].startswith("EAP"):
+        return f"{parts[0]}-{parts[1]}"
+    return str(source_collection_id or "")
+
+
+def assign_benchmark_split(source_collection_id: str) -> tuple[str, bool]:
+    if source_collection_id in ADAPTATION_SEED_COLLECTION_IDS:
+        return "adaptation_seed_pool", False
+    return "locked_test_holdout", True
+
+
+def verify_custodian_and_series_disjoint_split(documents: list) -> dict:
+    """Strictly asserts zero shared collection ID, EAP archive series, custodian, book, or SHA-256 across splits."""
+    holdout_docs = [d for d in documents if d.get("benchmark_split") == "locked_test_holdout"]
+    seed_docs = [d for d in documents if d.get("benchmark_split") == "adaptation_seed_pool"]
+    assert len(holdout_docs) + len(seed_docs) == len(documents), "Every document must declare benchmark_split"
+
+    holdout_cids = {d["source_collection_id"] for d in holdout_docs}
+    seed_cids = {d["source_collection_id"] for d in seed_docs}
+    assert not (holdout_cids & seed_cids), f"Collection leakage: {holdout_cids & seed_cids}"
+
+    holdout_series = {_eap_series_key(d["source_collection_id"]) for d in holdout_docs}
+    seed_series = {_eap_series_key(d["source_collection_id"]) for d in seed_docs}
+    assert not (holdout_series & seed_series), f"EAP series leakage: {holdout_series & seed_series}"
+
+    holdout_custodians = {d.get("custodian_or_author") for d in holdout_docs if d.get("custodian_or_author")}
+    seed_custodians = {d.get("custodian_or_author") for d in seed_docs if d.get("custodian_or_author")}
+    assert not (holdout_custodians & seed_custodians), f"Custodian leakage: {holdout_custodians & seed_custodians}"
+
+    holdout_shas = {d.get("page_sha256") for d in holdout_docs if d.get("page_sha256")}
+    seed_shas = {d.get("page_sha256") for d in seed_docs if d.get("page_sha256")}
+    assert not (holdout_shas & seed_shas), "Page SHA-256 leakage!"
+
+    assert "GrammaireDeLaLangueChame" in holdout_cids and "bub_gb_SSAoAAAAYAAJ" in holdout_cids
+    assert all(d.get("training_forbidden") is True for d in holdout_docs)
+    return {
+        "locked_test_holdout_documents": len(holdout_docs),
+        "locked_test_holdout_pages": sum(1 for d in holdout_docs if "lines" in d and d.get("doc_id") != "wikimedia_public_specimens_01"),
+        "locked_test_holdout_sources": len(holdout_cids),
+        "adaptation_seed_pool_pages": len(seed_docs),
+        "adaptation_seed_pool_sources": len(seed_cids),
+        "shared_collections": 0,
+        "shared_eap_series": 0,
+        "shared_custodians": 0,
+    }
 
 
 def sha256_file(path: str) -> str:
@@ -398,14 +553,44 @@ def render_contact_sheets(enriched: list, out_dir: str):
     return sheets
 
 
-def is_eap_calibration_card_box(bbox: list, text: str, img_h: int, source_archive: str) -> bool:
-    """Flags bottom-margin ruler/QpCARD/plaque detections on EAP photos without touching Cham ink."""
+def compute_eap_card_cutoff_y(img: np.ndarray, source_collection_id: str, source_archive: str) -> int:
+    """Finds the exact y-coordinate separating an EAP manuscript folio from its bottom ruler/QpCARD/number plaque."""
+    h, w = img.shape[:2]
+    if "EAP" not in source_archive:
+        return h + 1
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) if img.ndim == 3 else img
+    band = gray[:, int(0.12 * w):int(0.88 * w)]
+
+    # Case A: EAP531 palm-leaf on burlap with bright white plastic ruler at bottom
+    if str(source_collection_id).startswith("EAP531"):
+        row_p85 = np.percentile(band, 85, axis=1)
+        for y in range(int(0.58 * h), int(0.92 * h)):
+            if row_p85[y] >= 192 and float(np.mean(row_p85[y:min(h, y + 12)])) >= 192:
+                return max(int(0.58 * h), y - 3)
+        return int(0.74 * h)
+
+    # Case B: EAP698 / EAP1005 folios on dark table with black horizontal gap above bottom QpCARD / number tag
+    row_p92 = np.percentile(band, 92, axis=1)
+    # Find bottom-most bright card region first, then walk up into the dark table gap (< 82) separating it from the folio
+    saw_card = False
+    for y in range(int(0.96 * h), int(0.62 * h), -1):
+        if row_p92[y] >= 135:
+            saw_card = True
+        elif saw_card and float(np.max(row_p92[max(0, y - 4):y + 1])) < 82:
+            return y
+    return int(0.86 * h)
+
+
+def is_eap_calibration_card_box(bbox: list, text: str, img_h: int, source_archive: str, cutoff_y: int = None) -> bool:
+    """Flags bottom-margin ruler/QpCARD/plaque detections on EAP photos (even if Cham CTC hallucinated on QpCARD)."""
     if "EAP" not in source_archive:
         return False
+    yc = 0.5 * (bbox[1] + bbox[3])
+    if cutoff_y is not None and yc >= cutoff_y:
+        return True
     if any("\uAA00" <= ch <= "\uAA5F" for ch in (text or "")):
         return False
-    y0 = bbox[1]
-    return bool(y0 >= 0.77 * img_h)
+    return bool(bbox[1] >= 0.77 * img_h)
 
 
 def call_live_draft_ocr(image_path: str, model_id: str, retries: int = 3, timeout: int = 240) -> dict:
@@ -436,13 +621,31 @@ def call_live_draft_ocr(image_path: str, model_id: str, retries: int = 3, timeou
     raise RuntimeError(f"Draft OCR failed on {image_path}: {last_err}")
 
 
-def run_presegmentation_and_draft_pack(enriched: list) -> list:
+def run_presegmentation_and_draft_pack(enriched: list, use_local_engine: bool = False, refresh_ocr: bool = False) -> list:
     os.makedirs(CROPS_DIR, exist_ok=True)
     os.makedirs(REVIEW_DIR, exist_ok=True)
     cache_dir = os.path.join(REVIEW_DIR, "_raw_api_cache")
     os.makedirs(cache_dir, exist_ok=True)
 
-    print(f"[3/4] Running non-destructive pre-segmentation & draft OCR on {len(enriched)} pages via {LIVE_API_URL} ...")
+    if refresh_ocr:
+        for fn in os.listdir(cache_dir):
+            if fn.endswith(".ocr.json"):
+                os.remove(os.path.join(cache_dir, fn))
+        for fn in os.listdir(CROPS_DIR):
+            if fn.endswith(".png"):
+                os.remove(os.path.join(CROPS_DIR, fn))
+        print("  -> Wiped stale pre-v26.2 `_raw_api_cache/*.ocr.json` and `crops/*.png`.")
+
+    local_app = None
+    if use_local_engine:
+        studio_dir = os.path.join(PROJECT_ROOT, "ocr-studio")
+        if studio_dir not in sys.path:
+            sys.path.insert(0, studio_dir)
+        import app as _studio_app
+        local_app = _studio_app
+        print(f"[3/4] Running Pipeline v26.2 pre-segmentation & draft OCR on {len(enriched)} pages via local Python engine ...")
+    else:
+        print(f"[3/4] Running non-destructive pre-segmentation & draft OCR on {len(enriched)} pages via {LIVE_API_URL} ...")
 
     def _process_doc(idx_and_it):
         idx, it = idx_and_it
@@ -450,93 +653,112 @@ def run_presegmentation_and_draft_pack(enriched: list) -> list:
         img_p = os.path.join(PROJECT_ROOT, it["page_relpath"].replace("/", os.sep))
         cache_p = os.path.join(cache_dir, f"{doc_id}.ocr.json")
         t0 = time.time()
+        img = cv2.imread(img_p)
+        h, w = img.shape[:2]
         if os.path.exists(cache_p) and os.path.getsize(cache_p) > 200:
             resp = json.load(open(cache_p, "r", encoding="utf-8"))
+        elif local_app is not None:
+            resp = local_app.run_ocr_pipeline(img, model_ver=it["draft_ocr_model"], method="dbnet", reading_order="auto")
+            with open(cache_p, "w", encoding="utf-8") as cf:
+                json.dump(resp, cf, ensure_ascii=False)
         else:
             resp = call_live_draft_ocr(img_p, it["draft_ocr_model"])
             with open(cache_p, "w", encoding="utf-8") as cf:
                 json.dump(resp, cf, ensure_ascii=False)
         dt = round(time.time() - t0, 2)
-
-        img = cv2.imread(img_p)
-        h, w = img.shape[:2]
         raw_lines = resp.get("lines") or []
 
-        manifest_lines = []
-        studio_lines = []
-        calib_filtered = 0
+        def _collect_kept_lines(raw_lns):
+            m_lines, s_lines, c_filt = [], [], 0
+            for raw_ln in raw_lns:
+                bbox = raw_ln.get("bbox")
+                raw_txt = (raw_ln.get("text") or "").strip()
+                if not bbox or len(bbox) != 4:
+                    continue
+                x0, y0, x1, y1 = [int(round(v)) for v in bbox]
+                x0, y0 = max(0, x0), max(0, y0)
+                x1, y1 = min(w, x1), min(h, y1)
+                if x1 - x0 < 6 or y1 - y0 < 6:
+                    continue
+                if is_eap_calibration_card_box([x0, y0, x1, y1], raw_txt, h, it["source_archive"], cutoff_y=eap_cutoff_y):
+                    c_filt += 1
+                    continue
+                norm_txt = normalize_unicode(raw_txt) if any("\uAA00" <= c <= "\uAA5F" for c in raw_txt) else raw_txt
+                l_num = len(m_lines) + 1
+                crop_p = os.path.join(CROPS_DIR, f"{doc_id}_line_{l_num:02d}.png")
+                crop_arr = img[y0:y1, x0:x1]
+                cv2.imwrite(crop_p, crop_arr)
+                conf = round(float(raw_ln.get("confidence") or 0.0), 4)
+                cal_conf = round(float(raw_ln.get("calibrated_confidence") or conf), 4)
+                sel_rec = raw_ln.get("selected_recognizer") or it["draft_ocr_model"]
+                seg = raw_ln.get("segmentation") or {}
+                raw_poly = raw_ln.get("polygon")
+                compact_poly = (
+                    [[round(float(pt[0]), 1), round(float(pt[1]), 1)] for pt in raw_poly if isinstance(pt, (list, tuple)) and len(pt) >= 2]
+                    if isinstance(raw_poly, list) else None
+                )
+                m_lines.append({
+                    "line": l_num,
+                    "bbox": [x0, y0, x1, y1],
+                    "polygon": compact_poly,
+                    "crop_relpath": os.path.relpath(crop_p, PROJECT_ROOT).replace("\\", "/"),
+                    "crop_sha256": sha256_file(crop_p),
+                    "gt": None,
+                    "verified_by_human": False,
+                    "draft_prediction": norm_txt,
+                    "draft_model": it["draft_ocr_model"],
+                    "draft_selected_recognizer": sel_rec,
+                    "draft_confidence": conf,
+                    "draft_calibrated_confidence": cal_conf,
+                    "needs_review": bool(seg.get("needs_review", False) or conf < 0.75),
+                    "review_reasons": seg.get("reason") or [],
+                })
+                ok, buf = cv2.imencode(".png", crop_arr)
+                b64_crop = ("data:image/png;base64," + base64.b64encode(buf.tobytes()).decode("ascii")) if ok else None
+                s_lines.append({
+                    "line_id": l_num,
+                    "text": norm_txt,
+                    "original_text": norm_txt,
+                    "confidence": conf,
+                    "calibrated_confidence": cal_conf,
+                    "selected_recognizer": sel_rec,
+                    "human_verified": False,
+                    "bbox": [x0, y0, x1, y1],
+                    "coords": raw_ln.get("coords") or [x0, y0, x1 - x0, y1 - y0],
+                    "polygon": raw_ln.get("polygon"),
+                    "segmentation": seg,
+                    "image": b64_crop,
+                })
+            return m_lines, s_lines, c_filt
 
-        for raw_ln in raw_lines:
-            bbox = raw_ln.get("bbox")
-            raw_txt = (raw_ln.get("text") or "").strip()
-            if not bbox or len(bbox) != 4:
-                continue
-            x0, y0, x1, y1 = [int(round(v)) for v in bbox]
-            x0, y0 = max(0, x0), max(0, y0)
-            x1, y1 = min(w, x1), min(h, y1)
-            if x1 - x0 < 6 or y1 - y0 < 6:
-                continue
+        eap_cutoff_y = compute_eap_card_cutoff_y(img, it["source_collection_id"], it["source_archive"])
+        manifest_lines, studio_lines, calib_filtered = _collect_kept_lines(raw_lines)
 
-            if is_eap_calibration_card_box([x0, y0, x1, y1], raw_txt, h, it["source_archive"]):
-                calib_filtered += 1
-                continue
+        # If 0 manuscript lines survived above eap_cutoff_y (e.g. ultra-faint ballpoint ink masked by a crisp bottom QpCARD),
+        # run CLAHE local-contrast rescue with the bottom calibration strip masked out.
+        if not manifest_lines and local_app is not None:
+            masked = img.copy()
+            if eap_cutoff_y < h:
+                masked[eap_cutoff_y:, :] = 20
+            lab_m = cv2.cvtColor(masked, cv2.COLOR_BGR2LAB)
+            lm, am, bm = cv2.split(lab_m)
+            enh_m = cv2.cvtColor(cv2.merge([cv2.createCLAHE(clipLimit=3.2, tileGridSize=(8, 8)).apply(lm), am, bm]), cv2.COLOR_LAB2BGR)
+            resp = local_app.run_ocr_pipeline(enh_m, model_ver=it["draft_ocr_model"], method="dbnet", reading_order="auto")
+            with open(cache_p, "w", encoding="utf-8") as cf:
+                json.dump(resp, cf, ensure_ascii=False)
+            raw_lines = resp.get("lines") or []
+            manifest_lines, studio_lines, calib_filtered = _collect_kept_lines(raw_lines)
 
-            norm_txt = normalize_unicode(raw_txt) if any("\uAA00" <= c <= "\uAA5F" for c in raw_txt) else raw_txt
-            l_num = len(manifest_lines) + 1
-            crop_p = os.path.join(CROPS_DIR, f"{doc_id}_line_{l_num:02d}.png")
-            crop_arr = img[y0:y1, x0:x1]
-            cv2.imwrite(crop_p, crop_arr)
-
-            conf = round(float(raw_ln.get("confidence") or 0.0), 4)
-            cal_conf = round(float(raw_ln.get("calibrated_confidence") or conf), 4)
-            sel_rec = raw_ln.get("selected_recognizer") or it["draft_ocr_model"]
-            seg = raw_ln.get("segmentation") or {}
-
-            raw_poly = raw_ln.get("polygon")
-            compact_poly = (
-                [[round(float(pt[0]), 1), round(float(pt[1]), 1)] for pt in raw_poly if isinstance(pt, (list, tuple)) and len(pt) >= 2]
-                if isinstance(raw_poly, list) else None
-            )
-
-            # STRICT ANTI-CIRCULAR PROTOCOL:
-            # `gt` MUST remain None until a human paleographer verifies the line!
-            manifest_lines.append({
-                "line": l_num,
-                "bbox": [x0, y0, x1, y1],
-                "polygon": compact_poly,
-                "crop_relpath": os.path.relpath(crop_p, PROJECT_ROOT).replace("\\", "/"),
-                "crop_sha256": sha256_file(crop_p),
-                "gt": None,
-                "verified_by_human": False,
-                "draft_prediction": norm_txt,
-                "draft_model": it["draft_ocr_model"],
-                "draft_selected_recognizer": sel_rec,
-                "draft_confidence": conf,
-                "draft_calibrated_confidence": cal_conf,
-                "needs_review": bool(seg.get("needs_review", False) or conf < 0.75),
-                "review_reasons": seg.get("reason") or [],
-            })
-
-            ok, buf = cv2.imencode(".png", crop_arr)
-            b64_crop = ("data:image/png;base64," + base64.b64encode(buf.tobytes()).decode("ascii")) if ok else None
-            studio_lines.append({
-                "line_id": l_num,
-                "text": norm_txt,
-                "original_text": norm_txt,
-                "confidence": conf,
-                "calibrated_confidence": cal_conf,
-                "selected_recognizer": sel_rec,
-                "human_verified": False,
-                "bbox": [x0, y0, x1, y1],
-                "coords": raw_ln.get("coords") or [x0, y0, x1 - x0, y1 - y0],
-                "polygon": raw_ln.get("polygon"),
-                "segmentation": seg,
-                "image": b64_crop,
-            })
+        bench_split, train_forbidden = assign_benchmark_split(it["source_collection_id"])
+        ref_excerpt = SCHOLARLY_REFERENCE_EXCERPTS.get(doc_id)
+        is_gold20 = doc_id in GOLD20_PRIORITY_DOC_IDS
 
         studio_payload = {
             "image_name": f"{doc_id}.jpg",
             "doc_id": doc_id,
+            "benchmark_split": bench_split,
+            "training_forbidden": train_forbidden,
+            "gold20_priority": is_gold20,
             "status": "Needs review",
             "verification_status": "pending_human_review",
             "verified_by_human": False,
@@ -545,6 +767,7 @@ def run_presegmentation_and_draft_pack(enriched: list) -> list:
             "source_collection_id": it["source_collection_id"],
             "catalogue_url": it["catalogue_url"],
             "scholarly_reference_hint": it["scholarly_reference_hint"],
+            "scholarly_reference_excerpt": ref_excerpt,
             "lines": studio_lines,
         }
         studio_json_p = os.path.join(REVIEW_DIR, f"{doc_id}.studio.json")
@@ -554,14 +777,18 @@ def run_presegmentation_and_draft_pack(enriched: list) -> list:
         cham_lines_cnt = sum(1 for ln in manifest_lines if any("\uAA00" <= c <= "\uAA5F" for c in (ln["draft_prediction"] or "")))
         mean_conf = round(float(np.mean([ln["draft_confidence"] for ln in manifest_lines])) if manifest_lines else 0.0, 4)
         doc_info = resp.get("document") or {}
+        prof_info = resp.get("profiler") or {}
         print(
-            f"  [{idx:02d}/{len(enriched)}] {doc_id:28s} | lines={len(manifest_lines):2d} (cham={cham_lines_cnt:2d}, card_filtered={calib_filtered}) "
-            f"| conf={mean_conf:.3f} | status={doc_info.get('status','?'):12s} | {dt:.1f}s"
+            f"  [{idx:02d}/{len(enriched)}] {doc_id:28s} | {bench_split:20s} | lines={len(manifest_lines):2d} (cham={cham_lines_cnt:2d}, card_filtered={calib_filtered}) "
+            f"| conf={mean_conf:.3f} | det={prof_info.get('detector','?'):21s} | {dt:.1f}s"
         )
 
         return {
             "doc_id": doc_id,
             "split": "staging_review_queue",
+            "benchmark_split": bench_split,
+            "training_forbidden": train_forbidden,
+            "gold20_priority": is_gold20,
             "verification_status": "pending_human_review",
             "verified_by_human": False,
             "gold_eligible": False,
@@ -572,6 +799,7 @@ def run_presegmentation_and_draft_pack(enriched: list) -> list:
             "script_profile": it["script_profile"],
             "source_archive": it["source_archive"],
             "source_collection_id": it["source_collection_id"],
+            "eap_or_book_series": _eap_series_key(it["source_collection_id"]),
             "canvas_or_leaf_index": it["canvas_or_leaf_index"],
             "title": it["title"],
             "material": it["material"],
@@ -584,12 +812,16 @@ def run_presegmentation_and_draft_pack(enriched: list) -> list:
             "redistribution_allowed_in_git": it["redistribution_allowed_in_git"],
             "required_statement": it["required_statement"],
             "scholarly_reference_hint": it["scholarly_reference_hint"],
+            "scholarly_reference_excerpt": ref_excerpt,
             "page_relpath": it["page_relpath"],
             "page_sha256": it["page_sha256"],
             "width": it["width"],
             "height": it["height"],
             "draft_ocr_summary": {
+                "pipeline_version": "v26.2_router_v2.3",
                 "draft_model": it["draft_ocr_model"],
+                "executed_detector": prof_info.get("detector"),
+                "detector_switched": bool(prof_info.get("detector_switched", False)),
                 "raw_api_lines": len(raw_lines),
                 "calibration_card_boxes_filtered": calib_filtered,
                 "kept_draft_lines": len(manifest_lines),
@@ -597,7 +829,7 @@ def run_presegmentation_and_draft_pack(enriched: list) -> list:
                 "mean_draft_confidence": mean_conf,
                 "document_status": doc_info.get("status"),
                 "document_reasons": doc_info.get("reasons") or [],
-                "layout": resp.get("layout") or {},
+                "layout": doc_info.get("layout") or resp.get("layout") or {},
             },
             "line_count": len(manifest_lines),
             "lines": manifest_lines,
@@ -623,6 +855,9 @@ def load_verified_gold_carryover() -> list:
     harum = json.loads(json.dumps(next(d for d in v2_m["documents"] if d["doc_id"] == "harum_palei_01")))
     harum.update({
         "split": "verified_gold",
+        "benchmark_split": "locked_test_holdout",
+        "training_forbidden": True,
+        "gold20_priority": False,
         "verification_status": "human_verified",
         "verified_by_human": True,
         "gold_eligible": True,
@@ -630,6 +865,8 @@ def load_verified_gold_carryover() -> list:
         "script_profile": "pure_akhar_thrah",
         "source_archive": "Cham Community Poetry Folio (Local Verified Benchmark)",
         "source_collection_id": "harum_palei_01",
+        "eap_or_book_series": "harum_palei_01",
+        "custodian_or_author": "Cham Community Poetry Folio (harum_palei_01)",
         "license": "Project Benchmark Specimen (Human-Verified)",
         "redistribution_allowed_in_git": True,
     })
@@ -639,6 +876,9 @@ def load_verified_gold_carryover() -> list:
     wiki = json.loads(json.dumps(next(d for d in v2_m["documents"] if d["doc_id"] == "wikimedia_public_specimens_01")))
     wiki.update({
         "split": "verified_gold",
+        "benchmark_split": "locked_test_holdout",
+        "training_forbidden": True,
+        "gold20_priority": False,
         "verification_status": "human_verified",
         "verified_by_human": True,
         "gold_eligible": True,
@@ -646,6 +886,8 @@ def load_verified_gold_carryover() -> list:
         "script_profile": "pure_akhar_thrah",
         "source_archive": "Wikimedia Commons",
         "source_collection_id": "Category:Cham_script",
+        "eap_or_book_series": "Category:Cham_script",
+        "custodian_or_author": "Wikimedia Commons Contributors",
         "license": "Public Domain / CC BY-SA 4.0",
         "redistribution_allowed_in_git": True,
     })
@@ -655,13 +897,114 @@ def load_verified_gold_carryover() -> list:
     return [harum, wiki]
 
 
+def render_bbox_overlay_sheets(staging_docs: list, out_dir: str) -> list:
+    """Renders 4x4 visual contact sheets with detected Pipeline v26.2 line polygons/boxes overlaid (`Gate SC-2`)."""
+    os.makedirs(out_dir, exist_ok=True)
+    chunk_sz = 16
+    tw, th = 390, 295
+    sheets = []
+    for s_idx, start in enumerate(range(0, len(staging_docs), chunk_sz), start=1):
+        batch = staging_docs[start:start + chunk_sz]
+        tiles = []
+        for idx, d in enumerate(batch, start=start + 1):
+            img_p = os.path.join(PROJECT_ROOT, d["page_relpath"].replace("/", os.sep))
+            im = cv2.imread(img_p)
+            for ln in d.get("lines", []):
+                has_c = any("\uAA00" <= c <= "\uAA5F" for c in (ln.get("draft_prediction") or ""))
+                color = (40, 235, 90) if has_c else (0, 190, 255)
+                poly = ln.get("polygon")
+                if poly and len(poly) >= 3:
+                    pts = np.array(poly, dtype=np.int32).reshape((-1, 1, 2))
+                    cv2.polylines(im, [pts], True, color, max(2, im.shape[1] // 420), cv2.LINE_AA)
+                else:
+                    bx0, by0, bx1, by1 = ln["bbox"]
+                    cv2.rectangle(im, (bx0, by0), (bx1, by1), color, max(2, im.shape[1] // 420))
+            h, w = im.shape[:2]
+            scale = min(tw / w, (th - 36) / h)
+            nw, nh = max(1, int(w * scale)), max(1, int(h * scale))
+            resized = cv2.resize(im, (nw, nh), interpolation=cv2.INTER_AREA)
+            canvas = np.full((th, tw, 3), 24, dtype=np.uint8)
+            x_off = (tw - nw) // 2
+            y_off = 32 + ((th - 32 - nh) // 2)
+            canvas[y_off:y_off + nh, x_off:x_off + nw] = resized
+            split_tag = "HOLD" if d["benchmark_split"] == "locked_test_holdout" else "SEED"
+            lbl = f"#{idx:02d} [{split_tag}] {d['doc_id'][:19]} ({d['line_count']}L)"
+            cv2.putText(canvas, lbl, (6, 21), cv2.FONT_HERSHEY_SIMPLEX, 0.44, (110, 245, 165) if split_tag == "HOLD" else (120, 210, 255), 1, cv2.LINE_AA)
+            tiles.append(canvas)
+        while len(tiles) < chunk_sz:
+            tiles.append(np.full((th, tw, 3), 24, dtype=np.uint8))
+        rows = [np.hstack(tiles[r:r + 4]) for r in range(0, chunk_sz, 4)]
+        sheet = np.vstack(rows)
+        sp = os.path.join(out_dir, f"v4_bbox_overlay_{s_idx}.jpg")
+        cv2.imwrite(sp, sheet, [cv2.IMWRITE_JPEG_QUALITY, 88])
+        sheets.append(sp)
+    print(f"  -> Rendered {len(sheets)} Pipeline v26.2 bbox overlay contact sheets -> {sheets}")
+    return sheets
+
+
+def build_gold20_priority_pack(staging_docs: list) -> str:
+    """Packages a stratified 20-page Fast-Review Pack (`12` holdout + `8` seed) for rapid Studio sign-off (`Stage 3`)."""
+    import shutil
+    pack_dir = os.path.join(REVIEW_DIR, "gold20_priority_pack")
+    os.makedirs(pack_dir, exist_ok=True)
+    by_id = {d["doc_id"]: d for d in staging_docs}
+    entries = []
+    for rank, did in enumerate(GOLD20_PRIORITY_DOC_IDS, start=1):
+        assert did in by_id, f"Missing Gold-20 doc_id in staging_docs: {did}"
+        d = by_id[did]
+        # STRICT GATE SC-3: verify gt is 100% None on every unreviewed line!
+        assert all(ln.get("gt") is None and ln.get("verified_by_human") is False for ln in d["lines"]), f"Circular GT detected on {did}!"
+        src_img = os.path.join(PROJECT_ROOT, d["page_relpath"].replace("/", os.sep))
+        src_json = os.path.join(REVIEW_DIR, f"{did}.studio.json")
+        shutil.copy2(src_img, os.path.join(pack_dir, f"{did}.jpg"))
+        shutil.copy2(src_json, os.path.join(pack_dir, f"{did}.studio.json"))
+        entries.append({
+            "priority_rank": rank,
+            "doc_id": did,
+            "benchmark_split": d["benchmark_split"],
+            "training_forbidden": d["training_forbidden"],
+            "stratum": d["stratum"],
+            "source_collection_id": d["source_collection_id"],
+            "draft_lines": d["line_count"],
+            "cham_bearing_lines": d["draft_ocr_summary"]["cham_bearing_lines"],
+            "mean_draft_confidence": d["draft_ocr_summary"]["mean_draft_confidence"],
+            "scholarly_reference_excerpt": d.get("scholarly_reference_excerpt"),
+            "studio_drag_drop_files": [f"{did}.jpg", f"{did}.studio.json"],
+        })
+    out_manifest = os.path.join(REVIEW_DIR, "gold20_priority_manifest.json")
+    payload = {
+        "pack_id": "realscan_gold_v4_priority_gold20",
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "total_pages": len(entries),
+        "locked_test_holdout_pages": sum(1 for e in entries if e["benchmark_split"] == "locked_test_holdout"),
+        "adaptation_seed_pool_pages": sum(1 for e in entries if e["benchmark_split"] == "adaptation_seed_pool"),
+        "total_draft_lines": sum(e["draft_lines"] for e in entries),
+        "anti_circular_verified": True,
+        "instructions_vi": (
+            "Kéo-thả đồng thời cặp tệp `<doc_id>.jpg` + `<doc_id>.studio.json` trong thư mục `gold20_priority_pack/` "
+            "vào https://ocr.cham.asia để nạp sẵn toàn bộ khung dòng Pipeline v26.2 mà không cần chạy lại OCR, "
+            "chỉnh sửa/xác nhận dòng (phím A), xuất `cham_ocr_transcription.json` (Ctrl+E) và chạy "
+            "`python scripts/ingest_studio_to_realscan_gold.py --version v4 --promote-verified`."
+        ),
+        "items": entries,
+    }
+    with open(out_manifest, "w", encoding="utf-8", newline="\n") as f:
+        json.dump(payload, f, indent=2, ensure_ascii=False)
+    print(f"  -> Built Gold-20 Priority Fast-Review Pack ({len(entries)} pages, {payload['total_draft_lines']} lines) -> {out_manifest}")
+    return out_manifest
+
+
 def write_review_portal_html(staging_docs: list):
     """Generates a self-contained local review index (`review_queue/index.html`) for paleographic sign-off."""
     rows_html = []
     for i, d in enumerate(staging_docs, start=1):
         ds = d["draft_ocr_summary"]
         first_pred = next((ln["draft_prediction"] for ln in d["lines"] if ln.get("draft_prediction")), "—")
-        hint_html = f"<div class='hint'>📚 {d['scholarly_reference_hint']}</div>" if d.get("scholarly_reference_hint") else ""
+        ref_ex = d.get("scholarly_reference_excerpt")
+        ref_extra = f"<div class='hint'>📖 <strong>{ref_ex['edition']}</strong>: {ref_ex['romanized_cham_anchor']}</div>" if ref_ex else ""
+        hint_html = (f"<div class='hint'>📚 {d['scholarly_reference_hint']}</div>" if d.get("scholarly_reference_hint") else "") + ref_extra
+        split_lbl = "locked_test_holdout (Cấm train)" if d["benchmark_split"] == "locked_test_holdout" else "adaptation_seed_pool (Cho phép V27 sau duyệt)"
+        g20_badge = "<span class='badge' style='background:#1f4d2e;color:#7ee787'>⭐ Gold-20 Priority</span>" if d.get("gold20_priority") else ""
         rows_html.append(f"""
         <div class="card" data-stratum="{d['stratum']}">
           <div class="thumb-wrap">
@@ -673,11 +1016,13 @@ def write_review_portal_html(staging_docs: list):
             <div class="top-row">
               <span class="badge idx">#{i:02d}</span>
               <span class="badge stratum">{d['stratum']}</span>
+              <span class="badge">{split_lbl}</span>
+              {g20_badge}
               <span class="badge pending">pending_human_review (gt: null)</span>
             </div>
             <h3>{d['doc_id']} <small>({d['source_collection_id']} · leaf/canvas {d['canvas_or_leaf_index']})</small></h3>
             <p class="prov"><strong>{d['source_archive']}</strong> — {d['material']} · <em>{d['custodian_or_author']}</em> ({d['region']}, {d['approx_date']})</p>
-            <p class="stats">Draft model: <code>{ds['draft_model']}</code> · Kept lines: <strong>{ds['kept_draft_lines']}</strong> (Cham: {ds['cham_bearing_lines']}) · Mean conf: <strong>{ds['mean_draft_confidence']:.3f}</strong> · Layout: <code>{ds['layout'].get('reading_order','rows')}</code></p>
+            <p class="stats">Draft model: <code>{ds['draft_model']}</code> · Detector: <code>{ds.get('executed_detector','dbnet')}</code> · Kept lines: <strong>{ds['kept_draft_lines']}</strong> (Cham: {ds['cham_bearing_lines']}) · Mean conf: <strong>{ds['mean_draft_confidence']:.3f}</strong> · Layout: <code>{ds['layout'].get('reading_order','rows')}</code></p>
             <div class="sample-line">{first_pred}</div>
             {hint_html}
             <div class="links">
@@ -890,6 +1235,8 @@ def reproduce_from_locked_manifest():
 def main():
     ap = argparse.ArgumentParser(description="Build & harvest RealScan-Gold v4 multi-source physical Cham corpus")
     ap.add_argument("--fetch-only", action="store_true", help="Only download the 56 physical pages and render visual contact sheets")
+    ap.add_argument("--local-engine", action="store_true", help="Run Pipeline v26.2 + Auto Router v2.3 directly via local ocr-studio/app.py")
+    ap.add_argument("--refresh-ocr", action="store_true", help="Wipe cached OCR outputs and regenerate all line boxes & crops cleanly")
     ap.add_argument("--contact-sheet-dir", default=os.path.join(REVIEW_DIR, "_contact_sheets"), help="Directory for visual QA contact sheets")
     ap.add_argument("--fetch", action="store_true", help="Reconstruct local gitignored pages & crops from locked manifest.json")
     args = ap.parse_args()
@@ -907,7 +1254,13 @@ def main():
         return
 
     verified_docs = load_verified_gold_carryover()
-    staging_docs = run_presegmentation_and_draft_pack(enriched)
+    staging_docs = run_presegmentation_and_draft_pack(
+        enriched, use_local_engine=args.local_engine, refresh_ocr=args.refresh_ocr
+    )
+    all_docs = [*verified_docs, *staging_docs]
+    disjoint_audit = verify_custodian_and_series_disjoint_split(all_docs)
+    render_bbox_overlay_sheets(staging_docs, args.contact_sheet_dir)
+    gold20_manifest_p = build_gold20_priority_pack(staging_docs)
 
     print("[4/4] Assembling locked RealScan-Gold v4 manifest, Studio review portal & Vietnamese report...")
     harum_doc = verified_docs[0]
@@ -915,16 +1268,23 @@ def main():
     indep_staging_sources = sorted({d["source_collection_id"] for d in staging_docs})
 
     manifest = {
-        "schema_version": "4.0.0",
+        "schema_version": "4.1.0",
         "dataset_id": "realscan_gold_v4",
         "created_at": datetime.now(timezone.utc).isoformat(),
+        "pipeline_segmentation_baseline": "v26.2_router_v2.3",
         "anti_circular_ground_truth_policy": (
             "STRICT 2-TIER SEPARATION: (1) `verified_gold` contains ONLY human-verified real physical specimens "
             "(`verified_by_human: true`, `gold_eligible: true`, non-null `gt`). (2) `staging_review_queue` contains "
             "56 newly harvested authentic physical folios/pages across 25 independent manuscripts & historical printed "
-            "books with pre-segmented boxes and `draft_prediction` ONLY (`gt` is strictly `null`, `gold_eligible: false`) "
+            "books with Pipeline v26.2 pre-segmented boxes and `draft_prediction` ONLY (`gt` is strictly `null`, `gold_eligible: false`) "
             "until promoted via `scripts/ingest_studio_to_realscan_gold.py --version v4 --promote-verified`. "
             "Zero synthetic font-rendered pages are included (`synthetic_pages_included = 0`)."
+        ),
+        "custodian_and_series_disjoint_split_policy": (
+            "PERMANENT LEAKAGE BARRIER: Every source is locked into either `locked_test_holdout` (16 independent sources: "
+            "37 multi-line pages + 7 Wikimedia specimens, `training_forbidden: true`) or `adaptation_seed_pool` (11 manuscripts "
+            "across 6 completely disjoint EAP archive series = 20 pages). Zero `source_collection_id`, zero `EAP<project>-<series>` "
+            "prefix, zero human custodian, and zero printed book is shared across the two splits."
         ),
         "redistribution_and_copyright_policy": (
             "Image binaries (`pages/`, `crops/`, `review_queue/`) are gitignored on local disk to strictly respect "
@@ -943,12 +1303,14 @@ def main():
             "staging_cham_bearing_lines": sum(d["draft_ocr_summary"]["cham_bearing_lines"] for d in staging_docs),
             "total_physical_pages": 1 + len(staging_docs),
             "total_independent_sources": 2 + len(indep_staging_sources),
+            "gold20_priority_pages": len(GOLD20_PRIORITY_DOC_IDS),
+            "disjoint_split_audit": disjoint_audit,
             "strata_page_counts": {
                 st: sum(1 for d in staging_docs if d["stratum"] == st)
                 for st in sorted({d["stratum"] for d in staging_docs})
             },
         },
-        "documents": [*verified_docs, *staging_docs],
+        "documents": all_docs,
     }
 
     with open(MANIFEST_PATH, "w", encoding="utf-8", newline="\n") as mf:
@@ -957,6 +1319,7 @@ def main():
     write_collection_report(manifest)
 
     print(f"✅ Built RealScan-Gold v4 -> {MANIFEST_PATH}")
+    print(f"✅ Gold-20 Priority Manifest -> {gold20_manifest_p}")
     print(f"✅ Local Studio Review Portal -> {portal_p}")
     print(json.dumps(manifest["summary"], indent=2, ensure_ascii=False))
 

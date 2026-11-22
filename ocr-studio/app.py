@@ -239,6 +239,128 @@ class OfficialPaddleOCRWrapper:
 
 _ROUTER_ILLEGAL_MEDIAL_RE = re.compile(r'[\uAA33\uAA34]{2,}|[\uAA2F\uAA30]{2,}')
 _ROUTER_EDITORIAL_SYMS = set('-/_*[]{}<>=+%@#')
+_ROUTER_GIBBERISH_TOKEN_RE = re.compile(
+    r'(?:[a-z\u00E0-\u1EF9][A-Z]'
+    r'|[A-Z\u00C0-\u01AF]{2,}[a-z\u00E0-\u1EF9]'
+    r'|[A-Za-z\u00C0-\u1EF9]+[0-9]+[A-Za-z0-9\u00C0-\u1EF9]*'
+    r'|[0-9]+(?!(?:er|e|st|nd|rd|th)\b)[A-Za-z\u00C0-\u1EF9]+'
+    r'|\bZ[BCDFGHJKLMNPQRSTVWXYZ\u00C0-\u1EF9]'
+    r'|\bXX\)'
+    r'|[BCDFGHJKLMNPQRSTVWXZbcdfghjklmnpqrstvwxz]{5,})'
+)
+_ROUTER_CHAM_SOUP_RE = re.compile(
+    r'(?:[{}\[\]_\\]|/[0-9 ]|[0-9][\uAA00-\uAA5F]|[\uAA00-\uAA5F][0-9])'
+)
+_ROUTER_LATIN_VOWELS = set('aeiouyàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵœæ')
+
+
+def _cham_char_count(text):
+    return sum(1 for ch in (text or '') if '\uAA00' <= ch <= '\uAA5F')
+
+
+def _is_clean_ascii_numeral_span(text):
+    s = (text or '').strip()
+    if not s:
+        return False
+    ascii_digits = sum(1 for ch in s if ch.isascii() and ch.isdigit())
+    if ascii_digits < 3:
+        return False
+    return all((ch.isascii() and (ch.isdigit() or ch in ' -–—./:,()')) for ch in s)
+
+
+def _is_plausible_latin_span(text):
+    """Rejects CTC script-mismatch gibberish (e.g. '2VfWKV)', 'g873986)') while accepting real Latin/Vi/Fr words."""
+    s = (text or '').strip()
+    if not s:
+        return False
+    alpha = [ch for ch in s if ('a' <= ch.lower() <= 'z') or ('\u00C0' <= ch <= '\u1EF9')]
+    if len(alpha) < 2:
+        return False
+    if _ROUTER_GIBBERISH_TOKEN_RE.search(s):
+        return False
+    v_cnt = sum(1 for ch in alpha if ch.lower() in _ROUTER_LATIN_VOWELS)
+    return (v_cnt / float(len(alpha))) >= 0.20
+
+
+def _has_plausible_latin_word(text):
+    """True when at least one whitespace token (>=2 letters) in `text` is a clean non-gibberish Latin/Vi/Fr word."""
+    for tok in (text or '').split():
+        cleaned = tok.strip('.,;:!?()[]{}"\'-–—/')
+        if len(cleaned) >= 2 and _is_plausible_latin_span(cleaned):
+            return True
+    return False
+
+
+def _find_coarse_phrase_spans(crop_img, max_chunks=6):
+    """Segments a line crop into at most `max_chunks` phrase spans while preserving standalone Cham headwords."""
+    spans = _find_horizontal_word_spans(crop_img)
+    if len(spans) <= 1:
+        return spans
+    h, w = crop_img.shape[:2]
+    min_chunk_w = max(16, int(round(0.55 * h)))
+
+    # Merge tiny spans (< min_chunk_w) into their closest neighbour while keeping headword-width tokens intact
+    merged = list(spans)
+    while len(merged) > 2:
+        widths = [b - a for a, b in merged]
+        smallest_i = int(np.argmin(widths))
+        if widths[smallest_i] >= min_chunk_w and len(merged) <= max_chunks:
+            break
+        if len(merged) <= max_chunks and all(wd >= min_chunk_w for wd in widths):
+            break
+        if widths[smallest_i] < min_chunk_w:
+            if smallest_i == 0:
+                pair_i = 0
+            elif smallest_i == len(merged) - 1:
+                pair_i = len(merged) - 2
+            else:
+                gap_l = merged[smallest_i][0] - merged[smallest_i - 1][1]
+                gap_r = merged[smallest_i + 1][0] - merged[smallest_i][1]
+                pair_i = smallest_i - 1 if gap_l <= gap_r else smallest_i
+        else:
+            gaps = [merged[k + 1][0] - merged[k][1] for k in range(len(merged) - 1)]
+            pair_i = int(np.argmin(gaps))
+        merged[pair_i] = (merged[pair_i][0], merged[pair_i + 1][1])
+        merged.pop(pair_i + 1)
+    return merged if len(merged) >= 2 else [(0, w)]
+
+
+def _find_horizontal_word_spans(crop_img):
+    """Segments a mixed-script line crop into word/phrase x-intervals [x0, x1] at clean vertical whitespace valleys."""
+    if not isinstance(crop_img, np.ndarray) or crop_img.ndim < 2 or crop_img.size == 0:
+        return []
+    gray = cv2.cvtColor(crop_img, cv2.COLOR_BGR2GRAY) if crop_img.ndim == 3 else crop_img
+    h, w = gray.shape[:2]
+    if h < 10 or w < int(2.4 * h):
+        return [(0, w)]
+    bg = float(np.percentile(gray, 85))
+    ink = (bg - gray.astype(np.float32)) > max(22.0, 0.14 * bg)
+    y0, y1 = int(h * 0.12), max(int(h * 0.12) + 1, int(h * 0.88))
+    is_gap = ink[y0:y1, :].sum(axis=0) == 0
+    min_gap = max(5, int(round(0.16 * h)))
+
+    spans = []
+    in_word = False
+    start = 0
+    gap_run = 0
+    for x in range(w):
+        if not is_gap[x]:
+            if not in_word:
+                start = max(0, x - 3)
+                in_word = True
+            gap_run = 0
+        elif in_word:
+            gap_run += 1
+            if gap_run >= min_gap:
+                end = min(w, x - gap_run + 4)
+                if end - start >= max(8, int(0.25 * h)):
+                    spans.append((start, end))
+                in_word = False
+    if in_word:
+        end = w
+        if end - start >= max(8, int(0.25 * h)):
+            spans.append((start, end))
+    return spans if len(spans) >= 2 else [(0, w)]
 
 
 def _cham_script_ratio(text):
@@ -330,12 +452,14 @@ class AutoRoutingOCRWrapper:
             best_cham.append((chosen_txt, chosen_conf))
             best_cham_ver.append(chosen_ver)
 
-        # 3. Selective Vietnamese / Latin multiscript handoff ONLY when Cham CTC emits non-Cham soup or severe uncertainty
+        # 3. Selective Vietnamese / Latin multiscript handoff (v2.3: also probes low-Cham-ratio lines & Cham-soup lines
+        #    so lines like 'Năm 2000-2025', '1990-2000', and 'ꨂꨣꩃ ꨌꩌ (Người Chăm)' are routed/split accurately)
         viet_indices = []
         viet_imgs = []
         for i, (c_txt, c_conf) in enumerate(best_cham):
             c_ratio = _cham_script_ratio(c_txt)
-            if (c_ratio < 0.62 and c_conf < 0.85) or c_conf < 0.34:
+            has_cham_soup = bool(_ROUTER_CHAM_SOUP_RE.search(c_txt or ''))
+            if (c_ratio < 0.62 and c_conf < 0.85) or c_ratio < 0.35 or c_conf < 0.34 or (has_cham_soup and c_conf < 0.90):
                 viet_indices.append(i)
                 viet_imgs.append(img_list[i])
 
@@ -345,7 +469,7 @@ class AutoRoutingOCRWrapper:
             for idx_orig, v_res in zip(viet_indices, viet_batch):
                 viet_map[idx_orig] = v_res
 
-        # 4. Script-aware adjudication preventing false Vietnamese takeover on historical Cham manuscripts
+        # 4. Script-aware adjudication + Intra-Line Horizontal Script-Span Splitting (Auto Router v2.3)
         final_results = [None] * len(img_list)
         selected_vers = []
         for i in range(len(img_list)):
@@ -359,8 +483,10 @@ class AutoRoutingOCRWrapper:
             v_txt, v_conf = viet_map[i]
             v_conf = float(v_conf)
             c_ratio = _cham_script_ratio(c_txt)
+            c_cnt = _cham_char_count(c_txt)
             v_alpha = _latin_alpha_ratio(v_txt)
             v_lat_cnt = _latin_alpha_count(v_txt)
+            has_cham_soup = bool(_ROUTER_CHAM_SOUP_RE.search(c_txt or ''))
 
             take_viet = False
             if v_alpha >= 0.42:
@@ -371,11 +497,47 @@ class AutoRoutingOCRWrapper:
                     # Coherent Cham script present -> protect historical Cham folios unless Vi is overwhelmingly confident
                     take_viet = (c_conf < 0.50 and v_conf >= 0.88 and v_alpha >= 0.70)
             elif c_ratio < 0.35 and v_lat_cnt >= 2 and (v_alpha >= 0.18 or _has_viet_diacritics(v_txt)):
-                # Digit/punctuation-heavy Vietnamese lines (e.g. "Số trang: 0123456789, dấu ! ? : ; ( ) / -")
-                # where Cham CTC emits non-Cham bracket/digit soup while Vi decodes valid Latin words + numbers
-                take_viet = (v_conf >= 0.55 and v_conf >= c_conf - 0.05)
+                # Digit/punctuation-heavy Vietnamese lines (e.g. "Năm 2000-2025", "Số trang: 0123456789")
+                take_viet = (v_conf >= 0.55 and (v_conf >= c_conf - 0.05 or _has_viet_diacritics(v_txt)))
+            elif c_ratio < 0.25 and v_lat_cnt == 0 and _is_clean_ascii_numeral_span(v_txt):
+                # Pure ASCII numeral/year-range lines where Cham CTC mixed script ('1꩐0-200') or collapsed repeated '00'/'99' ('1990-200' vs '1990-2000');
+                # clean non-collapsed numerals ('123 - 456', '7-8') stay on the Cham specialist.
+                v_digits = sum(1 for ch in (v_txt or '') if ch.isascii() and ch.isdigit())
+                c_ascii_digits = sum(1 for ch in (c_txt or '') if ch.isascii() and ch.isdigit())
+                ctc_collapsed_rep = (('00' in (v_txt or '') or '99' in (v_txt or '')) and v_digits > c_ascii_digits)
+                take_viet = (v_conf >= 0.84 and (has_cham_soup or ctc_collapsed_rep))
             elif c_conf < 0.25 and v_conf > c_conf + 0.25:
                 take_viet = True
+
+            # Auto Router v2.3: Symmetric Intra-Line Horizontal Script-Span Splitting
+            # Fast-skip 100% pure high-confidence Latin/Fr/Vi lines and 100% pure high-confidence Cham lines
+            is_clean_pure_latin = (
+                take_viet
+                and v_conf >= 0.86
+                and v_alpha >= 0.62
+                and not _ROUTER_GIBBERISH_TOKEN_RE.search(v_txt or '')
+            )
+            is_clean_pure_cham = (
+                (not take_viet)
+                and c_conf >= 0.84
+                and c_ratio >= 0.75
+                and not has_cham_soup
+            )
+            if (
+                not is_clean_pure_latin
+                and not is_clean_pure_cham
+                and (c_cnt >= 2 or (c_cnt >= 1 and _ROUTER_GIBBERISH_TOKEN_RE.search(v_txt or '')))
+                and v_lat_cnt >= 2
+                and v_conf >= 0.55
+                and _has_plausible_latin_word(v_txt)
+            ):
+                split_res = self._try_intraline_script_split(
+                    img_list[i], c_ver, _norm_u, default_is_viet=take_viet
+                )
+                if split_res is not None:
+                    final_results[i] = (split_res[0], split_res[1])
+                    selected_vers.append(split_res[2])
+                    continue
 
             if take_viet:
                 final_results[i] = (v_txt, v_conf)
@@ -386,6 +548,83 @@ class AutoRoutingOCRWrapper:
 
         self.last_selected_versions = list(selected_vers)
         return final_results, list(selected_vers), 0.0
+
+    def _try_intraline_script_split(self, crop_img, cham_ver, norm_fn, default_is_viet=False):
+        """Splits a mixed Cham+Latin line into <=6 coarse phrase spans with symmetric bidirectional gain gating."""
+        spans = _find_coarse_phrase_spans(crop_img, max_chunks=6)
+        if len(spans) < 2 or len(spans) > 6:
+            return None
+        sub_imgs = [crop_img[:, x0:x1] for x0, x1 in spans]
+        try:
+            c_sub_res, _ = self.cham_model(sub_imgs)
+            v_sub_res, _ = self.viet_model(sub_imgs)
+        except Exception:
+            return None
+        if len(c_sub_res) != len(spans) or len(v_sub_res) != len(spans):
+            return None
+
+        labels = []
+        for (ct, cc), (vt, vc) in zip(c_sub_res, v_sub_res):
+            cc, vc = float(cc), float(vc)
+            cr = _cham_script_ratio(ct)
+            cham_soup = bool(_ROUTER_CHAM_SOUP_RE.search(ct or ''))
+            if default_is_viet:
+                # Line defaulted to Vi/Fr: only flip a chunk to Cham if it is genuinely Akhar Thrah AND Vi failed/garbled it
+                vi_garbled = (vc < 0.82) or bool(_ROUTER_GIBBERISH_TOKEN_RE.search(vt or '')) or (_latin_alpha_ratio(vt) < 0.45)
+                if cr >= 0.55 and _cham_char_count(ct) >= 1 and cc >= max(0.55, vc - 0.08) and vi_garbled and not cham_soup:
+                    labels.append('cham')
+                else:
+                    labels.append('vi')
+            else:
+                # Line defaulted to Cham: only flip a chunk to Vi if Cham failed/garbled AND Vi decoded plausible Latin words
+                cham_garbled = (cr < 0.45) or (cc < 0.78) or cham_soup
+                if cham_garbled and vc >= max(0.74, cc + 0.06) and (_is_plausible_latin_span(vt) or _has_viet_diacritics(vt)):
+                    labels.append('vi')
+                else:
+                    labels.append('cham')
+
+        if len(set(labels)) < 2:
+            return None
+
+        # Merge adjacent same-script word spans so each recognizer receives maximal contiguous phrase context!
+        grouped = []
+        cur_lbl = labels[0]
+        cur_x0, cur_x1 = spans[0]
+        for lbl, (x0, x1) in zip(labels[1:], spans[1:]):
+            if lbl == cur_lbl:
+                cur_x1 = x1
+            else:
+                grouped.append((cur_lbl, cur_x0, cur_x1))
+                cur_lbl, cur_x0, cur_x1 = lbl, x0, x1
+        grouped.append((cur_lbl, cur_x0, cur_x1))
+
+        cham_grp_imgs = [crop_img[:, x0:x1] for lbl, x0, x1 in grouped if lbl == 'cham']
+        vi_grp_imgs = [crop_img[:, x0:x1] for lbl, x0, x1 in grouped if lbl == 'vi']
+        c_grp_out = iter(self.cham_model(cham_grp_imgs)[0]) if cham_grp_imgs else iter(())
+        v_grp_out = iter(self.viet_model(vi_grp_imgs)[0]) if vi_grp_imgs else iter(())
+
+        parts = []
+        weighted_conf = 0.0
+        total_w = 0.0
+        for lbl, x0, x1 in grouped:
+            span_w = max(1.0, float(x1 - x0))
+            if lbl == 'cham':
+                gt_txt, gt_conf = next(c_grp_out, ('', 0.0))
+                gt_txt = norm_fn(gt_txt) if any('\uAA00' <= c <= '\uAA5F' for c in (gt_txt or '')) else (gt_txt or '')
+            else:
+                gt_txt, gt_conf = next(v_grp_out, ('', 0.0))
+            gt_txt = (gt_txt or '').strip()
+            if gt_txt:
+                parts.append(gt_txt)
+                weighted_conf += float(gt_conf) * span_w
+                total_w += span_w
+
+        if len(parts) < 2 or total_w <= 0:
+            return None
+        merged_txt = ' '.join(parts)
+        if _cham_char_count(merged_txt) < 1 or _latin_alpha_count(merged_txt) < 2:
+            return None
+        return merged_txt, round(weighted_conf / total_w, 6), f"{cham_ver}+vi"
 
     def __call__(self, img_list):
         results, _, elapsed = self.predict_with_provenance(img_list)
@@ -531,12 +770,13 @@ def get_ocr_model(version):
     args.rec_image_shape = str(manifest_for_shape.get("rec_image_shape") or default_rec_shape)
     args.use_space_char = True
     
-    # Batch size config: default to 1 on CPU to prevent padding latency blowup from varying crop aspect ratios
+    # Batch size config: TextRecognizer pre-sorts crops by wh_ratio, and V26.1 uses use_valid_mask=True,
+    # so CPU mini-batch=6 cuts 70-line 2-column latency ~2x (preventing Cloudflare HTTP 524) with zero padding drift
     env_batch = os.getenv("OCR_REC_BATCH_SIZE")
     if env_batch:
         ocr_rec_batch_size = int(env_batch)
     else:
-        ocr_rec_batch_size = 1 if not paddle.is_compiled_with_cuda() else 16
+        ocr_rec_batch_size = 6 if not paddle.is_compiled_with_cuda() else 16
         
     args.rec_batch_num = ocr_rec_batch_size
     
@@ -781,10 +1021,11 @@ def _stacked_by_centerline(pts1, pts2, ox1, ox2, ratio=0.5):
     xm = (ox1 + ox2) / 2.0
     return abs(f1(xm) - f2(xm)) > ratio * t
 
-def merge_line_boxes(boxes, img_w, img_h):
+def merge_line_boxes(boxes, img_w, img_h, col_divider_x=None):
     """
     Merges horizontally separated bounding boxes on the same line into a single unified line crop.
-    Prevents splitting a single line into separate fragments across distant words.
+    Prevents splitting a single line into separate fragments across distant words, while never
+    bridging across a detected vertical two-column divider (`col_divider_x`).
     """
     if boxes is None or len(boxes) == 0:
         return []
@@ -857,6 +1098,10 @@ def merge_line_boxes(boxes, img_w, img_h):
                 # horizontal overlap against their true (perpendicular) thickness instead.
                 if h_overlap > 0.25 and _stacked_by_centerline(r1[4], r2[4], max(r1[0], r2[0]), min(r1[2], r2[2])):
                     continue
+
+                if col_divider_x is not None:
+                    if min(r1[0], r2[0]) < col_divider_x - 3.0 and max(r1[2], r2[2]) > col_divider_x + 3.0:
+                        continue
 
                 if v_overlap >= 0.50 and x_dist <= max(40.0, 2.5 * min_h):
                     new_x1 = max(0.0, min(r1[0], r2[0]))
@@ -1049,12 +1294,13 @@ def _merge_ribbon_polys(a, b):
     cnt = cv2.approxPolyDP(cnt, 1.0, True).reshape(-1, 2).astype(np.float32) + off
     return _ribbon_info(cnt)
 
-def merge_line_polygons(polys, img_w, img_h):
+def merge_line_polygons(polys, img_w, img_h, col_divider_x=None):
     """Polygon counterpart of merge_line_boxes() for Cham-DBNet box_type='poly'.
 
     Fragments of one curved line (shared, extrapolated centerline) are merged into one curved polygon;
     vertically stacked wavy lines are never merged even though their AABBs overlap (the decision uses
-    ribbon centerlines / thickness, not AABB heights). Detached micro-diacritic specks next to a full line
+    ribbon centerlines / thickness, not AABB heights), and fragments on opposite sides of a vertical
+    two-column divider (`col_divider_x`) are never merged. Detached micro-diacritic specks next to a full line
     are suppressed as in merge_line_boxes. Returns polygons sorted by centerline y.
     """
     items = []
@@ -1080,6 +1326,9 @@ def merge_line_polygons(polys, img_w, img_h):
             for j in range(i + 1, len(items)):
                 if used[j]:
                     continue
+                if col_divider_x is not None:
+                    if min(r1['x0'], items[j]['x0']) < col_divider_x - 3.0 and max(r1['x1'], items[j]['x1']) > col_divider_x + 3.0:
+                        continue
                 if _ribbons_same_line(r1, items[j]):
                     r1 = _merge_ribbon_polys(r1, items[j])
                     used[j] = True
@@ -1306,8 +1555,8 @@ def calibrate_line_confidence(raw_conf, model_ver=None, text="", temperature=Non
     z = math.log(p / (1.0 - p))
     return round(1.0 / (1.0 + math.exp(-z / T)), 6)
 
-def get_model_info(model_ver):
-    """Returns provenance info (model id, weight fingerprints, detector, normalizer) for the response."""
+def get_model_info(model_ver, executed_detector=None, detector_switched=False):
+    """Returns provenance info (model id, weight fingerprints, executed detector, normalizer) for the response."""
     info = {"model": model_ver, "normalizer": None}
     rec_versions = [DEFAULT_CHAM_MODEL, 'v24_1_r3_1', 'vi'] if model_ver == 'auto' else [model_ver]
     recs = []
@@ -1338,15 +1587,19 @@ def get_model_info(model_ver):
         elif v in ocr_models and isinstance(ocr_models.get(v), OfficialPaddleOCRWrapper):
             recs.append({"version": v, "model_dir": None, "wrapper": "OfficialPaddleOCRWrapper"})
     info["recognizers"] = recs
-    if not det_model_info:
+    if not det_model_info and not executed_detector:
         info["detector"] = {"name": None, "mode": DET_MODE, "loaded": False}
     else:
-        info["detector"] = {"name": det_model_info.get("name"), "mode": det_model_info.get("mode"), "loaded": True,
-                            "weights_sha256_16": _file_fingerprint(os.path.join(det_model_info.get("dir", ""), "inference.pdiparams")),
+        active_det_name = executed_detector or det_model_info.get("name")
+        active_det_dir = CHAM_DET_DIR if active_det_name == "cham_dbnet" else det_model_info.get("dir", "")
+        cham_sha16 = _file_fingerprint(os.path.join(CHAM_DET_DIR, "inference.pdiparams")) if (cham_det_model is not None or active_det_name == "cham_dbnet") else None
+        info["detector"] = {"name": active_det_name, "mode": det_model_info.get("mode", DET_MODE), "loaded": True,
+                            "detector_switched": bool(detector_switched),
+                            "weights_sha256_16": _file_fingerprint(os.path.join(active_det_dir, "inference.pdiparams")) if active_det_dir else None,
                             # Exposed so a deployment can be verified: False means the fine-tuned Cham-DBNet
                             # failed to load (e.g. PIR model on an old Paddle) and only the legacy detector runs.
                             "cham_dbnet_available": cham_det_model is not None,
-                            "cham_dbnet_sha256_16": _file_fingerprint(os.path.join(CHAM_DET_DIR, "inference.pdiparams")) if cham_det_model is not None else None,
+                            "cham_dbnet_sha256_16": cham_sha16,
                             "cham_dbnet_box_type": ("poly" if _is_poly_detector(cham_det_model) else "quad") if cham_det_model is not None else None}
     try:
         import paddle as _paddle
@@ -1400,8 +1653,11 @@ def compute_uncovered_ink(ink, polygons, median_line_h=None):
     cover = np.zeros((h, w), dtype=np.uint8)
     for poly in polygons:
         cv2.fillPoly(cover, [np.round(np.array(poly, dtype=np.float32)).astype(np.int32)], 1)
-    pad = int(max(3, round(0.25 * median_line_h))) if median_line_h else 5
-    cover = cv2.dilate(cover, np.ones((2 * pad + 1, 2 * pad + 1), np.uint8))
+    # Anisotropic dilation: tight vertical pad (0.08 * median_line_h) prevents two neighbouring lines
+    # from bridging vertically across a missed short line (e.g. synthetic_142 GT[1]), while preserving horizontal word margin
+    pad_y = int(max(2, round(0.08 * median_line_h))) if median_line_h else 3
+    pad_x = int(max(3, round(0.25 * median_line_h))) if median_line_h else 5
+    cover = cv2.dilate(cover, np.ones((2 * pad_y + 1, 2 * pad_x + 1), np.uint8))
     total, uncovered, idxs = 0, 0, []
     for i in range(len(stats)):
         ch, area = stats[i, cv2.CC_STAT_HEIGHT], stats[i, cv2.CC_STAT_AREA]
@@ -1547,23 +1803,136 @@ def build_document_status(results, reasons, extra=None):
 
 def check_inverted_polarity(img):
     """
-    Detects if an image has inverted polarity (light/white text on dark/colored background).
+    Morphological Opening Solid-Substrate vs Thin-Stroke Polarity Detector.
+    Returns True iff >=95% of the morphologically opened background is dark (<85) AND bright foreground
+    pixels (`p99.2`) vanish under opening (`diff > 45`), proving genuine light text strokes on a dark
+    background while never falsely inverting archival photos on dark velvet tables or tan/brown palm-leaf/paper.
     """
     if img is None or img.size == 0:
         return False
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) if len(img.shape) == 3 else img
     h, w = gray.shape[:2]
-    pad_h = max(1, int(h * 0.05))
-    pad_w = max(1, int(w * 0.05))
-    border = np.concatenate([
-        gray[0:pad_h, :].flatten(),
-        gray[-pad_h:, :].flatten(),
-        gray[:, 0:pad_w].flatten(),
-        gray[:, -pad_w:].flatten()
-    ])
-    bg_val = float(np.median(border))
-    fg_val = float(np.percentile(gray, 95))
-    return bool(bg_val < 145 and (fg_val - bg_val) > 35)
+    if h < 8 or w < 8:
+        return False
+    if float(np.median(gray)) >= 130.0:
+        return False
+
+    if h >= 180 and w >= 240:
+        roi = gray[int(h * 0.14):int(h * 0.68), int(w * 0.16):int(w * 0.84)]
+    else:
+        roi = gray
+
+    scale = min(1.0, 900.0 / float(max(roi.shape[:2])))
+    work = (
+        cv2.resize(roi, (max(8, int(roi.shape[1] * scale)), max(8, int(roi.shape[0] * scale))), interpolation=cv2.INTER_AREA)
+        if scale < 1.0 else roi
+    )
+    wh, ww = work.shape[:2]
+    k = int(max(7, min(21, round(min(wh, ww) / 8)))) | 1
+    se = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k))
+    opened = cv2.morphologyEx(work, cv2.MORPH_OPEN, se)
+
+    op_p95 = float(np.percentile(opened, 95))
+    fg_p992 = float(np.percentile(work, 99.2))
+    return bool(op_p95 < 85.0 and (fg_p992 - op_p95) > 45.0)
+
+
+def detect_vertical_column_divider(img):
+    """Detects a continuous printed vertical column-divider rule in [0.38W, 0.62W] (e.g. 2-column dictionaries)."""
+    if img is None or img.size == 0:
+        return None
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) if len(img.shape) == 3 else img
+    h, w = gray.shape[:2]
+    if h < 300 or w < 300:
+        return None
+    y0, y1 = int(h * 0.14), int(h * 0.86)
+    x0, x1 = int(w * 0.38), int(w * 0.62)
+    band = gray[y0:y1, x0:x1]
+    bh, bw = band.shape
+    horiz_bg = cv2.GaussianBlur(band, (31, 1), 0)
+    dark = (cv2.subtract(horiz_bg, band) > 22).astype(np.uint8)
+
+    q_peaks = []
+    for q in range(4):
+        s0, s1 = (q * bh) // 4, ((q + 1) * bh) // 4
+        sub = cv2.dilate(dark[s0:s1, :], np.ones((1, 3), np.uint8))
+        dens = sub.mean(axis=0)
+        pk = int(np.argmax(dens))
+        val = float(dens[pk])
+        lf = dens[max(0, pk - 22):max(0, pk - 5)]
+        rf = dens[min(bw, pk + 6):min(bw, pk + 23)]
+        if val >= 0.50 and len(lf) >= 5 and len(rf) >= 5 and float(lf.mean()) <= 0.12 and float(rf.mean()) <= 0.12:
+            q_peaks.append((q, pk, val))
+
+    if len(q_peaks) < 3:
+        return None
+    xs = [p[1] for p in q_peaks]
+    if max(xs) - min(xs) > 16:
+        return None
+    return x0 + int(round(float(np.median(xs))))
+
+
+def maybe_safe_deskew_page(img, min_abs_deg=9.0, min_var_gain=1.55, search_deg=16.0, step_deg=0.5):
+    """
+    Conditional Safe-Border Pre-Detection Deskew gated strictly at |theta| >= 9.0 deg AND projection
+    variance gain >= 1.55x. Returns (deskewed_img, M_inv_2x3_or_None, applied_angle_deg).
+    Guarantees 0% change on upright or mildly tilted pages (|theta| < 9 deg) and 0 border glyph clipping.
+    """
+    if img is None or img.size == 0:
+        return img, None, 0.0
+    h, w = img.shape[:2]
+    if h < 140 or w < 180:
+        return img, None, 0.0
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) if len(img.shape) == 3 else img
+    if check_inverted_polarity(img):
+        gray = 255 - gray
+    roi = gray[int(h * 0.14):int(h * 0.84), int(w * 0.14):int(w * 0.86)]
+    scale = min(1.0, 560.0 / float(max(roi.shape[:2])))
+    small = cv2.resize(roi, (max(16, int(roi.shape[1] * scale)), max(16, int(roi.shape[0] * scale))), interpolation=cv2.INTER_AREA)
+    bh = cv2.morphologyEx(small, cv2.MORPH_BLACKHAT, cv2.getStructuringElement(cv2.MORPH_RECT, (25, 25)))
+    _, bw = cv2.threshold(bh, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    if int((bw > 0).sum()) < 80:
+        return img, None, 0.0
+
+    sh, sw = bw.shape
+    cx, cy = sw / 2.0, sh / 2.0
+    zero_score = max(1.0, float(np.var(bw.sum(axis=1).astype(np.float64))))
+    best_angle = 0.0
+    best_score = zero_score
+
+    for ang in np.arange(-search_deg, search_deg + 1e-6, step_deg):
+        if abs(float(ang)) < 1e-4:
+            continue
+        M_s = cv2.getRotationMatrix2D((cx, cy), float(ang), 1.0)
+        rot = cv2.warpAffine(bw, M_s, (sw, sh), flags=cv2.INTER_NEAREST, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
+        sc = float(np.var(rot.sum(axis=1).astype(np.float64)))
+        if sc > best_score:
+            best_score = sc
+            best_angle = float(ang)
+
+    if abs(best_angle) < min_abs_deg or (best_score / zero_score) < min_var_gain:
+        return img, None, 0.0
+
+    rad = math.radians(abs(best_angle))
+    cos_a, sin_a = math.cos(rad), math.sin(rad)
+    new_w = int(math.ceil(w * cos_a + h * sin_a))
+    new_h = int(math.ceil(h * cos_a + w * sin_a))
+    M = cv2.getRotationMatrix2D((w / 2.0, h / 2.0), best_angle, 1.0)
+    M[0, 2] += (new_w - w) / 2.0
+    M[1, 2] += (new_h - h) / 2.0
+    deskewed = cv2.warpAffine(img, M, (new_w, new_h), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
+    M_inv = cv2.invertAffineTransform(M)
+    return deskewed, M_inv, round(best_angle, 2)
+
+
+def map_deskew_pts_to_original(pts, M_inv, orig_w, orig_h):
+    """Maps 2D points from deskewed canvas space back to original image frame [0..orig_w-1, 0..orig_h-1]."""
+    arr = np.asarray(pts, dtype=np.float64).reshape(-1, 2)
+    ones = np.ones((len(arr), 1), dtype=np.float64)
+    mapped = np.hstack([arr, ones]) @ np.asarray(M_inv, dtype=np.float64).T
+    mapped[:, 0] = np.clip(mapped[:, 0], 0, max(0, orig_w - 1))
+    mapped[:, 1] = np.clip(mapped[:, 1], 0, max(0, orig_h - 1))
+    return mapped
 
 def preprocess_crop_for_rec(crop_img):
     """
@@ -1670,14 +2039,22 @@ def segment_lines_dbnet(img, det_model, ink=None, return_info=False, reading_ord
     is_inverted = check_inverted_polarity(img)
     det_img = (255 - img) if is_inverted else img
     h, w = img.shape[:2]
+    col_divider_x = detect_vertical_column_divider(det_img) if reading_order != 'rows' else None
+    if col_divider_x is not None:
+        # Mask thin vertical 2-column rule on det_img so DBNet never bridges left & right columns across '|'
+        det_img = det_img.copy()
+        rx0, rx1 = max(0, col_divider_x - 3), min(w, col_divider_x + 4)
+        bg_fill = int(np.median(det_img[int(h * 0.14):int(h * 0.86), max(0, rx0 - 12):min(w, rx1 + 12)]))
+        det_img[int(h * 0.10):int(h * 0.90), rx0:rx1] = bg_fill
+        info["column_divider_x"] = int(col_divider_x)
 
     def _detect(detector):
         boxes, _ = detector(det_img)
         if _is_poly_detector(detector):
             boxes = [] if boxes is None else [np.array(b, dtype=np.float32).reshape(-1, 2) for b in boxes]
-            return merge_line_polygons(boxes, w, h)
+            return merge_line_polygons(boxes, w, h, col_divider_x=col_divider_x)
         boxes = [] if boxes is None else [np.array(b, dtype=np.float32) for b in boxes]
-        return merge_line_boxes(boxes, w, h)
+        return merge_line_boxes(boxes, w, h, col_divider_x=col_divider_x)
 
     def _coverage(boxes):
         """(uncovered ink ratio, max box height / glyph height) for a candidate box set.
@@ -2720,9 +3097,16 @@ def run_ocr_pipeline(img, model_ver=None, method='dbnet', threshold=0.05, gap=12
     }
     doc_reasons = []
     doc_extra = {}
+    executed_det_name = None
+    executed_det_switched = False
 
     if method == 'dbnet':
-        ink = analyze_text_ink(img)
+        orig_h, orig_w = img.shape[:2]
+        work_img, deskew_M_inv, deskew_deg = maybe_safe_deskew_page(img)
+        if deskew_M_inv is not None:
+            profiler_dict['deskew_angle_deg'] = deskew_deg
+            doc_extra['deskew_angle_deg'] = deskew_deg
+        ink = analyze_text_ink(work_img)
         doc_extra['ink_ratio'] = round(ink['ink_ratio'], 5)
         if is_blank_page(ink):
             # No text-like ink: never hallucinate a line on blank / near-blank paper
@@ -2736,20 +3120,72 @@ def run_ocr_pipeline(img, model_ver=None, method='dbnet', threshold=0.05, gap=12
             try:
                 det = get_det_model()
                 final_crops, lines_metadata, det_info = segment_lines_dbnet(
-                    img, det, ink=ink, return_info=True, reading_order=reading_order)
+                    work_img, det, ink=ink, return_info=True, reading_order=reading_order)
             except Exception:
                 import traceback
                 print(f"❌ DBNet segmentation error: {traceback.format_exc()}")
                 final_crops, lines_metadata = [], []
 
+            if deskew_M_inv is not None and lines_metadata:
+                for meta in lines_metadata:
+                    poly = meta.get('polygon')
+                    if not poly and meta.get('bbox') and len(meta['bbox']) == 4:
+                        bx0, by0, bx1, by1 = meta['bbox']
+                        poly = [[bx0, by0], [bx1, by0], [bx1, by1], [bx0, by1]]
+                    if poly:
+                        orig_pts = map_deskew_pts_to_original(poly, deskew_M_inv, orig_w, orig_h)
+                        meta['polygon'] = np.round(orig_pts, 1).tolist()
+                        x0_m = int(round(float(orig_pts[:, 0].min())))
+                        y0_m = int(round(float(orig_pts[:, 1].min())))
+                        x1_m = int(round(float(orig_pts[:, 0].max())))
+                        y1_m = int(round(float(orig_pts[:, 1].max())))
+                        meta['bbox'] = [x0_m, y0_m, x1_m, y1_m]
+                        meta['core_box'] = [y0_m, y1_m]
+
             base_segmentation_sec = time.time() - t_seg
             if det_info:
+                executed_det_name = det_info.get('detector')
+                executed_det_switched = bool(det_info.get('detector_switched'))
                 doc_extra['layout'] = det_info.get('layout')
                 doc_extra['uncovered_ink_ratio'] = det_info.get('uncovered_ink_ratio')
                 profiler_dict['det_lines'] = det_info.get('lines_detected')
-                profiler_dict['detector'] = det_info.get('detector')
-                profiler_dict['detector_switched'] = det_info.get('detector_switched')
+                profiler_dict['detector'] = executed_det_name
+                profiler_dict['detector_switched'] = executed_det_switched
                 profiler_dict['uncovered_ink_ratio_primary'] = det_info.get('uncovered_ink_ratio_primary')
+
+            if not final_crops:
+                try:
+                    lab_f = cv2.cvtColor(work_img, cv2.COLOR_BGR2LAB)
+                    l_ch, a_ch, b_ch = cv2.split(lab_f)
+                    clahe_img = cv2.cvtColor(
+                        cv2.merge([cv2.createCLAHE(clipLimit=3.2, tileGridSize=(8, 8)).apply(l_ch), a_ch, b_ch]),
+                        cv2.COLOR_LAB2BGR,
+                    )
+                    det = get_det_model()
+                    final_crops, lines_metadata, det_info = segment_lines_dbnet(
+                        clahe_img, det, ink=analyze_text_ink(clahe_img), return_info=True, reading_order=reading_order
+                    )
+                    if final_crops:
+                        # Re-slice final_crops from un-enhanced work_img when polygon/bbox exists, or keep CLAHE crops for faint ink
+                        profiler_dict['clahe_faint_ink_rescue'] = True
+                        if det_info:
+                            executed_det_name = det_info.get('detector')
+                            executed_det_switched = bool(det_info.get('detector_switched'))
+                            profiler_dict['det_lines'] = det_info.get('lines_detected')
+                            profiler_dict['detector'] = executed_det_name
+                            profiler_dict['detector_switched'] = executed_det_switched
+                        if deskew_M_inv is not None and lines_metadata:
+                            for meta in lines_metadata:
+                                poly = meta.get('polygon')
+                                if poly:
+                                    orig_pts = map_deskew_pts_to_original(poly, deskew_M_inv, orig_w, orig_h)
+                                    meta['polygon'] = np.round(orig_pts, 1).tolist()
+                                    x0_m, y0_m = int(round(float(orig_pts[:, 0].min()))), int(round(float(orig_pts[:, 1].min())))
+                                    x1_m, y1_m = int(round(float(orig_pts[:, 0].max()))), int(round(float(orig_pts[:, 1].max())))
+                                    meta['bbox'] = [x0_m, y0_m, x1_m, y1_m]
+                                    meta['core_box'] = [y0_m, y1_m]
+                except Exception as e_clahe:
+                    print(f"⚠️ CLAHE faint-ink rescue skipped: {e_clahe}")
 
             if not final_crops:
                 print("⚠️ DBNet found 0 text lines, falling back to Valley segmentation...")
@@ -2817,8 +3253,9 @@ def run_ocr_pipeline(img, model_ver=None, method='dbnet', threshold=0.05, gap=12
         if not cal_ver and model_ver != 'auto':
             cal_ver = resolve_actual_model_version(model_ver)
 
+        primary_rec_part = str(cal_ver).split('+', 1)[0] if cal_ver else ''
         if (cal_ver and cal_ver not in ('vi', 'en', 'fr', 'japan')) and (
-            cal_ver in ('v24', 'v25', 'v26') or str(cal_ver).startswith('v24')
+            primary_rec_part in ('v24', 'v25', 'v26') or primary_rec_part.startswith('v24')
         ):
             if any('\uAA00' <= ch <= '\uAA5F' for ch in (pred_text or '')):
                 try:
@@ -2831,7 +3268,7 @@ def run_ocr_pipeline(img, model_ver=None, method='dbnet', threshold=0.05, gap=12
         _, buffer = cv2.imencode('.png', line_img)
         line_b64 = base64.b64encode(buffer).decode('utf-8')
 
-        cal_conf = calibrate_line_confidence(confidence, cal_ver, pred_text)
+        cal_conf = calibrate_line_confidence(confidence, primary_rec_part or cal_ver, pred_text)
 
         # Backward-compatible format with explicit per-line recognizer provenance
         results.append({
@@ -2861,7 +3298,16 @@ def run_ocr_pipeline(img, model_ver=None, method='dbnet', threshold=0.05, gap=12
     profiler_dict['backend_total_sec'] = round(time.time() - t_start, 4)
     profiler_dict['base_segmentation_sec'] = round(base_segmentation_sec, 4)
     document = build_document_status(results, doc_reasons, doc_extra)
-    return {'lines': results, 'profiler': profiler_dict, 'document': document, 'model_info': get_model_info(model_ver)}
+    return {
+        'lines': results,
+        'profiler': profiler_dict,
+        'document': document,
+        'model_info': get_model_info(
+            model_ver,
+            executed_detector=executed_det_name,
+            detector_switched=executed_det_switched,
+        ),
+    }
 
 def save_correction_entry(data, base_dir=None):
     """Persists a verified/corrected text line to legacy ocr_corrections.txt and Stage R4 active learning storage."""

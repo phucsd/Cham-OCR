@@ -219,7 +219,7 @@
                         <span>Specimens</span>
                     </button>
                 </div>
-                <input type="file" id="file-input" multiple accept="image/*,application/pdf,.pdf" style="display: none;" onchange="StudioApp.handleIncomingFiles(this.files); this.value='';">
+                <input type="file" id="file-input" multiple accept="image/*,application/pdf,.pdf,application/json,.json" style="display: none;" onchange="StudioApp.handleIncomingFiles(this.files); this.value='';">
                 <div class="intake-meta-row">
                     <label class="toggle-switch-label" title="Automatically run OCR when new images or PDF pages are added">
                         <input type="checkbox" id="chk-auto-ocr" onchange="StudioApp.setAutoOcr(this.checked)">

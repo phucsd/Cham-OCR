@@ -1,0 +1,246 @@
+{
+  "created_at": "2026-11-22T17:14:04.216673+00:00",
+  "model_tested": "v24_1_r4",
+  "experiment_4a_archival_tall_descender_bands": {
+    "full_100": {
+      "keep_vertical_fraction": 1.0,
+      "num_tall_lines_tested": 44,
+      "mean_crop_height_px": 93.4,
+      "mean_confidence": 0.4963,
+      "high_conf_ge_075_count": 0,
+      "mean_cham_chars_per_line": 9.48,
+      "total_subjoined_medials_vowels": 64,
+      "sample_predictions": [
+        {
+          "doc_id": "aymonier1889_chronique_p108",
+          "line": 1,
+          "h": 92,
+          "conf": 0.4671,
+          "pred": "ꨆꨔ ꨦꨭ- ꩍꨭꨧ -/ ꨮꨭ ꨕꨮꩃ *_ꨖ"
+        },
+        {
+          "doc_id": "aymonier1889_chronique_p108",
+          "line": 3,
+          "h": 107,
+          "conf": 0.5738,
+          "pred": "ꨆꨗ ꨣꩀ ꨣꨬ ꨆꨭ ꨆ,ꨂꩍ-꩑ꩍꩂ"
+        },
+        {
+          "doc_id": "aymonier1889_chronique_p108",
+          "line": 5,
+          "h": 107,
+          "conf": 0.5157,
+          "pred": " ꨕꩍ ꨙꩍ꩑ꨊꩍ ꨇꨶꨦꨤꨫꩍ ꨆꨆ ꨊꨭꨌꩍ"
+        },
+        {
+          "doc_id": "aymonier1889_chronique_p108",
+          "line": 7,
+          "h": 78,
+          "conf": 0.3894,
+          "pred": " {5ꨆ49ꨆ9 9422_#ꨭ922252"
+        },
+        {
+          "doc_id": "aymonier1889_chronique_p108",
+          "line": 8,
+          "h": 89,
+          "conf": 0.5285,
+          "pred": "ꨴ꩑ ꨙ ꨉꩀ  _ꨯ_ 7/-4-#7 ꨖꨲ"
+        }
+      ]
+    },
+    "core_80": {
+      "keep_vertical_fraction": 0.8,
+      "num_tall_lines_tested": 44,
+      "mean_crop_height_px": 74.7,
+      "mean_confidence": 0.4681,
+      "high_conf_ge_075_count": 0,
+      "mean_cham_chars_per_line": 9.41,
+      "total_subjoined_medials_vowels": 63,
+      "sample_predictions": [
+        {
+          "doc_id": "aymonier1889_chronique_p108",
+          "line": 1,
+          "h": 74,
+          "conf": 0.4404,
+          "pred": "ꨆ ꨴ  ꨕꨳꩍꨭ ꩍ _ꨶꩌ  ꨌ _ꨪ ꨆ"
+        },
+        {
+          "doc_id": "aymonier1889_chronique_p108",
+          "line": 3,
+          "h": 86,
+          "conf": 0.4921,
+          "pred": "ꨆ ꨟ ꨆ ꨬ ꨆꨭ * ꨆꨫꩍ &ꨫꩌ-ꨶ -ꨕꩂ."
+        },
+        {
+          "doc_id": "aymonier1889_chronique_p108",
+          "line": 5,
+          "h": 86,
+          "conf": 0.4936,
+          "pred": "ꨓ ꩍ 2ꩍ}ꨖꨊꨳꩍ ꨆꨭ_ꨔ1ꨮ-ꩍ # ꨭ ꨌ"
+        },
+        {
+          "doc_id": "aymonier1889_chronique_p108",
+          "line": 7,
+          "h": 62,
+          "conf": 0.3717,
+          "pred": "-{6652609ꨌ ꨚ_{002 -#5-542422"
+        },
+        {
+          "doc_id": "aymonier1889_chronique_p108",
+          "line": 8,
+          "h": 71,
+          "conf": 0.457,
+          "pred": "ꨚ꩞ 47 ꨙ ꨉꩀ ꨆ  _ꨧ-_ꨆ} ꨍ7_ "
+        }
+      ]
+    },
+    "core_68": {
+      "keep_vertical_fraction": 0.68,
+      "num_tall_lines_tested": 44,
+      "mean_crop_height_px": 63.6,
+      "mean_confidence": 0.455,
+      "high_conf_ge_075_count": 0,
+      "mean_cham_chars_per_line": 9.11,
+      "total_subjoined_medials_vowels": 52,
+      "sample_predictions": [
+        {
+          "doc_id": "aymonier1889_chronique_p108",
+          "line": 1,
+          "h": 63,
+          "conf": 0.5422,
+          "pred": "ꨆꨳ {7 ꨕꨳ ꨨ ꨧ ꨔ _ ꨌꨬ ꨆꨬ "
+        },
+        {
+          "doc_id": "aymonier1889_chronique_p108",
+          "line": 3,
+          "h": 73,
+          "conf": 0.4568,
+          "pred": "ꩍ ꨆ ꨂ ꨧ ꨆ ꨬ  #7 {  ꨬꨫꩌ-(ꨪ7 -ꨪꨕ"
+        },
+        {
+          "doc_id": "aymonier1889_chronique_p108",
+          "line": 5,
+          "h": 73,
+          "conf": 0.5132,
+          "pred": "ꨓꨴ ꨴꩀ 8 ꨟꨳꩍ ꨆ5}-ꨔꩀ_  ꨆꩍ #ꨬꨬ ꨌꨬ"
+        },
+        {
+          "doc_id": "aymonier1889_chronique_p108",
+          "line": 7,
+          "h": 53,
+          "conf": 0.4056,
+          "pred": "- {502ꨇ506} ꨭꨇ_{ꨭꨭ27 #ꨵꨀ_  _"
+        },
+        {
+          "doc_id": "aymonier1889_chronique_p108",
+          "line": 8,
+          "h": 61,
+          "conf": 0.4542,
+          "pred": "ꨚꩀ ꨔ ꩇꩌ ꨦ  ꨋ - ꩍ-_ꨆꩌ ꨍ7   ꨔ"
+        }
+      ]
+    },
+    "core_56": {
+      "keep_vertical_fraction": 0.56,
+      "num_tall_lines_tested": 44,
+      "mean_crop_height_px": 52.4,
+      "mean_confidence": 0.4687,
+      "high_conf_ge_075_count": 0,
+      "mean_cham_chars_per_line": 8.86,
+      "total_subjoined_medials_vowels": 58,
+      "sample_predictions": [
+        {
+          "doc_id": "aymonier1889_chronique_p108",
+          "line": 1,
+          "h": 52,
+          "conf": 0.4355,
+          "pred": "ꨬ6) ꨇ {/ ꩀ ꨙꨇ ꨚ 4 ꨧ ꨴ ꨌ7ꨁꨬ _"
+        },
+        {
+          "doc_id": "aymonier1889_chronique_p108",
+          "line": 3,
+          "h": 60,
+          "conf": 0.384,
+          "pred": "* ꨎ ꨓꨵꩇ   ꨨꨫ ꨆ # ꨴ / <ꨶꨬꨫ}_-_ꨇꨫ "
+        },
+        {
+          "doc_id": "aymonier1889_chronique_p108",
+          "line": 5,
+          "h": 60,
+          "conf": 0.4566,
+          "pred": "(ꨬ ꩀ *ꩇ7} ꨳ ꨆ ꨨꨮ _ꨶ 57ꨆ ꨪ ꨌ"
+        },
+        {
+          "doc_id": "aymonier1889_chronique_p108",
+          "line": 7,
+          "h": 44,
+          "conf": 0.3859,
+          "pred": "- {{ꨭ 18248} ꨀ_ꨔ_{2_#ꨶꨭꨭ_{ꨭ ꨆ _ ꨬꨭ _"
+        },
+        {
+          "doc_id": "aymonier1889_chronique_p108",
+          "line": 8,
+          "h": 50,
+          "conf": 0.4958,
+          "pred": "1 \\{ ꨶ ꨧꨮ   ꨎ  ꨱꩌ  ꨕ  "
+        }
+      ]
+    }
+  },
+  "experiment_4b_controlled_gt_calligraphic_curve": {
+    "0_clean_printed_baseline": {
+      "n_lines": 25,
+      "strict_cer_pct": 5.52,
+      "exact_line_acc_pct": 12.0,
+      "mean_confidence": 0.9512
+    },
+    "1_calligraphic_slant_12deg": {
+      "n_lines": 25,
+      "strict_cer_pct": 6.33,
+      "exact_line_acc_pct": 12.0,
+      "mean_confidence": 0.9479
+    },
+    "2_tall_descender_2_1x_box": {
+      "n_lines": 25,
+      "strict_cer_pct": 14.91,
+      "exact_line_acc_pct": 0.0,
+      "mean_confidence": 0.8373
+    },
+    "3_thin_brush_stroke_fade": {
+      "n_lines": 25,
+      "strict_cer_pct": 5.31,
+      "exact_line_acc_pct": 8.0,
+      "mean_confidence": 0.9466
+    },
+    "4_combined_scribal_perturbation": {
+      "n_lines": 25,
+      "strict_cer_pct": 12.97,
+      "exact_line_acc_pct": 0.0,
+      "mean_confidence": 0.8961
+    }
+  },
+  "experiment_4c_v27_leak_guard_audit": {
+    "adversarial_attacks_blocked": {
+      "attack_1_direct_holdout_doc_id": {
+        "blocked": true,
+        "reason": "Holdout doc_id leak detected: harum_palei_01"
+      },
+      "attack_2_shared_eap_series_cousin": {
+        "blocked": true,
+        "reason": "Holdout collection/series leak detected: EAP531-1-99"
+      },
+      "attack_3_disguised_holdout_crop_sha256": {
+        "blocked": true,
+        "reason": "Holdout SHA-256 leak detected on crop_sha256: de64668419b591d4d6ce300ed01fe2d92e8782c8806e4658f5bf5d118b3730c8"
+      },
+      "attack_4_unverified_pseudo_label": {
+        "blocked": true,
+        "reason": "Record #0 (eap698_12_1_c18) rejected: unverified or missing human GT (pseudo-labeling forbidden)."
+      }
+    },
+    "valid_human_verified_seed_probe": {
+      "accepted_records": 1,
+      "holdout_shas_guarded": 1012
+    }
+  }
+}

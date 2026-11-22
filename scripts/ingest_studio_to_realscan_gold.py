@@ -298,12 +298,107 @@ def ingest_page_json(
     return manifest
 
 
+def _series_key_v4(cid: str) -> str:
+    parts = str(cid or "").split("-")
+    if len(parts) >= 2 and parts[0].startswith("EAP"):
+        return f"{parts[0]}-{parts[1]}"
+    return str(cid or "")
+
+
+def verify_v27_training_disjoint_from_holdout(candidate_records: list, manifest_path: str = None) -> dict:
+    """Hard leak-guard for V27 adaptation: blocks any `locked_test_holdout` or unverified pseudo-labeled sample."""
+    manifest_path = manifest_path or MANIFEST_BY_VER["v4"]
+    with open(manifest_path, "r", encoding="utf-8") as f:
+        m = json.load(f)
+
+    holdout_doc_ids = set()
+    holdout_cids = set()
+    holdout_series = set()
+    holdout_shas = set()
+    for d in m.get("documents", []):
+        if d.get("benchmark_split") == "locked_test_holdout" or d.get("training_forbidden") is True:
+            holdout_doc_ids.add(d.get("doc_id"))
+            if d.get("source_collection_id"):
+                holdout_cids.add(d["source_collection_id"])
+                holdout_series.add(_series_key_v4(d["source_collection_id"]))
+            if d.get("page_sha256"):
+                holdout_shas.add(d["page_sha256"])
+            for ln in d.get("lines", []):
+                if ln.get("crop_sha256"):
+                    holdout_shas.add(ln["crop_sha256"])
+            for grp in (d.get("groups") or {}).values():
+                for sp in grp:
+                    if sp.get("crop_sha256"):
+                        holdout_shas.add(sp["crop_sha256"])
+
+    for idx, rec in enumerate(candidate_records):
+        if rec.get("verified_by_human") is not True or not rec.get("gt"):
+            raise PermissionError(f"Record #{idx} ({rec.get('doc_id')}) rejected: unverified or missing human GT (pseudo-labeling forbidden).")
+        if rec.get("training_forbidden") is True or rec.get("benchmark_split") == "locked_test_holdout":
+            raise PermissionError(f"Record #{idx} ({rec.get('doc_id')}) rejected: marked locked_test_holdout / training_forbidden.")
+        if rec.get("doc_id") in holdout_doc_ids:
+            raise PermissionError(f"Holdout doc_id leak detected: {rec.get('doc_id')}")
+        cid = rec.get("source_collection_id")
+        if cid and (cid in holdout_cids or _series_key_v4(cid) in holdout_series):
+            raise PermissionError(f"Holdout collection/series leak detected: {cid}")
+        for k in ("page_sha256", "crop_sha256"):
+            if rec.get(k) and rec[k] in holdout_shas:
+                raise PermissionError(f"Holdout SHA-256 leak detected on {k}: {rec[k]}")
+
+    return {"accepted_records": len(candidate_records), "holdout_shas_guarded": len(holdout_shas)}
+
+
+def export_verified_v27_seed_lines(out_jsonl: str, manifest_path: str = None) -> dict:
+    """Exports ONLY human-verified lines from `adaptation_seed_pool` after running the hard holdout leak-guard."""
+    manifest_path = manifest_path or MANIFEST_BY_VER["v4"]
+    with open(manifest_path, "r", encoding="utf-8") as f:
+        m = json.load(f)
+    candidates = []
+    for d in m.get("documents", []):
+        if d.get("benchmark_split") == "adaptation_seed_pool" and not d.get("training_forbidden", False):
+            if d.get("split") == "verified_gold" and d.get("verified_by_human") is True:
+                for ln in d.get("lines", []):
+                    if ln.get("verified_by_human") is True and ln.get("gt"):
+                        candidates.append({
+                            "doc_id": d["doc_id"],
+                            "source_collection_id": d["source_collection_id"],
+                            "stratum": d.get("stratum"),
+                            "benchmark_split": d["benchmark_split"],
+                            "training_forbidden": False,
+                            "verified_by_human": True,
+                            "annotator_id": d.get("annotator_id"),
+                            "review_round": d.get("review_round", 1),
+                            "page_sha256": d.get("page_sha256"),
+                            "line": ln["line"],
+                            "crop_relpath": ln["crop_relpath"],
+                            "crop_sha256": ln["crop_sha256"],
+                            "gt": ln["gt"],
+                        })
+    audit = verify_v27_training_disjoint_from_holdout(candidates, manifest_path=manifest_path)
+    os.makedirs(os.path.dirname(os.path.abspath(out_jsonl)), exist_ok=True)
+    with open(out_jsonl, "w", encoding="utf-8", newline="\n") as out_f:
+        for r in candidates:
+            out_f.write(json.dumps(r, ensure_ascii=False) + "\n")
+    return {**audit, "out_jsonl": out_jsonl}
+
+
 def verify_manifest_integrity(target_manifest: str, project_root: str = PROJECT_ROOT) -> dict:
     with open(target_manifest, "r", encoding="utf-8") as f:
         m = json.load(f)
     is_v4 = m.get("schema_version", "").startswith("4.")
+    is_v4_1 = m.get("schema_version", "") >= "4.1.0"
     checked_files = 0
     missing_gitignored = 0
+
+    if is_v4_1:
+        hold_cids = {d["source_collection_id"] for d in m["documents"] if d.get("benchmark_split") == "locked_test_holdout"}
+        seed_cids = {d["source_collection_id"] for d in m["documents"] if d.get("benchmark_split") == "adaptation_seed_pool"}
+        assert not (hold_cids & seed_cids), f"Collection split leak: {hold_cids & seed_cids}"
+        assert not ({_series_key_v4(c) for c in hold_cids} & {_series_key_v4(c) for c in seed_cids}), "EAP series split leak!"
+        for d in m["documents"]:
+            assert d.get("benchmark_split") in ("locked_test_holdout", "adaptation_seed_pool"), f"Missing benchmark_split on {d['doc_id']}"
+            if d["benchmark_split"] == "locked_test_holdout":
+                assert d.get("training_forbidden") is True, f"Holdout doc missing training_forbidden=True: {d['doc_id']}"
 
     for d in m["documents"]:
         if is_v4:
@@ -354,9 +449,14 @@ def main():
     ap.add_argument("--review-round", type=int, default=1, help="Human verification round (1 = primary, 2 = dual-annotator adjudication)")
     ap.add_argument("--confirm-human-verified", action="store_true", help="Explicitly attest offline human verification if JSON status != 'Verified'")
     ap.add_argument("--verify-manifest", action="store_true", help="Verify SHA-256 & anti-circularity integrity of RealScan-Gold")
+    ap.add_argument("--export-v27-seed-lines", help="Export human-verified adaptation_seed_pool lines to JSONL with holdout leak-guard")
     args = ap.parse_args()
 
     target_manifest = MANIFEST_BY_VER[args.version]
+    if args.export_v27_seed_lines:
+        res = export_verified_v27_seed_lines(args.export_v27_seed_lines, manifest_path=target_manifest)
+        print(f"✅ Exported {res['accepted_records']} human-verified V27 adaptation seed lines (guarded {res['holdout_shas_guarded']} holdout SHAs) -> {res['out_jsonl']}")
+        return
     if args.verify_manifest:
         stats = verify_manifest_integrity(target_manifest)
         print(

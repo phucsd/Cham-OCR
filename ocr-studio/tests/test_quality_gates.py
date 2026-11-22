@@ -935,6 +935,154 @@ def test_realscan_gold_v4_anti_circular_and_promotion_gates():
         assert prod_stats['documents'] >= 58, prod_stats
 
 
+def test_stage1_v26_2_polarity_divider_deskew_provenance_and_router_v23():
+    """Adversarial regression gate for Pipeline v26.2 + Auto Router v2.3 (Gate SC-1)."""
+    # 1. check_inverted_polarity: must NOT invert dark-framed archival photo (bright paper interior),
+    #    and MUST invert genuine dark-substrate white-stroke negative/dark-mode image (even 1 line).
+    archival_dark_frame = np.full((600, 800, 3), 24, dtype=np.uint8)
+    archival_dark_frame[90:510, 120:680] = 215  # bright paper folio inside dark table frame
+    for y in range(140, 460, 48):
+        cv2.line(archival_dark_frame, (160, y), (640, y), (30, 30, 30), 3)
+    assert app.check_inverted_polarity(archival_dark_frame) is False, "False positive inversion on dark-framed archival photo!"
+
+    dark_mode_1line = np.full((240, 720, 3), 22, dtype=np.uint8)
+    cv2.putText(dark_mode_1line, "CHAM NEGATIVE TEST", (60, 130), cv2.FONT_HERSHEY_SIMPLEX, 1.1, (242, 242, 242), 2)
+    assert app.check_inverted_polarity(dark_mode_1line) is True, "Missed genuine 1-line dark-substrate white-stroke image!"
+
+    # 2. detect_vertical_column_divider + cross-column barrier in merge_line_boxes
+    two_col_page = np.full((900, 1200, 3), 242, dtype=np.uint8)
+    cv2.line(two_col_page, (600, 140), (600, 820), (35, 35, 35), 2)
+    div_x = app.detect_vertical_column_divider(two_col_page)
+    assert div_x is not None and 595 <= div_x <= 605, f"Expected divider near x=600, got {div_x}"
+    q_left = [[140, 300], [594, 300], [594, 336], [140, 336]]
+    q_right = [[606, 301], [1080, 301], [1080, 337], [606, 337]]
+    assert len(app.merge_line_boxes([q_left, q_right], 1200, 900, col_divider_x=None)) == 1
+    merged_boxes = app.merge_line_boxes([q_left, q_right], 1200, 900, col_divider_x=div_x)
+    assert len(merged_boxes) == 2, f"Cross-column merge leaked across col_divider_x={div_x}: {merged_boxes}"
+
+    single_col_page = np.full((900, 1200, 3), 242, dtype=np.uint8)
+    for y in range(160, 780, 52):
+        cv2.line(single_col_page, (150, y), (1050, y), (30, 30, 30), 3)
+    assert app.detect_vertical_column_divider(single_col_page) is None, "False column divider on single-column page!"
+
+    # 3. get_model_info detector provenance when detector_switched=True
+    mi_switched = app.get_model_info('v24_1_r4', executed_detector='cham_dbnet', detector_switched=True)
+    assert mi_switched['detector']['name'] == 'cham_dbnet'
+    assert mi_switched['detector']['detector_switched'] is True
+    assert mi_switched['detector']['weights_sha256_16'] == mi_switched['detector']['cham_dbnet_sha256_16']
+
+    # 4. maybe_safe_deskew_page: 0-deg untouched; -12-deg counter-rotated and inverse-mapped cleanly
+    straight = np.full((520, 760, 3), 248, dtype=np.uint8)
+    for y in range(90, 440, 46):
+        cv2.line(straight, (90, y), (670, y), (20, 20, 20), 4)
+    _, M0, ang0 = app.maybe_safe_deskew_page(straight)
+    assert M0 is None and ang0 == 0.0, f"Unexpected deskew on 0-deg image: {ang0}"
+
+    M_rot = cv2.getRotationMatrix2D((380.0, 260.0), -12.0, 1.0)
+    tilted = cv2.warpAffine(straight, M_rot, (760, 520), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
+    dsk_im, M_inv, ang_est = app.maybe_safe_deskew_page(tilted)
+    assert M_inv is not None and 10.5 <= ang_est <= 13.5, f"Expected ~+12 deg deskew, got {ang_est}"
+    mapped_pt = app.map_deskew_pts_to_original([[100.0, 100.0], [200.0, 100.0], [200.0, 130.0], [100.0, 130.0]], M_inv, 760, 520)
+    assert len(mapped_pt) == 4 and all(0.0 <= px <= 760.0 and 0.0 <= py <= 520.0 for px, py in mapped_pt)
+
+    # 5. Auto Router v2.3: 'Năm 2000-2025', pure ASCII year '1990-2000', genuine Cham digits, and intra-line split
+    dummy_mixed = np.full((48, 360, 3), 250, dtype=np.uint8)
+    cv2.rectangle(dummy_mixed, (20, 12), (120, 36), (20, 20, 20), -1)   # span 0 (Cham headword)
+    cv2.rectangle(dummy_mixed, (165, 12), (335, 36), (20, 20, 20), -1)  # span 1 (Vietnamese/French gloss)
+
+    def _mock_cham(imgs):
+        outs = []
+        for im in imgs:
+            w = im.shape[1]
+            if w > 300:
+                outs.append(('ꨂꨣꩃ ꨌꩌ {61ꨯꨮꩀ', 0.78))
+            elif w < 140:
+                outs.append(('ꨂꨣꩃ ꨌꩌ', 0.96))
+            else:
+                outs.append(('{61_48}', 0.41))
+        return outs, 0.01
+
+    def _mock_viet(imgs):
+        outs = []
+        for im in imgs:
+            w = im.shape[1]
+            if w > 300:
+                outs.append(('2ZwY Người Chăm', 0.89))
+            elif w < 140:
+                outs.append(('2ZwY', 0.62))
+            else:
+                outs.append(('(Người Chăm)', 0.96))
+        return outs, 0.01
+
+    router_split = app.AutoRoutingOCRWrapper(_mock_cham, _mock_viet, cham_w320_model=None, primary_ver='v24_1_r4')
+    res_s, vers_s, _ = router_split.predict_with_provenance([dummy_mixed])
+    assert vers_s == ['v24_1_r4+vi'], f"Expected intra-line split v24_1_r4+vi, got {vers_s}: {res_s}"
+    assert 'ꨂꨣꩃ ꨌꩌ' in res_s[0][0] and '(Người Chăm)' in res_s[0][0], res_s
+
+    router_yr = app.AutoRoutingOCRWrapper(
+        lambda imgs: ([('꩒) 200-2026', 0.87), ('1꩐0-200', 0.81), ('꩒꩐꩒꩖', 0.97)], 0.01),
+        lambda imgs: ([('Năm 2000-2025', 0.98), ('1990-2000', 0.98), ('2026', 0.70)], 0.01),
+        cham_w320_model=None,
+        primary_ver='v24_1_r4',
+    )
+    blank = np.full((48, 240, 3), 250, dtype=np.uint8)
+    res_y, vers_y, _ = router_yr.predict_with_provenance([blank, blank, blank])
+    assert res_y[0][0] == 'Năm 2000-2025' and vers_y[0] == 'vi', (res_y[0], vers_y[0])
+    assert res_y[1][0] == '1990-2000' and vers_y[1] == 'vi', (res_y[1], vers_y[1])
+    assert res_y[2][0] == '꩒꩐꩒꩖' and vers_y[2] == 'v24_1_r4', (res_y[2], vers_y[2])
+
+
+def test_stage2_to_4_disjoint_split_and_v27_leak_guard():
+    """Adversarial regression gate for Stage 2–4 Custodian/Series-Disjoint Split & V27 Holdout Leak-Guard."""
+    import json
+    repo_root = os.path.dirname(app.PROJECT_ROOT)
+    scripts_dir = os.path.join(repo_root, 'scripts')
+    if scripts_dir not in sys.path:
+        sys.path.insert(0, scripts_dir)
+    import ingest_studio_to_realscan_gold as ingest_v4
+
+    prod_v4 = os.path.join(repo_root, 'ocr-benchmark', 'data', 'realscan_gold_v4', 'manifest.json')
+    if not os.path.exists(prod_v4):
+        return
+    m4 = json.load(open(prod_v4, encoding='utf-8'))
+    if m4.get('schema_version', '') < '4.1.0':
+        return
+
+    # 1. Verify manifest integrity + zero collection/series/custodian leakage
+    stats = ingest_v4.verify_manifest_integrity(prod_v4, project_root=repo_root)
+    assert stats['documents'] == 58, stats
+
+    holdout_doc = next(d for d in m4['documents'] if d.get('benchmark_split') == 'locked_test_holdout' and d.get('lines'))
+    seed_doc = next(d for d in m4['documents'] if d.get('benchmark_split') == 'adaptation_seed_pool' and d.get('lines'))
+
+    # 2. Must block holdout doc_id, shared EAP series cousin, disguised holdout crop SHA, and unverified pseudo-label
+    for bad_rec in [
+        {'doc_id': holdout_doc['doc_id'], 'source_collection_id': holdout_doc['source_collection_id'], 'verified_by_human': True, 'gt': 'ꨀ'},
+        {'doc_id': 'cousin_leak', 'source_collection_id': 'EAP531-1-99', 'verified_by_human': True, 'gt': 'ꨀ'},
+        {'doc_id': seed_doc['doc_id'], 'source_collection_id': seed_doc['source_collection_id'], 'crop_sha256': holdout_doc['lines'][0]['crop_sha256'], 'verified_by_human': True, 'gt': 'ꨀ'},
+        {'doc_id': seed_doc['doc_id'], 'source_collection_id': seed_doc['source_collection_id'], 'verified_by_human': False, 'gt': 'ꨀ'},
+    ]:
+        blocked = False
+        try:
+            ingest_v4.verify_v27_training_disjoint_from_holdout([bad_rec], manifest_path=prod_v4)
+        except PermissionError:
+            blocked = True
+        assert blocked, f"Failed to block leakage record: {bad_rec}"
+
+    # 3. Must accept genuinely human-verified adaptation_seed_pool record
+    ok_res = ingest_v4.verify_v27_training_disjoint_from_holdout([{
+        'doc_id': seed_doc['doc_id'],
+        'source_collection_id': seed_doc['source_collection_id'],
+        'benchmark_split': 'adaptation_seed_pool',
+        'training_forbidden': False,
+        'verified_by_human': True,
+        'page_sha256': seed_doc['page_sha256'],
+        'crop_sha256': seed_doc['lines'][0]['crop_sha256'],
+        'gt': 'ꨀꨕꩅ ꨌꩌ',
+    }], manifest_path=prod_v4)
+    assert ok_res['accepted_records'] == 1
+
+
 class TestQualityGates(unittest.TestCase):
     pass
 

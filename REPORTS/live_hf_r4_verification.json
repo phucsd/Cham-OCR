@@ -1,8 +1,8 @@
 {
-  "verified_at": "2026-11-22T08:01:12.795712+00:00",
+  "verified_at": "2026-11-22T17:26:30.489406+00:00",
   "space_id": "phucsd/cham-ocr-studio",
   "live_url": "https://ocr.cham.asia",
-  "commit_sha": "1af2d681733bb88c1a6c9bdd1be63fb2dcdabdff",
+  "commit_sha": "8ab7a278639d30726cde8c2726ced271e58e8bf5",
   "files_uploaded": [
     "Dockerfile",
     "DESIGN.md",
@@ -65,7 +65,7 @@
     "ocr-studio/static/samples/test_006_lvl1.png"
   ],
   "rollout": {
-    "rollout_seconds": 45,
+    "rollout_seconds": 46,
     "stage": "RUNNING",
     "health_body": "OK",
     "probe_model_info": {
@@ -86,6 +86,7 @@
         "name": "generic_ppocrv4_dbnet",
         "mode": "hybrid",
         "loaded": true,
+        "detector_switched": false,
         "weights_sha256_16": "49ee815e30cff43c",
         "cham_dbnet_available": true,
         "cham_dbnet_sha256_16": "cfc65a686ecaa5fd",
@@ -108,8 +109,8 @@
   },
   "live_harum_palei_01": {
     "default_v24_1_r4": {
-      "wall_sec": 19.276,
-      "backend_sec": 9.8458,
+      "wall_sec": 16.414,
+      "backend_sec": 14.273,
       "has_calibrated_confidence": true,
       "model_info": {
         "model": "v24_1_r4",
@@ -129,6 +130,7 @@
           "name": "generic_ppocrv4_dbnet",
           "mode": "hybrid",
           "loaded": true,
+          "detector_switched": false,
           "weights_sha256_16": "49ee815e30cff43c",
           "cham_dbnet_available": true,
           "cham_dbnet_sha256_16": "cfc65a686ecaa5fd",
@@ -140,14 +142,14 @@
       "pred_lines": 25,
       "matched_lines": 25,
       "line_recall_pct": 100.0,
-      "matched_line_cer_pct": 3.04,
-      "e2e_doc_cer_pct": 2.96,
+      "matched_line_cer_pct": 2.68,
+      "e2e_doc_cer_pct": 2.6,
       "unmatched_gt_chars": 0,
       "unmatched_pred_chars": 0
     },
     "v24_1_r3_1": {
-      "wall_sec": 17.335,
-      "backend_sec": 9.7685,
+      "wall_sec": 16.215,
+      "backend_sec": 14.1188,
       "has_calibrated_confidence": true,
       "model_info": {
         "model": "v24_1_r3_1",
@@ -167,6 +169,7 @@
           "name": "generic_ppocrv4_dbnet",
           "mode": "hybrid",
           "loaded": true,
+          "detector_switched": false,
           "weights_sha256_16": "49ee815e30cff43c",
           "cham_dbnet_available": true,
           "cham_dbnet_sha256_16": "cfc65a686ecaa5fd",
@@ -178,14 +181,14 @@
       "pred_lines": 25,
       "matched_lines": 25,
       "line_recall_pct": 100.0,
-      "matched_line_cer_pct": 5.23,
-      "e2e_doc_cer_pct": 5.08,
+      "matched_line_cer_pct": 5.47,
+      "e2e_doc_cer_pct": 5.32,
       "unmatched_gt_chars": 0,
       "unmatched_pred_chars": 0
     },
     "auto": {
-      "wall_sec": 19.267,
-      "backend_sec": 9.8152,
+      "wall_sec": 15.427,
+      "backend_sec": 13.1923,
       "has_calibrated_confidence": true,
       "model_info": {
         "model": "auto",
@@ -223,6 +226,7 @@
           "name": "generic_ppocrv4_dbnet",
           "mode": "hybrid",
           "loaded": true,
+          "detector_switched": false,
           "weights_sha256_16": "49ee815e30cff43c",
           "cham_dbnet_available": true,
           "cham_dbnet_sha256_16": "cfc65a686ecaa5fd",
@@ -234,8 +238,8 @@
       "pred_lines": 25,
       "matched_lines": 25,
       "line_recall_pct": 100.0,
-      "matched_line_cer_pct": 3.04,
-      "e2e_doc_cer_pct": 2.96,
+      "matched_line_cer_pct": 2.68,
+      "e2e_doc_cer_pct": 2.6,
       "unmatched_gt_chars": 0,
       "unmatched_pred_chars": 0
     }
@@ -245,7 +249,7 @@
     "lines": "134/134",
     "abs_line_err": 0,
     "blank_page_zero_lines": true,
-    "doc_cer_pct": 9.4,
-    "matched_cer_pct": 9.6
+    "doc_cer_pct": 8.97,
+    "matched_cer_pct": 9.15
   }
 }

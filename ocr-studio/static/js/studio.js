@@ -525,10 +525,66 @@
         return folio;
     }
 
+    function readFileAsText(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (ev) => resolve(String(ev.target.result || ""));
+            reader.onerror = (err) => reject(err);
+            reader.readAsText(file, "utf-8");
+        });
+    }
+
+    function stemName(filename) {
+        return String(filename || "")
+            .replace(/^.*[\\/]/, "")
+            .replace(/\.studio\.json$/i, "")
+            .replace(/\.[^.]+$/, "")
+            .trim()
+            .toLowerCase();
+    }
+
+    async function applyImportedJsonPayload(payload) {
+        const entries = Array.isArray(payload && payload.documents) ? payload.documents : [payload];
+        let hydratedCount = 0;
+        for (const entry of entries) {
+            if (!entry || !Array.isArray(entry.lines)) continue;
+            const targetStem = stemName(entry.doc_id || entry.image_name || entry.name || "");
+            let folio = state.queue.find((q) => stemName(q.name) === targetStem);
+            if (!folio && entries.length === 1 && state.activeFolioId) {
+                folio = state.queue.find((q) => q.id === state.activeFolioId);
+            }
+            if (!folio) continue;
+            folio.lines = entry.lines.map((ln, idx) => ({
+                ...ln,
+                index: ln.index || ln.line_id || idx + 1,
+                text: ln.text ?? ln.draft_prediction ?? "",
+                confidence: Number(ln.confidence ?? ln.draft_confidence ?? 0),
+                calibrated_confidence: Number(ln.calibrated_confidence ?? ln.draft_calibrated_confidence ?? ln.confidence ?? 0),
+                human_verified: Boolean(ln.human_verified)
+            }));
+            folio.lineCount = folio.lines.length;
+            folio.verifiedCount = folio.lines.filter((l) => l.human_verified).length;
+            folio.model = entry.model || folio.model;
+            folio.status = computeDocStatus(folio.lines, folio.document);
+            await dbPutFolio(folio);
+            hydratedCount++;
+            if (folio.id === state.activeFolioId) {
+                await selectFolio(folio.id);
+            }
+        }
+        if (hydratedCount > 0) {
+            persistQueueIndex();
+            renderQueue();
+            updateCorpusFooter();
+        }
+        return hydratedCount;
+    }
+
     async function handleIncomingFiles(fileList) {
         if (!fileList || fileList.length === 0) return;
         const files = Array.from(fileList);
         const pdfFiles = files.filter((f) => (f.type === "application/pdf") || (f.name && f.name.toLowerCase().endsWith(".pdf")));
+        const jsonFiles = files.filter((f) => (f.type === "application/json") || /\.json$/i.test(f.name || ""));
         const imgFiles = files.filter((f) => (f.type && f.type.startsWith("image/")) || /\.(png|jpe?g|webp|bmp|gif)$/i.test(f.name || ""));
 
         const newlyAdded = [];
@@ -545,18 +601,34 @@
             }
         }
 
+        let hydratedFolios = 0;
+        for (const jf of jsonFiles) {
+            try {
+                const rawTxt = await readFileAsText(jf);
+                const parsed = JSON.parse(rawTxt);
+                hydratedFolios += await applyImportedJsonPayload(parsed);
+                appendLog(`Imported transcription JSON: ${jf.name}`, "success");
+            } catch (err) {
+                toast(`JSON import error (${jf.name}): ${err.message}`);
+                appendLog(`Failed to parse JSON ${jf.name}: ${err}`, "error");
+            }
+        }
+
         if (newlyAdded.length > 0 && (!state.activeFolioId || newlyAdded.length === 1)) {
             await selectFolio(newlyAdded[0].id);
         }
-        if (newlyAdded.length > 1) {
+        if (hydratedFolios > 0) {
+            toast(`Hydrated ${hydratedFolios} folio(s) from Review Queue JSON`);
+        } else if (newlyAdded.length > 1) {
             toast(`Added ${newlyAdded.length} manuscript folios to queue`);
         } else if (newlyAdded.length === 1) {
             toast(`Loaded ${newlyAdded[0].name}`);
         }
 
+        const hasUnprocessedNew = newlyAdded.some((it) => it.status === "Unprocessed" && (!it.lines || it.lines.length === 0));
         if (pdfFiles.length > 0) {
             await openPdfImportDialog(pdfFiles[0]);
-        } else if (state.autoTranscribeOnUpload && newlyAdded.length > 0) {
+        } else if (state.autoTranscribeOnUpload && hasUnprocessedNew) {
             runBatchOCR("unprocessed");
         }
     }

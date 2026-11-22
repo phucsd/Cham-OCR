@@ -201,6 +201,7 @@ def wait_for_space_rollout(api: HfApi, commit_sha: str, max_wait_s: int = 900) -
                 ui_ok = (
                     jsr.status_code == 200
                     and "focusCropTimer" in jsr.text
+                    and "applyImportedJsonPayload" in jsr.text
                     and helpr.status_code == 200
                 )
                 if hr.status_code == 200 and ui_ok:
@@ -258,7 +259,7 @@ def main():
             repo_id=SPACE_ID,
             repo_type="space",
             operations=ops,
-            commit_message="Deploy Cham-OCR V26.1 Priority A: Exact Pass-2 Recognizer Provenance (Zero Script Guessing) & Auto Router v2.2",
+            commit_message="Deploy Cham-OCR V26.2: Archival Polarity Fix, 2-Column Divider Barrier, Safe Deskew, Detector Provenance, Auto Router v2.3 & Studio JSON Import",
         )
         commit_sha = str(getattr(commit_info, "oid", "") or getattr(commit_info, "commit_url", "").rstrip("/").split("/")[-1])
         print(f"🚀 Commit created on `{SPACE_ID}`: `{commit_sha}`")
