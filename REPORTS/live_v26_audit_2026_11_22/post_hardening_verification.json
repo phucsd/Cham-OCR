@@ -1,7 +1,12 @@
 {
-  "verified_utc": "2026-11-22T06:55:22Z",
+  "verified_utc": "2026-11-22T08:07:10Z",
   "live_url": "https://ocr.cham.asia",
-  "space_commit": "9a4e559e61e980f4d5cb59a86dfcdf1985dfe239",
+  "space_commit": "1af2d681733bb88c1a6c9bdd1be63fb2dcdabdff",
+  "v25_catalog_entry": {
+    "short_label": "V25 Bilingual (Legacy)",
+    "group": "Historical Baselines",
+    "deprecated": true
+  },
   "api_contract_retest": {
     "missing_image": {
       "http": 400,
@@ -30,63 +35,195 @@
   },
   "auto_router_v2_2_retest": {
     "vietnamese_00": {
-      "http": 200,
-      "cer_pct": 4.88,
-      "gt_lines": [
-        "Cộng hòa xã hội chủ nghĩa Việt Nam.",
-        "Đây là bản phiên âm tiếng Chăm và tiếng Việt.",
-        "Số trang: 0123456789, dấu ! ? : ; ( ) / -"
-      ],
-      "pred_lines": [
+      "rows": {
+        "http": 200,
+        "cer_pct": 4.88,
+        "gt_lines": [
+          "Cộng hòa xã hội chủ nghĩa Việt Nam.",
+          "Đây là bản phiên âm tiếng Chăm và tiếng Việt.",
+          "Số trang: 0123456789, dấu ! ? : ; ( ) / -"
+        ],
+        "pred_lines": [
+          {
+            "index": 1,
+            "text": "Cộng hòa xã hội chủ nghĩa Việt Nam",
+            "selected_recognizer": "vi",
+            "calibrated_confidence": 0.906118
+          },
+          {
+            "index": 2,
+            "text": "Đây là bản phiên âm tiếng Chăm và tiếng Việt.",
+            "selected_recognizer": "vi",
+            "calibrated_confidence": 0.966291
+          },
+          {
+            "index": 3,
+            "text": "Số trang: 0123456789, dấu !?:; () /-",
+            "selected_recognizer": "vi",
+            "calibrated_confidence": 0.893997
+          }
+        ]
+      },
+      "auto": {
+        "http": 200,
+        "cer_pct": 4.88,
+        "gt_lines": [
+          "Cộng hòa xã hội chủ nghĩa Việt Nam.",
+          "Đây là bản phiên âm tiếng Chăm và tiếng Việt.",
+          "Số trang: 0123456789, dấu ! ? : ; ( ) / -"
+        ],
+        "pred_lines": [
+          {
+            "index": 1,
+            "text": "Cộng hòa xã hội chủ nghĩa Việt Nam",
+            "selected_recognizer": "vi",
+            "calibrated_confidence": 0.906118
+          },
+          {
+            "index": 2,
+            "text": "Đây là bản phiên âm tiếng Chăm và tiếng Việt.",
+            "selected_recognizer": "vi",
+            "calibrated_confidence": 0.966291
+          },
+          {
+            "index": 3,
+            "text": "Số trang: 0123456789, dấu !?:; () /-",
+            "selected_recognizer": "vi",
+            "calibrated_confidence": 0.893997
+          }
+        ]
+      }
+    },
+    "mixed_vi_cham_00": {
+      "rows": {
+        "http": 200,
+        "cer_pct": 0.0,
+        "gt_lines": [
+          "Cộng hòa xã hội chủ nghĩa Việt Nam.",
+          "ꨓꨝꨳꩀ ꨔꩅ !"
+        ],
+        "pred_lines": [
+          {
+            "index": 1,
+            "text": "Cộng hòa xã hội chủ nghĩa Việt Nam.",
+            "selected_recognizer": "vi",
+            "calibrated_confidence": 0.918535
+          },
+          {
+            "index": 2,
+            "text": "ꨓꨝꨳꩀ ꨔꩅ !",
+            "selected_recognizer": "v24_1_r4",
+            "calibrated_confidence": 0.993301
+          }
+        ]
+      },
+      "auto": {
+        "http": 200,
+        "cer_pct": 0.0,
+        "gt_lines": [
+          "Cộng hòa xã hội chủ nghĩa Việt Nam.",
+          "ꨓꨝꨳꩀ ꨔꩅ !"
+        ],
+        "pred_lines": [
+          {
+            "index": 1,
+            "text": "Cộng hòa xã hội chủ nghĩa Việt Nam.",
+            "selected_recognizer": "vi",
+            "calibrated_confidence": 0.918535
+          },
+          {
+            "index": 2,
+            "text": "ꨓꨝꨳꩀ ꨔꩅ !",
+            "selected_recognizer": "v24_1_r4",
+            "calibrated_confidence": 0.993301
+          }
+        ]
+      }
+    }
+  },
+  "priority_a_cross_method_provenance": {
+    "mixed_vi_cham_00": {
+      "dbnet": [
         {
           "index": 1,
-          "text": "Cộng hòa xã hội chủ nghĩa Việt Nam",
           "selected_recognizer": "vi",
-          "calibrated_confidence": 0.906118
+          "selected_crop_type": "dbnet",
+          "text": "Cộng hòa xã hội chủ nghĩa Việt Nam."
         },
         {
           "index": 2,
-          "text": "Đây là bản phiên âm tiếng Chăm và tiếng Việt.",
+          "selected_recognizer": "v24_1_r4",
+          "selected_crop_type": "dbnet",
+          "text": "ꨓꨝꨳꩀ ꨔꩅ !"
+        }
+      ],
+      "valley": [
+        {
+          "index": 1,
           "selected_recognizer": "vi",
-          "calibrated_confidence": 0.966291
+          "selected_crop_type": "safe",
+          "text": "Cộng hòa xã hội chủ nghĩa Việt Nam."
         },
         {
-          "index": 3,
-          "text": "Số trang: 0123456789, dấu !?:; () /-",
+          "index": 2,
+          "selected_recognizer": "v24_1_r4",
+          "selected_crop_type": "safe",
+          "text": "ꨓꨝꨳꩀ ꨔꩅ"
+        }
+      ],
+      "adaptive": [
+        {
+          "index": 1,
           "selected_recognizer": "vi",
-          "calibrated_confidence": 0.893997
+          "selected_crop_type": "safe",
+          "text": "Cộng hòa xã hội chủ nghĩa Việt Nam."
+        },
+        {
+          "index": 2,
+          "selected_recognizer": "v24_1_r4",
+          "selected_crop_type": "safe",
+          "text": "ꨝꨳꩀ ꨔꩅ"
         }
       ]
     },
-    "mixed_vi_cham_00": {
-      "http": 200,
-      "cer_pct": 0.0,
-      "gt_lines": [
-        "Cộng hòa xã hội chủ nghĩa Việt Nam.",
-        "ꨓꨝꨳꩀ ꨔꩅ !"
-      ],
-      "pred_lines": [
-        {
-          "index": 1,
-          "text": "Cộng hòa xã hội chủ nghĩa Việt Nam.",
-          "selected_recognizer": "vi",
-          "calibrated_confidence": 0.918535
-        },
-        {
-          "index": 2,
-          "text": "ꨓꨝꨳꩀ ꨔꩅ !",
-          "selected_recognizer": "v24_1_r4",
-          "calibrated_confidence": 0.993301
-        }
-      ]
+    "ascii_numerals_auto": {
+      "ocr_crop": {
+        "text": "123466",
+        "selected_recognizer": "v24_1_r4",
+        "confidence": 0.9763364791870117,
+        "verified_matches_specialist": true
+      },
+      "dbnet": {
+        "text": "-<46",
+        "selected_recognizer": "v24_1_r4",
+        "selected_crop_type": "dbnet",
+        "confidence": 0.6549372673034668,
+        "verified_matches_specialist": true
+      },
+      "valley": {
+        "text": "123-466",
+        "selected_recognizer": "v24_1_r4",
+        "selected_crop_type": "safe",
+        "confidence": 0.8087425231933594,
+        "verified_matches_specialist": true
+      },
+      "adaptive": {
+        "text": "123-466",
+        "selected_recognizer": "v24_1_r4",
+        "selected_crop_type": "safe",
+        "confidence": 0.9485940337181091,
+        "verified_matches_specialist": true
+      }
     }
   },
   "cham_digits_tight_crop_retest": {
     "n": 12,
     "tight_crop_cer_pct": 6.0,
     "exact_pct": 75.0,
-    "uncropped_1100x100_bug_cer_pct_before": 14.0,
-    "uncropped_1100x100_exact_pct_before": 33.33,
+    "uncropped_1100x100_historical_cer_pct": 14.0,
+    "uncropped_1100x100_historical_exact_pct": 33.33,
+    "crop_compression_artifact_delta_pct": 8.0,
+    "residual_real_model_cer_pct": 6.0,
     "rows": [
       {
         "id": "NotoSansCham-Light_0",

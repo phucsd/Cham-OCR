@@ -735,6 +735,105 @@ def test_v26_audit_api_contract_and_provenance_hardening():
         httpd.server_close()
 
 
+def test_priority_a_pass2_provenance_and_zero_script_guessing():
+    """Priority A regression: exact recognizer provenance across Pass 2 (valley/adaptive) & /ocr_crop without script guessing."""
+    import base64
+    from http.server import HTTPServer
+    import json
+    import threading
+    import urllib.request
+
+    # 1. calibrate_line_confidence must never infer recognizer temperature from output characters when model_ver='auto'
+    assert app.calibrate_line_confidence(0.80, model_ver='auto', text='ꨀꨕꩅ') == 0.8
+    assert app.calibrate_line_confidence(0.80, model_ver=None, text='ꨀꨕꩅ') == 0.8
+
+    # 2. Construct a crisp synthetic line image that triggers Pass 1 (safe, taller) -> Pass 2 (tight, shorter)
+    canvas = np.full((160, 360, 3), 255, dtype=np.uint8)
+    for x in range(40, 310, 28):
+        cv2.rectangle(canvas, (x, 66), (x + 14, 92), (15, 15, 15), -1)
+
+    # Height of core ink is 26px (y=66..92).
+    # Pass 1 'safe' crop expands >= 0.40 * h on top & bottom (~46px+ tall).
+    # Pass 2 'tight' crop expands ~0.05 * h (~28px tall, ar48 = 360*48/28 is >420 unless cropped narrower;
+    # make canvas width 200 so tight crop ~28x200 has ar48 = 200*48/28 = 342.8 in [104, 420) for W320!).
+    canvas = canvas[:, :200].copy()
+
+    def fake_w480(imgs):
+        out = []
+        for im in imgs:
+            h = im.shape[0]
+            if h >= 36:
+                # Pass 1 safe/rescue/loose crops: low confidence (<0.75) to force Pass 2 execution
+                out.append(('123 - 456', 0.62))
+            else:
+                # Pass 2 tight crop: sub-0.905 confidence so W=320 specialist adjudicates
+                out.append(('123 - 456', 0.82))
+        return out, 0.0
+
+    def fake_w320(imgs):
+        # Pass 1 safe/rescue/loose crops stay <0.75 so Pass 2 is forced; Pass 2 tight crop (h < 36) wins with 0.94!
+        return [('123 - 456', 0.65 if im.shape[0] >= 36 else 0.94) for im in imgs], 0.0
+
+    def fake_vi(imgs):
+        # Pure numerals/punctuation: v_lat_cnt == 0 -> Auto Router must NOT hand off to 'vi'
+        return [('123 - 456', 0.91) for _ in imgs], 0.0
+
+    router = app.AutoRoutingOCRWrapper(
+        fake_w480, fake_vi, cham_w320_model=fake_w320, primary_ver='v24_1_r4', w320_ver='v24_1_r3_1'
+    )
+
+    saved_auto = app.ocr_models.get('auto')
+    app.ocr_models['auto'] = router
+    try:
+        for seg_method in ('valley', 'adaptive'):
+            resp = app.run_ocr_pipeline(canvas, model_ver='auto', method=seg_method)
+            assert len(resp['lines']) == 1, (seg_method, resp)
+            line = resp['lines'][0]
+            assert line['segmentation']['selected_crop_type'] == 'tight', (seg_method, line)
+            assert line['text'] == '123 - 456', (seg_method, line)
+            # Crucial assertion: old post-OCR character check guessed 'vi' because '123 - 456' has no U+AA00..U+AA5F!
+            # Exact Pass-2 provenance must report 'v24_1_r3_1'.
+            assert line['selected_recognizer'] == 'v24_1_r3_1', (seg_method, line)
+
+        # 3. Verify /ocr_crop with model='auto' on pure ASCII digits/hyphen ('7-8') reports 'v24_1_r4', never guesses 'vi'
+        def crop_w480(imgs):
+            return [('7-8', 0.95) for _ in imgs], 0.0
+
+        def crop_vi(imgs):
+            return [('7-8', 0.96) for _ in imgs], 0.0
+
+        app.ocr_models['auto'] = app.AutoRoutingOCRWrapper(
+            crop_w480, crop_vi, cham_w320_model=None, primary_ver='v24_1_r4'
+        )
+        ok, buf = cv2.imencode('.png', canvas)
+        assert ok
+        b64_img = base64.b64encode(buf.tobytes()).decode('ascii')
+
+        httpd = HTTPServer(('127.0.0.1', 0), app.ChamOCRRequestHandler)
+        port = httpd.server_address[1]
+        th = threading.Thread(target=httpd.serve_forever, daemon=True)
+        th.start()
+        try:
+            req = urllib.request.Request(
+                f'http://127.0.0.1:{port}/ocr_crop',
+                data=json.dumps({'image': b64_img, 'model': 'auto', 'bbox': [20, 55, 190, 105]}).encode('utf-8'),
+                headers={'Content-Type': 'application/json'},
+                method='POST',
+            )
+            with urllib.request.urlopen(req, timeout=10) as r:
+                crop_body = json.loads(r.read().decode('utf-8'))
+            assert crop_body['text'] == '7-8', crop_body
+            assert crop_body['selected_recognizer'] == 'v24_1_r4', crop_body
+        finally:
+            httpd.shutdown()
+            httpd.server_close()
+    finally:
+        if saved_auto is None:
+            app.ocr_models.pop('auto', None)
+        else:
+            app.ocr_models['auto'] = saved_auto
+
+
 class TestQualityGates(unittest.TestCase):
     pass
 

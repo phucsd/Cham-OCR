@@ -276,10 +276,11 @@ class AutoRoutingOCRWrapper:
         self.w320_ver = w320_ver
         self.last_selected_versions = []
 
-    def __call__(self, img_list):
+    def predict_with_provenance(self, img_list):
+        """Executes tri-specialist routing and returns (results, selected_versions, elapsed) directly."""
         if not img_list:
             self.last_selected_versions = []
-            return [], 0.0
+            return [], [], 0.0
 
         try:
             from scripts.generate_data import normalize_unicode as _norm_u
@@ -383,8 +384,12 @@ class AutoRoutingOCRWrapper:
                 final_results[i] = (c_txt, c_conf)
                 selected_vers.append(c_ver)
 
-        self.last_selected_versions = selected_vers
-        return final_results, 0.0
+        self.last_selected_versions = list(selected_vers)
+        return final_results, list(selected_vers), 0.0
+
+    def __call__(self, img_list):
+        results, _, elapsed = self.predict_with_provenance(img_list)
+        return results, elapsed
 
 def validate_requested_model(raw_model):
     """Validates a client-supplied model identifier against ALLOWED_MODEL_IDS and local installation."""
@@ -1243,6 +1248,42 @@ def get_model_manifest(version):
             _model_manifest_cache[cache_key] = {}
     return _model_manifest_cache[cache_key]
 
+def resolve_actual_model_version(model_ver):
+    """Resolves canonical recognizer identifier from loaded on-disk paths / manifest (never 'auto')."""
+    if not model_ver or model_ver == 'auto':
+        return None
+    p = ocr_model_paths.get(model_ver)
+    if p and p.get("model_dir"):
+        dir_base = os.path.basename(os.path.normpath(p["model_dir"]))
+        inferred_ver = (
+            "vi" if dir_base == "rec_vietnamese_infer"
+            else (dir_base[len("rec_cham_inference_"):] if dir_base.startswith("rec_cham_inference_") else model_ver)
+        )
+        manifest = get_model_manifest(inferred_ver)
+        return str(manifest.get("model_id") or inferred_ver)
+    manifest = get_model_manifest(model_ver)
+    if manifest.get("model_id"):
+        return str(manifest["model_id"])
+    return str(model_ver)
+
+
+def invoke_recognizer_with_provenance(ocr_model, img_list, model_ver=None):
+    """Invokes a recognizer/router and returns (results, selected_versions, elapsed) without post-OCR script guessing."""
+    if not img_list:
+        return [], [], 0.0
+    if hasattr(ocr_model, "predict_with_provenance"):
+        res, sel_vers, elapsed = ocr_model.predict_with_provenance(img_list)
+        return res, list(sel_vers), elapsed
+    if hasattr(ocr_model, "last_selected_versions"):
+        ocr_model.last_selected_versions = []
+    res, elapsed = ocr_model(img_list)
+    attr_vers = list(getattr(ocr_model, "last_selected_versions", None) or [])
+    if len(attr_vers) == len(res):
+        return res, attr_vers, elapsed
+    single_ver = resolve_actual_model_version(model_ver)
+    return res, [single_ver] * len(res), elapsed
+
+
 def calibrate_line_confidence(raw_conf, model_ver=None, text="", temperature=None):
     """Post-hoc logit temperature scaling for recognizer confidence (identity when T=1.0)."""
     val = float(raw_conf)
@@ -1251,10 +1292,7 @@ def calibrate_line_confidence(raw_conf, model_ver=None, text="", temperature=Non
     if val >= 1.0:
         return 1.0
     if temperature is None:
-        target_ver = model_ver
-        if model_ver == 'auto':
-            has_cham = any('\uAA00' <= ch <= '\uAA5F' for ch in (text or ''))
-            target_ver = DEFAULT_CHAM_MODEL if has_cham else None
+        target_ver = None if model_ver in (None, 'auto') else model_ver
         manifest = get_model_manifest(target_ver)
         try:
             T = float(manifest.get("confidence_temperature", 1.0))
@@ -1297,6 +1335,8 @@ def get_model_info(model_ver):
                          "dict_sha256_16": _file_fingerprint(p["dict_path"]),
                          "rec_image_shape": rec_shape_info,
                          "confidence_temperature": conf_temp})
+        elif v in ocr_models and isinstance(ocr_models.get(v), OfficialPaddleOCRWrapper):
+            recs.append({"version": v, "model_dir": None, "wrapper": "OfficialPaddleOCRWrapper"})
     info["recognizers"] = recs
     if not det_model_info:
         info["detector"] = {"name": None, "mode": DET_MODE, "loaded": False}
@@ -1876,7 +1916,7 @@ def has_important_cham_sign_changes(pred1, pred2):
                 return True
     return False
 
-def segment_lines_advanced(img, base_coords, ocr_model):
+def segment_lines_advanced(img, base_coords, ocr_model, model_ver=None):
     """
     Advanced Multi-Crop Strategy with Risk-Gated Batched Inference
     """
@@ -2206,8 +2246,9 @@ def segment_lines_advanced(img, base_coords, ocr_model):
         if valid_imgs:
             try:
                 print(f"DEBUG: [segment_lines_advanced] Calling ocr_model for Pass 1 ({len(valid_imgs)} images)...")
-                results, _ = ocr_model(valid_imgs)
-                sel_vers_p1 = getattr(ocr_model, 'last_selected_versions', None) or []
+                results, sel_vers_p1, _ = invoke_recognizer_with_provenance(
+                    ocr_model, valid_imgs, model_ver=model_ver
+                )
                 print("DEBUG: [segment_lines_advanced] Pass 1 prediction finished.")
                 for local_idx, (vi, res) in enumerate(zip(valid_indices, results)):
                     pred_text, conf = res if res else ("", 0.0)
@@ -2215,7 +2256,7 @@ def segment_lines_advanced(img, base_coords, ocr_model):
                     pass1_candidates[vi]["prediction"] = pred_text
                     pass1_candidates[vi]["confidence"] = float(conf)
                     pass1_candidates[vi]["pred_length"] = len(pred_text)
-                    if local_idx < len(sel_vers_p1):
+                    if local_idx < len(sel_vers_p1) and sel_vers_p1[local_idx] is not None:
                         pass1_candidates[vi]["routed_version"] = sel_vers_p1[local_idx]
             except Exception as e:
                 print(f"DEBUG: [segment_lines_advanced] Batch inference pass 1 failed: {e}")
@@ -2309,17 +2350,22 @@ def segment_lines_advanced(img, base_coords, ocr_model):
                 pass2_candidates.append(cand_obj)
                 line_meta["candidates"][ctype] = cand_obj
 
-    # Run Batch Pass 2 with coordinate-level deduplication
+    # Run Batch Pass 2 with coordinate-level deduplication (preserving exact recognizer provenance)
     t_pass2_rec = time.time()
     if pass2_candidates:
-        # Cache for coordinate-level deduplication: (s, e) -> (prediction, confidence)
+        # Cache for coordinate-level deduplication: (s, e) -> (prediction, confidence, routed_version)
         seen_boxes = {}
+        pending_boxes = set()
         
         # Pre-populate seen_boxes with Pass 1 (safe) results to avoid re-running identical boxes
         for line_meta in lines_meta:
             if "safe" in line_meta["candidates"]:
                 safe_c = line_meta["candidates"]["safe"]
-                seen_boxes[tuple(safe_c["crop_box"])] = (safe_c["prediction"], safe_c["confidence"])
+                seen_boxes[tuple(safe_c["crop_box"])] = (
+                    safe_c["prediction"],
+                    safe_c["confidence"],
+                    safe_c.get("routed_version"),
+                )
                 
         exec_candidates = [] # candidates that require actual OCR execution
         deferred_copies = [] # candidates that will copy results from an identical box
@@ -2327,16 +2373,19 @@ def segment_lines_advanced(img, base_coords, ocr_model):
         for cand in pass2_candidates:
             c_box = tuple(cand["crop_box"])
             if c_box in seen_boxes:
-                res = seen_boxes[c_box]
-                if res[0] != "" or res[1] > 0.0:
-                    cand["prediction"] = res[0]
-                    cand["confidence"] = res[1]
-                    cand["pred_length"] = len(res[0])
-                else:
+                if c_box in pending_boxes:
                     deferred_copies.append((cand, c_box))
+                else:
+                    p_txt, p_conf, p_ver = seen_boxes[c_box]
+                    cand["prediction"] = p_txt
+                    cand["confidence"] = p_conf
+                    cand["pred_length"] = len(p_txt)
+                    if p_ver is not None:
+                        cand["routed_version"] = p_ver
             else:
                 exec_candidates.append(cand)
-                seen_boxes[c_box] = ("", 0.0) # mark as pending
+                seen_boxes[c_box] = ("", 0.0, None)
+                pending_boxes.add(c_box)
                 
         if exec_candidates:
             imgs = [preprocess_crop_for_rec(c["crop_img"]) for c in exec_candidates]
@@ -2355,27 +2404,34 @@ def segment_lines_advanced(img, base_coords, ocr_model):
             if valid_imgs:
                 try:
                     print(f"DEBUG: [segment_lines_advanced] Calling ocr_model for Pass 2 ({len(valid_imgs)} images, deduplicated from {len(pass2_candidates)})...")
-                    results, _ = ocr_model(valid_imgs)
+                    results, sel_vers_p2, _ = invoke_recognizer_with_provenance(
+                        ocr_model, valid_imgs, model_ver=model_ver
+                    )
                     print("DEBUG: [segment_lines_advanced] Pass 2 prediction finished.")
-                    for vi, res in zip(valid_indices, results):
+                    for local_idx, (vi, res) in enumerate(zip(valid_indices, results)):
                         pred_text, conf = res if res else ("", 0.0)
                         pred_text = pred_text.strip()
+                        r_ver = sel_vers_p2[local_idx] if local_idx < len(sel_vers_p2) else None
                         
                         exec_cand = exec_candidates[vi]
                         exec_cand["prediction"] = pred_text
                         exec_cand["confidence"] = float(conf)
                         exec_cand["pred_length"] = len(pred_text)
+                        if r_ver is not None:
+                            exec_cand["routed_version"] = r_ver
                         
-                        seen_boxes[tuple(exec_cand["crop_box"])] = (pred_text, float(conf))
+                        seen_boxes[tuple(exec_cand["crop_box"])] = (pred_text, float(conf), r_ver)
                 except Exception as e:
                     print(f"DEBUG: [segment_lines_advanced] Batch inference pass 2 failed: {e}")
                     
         # Process deferred copies
         for cand, c_box in deferred_copies:
-            pred_text, conf = seen_boxes[c_box]
+            pred_text, conf, r_ver = seen_boxes[c_box]
             cand["prediction"] = pred_text
             cand["confidence"] = conf
             cand["pred_length"] = len(pred_text)
+            if r_ver is not None:
+                cand["routed_version"] = r_ver
             
     recognition_batch_pass2_sec = time.time() - t_pass2_rec
     
@@ -2447,6 +2503,8 @@ def segment_lines_advanced(img, base_coords, ocr_model):
         line_meta["crop_sanity_score"] = best_score
         
         sel_data = cand_data[selected_ctype]
+        if sel_data.get("routed_version") is not None:
+            line_meta["routed_version"] = sel_data["routed_version"]
         
         # Flags
         needs_review_reasons = []
@@ -2696,22 +2754,24 @@ def run_ocr_pipeline(img, model_ver=None, method='dbnet', threshold=0.05, gap=12
             if not final_crops:
                 print("⚠️ DBNet found 0 text lines, falling back to Valley segmentation...")
                 _, coords = segment_lines_valleys(img, window_size=win, min_dist=gap)
-                final_crops, lines_metadata, adv_profiler = segment_lines_advanced(img, coords, ocr)
+                final_crops, lines_metadata, adv_profiler = segment_lines_advanced(
+                    img, coords, ocr, model_ver=model_ver
+                )
                 profiler_dict.update(adv_profiler)
                 profiler_dict['fallback'] = 'valley'
                 doc_reasons.append('detector_found_no_lines')
             else:
                 t_rec = time.time()
                 rec_crops = [preprocess_crop_for_rec(c) for c in final_crops]
-                rec_res, _ = ocr(rec_crops)
+                rec_res, sel_vers, _ = invoke_recognizer_with_provenance(ocr, rec_crops, model_ver=model_ver)
                 rec_sec = time.time() - t_rec
                 print(f"⏱️  DBNet batch recognition ({len(final_crops)} lines) took: {rec_sec:.4f}s")
-                sel_vers = getattr(ocr, 'last_selected_versions', None) or []
                 for idx, (pred_text, conf) in enumerate(rec_res):
                     lines_metadata[idx]['candidates']['dbnet']['prediction'] = pred_text
                     lines_metadata[idx]['candidates']['dbnet']['confidence'] = conf
-                    if idx < len(sel_vers):
+                    if idx < len(sel_vers) and sel_vers[idx] is not None:
                         lines_metadata[idx]['routed_version'] = sel_vers[idx]
+                        lines_metadata[idx]['candidates']['dbnet']['routed_version'] = sel_vers[idx]
                 num_detected = len(lines_metadata)
                 dropped_text_lines = []
                 lines_metadata, final_crops = apply_line_quality_gates(lines_metadata, final_crops, dropped_text_lines)
@@ -2739,20 +2799,28 @@ def run_ocr_pipeline(img, model_ver=None, method='dbnet', threshold=0.05, gap=12
 
         t_adv = time.time()
         # Apply Advanced Segmentation and Multi-Crop
-        final_crops, lines_metadata, adv_profiler = segment_lines_advanced(img, coords, ocr)
+        final_crops, lines_metadata, adv_profiler = segment_lines_advanced(
+            img, coords, ocr, model_ver=model_ver
+        )
         profiler_dict.update(adv_profiler)
         print(f"⏱️  segment_lines_advanced took: {time.time() - t_adv:.4f}s")
 
     t_resp = time.time()
-    # Prepare backward-compatible response
+    # Prepare backward-compatible response (provenance strictly from executed recognizer, never script-guessed)
     results = []
     for idx, (line_img, meta) in enumerate(zip(final_crops, lines_metadata)):
         cand_sel = meta['candidates'][meta['selected_crop_type']]
         pred_text = cand_sel['prediction']
         confidence = cand_sel['confidence']
 
-        if model_ver in ['auto', 'v24', 'v25', 'v26'] or str(model_ver).startswith('v24'):
-            if model_ver != 'auto' or any('\uAA00' <= ch <= '\uAA5F' for ch in (pred_text or '')):
+        cal_ver = cand_sel.get('routed_version') or meta.get('routed_version')
+        if not cal_ver and model_ver != 'auto':
+            cal_ver = resolve_actual_model_version(model_ver)
+
+        if (cal_ver and cal_ver not in ('vi', 'en', 'fr', 'japan')) and (
+            cal_ver in ('v24', 'v25', 'v26') or str(cal_ver).startswith('v24')
+        ):
+            if any('\uAA00' <= ch <= '\uAA5F' for ch in (pred_text or '')):
                 try:
                     from scripts.generate_data import normalize_unicode
                     pred_text = normalize_unicode(pred_text)
@@ -2763,9 +2831,6 @@ def run_ocr_pipeline(img, model_ver=None, method='dbnet', threshold=0.05, gap=12
         _, buffer = cv2.imencode('.png', line_img)
         line_b64 = base64.b64encode(buffer).decode('utf-8')
 
-        cal_ver = meta.get('routed_version') or cand_sel.get('routed_version') or model_ver
-        if cal_ver == 'auto':
-            cal_ver = DEFAULT_CHAM_MODEL if any('\uAA00' <= ch <= '\uAA5F' for ch in (pred_text or '')) else 'vi'
         cal_conf = calibrate_line_confidence(confidence, cal_ver, pred_text)
 
         # Backward-compatible format with explicit per-line recognizer provenance
@@ -3564,8 +3629,9 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             try:
                 with _INFERENCE_LOCK:
                     ocr = get_ocr_model(model_ver)
-                    res, _ = ocr([preprocess_crop_for_rec(crop_img)])
-                    sel_vers = list(getattr(ocr, 'last_selected_versions', None) or [])
+                    res, sel_vers, _ = invoke_recognizer_with_provenance(
+                        ocr, [preprocess_crop_for_rec(crop_img)], model_ver=model_ver
+                    )
                 pred_text, conf = res[0] if res else ("", 0.0)
             except UnknownModelError as ume:
                 self.send_json_response({'error': str(ume), 'allowed_models': list(ADVERTISED_MODEL_IDS)}, 400)
@@ -3573,18 +3639,20 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
             except Exception as e:
                 self.send_json_response({'error': f'Cropped OCR transcription error ({model_ver}): {e}'}, 500)
                 return
-                
-            if model_ver in ['auto', 'v24', 'v25', 'v26'] or str(model_ver).startswith('v24'):
-                if model_ver != 'auto' or any('\uAA00' <= ch <= '\uAA5F' for ch in (pred_text or '')):
+
+            sel_ver = sel_vers[0] if sel_vers else (
+                resolve_actual_model_version(model_ver) if model_ver != 'auto' else None
+            )
+
+            if (sel_ver and sel_ver not in ('vi', 'en', 'fr', 'japan')) and (
+                sel_ver in ('v24', 'v25', 'v26') or str(sel_ver).startswith('v24')
+            ):
+                if any('\uAA00' <= ch <= '\uAA5F' for ch in (pred_text or '')):
                     try:
                         from scripts.generate_data import normalize_unicode
                         pred_text = normalize_unicode(pred_text)
                     except Exception as e:
                         print(f"Warning: normalize_unicode failed: {e}")
-
-            sel_ver = sel_vers[0] if sel_vers else model_ver
-            if sel_ver == 'auto':
-                sel_ver = DEFAULT_CHAM_MODEL if any('\uAA00' <= ch <= '\uAA5F' for ch in (pred_text or '')) else 'vi'
                     
             _, buffer = cv2.imencode('.png', crop_img)
             crop_b64 = base64.b64encode(buffer).decode('utf-8')

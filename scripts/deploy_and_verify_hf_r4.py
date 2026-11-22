@@ -193,7 +193,7 @@ def wait_for_space_rollout(api: HfApi, commit_sha: str, max_wait_s: int = 900) -
         if stage.upper() == "BUILD_ERROR" or stage.upper() == "RUNTIME_ERROR":
             raise RuntimeError(f"HF Space entered error stage: {stage}")
 
-        if stage.upper() == "RUNNING" and (saw_building or el >= 35 or max_wait_s <= 180):
+        if stage.upper() == "RUNNING" and (saw_building or el >= 90 or max_wait_s <= 180):
             try:
                 hr = requests.get(f"{LIVE_BASE_URL}/health", timeout=15)
                 jsr = requests.get(f"{LIVE_BASE_URL}/static/js/studio.js", timeout=15)
@@ -258,7 +258,7 @@ def main():
             repo_id=SPACE_ID,
             repo_type="space",
             operations=ops,
-            commit_message="Deploy Cham-OCR V26.1 API Provenance Hardening (P0/P1 HTTP 400), Auto Router v2.2 & V25 Legacy Reclassification",
+            commit_message="Deploy Cham-OCR V26.1 Priority A: Exact Pass-2 Recognizer Provenance (Zero Script Guessing) & Auto Router v2.2",
         )
         commit_sha = str(getattr(commit_info, "oid", "") or getattr(commit_info, "commit_url", "").rstrip("/").split("/")[-1])
         print(f"🚀 Commit created on `{SPACE_ID}`: `{commit_sha}`")

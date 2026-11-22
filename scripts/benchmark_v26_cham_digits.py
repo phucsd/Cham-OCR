@@ -5,9 +5,11 @@
 Methodological fix (2026-11-22):
 - Inverts grayscale (`ImageOps.invert(image.convert('L')).getbbox()`) before computing the ink
   bounding box (`Image.getbbox()` on a white RGB canvas otherwise returns the full 1100x100 canvas,
-  stuffing ~75% unmasked white margin into W=480).
+  horizontally compressing ~75% blank white margin into W=480).
 - Crops tightly around ink with realistic DBNet textline margins (pad_x=12, pad_y=8).
 - Computes `digit_correct` via minimum-edit Levenshtein alignment rather than positional `zip()`.
+- Writes to a separate `--out-dir` (`digits_tight_retest` by default) so historical `2026-11-22/digits`
+  artifacts remain untouched.
 """
 import argparse,collections,concurrent.futures,hashlib,json,statistics,sys
 from pathlib import Path
@@ -17,9 +19,7 @@ from benchmark_all_live_v26 import MODELS as ALL_MODELS
 MODELS=['v24_1_r4','v25','auto','v24_1_r3_1']
 from live_symbol_crop_benchmark import call,norm
 sys.stdout.reconfigure(encoding='utf-8',errors='backslashreplace')
-OUT=ROOT/'REPORTS/live_v26_audit_2026_11_22/digits'
-IMAGE=OUT/'images'
-IMAGE.mkdir(parents=True,exist_ok=True)
+DEFAULT_OUT=ROOT/'REPORTS/live_v26_audit_2026_11_22/digits_tight_retest'
 fonts=['NotoSansCham-Light.ttf','NotoSansCham-Medium.ttf','NotoSansCham-SemiBold.ttf']
 base=ROOT/'ocr-benchmark/data/fonts_heldout'
 digits=''.join(chr(0xAA50+i) for i in range(10))
@@ -56,7 +56,7 @@ def aligned_digit_correct(gt: str, pred: str) -> int:
     return hits
 
 
-def render(font, gt, name, pad_x=12, pad_y=8):
+def render(font, gt, name, image_dir, pad_x=12, pad_y=8):
     ft = ImageFont.truetype(str(base / font), 46)
     canvas = Image.new('RGB', (1200, 120), 'white')
     draw = ImageDraw.Draw(canvas)
@@ -70,7 +70,7 @@ def render(font, gt, name, pad_x=12, pad_y=8):
         image = canvas.crop((x0, y0, x1, y1))
     else:
         image = canvas
-    file = IMAGE / (name + '.png')
+    file = image_dir / (name + '.png')
     image.save(file)
     return dict(
         id=name,
@@ -88,15 +88,19 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--url', default='https://ocr.cham.asia')
     ap.add_argument('--models', default=','.join(MODELS))
+    ap.add_argument('--out-dir', default=str(DEFAULT_OUT), help='Output directory (defaults to digits_tight_retest to preserve historical 2026-11-22/digits)')
     ap.add_argument('--fresh', action='store_true', help='Ignore cached results.jsonl and re-run cleanly')
     args = ap.parse_args()
+    out_dir = Path(args.out_dir)
+    image_dir = out_dir / 'images'
+    image_dir.mkdir(parents=True, exist_ok=True)
     models = [m.strip() for m in args.models.split(',') if m.strip()]
 
     texts = [digits, ' '.join(digits), '꩒꩐꩒꩖ ꩐꩙ ꩑꩘', '꩙꩘꩗꩖꩕ ꩔꩓꩒꩑꩐']
-    cases = [render(f, gt, f.replace('.ttf', '') + '_' + str(i)) for f in fonts for i, gt in enumerate(texts)]
+    cases = [render(f, gt, f.replace('.ttf', '') + '_' + str(i), image_dir) for f in fonts for i, gt in enumerate(texts)]
     case_sha = {c['id']: hashlib.sha256(c['path'].read_bytes()).hexdigest() for c in cases}
 
-    j = OUT / 'results.jsonl'
+    j = out_dir / 'results.jsonl'
     old = {}
     if j.exists() and not args.fresh:
         for x in j.read_text(encoding='utf-8').splitlines():
@@ -140,7 +144,7 @@ def main():
                 'exact_pct': round(100 * sum(r['exact'] for r in g) / len(g), 2),
             }
         summary[m] = {'n': len(good), 'errors': len(a) - len(good), 'groups': by}
-    (OUT / 'summary.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding='utf-8')
+    (out_dir / 'summary.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding='utf-8')
     print('DIGITS_DONE', len(rows), json.dumps(summary, ensure_ascii=False), flush=True)
 
 
