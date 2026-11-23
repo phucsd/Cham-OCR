@@ -197,16 +197,17 @@ def wait_for_space_rollout(api: HfApi, commit_sha: str, max_wait_s: int = 900) -
             try:
                 hr = requests.get(f"{LIVE_BASE_URL}/health", timeout=15)
                 idxr = requests.get(f"{LIVE_BASE_URL}/", timeout=15)
-                jsr = requests.get(f"{LIVE_BASE_URL}/static/js/studio.js?v=26.3.1", timeout=15)
+                jsr = requests.get(f"{LIVE_BASE_URL}/static/js/studio.js?v=26.3.2", timeout=15)
                 helpr = requests.get(f"{LIVE_BASE_URL}/help", timeout=15)
                 ui_ok = (
                     idxr.status_code == 200
-                    and "studio.js?v=26.3.1" in idxr.text
+                    and "studio.js?v=26.3.2" in idxr.text
                     and jsr.status_code == 200
                     and "focusCropTimer" in jsr.text
                     and "applyImportedJsonPayload" in jsr.text
                     and "skipSyncActive" in jsr.text
                     and "hydratedIdSet" in jsr.text
+                    and "fetchWithTransientRetry" in jsr.text
                     and helpr.status_code == 200
                 )
                 if hr.status_code == 200 and ui_ok:

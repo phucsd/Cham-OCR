@@ -1223,6 +1223,30 @@
     // =========================================================================
     // Single-Folio & Automated Batch OCR Execution
     // =========================================================================
+    async function fetchWithTransientRetry(url, init, maxRetries = 1) {
+        let lastErr = null;
+        for (let attempt = 0; attempt <= maxRetries; attempt++) {
+            try {
+                const res = await fetch(url, init);
+                if ((res.status === 502 || res.status === 503 || res.status === 504) && attempt < maxRetries) {
+                    appendLog(`Transient HTTP ${res.status} on ${url}; retrying in 900ms...`, "warn");
+                    await new Promise((r) => setTimeout(r, 900));
+                    continue;
+                }
+                return res;
+            } catch (err) {
+                lastErr = err;
+                if (attempt < maxRetries) {
+                    appendLog(`Transient network error on ${url}; retrying in 900ms...`, "warn");
+                    await new Promise((r) => setTimeout(r, 900));
+                    continue;
+                }
+                throw lastErr;
+            }
+        }
+        throw lastErr || new Error(`Request to ${url} failed`);
+    }
+
     async function executeOcrRequestForFolio(folioItem) {
         if (!folioItem.image) {
             const dbRec = await dbGetFolio(folioItem.id);
@@ -1233,7 +1257,7 @@
         const modelSelect = document.getElementById("model-select");
         const chosenModel = modelSelect ? modelSelect.value : (folioItem.model || "v24_1_r4");
 
-        const res = await fetch("/ocr", {
+        const res = await fetchWithTransientRetry("/ocr", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -1843,7 +1867,7 @@
         toast("Transcribing selected manuscript region...");
 
         try {
-            const res = await fetch("/ocr_crop", {
+            const res = await fetchWithTransientRetry("/ocr_crop", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

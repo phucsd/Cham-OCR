@@ -1,8 +1,8 @@
 {
-  "verified_at": "2026-11-23T02:02:26.111860+00:00",
+  "verified_at": "2026-11-23T03:35:22.130432+00:00",
   "space_id": "phucsd/cham-ocr-studio",
   "live_url": "https://ocr.cham.asia",
-  "commit_sha": "7e15b40c11119b00332899cebe5a8661276e3151",
+  "commit_sha": "a67d1cc08eaf0e40b49ebd70e53af9848856056f",
   "files_uploaded": [
     "Dockerfile",
     "DESIGN.md",
@@ -109,8 +109,8 @@
   },
   "live_harum_palei_01": {
     "default_v24_1_r4": {
-      "wall_sec": 15.737,
-      "backend_sec": 13.0463,
+      "wall_sec": 18.535,
+      "backend_sec": 16.1902,
       "has_calibrated_confidence": true,
       "model_info": {
         "model": "v24_1_r4",
@@ -148,8 +148,8 @@
       "unmatched_pred_chars": 0
     },
     "v24_1_r3_1": {
-      "wall_sec": 14.053,
-      "backend_sec": 11.8871,
+      "wall_sec": 17.914,
+      "backend_sec": 15.6026,
       "has_calibrated_confidence": true,
       "model_info": {
         "model": "v24_1_r3_1",
@@ -187,8 +187,8 @@
       "unmatched_pred_chars": 0
     },
     "auto": {
-      "wall_sec": 14.387,
-      "backend_sec": 12.0643,
+      "wall_sec": 20.871,
+      "backend_sec": 18.3715,
       "has_calibrated_confidence": true,
       "model_info": {
         "model": "auto",

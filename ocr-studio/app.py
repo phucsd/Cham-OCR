@@ -683,15 +683,19 @@ def _register_loaded_model(version, model_obj):
 
 
 def get_ocr_model(version):
-    """Loads and caches the PaddleOCR model for the given version dynamically"""
+    """Loads and caches the PaddleOCR model for the given version dynamically (thread-safe via RLock)."""
+    with _INFERENCE_LOCK:
+        return _get_ocr_model_unlocked(version)
+
+
+def _get_ocr_model_unlocked(version):
     global ocr_models
     version = validate_requested_model(version)
-    with _INFERENCE_LOCK:
-        if version in ocr_models:
-            if version in _legacy_model_lru:
-                _legacy_model_lru.remove(version)
-                _legacy_model_lru.append(version)
-            return ocr_models[version]
+    if version in ocr_models:
+        if version in _legacy_model_lru:
+            _legacy_model_lru.remove(version)
+            _legacy_model_lru.append(version)
+        return ocr_models[version]
         
     if version in ['en', 'fr', 'japan']:
         ocr_model = OfficialPaddleOCRWrapper(lang=version)
@@ -975,33 +979,34 @@ def get_cham_det_model():
     on wavy / perspective / tightly spaced pages where Cham-DBNet finds 8/8, 7/8, 5/5, 14/14).
     """
     global cham_det_model, _cham_det_failed
-    if cham_det_model is not None or _cham_det_failed:
-        return cham_det_model
-    cham_det_dir = CHAM_DET_DIR
-    has_pdmodel = os.path.exists(os.path.join(cham_det_dir, "inference.pdmodel"))
-    has_json = os.path.exists(os.path.join(cham_det_dir, "inference.json"))
-    has_cham_model = os.path.exists(os.path.join(cham_det_dir, "inference.pdiparams")) and (has_pdmodel or has_json)
-    if not has_cham_model:
-        _cham_det_failed = True
-        return None
-    if not has_pdmodel and has_json:
-        try:
-            import paddle as _paddle
-            major_ver = int(str(getattr(_paddle, "__version__", "0")).split(".")[0])
-        except Exception:
-            major_ver = 0
-        if major_ver < 3:
+    with _INFERENCE_LOCK:
+        if cham_det_model is not None or _cham_det_failed:
+            return cham_det_model
+        cham_det_dir = CHAM_DET_DIR
+        has_pdmodel = os.path.exists(os.path.join(cham_det_dir, "inference.pdmodel"))
+        has_json = os.path.exists(os.path.join(cham_det_dir, "inference.json"))
+        has_cham_model = os.path.exists(os.path.join(cham_det_dir, "inference.pdiparams")) and (has_pdmodel or has_json)
+        if not has_cham_model:
             _cham_det_failed = True
-            print("⚠️  Cham DBNet is PIR (.json) and requires Paddle >= 3.0; skipping on Paddle 2.x.")
             return None
-    try:
-        cham_det_model = _build_text_detector(cham_det_dir, CHAM_DET_DB_THRESH, CHAM_DET_BOX_THRESH, CHAM_DET_UNCLIP,
-                                              box_type=CHAM_DET_BOX_TYPE)
-        print(f"🌟 Cham Text Detection model ready: {cham_det_dir} (box_type={CHAM_DET_BOX_TYPE})")
-    except Exception as e:
-        _cham_det_failed = True
-        print(f"⚠️  Failed to load Cham DBNet detector ({e}); legacy generic detector only.")
-    return cham_det_model
+        if not has_pdmodel and has_json:
+            try:
+                import paddle as _paddle
+                major_ver = int(str(getattr(_paddle, "__version__", "0")).split(".")[0])
+            except Exception:
+                major_ver = 0
+            if major_ver < 3:
+                _cham_det_failed = True
+                print("⚠️  Cham DBNet is PIR (.json) and requires Paddle >= 3.0; skipping on Paddle 2.x.")
+                return None
+        try:
+            cham_det_model = _build_text_detector(cham_det_dir, CHAM_DET_DB_THRESH, CHAM_DET_BOX_THRESH, CHAM_DET_UNCLIP,
+                                                  box_type=CHAM_DET_BOX_TYPE)
+            print(f"🌟 Cham Text Detection model ready: {cham_det_dir} (box_type={CHAM_DET_BOX_TYPE})")
+        except Exception as e:
+            _cham_det_failed = True
+            print(f"⚠️  Failed to load Cham DBNet detector ({e}); legacy generic detector only.")
+        return cham_det_model
 
 def get_det_model():
     """Loads and caches the primary PaddleOCR TextDetector model for DBNet segmentation.
@@ -1010,17 +1015,18 @@ def get_det_model():
     'cham' uses the Cham-DBNet detector as primary (falls back to generic if it cannot load).
     """
     global det_model
-    if det_model is not None:
+    with _INFERENCE_LOCK:
+        if det_model is not None:
+            return det_model
+        if DET_MODE == 'cham' and get_cham_det_model() is not None:
+            det_model = get_cham_det_model()
+            det_model_info.update({"name": "cham_dbnet", "dir": CHAM_DET_DIR, "mode": DET_MODE})
+        else:
+            det_model = get_generic_det_model()
+            det_model_info.update({"name": "generic_ppocrv4_dbnet", "dir": _ensure_generic_det_dir(), "mode": DET_MODE})
+        if DET_MODE == 'hybrid':
+            get_cham_det_model()  # preload so the first hard page doesn't pay the load cost
         return det_model
-    if DET_MODE == 'cham' and get_cham_det_model() is not None:
-        det_model = get_cham_det_model()
-        det_model_info.update({"name": "cham_dbnet", "dir": CHAM_DET_DIR, "mode": DET_MODE})
-    else:
-        det_model = get_generic_det_model()
-        det_model_info.update({"name": "generic_ppocrv4_dbnet", "dir": _ensure_generic_det_dir(), "mode": DET_MODE})
-    if DET_MODE == 'hybrid':
-        get_cham_det_model()  # preload so the first hard page doesn't pay the load cost
-    return det_model
 
 def _quad_centerline(pts):
     """(y-at-x function, perpendicular thickness) of a 4-point text quad (tl, tr, br, bl)."""
@@ -1547,13 +1553,14 @@ def invoke_recognizer_with_provenance(ocr_model, img_list, model_ver=None):
     """Invokes a recognizer/router and returns (results, selected_versions, elapsed) without post-OCR script guessing."""
     if not img_list:
         return [], [], 0.0
-    if hasattr(ocr_model, "predict_with_provenance"):
-        res, sel_vers, elapsed = ocr_model.predict_with_provenance(img_list)
-        return res, list(sel_vers), elapsed
-    if hasattr(ocr_model, "last_selected_versions"):
-        ocr_model.last_selected_versions = []
-    res, elapsed = ocr_model(img_list)
-    attr_vers = list(getattr(ocr_model, "last_selected_versions", None) or [])
+    with _INFERENCE_LOCK:
+        if hasattr(ocr_model, "predict_with_provenance"):
+            res, sel_vers, elapsed = ocr_model.predict_with_provenance(img_list)
+            return res, list(sel_vers), elapsed
+        if hasattr(ocr_model, "last_selected_versions"):
+            ocr_model.last_selected_versions = []
+        res, elapsed = ocr_model(img_list)
+        attr_vers = list(getattr(ocr_model, "last_selected_versions", None) or [])
     if len(attr_vers) == len(res):
         return res, attr_vers, elapsed
     single_ver = resolve_actual_model_version(model_ver)
@@ -1665,8 +1672,20 @@ def analyze_text_ink(img):
             "ink_ratio": ink_px / float(max(1, h * w)), "num_components": len(keep), "shape": (h, w)}
 
 def is_blank_page(ink):
-    """True when the page has no text-like ink (blank / near-blank paper)."""
-    return ink["num_components"] < 4 or ink["ink_ratio"] < 0.0003
+    """True when the page has no text-like ink (blank / near-blank paper), while preserving a compact sparse text line on a large canvas."""
+    if ink["num_components"] < 4:
+        return True
+    if ink["ink_ratio"] >= 0.0003:
+        return False
+    # Compact single-line text cluster on a very large page (e.g. 500-800px ink on a 3000x2000 canvas):
+    cents = ink.get("centroids")
+    h = (ink.get("shape") or (1000, 1000))[0]
+    if ink["num_components"] >= 5 and ink.get("ink_px", 0) >= 300 and cents is not None and len(cents) >= 5:
+        ys = np.sort(cents[:, 1])
+        y_span = float(ys[int(round(0.85 * (len(ys) - 1)))] - ys[int(round(0.15 * (len(ys) - 1)))])
+        if y_span <= max(64.0, 0.12 * float(h)):
+            return False
+    return True
 
 def compute_uncovered_ink(ink, polygons, median_line_h=None):
     """Fraction of text-like ink (area-weighted) whose component centroid lies outside every detected line.
@@ -1730,7 +1749,7 @@ def _split_columns(idx, rects, median_h, img_w, col_divider_x=None):
         else:
             cols[-1][1] = max(cols[-1][1], r[1])
             cols[-1][2].extend(r[2])
-    if len(cols) < 2 or any(len(c[2]) < 3 for c in cols):
+    if len(cols) < 2 or any(len(c[2]) < 2 for c in cols):
         return [idx]
     # Columns must sit side by side (overlapping vertical extents), not be stacked blocks
     for a, b in zip(cols, cols[1:]):
@@ -1739,6 +1758,32 @@ def _split_columns(idx, rects, median_h, img_w, col_divider_x=None):
         inter = max(0.0, min(ay2, by2) - max(ay1, by1))
         if inter < 0.5 * min(ay2 - ay1, by2 - by1):
             return [idx]
+    # Short-column anti-false-column guard: when any column has only 2 lines (e.g. 2x2 grid),
+    # require strict left-margin alignment, wide inter-column gutter (or explicit divider), bounded
+    # column width, and 1-to-1 row Y-overlap so split word fragments on a 1-col page never form columns.
+    if any(len(c[2]) == 2 for c in cols):
+        strict_gutter = max(3.5 * median_h, 0.12 * img_w)
+        for c in cols:
+            if (c[1] - c[0]) > 0.45 * img_w:
+                return [idx]
+            xs1 = [rects[i][0] for i in c[2]]
+            if max(xs1) - min(xs1) > max(18.0, 1.2 * median_h):
+                return [idx]
+        for a, b in zip(cols, cols[1:]):
+            div_ab = (
+                col_divider_x is not None
+                and a[1] <= col_divider_x + 8
+                and b[0] >= col_divider_x - 8
+            )
+            if not (div_ab or (b[0] - a[1] >= strict_gutter)):
+                return [idx]
+        other_boxes_for = lambda k: [j for m, c in enumerate(cols) if m != k for j in c[2]]
+        for k, c in enumerate(cols):
+            if len(c[2]) == 2:
+                others = other_boxes_for(k)
+                for i in c[2]:
+                    if not any((min(rects[i][3], rects[j][3]) - max(rects[i][1], rects[j][1])) > 0.35 * median_h for j in others):
+                        return [idx]
     return [c[2] for c in cols]
 
 def order_lines_reading(rects, img_w, col_divider_x=None):
@@ -1753,7 +1798,7 @@ def order_lines_reading(rects, img_w, col_divider_x=None):
     yc = lambda i: (rects[i][1] + rects[i][3]) / 2.0
     order_y = sorted(range(n), key=yc)
     layout = {"reading_order": "rows", "columns": 1}
-    if n < 6:
+    if n < 4:
         return order_y, layout
     median_h = float(np.median([r[3] - r[1] for r in rects]))
     x0 = min(r[0] for r in rects)
@@ -1773,9 +1818,9 @@ def order_lines_reading(rects, img_w, col_divider_x=None):
         sections.append(cur)
     order = []
     for sec in sections:
-        cols = _split_columns(sec, rects, median_h, img_w, col_divider_x=col_divider_x) if len(sec) >= 6 else [sec]
+        cols = _split_columns(sec, rects, median_h, img_w, col_divider_x=col_divider_x) if len(sec) >= 4 else [sec]
         lead_hdrs, tail_ftrs = [], []
-        if len(cols) == 1 and len(sec) >= 7:
+        if len(cols) == 1 and len(sec) >= 5:
             # Test minimum-peel combinations (1 top, 1 bottom, 1+1, 2 top, 2 bottom, 2+1, 1+2) of vertically
             # isolated header/footer lines (e.g. short centered title '* ... *' and/or centered page number '- 30 -')
             # ONLY if every peeled line has no vertical overlap with the remaining body AND the body splits cleanly.
@@ -1786,7 +1831,7 @@ def order_lines_reading(rects, img_w, col_divider_x=None):
                 )
 
             for n_top, n_bot in ((1, 0), (0, 1), (1, 1), (2, 0), (0, 2), (2, 1), (1, 2)):
-                if len(sec) - n_top - n_bot < 6:
+                if len(sec) - n_top - n_bot < 4:
                     continue
                 cand_top = sec[:n_top]
                 cand_bot = sec[len(sec) - n_bot:] if n_bot > 0 else []
@@ -1887,9 +1932,13 @@ def check_inverted_polarity(img):
         int(h * 0.04):max(int(h * 0.04) + 1, int(h * 0.96)),
         int(w * 0.04):max(int(w * 0.04) + 1, int(w * 0.96)),
     ]
+    roi_edge = gray[
+        int(h * 0.015):max(int(h * 0.015) + 1, int(h * 0.985)),
+        int(w * 0.015):max(int(w * 0.015) + 1, int(w * 0.985)),
+    ]
     roi_mid = gray[int(h * 0.14):int(h * 0.68), int(w * 0.16):int(w * 0.84)] if (h >= 180 and w >= 240) else roi_wide
 
-    def _eval_roi(roi_arr, allow_sparse=False):
+    def _eval_roi(roi_arr, allow_dense=True, allow_sparse=False):
         scale = min(1.0, 900.0 / float(max(roi_arr.shape[:2])))
         work = (
             cv2.resize(roi_arr, (max(8, int(roi_arr.shape[1] * scale)), max(8, int(roi_arr.shape[0] * scale))), interpolation=cv2.INTER_AREA)
@@ -1900,24 +1949,30 @@ def check_inverted_polarity(img):
         se = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k))
         opened = cv2.morphologyEx(work, cv2.MORPH_OPEN, se)
 
-        op_p95 = float(np.percentile(opened, 95))
-        fg_p992 = float(np.percentile(work, 99.2))
-        if op_p95 < 85.0 and (fg_p992 - op_p95) > 45.0:
-            return True
+        if allow_dense:
+            op_p95 = float(np.percentile(opened, 95))
+            fg_p992 = float(np.percentile(work, 99.2))
+            if op_p95 < 85.0 and (fg_p992 - op_p95) > 45.0:
+                return True
         if allow_sparse:
-            # Sparse single-line white-on-black page (e.g. 0.1% white stroke pixels):
-            # only fire when >=98.5% of opened background is genuinely dark (<65), so dark-framed folios
-            # with a bright paper/palm-leaf interior (op_p985 >= 110) are never inverted.
+            # Canvas-size-invariant sparse white-on-black text detector (e.g. 0.01%-0.15% white stroke pixels in a corner):
+            # only fire when >=98.5% of opened background is genuinely dark (<65), so dark-framed folios or bright pages on
+            # dark tables (op_p985 >= 110..255) are never inverted; require multi-component high-contrast Top-Hat strokes.
             op_p985 = float(np.percentile(opened, 98.5))
             if op_p985 < 65.0:
                 tophat = cv2.subtract(work, opened)
-                if int((tophat > 60).sum()) >= 28 and float(np.percentile(tophat, 99.92)) > 55.0:
-                    return True
+                if int((tophat > 60).sum()) >= 24 and int((tophat > 110).sum()) >= 10:
+                    nth, _, th_stats, _ = cv2.connectedComponentsWithStats((tophat > 75).astype(np.uint8), connectivity=8)
+                    valid_th = sum(1 for i in range(1, nth) if int(th_stats[i, cv2.CC_STAT_AREA]) >= 4)
+                    if valid_th >= 3:
+                        return True
         return False
 
-    if _eval_roi(roi_mid, allow_sparse=False):
+    if _eval_roi(roi_mid, allow_dense=True, allow_sparse=False):
         return True
-    return _eval_roi(roi_wide, allow_sparse=True)
+    if _eval_roi(roi_wide, allow_dense=True, allow_sparse=True):
+        return True
+    return _eval_roi(roi_edge, allow_dense=False, allow_sparse=True)
 
 
 def detect_vertical_column_divider(img):
@@ -2030,6 +2085,29 @@ def preprocess_crop_for_rec(crop_img):
         return cv2.cvtColor(bin_inv, cv2.COLOR_GRAY2BGR)
     return crop_img
 
+
+def _trim_horizontal_whitespace_for_rec(crop_img):
+    """Trims wide blank horizontal page margins on projection-based line strips (valley/adaptive)
+    so short lines + trailing punctuation (e.g. '?') are not crushed when resized to W<=480."""
+    if crop_img is None or crop_img.size == 0:
+        return crop_img
+    ch, cw = crop_img.shape[:2]
+    if ch < 8 or cw < 48 or (cw / float(max(1, ch))) <= 6.5:
+        return crop_img
+    gray = cv2.cvtColor(crop_img, cv2.COLOR_BGR2GRAY) if len(crop_img.shape) == 3 else crop_img
+    ink_cols = np.where((gray < 225).sum(axis=0) >= 1)[0]
+    if len(ink_cols) == 0:
+        return crop_img
+    x0, x1 = int(ink_cols[0]), int(ink_cols[-1])
+    if (x1 - x0 + 1) >= 0.72 * cw:
+        return crop_img
+    pad_x = max(14, int(round(0.55 * ch)))
+    tx0 = max(0, x0 - pad_x)
+    tx1 = min(cw, x1 + 1 + pad_x)
+    if tx1 - tx0 < 16:
+        return crop_img
+    return crop_img[:, tx0:tx1]
+
 def _aabb(poly):
     pts = np.array(poly, dtype=np.float32)
     return float(np.min(pts[:, 0])), float(np.min(pts[:, 1])), float(np.max(pts[:, 0])), float(np.max(pts[:, 1]))
@@ -2132,7 +2210,8 @@ def segment_lines_dbnet(img, det_model, ink=None, return_info=False, reading_ord
         info["column_divider_x"] = int(col_divider_x)
 
     def _detect(detector):
-        boxes, _ = detector(det_img)
+        with _INFERENCE_LOCK:
+            boxes, _ = detector(det_img)
         if _is_poly_detector(detector):
             boxes = [] if boxes is None else [np.array(b, dtype=np.float32).reshape(-1, 2) for b in boxes]
             return merge_line_polygons(boxes, w, h, col_divider_x=col_divider_x)
@@ -2569,6 +2648,16 @@ def segment_lines_advanced(img, base_coords, ocr_model, model_ver=None):
             xmax = max(stats[i][0] + stats[i][2] for i in best_cluster)
             ymin = min(stats[i][1] for i in best_cluster)
             ymax = max(stats[i][1] + stats[i][3] for i in best_cluster)
+            # Extend horizontal bbox to include adjacent small punctuation (e.g. '?', '.', '꩝' with area < 25)
+            p_reach = max(24, int(round(1.1 * median_line_height)))
+            band_x0 = max(0, int(xmin) - p_reach)
+            band_x1 = min(img_w, int(xmax) + p_reach)
+            band_gray = gray[max(0, int(ymin) - 2):min(img_h, int(ymax) + 3), band_x0:band_x1]
+            if band_gray.size > 0:
+                p_cols = np.where((band_gray < 215).sum(axis=0) >= 2)[0]
+                if len(p_cols) > 0:
+                    xmin = min(int(xmin), band_x0 + int(p_cols[0]))
+                    xmax = max(int(xmax), band_x0 + int(p_cols[-1]) + 1)
         else:
             xmin, xmax = 0, img_w
             ymin, ymax = int(s), int(e)
@@ -2690,7 +2779,7 @@ def segment_lines_advanced(img, base_coords, ocr_model, model_ver=None):
     # Phase 3: Pass 1 Batch Recognition
     t_pass1 = time.time()
     if pass1_candidates:
-        imgs = [preprocess_crop_for_rec(c["crop_img"]) for c in pass1_candidates]
+        imgs = [_trim_horizontal_whitespace_for_rec(preprocess_crop_for_rec(c["crop_img"])) for c in pass1_candidates]
         # ocr_model accepts a list of images and returns list of (text, conf)
         # However, PaddleOCR's predict() might fail if empty list or invalid dims.
         valid_imgs = []
@@ -2850,7 +2939,7 @@ def segment_lines_advanced(img, base_coords, ocr_model, model_ver=None):
                 pending_boxes.add(c_box)
                 
         if exec_candidates:
-            imgs = [preprocess_crop_for_rec(c["crop_img"]) for c in exec_candidates]
+            imgs = [_trim_horizontal_whitespace_for_rec(preprocess_crop_for_rec(c["crop_img"])) for c in exec_candidates]
             valid_imgs = []
             valid_indices = []
             for i, m in enumerate(imgs):
@@ -4053,29 +4142,28 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                 self.send_json_response({'error': 'Unable to read image (unsupported format or corrupted base64 payload)'}, 400)
                 return
                 
-            # Serialize Paddle C++ model loading & inference safely while keeping HTTP GET/health non-blocking
-            with _INFERENCE_LOCK:
-                t_model = time.time()
-                try:
-                    get_ocr_model(model_ver)
-                except UnknownModelError as ume:
-                    self.send_json_response({'error': str(ume), 'allowed_models': list(ADVERTISED_MODEL_IDS)}, 400)
-                    return
-                except Exception as e:
-                    import traceback
-                    print(f"❌ Error loading OCR model '{model_ver}': {traceback.format_exc()}")
-                    self.send_json_response({'error': f'Model loading failure ({model_ver}): {e}'}, 500)
-                    return
-                print(f"⏱️  Loaded model in: {time.time() - t_model:.4f}s")
+            # C++ predictors lock internally via _INFERENCE_LOCK so OpenCV deskew/cropping/PNG encoding run concurrently
+            t_model = time.time()
+            try:
+                get_ocr_model(model_ver)
+            except UnknownModelError as ume:
+                self.send_json_response({'error': str(ume), 'allowed_models': list(ADVERTISED_MODEL_IDS)}, 400)
+                return
+            except Exception as e:
+                import traceback
+                print(f"❌ Error loading OCR model '{model_ver}': {traceback.format_exc()}")
+                self.send_json_response({'error': f'Model loading failure ({model_ver}): {e}'}, 500)
+                return
+            print(f"⏱️  Loaded model in: {time.time() - t_model:.4f}s")
 
-                try:
-                    response = run_ocr_pipeline(img, model_ver=model_ver, method=method, threshold=threshold,
-                                                gap=gap, win=win, reading_order=reading_order, t_start=t_start)
-                except Exception as e:
-                    import traceback
-                    print(f"❌ Error during OCR pipeline: {traceback.format_exc()}")
-                    self.send_json_response({'error': f'OCR transcription engine error: {e}'}, 500)
-                    return
+            try:
+                response = run_ocr_pipeline(img, model_ver=model_ver, method=method, threshold=threshold,
+                                            gap=gap, win=win, reading_order=reading_order, t_start=t_start)
+            except Exception as e:
+                import traceback
+                print(f"❌ Error during OCR pipeline: {traceback.format_exc()}")
+                self.send_json_response({'error': f'OCR transcription engine error: {e}'}, 500)
+                return
 
             t_send = time.time()
             self.send_json_response(response)
@@ -4158,11 +4246,11 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                 return
                 
             try:
-                with _INFERENCE_LOCK:
-                    ocr = get_ocr_model(model_ver)
-                    res, sel_vers, _ = invoke_recognizer_with_provenance(
-                        ocr, [preprocess_crop_for_rec(crop_img)], model_ver=model_ver
-                    )
+                pre_crop = preprocess_crop_for_rec(crop_img)
+                ocr = get_ocr_model(model_ver)
+                res, sel_vers, _ = invoke_recognizer_with_provenance(
+                    ocr, [pre_crop], model_ver=model_ver
+                )
                 pred_text, conf = res[0] if res else ("", 0.0)
             except UnknownModelError as ume:
                 self.send_json_response({'error': str(ume), 'allowed_models': list(ADVERTISED_MODEL_IDS)}, 400)

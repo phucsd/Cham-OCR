@@ -1182,6 +1182,57 @@ def test_stage_v26_3_qa_p1_p2_regressions():
         app._legacy_model_lru[:] = saved_lru
 
 
+def test_stage_v26_3_2_adversarial_regressions():
+    """Adversarial regression gate for Pipeline v26.3.2 (5-line 2x2 grid, mega-canvas corner negative, valley/adaptive trim, transient retry)."""
+    # 1. Short 5-line two-column layout (1 centered title + 2 rows x 2 cols) -> columns: 2, order [0, 1, 4, 2, 3]
+    rects_5line_2col = [
+        [514, 54, 671, 79],     # 0: short centered header
+        [123, 234, 275, 273],   # 1: left row 1
+        [755, 241, 953, 270],   # 2: right row 1
+        [754, 409, 896, 448],   # 3: right row 2
+        [125, 413, 291, 446],   # 4: left row 2
+    ]
+    ord_5, lay_5 = app.order_lines_reading(rects_5line_2col, 1250)
+    assert lay_5 == {'reading_order': 'columns', 'columns': 2}, lay_5
+    assert ord_5 == [0, 1, 4, 2, 3], ord_5
+
+    # Anti-false-column guards: narrow word-gap fragments and unaligned right starts must remain 1-column rows
+    _, lay_gap = app.order_lines_reading([[80, 100, 320, 134], [385, 102, 690, 135], [82, 170, 340, 204], [410, 172, 710, 205]], 1000)
+    assert lay_gap == {'reading_order': 'rows', 'columns': 1}, lay_gap
+    _, lay_stag = app.order_lines_reading([[80, 100, 250, 134], [520, 102, 720, 135], [82, 170, 260, 204], [640, 172, 830, 205]], 1000)
+    assert lay_stag == {'reading_order': 'rows', 'columns': 1}, lay_stag
+
+    # 2. Canvas-size-invariant sparse corner negative (1600x980 with ~0.015% corner strokes) vs single dust speck
+    corner_neg = np.zeros((980, 1600, 3), dtype=np.uint8)
+    for k in range(6):
+        x = 1260 + k * 24
+        cv2.line(corner_neg, (x, 68), (x + 11, 98), (245, 245, 245), 2)
+    assert app.check_inverted_polarity(corner_neg) is True, "Missed sparse top-right corner negative on 1600x980!"
+    assert app.is_blank_page(app.analyze_text_ink(corner_neg)) is False, "Sparse corner negative falsely marked blank!"
+
+    dust_only = np.zeros((980, 1600, 3), dtype=np.uint8)
+    cv2.circle(dust_only, (400, 400), 4, (245, 245, 245), -1)
+    assert app.check_inverted_polarity(dust_only) is False, "Single dust speck falsely marked inverted!"
+
+    # 3. Horizontal whitespace trim on wide valley/adaptive strip preserves trailing '?' without altering full-width strips
+    wide_strip = np.full((46, 1050, 3), 255, dtype=np.uint8)
+    cv2.rectangle(wide_strip, (90, 10), (225, 36), (20, 20, 20), -1)
+    cv2.circle(wide_strip, (238, 33), 2, (35, 35, 35), -1)  # tiny trailing '?' dot
+    trimmed = app._trim_horizontal_whitespace_for_rec(wide_strip)
+    assert trimmed.shape[0] == 46 and 160 <= trimmed.shape[1] <= 240, trimmed.shape
+    assert int((trimmed < 100).sum()) == int((wide_strip < 100).sum()), "Horizontal trim clipped glyph/punctuation ink!"
+
+    full_strip = np.full((46, 600, 3), 255, dtype=np.uint8)
+    cv2.rectangle(full_strip, (30, 10), (560, 36), (20, 20, 20), -1)
+    assert app._trim_horizontal_whitespace_for_rec(full_strip).shape == (46, 600, 3)
+
+    # 4. Studio JS transient 502/503/504 auto-retry helper present
+    js_src = open(os.path.join(app.PROJECT_ROOT, 'static', 'js', 'studio.js'), 'r', encoding='utf-8').read()
+    assert 'async function fetchWithTransientRetry(' in js_src
+    assert 'fetchWithTransientRetry("/ocr"' in js_src
+    assert 'fetchWithTransientRetry("/ocr_crop"' in js_src
+
+
 class TestQualityGates(unittest.TestCase):
     pass
 
