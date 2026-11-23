@@ -19,8 +19,8 @@ WORKDIR /app
 COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Force cache bust for updated app code & V26.1 Masked-SVTR + Exact Pass-2 Provenance (Priority A) + Auto Router v2.2
-RUN echo "Cache bust 2026-11-22T07:55:00Z - Cham-OCR Studio: V26.1 Masked-SVTR + Exact Pass-2 Provenance (Zero Script Guessing) + Auto Router v2.2"
+# Force cache bust for updated app code & Pipeline v26.3.1 + Studio JSON Re-Import Fix + Static Cache-Busting
+RUN echo "Cache bust 2026-11-23T09:00:00Z - Cham-OCR Studio: Pipeline v26.3.1 + Studio Multi-Folio JSON Re-Import + Cache-Control no-store"
 
 # Copy application files
 COPY . /app

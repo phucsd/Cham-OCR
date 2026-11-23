@@ -3910,7 +3910,7 @@ class ChamOCRRequestHandler(BaseHTTPRequestHandler):
                 payload = sf.read()
             self.send_response(200)
             self.send_header('Content-type', mime)
-            self.send_header('Cache-Control', 'no-cache')
+            self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
             self.send_header('Content-Length', str(len(payload)))
             self.end_headers()
             if not head_only:
