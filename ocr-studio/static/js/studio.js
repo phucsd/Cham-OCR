@@ -562,14 +562,21 @@
                 calibrated_confidence: Number(ln.calibrated_confidence ?? ln.draft_calibrated_confidence ?? ln.confidence ?? 0),
                 human_verified: Boolean(ln.human_verified)
             }));
+            if (entry.document) folio.document = entry.document;
+            if (entry.profiler) folio.profiler = entry.profiler;
             folio.lineCount = folio.lines.length;
             folio.verifiedCount = folio.lines.filter((l) => l.human_verified).length;
             folio.model = entry.model || folio.model;
             folio.status = computeDocStatus(folio.lines, folio.document);
+            if (folio.id === state.activeFolioId) {
+                state.lines = folio.lines;
+                state.documentMeta = folio.document || null;
+                state.profilerMeta = folio.profiler || null;
+            }
             await dbPutFolio(folio);
             hydratedCount++;
             if (folio.id === state.activeFolioId) {
-                await selectFolio(folio.id);
+                await selectFolio(folio.id, { skipSyncActive: true });
             }
         }
         if (hydratedCount > 0) {
@@ -615,9 +622,11 @@
         }
 
         if (newlyAdded.length > 0 && (!state.activeFolioId || newlyAdded.length === 1)) {
-            await selectFolio(newlyAdded[0].id);
+            await selectFolio(newlyAdded[0].id, { skipSyncActive: hydratedFolios > 0 });
         }
-        if (hydratedFolios > 0) {
+        if (jsonFiles.length > 0 && hydratedFolios === 0) {
+            toast("No matching folio found in queue for imported JSON");
+        } else if (hydratedFolios > 0) {
             toast(`Hydrated ${hydratedFolios} folio(s) from Review Queue JSON`);
         } else if (newlyAdded.length > 1) {
             toast(`Added ${newlyAdded.length} manuscript folios to queue`);
@@ -893,12 +902,14 @@
     // =========================================================================
     // Queue Selection, Filtering, Drag-Reordering & Deletion
     // =========================================================================
-    async function selectFolio(folioId) {
+    async function selectFolio(folioId, options = {}) {
         const item = state.queue.find((x) => x.id === folioId);
         if (!item) return;
 
-        // Save current active folio lines back into queue item before switching
-        syncActiveFolioToQueue();
+        // Save current active folio lines back into queue item before switching (unless hydrating new state onto active folio)
+        if (!options.skipSyncActive) {
+            syncActiveFolioToQueue();
+        }
 
         state.activeFolioId = folioId;
         state.queue.forEach((x) => { x.active = (x.id === folioId); });

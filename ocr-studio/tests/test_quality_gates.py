@@ -569,8 +569,13 @@ def test_workbench_samples_models_and_corpus_zip_export():
     catalog = app.list_available_models()
     assert catalog['default_model'] == 'v24_1_r4'
     ids = {m['id']: m for m in catalog['models']}
+    try:
+        import paddle
+        paddle_major = int(str(getattr(paddle, '__version__', '0')).split('.')[0])
+    except Exception:
+        paddle_major = 0
     assert 'v24_1_r4' in ids and ids['v24_1_r4']['installed'] is True
-    assert 'v25' in ids and ids['v25']['installed'] is True
+    assert 'v25' in ids and ids['v25']['installed'] is (not (0 < paddle_major < 3))
     assert 'auto' in ids and ids['auto']['installed'] is True
 
     samples = app.list_curated_samples()
@@ -1081,6 +1086,92 @@ def test_stage2_to_4_disjoint_split_and_v27_leak_guard():
         'gt': 'ꨀꨕꩅ ꨌꩌ',
     }], manifest_path=prod_v4)
     assert ok_res['accepted_records'] == 1
+
+
+def test_stage_v26_3_qa_p1_p2_regressions():
+    """Adversarial regression gate for all 4 P1 bugs and 2 P2 issues from Independent QA (2026-11-23)."""
+    # P1-1: Studio JS active-folio JSON re-import must update state.lines before dbPutFolio and pass skipSyncActive: true
+    js_p = os.path.join(app.PROJECT_ROOT, 'static', 'js', 'studio.js')
+    js_src = open(js_p, 'r', encoding='utf-8').read()
+    assert 'selectFolio(folio.id, { skipSyncActive: true })' in js_src
+    assert 'if (!options.skipSyncActive)' in js_src
+
+    # P1-2: Two-column page with a SHORT centered top header (and optional centered bottom footer)
+    rects_2col_short_title = [
+        [489, 47, 633, 83],     # 0: short centered title (< 0.6 * text_w!)
+        [95, 159, 246, 195],    # 1: left 1
+        [758, 159, 905, 197],   # 2: right 1
+        [759, 299, 917, 336],   # 3: right 2
+        [96, 305, 215, 336],    # 4: left 2
+        [759, 439, 900, 477],   # 5: right 3
+        [94, 441, 201, 475],    # 6: left 3
+    ]
+    order_open, layout_open = app.order_lines_reading(rects_2col_short_title, 1250, col_divider_x=None)
+    assert layout_open == {'reading_order': 'columns', 'columns': 2}, layout_open
+    assert order_open == [0, 1, 4, 6, 2, 3, 5], order_open
+
+    order_div, layout_div = app.order_lines_reading(rects_2col_short_title, 1250, col_divider_x=637)
+    assert layout_div == {'reading_order': 'columns', 'columns': 2}, layout_div
+    assert order_div == [0, 1, 4, 6, 2, 3, 5], order_div
+
+    # P1-3: Sparse single-line white-on-black negative (~0.14% bright stroke pixels at left x=70..275)
+    sparse_neg = np.zeros((220, 1050, 3), dtype=np.uint8)
+    for x in range(72, 260, 22):
+        cv2.line(sparse_neg, (x, 96), (x + 12, 122), (248, 248, 248), 2)
+    assert app.check_inverted_polarity(sparse_neg) is True, "Missed sparse 0.14%-ink white-on-black negative!"
+    assert app.check_inverted_polarity(np.zeros((220, 1050, 3), dtype=np.uint8)) is False, "False positive on pure black blank!"
+
+    # P1-4: Leading-Vietnamese + trailing-Cham inline split where Cham CTC outputs glued Cham-digit soup ('ꨚ꩗꩐꩐꩖ ꨏ/ꨮ;')
+    mixed_lead_vi = np.full((64, 440, 3), 252, dtype=np.uint8)
+    cv2.rectangle(mixed_lead_vi, (24, 16), (170, 48), (18, 18, 18), -1)   # 'Người Chăm:'
+    cv2.rectangle(mixed_lead_vi, (215, 16), (410, 48), (18, 18, 18), -1)  # 'ꨚꨗꩍ ꨓꨶꨮꩉ ?'
+
+    def _mock_cham_lead(imgs):
+        outs = []
+        for im in imgs:
+            w = im.shape[1]
+            if w > 380:
+                outs.append(('ꨚ꩗꩐꩐꩖ ꨏ/ꨮ; ꨚꨗꩍ ꨓꨶꨮꩉ ?', 0.74))
+            elif w < 190:
+                outs.append(('ꨚ꩗꩐꩐꩖ ꨏ/ꨮ;', 0.83))
+            else:
+                outs.append(('ꨚꨗꩍ ꨓꨶꨮꩉ ?', 0.96))
+        return outs, 0.01
+
+    def _mock_vi_lead(imgs):
+        outs = []
+        for im in imgs:
+            w = im.shape[1]
+            if w > 380:
+                outs.append(('Người Chăm: 2ZwY ?', 0.88))
+            elif w < 190:
+                outs.append(('Người Chăm:', 0.97))
+            else:
+                outs.append(('2ZwY ?', 0.58))
+        return outs, 0.01
+
+    router_bi = app.AutoRoutingOCRWrapper(_mock_cham_lead, _mock_vi_lead, cham_w320_model=None, primary_ver='v24_1_r4')
+    res_bi, vers_bi, _ = router_bi.predict_with_provenance([mixed_lead_vi])
+    assert vers_bi == ['v24_1_r4+vi'], (res_bi, vers_bi)
+    assert res_bi[0][0] == 'Người Chăm: ꨚꨗꩍ ꨓꨶꨮꩉ ?', res_bi
+
+    # P2-1: Bounded LRU cache for non-pinned legacy models
+    saved_models = dict(app.ocr_models)
+    saved_lru = list(app._legacy_model_lru)
+    try:
+        app.ocr_models.clear()
+        app._legacy_model_lru.clear()
+        app._register_loaded_model('v24_1_r4', 'core_r4')
+        app._register_loaded_model('v23', 'leg_23')
+        app._register_loaded_model('v24', 'leg_24')
+        app._register_loaded_model('v25', 'leg_25')
+        assert 'v24_1_r4' in app.ocr_models
+        assert 'v23' not in app.ocr_models
+        assert app._legacy_model_lru == ['v24', 'v25']
+    finally:
+        app.ocr_models.clear()
+        app.ocr_models.update(saved_models)
+        app._legacy_model_lru[:] = saved_lru
 
 
 class TestQualityGates(unittest.TestCase):

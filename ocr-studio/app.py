@@ -68,6 +68,9 @@ if ocr_training_dir not in sys.path:
 
 # Global variables for OCR models
 ocr_models = {}
+_PINNED_RESIDENT_MODELS = frozenset({"v24_1_r4", "v24_1_r3_1", "vi", "auto"})
+_MAX_LEGACY_RESIDENT_MODELS = int(os.getenv("MAX_LEGACY_RESIDENT_MODELS", "2"))
+_legacy_model_lru = []
 det_model = None
 generic_det_model = None
 cham_det_model = None
@@ -249,7 +252,9 @@ _ROUTER_GIBBERISH_TOKEN_RE = re.compile(
     r'|[BCDFGHJKLMNPQRSTVWXZbcdfghjklmnpqrstvwxz]{5,})'
 )
 _ROUTER_CHAM_SOUP_RE = re.compile(
-    r'(?:[{}\[\]_\\]|/[0-9 ]|[0-9][\uAA00-\uAA5F]|[\uAA00-\uAA5F][0-9])'
+    r'(?:[{}\[\]_\\]|/[0-9 ]|/[\uAA00-\uAA5F]|[\uAA00-\uAA5F]/'
+    r'|[0-9][\uAA00-\uAA5F]|[\uAA00-\uAA5F][0-9]'
+    r'|[\uAA00-\uAA4F][\uAA50-\uAA59]+|[\uAA50-\uAA59]+[\uAA00-\uAA4F])'
 )
 _ROUTER_LATIN_VOWELS = set('aeiouyàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵœæ')
 
@@ -578,7 +583,8 @@ class AutoRoutingOCRWrapper:
             else:
                 # Line defaulted to Cham: only flip a chunk to Vi if Cham failed/garbled AND Vi decoded plausible Latin words
                 cham_garbled = (cr < 0.45) or (cc < 0.78) or cham_soup
-                if cham_garbled and vc >= max(0.74, cc + 0.06) and (_is_plausible_latin_span(vt) or _has_viet_diacritics(vt)):
+                min_vc = 0.74 if cham_soup else max(0.74, cc + 0.06)
+                if cham_garbled and vc >= min_vc and (_is_plausible_latin_span(vt) or _has_viet_diacritics(vt)):
                     labels.append('vi')
                 else:
                     labels.append('cham')
@@ -658,11 +664,31 @@ def validate_requested_model(raw_model):
     return ver
 
 
+def _register_loaded_model(version, model_obj):
+    """Caches `model_obj` while bounding resident non-core legacy C++ predictors to prevent OOM on multi-model sweeps."""
+    import gc
+    pinned = set(_PINNED_RESIDENT_MODELS) | {DEFAULT_CHAM_MODEL}
+    if version not in pinned:
+        if version in _legacy_model_lru:
+            _legacy_model_lru.remove(version)
+        while len(_legacy_model_lru) >= max(1, _MAX_LEGACY_RESIDENT_MODELS):
+            evict_ver = _legacy_model_lru.pop(0)
+            if evict_ver not in pinned and evict_ver in ocr_models:
+                ocr_models.pop(evict_ver, None)
+                gc.collect()
+        _legacy_model_lru.append(version)
+    ocr_models[version] = model_obj
+    return model_obj
+
+
 def get_ocr_model(version):
     """Loads and caches the PaddleOCR model for the given version dynamically"""
     global ocr_models
     version = validate_requested_model(version)
     if version in ocr_models:
+        if version in _legacy_model_lru:
+            _legacy_model_lru.remove(version)
+            _legacy_model_lru.append(version)
         return ocr_models[version]
         
     if version in ['en', 'fr', 'japan']:
@@ -816,8 +842,7 @@ def get_ocr_model(version):
     except Exception as e:
         print(f"Failed to warmup model: {e}")
         
-    ocr_models[version] = ocr_model
-    return ocr_model
+    return _register_loaded_model(version, ocr_model)
 
 def _ensure_generic_det_dir():
     """Returns the generic PP-OCRv4 detector directory, downloading it if missing."""
@@ -1671,13 +1696,19 @@ def compute_uncovered_ink(ink, polygons, median_line_h=None):
             idxs.append(i)
     return (uncovered / float(total) if total else 0.0), idxs
 
-def _split_columns(idx, rects, median_h, img_w):
-    """Splits a group of non-spanning line boxes into side-by-side columns using vertical gutters."""
+def _split_columns(idx, rects, median_h, img_w, col_divider_x=None):
+    """Splits a group of non-spanning line boxes into side-by-side columns using vertical gutters or divider x."""
     ivs = sorted(idx, key=lambda i: rects[i][0])
     runs = []  # [x_start, x_end, members]
     for i in ivs:
         x1, _, x2, _ = rects[i]
-        if runs and x1 <= runs[-1][1]:
+        crosses_div = (
+            col_divider_x is not None
+            and runs
+            and runs[-1][1] <= col_divider_x + 6
+            and x1 >= col_divider_x - 6
+        )
+        if runs and x1 <= runs[-1][1] and not crosses_div:
             runs[-1][1] = max(runs[-1][1], x2)
             runs[-1][2].append(i)
         else:
@@ -1687,7 +1718,12 @@ def _split_columns(idx, rects, median_h, img_w):
     min_gutter = max(1.5 * median_h, 0.025 * img_w)
     cols = [runs[0]]
     for r in runs[1:]:
-        if r[0] - cols[-1][1] >= min_gutter:
+        div_between = (
+            col_divider_x is not None
+            and cols[-1][1] <= col_divider_x + 8
+            and r[0] >= col_divider_x - 8
+        )
+        if div_between or (r[0] - cols[-1][1] >= min_gutter):
             cols.append([r[0], r[1], list(r[2])])
         else:
             cols[-1][1] = max(cols[-1][1], r[1])
@@ -1703,12 +1739,12 @@ def _split_columns(idx, rects, median_h, img_w):
             return [idx]
     return [c[2] for c in cols]
 
-def order_lines_reading(rects, img_w):
+def order_lines_reading(rects, img_w, col_divider_x=None):
     """Column-aware reading order for line boxes [x1, y1, x2, y2].
 
-    Full-width (spanning) lines split the page into sections; inside each section, side-by-side
-    columns separated by a clear vertical gutter are read top-to-bottom, left column first.
-    Single-column pages keep the legacy top-to-bottom order.
+    Full-width (spanning) lines AND vertically isolated top/bottom centered headers/footers split the page
+    into sections; inside each section, side-by-side columns separated by a vertical gutter or `col_divider_x`
+    are read top-to-bottom, left column first. Single-column pages keep the legacy top-to-bottom order.
     Returns (order, layout) where layout = {"reading_order": "rows"|"columns", "columns": k}.
     """
     n = len(rects)
@@ -1735,11 +1771,44 @@ def order_lines_reading(rects, img_w):
         sections.append(cur)
     order = []
     for sec in sections:
-        cols = _split_columns(sec, rects, median_h, img_w) if len(sec) >= 6 else [sec]
+        cols = _split_columns(sec, rects, median_h, img_w, col_divider_x=col_divider_x) if len(sec) >= 6 else [sec]
+        lead_hdrs, tail_ftrs = [], []
+        if len(cols) == 1 and len(sec) >= 7:
+            # Peel up to 2 vertically isolated top headers and/or bottom footers (e.g. short centered title '* ... *'
+            # or centered page number '- 30 -') ONLY if the remaining body cleanly splits into >=2 side-by-side columns.
+            rem = list(sec)
+            while len(lead_hdrs) < 2 and len(rem) > 6:
+                cand = rem[0]
+                if all((min(rects[cand][3], rects[j][3]) - max(rects[cand][1], rects[j][1])) <= 0.15 * median_h for j in rem[1:]):
+                    lead_hdrs.append(rem.pop(0))
+                    test_cols = _split_columns(rem, rects, median_h, img_w, col_divider_x=col_divider_x)
+                    if len(test_cols) > 1:
+                        cols = test_cols
+                        break
+                else:
+                    break
+            if len(cols) == 1:
+                rem_t = list(rem)
+                while len(tail_ftrs) < 2 and len(rem_t) > 6:
+                    cand = rem_t[-1]
+                    if all((min(rects[cand][3], rects[j][3]) - max(rects[cand][1], rects[j][1])) <= 0.15 * median_h for j in rem_t[:-1]):
+                        tail_ftrs.insert(0, rem_t.pop())
+                        test_cols = _split_columns(rem_t, rects, median_h, img_w, col_divider_x=col_divider_x)
+                        if len(test_cols) > 1:
+                            cols = test_cols
+                            break
+                    else:
+                        break
+            if len(cols) == 1:
+                lead_hdrs, tail_ftrs = [], []
         if len(cols) > 1:
             layout = {"reading_order": "columns", "columns": max(layout["columns"], len(cols))}
-        for col in cols:
-            order.extend(sorted(col, key=yc))
+            order.extend(lead_hdrs)
+            for col in cols:
+                order.extend(sorted(col, key=yc))
+            order.extend(tail_ftrs)
+        else:
+            order.extend(sorted(sec, key=yc))
     return order, layout
 
 def apply_line_quality_gates(lines_metadata, final_crops, dropped=None):
@@ -1817,24 +1886,41 @@ def check_inverted_polarity(img):
     if float(np.median(gray)) >= 130.0:
         return False
 
-    if h >= 180 and w >= 240:
-        roi = gray[int(h * 0.14):int(h * 0.68), int(w * 0.16):int(w * 0.84)]
-    else:
-        roi = gray
+    roi_wide = gray[
+        int(h * 0.04):max(int(h * 0.04) + 1, int(h * 0.96)),
+        int(w * 0.04):max(int(w * 0.04) + 1, int(w * 0.96)),
+    ]
+    roi_mid = gray[int(h * 0.14):int(h * 0.68), int(w * 0.16):int(w * 0.84)] if (h >= 180 and w >= 240) else roi_wide
 
-    scale = min(1.0, 900.0 / float(max(roi.shape[:2])))
-    work = (
-        cv2.resize(roi, (max(8, int(roi.shape[1] * scale)), max(8, int(roi.shape[0] * scale))), interpolation=cv2.INTER_AREA)
-        if scale < 1.0 else roi
-    )
-    wh, ww = work.shape[:2]
-    k = int(max(7, min(21, round(min(wh, ww) / 8)))) | 1
-    se = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k))
-    opened = cv2.morphologyEx(work, cv2.MORPH_OPEN, se)
+    def _eval_roi(roi_arr, allow_sparse=False):
+        scale = min(1.0, 900.0 / float(max(roi_arr.shape[:2])))
+        work = (
+            cv2.resize(roi_arr, (max(8, int(roi_arr.shape[1] * scale)), max(8, int(roi_arr.shape[0] * scale))), interpolation=cv2.INTER_AREA)
+            if scale < 1.0 else roi_arr
+        )
+        wh, ww = work.shape[:2]
+        k = int(max(7, min(21, round(min(wh, ww) / 8)))) | 1
+        se = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k))
+        opened = cv2.morphologyEx(work, cv2.MORPH_OPEN, se)
 
-    op_p95 = float(np.percentile(opened, 95))
-    fg_p992 = float(np.percentile(work, 99.2))
-    return bool(op_p95 < 85.0 and (fg_p992 - op_p95) > 45.0)
+        op_p95 = float(np.percentile(opened, 95))
+        fg_p992 = float(np.percentile(work, 99.2))
+        if op_p95 < 85.0 and (fg_p992 - op_p95) > 45.0:
+            return True
+        if allow_sparse:
+            # Sparse single-line white-on-black page (e.g. 0.1% white stroke pixels):
+            # only fire when >=98.5% of opened background is genuinely dark (<65), so dark-framed folios
+            # with a bright paper/palm-leaf interior (op_p985 >= 110) are never inverted.
+            op_p985 = float(np.percentile(opened, 98.5))
+            if op_p985 < 65.0:
+                tophat = cv2.subtract(work, opened)
+                if int((tophat > 60).sum()) >= 28 and float(np.percentile(tophat, 99.92)) > 55.0:
+                    return True
+        return False
+
+    if _eval_roi(roi_mid, allow_sparse=False):
+        return True
+    return _eval_roi(roi_wide, allow_sparse=True)
 
 
 def detect_vertical_column_divider(img):
@@ -2118,7 +2204,7 @@ def segment_lines_dbnet(img, det_model, ink=None, return_info=False, reading_ord
     # Column-aware reading order (fixes left/right interleaving on multi-column pages)
     if reading_order != 'rows' and len(dt_boxes) > 1:
         rects = [_reading_rect(b) for b in dt_boxes] if use_poly else [_aabb(b) for b in dt_boxes]
-        order, layout = order_lines_reading(rects, w)
+        order, layout = order_lines_reading(rects, w, col_divider_x=col_divider_x)
         dt_boxes = [dt_boxes[i] for i in order]
         info["layout"] = layout
 
@@ -4198,7 +4284,7 @@ def run_server():
     print(f"📁 Corrections will be saved to: ocr-studio/data/ocr_corrections.txt")
     print(f"======================================================================")
     
-    for _preload_ver in dict.fromkeys([DEFAULT_CHAM_MODEL, 'v24_1_r2_1_6', 'v24']):
+    for _preload_ver in dict.fromkeys([DEFAULT_CHAM_MODEL, 'v24_1_r3_1']):
         try:
             get_ocr_model(_preload_ver)
         except Exception as e:
