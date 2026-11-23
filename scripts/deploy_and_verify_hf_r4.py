@@ -203,6 +203,7 @@ def wait_for_space_rollout(api: HfApi, commit_sha: str, max_wait_s: int = 900) -
                     and "focusCropTimer" in jsr.text
                     and "applyImportedJsonPayload" in jsr.text
                     and "skipSyncActive" in jsr.text
+                    and "hydratedIdSet" in jsr.text
                     and helpr.status_code == 200
                 )
                 if hr.status_code == 200 and ui_ok:

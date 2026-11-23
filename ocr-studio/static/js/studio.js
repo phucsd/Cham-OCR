@@ -543,14 +543,14 @@
             .toLowerCase();
     }
 
-    async function applyImportedJsonPayload(payload) {
+    async function applyImportedJsonPayload(payload, hydratedIdSet = null) {
         const entries = Array.isArray(payload && payload.documents) ? payload.documents : [payload];
         let hydratedCount = 0;
         for (const entry of entries) {
             if (!entry || !Array.isArray(entry.lines)) continue;
             const targetStem = stemName(entry.doc_id || entry.image_name || entry.name || "");
             let folio = state.queue.find((q) => stemName(q.name) === targetStem);
-            if (!folio && entries.length === 1 && state.activeFolioId) {
+            if (!folio && entries.length === 1 && state.activeFolioId && (!targetStem || state.queue.length === 1)) {
                 folio = state.queue.find((q) => q.id === state.activeFolioId);
             }
             if (!folio) continue;
@@ -575,6 +575,7 @@
             }
             await dbPutFolio(folio);
             hydratedCount++;
+            if (hydratedIdSet) hydratedIdSet.add(folio.id);
             if (folio.id === state.activeFolioId) {
                 await selectFolio(folio.id, { skipSyncActive: true });
             }
@@ -609,11 +610,12 @@
         }
 
         let hydratedFolios = 0;
+        const hydratedIds = new Set();
         for (const jf of jsonFiles) {
             try {
                 const rawTxt = await readFileAsText(jf);
                 const parsed = JSON.parse(rawTxt);
-                hydratedFolios += await applyImportedJsonPayload(parsed);
+                hydratedFolios += await applyImportedJsonPayload(parsed, hydratedIds);
                 appendLog(`Imported transcription JSON: ${jf.name}`, "success");
             } catch (err) {
                 toast(`JSON import error (${jf.name}): ${err.message}`);
@@ -622,7 +624,9 @@
         }
 
         if (newlyAdded.length > 0 && (!state.activeFolioId || newlyAdded.length === 1)) {
-            await selectFolio(newlyAdded[0].id, { skipSyncActive: hydratedFolios > 0 });
+            await selectFolio(newlyAdded[0].id, {
+                skipSyncActive: Boolean(state.activeFolioId && hydratedIds.has(state.activeFolioId))
+            });
         }
         if (jsonFiles.length > 0 && hydratedFolios === 0) {
             toast("No matching folio found in queue for imported JSON");
@@ -948,11 +952,12 @@
         if (state.currentImageBase64) {
             if (emptyCard) emptyCard.style.display = "none";
             if (runBtn) runBtn.disabled = false;
-            imgEl.onload = () => {
+            const nextSrc = "data:image/png;base64," + state.currentImageBase64;
+            const finishImageRender = (resetZoom) => {
                 state.imageWidth = imgEl.naturalWidth;
                 state.imageHeight = imgEl.naturalHeight;
                 applyCanvasFilters();
-                zoomToFit();
+                if (resetZoom) zoomToFit();
                 renderOverlays();
                 renderEditor();
                 renderDocTelemetry();
@@ -961,7 +966,12 @@
                 }
             };
             imgEl.style.display = "block";
-            imgEl.src = "data:image/png;base64," + state.currentImageBase64;
+            if (imgEl.src === nextSrc && imgEl.complete && imgEl.naturalWidth > 0) {
+                finishImageRender(false);
+            } else {
+                imgEl.onload = () => finishImageRender(true);
+                imgEl.src = nextSrc;
+            }
         } else {
             imgEl.style.display = "none";
             if (emptyCard) emptyCard.style.display = "flex";

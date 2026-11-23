@@ -1114,12 +1114,20 @@ def test_stage_v26_3_qa_p1_p2_regressions():
     assert layout_div == {'reading_order': 'columns', 'columns': 2}, layout_div
     assert order_div == [0, 1, 4, 6, 2, 3, 5], order_div
 
+    # Two-column page with BOTH a short top header AND a short centered bottom page-number footer ('- 30 -')
+    rects_2col_hdr_and_ftr = rects_2col_short_title + [[525, 560, 595, 592]]
+    order_hf, layout_hf = app.order_lines_reading(rects_2col_hdr_and_ftr, 1250, col_divider_x=None)
+    assert layout_hf == {'reading_order': 'columns', 'columns': 2}, layout_hf
+    assert order_hf == [0, 1, 4, 6, 2, 3, 5, 7], order_hf
+
     # P1-3: Sparse single-line white-on-black negative (~0.14% bright stroke pixels at left x=70..275)
     sparse_neg = np.zeros((220, 1050, 3), dtype=np.uint8)
     for x in range(72, 260, 22):
         cv2.line(sparse_neg, (x, 96), (x + 12, 122), (248, 248, 248), 2)
     assert app.check_inverted_polarity(sparse_neg) is True, "Missed sparse 0.14%-ink white-on-black negative!"
     assert app.check_inverted_polarity(np.zeros((220, 1050, 3), dtype=np.uint8)) is False, "False positive on pure black blank!"
+    adap_crops, adap_coords = app.segment_lines_adaptive(sparse_neg)
+    assert len(adap_crops) == 1 and float(np.median(adap_crops[0])) > 200.0, "segment_lines_adaptive failed to invert negative crop!"
 
     # P1-4: Leading-Vietnamese + trailing-Cham inline split where Cham CTC outputs glued Cham-digit soup ('ꨚ꩗꩐꩐꩖ ꨏ/ꨮ;')
     mixed_lead_vi = np.full((64, 440, 3), 252, dtype=np.uint8)

@@ -667,29 +667,31 @@ def validate_requested_model(raw_model):
 def _register_loaded_model(version, model_obj):
     """Caches `model_obj` while bounding resident non-core legacy C++ predictors to prevent OOM on multi-model sweeps."""
     import gc
-    pinned = set(_PINNED_RESIDENT_MODELS) | {DEFAULT_CHAM_MODEL}
-    if version not in pinned:
-        if version in _legacy_model_lru:
-            _legacy_model_lru.remove(version)
-        while len(_legacy_model_lru) >= max(1, _MAX_LEGACY_RESIDENT_MODELS):
-            evict_ver = _legacy_model_lru.pop(0)
-            if evict_ver not in pinned and evict_ver in ocr_models:
-                ocr_models.pop(evict_ver, None)
-                gc.collect()
-        _legacy_model_lru.append(version)
-    ocr_models[version] = model_obj
-    return model_obj
+    with _INFERENCE_LOCK:
+        pinned = set(_PINNED_RESIDENT_MODELS) | {DEFAULT_CHAM_MODEL}
+        if version not in pinned:
+            if version in _legacy_model_lru:
+                _legacy_model_lru.remove(version)
+            while len(_legacy_model_lru) >= max(1, _MAX_LEGACY_RESIDENT_MODELS):
+                evict_ver = _legacy_model_lru.pop(0)
+                if evict_ver not in pinned and evict_ver in ocr_models:
+                    ocr_models.pop(evict_ver, None)
+                    gc.collect()
+            _legacy_model_lru.append(version)
+        ocr_models[version] = model_obj
+        return model_obj
 
 
 def get_ocr_model(version):
     """Loads and caches the PaddleOCR model for the given version dynamically"""
     global ocr_models
     version = validate_requested_model(version)
-    if version in ocr_models:
-        if version in _legacy_model_lru:
-            _legacy_model_lru.remove(version)
-            _legacy_model_lru.append(version)
-        return ocr_models[version]
+    with _INFERENCE_LOCK:
+        if version in ocr_models:
+            if version in _legacy_model_lru:
+                _legacy_model_lru.remove(version)
+                _legacy_model_lru.append(version)
+            return ocr_models[version]
         
     if version in ['en', 'fr', 'japan']:
         ocr_model = OfficialPaddleOCRWrapper(lang=version)
@@ -1774,33 +1776,28 @@ def order_lines_reading(rects, img_w, col_divider_x=None):
         cols = _split_columns(sec, rects, median_h, img_w, col_divider_x=col_divider_x) if len(sec) >= 6 else [sec]
         lead_hdrs, tail_ftrs = [], []
         if len(cols) == 1 and len(sec) >= 7:
-            # Peel up to 2 vertically isolated top headers and/or bottom footers (e.g. short centered title '* ... *'
-            # or centered page number '- 30 -') ONLY if the remaining body cleanly splits into >=2 side-by-side columns.
-            rem = list(sec)
-            while len(lead_hdrs) < 2 and len(rem) > 6:
-                cand = rem[0]
-                if all((min(rects[cand][3], rects[j][3]) - max(rects[cand][1], rects[j][1])) <= 0.15 * median_h for j in rem[1:]):
-                    lead_hdrs.append(rem.pop(0))
-                    test_cols = _split_columns(rem, rects, median_h, img_w, col_divider_x=col_divider_x)
+            # Test minimum-peel combinations (1 top, 1 bottom, 1+1, 2 top, 2 bottom, 2+1, 1+2) of vertically
+            # isolated header/footer lines (e.g. short centered title '* ... *' and/or centered page number '- 30 -')
+            # ONLY if every peeled line has no vertical overlap with the remaining body AND the body splits cleanly.
+            def _isolated_band(peeled, body):
+                return all(
+                    (min(rects[p][3], rects[b][3]) - max(rects[p][1], rects[b][1])) <= 0.15 * median_h
+                    for p in peeled for b in body
+                )
+
+            for n_top, n_bot in ((1, 0), (0, 1), (1, 1), (2, 0), (0, 2), (2, 1), (1, 2)):
+                if len(sec) - n_top - n_bot < 6:
+                    continue
+                cand_top = sec[:n_top]
+                cand_bot = sec[len(sec) - n_bot:] if n_bot > 0 else []
+                rem_body = sec[n_top:len(sec) - n_bot if n_bot > 0 else len(sec)]
+                if _isolated_band(cand_top + cand_bot, rem_body):
+                    test_cols = _split_columns(rem_body, rects, median_h, img_w, col_divider_x=col_divider_x)
                     if len(test_cols) > 1:
                         cols = test_cols
+                        lead_hdrs = list(cand_top)
+                        tail_ftrs = list(cand_bot)
                         break
-                else:
-                    break
-            if len(cols) == 1:
-                rem_t = list(rem)
-                while len(tail_ftrs) < 2 and len(rem_t) > 6:
-                    cand = rem_t[-1]
-                    if all((min(rects[cand][3], rects[j][3]) - max(rects[cand][1], rects[j][1])) <= 0.15 * median_h for j in rem_t[:-1]):
-                        tail_ftrs.insert(0, rem_t.pop())
-                        test_cols = _split_columns(rem_t, rects, median_h, img_w, col_divider_x=col_divider_x)
-                        if len(test_cols) > 1:
-                            cols = test_cols
-                            break
-                    else:
-                        break
-            if len(cols) == 1:
-                lead_hdrs, tail_ftrs = [], []
         if len(cols) > 1:
             layout = {"reading_order": "columns", "columns": max(layout["columns"], len(cols))}
             order.extend(lead_hdrs)
@@ -2292,7 +2289,7 @@ def segment_lines_adaptive(img, threshold_pct=0.08, gap_threshold=12):
     for s, e in line_ranges:
         s_pad = max(0, s - pad)
         e_pad = min(h, e + pad)
-        cropped_lines.append(img[s_pad:e_pad, :])
+        cropped_lines.append(proc_img[s_pad:e_pad, :])
         coords.append((s_pad, e_pad))
     return cropped_lines, coords
 
@@ -2321,7 +2318,7 @@ def segment_lines_valleys(img, window_size=25, min_dist=35):
         e = split_points[idx + 1]
         if e - s < 15:
             continue
-        cropped_lines.append(img[s:e, :])
+        cropped_lines.append(proc_img[s:e, :])
         coords.append((s, e))
     return cropped_lines, coords
 
@@ -2401,6 +2398,8 @@ def segment_lines_advanced(img, base_coords, ocr_model, model_ver=None):
             "ocr_model_calls": 0
         }
         
+    if check_inverted_polarity(img):
+        img = 255 - img
     img_h, img_w, _ = img.shape
     heights = [float(e - s) for s, e in base_coords]
     valid_heights = [h for h in heights if h <= 0.15 * img_h]

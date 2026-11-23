@@ -67,3 +67,25 @@
 | `shaped_two_col_divider` | `7 / 7` | **`1.22%`** | `columns (2 cols)` | `["v24_1_r4"] × 7` |
 | `shaped_two_col_open` | `7 / 7` | **`1.22%`** | `columns (2 cols)` | `["v24_1_r4"] × 7` |
 | `shaped_negative_ruled` | `0 / 0` | **PASS (`0` dòng)** | `no_text` | `[]` |
+
+---
+
+## 4. Rà soát Phản biện Chuyên sâu Vòng 2 (`v26.3.1` Red-Team Edge-Case Audit)
+
+Khi thực hiện rà soát phản biện toàn diện từng dòng mã lần thứ 2, chúng tôi phát hiện và đóng thêm **5 trường hợp biên tiềm ẩn** chưa lộ ra ở bộ test vòng 1:
+
+1. **Tương thích trình duyệt Safari/WebKit & Giữ nguyên mức Zoom khi nạp lại JSON trên cùng Folio (`studio.js`)**:
+   - **Phát hiện**: Trong `selectFolio()`, gán lại `imgEl.src` bằng chính chuỗi `data:image/png;base64,...` đang hiển thị có thể không kích hoạt sự kiện `imgEl.onload` trên Safari/WebKit (khiến khung soạn thảo không vẽ lại), đồng thời trên Chrome lại gọi `zoomToFit()` làm mất mức phóng đại hiện tại của người dùng.
+   - **Khắc phục**: Khi `imgEl.src === nextSrc && imgEl.complete && imgEl.naturalWidth > 0`, gọi đồng bộ `finishImageRender(false)` để cập nhật ngay lớp phủ và khung văn bản mà không reset mức zoom (`25% -> 25%`).
+2. **Bảo toàn chỉnh sửa thủ công chưa lưu trên `folio_1` khi tải đồng thời `folio_2.png + folio_2.studio.json` (`studio.js`)**:
+   - **Phát hiện**: Biểu thức cũ `{ skipSyncActive: hydratedFolios > 0 }` bỏ qua `syncActiveFolioToQueue()` ngay cả khi tệp JSON vừa nạp thuộc về `folio_2` mới thêm, dẫn tới nguy cơ mất chỉnh sửa trên `folio_1` đang mở trước khi chuyển sang `folio_2`.
+   - **Khắc phục**: Theo dõi tập `hydratedIds` thực tế và chỉ bật `skipSyncActive` khi `hydratedIds.has(state.activeFolioId)`.
+3. **Chặn ghi đè nhầm khi hàng đợi có $\ge 2$ Folio và người dùng chọn nhầm tệp JSON khác tên (`studio.js`)**:
+   - **Phát hiện**: Cơ chế fallback `entries.length === 1` sang `state.activeFolioId` nếu chạy khi hàng đợi có nhiều trang sẽ ghi đè nhầm `folio_999.studio.json` vào trang đang mở.
+   - **Khắc phục**: Giới hạn fallback về `activeFolioId` chỉ khi `!targetStem || state.queue.length === 1`; khi hàng đợi có $\ge 2$ trang và tên không khớp bất kỳ trang nào, hiển thị cảnh báo `"No matching folio found in queue for imported JSON"`.
+4. **Đảo cực đồng nhất cho cả `method="valley"` và `method="adaptive"` trên ảnh âm bản (`app.py`)**:
+   - **Phát hiện**: `segment_lines_adaptive()` và `segment_lines_valleys()` trước đó cắt dòng trên ảnh gốc chưa đảo cực `img` thay vì `proc_img`, và `segment_lines_advanced()` chưa đảo cực `img` trước bước nhị phân hóa `THRESH_BINARY_INV`.
+   - **Khắc phục**: Cắt dòng từ `proc_img` và bổ sung đảo cực đầu hàm `segment_lines_advanced()`, giúp cả 3 phương pháp `dbnet`, `valley` và `adaptive` đều nhận diện thành công ảnh âm bản `shaped_inverted.png`.
+5. **Thứ tự bóc tách tối thiểu `(n_top, n_bot)` cho trang 2 cột có đồng thời Tiêu đề ngắn + Số trang cuối (`app.py`) & Khóa luồng `_INFERENCE_LOCK` trực tiếp trong `get_ocr_model()`**:
+   - **Khắc phục**: Kiểm tra tổ hợp `(1, 0), (0, 1), (1, 1), (2, 0), (0, 2), (2, 1), (1, 2)` theo thứ tự số dòng bóc tách tăng dần (tránh bóc tham lam dòng đầu cột trái khi trang có cả tiêu đề và số trang chân trang), đồng thời bọc `_INFERENCE_LOCK` ngay trong `_register_loaded_model()` / `get_ocr_model()` để an toàn tuyệt đối đa luồng.
+

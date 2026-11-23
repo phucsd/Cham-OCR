@@ -1,9 +1,10 @@
 {
-  "verified_at_utc": "2026-11-23T01:20:44Z",
+  "verified_at_utc": "2026-11-23T01:41:12Z",
   "target_url": "https://ocr.cham.asia",
   "hf_space_repo": "phucsd/cham-ocr-studio",
-  "hf_space_commit": "2f700c0b7e3b3bd6aa35aab31f08b173dafd18d5",
-  "pipeline_version": "v26.3",
+  "hf_space_commit": "5785d7a06e62504d29a8aba82102f8a10a0cbc4d",
+  "pipeline_version": "v26.3.1",
+  "live_studio_js_sha256_16": "d9604a2665f64e62",
   "shaped_challenge_suite_12_images": {
     "auto": {
       "before_v26_3_micro_cer_pct": 40.42,
@@ -52,9 +53,18 @@
   "live_playwright_chrome_reimport": {
     "import_json_a": true,
     "reimport_json_b_active_folio": true,
+    "zoom_preserved_on_reimport": true,
     "indexeddb_persisted_b": true,
     "reload_persisted_b": true,
+    "simultaneous_folio2_and_json_hydrated": true,
+    "active_folio1_unsaved_edit_preserved": true,
+    "multifolio_wrong_stem_blocked": true,
     "unmatched_json_warning_toast": true
+  },
+  "inverted_polarity_all_seg_methods_live": {
+    "dbnet": "ꨧꨪ ꨀꨆꨢꨯꨮꩅ ?",
+    "valley": "ꨧꨪ ꨀꨆꨢꨯꨮꩅ",
+    "adaptive": "ꨧꨪ ꨀꨆꨢꨯꨮꩅ"
   },
   "unit_quality_gates": {
     "system_python_no_paddle_passed": "32/32",

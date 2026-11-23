@@ -1,8 +1,8 @@
 {
-  "verified_at": "2026-11-23T00:57:07.431463+00:00",
+  "verified_at": "2026-11-23T01:39:40.203837+00:00",
   "space_id": "phucsd/cham-ocr-studio",
   "live_url": "https://ocr.cham.asia",
-  "commit_sha": "2f700c0b7e3b3bd6aa35aab31f08b173dafd18d5",
+  "commit_sha": "5785d7a06e62504d29a8aba82102f8a10a0cbc4d",
   "files_uploaded": [
     "Dockerfile",
     "DESIGN.md",
@@ -65,7 +65,7 @@
     "ocr-studio/static/samples/test_006_lvl1.png"
   ],
   "rollout": {
-    "rollout_seconds": 45,
+    "rollout_seconds": 61,
     "stage": "RUNNING",
     "health_body": "OK",
     "probe_model_info": {
@@ -109,8 +109,8 @@
   },
   "live_harum_palei_01": {
     "default_v24_1_r4": {
-      "wall_sec": 14.609,
-      "backend_sec": 12.3324,
+      "wall_sec": 19.76,
+      "backend_sec": 17.5331,
       "has_calibrated_confidence": true,
       "model_info": {
         "model": "v24_1_r4",
@@ -148,8 +148,8 @@
       "unmatched_pred_chars": 0
     },
     "v24_1_r3_1": {
-      "wall_sec": 16.707,
-      "backend_sec": 14.4347,
+      "wall_sec": 19.765,
+      "backend_sec": 17.4615,
       "has_calibrated_confidence": true,
       "model_info": {
         "model": "v24_1_r3_1",
@@ -187,8 +187,8 @@
       "unmatched_pred_chars": 0
     },
     "auto": {
-      "wall_sec": 14.49,
-      "backend_sec": 12.0145,
+      "wall_sec": 21.383,
+      "backend_sec": 18.9602,
       "has_calibrated_confidence": true,
       "model_info": {
         "model": "auto",
